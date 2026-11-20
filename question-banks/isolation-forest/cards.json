@@ -1,0 +1,23 @@
+{
+  "source": {
+    "id": "isolation-forest",
+    "title": "scikit-learn Isolation Forest 官方文档",
+    "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+    "type": "官方文档",
+    "note": "算法与接口参考官方文档；安全流量和主机行为示例为原创应用。"
+  },
+  "cards": [
+    {"id":"isof-001","category":"detection","level":"入门","question":"Isolation Forest 为什么可用于发现异常安全行为？","answer":"它通过随机划分特征空间，利用样本被隔离的难易程度计算异常分数。","explanation":"异常行为可能值得调查，但异常不等于恶意。","example":"对主机每日外联统计打分，检查分数异常的设备。","tags":["Isolation Forest","异常检测"],"evidence":"source"},
+    {"id":"isof-002","category":"detection","level":"进阶","question":"Isolation Forest 的异常分数与攻击概率有什么区别？","answer":"异常分数表示样本相对异常程度，不自动等于真实攻击概率。","explanation":"若需要概率解释，应使用有标签的独立数据评估与校准。","example":"异常分数较高的设备也可能是新上线的正常业务。","tags":["异常分数","风险评分"],"evidence":"application"},
+    {"id":"isof-003","category":"detection","level":"进阶","question":"Isolation Forest 的 contamination 参数应怎样理解？","answer":"它影响模型划分异常与正常的阈值设定，不能直接当作已知的真实攻击比例。","explanation":"生产环境异常比例往往未知，应结合验证数据和告警预算选取。","example":"比较不同阈值产生的告警数及人工确认率。","tags":["contamination","阈值"],"evidence":"source"},
+    {"id":"isof-004","category":"detection","level":"实践","question":"没有攻击标签时，怎样验证安全异常检测的输出？","answer":"抽样人工复核，并结合历史事件、业务变更和可用的已确认样本检查。","explanation":"无标签条件下不能直接计算完整的攻击召回率。","example":"按不同异常分数区间抽查主机外联事件。","tags":["无标签","人工复核"],"evidence":"application"},
+    {"id":"isof-005","category":"detection","level":"实践","question":"用 Isolation Forest 检测主机异常时，样本单位可以怎样选择？","answer":"可以将一台主机在一个固定时间窗口内的行为汇总作为样本。","explanation":"窗口过短可能噪声较大，过长可能延迟发现，需要结合目标行为验证。","example":"按主机和一小时窗口统计不同目的地址数与连接次数。","tags":["样本单位","主机行为"],"evidence":"application"},
+    {"id":"isof-006","category":"detection","level":"进阶","question":"为什么异常检测训练集中的攻击污染需要关注？","answer":"若训练集含有较多攻击或异常行为，模型学到的常态边界可能受影响。","explanation":"应检查数据来源，必要时比较不同训练窗口和清洗策略。","example":"排查训练期是否包含已知大规模扫描事件。","tags":["训练污染","常态"],"evidence":"application"},
+    {"id":"isof-007","category":"detection","level":"实践","question":"如何将 Isolation Forest 用作安全告警排序？","answer":"按异常分数排序，再结合资产重要性和人工处理容量确定调查顺序。","explanation":"不同模型分数方向可能不同，使用前要确认接口定义。","example":"每日抽查异常程度最高的 50 台主机，并记录确认结果。","tags":["告警排序","异常分数"],"evidence":"application"},
+    {"id":"isof-008","category":"detection","level":"进阶","question":"Isolation Forest 的 predict 返回值如何理解？","answer":"官方接口使用 1 表示内部样本，-1 表示异常样本。","explanation":"二值结果由模型阈值决定，保留分数更方便调整告警量。","example":"先存储 decision_function，再根据运营阈值生成告警。","tags":["predict","接口"],"evidence":"source"},
+    {"id":"isof-009","category":"detection","level":"实践","question":"为什么安全异常检测需要和简单统计基线比较？","answer":"简单频率阈值可能已经识别大部分异常，比较后才能看出模型增益。","explanation":"比较应使用相同数据窗口和告警数量。","example":"在相同每日告警预算下对比连接数阈值与 Isolation Forest。","tags":["基线","异常检测"],"evidence":"application"},
+    {"id":"isof-010","category":"detection","level":"进阶","question":"异常检测模型如何处理不同业务类型的主机？","answer":"应考虑业务分组或加入合理上下文，避免用单一基线误判不同业务。","explanation":"批处理服务器与办公终端的正常行为可能差异很大。","example":"按资产角色分别分析外联模式，再比较各组误报。","tags":["资产分组","误报"],"evidence":"application"},
+    {"id":"isof-011","category":"detection","level":"实践","question":"安全异常检测如何避免未来信息进入特征？","answer":"仅使用评分时点之前已产生并可获得的日志和统计。","explanation":"后续事件可以作为评估标签或调查证据，但不能回填进当时预测输入。","example":"上午十点告警不能使用下午才发生的连接总数。","tags":["时间泄漏","特征"],"evidence":"application"},
+    {"id":"isof-012","category":"detection","level":"进阶","question":"异常检测中为什么要持续复核正常行为变化？","answer":"业务、采集设备或用户行为改变后，原来的常态可能过时。","explanation":"监测告警量和人工确认情况，再决定是否调整训练窗口或阈值。","example":"业务迁移后外联频率整体升高，先确认变更再更新模型。","tags":["漂移","监控"],"evidence":"application"}
+  ]
+}

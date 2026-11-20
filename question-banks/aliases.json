@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "aliases": [
+    {"source":"cic-003","canonical":"ai4sec-011","reason":"同一知识点：网络流量检测的样本单位。"},
+    {"source":"cic-004","canonical":"ai4sec-004","reason":"同一知识点：高度相似样本跨集合导致高估。"},
+    {"source":"cic-010","canonical":"ai4sec-002","reason":"同一知识点：预测标签及其派生字段泄漏。"},
+    {"source":"unsw-004","canonical":"ai4sec-002","reason":"以 UNSW 字段举例的标签泄漏。"},
+    {"source":"unsw-005","canonical":"ai4sec-010","reason":"同一知识点：预处理只在训练集拟合。"},
+    {"source":"unsw-007","canonical":"eval-011","reason":"同一知识点：通过特征消融检查环境捷径。"},
+    {"source":"unsw-008","canonical":"cic-009","reason":"同一知识点：按攻击类别分析整体指标。"},
+    {"source":"unsw-009","canonical":"cic-007","reason":"同一知识点：实时检测只能使用预测时可获得的流特征。"},
+    {"source":"unsw-010","canonical":"ai4sec-014","reason":"同一知识点：模型与规则基线比较。"},
+    {"source":"suri-009","canonical":"ai4sec-037","reason":"同一知识点：安全告警排序的效果评估。"},
+    {"source":"code-005","canonical":"ai4sec-024","reason":"同一知识点：相似代码跨集合的泄漏。"},
+    {"source":"prime-002","canonical":"ai4sec-024","reason":"同一知识点：漏洞数据集去重与集合污染。"},
+    {"source":"prime-003","canonical":"ai4sec-003","reason":"同一知识点：安全数据按时间切分。"},
+    {"source":"ember-008","canonical":"ai4sec-028","reason":"同一知识点：恶意软件按家族评估泛化。"},
+    {"source":"ember-009","canonical":"ai4sec-028","reason":"同一知识点：恶意软件按时间评估泛化。"},
+    {"source":"ember-012","canonical":"ai4sec-029","reason":"同一知识点：恶意软件静态特征与动态行为的区别和互补。"},
+    {"source":"llmv-005","canonical":"code-006","reason":"同一知识点：漏洞答案和事后信息进入输入造成泄漏。"},
+    {"source":"copilot-007","canonical":"ai4sec-040","reason":"同一知识点：安全助手处置建议需人工审核。"},
+    {"source":"rag-006","canonical":"rag-002","reason":"同一知识点：检索质量与答案质量分开评估。"},
+    {"source":"rag-007","canonical":"ai4sec-039","reason":"同一知识点：证据不足时说明不确定并提出待验证事项。"}
+  ]
+}

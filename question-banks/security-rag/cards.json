@@ -1,0 +1,21 @@
+{
+  "source": {
+    "id": "security-rag",
+    "title": "RAG 原始论文与安全知识检索应用",
+    "url": "https://arxiv.org/abs/2005.11401",
+    "type": "研究论文",
+    "note": "论文提供检索增强生成的基础；安全知识库、评估与示例为原创 AI4SEC 应用。"
+  },
+  "cards": [
+    {"id":"rag-001","category":"operations","level":"入门","question":"安全知识库中的检索增强生成如何工作？","answer":"先检索与安全问题相关的资料，再将检索内容提供给模型生成回答。","explanation":"应保留资料来源，并让回答受到实际检索证据约束。","example":"查询某漏洞时检索官方公告，再依据公告生成带引用的说明。","tags":["RAG","安全知识库"],"evidence":"application"},
+    {"id":"rag-002","category":"operations","level":"进阶","question":"为什么安全知识问答要分别评估检索与生成？","answer":"检索没有找到正确资料和模型误读已找到资料，是不同错误。","explanation":"分开评估才能知道优先改进索引、查询还是生成步骤。","example":"先检查正确漏洞公告是否进入前几条，再检查答案是否忠于公告。","tags":["检索评估","生成评估"],"evidence":"application"},
+    {"id":"rag-003","category":"operations","level":"实践","question":"安全文档切块时为什么要保留标题和来源？","answer":"片段脱离标题、产品版本或上下文后，模型可能误用内容。","explanation":"分块需兼顾检索粒度和足够的语义上下文。","example":"为漏洞公告片段附标题、CVE 编号、版本范围和原文链接。","tags":["文档切块","元数据"],"evidence":"application"},
+    {"id":"rag-004","category":"operations","level":"进阶","question":"安全知识检索为什么常把关键词检索与向量检索结合？","answer":"精确编号和术语匹配与语义相似检索各有优势。","explanation":"混合检索的具体权重需要在目标问题集上验证。","example":"用关键词匹配 CVE 编号，同时检索语义相近的漏洞描述。","tags":["混合检索","CVE"],"evidence":"application"},
+    {"id":"rag-005","category":"operations","level":"实践","question":"如何构建安全知识检索的测试集？","answer":"为真实安全问题标注相关资料，并覆盖精确编号、同义表达和无答案问题。","explanation":"资料版本和问题创建时间要记录，以便评估时避免使用未来信息。","example":"为每个漏洞问题标注可支持回答的公告段落。","tags":["测试集","检索"],"evidence":"application"},
+    {"id":"rag-006","category":"operations","level":"进阶","question":"安全问答中的检索命中率能否代替答案正确率？","answer":"不能。检索到正确资料后，模型仍可能误读、遗漏或错误引用。","explanation":"检索质量与答案质量应分别测量。","example":"公告在前五条中，但答案引用了另一个不适用的产品版本。","tags":["命中率","答案正确性"],"evidence":"application"},
+    {"id":"rag-007","category":"operations","level":"实践","question":"安全知识库找不到足够证据时，助手应如何回答？","answer":"说明资料不足并列出缺少的关键证据，不应虚构漏洞详情。","explanation":"可以提出下一步需要查询的资料或待确认条件。","example":"未找到适用版本时，提示先核对受影响产品及版本。","tags":["拒答","证据不足"],"evidence":"application"},
+    {"id":"rag-008","category":"operations","level":"进阶","question":"为什么安全 RAG 需要记录资料的发布时间与版本？","answer":"漏洞状态和修复建议会更新，旧资料可能不适用于当前问题。","explanation":"答案应能追踪所用资料和更新时间，并处理相互冲突的版本。","example":"同一漏洞存在更新公告时，显示当前引用的发布日期。","tags":["时效性","版本"],"evidence":"application"},
+    {"id":"rag-009","category":"operations","level":"实践","question":"如何检查安全 RAG 的引用是否有效？","answer":"检查引用内容能否支持每一项关键结论，且引用位置与版本正确。","explanation":"链接存在并不代表引用支持结论。","example":"回答称某版本受影响时，核对引用段落是否包含该版本范围。","tags":["引用","事实核验"],"evidence":"application"},
+    {"id":"rag-010","category":"operations","level":"进阶","question":"评估历史安全事件问答时为什么要限制资料时间？","answer":"使用事件发生后才发布的资料可能泄露当时不可知的信息。","explanation":"应定义回答时点，只检索该时点可获得的证据。","example":"复现某日告警研判时，不使用数周后公布的事后分析结论。","tags":["时间泄漏","情报"],"evidence":"application"}
+  ]
+}

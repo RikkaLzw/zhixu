@@ -1,0 +1,21 @@
+{
+  "source": {
+    "id": "unsw-nb15",
+    "title": "UNSW-NB15 官方数据集",
+    "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+    "type": "官方数据集",
+    "note": "根据数据集官方说明整理；跨环境评估、字段使用和样例为原创应用。"
+  },
+  "cards": [
+    {"id":"unsw-001","category":"detection","level":"入门","question":"UNSW-NB15 是什么类型的 AI4SEC 数据集？","answer":"它是包含正常与攻击网络活动的入侵检测数据集。","explanation":"官方提供原始流量、特征数据和预划分数据，可用于安全检测实验。","example":"用预划分数据训练网络攻击二分类模型。","tags":["入侵检测","数据集"],"evidence":"source"},
+    {"id":"unsw-002","category":"detection","level":"入门","question":"UNSW-NB15 可以支持哪两种常见分类任务？","answer":"可以做正常/攻击二分类，也可以研究攻击类别识别。","explanation":"选择任务时要分别定义标签、输入字段和评估指标。","example":"二分类模型先判断是否攻击，再由单独模型尝试识别攻击类型。","tags":["二分类","多分类"],"evidence":"source"},
+    {"id":"unsw-003","category":"detection","level":"进阶","question":"UNSW-NB15 的官方训练集和测试集有什么作用？","answer":"它们为基线比较提供固定的数据划分。","explanation":"固定划分有利于复现，但结果仍需结合标签比例和测试环境解释。","example":"先报告官方划分结果，再增加按时间或主机分组的补充评估。","tags":["数据切分","复现"],"evidence":"source"},
+    {"id":"unsw-004","category":"detection","level":"实践","question":"使用 UNSW-NB15 做二分类前，为什么要检查攻击类别字段？","answer":"攻击类别字段可能直接透露二分类标签，不能作为该任务的输入。","explanation":"同一字段在不同任务中角色不同；是否泄漏取决于预测目标和部署时可用信息。","example":"目标是 label 时，排查 attack_cat 和其他由标签派生的列。","tags":["标签泄漏","特征"],"evidence":"application"},
+    {"id":"unsw-005","category":"detection","level":"实践","question":"为什么 UNSW-NB15 中的类别特征要在训练集拟合编码器？","answer":"用全部数据拟合编码器会让测试集的信息提前进入训练过程。","explanation":"编码规则应由训练集确定，并明确处理测试中未见过的类别。","example":"把编码和分类器放入同一个训练流水线。","tags":["预处理","数据泄漏"],"evidence":"application"},
+    {"id":"unsw-006","category":"detection","level":"进阶","question":"为什么不能直接拿 UNSW-NB15 准确率和另一个数据集的准确率比较？","answer":"两个数据集的标签比例、攻击种类、采集环境和切分方式可能不同。","explanation":"必须说明测试条件，并在相同决策需求下比较。","example":"分别报告两套数据上的精确率、召回率与每千条流的告警数。","tags":["跨数据集","评估"],"evidence":"application"},
+    {"id":"unsw-007","category":"detection","level":"实践","question":"如何检查 UNSW-NB15 模型是否依赖少数环境字段？","answer":"分析特征贡献，再通过去除字段和分组评估验证结论。","explanation":"特征重要性只提示模型依赖，不能证明该特征在目标环境中稳定或具有因果性。","example":"移除地址或标识字段后，比较主机分组测试结果。","tags":["特征重要性","捷径"],"evidence":"application"},
+    {"id":"unsw-008","category":"detection","level":"进阶","question":"UNSW-NB15 中少数攻击类别应如何评估？","answer":"分别报告各类别样本量、召回率及混淆情况。","explanation":"总体平均值可能掩盖稀有类别失败；样本很少时也应说明结果的不确定性。","example":"对每个攻击类别列出真实数量、正确识别数量和常见混淆类别。","tags":["类别不平衡","多分类"],"evidence":"application"},
+    {"id":"unsw-009","category":"detection","level":"实践","question":"为什么安全模型训练前要检查特征是否在预测时可用？","answer":"一些完整连接或事后统计在需要触发告警的时刻尚未形成。","explanation":"训练时采用未来信息会造成离线效果与实时效果不一致。","example":"只用连接前 30 秒产生的统计，评估 30 秒内的检测任务。","tags":["实时检测","时间泄漏"],"evidence":"application"},
+    {"id":"unsw-010","category":"detection","level":"实践","question":"如何比较 UNSW-NB15 上的模型和规则？","answer":"让规则与模型使用相同的测试集、目标标签和告警统计口径。","explanation":"比较时除了检测率，还应看共同漏报、互补发现和人工处理量。","example":"列出只被规则发现、只被模型发现及两者都遗漏的攻击样本。","tags":["规则","模型评估"],"evidence":"application"}
+  ]
+}

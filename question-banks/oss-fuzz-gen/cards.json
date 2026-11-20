@@ -1,0 +1,23 @@
+{
+  "source": {
+    "id": "oss-fuzz-gen",
+    "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+    "url": "https://github.com/google/oss-fuzz-gen",
+    "type": "开源安全项目",
+    "note": "根据项目说明整理；实验设计和验证建议为原创应用。"
+  },
+  "cards": [
+    {"id":"fuzz-001","category":"vulnerabilities","level":"入门","question":"OSS-Fuzz-gen 将大语言模型用于哪类安全任务？","answer":"用于生成和评估模糊测试目标，以帮助测试真实软件项目。","explanation":"项目将生成的目标与 OSS-Fuzz 测试流程结合。","example":"为授权的开源库生成调用目标函数的测试入口。","tags":["OSS-Fuzz-gen","大模型","模糊测试"],"evidence":"source"},
+    {"id":"fuzz-002","category":"vulnerabilities","level":"入门","question":"模糊测试目标或 harness 在 AI 生成流程中起什么作用？","answer":"它把测试输入转换为对目标代码的调用，使模糊测试引擎能够执行代码。","explanation":"目标需要正确初始化、解析输入并调用相关接口。","example":"将字节输入交给库的解析接口，并在每次执行后释放资源。","tags":["harness","测试入口"],"evidence":"application"},
+    {"id":"fuzz-003","category":"vulnerabilities","level":"进阶","question":"为什么 AI 生成的 fuzz harness 能编译还不代表测试有效？","answer":"它可能没有触达目标代码、使用了不合理输入，或在初始化阶段提前退出。","explanation":"需要检查运行情况、覆盖率和实际调用路径。","example":"编译成功但覆盖率几乎为零时，检查目标函数是否真正执行。","tags":["编译","有效性","覆盖率"],"evidence":"application"},
+    {"id":"fuzz-004","category":"vulnerabilities","level":"进阶","question":"OSS-Fuzz-gen 用哪些维度评估生成目标？","answer":"项目评估目标的可编译性、运行崩溃、覆盖率及与已有目标的覆盖差异。","explanation":"这些指标分别对应构建、运行和实际覆盖能力。","example":"比较生成目标与已有人工目标的新增覆盖行数。","tags":["评估","覆盖率"],"evidence":"source"},
+    {"id":"fuzz-005","category":"vulnerabilities","level":"实践","question":"如何验证 AI 生成的 fuzz harness 是否调用了正确接口？","answer":"结合代码覆盖、调用日志和目标 API 文档检查。","explanation":"高覆盖也要确认是否来自期望的代码路径。","example":"检查生成测试是否进入目标解析函数，而非只运行初始化代码。","tags":["调用路径","验证"],"evidence":"application"},
+    {"id":"fuzz-006","category":"vulnerabilities","level":"进阶","question":"AI 生成的测试触发崩溃后，为什么不能直接认定目标程序存在漏洞？","answer":"崩溃也可能来自生成的 harness、错误使用 API 或测试环境。","explanation":"需要区分目标代码缺陷、测试代码缺陷和预期退出。","example":"先用最小输入重现，再检查崩溃位置和调用约束。","tags":["崩溃归因","误报"],"evidence":"application"},
+    {"id":"fuzz-007","category":"vulnerabilities","level":"实践","question":"模糊测试发现的崩溃应如何做可复现验证？","answer":"保留触发输入、目标版本、运行参数、堆栈和环境信息。","explanation":"在授权隔离环境中重复运行，必要时缩减输入并人工审计。","example":"记录相同版本下能稳定触发崩溃的最小输入。","tags":["复现","崩溃"],"evidence":"application"},
+    {"id":"fuzz-008","category":"vulnerabilities","level":"进阶","question":"为什么比较 AI 生成目标与人工目标时需要记录覆盖差异？","answer":"单独的覆盖率不能说明生成目标是否发现了已有测试未覆盖的代码。","explanation":"还应统一目标版本、测试时间和资源条件。","example":"报告共同覆盖、仅人工覆盖和仅生成目标覆盖的代码。","tags":["覆盖率","对照实验"],"evidence":"application"},
+    {"id":"fuzz-009","category":"vulnerabilities","level":"实践","question":"如何评估大模型生成测试目标的成本？","answer":"记录生成调用次数、编译与运行资源、人工修复和验证时间。","explanation":"应将成本与有效新增覆盖和经确认的问题一起分析。","example":"比较每个有效测试目标需要的模型调用和人工修改时间。","tags":["成本","效率"],"evidence":"application"},
+    {"id":"fuzz-010","category":"vulnerabilities","level":"实践","question":"AI 生成的 fuzz harness 常见需要人工检查哪些内容？","answer":"检查 API 用法、输入边界、初始化与资源清理是否符合项目约束。","explanation":"生成代码可能使用不存在的函数，或错误处理所有权。","example":"核对头文件、函数签名和输入缓冲区的生命周期。","tags":["代码审查","harness"],"evidence":"application"},
+    {"id":"fuzz-011","category":"vulnerabilities","level":"进阶","question":"为什么模糊测试崩溃需要去重？","answer":"多个输入可能触发同一根因，直接按输入数量统计会夸大发现。","explanation":"可结合堆栈、崩溃位置和人工分析聚类。","example":"将指向同一代码位置的相似崩溃先归为一组再复核。","tags":["崩溃去重","根因"],"evidence":"application"},
+    {"id":"fuzz-012","category":"vulnerabilities","level":"实践","question":"如何组织 AI 辅助模糊测试的完整实验？","answer":"固定目标版本和资源，生成测试入口，编译运行，比较覆盖并复核崩溃。","explanation":"全程记录提示词、模型版本和构建参数，确保实验可复现。","example":"对同一项目比较多次生成的有效目标及新增覆盖。","tags":["实验流程","复现"],"evidence":"application"}
+  ]
+}

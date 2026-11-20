@@ -1,0 +1,23 @@
+{
+  "source": {
+    "id": "cic-ids2017",
+    "title": "CIC-IDS2017 官方数据集",
+    "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+    "type": "官方数据集",
+    "note": "根据官方数据说明整理；实验设计和示例为结合 AI4SEC 场景的原创应用。"
+  },
+  "cards": [
+    {"id":"cic-001","category":"detection","level":"入门","question":"CIC-IDS2017 可以用来练习什么 AI4SEC 任务？","answer":"可以用它练习网络流量中的正常与攻击行为分类，以及攻击类别识别。","explanation":"官方提供原始网络流量和按流提取的特征与标签，适合建立监督学习基线。","example":"用流量特征训练正常/攻击二分类器，再分析误报和漏报。","tags":["流量检测","数据集","分类"],"evidence":"source"},
+    {"id":"cic-002","category":"detection","level":"入门","question":"CIC-IDS2017 的原始 PCAP 和流特征 CSV 分别适合什么用途？","answer":"PCAP 适合重新解析报文与构建特征，流特征 CSV 适合直接开展表格模型实验。","explanation":"两种表示的信息粒度不同；使用 CSV 时要检查每个字段在预测时是否可获得。","example":"先用 CSV 训练基线，再用 PCAP 回查一个误报连接的上下文。","tags":["PCAP","流特征"],"evidence":"source"},
+    {"id":"cic-003","category":"detection","level":"入门","question":"CIC-IDS2017 的流记录通常对应什么样本单位？","answer":"一条样本通常表示一条网络流及其汇总特征，而不是单个报文。","explanation":"持续时间、包数和字节数等统计量对应流级视角，选择样本单位会影响检测时机。","example":"模型用完整连接统计分类时，其结论不能直接当作连接开始瞬间的实时检测结果。","tags":["样本单位","流特征"],"evidence":"application"},
+    {"id":"cic-004","category":"detection","level":"进阶","question":"为什么 CIC-IDS2017 的随机切分可能高估检测效果？","answer":"同一攻击活动、主机或相近时间的流可能同时出现在训练集与测试集。","explanation":"模型可能记住环境和活动特征，而不是泛化到新的攻击场景。","example":"先按攻击活动或时间组织分组，再检查训练与测试组是否存在高度相似流。","tags":["数据泄漏","切分"],"evidence":"application"},
+    {"id":"cic-005","category":"detection","level":"进阶","question":"用 CIC-IDS2017 做攻击检测时，为什么要检查日期和场景的关系？","answer":"数据采集按日期安排正常活动和不同攻击，日期可能与标签强烈关联。","explanation":"模型若主要依赖采集日而非攻击行为，在其他环境中可能失效。","example":"对比包含和排除绝对时间字段时的结果，并分析按日期划分的分布。","tags":["时间切分","捷径"],"evidence":"source"},
+    {"id":"cic-006","category":"detection","level":"实践","question":"流量模型中的 IP 地址为什么可能形成环境捷径？","answer":"固定实验主机的地址可能和标签绑定，使模型记住设备身份。","explanation":"IP 可以是有用上下文，但必须验证部署环境中是否能稳定获取，以及模型是否依赖特定地址。","example":"比较去除原始 IP、按主机分组和原始随机切分下的效果。","tags":["特征工程","泛化"],"evidence":"application"},
+    {"id":"cic-007","category":"detection","level":"实践","question":"CIC-IDS2017 的完整流统计为什么可能不适合早期检测？","answer":"完整流统计可能包含连接结束后才知道的包数、字节数或持续时间。","explanation":"预测时间点应先于特征提取；否则会使用部署时尚不可见的信息。","example":"若要求连接开始 10 秒内预测，只计算前 10 秒已观测到的特征。","tags":["时间泄漏","实时检测"],"evidence":"application"},
+    {"id":"cic-008","category":"detection","level":"实践","question":"如何为 CIC-IDS2017 建立可解释的首个基线？","answer":"固定切分方式，比较简单规则、逻辑回归和树模型，并记录相同指标。","explanation":"基线便于判断复杂模型是否真正提高了安全检测效果，而不仅是利用数据集特征。","example":"报告每种方法的精确率、召回率、误报数量及攻击类别表现。","tags":["基线","实验设计"],"evidence":"application"},
+    {"id":"cic-009","category":"detection","level":"进阶","question":"为什么要按攻击类型报告 CIC-IDS2017 检测结果？","answer":"总体分数可能掩盖某些攻击类别召回率很低的问题。","explanation":"类别数量和样本量不平衡时，多数类或常见攻击会主导总体指标。","example":"分别查看扫描、暴力尝试等类别的样本数、召回率和典型漏报。","tags":["分类评估","漏报"],"evidence":"application"},
+    {"id":"cic-010","category":"detection","level":"实践","question":"如何避免在流量分类实验中把标签列当作输入？","answer":"明确目标标签列和任何等价的攻击类别字段，将其排除在模型特征之外。","explanation":"标签或由标签直接推导的字段进入训练会制造虚假的高分。","example":"训练前打印输入列清单，并检查是否含有标签、攻击名称或事后处置字段。","tags":["标签泄漏","数据清洗"],"evidence":"application"},
+    {"id":"cic-011","category":"detection","level":"进阶","question":"为什么 CIC-IDS2017 上的高分不能直接代表生产环境效果？","answer":"实验采集环境、流量分布与真实网络可能不同。","explanation":"真实部署还会遇到新业务、新攻击、不同采集设备和标签延迟。","example":"在隔离的目标环境采集经授权的样本，做时间外和环境外验证。","tags":["分布变化","部署"],"evidence":"application"},
+    {"id":"cic-012","category":"detection","level":"实践","question":"完成一次流量检测实验后，应记录哪些可复现信息？","answer":"记录数据版本、特征列表、切分规则、训练参数、阈值和评估结果。","explanation":"同时保留样本筛选和错误案例，便于复核和比较。","example":"报告中写明按日期分组、每组样本量、模型阈值和测试集告警数。","tags":["复现","实验记录"],"evidence":"application"}
+  ]
+}

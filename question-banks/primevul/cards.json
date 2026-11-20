@@ -1,0 +1,23 @@
+{
+  "source": {
+    "id": "primevul",
+    "title": "PrimeVul 漏洞检测数据集",
+    "url": "https://github.com/DLVulDet/PrimeVul",
+    "type": "论文与开源数据集",
+    "note": "依据项目作者公开说明整理；数据分析和实验建议为原创应用。"
+  },
+  "cards": [
+    {"id":"prime-001","category":"vulnerabilities","level":"入门","question":"PrimeVul 主要用于研究哪类 AI4SEC 任务？","answer":"用于训练和评估代码语言模型的漏洞检测能力。","explanation":"项目强调更可靠的标签、数据去重、时间切分和成对样本评估。","example":"用函数代码预测是否存在漏洞，并检查模型对修复版本的判断。","tags":["PrimeVul","漏洞检测"],"evidence":"source"},
+    {"id":"prime-002","category":"vulnerabilities","level":"进阶","question":"PrimeVul 为什么强调代码去重？","answer":"去重有助于减少相似代码造成的训练与测试污染。","explanation":"如果模型已经见过相同或近似代码，测试分数可能高估泛化能力。","example":"按相似函数聚类，再确认同组样本不会跨集合泄漏。","tags":["去重","数据污染"],"evidence":"source"},
+    {"id":"prime-003","category":"vulnerabilities","level":"进阶","question":"PrimeVul 为什么采用按时间划分数据？","answer":"时间切分有助于模拟使用过去样本检测后续代码的场景。","explanation":"它仍需结合项目、样本来源和预训练数据污染进一步分析。","example":"用较早提交训练，使用较晚提交测试，并记录时间边界。","tags":["时间切分","泛化"],"evidence":"source"},
+    {"id":"prime-004","category":"vulnerabilities","level":"进阶","question":"漏洞代码与修复代码的成对评估检查什么？","answer":"检查模型能否区分相似的漏洞版本和修复版本。","explanation":"即使两个函数只存在少量改动，模型也应关注与缺陷相关的差异。","example":"同一函数修复前判为有漏洞、修复后判为无漏洞。","tags":["成对样本","修复"],"evidence":"source"},
+    {"id":"prime-005","category":"vulnerabilities","level":"实践","question":"只看成对样本的单条准确率为什么不够？","answer":"它不能直接反映模型是否同时正确判断一对修复前后代码。","explanation":"应单独统计两条都正确、只对一条和两条都错误的情况。","example":"模型对修复前后都判有漏洞时，可能获得单条正确，却没有识别修复差异。","tags":["成对评估","指标"],"evidence":"application"},
+    {"id":"prime-006","category":"vulnerabilities","level":"实践","question":"使用 PrimeVul 元数据前，为什么要检查字段覆盖率？","answer":"项目说明部分样本无法获得完整 CVE、CWE 或文件级元数据。","explanation":"缺失元数据的样本不能无说明地排除，否则可能改变评估分布。","example":"报告具有 CVE 信息的样本数，并比较缺失与非缺失样本的表现。","tags":["元数据","覆盖率"],"evidence":"source"},
+    {"id":"prime-007","category":"vulnerabilities","level":"进阶","question":"漏洞修复提交信息为什么应与代码模型输入分开？","answer":"提交信息可能包含漏洞描述或修复结论，直接泄露待预测标签。","explanation":"若部署场景不提供修复信息，训练和测试也不应使用它。","example":"将提交信息保存在审计记录中，但不输入给函数级分类器。","tags":["提交信息","标签泄漏"],"evidence":"application"},
+    {"id":"prime-008","category":"vulnerabilities","level":"实践","question":"PrimeVul 的文件级元数据能帮助分析什么问题？","answer":"可以帮助检查函数在源文件中的位置及周围代码上下文。","explanation":"项目提供部分样本的文件名、相对路径、位置及文件内容，覆盖情况需核对。","example":"对漏报函数查看其调用环境和同文件中的相关定义。","tags":["文件上下文","误报分析"],"evidence":"source"},
+    {"id":"prime-009","category":"vulnerabilities","level":"实践","question":"如何检查代码语言模型评测中的预训练污染？","answer":"记录模型训练截止信息与样本时间，并寻找公开代码或基准是否可能已被模型见过的证据。","explanation":"若无法确认预训练数据，应报告不确定性并增加更新或私有授权测试样本。","example":"对比公开历史函数与时间更新的留出代码上的效果。","tags":["预训练污染","时间"],"evidence":"application"},
+    {"id":"prime-010","category":"vulnerabilities","level":"进阶","question":"为什么 PrimeVul 上需要报告误报负担？","answer":"真实审计中安全代码通常很多，误报会消耗审计人员时间。","explanation":"应结合具体测试分布、阈值和分析预算报告数量。","example":"报告每千个正常函数被标记为可疑的数量。","tags":["误报","审计成本"],"evidence":"application"},
+    {"id":"prime-011","category":"vulnerabilities","level":"实践","question":"如何评价漏洞检测模型解释是否真的关注了修复点？","answer":"对照修复前后差异，检查模型指出的代码是否与已知修复位置及触发条件相关。","explanation":"解释与修复点接近只是线索，还需人工核对完整语义。","example":"模型指出边界检查的变化，再由审计人员验证其作用。","tags":["解释","修复差异"],"evidence":"application"},
+    {"id":"prime-012","category":"vulnerabilities","level":"实践","question":"新增 PrimeVul 版本后应记录哪些实验信息？","answer":"记录版本、下载内容、样本筛选、去重规则、切分和模型输入范围。","explanation":"不同发布版本的元数据覆盖与样本集合可能不同。","example":"在实验报告中注明使用完整原始版本还是带元数据的子集。","tags":["版本","复现"],"evidence":"source"}
+  ]
+}

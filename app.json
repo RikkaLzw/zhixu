@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "memory-cards",
-    "slug": "memory-cards",
-    "version": "1.0.0",
+    "name": "知序",
+    "slug": "zhixu-ai4sec",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -10,16 +10,28 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.joblearning.ai4sec",
+      "versionCode": 2,
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#F4F5F1",
+        "foregroundImage": "./assets/android-icon-foreground.png"
       },
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 37,
+            "targetSdkVersion": 36,
+            "cmakeVersion": "3.31.6"
+          }
+        }
+      ]
+    ]
   }
 }

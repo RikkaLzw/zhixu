@@ -1,0 +1,21 @@
+{
+  "source": {
+    "id": "llm4vuln",
+    "title": "LLM4Vuln 漏洞推理评估论文",
+    "url": "https://arxiv.org/abs/2401.16185",
+    "type": "研究论文",
+    "note": "参考论文对漏洞推理评估的拆分思路；卡片中的工程示例为原创应用。"
+  },
+  "cards": [
+    {"id":"llmv-001","category":"vulnerabilities","level":"入门","question":"LLM4Vuln 关注大语言模型的什么安全能力？","answer":"关注大语言模型对代码漏洞的推理与检测能力，并分析不同辅助因素的影响。","explanation":"评估时需要区分模型自身判断、外部知识和上下文对结果的贡献。","example":"比较同一模型在有无检索到漏洞知识时的判断。","tags":["LLM4Vuln","漏洞推理"],"evidence":"source"},
+    {"id":"llmv-002","category":"vulnerabilities","level":"进阶","question":"为什么漏洞推理实验要区分模型能力和外部知识？","answer":"如果只看最终正确率，很难知道结果来自模型推理还是检索到的答案。","explanation":"应控制其他条件，分别评估知识提供前后的表现。","example":"固定代码和提示词，单独改变是否提供相关漏洞知识。","tags":["消融实验","外部知识"],"evidence":"source"},
+    {"id":"llmv-003","category":"vulnerabilities","level":"进阶","question":"如何评估代码上下文对大模型漏洞判断的影响？","answer":"在相同样本上对比仅函数、相关调用链和文件级上下文的结果。","explanation":"上下文增多不必然提高效果，也可能增加噪声和成本。","example":"检查增加调用方后，模型是否正确判断输入能否到达危险操作。","tags":["代码上下文","消融"],"evidence":"application"},
+    {"id":"llmv-004","category":"vulnerabilities","level":"实践","question":"大模型漏洞分析输出应包含哪些可复核内容？","answer":"应包含可疑位置、相关数据流、触发条件、结论和不确定之处。","explanation":"这些内容方便安全人员核实，而不只是接收一个漏洞标签。","example":"指出不可信输入到危险调用的路径，并列出尚未确认的校验条件。","tags":["输出结构","证据"],"evidence":"application"},
+    {"id":"llmv-005","category":"vulnerabilities","level":"进阶","question":"为什么漏洞描述与代码答案不能随意放进评测提示词？","answer":"如果描述直接透露测试样本的结论，评测会混入答案泄漏。","explanation":"应明确评估目标：是利用公开情报审计，还是在未知答案条件下发现漏洞。","example":"测试未知漏洞发现时，不提供该函数的修复说明或漏洞标签。","tags":["评测泄漏","提示词"],"evidence":"application"},
+    {"id":"llmv-006","category":"vulnerabilities","level":"实践","question":"如何比较不同提示词对漏洞检测结果的影响？","answer":"固定模型、样本和评估方法，只改变提示词，并记录每次输出。","explanation":"还应控制采样设置并检查结果稳定性。","example":"比较直接分类提示与要求列出证据的提示下的误报和漏报。","tags":["提示词","对照实验"],"evidence":"application"},
+    {"id":"llmv-007","category":"vulnerabilities","level":"进阶","question":"为什么大模型说出了正确漏洞类型仍需要检查推理依据？","answer":"模型可能碰巧猜对类别，但指出的位置或触发条件不成立。","explanation":"类别正确、定位正确和证据充分应分别评估。","example":"模型判断存在注入，但所指出的数据实际没有到达危险调用。","tags":["漏洞定位","解释评估"],"evidence":"application"},
+    {"id":"llmv-008","category":"vulnerabilities","level":"实践","question":"如何评估大模型对安全代码的误报？","answer":"准备有可信标签的安全代码，统计被错误报告为漏洞的比例和原因。","explanation":"测试应覆盖正常的输入校验和安全处理方式。","example":"模型忽略已存在的边界检查，错误报告越界风险。","tags":["误报","安全样本"],"evidence":"application"},
+    {"id":"llmv-009","category":"vulnerabilities","level":"进阶","question":"为什么代码大模型的多次运行结果需要检查一致性？","answer":"生成结果可能受采样或提示细节影响，单次结果不能体现稳定性。","explanation":"应记录模型版本与生成参数，必要时重复运行并报告变化。","example":"对同一函数重复评估，比较漏洞判断和定位的一致率。","tags":["稳定性","复现"],"evidence":"application"},
+    {"id":"llmv-010","category":"vulnerabilities","level":"实践","question":"如何衡量大模型辅助漏洞审计的实际价值？","answer":"同时衡量有效漏洞发现、误报、审计时间、模型成本和人工复核工作量。","explanation":"离线准确率不能完整代表工具是否帮助安全团队。","example":"比较人工审计和辅助审计在相同代码集上的有效发现与耗时。","tags":["审计效率","评估"],"evidence":"application"}
+  ]
+}

@@ -1,0 +1,5638 @@
+{
+  "schemaVersion": 1,
+  "description": "合并同一知识点后的 AI4SEC 卡片；不包含个人学习记录。",
+  "cards": [
+    {
+      "id": "ai4sec-001",
+      "category": "foundations",
+      "question": "AI4SEC 中的分类和异常检测有什么区别？",
+      "answer": "分类利用已标注样本学习已知类别；异常检测寻找偏离常态的样本，还需要结合上下文判断是否构成攻击。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-002",
+      "category": "foundations",
+      "question": "安全检测中的标签泄漏是什么？",
+      "answer": "训练或评估使用了预测时不应获得的标签信息或事后信息，使模型效果被高估。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-002"
+        },
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-010"
+        },
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "unsw-004"
+        }
+      ],
+      "explanation": "标签或由标签直接推导的字段进入训练会制造虚假的高分。",
+      "example": "训练前打印输入列清单，并检查是否含有标签、攻击名称或事后处置字段。",
+      "alternateQuestions": [
+        "如何避免在流量分类实验中把标签列当作输入？",
+        "使用 UNSW-NB15 做二分类前，为什么要检查攻击类别字段？"
+      ],
+      "otherExplanations": [
+        "同一字段在不同任务中角色不同；是否泄漏取决于预测目标和部署时可用信息。"
+      ],
+      "otherExamples": [
+        "目标是 label 时，排查 attack_cat 和其他由标签派生的列。"
+      ],
+      "level": "实践",
+      "tags": [
+        "标签泄漏",
+        "数据清洗",
+        "特征"
+      ]
+    },
+    {
+      "id": "ai4sec-003",
+      "category": "foundations",
+      "question": "为什么安全数据需要考虑时间切分？",
+      "answer": "实际系统通常用过去的数据预测未来；时间切分有助于检查模型面对后续数据时的表现。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-003"
+        },
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "source",
+          "sourceCardId": "prime-003"
+        }
+      ],
+      "explanation": "它仍需结合项目、样本来源和预训练数据污染进一步分析。",
+      "example": "用较早提交训练，使用较晚提交测试，并记录时间边界。",
+      "alternateQuestions": [
+        "PrimeVul 为什么采用按时间划分数据？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "时间切分",
+        "泛化"
+      ]
+    },
+    {
+      "id": "ai4sec-004",
+      "category": "foundations",
+      "question": "为什么相似样本不能随意分到训练集和测试集？",
+      "answer": "模型可能记住重复流量、同一攻击活动或相似代码，使测试结果不能反映对新样本的效果。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-004"
+        },
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-004"
+        }
+      ],
+      "explanation": "模型可能记住环境和活动特征，而不是泛化到新的攻击场景。",
+      "example": "先按攻击活动或时间组织分组，再检查训练与测试组是否存在高度相似流。",
+      "alternateQuestions": [
+        "为什么 CIC-IDS2017 的随机切分可能高估检测效果？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "数据泄漏",
+        "切分"
+      ]
+    },
+    {
+      "id": "ai4sec-005",
+      "category": "foundations",
+      "question": "为什么安全检测不能只看准确率？",
+      "answer": "正常样本远多于攻击样本时，全部预测为正常也可能得到很高的准确率，却无法发现攻击。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-006",
+      "category": "foundations",
+      "question": "安全告警的精确率是什么？",
+      "answer": "模型报出的告警中，真正属于目标威胁的比例。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-007",
+      "category": "foundations",
+      "question": "安全检测的召回率是什么？",
+      "answer": "所有真实目标威胁中，被模型检测出来的比例。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-008",
+      "category": "foundations",
+      "question": "为什么需要在验证集选择检测阈值？",
+      "answer": "阈值影响告警量、误报和漏报。应结合处置能力在验证集选定阈值，再用独立测试集报告效果。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-009",
+      "category": "foundations",
+      "question": "安全模型训练中的类别不平衡是什么？",
+      "answer": "正常样本与攻击样本数量差异很大，模型容易偏向多数类，需要结合类别权重、采样和合适指标处理。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-010",
+      "category": "foundations",
+      "question": "为什么特征处理要先划分数据集？",
+      "answer": "应只在训练集拟合预处理参数，再应用到验证集和测试集，避免测试数据的信息进入训练过程。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-010"
+        },
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "unsw-005"
+        }
+      ],
+      "explanation": "编码规则应由训练集确定，并明确处理测试中未见过的类别。",
+      "example": "把编码和分类器放入同一个训练流水线。",
+      "alternateQuestions": [
+        "为什么 UNSW-NB15 中的类别特征要在训练集拟合编码器？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "实践",
+      "tags": [
+        "预处理",
+        "数据泄漏"
+      ]
+    },
+    {
+      "id": "ai4sec-011",
+      "category": "detection",
+      "question": "做恶意流量检测时，一条样本可以是什么？",
+      "answer": "可以是一条网络流，也可以是某个主机在固定时间窗口内的流量统计；选择取决于要识别的行为。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-011"
+        },
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-003"
+        }
+      ],
+      "explanation": "持续时间、包数和字节数等统计量对应流级视角，选择样本单位会影响检测时机。",
+      "example": "模型用完整连接统计分类时，其结论不能直接当作连接开始瞬间的实时检测结果。",
+      "alternateQuestions": [
+        "CIC-IDS2017 的流记录通常对应什么样本单位？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "入门",
+      "tags": [
+        "样本单位",
+        "流特征"
+      ]
+    },
+    {
+      "id": "ai4sec-012",
+      "category": "detection",
+      "question": "异常流量一定是恶意流量吗？",
+      "answer": "不一定。新业务、配置变化和正常的集中访问也可能偏离历史行为。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-013",
+      "category": "detection",
+      "question": "提高检测阈值通常会带来什么变化？",
+      "answer": "通常会减少告警量，并改变误报和漏报；具体变化应在验证数据上测量。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-013"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-014",
+      "category": "detection",
+      "question": "为什么要把机器学习检测与规则基线比较？",
+      "answer": "可以判断模型是否真正补充了现有规则，并比较双方的漏报、误报和维护成本。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-014"
+        },
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "unsw-010"
+        }
+      ],
+      "explanation": "比较时除了检测率，还应看共同漏报、互补发现和人工处理量。",
+      "example": "列出只被规则发现、只被模型发现及两者都遗漏的攻击样本。",
+      "alternateQuestions": [
+        "如何比较 UNSW-NB15 上的模型和规则？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "实践",
+      "tags": [
+        "规则",
+        "模型评估"
+      ]
+    },
+    {
+      "id": "ai4sec-015",
+      "category": "detection",
+      "question": "安全检测中的模型漂移指什么？",
+      "answer": "业务环境、用户行为或攻击方式变化后，模型输入或预测效果发生变化，需要持续监测和复评。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-015"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-016",
+      "category": "detection",
+      "question": "恶意流量模型可以使用哪些可用特征？",
+      "answer": "可根据检测时机使用协议、连接持续时间、包数、字节数和连接频率等特征，并确认预测时能够获取。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-016"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-017",
+      "category": "detection",
+      "question": "安全告警中的误报是什么？",
+      "answer": "误报是正常行为被系统判为目标威胁。误报过多会消耗分析人员时间并造成告警疲劳。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-017"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-018",
+      "category": "detection",
+      "question": "安全告警中的漏报是什么？",
+      "answer": "漏报是真实威胁未被系统识别。应分析漏报所属攻击类型、数据缺失和检测盲区。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-018"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-019",
+      "category": "detection",
+      "question": "为什么要对安全事件使用时间窗口？",
+      "answer": "时间窗口能聚合一段时间内的次数和变化，帮助识别单条事件不明显的连续行为。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-019"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-020",
+      "category": "detection",
+      "question": "异常分数如何转化为可处理的告警？",
+      "answer": "结合有标签的验证数据和分析人员处理能力选择阈值，并持续检查误报和漏报。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-020"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-021",
+      "category": "vulnerabilities",
+      "question": "代码漏洞检测的模型通常以什么为输入？",
+      "answer": "可以输入函数代码、相关调用上下文、代码结构或数据流；具体范围由检测任务和模型决定。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-021"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-022",
+      "category": "vulnerabilities",
+      "question": "为什么函数级漏洞检测需要关注上下文？",
+      "answer": "漏洞触发条件可能涉及调用者、跨函数数据流或外部配置，只看单个函数可能缺少判断依据。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-022"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-023",
+      "category": "vulnerabilities",
+      "question": "如何评估大模型生成的漏洞分析？",
+      "answer": "检查漏洞类型、位置、触发条件和证据，并用可复现的测试或人工审计确认。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-023"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-024",
+      "category": "vulnerabilities",
+      "question": "漏洞检测中为什么要避免相似代码跨集合？",
+      "answer": "近似代码或同一次修复的不同版本跨集合可能使模型记住样本，而不是学会泛化。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-024"
+        },
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-005"
+        },
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "source",
+          "sourceCardId": "prime-002"
+        }
+      ],
+      "explanation": "去重需要考虑格式变化、变量重命名和修复前后的相似代码。",
+      "example": "先聚合同一项目中近似函数，再按组切分训练和测试。",
+      "alternateQuestions": [
+        "代码漏洞分类为什么要检查相似函数是否跨集合？",
+        "PrimeVul 为什么强调代码去重？"
+      ],
+      "otherExplanations": [
+        "如果模型已经见过相同或近似代码，测试分数可能高估泛化能力。"
+      ],
+      "otherExamples": [
+        "按相似函数聚类，再确认同组样本不会跨集合泄漏。"
+      ],
+      "level": "实践",
+      "tags": [
+        "代码去重",
+        "数据泄漏",
+        "去重",
+        "数据污染"
+      ]
+    },
+    {
+      "id": "ai4sec-025",
+      "category": "vulnerabilities",
+      "question": "什么是代码漏洞检测的误报？",
+      "answer": "模型把实际不存在目标漏洞的代码判为有漏洞。需要检查代码上下文和触发条件。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-025"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-026",
+      "category": "vulnerabilities",
+      "question": "为什么漏洞定位比单纯输出有无漏洞更有用？",
+      "answer": "定位能帮助审计人员快速检查可疑代码和数据流，并验证模型给出的原因。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-026"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-027",
+      "category": "vulnerabilities",
+      "question": "恶意软件静态检测可以使用哪些输入？",
+      "answer": "可以使用文件结构、导入函数、字节统计和字符串等不依赖实际运行的特征。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-027"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-028",
+      "category": "vulnerabilities",
+      "question": "为什么恶意软件检测要关注样本时间和家族？",
+      "answer": "同家族或相近时间的样本可能高度相似；按时间和家族分析有助于了解面对新样本的效果。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-028"
+        },
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-008"
+        },
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-009"
+        }
+      ],
+      "explanation": "仅随机切分可能让同家族相似文件出现在训练与测试中。",
+      "example": "在具备可信家族标签时留出部分家族用于测试。",
+      "alternateQuestions": [
+        "恶意软件检测模型如何评估对新家族的效果？",
+        "静态恶意软件模型为什么需要关注样本时间？"
+      ],
+      "otherExplanations": [
+        "按时间评估有助于暴露对旧样本的依赖。"
+      ],
+      "otherExamples": [
+        "用早期样本训练，检查后续样本的精确率、召回率和误报量。"
+      ],
+      "level": "实践",
+      "tags": [
+        "家族切分",
+        "泛化",
+        "时间切分",
+        "漂移"
+      ]
+    },
+    {
+      "id": "ai4sec-029",
+      "category": "vulnerabilities",
+      "question": "静态特征与动态行为特征有什么区别？",
+      "answer": "静态特征来自文件本身；动态特征来自隔离环境中的运行行为，两者能提供不同证据。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-029"
+        },
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-012"
+        }
+      ],
+      "explanation": "两类证据的采集成本和覆盖范围不同，不能简单视为等价。",
+      "example": "对静态模型高风险但证据不足的样本安排受控行为分析。",
+      "alternateQuestions": [
+        "EMBER 静态基线与动态行为模型可以怎样互补？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "静态分析",
+        "动态分析"
+      ]
+    },
+    {
+      "id": "ai4sec-030",
+      "category": "vulnerabilities",
+      "question": "代码模型发现疑似漏洞后应如何验证？",
+      "answer": "结合完整代码上下文进行人工审计，并在授权的隔离环境中构造可复现的测试。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-030"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-031",
+      "category": "operations",
+      "question": "如何用 AI 辅助安全告警研判？",
+      "answer": "汇集告警、日志、资产和情报，让模型提取证据、生成判断与待验证事项，再交给分析人员复核。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-031"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-032",
+      "category": "operations",
+      "question": "AI 研判结果为什么需要列出证据？",
+      "answer": "分析人员需要回查日志或情报，核对结论是否得到支持，并据此决定后续处置。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-032"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-033",
+      "category": "operations",
+      "question": "威胁情报提取可以从报告中识别哪些对象？",
+      "answer": "可以提取域名、IP、文件哈希、漏洞编号和攻击行为，并保留对应的原文证据。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-033"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-034",
+      "category": "operations",
+      "question": "安全知识库问答如何检查答案可靠性？",
+      "answer": "分别检查资料是否被正确检索、答案是否与资料一致、引用是否支持结论，以及资料不足时是否明确说明。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-034"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-035",
+      "category": "operations",
+      "question": "为什么告警研判需要资产上下文？",
+      "answer": "同一行为对不同资产的重要性和风险可能不同，资产角色与业务背景有助于判断优先级。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-035"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-036",
+      "category": "operations",
+      "question": "安全知识检索为什么要保留资料来源？",
+      "answer": "来源让分析人员能够核对原文、判断资料的适用范围，并追溯模型回答的依据。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-036"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-037",
+      "category": "operations",
+      "question": "如何评估告警排序是否有实际价值？",
+      "answer": "检查高优先级告警中的真实威胁比例、遗漏情况，以及分析人员在有限时间内能处理的告警量。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-037"
+        },
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-009"
+        }
+      ],
+      "explanation": "还要记录标签来源与人工复核范围，避免只评估已被关注的告警。",
+      "example": "对比原始规则排序和模型排序在前 50 条告警中的有效发现数。",
+      "alternateQuestions": [
+        "如何评估 EVE 告警排序系统是否改善安全运营？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "实践",
+      "tags": [
+        "排序",
+        "运营评估"
+      ]
+    },
+    {
+      "id": "ai4sec-038",
+      "category": "operations",
+      "question": "为什么安全报告中的指标需要上下文？",
+      "answer": "IP、域名或哈希本身不能说明全部风险；还应结合来源、时间、相关行为和置信度。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-038"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-039",
+      "category": "operations",
+      "question": "安全助手应如何处理证据不足的告警？",
+      "answer": "明确指出缺少的信息和待验证问题，避免把推测当作已确认事实。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-039"
+        },
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-007"
+        }
+      ],
+      "explanation": "可以提出下一步需要查询的资料或待确认条件。",
+      "example": "未找到适用版本时，提示先核对受影响产品及版本。",
+      "alternateQuestions": [
+        "安全知识库找不到足够证据时，助手应如何回答？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "实践",
+      "tags": [
+        "拒答",
+        "证据不足"
+      ]
+    },
+    {
+      "id": "ai4sec-040",
+      "category": "operations",
+      "question": "模型建议封禁资产后应怎样处理？",
+      "answer": "先核查证据、影响范围和处置权限，由具备权限的人员确认后再执行。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-040"
+        },
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-007"
+        }
+      ],
+      "explanation": "隔离主机、封禁账号等操作可能影响业务，应结合实际情况确认。",
+      "example": "先核实设备风险和业务影响，再批准隔离建议。",
+      "alternateQuestions": [
+        "安全助手提出的处置建议应如何使用？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "实践",
+      "tags": [
+        "人工复核",
+        "处置"
+      ]
+    },
+    {
+      "id": "cic-001",
+      "category": "detection",
+      "question": "CIC-IDS2017 可以用来练习什么 AI4SEC 任务？",
+      "answer": "可以用它练习网络流量中的正常与攻击行为分类，以及攻击类别识别。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "入门",
+      "tags": [
+        "流量检测",
+        "数据集",
+        "分类"
+      ],
+      "explanation": "官方提供原始网络流量和按流提取的特征与标签，适合建立监督学习基线。",
+      "example": "用流量特征训练正常/攻击二分类器，再分析误报和漏报。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "source",
+          "sourceCardId": "cic-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cic-002",
+      "category": "detection",
+      "question": "CIC-IDS2017 的原始 PCAP 和流特征 CSV 分别适合什么用途？",
+      "answer": "PCAP 适合重新解析报文与构建特征，流特征 CSV 适合直接开展表格模型实验。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "入门",
+      "tags": [
+        "PCAP",
+        "流特征"
+      ],
+      "explanation": "两种表示的信息粒度不同；使用 CSV 时要检查每个字段在预测时是否可获得。",
+      "example": "先用 CSV 训练基线，再用 PCAP 回查一个误报连接的上下文。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "source",
+          "sourceCardId": "cic-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cic-005",
+      "category": "detection",
+      "question": "用 CIC-IDS2017 做攻击检测时，为什么要检查日期和场景的关系？",
+      "answer": "数据采集按日期安排正常活动和不同攻击，日期可能与标签强烈关联。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "进阶",
+      "tags": [
+        "时间切分",
+        "捷径"
+      ],
+      "explanation": "模型若主要依赖采集日而非攻击行为，在其他环境中可能失效。",
+      "example": "对比包含和排除绝对时间字段时的结果，并分析按日期划分的分布。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "source",
+          "sourceCardId": "cic-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cic-006",
+      "category": "detection",
+      "question": "流量模型中的 IP 地址为什么可能形成环境捷径？",
+      "answer": "固定实验主机的地址可能和标签绑定，使模型记住设备身份。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "实践",
+      "tags": [
+        "特征工程",
+        "泛化"
+      ],
+      "explanation": "IP 可以是有用上下文，但必须验证部署环境中是否能稳定获取，以及模型是否依赖特定地址。",
+      "example": "比较去除原始 IP、按主机分组和原始随机切分下的效果。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cic-007",
+      "category": "detection",
+      "question": "CIC-IDS2017 的完整流统计为什么可能不适合早期检测？",
+      "answer": "完整流统计可能包含连接结束后才知道的包数、字节数或持续时间。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "实践",
+      "tags": [
+        "时间泄漏",
+        "实时检测"
+      ],
+      "explanation": "预测时间点应先于特征提取；否则会使用部署时尚不可见的信息。",
+      "example": "若要求连接开始 10 秒内预测，只计算前 10 秒已观测到的特征。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-007"
+        },
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "unsw-009"
+        }
+      ],
+      "alternateQuestions": [
+        "为什么安全模型训练前要检查特征是否在预测时可用？"
+      ],
+      "otherExplanations": [
+        "训练时采用未来信息会造成离线效果与实时效果不一致。"
+      ],
+      "otherExamples": [
+        "只用连接前 30 秒产生的统计，评估 30 秒内的检测任务。"
+      ]
+    },
+    {
+      "id": "cic-008",
+      "category": "detection",
+      "question": "如何为 CIC-IDS2017 建立可解释的首个基线？",
+      "answer": "固定切分方式，比较简单规则、逻辑回归和树模型，并记录相同指标。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "实践",
+      "tags": [
+        "基线",
+        "实验设计"
+      ],
+      "explanation": "基线便于判断复杂模型是否真正提高了安全检测效果，而不仅是利用数据集特征。",
+      "example": "报告每种方法的精确率、召回率、误报数量及攻击类别表现。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cic-009",
+      "category": "detection",
+      "question": "为什么要按攻击类型报告 CIC-IDS2017 检测结果？",
+      "answer": "总体分数可能掩盖某些攻击类别召回率很低的问题。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "进阶",
+      "tags": [
+        "分类评估",
+        "漏报",
+        "类别不平衡",
+        "多分类"
+      ],
+      "explanation": "类别数量和样本量不平衡时，多数类或常见攻击会主导总体指标。",
+      "example": "分别查看扫描、暴力尝试等类别的样本数、召回率和典型漏报。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-009"
+        },
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "unsw-008"
+        }
+      ],
+      "alternateQuestions": [
+        "UNSW-NB15 中少数攻击类别应如何评估？"
+      ],
+      "otherExplanations": [
+        "总体平均值可能掩盖稀有类别失败；样本很少时也应说明结果的不确定性。"
+      ],
+      "otherExamples": [
+        "对每个攻击类别列出真实数量、正确识别数量和常见混淆类别。"
+      ]
+    },
+    {
+      "id": "cic-011",
+      "category": "detection",
+      "question": "为什么 CIC-IDS2017 上的高分不能直接代表生产环境效果？",
+      "answer": "实验采集环境、流量分布与真实网络可能不同。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "进阶",
+      "tags": [
+        "分布变化",
+        "部署"
+      ],
+      "explanation": "真实部署还会遇到新业务、新攻击、不同采集设备和标签延迟。",
+      "example": "在隔离的目标环境采集经授权的样本，做时间外和环境外验证。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cic-012",
+      "category": "detection",
+      "question": "完成一次流量检测实验后，应记录哪些可复现信息？",
+      "answer": "记录数据版本、特征列表、切分规则、训练参数、阈值和评估结果。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "实践",
+      "tags": [
+        "复现",
+        "实验记录"
+      ],
+      "explanation": "同时保留样本筛选和错误案例，便于复核和比较。",
+      "example": "报告中写明按日期分组、每组样本量、模型阈值和测试集告警数。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "unsw-001",
+      "category": "detection",
+      "question": "UNSW-NB15 是什么类型的 AI4SEC 数据集？",
+      "answer": "它是包含正常与攻击网络活动的入侵检测数据集。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "入门",
+      "tags": [
+        "入侵检测",
+        "数据集"
+      ],
+      "explanation": "官方提供原始流量、特征数据和预划分数据，可用于安全检测实验。",
+      "example": "用预划分数据训练网络攻击二分类模型。",
+      "sources": [
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "source",
+          "sourceCardId": "unsw-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "unsw-002",
+      "category": "detection",
+      "question": "UNSW-NB15 可以支持哪两种常见分类任务？",
+      "answer": "可以做正常/攻击二分类，也可以研究攻击类别识别。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "入门",
+      "tags": [
+        "二分类",
+        "多分类"
+      ],
+      "explanation": "选择任务时要分别定义标签、输入字段和评估指标。",
+      "example": "二分类模型先判断是否攻击，再由单独模型尝试识别攻击类型。",
+      "sources": [
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "source",
+          "sourceCardId": "unsw-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "unsw-003",
+      "category": "detection",
+      "question": "UNSW-NB15 的官方训练集和测试集有什么作用？",
+      "answer": "它们为基线比较提供固定的数据划分。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "进阶",
+      "tags": [
+        "数据切分",
+        "复现"
+      ],
+      "explanation": "固定划分有利于复现，但结果仍需结合标签比例和测试环境解释。",
+      "example": "先报告官方划分结果，再增加按时间或主机分组的补充评估。",
+      "sources": [
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "source",
+          "sourceCardId": "unsw-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "unsw-006",
+      "category": "detection",
+      "question": "为什么不能直接拿 UNSW-NB15 准确率和另一个数据集的准确率比较？",
+      "answer": "两个数据集的标签比例、攻击种类、采集环境和切分方式可能不同。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "level": "进阶",
+      "tags": [
+        "跨数据集",
+        "评估"
+      ],
+      "explanation": "必须说明测试条件，并在相同决策需求下比较。",
+      "example": "分别报告两套数据上的精确率、召回率与每千条流的告警数。",
+      "sources": [
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "unsw-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-011",
+      "category": "foundations",
+      "question": "如何检查安全模型是否把数据集标识当作答案？",
+      "answer": "检查高贡献特征，并通过字段消融、按来源切分和外部验证复核。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "实践",
+      "tags": [
+        "特征重要性",
+        "捷径",
+        "特征消融"
+      ],
+      "explanation": "模型可能用采集来源、日期或主机标识区分标签，而非学习攻击行为。",
+      "example": "移除数据来源字段后重新训练，再比较跨来源测试集的表现。",
+      "sources": [
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "unsw-007"
+        },
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-011"
+        }
+      ],
+      "alternateQuestions": [
+        "如何检查 UNSW-NB15 模型是否依赖少数环境字段？"
+      ],
+      "otherExplanations": [
+        "特征重要性只提示模型依赖，不能证明该特征在目标环境中稳定或具有因果性。"
+      ],
+      "otherExamples": [
+        "移除地址或标识字段后，比较主机分组测试结果。"
+      ]
+    },
+    {
+      "id": "eval-001",
+      "category": "foundations",
+      "question": "安全检测模型的训练集、验证集和测试集各承担什么角色？",
+      "answer": "训练集拟合模型，验证集选择模型和阈值，测试集用于最终独立评估。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "入门",
+      "tags": [
+        "训练集",
+        "验证集",
+        "测试集"
+      ],
+      "explanation": "反复根据测试结果修改模型会使测试集逐渐失去独立性。",
+      "example": "用验证集确定告警阈值后，只在测试集报告一次最终告警效果。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-002",
+      "category": "foundations",
+      "question": "安全数据预处理为什么要放进模型流水线？",
+      "answer": "流水线可确保每次训练或交叉验证只用相应训练数据拟合预处理。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "进阶",
+      "tags": [
+        "Pipeline",
+        "泄漏"
+      ],
+      "explanation": "标准化、编码和特征选择若提前在全数据拟合，会泄漏验证或测试信息。",
+      "example": "将缺失值填充、编码与分类器组合后再执行交叉验证。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "eval-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-003",
+      "category": "foundations",
+      "question": "为什么安全检测中的重采样不能先于数据切分？",
+      "answer": "全量数据重采样可能让相似或派生样本跨训练集与测试集。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "进阶",
+      "tags": [
+        "重采样",
+        "数据泄漏"
+      ],
+      "explanation": "测试集应保留独立且符合评估目标的数据分布。",
+      "example": "只在每个训练折内过采样攻击样本，验证折保持原有比例。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-004",
+      "category": "foundations",
+      "question": "安全告警中的精确率、召回率分别回答什么问题？",
+      "answer": "精确率回答告警有多准；召回率回答真实威胁被发现了多少。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "入门",
+      "tags": [
+        "精确率",
+        "召回率"
+      ],
+      "explanation": "两者都基于明确的目标威胁和标签，不能脱离告警阈值解释。",
+      "example": "100 条告警里 20 条真实攻击，精确率是 20%；是否漏掉攻击还要看全部真实攻击数。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-005",
+      "category": "foundations",
+      "question": "为什么攻击样本稀少时要关注精确率—召回率曲线？",
+      "answer": "它展示不同阈值下发现攻击与告警准确性之间的权衡。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "进阶",
+      "tags": [
+        "PR曲线",
+        "不平衡"
+      ],
+      "explanation": "在正例稀少的场景，还应结合实际攻击比例和告警量解释曲线。",
+      "example": "比较两个阈值下的召回率及分析人员需要处理的告警数。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-006",
+      "category": "foundations",
+      "question": "平均精确率和单个阈值下的精确率有什么区别？",
+      "answer": "平均精确率概括排序在不同召回水平的表现；单点精确率对应某个固定阈值。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "进阶",
+      "tags": [
+        "平均精确率",
+        "阈值"
+      ],
+      "explanation": "部署仍须选定阈值，并测量该阈值下的告警量和漏报。",
+      "example": "模型平均精确率较高，也可能在团队可处理的每日告警量下召回不足。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-007",
+      "category": "foundations",
+      "question": "安全检测阈值应该怎样选择？",
+      "answer": "在验证集上结合漏报代价、误报量和可处理容量选择，再在测试集评估。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "实践",
+      "tags": [
+        "阈值",
+        "告警量"
+      ],
+      "explanation": "阈值是业务决策的一部分，不应使用测试集反复调到最好。",
+      "example": "比较每天 50、100、200 条告警预算下的攻击召回率。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-008",
+      "category": "foundations",
+      "question": "安全检测中的假正例率和告警精确率为什么不能混为一谈？",
+      "answer": "假正例率以真实正常样本为分母；精确率以所有告警为分母。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "进阶",
+      "tags": [
+        "误报率",
+        "精确率"
+      ],
+      "explanation": "当正常流量极多时，即使假正例率低，也可能产生大量误报。",
+      "example": "一百万条正常流量即使只有 0.1% 被误报，也会产生一千条误报告警。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-009",
+      "category": "foundations",
+      "question": "为什么安全检测要报告告警数量，而不只报告 F1？",
+      "answer": "分析人员处理的是具体告警量，单一综合指标不能体现工作负荷。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "进阶",
+      "tags": [
+        "告警量",
+        "F1"
+      ],
+      "explanation": "F1 合并精确率和召回率，但不直接告诉团队每天会收到多少条告警。",
+      "example": "同时报告每万条流量的告警数、精确率和攻击召回率。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-010",
+      "category": "foundations",
+      "question": "为什么按攻击活动或主机分组比逐条随机划分更有挑战性？",
+      "answer": "分组划分能减少同一活动或设备的相似样本同时进入训练和测试。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "实践",
+      "tags": [
+        "分组切分",
+        "泛化"
+      ],
+      "explanation": "具体分组单位应匹配实际要泛化到的新对象。",
+      "example": "目标是发现新主机攻击时，把主机作为分组单位并检查各组标签。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-012",
+      "category": "foundations",
+      "question": "训练数据中的类别权重能解决安全检测的哪些问题？",
+      "answer": "它可以让模型训练时更重视代价较高或样本较少的类别。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "进阶",
+      "tags": [
+        "类别权重",
+        "不平衡"
+      ],
+      "explanation": "类别权重并不自动保证合适的告警阈值和真实环境效果。",
+      "example": "比较默认权重与平衡权重模型的召回率、误报量和精确率。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-013",
+      "category": "foundations",
+      "question": "安全模型误报分析应记录哪些内容？",
+      "answer": "记录原始证据、模型分数、真实标签、相关特征和误报原因。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "实践",
+      "tags": [
+        "误报分析",
+        "模型改进"
+      ],
+      "explanation": "应区分标签错误、正常业务变化、特征不足和模型偏差。",
+      "example": "将正常批量备份被判成异常外联的原因归类为业务上下文缺失。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-013"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-014",
+      "category": "foundations",
+      "question": "面对同一天的大量相似攻击流，怎样避免高估有效发现？",
+      "answer": "除了逐流计分，还应按攻击活动或事件聚合结果。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "实践",
+      "tags": [
+        "事件级评估",
+        "相似样本"
+      ],
+      "explanation": "发现同一事件的一千条相似流，与发现一千个独立事件不是同一回事。",
+      "example": "同时报告按流召回率和按攻击活动统计的事件召回率。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-014"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-015",
+      "category": "foundations",
+      "question": "安全模型的评分高就一定表示其概率可信么？",
+      "answer": "不一定。模型分数需要通过独立数据检查概率校准情况。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "进阶",
+      "tags": [
+        "概率校准",
+        "风险评分"
+      ],
+      "explanation": "排序能力和概率是否接近真实发生比例是不同问题。",
+      "example": "检查预测概率约 0.8 的一组样本中，真实攻击比例是否接近 80%。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/modules/calibration.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-015"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-016",
+      "category": "foundations",
+      "question": "什么情况下需要重新评估已部署的安全模型？",
+      "answer": "业务流量、采集方式、攻击类型或告警效果明显变化时，应重新评估。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "level": "实践",
+      "tags": [
+        "漂移",
+        "监控"
+      ],
+      "explanation": "要同时监测输入分布、预测分数、人工复核结果和反馈延迟。",
+      "example": "业务迁移导致异常告警激增时，先检查流量变化和标签，再决定是否更新模型。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-016"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-001",
+      "category": "detection",
+      "question": "Zeek 的 conn.log 对 AI4SEC 流量检测有什么价值？",
+      "answer": "它以连接为单位记录网络活动，可以作为连接级特征和事件关联的基础。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "入门",
+      "tags": [
+        "Zeek",
+        "conn.log",
+        "特征"
+      ],
+      "explanation": "模型可利用连接端点、协议、持续时间和流量统计构建检测样本。",
+      "example": "按源主机和时间窗口汇总连接次数与目标端口数，分析扫描行为。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/conn.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-002",
+      "category": "detection",
+      "question": "Zeek 连接记录中的 uid 可用于什么？",
+      "answer": "uid 可用于关联与同一连接相关的 Zeek 日志记录。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "入门",
+      "tags": [
+        "Zeek",
+        "uid",
+        "关联"
+      ],
+      "explanation": "它是关联线索，跨不同传感器、数据源或采集批次时仍需确认作用范围。",
+      "example": "用 uid 将连接记录与相关的 DNS 或 HTTP 记录关联。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/conn.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "zeek-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-003",
+      "category": "detection",
+      "question": "Zeek 日志中的 orig 和 resp 分别表示什么？",
+      "answer": "orig 指连接发起方，resp 指连接响应方。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "入门",
+      "tags": [
+        "方向",
+        "连接日志"
+      ],
+      "explanation": "建模时应明确方向，避免把源和目标的特征混在一起。",
+      "example": "统计发起方在一段时间内连接的不同响应方端口数。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/conn.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "zeek-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-004",
+      "category": "detection",
+      "question": "如何用 Zeek 连接日志构造潜在扫描检测特征？",
+      "answer": "按发起方和时间窗口统计连接次数、不同目标数、不同端口数和失败比例。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "实践",
+      "tags": [
+        "扫描检测",
+        "时间窗口"
+      ],
+      "explanation": "这些统计只是行为线索，还需要结合业务背景与标注结果判断。",
+      "example": "对五分钟窗口提取唯一目标 IP 数，并与正常运维扫描比较。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/index.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-005",
+      "category": "detection",
+      "question": "Zeek 连接状态字段为什么不能直接当作攻击标签？",
+      "answer": "连接状态描述连接过程，不直接说明行为是否恶意。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "进阶",
+      "tags": [
+        "conn_state",
+        "标签"
+      ],
+      "explanation": "连接失败可能来自网络故障、配置问题、正常探测或攻击。",
+      "example": "大量失败连接可作为模型特征，再结合来源、目标和其他事件研判。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/scripts/base/protocols/conn/main.zeek.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-006",
+      "category": "detection",
+      "question": "为什么 Zeek 中的连接持续时间需要结合检测时机使用？",
+      "answer": "完整持续时间通常要在连接结束或记录产生时才能确定。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "进阶",
+      "tags": [
+        "持续时间",
+        "时间泄漏"
+      ],
+      "explanation": "如果系统要求连接进行中告警，应使用当前已经观察到的时长。",
+      "example": "训练实时模型时，仅取截止到预测时刻的连接统计。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/index.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-007",
+      "category": "detection",
+      "question": "Zeek 的 dns.log 可以为恶意域名检测提供哪些信息？",
+      "answer": "它记录 DNS 查询及响应相关字段，可用于构造域名与查询行为特征。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "入门",
+      "tags": [
+        "DNS",
+        "域名检测"
+      ],
+      "explanation": "具体可用字段取决于配置和捕获情况。",
+      "example": "统计某主机查询失败比例、不同域名数量和查询频率。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/dns.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "zeek-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-008",
+      "category": "detection",
+      "question": "为什么恶意域名模型要组合字符串特征与查询行为？",
+      "answer": "域名形态和查询上下文提供不同证据，单一字符串特征容易误判。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "实践",
+      "tags": [
+        "DNS",
+        "特征工程"
+      ],
+      "explanation": "合法服务也可能使用长域名或随机子域名。",
+      "example": "将域名长度、字符分布与查询频率、响应状态联合分析。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/index.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-009",
+      "category": "detection",
+      "question": "Zeek 日志字段缺失时，模型应如何处理？",
+      "answer": "区分字段确实不可得、未解析、无响应和数据丢失等情况，再设计缺失值处理。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "进阶",
+      "tags": [
+        "缺失值",
+        "采集质量"
+      ],
+      "explanation": "把所有缺失都当作零可能掩盖不同含义，还可能让模型学到采集环境差异。",
+      "example": "为响应字节数缺失增加缺失标记，并检查捕获配置。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/index.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-010",
+      "category": "detection",
+      "question": "多传感器 Zeek 日志合并时应保留什么上下文？",
+      "answer": "保留传感器、采集时间、网络位置和原始连接标识。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "实践",
+      "tags": [
+        "多传感器",
+        "数据溯源"
+      ],
+      "explanation": "同一活动可能被多个传感器观察，关联和去重需要明确采集视角。",
+      "example": "合并前以传感器和连接标识追踪来源，再检查重复事件。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/index.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-011",
+      "category": "detection",
+      "question": "如何把 Zeek 连接记录转成主机行为序列？",
+      "answer": "先按主机关联记录，再按时间排序并保留方向和事件类型。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "进阶",
+      "tags": [
+        "行为序列",
+        "时间窗口"
+      ],
+      "explanation": "序列的窗口与预测时刻要事先固定，以免包含事后事件。",
+      "example": "用前十分钟连接序列预测接下来是否需要产生调查告警。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/index.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "zeek-012",
+      "category": "detection",
+      "question": "Zeek 日志产生的高风险分数为什么仍需回查原始事件？",
+      "answer": "分数只能提示优先级，原始事件和关联上下文用于验证原因。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "实践",
+      "tags": [
+        "证据",
+        "告警研判"
+      ],
+      "explanation": "审查人员需要判断触发特征、业务合理性和其他证据是否支持结论。",
+      "example": "从高分主机回查对应 conn.log、dns.log 与资产信息。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/index.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-001",
+      "category": "operations",
+      "question": "Suricata EVE JSON 适合 AI 安全运营中的什么工作？",
+      "answer": "它提供结构化的安全事件，可用于告警分析、事件关联和模型特征构建。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "入门",
+      "tags": [
+        "Suricata",
+        "EVE",
+        "告警"
+      ],
+      "explanation": "EVE 可记录告警、流、协议等多种事件，具体内容依赖配置。",
+      "example": "读取 alert 事件并关联同一流的其他可用上下文。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "suri-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-002",
+      "category": "operations",
+      "question": "EVE 事件中的 event_type 有什么用途？",
+      "answer": "它标识事件类型，帮助处理程序区分告警、流或协议事件等记录。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "入门",
+      "tags": [
+        "event_type",
+        "事件解析"
+      ],
+      "explanation": "不同事件类型可能拥有不同字段，解析时不能假设结构完全一致。",
+      "example": "只对 alert 事件提取规则告警内容，对 flow 事件提取流量统计。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "suri-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-003",
+      "category": "operations",
+      "question": "EVE 中的 flow_id 可用于什么？",
+      "answer": "可作为关联同一流相关 EVE 事件的线索。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "入门",
+      "tags": [
+        "flow_id",
+        "事件关联"
+      ],
+      "explanation": "它的作用范围要结合采集来源；不同产品的连接标识不能直接当作相同值。",
+      "example": "将同一 flow_id 的 alert 与可用协议记录合并。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "suri-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-004",
+      "category": "operations",
+      "question": "为什么 Suricata 规则告警不能直接等同于真实攻击标签？",
+      "answer": "规则命中可能是误报，也可能只代表需要进一步调查的可疑行为。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "进阶",
+      "tags": [
+        "弱标签",
+        "误报"
+      ],
+      "explanation": "将所有命中都当作真阳性会把规则偏差复制给模型。",
+      "example": "将分析人员确认结果和规则命中分开存储。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-005",
+      "category": "operations",
+      "question": "如何从 EVE 告警中构造可追溯的研判输入？",
+      "answer": "保留告警内容、事件时间、端点、规则信息、流标识和原始记录引用。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "实践",
+      "tags": [
+        "证据",
+        "告警研判"
+      ],
+      "explanation": "下游模型输出应能对应回具体事件，便于审计。",
+      "example": "给模型的每条上下文附事件编号，要求回答引用编号。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-006",
+      "category": "operations",
+      "question": "为什么不能只用 EVE 规则名称训练告警优先级模型？",
+      "answer": "规则名称可能与既有处置结果高度绑定，使模型只复述旧规则。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "进阶",
+      "tags": [
+        "告警排序",
+        "基线"
+      ],
+      "explanation": "应验证模型是否从资产、行为和关联事件中获得额外价值。",
+      "example": "比较仅规则名称基线与加入资产和流上下文后的模型。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-007",
+      "category": "operations",
+      "question": "多条 EVE 告警指向同一流时，如何避免重复统计事件？",
+      "answer": "按流标识及来源等上下文关联，并依据业务规则区分告警数与事件数。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "实践",
+      "tags": [
+        "去重",
+        "事件关联"
+      ],
+      "explanation": "同一流可触发多个规则；去重不能简单删除可能有价值的不同证据。",
+      "example": "把同一流的多条规则命中展示为一个事件下的多条证据。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-008",
+      "category": "operations",
+      "question": "用 EVE 数据做时间窗口特征时，为什么要确定时间字段含义？",
+      "answer": "必须明确使用事件发生时间、日志生成时间还是接收时间。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "进阶",
+      "tags": [
+        "事件时间",
+        "时序"
+      ],
+      "explanation": "乱序和采集延迟可能影响窗口统计和训练时的可用信息。",
+      "example": "评估实时检测时，仅使用预测时刻前已到达的日志。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-010",
+      "category": "operations",
+      "question": "为什么 Suricata 升级规则后需要监测告警模型？",
+      "answer": "规则变化会改变告警类型、数量和上下文分布，影响依赖这些字段的模型。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "进阶",
+      "tags": [
+        "规则版本",
+        "漂移"
+      ],
+      "explanation": "需要记录规则版本，并在规则调整后复评模型。",
+      "example": "发现某类规则更新后大量新告警进入最高优先级，检查模型分数和真实处置结果。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "suri-011",
+      "category": "operations",
+      "question": "Zeek uid 与 Suricata flow_id 可以直接相等匹配吗？",
+      "answer": "不能假定它们来自同一命名空间；需要根据时间、端点、协议与采集视角做关联。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "level": "实践",
+      "tags": [
+        "跨产品关联",
+        "数据质量"
+      ],
+      "explanation": "跨产品关联可能存在歧义，应保留关联置信度和原始记录。",
+      "example": "先按五元组与时间范围候选匹配，再检查方向和传感器位置。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-001",
+      "category": "vulnerabilities",
+      "question": "CodeXGLUE 缺陷检测任务使用什么作为主要样本？",
+      "answer": "任务以函数级源代码为样本，预测代码是否存在安全缺陷。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "入门",
+      "tags": [
+        "CodeXGLUE",
+        "函数级",
+        "漏洞检测"
+      ],
+      "explanation": "官方数据来自 Devign 相关数据，并提供训练、验证和测试文件。",
+      "example": "输入一个 C 函数，输出二分类预测。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "source",
+          "sourceCardId": "code-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-002",
+      "category": "vulnerabilities",
+      "question": "CodeXGLUE 缺陷检测任务的测试文件采用什么组织方式？",
+      "answer": "数据以 JSONL 组织，每行对应一个函数样本。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "入门",
+      "tags": [
+        "JSONL",
+        "数据集"
+      ],
+      "explanation": "训练、验证和测试数据分开保存。",
+      "example": "读取每行的代码字段与标签字段，构建函数分类数据集。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "source",
+          "sourceCardId": "code-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-003",
+      "category": "vulnerabilities",
+      "question": "为什么函数级二分类结果不能直接证明漏洞可利用？",
+      "answer": "分类结果只是对样本是否存在缺陷的预测，触发条件仍需结合上下文验证。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "漏洞验证",
+        "函数上下文"
+      ],
+      "explanation": "调用路径、输入来源和运行配置可能影响实际风险。",
+      "example": "模型将函数判为有缺陷后，进一步检查调用方是否可传入不可信输入。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-004",
+      "category": "vulnerabilities",
+      "question": "CodeXGLUE 的官方固定切分有什么用途？",
+      "answer": "它为研究者比较基线提供统一的训练、验证和测试划分。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "基准",
+        "跨项目"
+      ],
+      "explanation": "如果目标是评估跨项目泛化，还需要设计额外的项目级切分。",
+      "example": "报告官方切分结果，再补充未见项目的测试结果。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "source",
+          "sourceCardId": "code-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-006",
+      "category": "vulnerabilities",
+      "question": "对漏洞代码做词法基线时，应避免哪些标签捷径？",
+      "answer": "避免把漏洞编号、标签注释或事后修复说明放入模型输入。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "标签泄漏",
+        "代码特征",
+        "评测泄漏",
+        "提示词"
+      ],
+      "explanation": "这些信息可能直接透露答案，却不会出现在真实待审计代码中。",
+      "example": "比较仅代码输入与包含提交信息输入时的结果，排查标签泄漏。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-006"
+        },
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-005"
+        }
+      ],
+      "alternateQuestions": [
+        "为什么漏洞描述与代码答案不能随意放进评测提示词？"
+      ],
+      "otherExplanations": [
+        "应明确评估目标：是利用公开情报审计，还是在未知答案条件下发现漏洞。"
+      ],
+      "otherExamples": [
+        "测试未知漏洞发现时，不提供该函数的修复说明或漏洞标签。"
+      ]
+    },
+    {
+      "id": "code-007",
+      "category": "vulnerabilities",
+      "question": "为什么 CodeXGLUE 原始任务的准确率不能单独描述审计效果？",
+      "answer": "准确率不能直接体现漏洞召回率、误报量和不同漏洞类型的表现。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "准确率",
+        "审计评估"
+      ],
+      "explanation": "官方脚本报告准确率；实际应用还应依据标签和场景补充指标。",
+      "example": "增加精确率、召回率、混淆矩阵和每百个函数的可疑告警数。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "source",
+          "sourceCardId": "code-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-008",
+      "category": "vulnerabilities",
+      "question": "如何为代码漏洞检测构建简单基线？",
+      "answer": "先比较代码词频特征配合分类器、简单规则和代码模型。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "基线",
+        "代码表示"
+      ],
+      "explanation": "在相同切分与指标下比较，才能判断复杂模型的增益。",
+      "example": "用词频加逻辑回归作为基线，再与代码语言模型比较。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-009",
+      "category": "vulnerabilities",
+      "question": "函数太长超过模型输入长度时，直接截断有什么风险？",
+      "answer": "截断可能丢失触发漏洞的关键语句、条件或上下文。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "上下文长度",
+        "漏报"
+      ],
+      "explanation": "应记录截断比例，并比较切片、分块或扩大上下文的结果。",
+      "example": "检查漏报函数中的危险调用是否落在被截去的部分。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-010",
+      "category": "vulnerabilities",
+      "question": "为什么按项目切分能补充代码漏洞模型的评估？",
+      "answer": "它可以检查模型在未见项目的代码风格和依赖环境下是否仍然有效。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "跨项目",
+        "泛化"
+      ],
+      "explanation": "项目切分与官方随机划分回答不同的泛化问题。",
+      "example": "保留一个项目作为测试集，并报告各项目样本数量。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-011",
+      "category": "vulnerabilities",
+      "question": "如何检查漏洞模型是否只学会了项目或命名习惯？",
+      "answer": "结合项目级切分、变量重命名和特征消融观察效果变化。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "捷径",
+        "代码模型"
+      ],
+      "explanation": "这些分析提示模型依赖哪些表面特征，但不能单独证明因果关系。",
+      "example": "统一变量命名后重新评估，检查模型是否仍能识别相同缺陷。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-012",
+      "category": "vulnerabilities",
+      "question": "漏洞分类模型的输出怎样才能帮助人工审计？",
+      "answer": "除了风险分数，还应提供可疑位置、相关代码及可验证的理由。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "漏洞定位",
+        "证据"
+      ],
+      "explanation": "高分只能用于优先级排序，审计人员仍需检查完整上下文。",
+      "example": "列出可疑调用位置及其参数来源，并标记尚未确认的条件。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-013",
+      "category": "vulnerabilities",
+      "question": "漏洞数据集中标签噪声会怎样影响模型？",
+      "answer": "错误或不完整的标签会影响训练，也会使评估错误归因。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "标签噪声",
+        "错误分析"
+      ],
+      "explanation": "预测与标签不一致的样本需要人工复核，不能自动认定模型出错。",
+      "example": "抽查高置信度误报，发现部分样本缺少必要的跨函数上下文。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-013"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-014",
+      "category": "vulnerabilities",
+      "question": "如何分析漏洞检测模型的漏报？",
+      "answer": "按漏洞类型、代码长度、项目和上下文可用性分组检查。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "漏报",
+        "错误分析"
+      ],
+      "explanation": "分组分析可以发现整体指标掩盖的系统性盲区。",
+      "example": "比较长函数与短函数的召回率，并检查输入截断情况。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-014"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-001",
+      "category": "vulnerabilities",
+      "question": "PrimeVul 主要用于研究哪类 AI4SEC 任务？",
+      "answer": "用于训练和评估代码语言模型的漏洞检测能力。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "入门",
+      "tags": [
+        "PrimeVul",
+        "漏洞检测"
+      ],
+      "explanation": "项目强调更可靠的标签、数据去重、时间切分和成对样本评估。",
+      "example": "用函数代码预测是否存在漏洞，并检查模型对修复版本的判断。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "source",
+          "sourceCardId": "prime-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-004",
+      "category": "vulnerabilities",
+      "question": "漏洞代码与修复代码的成对评估检查什么？",
+      "answer": "检查模型能否区分相似的漏洞版本和修复版本。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "成对样本",
+        "修复"
+      ],
+      "explanation": "即使两个函数只存在少量改动，模型也应关注与缺陷相关的差异。",
+      "example": "同一函数修复前判为有漏洞、修复后判为无漏洞。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "source",
+          "sourceCardId": "prime-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-005",
+      "category": "vulnerabilities",
+      "question": "只看成对样本的单条准确率为什么不够？",
+      "answer": "它不能直接反映模型是否同时正确判断一对修复前后代码。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "成对评估",
+        "指标"
+      ],
+      "explanation": "应单独统计两条都正确、只对一条和两条都错误的情况。",
+      "example": "模型对修复前后都判有漏洞时，可能获得单条正确，却没有识别修复差异。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "application",
+          "sourceCardId": "prime-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-006",
+      "category": "vulnerabilities",
+      "question": "使用 PrimeVul 元数据前，为什么要检查字段覆盖率？",
+      "answer": "项目说明部分样本无法获得完整 CVE、CWE 或文件级元数据。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "元数据",
+        "覆盖率"
+      ],
+      "explanation": "缺失元数据的样本不能无说明地排除，否则可能改变评估分布。",
+      "example": "报告具有 CVE 信息的样本数，并比较缺失与非缺失样本的表现。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "source",
+          "sourceCardId": "prime-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-007",
+      "category": "vulnerabilities",
+      "question": "漏洞修复提交信息为什么应与代码模型输入分开？",
+      "answer": "提交信息可能包含漏洞描述或修复结论，直接泄露待预测标签。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "提交信息",
+        "标签泄漏"
+      ],
+      "explanation": "若部署场景不提供修复信息，训练和测试也不应使用它。",
+      "example": "将提交信息保存在审计记录中，但不输入给函数级分类器。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "application",
+          "sourceCardId": "prime-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-008",
+      "category": "vulnerabilities",
+      "question": "PrimeVul 的文件级元数据能帮助分析什么问题？",
+      "answer": "可以帮助检查函数在源文件中的位置及周围代码上下文。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "文件上下文",
+        "误报分析"
+      ],
+      "explanation": "项目提供部分样本的文件名、相对路径、位置及文件内容，覆盖情况需核对。",
+      "example": "对漏报函数查看其调用环境和同文件中的相关定义。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "source",
+          "sourceCardId": "prime-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-009",
+      "category": "vulnerabilities",
+      "question": "如何检查代码语言模型评测中的预训练污染？",
+      "answer": "记录模型训练截止信息与样本时间，并寻找公开代码或基准是否可能已被模型见过的证据。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "预训练污染",
+        "时间"
+      ],
+      "explanation": "若无法确认预训练数据，应报告不确定性并增加更新或私有授权测试样本。",
+      "example": "对比公开历史函数与时间更新的留出代码上的效果。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "application",
+          "sourceCardId": "prime-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-010",
+      "category": "vulnerabilities",
+      "question": "为什么 PrimeVul 上需要报告误报负担？",
+      "answer": "真实审计中安全代码通常很多，误报会消耗审计人员时间。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "误报",
+        "审计成本"
+      ],
+      "explanation": "应结合具体测试分布、阈值和分析预算报告数量。",
+      "example": "报告每千个正常函数被标记为可疑的数量。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "application",
+          "sourceCardId": "prime-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-011",
+      "category": "vulnerabilities",
+      "question": "如何评价漏洞检测模型解释是否真的关注了修复点？",
+      "answer": "对照修复前后差异，检查模型指出的代码是否与已知修复位置及触发条件相关。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "解释",
+        "修复差异"
+      ],
+      "explanation": "解释与修复点接近只是线索，还需人工核对完整语义。",
+      "example": "模型指出边界检查的变化，再由审计人员验证其作用。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "application",
+          "sourceCardId": "prime-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "prime-012",
+      "category": "vulnerabilities",
+      "question": "新增 PrimeVul 版本后应记录哪些实验信息？",
+      "answer": "记录版本、下载内容、样本筛选、去重规则、切分和模型输入范围。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "版本",
+        "复现"
+      ],
+      "explanation": "不同发布版本的元数据覆盖与样本集合可能不同。",
+      "example": "在实验报告中注明使用完整原始版本还是带元数据的子集。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "source",
+          "sourceCardId": "prime-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-001",
+      "category": "vulnerabilities",
+      "question": "EMBER 数据集主要用于研究什么？",
+      "answer": "它提供 Windows PE 文件的特征，可用于恶意软件静态检测研究。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "level": "入门",
+      "tags": [
+        "EMBER",
+        "恶意软件",
+        "静态检测"
+      ],
+      "explanation": "公开基准以特征为中心，可复现基准模型和扩展特征。",
+      "example": "用 PE 特征训练良性/恶意分类器。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "source",
+          "sourceCardId": "ember-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-002",
+      "category": "vulnerabilities",
+      "question": "EMBER 提供的是原始可执行样本还是 PE 特征？",
+      "answer": "该基准公开的是从 PE 文件提取的特征数据。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "level": "入门",
+      "tags": [
+        "PE",
+        "数据范围"
+      ],
+      "explanation": "公开特征可以用于建模，但不能替代对原始文件和运行行为的完整分析。",
+      "example": "用提供的特征训练模型，而不假定数据集中包含可运行原始文件。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "source",
+          "sourceCardId": "ember-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-003",
+      "category": "vulnerabilities",
+      "question": "EMBER 如何从 PE 文件获得建模特征？",
+      "answer": "项目使用 LIEF 等工具解析 PE 文件并提取特征，再生成向量化表示。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "level": "入门",
+      "tags": [
+        "LIEF",
+        "特征提取"
+      ],
+      "explanation": "特征提取器与向量化版本需要记录。",
+      "example": "从导入信息和文件结构等静态内容构造模型输入。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "source",
+          "sourceCardId": "ember-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-004",
+      "category": "vulnerabilities",
+      "question": "为什么 EMBER 实验必须记录特征提取版本？",
+      "answer": "不同特征版本或解析库版本可能产生不一致的表示。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "level": "进阶",
+      "tags": [
+        "特征版本",
+        "复现"
+      ],
+      "explanation": "训练与推理提取方式不一致会影响结果，项目明确提示版本兼容问题。",
+      "example": "训练和测试都使用同一特征版本与兼容的 LIEF 配置。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "source",
+          "sourceCardId": "ember-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-005",
+      "category": "vulnerabilities",
+      "question": "为什么混合 EMBER 2017 与 2018 数据时要检查选样差异？",
+      "answer": "项目说明两个年份使用了不同的样本选择标准。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "level": "进阶",
+      "tags": [
+        "时间",
+        "选样偏差"
+      ],
+      "explanation": "跨年份比较可能同时受到时间变化与选样方式影响。",
+      "example": "分别报告各年份表现，并注明样本构成不同。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "source",
+          "sourceCardId": "ember-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-006",
+      "category": "vulnerabilities",
+      "question": "EMBER 的开源基线使用哪类模型？",
+      "answer": "仓库提供基于 LightGBM 的基准训练流程。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "level": "入门",
+      "tags": [
+        "LightGBM",
+        "基线"
+      ],
+      "explanation": "它是静态特征分类基线，适合与其他方法在相同数据上比较。",
+      "example": "先复现基线，再比较另一种分类器的精确率和召回率。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "source",
+          "sourceCardId": "ember-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-007",
+      "category": "vulnerabilities",
+      "question": "为什么未知标签的恶意软件样本不能当作良性样本？",
+      "answer": "未知表示缺乏可靠标签，不等于已确认安全。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "level": "进阶",
+      "tags": [
+        "未知标签",
+        "数据质量"
+      ],
+      "explanation": "错误地把未知样本并入良性类会污染训练和评估。",
+      "example": "按数据集标签定义把未标注样本单独保留。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-010",
+      "category": "vulnerabilities",
+      "question": "静态恶意软件检测误报应如何分析？",
+      "answer": "结合文件来源、特征、模型分数和可信标注检查误判原因。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "level": "实践",
+      "tags": [
+        "误报",
+        "样本分析"
+      ],
+      "explanation": "正常软件的打包方式或稀有结构可能与恶意样本相似。",
+      "example": "检查被误报的合法安装程序是否与训练中的恶意打包文件共享特征。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-011",
+      "category": "vulnerabilities",
+      "question": "如何避免恶意软件模型依赖训练集中的来源标记？",
+      "answer": "排查采集源、文件路径、标签工具结果和其他可能直接暴露类别的字段。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "level": "实践",
+      "tags": [
+        "标签泄漏",
+        "来源偏差"
+      ],
+      "explanation": "模型应依据部署时可用且有意义的特征，而非数据构造过程中的答案。",
+      "example": "删除数据集分区标记并按采集来源分组重新评估。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-001",
+      "category": "vulnerabilities",
+      "question": "LLM4Vuln 关注大语言模型的什么安全能力？",
+      "answer": "关注大语言模型对代码漏洞的推理与检测能力，并分析不同辅助因素的影响。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "入门",
+      "tags": [
+        "LLM4Vuln",
+        "漏洞推理"
+      ],
+      "explanation": "评估时需要区分模型自身判断、外部知识和上下文对结果的贡献。",
+      "example": "比较同一模型在有无检索到漏洞知识时的判断。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "source",
+          "sourceCardId": "llmv-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-002",
+      "category": "vulnerabilities",
+      "question": "为什么漏洞推理实验要区分模型能力和外部知识？",
+      "answer": "如果只看最终正确率，很难知道结果来自模型推理还是检索到的答案。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "消融实验",
+        "外部知识"
+      ],
+      "explanation": "应控制其他条件，分别评估知识提供前后的表现。",
+      "example": "固定代码和提示词，单独改变是否提供相关漏洞知识。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "source",
+          "sourceCardId": "llmv-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-003",
+      "category": "vulnerabilities",
+      "question": "如何评估代码上下文对大模型漏洞判断的影响？",
+      "answer": "在相同样本上对比仅函数、相关调用链和文件级上下文的结果。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "代码上下文",
+        "消融"
+      ],
+      "explanation": "上下文增多不必然提高效果，也可能增加噪声和成本。",
+      "example": "检查增加调用方后，模型是否正确判断输入能否到达危险操作。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-004",
+      "category": "vulnerabilities",
+      "question": "大模型漏洞分析输出应包含哪些可复核内容？",
+      "answer": "应包含可疑位置、相关数据流、触发条件、结论和不确定之处。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "输出结构",
+        "证据"
+      ],
+      "explanation": "这些内容方便安全人员核实，而不只是接收一个漏洞标签。",
+      "example": "指出不可信输入到危险调用的路径，并列出尚未确认的校验条件。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-006",
+      "category": "vulnerabilities",
+      "question": "如何比较不同提示词对漏洞检测结果的影响？",
+      "answer": "固定模型、样本和评估方法，只改变提示词，并记录每次输出。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "提示词",
+        "对照实验"
+      ],
+      "explanation": "还应控制采样设置并检查结果稳定性。",
+      "example": "比较直接分类提示与要求列出证据的提示下的误报和漏报。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-007",
+      "category": "vulnerabilities",
+      "question": "为什么大模型说出了正确漏洞类型仍需要检查推理依据？",
+      "answer": "模型可能碰巧猜对类别，但指出的位置或触发条件不成立。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "漏洞定位",
+        "解释评估"
+      ],
+      "explanation": "类别正确、定位正确和证据充分应分别评估。",
+      "example": "模型判断存在注入，但所指出的数据实际没有到达危险调用。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-008",
+      "category": "vulnerabilities",
+      "question": "如何评估大模型对安全代码的误报？",
+      "answer": "准备有可信标签的安全代码，统计被错误报告为漏洞的比例和原因。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "误报",
+        "安全样本"
+      ],
+      "explanation": "测试应覆盖正常的输入校验和安全处理方式。",
+      "example": "模型忽略已存在的边界检查，错误报告越界风险。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-009",
+      "category": "vulnerabilities",
+      "question": "为什么代码大模型的多次运行结果需要检查一致性？",
+      "answer": "生成结果可能受采样或提示细节影响，单次结果不能体现稳定性。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "进阶",
+      "tags": [
+        "稳定性",
+        "复现"
+      ],
+      "explanation": "应记录模型版本与生成参数，必要时重复运行并报告变化。",
+      "example": "对同一函数重复评估，比较漏洞判断和定位的一致率。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-010",
+      "category": "vulnerabilities",
+      "question": "如何衡量大模型辅助漏洞审计的实际价值？",
+      "answer": "同时衡量有效漏洞发现、误报、审计时间、模型成本和人工复核工作量。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "level": "实践",
+      "tags": [
+        "审计效率",
+        "评估"
+      ],
+      "explanation": "离线准确率不能完整代表工具是否帮助安全团队。",
+      "example": "比较人工审计和辅助审计在相同代码集上的有效发现与耗时。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-001",
+      "category": "operations",
+      "question": "AI 威胁情报系统为什么要把攻击行为映射到 ATT&CK？",
+      "answer": "ATT&CK 提供统一的攻击行为描述，便于归类和关联安全事件。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "入门",
+      "tags": [
+        "ATT&CK",
+        "威胁情报"
+      ],
+      "explanation": "模型映射仍需由原文行为证据支持，不能仅凭关键词确定。",
+      "example": "从报告中的具体行为抽取候选技术，并给出原文片段。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "application",
+          "sourceCardId": "attack-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-002",
+      "category": "operations",
+      "question": "在 ATT&CK 中，战术和技术分别描述什么？",
+      "answer": "战术描述攻击者的目标，技术描述为达成目标采取的行为方式。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "入门",
+      "tags": [
+        "战术",
+        "技术",
+        "标签"
+      ],
+      "explanation": "做模型标签时应区分目标类别与具体行为类别。",
+      "example": "先识别报告中的行为，再映射到相应技术和可能的战术。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "source",
+          "sourceCardId": "attack-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-003",
+      "category": "operations",
+      "question": "威胁情报模型为什么需要区分技术和子技术？",
+      "answer": "子技术比技术描述更具体的行为，证据不足时不应强行细分。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "进阶",
+      "tags": [
+        "子技术",
+        "证据"
+      ],
+      "explanation": "输出可包含较宽泛的候选及缺少哪些细节。",
+      "example": "报告只有泛化的凭据获取描述时，暂不指定缺少证据的具体子技术。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "source",
+          "sourceCardId": "attack-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-004",
+      "category": "operations",
+      "question": "让模型给事件映射 ATT&CK 技术时应提供什么？",
+      "answer": "应提供事件原始行为、可用上下文和所用 ATT&CK 版本。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "实践",
+      "tags": [
+        "技术映射",
+        "模型输入"
+      ],
+      "explanation": "映射结果应包含技术编号、名称、证据与置信度或待确认问题。",
+      "example": "输入命令和关联日志，输出候选技术及支持该候选的日志行。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "application",
+          "sourceCardId": "attack-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-005",
+      "category": "operations",
+      "question": "为什么 ATT&CK 技术映射不能只做关键词匹配？",
+      "answer": "相同工具名或命令可能用于不同目的，也可能是正常管理行为。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "进阶",
+      "tags": [
+        "误报",
+        "行为上下文"
+      ],
+      "explanation": "需要理解行为、上下文和证据之间的关系。",
+      "example": "看到远程管理工具时，结合账号、目标设备和执行行为再判断。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "application",
+          "sourceCardId": "attack-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-006",
+      "category": "operations",
+      "question": "如何评价模型从威胁报告中提取 ATT&CK 技术的效果？",
+      "answer": "对照人工标注，分别统计技术级精确率、召回率和证据定位质量。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "实践",
+      "tags": [
+        "情报抽取",
+        "评估"
+      ],
+      "explanation": "还要明确是否允许较宽泛技术与子技术之间的部分匹配。",
+      "example": "报告预测技术编号、真实编号以及模型引用的原文句子。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "application",
+          "sourceCardId": "attack-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-007",
+      "category": "operations",
+      "question": "为什么 ATT&CK 多标签识别不能强制每个事件只对应一个技术？",
+      "answer": "一个事件可能包含多个可由证据支持的行为，也可能证据不足。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "进阶",
+      "tags": [
+        "多标签",
+        "行为映射"
+      ],
+      "explanation": "任务设计应允许多个候选及无足够证据的结果。",
+      "example": "同一事件包含两种不同可观察行为时，分别给出对应证据。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "application",
+          "sourceCardId": "attack-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-008",
+      "category": "operations",
+      "question": "ATT&CK 版本变化为什么会影响威胁情报模型？",
+      "answer": "技术、名称或关联关系可能随版本更新，导致旧标签与新知识库不一致。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "实践",
+      "tags": [
+        "版本管理",
+        "知识库"
+      ],
+      "explanation": "记录版本并维护映射关系，重新评估更新后的输出。",
+      "example": "对旧报告保留生成时的 ATT&CK 版本，并注明迁移规则。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "application",
+          "sourceCardId": "attack-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-009",
+      "category": "operations",
+      "question": "从报告抽取攻击技术时怎样保留可追溯性？",
+      "answer": "保存原文位置、报告来源、提取时间、候选技术和人工审核状态。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "实践",
+      "tags": [
+        "溯源",
+        "人工复核"
+      ],
+      "explanation": "这样可以区分原文事实、模型推断和人工确认。",
+      "example": "卡片或记录中同时保留报告标题、引用段落和技术编号。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "application",
+          "sourceCardId": "attack-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attack-010",
+      "category": "operations",
+      "question": "ATT&CK 中的 procedure 与技术有什么关系？",
+      "answer": "procedure 是攻击者对技术或子技术的具体实施方式。",
+      "createdAt": 0,
+      "topic": "threat-intelligence",
+      "level": "进阶",
+      "tags": [
+        "procedure",
+        "威胁情报"
+      ],
+      "explanation": "模型可用具体行为证据辅助映射，但不能把某个实例当成该技术的唯一实现。",
+      "example": "报告中的具体命令或操作可作为分析 procedure 的证据。",
+      "sources": [
+        {
+          "id": "mitre-attack",
+          "title": "MITRE ATT&CK 官方术语与知识库",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "source",
+          "sourceCardId": "attack-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-001",
+      "category": "operations",
+      "question": "AI 安全事件摘要要解决什么问题？",
+      "answer": "将分散的安全告警和上下文整理为便于分析人员理解的事件概览。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "入门",
+      "tags": [
+        "事件摘要",
+        "安全运营"
+      ],
+      "explanation": "摘要可帮助快速了解事件范围，但仍应回查相关证据。",
+      "example": "汇总涉及的资产、事件时间线与可疑指标。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "source",
+          "sourceCardId": "copilot-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-002",
+      "category": "operations",
+      "question": "安全事件摘要通常可以包含哪些内容？",
+      "answer": "可包含事件时间、受影响资产、行为时间线和相关威胁指标。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "入门",
+      "tags": [
+        "摘要",
+        "资产",
+        "时间线"
+      ],
+      "explanation": "具体能否提供取决于可用数据，缺失信息不应由模型编造。",
+      "example": "没有确认起始时间时，明确写“起始时间待核实”。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "source",
+          "sourceCardId": "copilot-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-003",
+      "category": "operations",
+      "question": "安全事件摘要中的事实与推断应怎样区分？",
+      "answer": "将直接观察到的日志事实与模型推测分开，并给出证据和待确认事项。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "进阶",
+      "tags": [
+        "事实",
+        "推断",
+        "证据"
+      ],
+      "explanation": "例如账户登录发生是事实，是否为攻击者操作需要更多依据。",
+      "example": "写明“日志显示登录成功”，另列“账号可能被盗用，待验证”。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-004",
+      "category": "operations",
+      "question": "AI 事件摘要如何让分析人员快速回查证据？",
+      "answer": "对关键结论附带可定位的事件、资产或指标引用。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "实践",
+      "tags": [
+        "证据引用",
+        "可追溯"
+      ],
+      "explanation": "引用必须真正支持对应结论，而不仅是附上相关链接。",
+      "example": "摘要中的可疑外联结论指向相应连接事件和目的地址。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-005",
+      "category": "operations",
+      "question": "为什么 AI 事件摘要要展示数据覆盖情况？",
+      "answer": "缺少日志、资产信息或告警上下文时，摘要可能无法覆盖完整事件。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "进阶",
+      "tags": [
+        "数据覆盖",
+        "事件摘要"
+      ],
+      "explanation": "应标明输入范围、时间窗口和未获得的数据。",
+      "example": "注明仅分析了某台主机近 24 小时的可用告警。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-006",
+      "category": "operations",
+      "question": "如何比较 AI 事件摘要和人工摘要？",
+      "answer": "建立人工标注样本，分别检查事实正确性、关键事件覆盖、引用和阅读时间。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "实践",
+      "tags": [
+        "摘要评估",
+        "人工标注"
+      ],
+      "explanation": "审查者还应记录错误的严重程度和影响。",
+      "example": "评估是否遗漏关键受影响资产、是否错误归因攻击者。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-008",
+      "category": "operations",
+      "question": "如何评价 AI 告警研判是否节省安全分析时间？",
+      "answer": "在相似任务与人员条件下比较耗时，同时检查结论质量和误报漏报。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "进阶",
+      "tags": [
+        "效率评估",
+        "研判"
+      ],
+      "explanation": "只统计生成速度而忽略人工核查成本会高估收益。",
+      "example": "比较完成完整调查所需时间，而不只比较摘要生成时间。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-009",
+      "category": "operations",
+      "question": "AI 事件时间线应如何处理互相矛盾的证据？",
+      "answer": "保留不同来源的时间和冲突，标明无法确定的顺序。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "实践",
+      "tags": [
+        "时间线",
+        "证据冲突"
+      ],
+      "explanation": "不能为了叙述流畅而擅自合并冲突事件。",
+      "example": "两套日志时间相差数分钟时，列出各自时间及来源。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-010",
+      "category": "operations",
+      "question": "为什么安全助手需要记录模型和资料版本？",
+      "answer": "版本记录有助于复现当时的回答并追踪结果变化。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "进阶",
+      "tags": [
+        "可复现",
+        "审计"
+      ],
+      "explanation": "还应记录查询时间、使用的工具及关键证据。",
+      "example": "调查记录包含模型版本、检索资料版本和输入事件编号。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "rag-001",
+      "category": "operations",
+      "question": "安全知识库中的检索增强生成如何工作？",
+      "answer": "先检索与安全问题相关的资料，再将检索内容提供给模型生成回答。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "level": "入门",
+      "tags": [
+        "RAG",
+        "安全知识库"
+      ],
+      "explanation": "应保留资料来源，并让回答受到实际检索证据约束。",
+      "example": "查询某漏洞时检索官方公告，再依据公告生成带引用的说明。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "rag-002",
+      "category": "operations",
+      "question": "为什么安全知识问答要分别评估检索与生成？",
+      "answer": "检索没有找到正确资料和模型误读已找到资料，是不同错误。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "level": "进阶",
+      "tags": [
+        "检索评估",
+        "生成评估",
+        "命中率",
+        "答案正确性"
+      ],
+      "explanation": "分开评估才能知道优先改进索引、查询还是生成步骤。",
+      "example": "先检查正确漏洞公告是否进入前几条，再检查答案是否忠于公告。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-002"
+        },
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-006"
+        }
+      ],
+      "alternateQuestions": [
+        "安全问答中的检索命中率能否代替答案正确率？"
+      ],
+      "otherExplanations": [
+        "检索质量与答案质量应分别测量。"
+      ],
+      "otherExamples": [
+        "公告在前五条中，但答案引用了另一个不适用的产品版本。"
+      ]
+    },
+    {
+      "id": "rag-003",
+      "category": "operations",
+      "question": "安全文档切块时为什么要保留标题和来源？",
+      "answer": "片段脱离标题、产品版本或上下文后，模型可能误用内容。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "level": "实践",
+      "tags": [
+        "文档切块",
+        "元数据"
+      ],
+      "explanation": "分块需兼顾检索粒度和足够的语义上下文。",
+      "example": "为漏洞公告片段附标题、CVE 编号、版本范围和原文链接。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "rag-004",
+      "category": "operations",
+      "question": "安全知识检索为什么常把关键词检索与向量检索结合？",
+      "answer": "精确编号和术语匹配与语义相似检索各有优势。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "level": "进阶",
+      "tags": [
+        "混合检索",
+        "CVE"
+      ],
+      "explanation": "混合检索的具体权重需要在目标问题集上验证。",
+      "example": "用关键词匹配 CVE 编号，同时检索语义相近的漏洞描述。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "rag-005",
+      "category": "operations",
+      "question": "如何构建安全知识检索的测试集？",
+      "answer": "为真实安全问题标注相关资料，并覆盖精确编号、同义表达和无答案问题。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "level": "实践",
+      "tags": [
+        "测试集",
+        "检索"
+      ],
+      "explanation": "资料版本和问题创建时间要记录，以便评估时避免使用未来信息。",
+      "example": "为每个漏洞问题标注可支持回答的公告段落。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "rag-008",
+      "category": "operations",
+      "question": "为什么安全 RAG 需要记录资料的发布时间与版本？",
+      "answer": "漏洞状态和修复建议会更新，旧资料可能不适用于当前问题。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "level": "进阶",
+      "tags": [
+        "时效性",
+        "版本"
+      ],
+      "explanation": "答案应能追踪所用资料和更新时间，并处理相互冲突的版本。",
+      "example": "同一漏洞存在更新公告时，显示当前引用的发布日期。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "rag-009",
+      "category": "operations",
+      "question": "如何检查安全 RAG 的引用是否有效？",
+      "answer": "检查引用内容能否支持每一项关键结论，且引用位置与版本正确。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "level": "实践",
+      "tags": [
+        "引用",
+        "事实核验"
+      ],
+      "explanation": "链接存在并不代表引用支持结论。",
+      "example": "回答称某版本受影响时，核对引用段落是否包含该版本范围。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "rag-010",
+      "category": "operations",
+      "question": "评估历史安全事件问答时为什么要限制资料时间？",
+      "answer": "使用事件发生后才发布的资料可能泄露当时不可知的信息。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "level": "进阶",
+      "tags": [
+        "时间泄漏",
+        "情报"
+      ],
+      "explanation": "应定义回答时点，只检索该时点可获得的证据。",
+      "example": "复现某日告警研判时，不使用数周后公布的事后分析结论。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "interview-001",
+      "category": "operations",
+      "question": "面试中怎样概括大模型可辅助的 AI4SEC 场景？",
+      "answer": "可从告警研判、日志解析、代码审计和威胁情报总结等具体任务回答。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "入门",
+      "tags": [
+        "面试题",
+        "安全运营",
+        "大模型"
+      ],
+      "explanation": "每个场景都应说明输入证据、输出结果和人工复核方式。",
+      "example": "输入告警及日志，输出附证据的事件摘要与待验证问题。",
+      "sources": [
+        {
+          "id": "github-ai4sec-interview",
+          "title": "security-engineering：AI 赋能安全面试题",
+          "url": "https://github.com/FeeiCN/security-engineering/blob/master/02-%E5%AE%89%E5%85%A8%E7%BB%84%E7%BB%87/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%9D%A2%E8%AF%95%E6%8C%87%E5%8D%97/03-%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93/09-AI%E5%AE%89%E5%85%A8%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE.md#ai-%E8%B5%8B%E8%83%BD%E5%AE%89%E5%85%A8",
+          "type": "GitHub 面试题库",
+          "evidence": "source",
+          "sourceCardId": "interview-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "interview-002",
+      "category": "operations",
+      "question": "如何回答“大模型怎样提高安全运营效率”？",
+      "answer": "结合告警摘要、证据关联、安全知识检索和报告整理，说明适用流程。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "进阶",
+      "tags": [
+        "面试题",
+        "安全运营",
+        "效率"
+      ],
+      "explanation": "还应说明如何用处理时间、有效发现和误报评估收益。",
+      "example": "对比辅助前后的完整调查时间与结论质量。",
+      "sources": [
+        {
+          "id": "github-ai4sec-interview",
+          "title": "security-engineering：AI 赋能安全面试题",
+          "url": "https://github.com/FeeiCN/security-engineering/blob/master/02-%E5%AE%89%E5%85%A8%E7%BB%84%E7%BB%87/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%9D%A2%E8%AF%95%E6%8C%87%E5%8D%97/03-%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93/09-AI%E5%AE%89%E5%85%A8%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE.md#ai-%E8%B5%8B%E8%83%BD%E5%AE%89%E5%85%A8",
+          "type": "GitHub 面试题库",
+          "evidence": "application",
+          "sourceCardId": "interview-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "interview-003",
+      "category": "operations",
+      "question": "如何评估 AI 安全工具的效率收益和处置风险？",
+      "answer": "同时测量时间、误报漏报、证据质量和需要人工审批的操作。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "level": "进阶",
+      "tags": [
+        "面试题",
+        "评估",
+        "人工复核"
+      ],
+      "explanation": "把工具建议、自动执行与人工确认分开评估。",
+      "example": "统计摘要节省的时间，同时检查是否遗漏关键资产或给出错误封禁建议。",
+      "sources": [
+        {
+          "id": "github-ai4sec-interview",
+          "title": "security-engineering：AI 赋能安全面试题",
+          "url": "https://github.com/FeeiCN/security-engineering/blob/master/02-%E5%AE%89%E5%85%A8%E7%BB%84%E7%BB%87/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%9D%A2%E8%AF%95%E6%8C%87%E5%8D%97/03-%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93/09-AI%E5%AE%89%E5%85%A8%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE.md#ai-%E8%B5%8B%E8%83%BD%E5%AE%89%E5%85%A8",
+          "type": "GitHub 面试题库",
+          "evidence": "application",
+          "sourceCardId": "interview-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-001",
+      "category": "detection",
+      "question": "Isolation Forest 为什么可用于发现异常安全行为？",
+      "answer": "它通过随机划分特征空间，利用样本被隔离的难易程度计算异常分数。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "入门",
+      "tags": [
+        "Isolation Forest",
+        "异常检测"
+      ],
+      "explanation": "异常行为可能值得调查，但异常不等于恶意。",
+      "example": "对主机每日外联统计打分，检查分数异常的设备。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "isof-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-002",
+      "category": "detection",
+      "question": "Isolation Forest 的异常分数与攻击概率有什么区别？",
+      "answer": "异常分数表示样本相对异常程度，不自动等于真实攻击概率。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "进阶",
+      "tags": [
+        "异常分数",
+        "风险评分"
+      ],
+      "explanation": "若需要概率解释，应使用有标签的独立数据评估与校准。",
+      "example": "异常分数较高的设备也可能是新上线的正常业务。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-003",
+      "category": "detection",
+      "question": "Isolation Forest 的 contamination 参数应怎样理解？",
+      "answer": "它影响模型划分异常与正常的阈值设定，不能直接当作已知的真实攻击比例。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "进阶",
+      "tags": [
+        "contamination",
+        "阈值"
+      ],
+      "explanation": "生产环境异常比例往往未知，应结合验证数据和告警预算选取。",
+      "example": "比较不同阈值产生的告警数及人工确认率。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "isof-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-004",
+      "category": "detection",
+      "question": "没有攻击标签时，怎样验证安全异常检测的输出？",
+      "answer": "抽样人工复核，并结合历史事件、业务变更和可用的已确认样本检查。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "实践",
+      "tags": [
+        "无标签",
+        "人工复核"
+      ],
+      "explanation": "无标签条件下不能直接计算完整的攻击召回率。",
+      "example": "按不同异常分数区间抽查主机外联事件。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-005",
+      "category": "detection",
+      "question": "用 Isolation Forest 检测主机异常时，样本单位可以怎样选择？",
+      "answer": "可以将一台主机在一个固定时间窗口内的行为汇总作为样本。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "实践",
+      "tags": [
+        "样本单位",
+        "主机行为"
+      ],
+      "explanation": "窗口过短可能噪声较大，过长可能延迟发现，需要结合目标行为验证。",
+      "example": "按主机和一小时窗口统计不同目的地址数与连接次数。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-006",
+      "category": "detection",
+      "question": "为什么异常检测训练集中的攻击污染需要关注？",
+      "answer": "若训练集含有较多攻击或异常行为，模型学到的常态边界可能受影响。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "进阶",
+      "tags": [
+        "训练污染",
+        "常态"
+      ],
+      "explanation": "应检查数据来源，必要时比较不同训练窗口和清洗策略。",
+      "example": "排查训练期是否包含已知大规模扫描事件。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-007",
+      "category": "detection",
+      "question": "如何将 Isolation Forest 用作安全告警排序？",
+      "answer": "按异常分数排序，再结合资产重要性和人工处理容量确定调查顺序。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "实践",
+      "tags": [
+        "告警排序",
+        "异常分数"
+      ],
+      "explanation": "不同模型分数方向可能不同，使用前要确认接口定义。",
+      "example": "每日抽查异常程度最高的 50 台主机，并记录确认结果。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-008",
+      "category": "detection",
+      "question": "Isolation Forest 的 predict 返回值如何理解？",
+      "answer": "官方接口使用 1 表示内部样本，-1 表示异常样本。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "进阶",
+      "tags": [
+        "predict",
+        "接口"
+      ],
+      "explanation": "二值结果由模型阈值决定，保留分数更方便调整告警量。",
+      "example": "先存储 decision_function，再根据运营阈值生成告警。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "isof-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-009",
+      "category": "detection",
+      "question": "为什么安全异常检测需要和简单统计基线比较？",
+      "answer": "简单频率阈值可能已经识别大部分异常，比较后才能看出模型增益。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "实践",
+      "tags": [
+        "基线",
+        "异常检测"
+      ],
+      "explanation": "比较应使用相同数据窗口和告警数量。",
+      "example": "在相同每日告警预算下对比连接数阈值与 Isolation Forest。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-010",
+      "category": "detection",
+      "question": "异常检测模型如何处理不同业务类型的主机？",
+      "answer": "应考虑业务分组或加入合理上下文，避免用单一基线误判不同业务。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "进阶",
+      "tags": [
+        "资产分组",
+        "误报"
+      ],
+      "explanation": "批处理服务器与办公终端的正常行为可能差异很大。",
+      "example": "按资产角色分别分析外联模式，再比较各组误报。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-011",
+      "category": "detection",
+      "question": "安全异常检测如何避免未来信息进入特征？",
+      "answer": "仅使用评分时点之前已产生并可获得的日志和统计。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "实践",
+      "tags": [
+        "时间泄漏",
+        "特征"
+      ],
+      "explanation": "后续事件可以作为评估标签或调查证据，但不能回填进当时预测输入。",
+      "example": "上午十点告警不能使用下午才发生的连接总数。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-012",
+      "category": "detection",
+      "question": "异常检测中为什么要持续复核正常行为变化？",
+      "answer": "业务、采集设备或用户行为改变后，原来的常态可能过时。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "level": "进阶",
+      "tags": [
+        "漂移",
+        "监控"
+      ],
+      "explanation": "监测告警量和人工确认情况，再决定是否调整训练窗口或阈值。",
+      "example": "业务迁移后外联频率整体升高，先确认变更再更新模型。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-001",
+      "category": "detection",
+      "question": "钓鱼网址数据可以支持什么 AI4SEC 任务？",
+      "answer": "可以用于训练或验证识别钓鱼网址的模型。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "入门",
+      "tags": [
+        "钓鱼检测",
+        "数据来源"
+      ],
+      "explanation": "OpenPhish 数据库说明其记录结构化钓鱼网站信息，并可用于分析和 AI 数据用途。",
+      "example": "在授权数据上训练网址风险排序模型。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "source",
+          "sourceCardId": "phish-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-002",
+      "category": "detection",
+      "question": "只有钓鱼网址列表能直接构建可靠的二分类测试集吗？",
+      "answer": "不能；二分类评估还需要来源可靠、与目标环境匹配的正常样本。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "进阶",
+      "tags": [
+        "负样本",
+        "标签质量"
+      ],
+      "explanation": "正负样本采集方式不同还可能产生来源捷径。",
+      "example": "说明正常网址的采集范围和时间，而不是把未列入黑名单的地址全部当作安全。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-003",
+      "category": "detection",
+      "question": "钓鱼网址模型可以使用哪些不访问网页的特征？",
+      "answer": "可以使用网址长度、字符分布、路径结构等词法特征。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "实践",
+      "tags": [
+        "URL特征",
+        "静态检测"
+      ],
+      "explanation": "这些特征采集成本较低，但单独使用可能难以判断页面意图。",
+      "example": "在离线样本上统计主机名长度和特殊字符数量。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-004",
+      "category": "detection",
+      "question": "为什么钓鱼网址检测要按域名分组评估？",
+      "answer": "同一域名下的多个相似网址若跨训练和测试，会高估对新域名的泛化。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "进阶",
+      "tags": [
+        "域名分组",
+        "去重"
+      ],
+      "explanation": "分组规则应说明如何处理子域名、重定向和公共托管域。",
+      "example": "将同一可注册域名的样本分到同一集合，并单独检查公共托管服务。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-005",
+      "category": "detection",
+      "question": "为什么钓鱼网址模型要考虑数据的时间变化？",
+      "answer": "钓鱼网址寿命和攻击方式会变化，历史样本的效果可能不能代表后续流量。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "进阶",
+      "tags": [
+        "时间切分",
+        "漂移"
+      ],
+      "explanation": "时间外测试应保证训练时没有使用之后才确认的信息。",
+      "example": "用早期数据训练，在后续采集的数据上测试。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-006",
+      "category": "detection",
+      "question": "钓鱼网址标签为什么需要记录确认时间？",
+      "answer": "模型预测时可能还不知道该网址之后才获得的确认结果。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "实践",
+      "tags": [
+        "标签时间",
+        "数据泄漏"
+      ],
+      "explanation": "标注可以用于事后评估，但不能作为预测时可用特征。",
+      "example": "保存首次观察时间与钓鱼确认时间，并分别用于特征和标签。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-007",
+      "category": "detection",
+      "question": "为什么不能只依赖网址中是否出现敏感词判断钓鱼？",
+      "answer": "正常网址也可能包含相关词语，钓鱼网址也可能没有这些词。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "进阶",
+      "tags": [
+        "特征",
+        "误报"
+      ],
+      "explanation": "需要结合多个特征、上下文和验证结果。",
+      "example": "比较简单关键词规则与多特征模型的误报。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-008",
+      "category": "detection",
+      "question": "采集钓鱼页面内容用于模型分析时需要什么条件？",
+      "answer": "应在授权的隔离环境中采集，并控制外部访问与敏感信息处理。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "实践",
+      "tags": [
+        "页面采集",
+        "隔离环境"
+      ],
+      "explanation": "页面内容和截图能补充证据，但采集过程带来额外成本。",
+      "example": "隔离浏览器记录页面截图和跳转链，而不输入真实账号。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-009",
+      "category": "detection",
+      "question": "为什么钓鱼网页的截图模型需要检查品牌和模板泄漏？",
+      "answer": "同一钓鱼模板或品牌页面跨集合时，模型可能记住外观而非识别新攻击。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "进阶",
+      "tags": [
+        "视觉检测",
+        "模板泄漏"
+      ],
+      "explanation": "可按模板、域名、时间或品牌分组评估。",
+      "example": "留出某些页面模板，检查模型在新模板上的误报与召回。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-010",
+      "category": "detection",
+      "question": "如何评估钓鱼网址模型的告警负担？",
+      "answer": "结合实际流量比例，报告误报量、精确率和发现钓鱼的召回率。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "实践",
+      "tags": [
+        "告警量",
+        "评估"
+      ],
+      "explanation": "实验集中的正负比例可能与真实访问流量不同。",
+      "example": "报告每十万次网址检查产生的误报数。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-011",
+      "category": "detection",
+      "question": "钓鱼网址模型为什么要记录数据源及许可？",
+      "answer": "不同数据源的采集方法、更新频率、覆盖范围和使用条件可能不同。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "进阶",
+      "tags": [
+        "数据治理",
+        "来源"
+      ],
+      "explanation": "训练与分发前应核对来源规则并保留版本信息。",
+      "example": "在数据清单中记录采集时间、来源和允许的用途。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-012",
+      "category": "detection",
+      "question": "如何分析钓鱼网址模型的误报？",
+      "answer": "回查网址结构、业务背景、训练来源和人工确认结果。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "level": "实践",
+      "tags": [
+        "误报分析",
+        "钓鱼检测"
+      ],
+      "explanation": "短链接、登录页面或新注册域名本身不能单独证明钓鱼。",
+      "example": "检查合法企业登录页面为何被高分标记。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-001",
+      "category": "vulnerabilities",
+      "question": "OSS-Fuzz-gen 将大语言模型用于哪类安全任务？",
+      "answer": "用于生成和评估模糊测试目标，以帮助测试真实软件项目。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "入门",
+      "tags": [
+        "OSS-Fuzz-gen",
+        "大模型",
+        "模糊测试"
+      ],
+      "explanation": "项目将生成的目标与 OSS-Fuzz 测试流程结合。",
+      "example": "为授权的开源库生成调用目标函数的测试入口。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "source",
+          "sourceCardId": "fuzz-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-002",
+      "category": "vulnerabilities",
+      "question": "模糊测试目标或 harness 在 AI 生成流程中起什么作用？",
+      "answer": "它把测试输入转换为对目标代码的调用，使模糊测试引擎能够执行代码。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "入门",
+      "tags": [
+        "harness",
+        "测试入口"
+      ],
+      "explanation": "目标需要正确初始化、解析输入并调用相关接口。",
+      "example": "将字节输入交给库的解析接口，并在每次执行后释放资源。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-003",
+      "category": "vulnerabilities",
+      "question": "为什么 AI 生成的 fuzz harness 能编译还不代表测试有效？",
+      "answer": "它可能没有触达目标代码、使用了不合理输入，或在初始化阶段提前退出。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "进阶",
+      "tags": [
+        "编译",
+        "有效性",
+        "覆盖率"
+      ],
+      "explanation": "需要检查运行情况、覆盖率和实际调用路径。",
+      "example": "编译成功但覆盖率几乎为零时，检查目标函数是否真正执行。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-004",
+      "category": "vulnerabilities",
+      "question": "OSS-Fuzz-gen 用哪些维度评估生成目标？",
+      "answer": "项目评估目标的可编译性、运行崩溃、覆盖率及与已有目标的覆盖差异。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "进阶",
+      "tags": [
+        "评估",
+        "覆盖率"
+      ],
+      "explanation": "这些指标分别对应构建、运行和实际覆盖能力。",
+      "example": "比较生成目标与已有人工目标的新增覆盖行数。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "source",
+          "sourceCardId": "fuzz-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-005",
+      "category": "vulnerabilities",
+      "question": "如何验证 AI 生成的 fuzz harness 是否调用了正确接口？",
+      "answer": "结合代码覆盖、调用日志和目标 API 文档检查。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "实践",
+      "tags": [
+        "调用路径",
+        "验证"
+      ],
+      "explanation": "高覆盖也要确认是否来自期望的代码路径。",
+      "example": "检查生成测试是否进入目标解析函数，而非只运行初始化代码。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-006",
+      "category": "vulnerabilities",
+      "question": "AI 生成的测试触发崩溃后，为什么不能直接认定目标程序存在漏洞？",
+      "answer": "崩溃也可能来自生成的 harness、错误使用 API 或测试环境。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "进阶",
+      "tags": [
+        "崩溃归因",
+        "误报"
+      ],
+      "explanation": "需要区分目标代码缺陷、测试代码缺陷和预期退出。",
+      "example": "先用最小输入重现，再检查崩溃位置和调用约束。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-007",
+      "category": "vulnerabilities",
+      "question": "模糊测试发现的崩溃应如何做可复现验证？",
+      "answer": "保留触发输入、目标版本、运行参数、堆栈和环境信息。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "实践",
+      "tags": [
+        "复现",
+        "崩溃"
+      ],
+      "explanation": "在授权隔离环境中重复运行，必要时缩减输入并人工审计。",
+      "example": "记录相同版本下能稳定触发崩溃的最小输入。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-008",
+      "category": "vulnerabilities",
+      "question": "为什么比较 AI 生成目标与人工目标时需要记录覆盖差异？",
+      "answer": "单独的覆盖率不能说明生成目标是否发现了已有测试未覆盖的代码。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "进阶",
+      "tags": [
+        "覆盖率",
+        "对照实验"
+      ],
+      "explanation": "还应统一目标版本、测试时间和资源条件。",
+      "example": "报告共同覆盖、仅人工覆盖和仅生成目标覆盖的代码。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-009",
+      "category": "vulnerabilities",
+      "question": "如何评估大模型生成测试目标的成本？",
+      "answer": "记录生成调用次数、编译与运行资源、人工修复和验证时间。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "实践",
+      "tags": [
+        "成本",
+        "效率"
+      ],
+      "explanation": "应将成本与有效新增覆盖和经确认的问题一起分析。",
+      "example": "比较每个有效测试目标需要的模型调用和人工修改时间。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-010",
+      "category": "vulnerabilities",
+      "question": "AI 生成的 fuzz harness 常见需要人工检查哪些内容？",
+      "answer": "检查 API 用法、输入边界、初始化与资源清理是否符合项目约束。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "实践",
+      "tags": [
+        "代码审查",
+        "harness"
+      ],
+      "explanation": "生成代码可能使用不存在的函数，或错误处理所有权。",
+      "example": "核对头文件、函数签名和输入缓冲区的生命周期。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-011",
+      "category": "vulnerabilities",
+      "question": "为什么模糊测试崩溃需要去重？",
+      "answer": "多个输入可能触发同一根因，直接按输入数量统计会夸大发现。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "进阶",
+      "tags": [
+        "崩溃去重",
+        "根因"
+      ],
+      "explanation": "可结合堆栈、崩溃位置和人工分析聚类。",
+      "example": "将指向同一代码位置的相似崩溃先归为一组再复核。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-012",
+      "category": "vulnerabilities",
+      "question": "如何组织 AI 辅助模糊测试的完整实验？",
+      "answer": "固定目标版本和资源，生成测试入口，编译运行，比较覆盖并复核崩溃。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "level": "实践",
+      "tags": [
+        "实验流程",
+        "复现"
+      ],
+      "explanation": "全程记录提示词、模型版本和构建参数，确保实验可复现。",
+      "example": "对同一项目比较多次生成的有效目标及新增覆盖。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

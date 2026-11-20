@@ -1,0 +1,14 @@
+{
+  "source": {
+    "id": "github-ai4sec-interview",
+    "title": "security-engineering：AI 赋能安全面试题",
+    "url": "https://github.com/FeeiCN/security-engineering/blob/master/02-%E5%AE%89%E5%85%A8%E7%BB%84%E7%BB%87/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E9%9D%A2%E8%AF%95%E6%8C%87%E5%8D%97/03-%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BA%93/09-AI%E5%AE%89%E5%85%A8%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE.md#ai-%E8%B5%8B%E8%83%BD%E5%AE%89%E5%85%A8",
+    "type": "GitHub 面试题库",
+    "note": "只选用 AI 赋能安全方向；问题与答案根据原题主题重新整理和扩展。"
+  },
+  "cards": [
+    {"id":"interview-001","category":"operations","level":"入门","question":"面试中怎样概括大模型可辅助的 AI4SEC 场景？","answer":"可从告警研判、日志解析、代码审计和威胁情报总结等具体任务回答。","explanation":"每个场景都应说明输入证据、输出结果和人工复核方式。","example":"输入告警及日志，输出附证据的事件摘要与待验证问题。","tags":["面试题","安全运营","大模型"],"evidence":"source"},
+    {"id":"interview-002","category":"operations","level":"进阶","question":"如何回答“大模型怎样提高安全运营效率”？","answer":"结合告警摘要、证据关联、安全知识检索和报告整理，说明适用流程。","explanation":"还应说明如何用处理时间、有效发现和误报评估收益。","example":"对比辅助前后的完整调查时间与结论质量。","tags":["面试题","安全运营","效率"],"evidence":"application"},
+    {"id":"interview-003","category":"operations","level":"进阶","question":"如何评估 AI 安全工具的效率收益和处置风险？","answer":"同时测量时间、误报漏报、证据质量和需要人工审批的操作。","explanation":"把工具建议、自动执行与人工确认分开评估。","example":"统计摘要节省的时间，同时检查是否遗漏关键资产或给出错误封禁建议。","tags":["面试题","评估","人工复核"],"evidence":"application"}
+  ]
+}

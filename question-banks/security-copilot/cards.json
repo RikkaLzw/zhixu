@@ -1,0 +1,21 @@
+{
+  "source": {
+    "id": "security-copilot",
+    "title": "Microsoft Security Copilot 事件摘要",
+    "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+    "type": "官方产品文档",
+    "note": "参考官方事件摘要能力；指标和系统设计为原创应用，不代表产品实际效果承诺。"
+  },
+  "cards": [
+    {"id":"copilot-001","category":"operations","level":"入门","question":"AI 安全事件摘要要解决什么问题？","answer":"将分散的安全告警和上下文整理为便于分析人员理解的事件概览。","explanation":"摘要可帮助快速了解事件范围，但仍应回查相关证据。","example":"汇总涉及的资产、事件时间线与可疑指标。","tags":["事件摘要","安全运营"],"evidence":"source"},
+    {"id":"copilot-002","category":"operations","level":"入门","question":"安全事件摘要通常可以包含哪些内容？","answer":"可包含事件时间、受影响资产、行为时间线和相关威胁指标。","explanation":"具体能否提供取决于可用数据，缺失信息不应由模型编造。","example":"没有确认起始时间时，明确写“起始时间待核实”。","tags":["摘要","资产","时间线"],"evidence":"source"},
+    {"id":"copilot-003","category":"operations","level":"进阶","question":"安全事件摘要中的事实与推断应怎样区分？","answer":"将直接观察到的日志事实与模型推测分开，并给出证据和待确认事项。","explanation":"例如账户登录发生是事实，是否为攻击者操作需要更多依据。","example":"写明“日志显示登录成功”，另列“账号可能被盗用，待验证”。","tags":["事实","推断","证据"],"evidence":"application"},
+    {"id":"copilot-004","category":"operations","level":"实践","question":"AI 事件摘要如何让分析人员快速回查证据？","answer":"对关键结论附带可定位的事件、资产或指标引用。","explanation":"引用必须真正支持对应结论，而不仅是附上相关链接。","example":"摘要中的可疑外联结论指向相应连接事件和目的地址。","tags":["证据引用","可追溯"],"evidence":"application"},
+    {"id":"copilot-005","category":"operations","level":"进阶","question":"为什么 AI 事件摘要要展示数据覆盖情况？","answer":"缺少日志、资产信息或告警上下文时，摘要可能无法覆盖完整事件。","explanation":"应标明输入范围、时间窗口和未获得的数据。","example":"注明仅分析了某台主机近 24 小时的可用告警。","tags":["数据覆盖","事件摘要"],"evidence":"application"},
+    {"id":"copilot-006","category":"operations","level":"实践","question":"如何比较 AI 事件摘要和人工摘要？","answer":"建立人工标注样本，分别检查事实正确性、关键事件覆盖、引用和阅读时间。","explanation":"审查者还应记录错误的严重程度和影响。","example":"评估是否遗漏关键受影响资产、是否错误归因攻击者。","tags":["摘要评估","人工标注"],"evidence":"application"},
+    {"id":"copilot-007","category":"operations","level":"实践","question":"安全助手提出的处置建议应如何使用？","answer":"将建议和依据交给有权限的人员审核，再决定是否执行。","explanation":"隔离主机、封禁账号等操作可能影响业务，应结合实际情况确认。","example":"先核实设备风险和业务影响，再批准隔离建议。","tags":["人工复核","处置"],"evidence":"application"},
+    {"id":"copilot-008","category":"operations","level":"进阶","question":"如何评价 AI 告警研判是否节省安全分析时间？","answer":"在相似任务与人员条件下比较耗时，同时检查结论质量和误报漏报。","explanation":"只统计生成速度而忽略人工核查成本会高估收益。","example":"比较完成完整调查所需时间，而不只比较摘要生成时间。","tags":["效率评估","研判"],"evidence":"application"},
+    {"id":"copilot-009","category":"operations","level":"实践","question":"AI 事件时间线应如何处理互相矛盾的证据？","answer":"保留不同来源的时间和冲突，标明无法确定的顺序。","explanation":"不能为了叙述流畅而擅自合并冲突事件。","example":"两套日志时间相差数分钟时，列出各自时间及来源。","tags":["时间线","证据冲突"],"evidence":"application"},
+    {"id":"copilot-010","category":"operations","level":"进阶","question":"为什么安全助手需要记录模型和资料版本？","answer":"版本记录有助于复现当时的回答并追踪结果变化。","explanation":"还应记录查询时间、使用的工具及关键证据。","example":"调查记录包含模型版本、检索资料版本和输入事件编号。","tags":["可复现","审计"],"evidence":"application"}
+  ]
+}
