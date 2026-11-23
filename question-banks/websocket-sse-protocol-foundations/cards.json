@@ -1,0 +1,325 @@
+{
+  "source": {
+    "id": "websocket-sse-protocol-foundations",
+    "title": "RFC 6455 与 WHATWG：WebSocket 和事件流",
+    "url": "https://www.rfc-editor.org/rfc/rfc6455.html",
+    "type": "协议标准、官方文档与论文",
+    "note": "依据逐题标注的规范、固定版本文档或论文自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "webstream-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "通信方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebSocket 与 Server-Sent Events 的主要通信方式有什么区别？",
+      "answer": "WebSocket 建立连接后支持双向消息；SSE 的事件流主要从服务器单向发送给客户端。",
+      "explanation": "SSE 应用仍可通过其他 HTTP 请求发送客户端数据。",
+      "example": "聊天双向交互与服务端状态推送。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "通信方式"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html",
+      "supportingReferences": [
+        {
+          "id": "whatwg-sse",
+          "title": "WHATWG HTML：Server-sent events",
+          "url": "https://html.spec.whatwg.org/multipage/server-sent-events.html",
+          "type": "Web 标准",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "webstream-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "握手升级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6455 的 WebSocket 初始握手怎样从 HTTP/1.1 切换协议？",
+      "answer": "客户端发送包含 Upgrade 的握手请求，服务器接受时以 101 Switching Protocols 响应。",
+      "explanation": "其他 HTTP 版本的 WebSocket 建立方式需参照相应扩展规范。",
+      "example": "HTTP/1.1 GET 请求请求升级为 websocket。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "握手升级"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "握手校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebSocket 握手中的 Sec-WebSocket-Key 与 Sec-WebSocket-Accept 配合有什么作用？",
+      "answer": "服务器根据客户端的随机键计算响应值，供客户端验证服务器理解了握手。",
+      "explanation": "该机制本身不提供用户身份认证，也不加密后续流量。",
+      "example": "客户端检查服务器返回的 Accept 值。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "握手校验"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "安全传输",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebSocket 的 ws 和 wss URI 方案在传输安全上有什么区别？",
+      "answer": "wss 使用 TLS 保护连接，ws 本身不提供 TLS 加密。",
+      "explanation": "身份验证和授权仍需由应用及部署配置处理。",
+      "example": "生产服务通过 wss 建立加密连接。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "安全传输"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "客户端掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6455 对客户端发送和服务器发送的 WebSocket 帧分别如何要求掩码？",
+      "answer": "客户端发送的帧必须掩码；服务器发送的帧不得掩码。",
+      "explanation": "掩码不是保密加密，密钥随帧发送。",
+      "example": "服务器对收到的客户端帧进行解掩码。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "客户端掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "消息分片",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebSocket 一条消息一定对应一个帧或一次 TCP 读取吗？",
+      "answer": "不一定；消息可以分成多个 WebSocket 帧，TCP 读取边界也不等于消息边界。",
+      "explanation": "接收端须按协议处理分片与重组。",
+      "example": "一条文本消息由多个帧传输。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "消息分片"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "文本编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6455 的 WebSocket 文本消息应使用什么编码？",
+      "answer": "完整文本消息必须是有效的 UTF-8。",
+      "explanation": "分片时单个帧的载荷可以不是独立完整的 UTF-8 序列。",
+      "example": "多字节字符可能跨帧。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "文本编码"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "控制帧",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebSocket 控制帧在载荷长度和分片上有什么限制？",
+      "answer": "控制帧载荷最多 125 字节，且不能分片。",
+      "explanation": "控制帧可以出现在分片消息的中间。",
+      "example": "传输长消息时插入 Ping 控制帧。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "控制帧"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "Ping与Pong",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebSocket 端点收到 Ping 后通常怎样回应？",
+      "answer": "除已收到 Close 等规定情况外，应尽快发送 Pong，且响应载荷与 Ping 相同。",
+      "explanation": "Ping 可用于存活检查；Pong 也可以主动发送。",
+      "example": "发送 Ping 并验证返回的载荷。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "Ping与Pong"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "子协议协商",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebSocket 的 Sec-WebSocket-Protocol 用于协商什么？",
+      "answer": "它用于从客户端提出的应用子协议中选择双方使用的协议。",
+      "explanation": "服务器不能选择客户端未请求的子协议。",
+      "example": "客户端请求特定消息格式的子协议。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "子协议协商"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "来源验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 WebSocket 服务端不能把 Origin 头当成可靠的客户端身份认证？",
+      "answer": "浏览器会按来源模型发送 Origin，但非浏览器客户端可以自行构造该值。",
+      "explanation": "服务端应按需求验证来源，并独立实施身份认证和授权。",
+      "example": "脚本客户端伪造一个 Origin 字符串。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "来源验证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6455.html"
+    },
+    {
+      "id": "webstream-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "事件流格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SSE 事件流如何标记一条事件记录结束？",
+      "answer": "用空行分隔和分派事件记录。",
+      "explanation": "事件流使用 UTF-8，一条事件可以包含多个字段行。",
+      "example": "发送 data: hello 后再发送一个空行。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "事件流格式"
+      ],
+      "evidence": "source",
+      "reference": "https://html.spec.whatwg.org/multipage/server-sent-events.html"
+    },
+    {
+      "id": "webstream-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "数据字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SSE 一条事件中出现多行 data 字段时，浏览器怎样组合数据？",
+      "answer": "按顺序用换行符连接这些数据行的值。",
+      "explanation": "字段值是文本，应用可自行选择 JSON 等内容格式。",
+      "example": "两行 data 形成包含换行符的 event.data。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "数据字段"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events"
+    },
+    {
+      "id": "webstream-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "事件名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SSE 的 event 字段与默认 message 事件有什么关系？",
+      "answer": "event 指定要分派的事件类型；没有指定事件名时使用 message。",
+      "explanation": "客户端可为命名事件注册对应监听器。",
+      "example": "event: update 触发 update 监听器。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "事件名称"
+      ],
+      "evidence": "source",
+      "reference": "https://html.spec.whatwg.org/multipage/server-sent-events.html"
+    },
+    {
+      "id": "webstream-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "断线恢复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "浏览器 EventSource 断线后通常怎样处理，服务器怎样请求停止自动重连？",
+      "answer": "通常会尝试重连；服务器可返回 HTTP 204 告知客户端停止重连。",
+      "explanation": "客户端调用 close() 也可结束 EventSource。",
+      "example": "服务终止订阅时返回 204。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "断线恢复"
+      ],
+      "evidence": "source",
+      "reference": "https://html.spec.whatwg.org/multipage/server-sent-events.html"
+    },
+    {
+      "id": "webstream-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebSocket 与服务端事件",
+      "knowledgePoint": "最后事件编号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SSE 重连时 Last-Event-ID 头有什么用途？",
+      "answer": "它向服务器报告客户端记录的最后事件 ID，供服务器决定如何处理续传。",
+      "explanation": "是否保存事件和实际重放取决于服务端实现。",
+      "example": "服务端使用 ID 查找可恢复的事件。",
+      "tags": [
+        "WebSocket 与服务端事件",
+        "最后事件编号"
+      ],
+      "evidence": "source",
+      "reference": "https://html.spec.whatwg.org/multipage/server-sent-events.html"
+    }
+  ]
+}

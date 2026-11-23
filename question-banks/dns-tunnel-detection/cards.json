@@ -1,0 +1,306 @@
+{
+  "source": {
+    "id": "dns-tunnel-detection",
+    "title": "DNS 隧道检测与模型评估",
+    "url": "https://arxiv.org/html/2505.22220v1",
+    "type": "研究论文与官方技术文档",
+    "note": "依据 Domainator、MITRE ATT&CK 整理；蚂蚁面经仅提供检测主题启发，经历为分享者自述。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "dnstunnel-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "隧道与DoH",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 隧道与 DNS over HTTPS（DoH）主要解决什么不同问题？",
+      "answer": "DNS 隧道利用 DNS 消息承载其他通信；DoH 把 DNS 查询和响应封装在 HTTPS 中传输。",
+      "explanation": "DoH 有合法用途，也可能与隧道通信组合使用。",
+      "example": "普通浏览器使用 DoH 查询域名并不等于建立恶意隧道。",
+      "tags": [
+        "隧道与DoH",
+        "DNS",
+        "威胁检测"
+      ],
+      "evidence": "application",
+      "reference": "https://attack.mitre.org/techniques/T1071/004/",
+      "referenceTitle": "MITRE ATT&CK：DNS 检测",
+      "supportingReferences": [
+        {
+          "id": "rfc8484-doh-ref",
+          "title": "RFC 8484：DNS Queries over HTTPS",
+          "url": "https://www.rfc-editor.org/rfc/rfc8484.html",
+          "type": "互联网标准",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "dnstunnel-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "单一词法特征局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "域名很长或字符熵很高，能否仅凭这一点确认 DNS 隧道恶意活动？",
+      "answer": "不能；这些只是可疑线索，合法流量也可能呈现类似特征。",
+      "explanation": "应结合查询行为、来源进程和其他证据。",
+      "example": "合法安全软件的 DNS 请求可能表现异常。",
+      "tags": [
+        "单一词法特征局限",
+        "DNS",
+        "威胁检测"
+      ],
+      "evidence": "application",
+      "reference": "https://attack.mitre.org/detectionstrategies/DET0400/",
+      "referenceTitle": "MITRE ATT&CK：DNS 检测策略",
+      "supportingReferences": [
+        {
+          "id": "domainator-legitimate-ref",
+          "title": "Domainator：DNS 隧道检测的良性异常",
+          "url": "https://arxiv.org/html/2505.22220v1#S3.SS5",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "dnstunnel-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "低频信标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么只检测高频 DNS 查询可能漏掉部分 DNS 信标？",
+      "answer": "有些信标以较低频率通信，可能不会达到短时间查询量阈值。",
+      "explanation": "可结合更长时间范围和其他行为线索。",
+      "example": "间隔较长的周期性查询未触发短窗口阈值。",
+      "tags": [
+        "低频信标",
+        "DNS",
+        "威胁检测",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1071/004/",
+      "referenceTitle": "MITRE ATT&CK：DNS 检测",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁网商银行公开面经（合集收录，经历为分享者自述）；DNS 隧道检测主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnstunnel-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "关联进程上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "排查可疑 DNS 隧道时，关联发起进程有什么帮助？",
+      "answer": "可以结合进程身份和运行上下文判断异常查询是否符合该主机的正常行为。",
+      "explanation": "进程异常仍是线索，需要进一步核实。",
+      "example": "关联脚本进程与其产生的异常 DNS 查询。",
+      "tags": [
+        "关联进程上下文",
+        "DNS",
+        "威胁检测",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://attack.mitre.org/detectionstrategies/DET0400/",
+      "referenceTitle": "MITRE ATT&CK：DNS 检测",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁网商银行公开面经（合集收录，经历为分享者自述）；DNS 隧道检测主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnstunnel-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "合法隧道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "检测到 DNS 承载非普通解析数据，就能认定它一定恶意吗？",
+      "answer": "不能；研究中也观察到安全软件产生的非恶意 DNS 隧道流量。",
+      "explanation": "需要结合用途、来源和授权情况判断。",
+      "example": "核查是否属于组织允许的安全产品通信。",
+      "tags": [
+        "合法隧道",
+        "DNS",
+        "威胁检测",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2505.22220v1#S4.SS4",
+      "referenceTitle": "Domainator 原论文",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁网商银行公开面经（合集收录，经历为分享者自述）；DNS 隧道检测主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnstunnel-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "检测与归属",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "DNS 隧道的二分类检测与识别具体工具或恶意软件有什么区别？",
+      "answer": "前者判断是否存在目标类型的可疑流量；后者尝试在候选类别中识别其来源。",
+      "explanation": "一个模型能检测异常，不代表能正确归属于具体工具。",
+      "example": "先识别可疑隧道，再分析是否与某已知工具相似。",
+      "tags": [
+        "检测与归属",
+        "DNS",
+        "威胁检测",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2505.22220v1#S4.SS4",
+      "referenceTitle": "Domainator 原论文",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁网商银行公开面经（合集收录，经历为分享者自述）；DNS 隧道检测主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnstunnel-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "未知工具归类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "闭集 DNS 隧道工具分类器遇到未参与训练的新工具时，为什么不能直接信任其具体归属？",
+      "answer": "新工具不在已知类别内，模型可能把它分配给某个已有类别。",
+      "explanation": "需要设计未知类别处理并结合独立证据。",
+      "example": "未见过的工具被判成训练集中相似的工具。",
+      "tags": [
+        "未知工具归类",
+        "DNS",
+        "威胁检测"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2505.22220v1#S4.SS4",
+      "referenceTitle": "Domainator 原论文"
+    },
+    {
+      "id": "dnstunnel-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "窗口字符串相似度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Domainator 如何把一个 DNS 请求窗口转成字符串相似度特征？",
+      "answer": "它计算窗口内请求子域名的两两相似度，并将每种度量汇总为窗口特征。",
+      "explanation": "原论文使用多个字符串度量，并按窗口训练分类器。",
+      "example": "比较同一窗口内多个子域名的相似程度。",
+      "tags": [
+        "窗口字符串相似度",
+        "DNS",
+        "威胁检测",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2505.22220v1#S3.SS5",
+      "referenceTitle": "Domainator 原论文",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁网商银行公开面经（合集收录，经历为分享者自述）；DNS 隧道检测主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnstunnel-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "固定前缀脆弱性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么仅靠固定子域名前缀识别 DNS 隧道工具可能不稳健？",
+      "answer": "工具作者可能修改该固定字符串，使依赖它的检测失效。",
+      "explanation": "行为统计特征也需面对编码和参数变化。",
+      "example": "更改查询前缀后，旧的字符串规则不再命中。",
+      "tags": [
+        "固定前缀脆弱性",
+        "DNS",
+        "威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2505.22220v1#S3.SS5",
+      "referenceTitle": "Domainator 原论文"
+    },
+    {
+      "id": "dnstunnel-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 隧道检测",
+      "knowledgePoint": "场景覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 DNS 隧道模型应分别评估空闲、上传和下载等通信阶段？",
+      "answer": "不同阶段的请求行为可能不同，某些阶段可能更接近正常流量。",
+      "explanation": "单一场景的表现不能代表所有阶段。",
+      "example": "模型能识别上传流量，却可能漏掉低活动量的空闲通信。",
+      "tags": [
+        "场景覆盖",
+        "DNS",
+        "威胁检测",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2505.22220v1#S5",
+      "referenceTitle": "Domainator 原论文",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁网商银行公开面经（合集收录，经历为分享者自述）；DNS 隧道检测主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

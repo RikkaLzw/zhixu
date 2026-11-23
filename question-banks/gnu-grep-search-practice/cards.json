@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "gnu-grep-search-practice",
+    "title": "GNU grep 手册：文本搜索与排障",
+    "url": "https://man7.org/linux/man-pages/man1/grep.1.html",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "grepops-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "匹配行计数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU grep -c 统计匹配次数还是匹配行数？",
+      "answer": "默认按输入文件统计被选中的行数，同一行内匹配多次也只计一行。",
+      "explanation": "与 -v 一起使用时统计未匹配行；多文件输出通常带文件名。",
+      "example": "一行包含两个 error 时，grep -c error 仍对该行计 1。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "匹配行计数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "整词匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU grep -w 对匹配子串的边界有什么要求？",
+      "answer": "匹配子串两侧必须是行边界或非单词组成字符；字母、数字和下划线属于单词组成字符。",
+      "explanation": "-w 约束匹配边界，不要求整个输入行等于模式。",
+      "example": "grep -w cat 可以选中 cat!，但不会因 cat 而选中 cat2。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "整词匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "整行匹配",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU grep -x 选择哪些行？",
+      "answer": "只选择整个输入行都与给定模式匹配的行。",
+      "explanation": "它不只是要求某个子串命中。",
+      "example": "grep -Fx ok 选择内容恰为 ok 的行。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "整行匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "匹配前后文",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU grep -A 2 和 -B 2 分别显示什么上下文？",
+      "answer": "分别显示匹配行之后两行、之前两行，并显示匹配行。",
+      "explanation": "-C 2 同时请求前后各两行；相邻上下文组可能合并。",
+      "example": "排查报错时用 grep -C 2 ERROR app.log 查看附近日志。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "匹配前后文"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "仅输出文件名",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU grep -l 与 -L 在搜索多个文件时分别列出什么？",
+      "answer": "-l 列出有选中行的文件名；-L 列出没有选中行的文件名。",
+      "explanation": "它们抑制普通的匹配行输出。",
+      "example": "grep -l ERROR *.log 可列出包含 ERROR 的日志文件。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "仅输出文件名"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "限制匹配行数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU grep -m 3 搜索一个文件时何时停止读取？",
+      "answer": "读取到第三个选中行后停止该文件的搜索。",
+      "explanation": "选项限制的是选中行数；若还指定后文选项，输出可能包含后文。",
+      "example": "grep -m 3 ERROR app.log 用于快速查看前三条匹配行。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "限制匹配行数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "安静模式状态",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "为什么不能仅凭 GNU grep -q 返回 0 就认定所有输入文件都成功读取？",
+      "answer": "-q 只要发现匹配就可返回 0，即使同时检测到错误。",
+      "explanation": "退出状态适合判断是否命中，但这个模式会掩盖部分读取错误。",
+      "example": "一个可读文件命中而另一个文件不可读时，需要另行检查错误。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "安静模式状态"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "多个模式",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU grep 多次使用 -e 时，输入行需要符合所有模式吗？",
+      "answer": "不需要；匹配任一给定模式即可选中该行。",
+      "explanation": "-e 也可以保护以连字符开头的模式，使其不被当作选项。",
+      "example": "grep -e ERROR -e WARN app.log 选出包含任一模式的行。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "多个模式"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "递归符号链接",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "GNU grep -r 与 -R 递归搜索时如何处理符号链接？",
+      "answer": "-r 仅跟随作为命令行参数给出的符号链接；-R 跟随递归过程中遇到的所有符号链接。",
+      "explanation": "跟随链接可能使搜索范围超出预期目录。",
+      "example": "项目目录中有指向其他目录的链接时，两种搜索结果可能不同。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "递归符号链接"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "文件名结束符",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU grep 的 -Z 与 -z 分别改变什么分隔方式？",
+      "answer": "-Z 在输出文件名后使用 NUL；-z 把输入和输出记录分隔符从换行改为 NUL。",
+      "explanation": "两者处理的对象不同，可与支持 NUL 分隔的工具配合。",
+      "example": "grep -lZ 可输出以 NUL 分隔的匹配文件名。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "文件名结束符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-011",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "排除目录",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU grep 递归查找时怎样按名称排除特定目录？",
+      "answer": "使用 --exclude-dir=GLOB 排除名称匹配该模式的目录。",
+      "explanation": "它控制目录遍历，而不是从输出文本中过滤路径。",
+      "example": "grep -r --exclude-dir=.git pattern . 跳过 .git 目录。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "排除目录"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "grepops-012",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU grep 搜索与排障",
+      "knowledgePoint": "以连字符开头的文件名",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU grep 搜索名为 -data 的文件时，怎样防止文件名被解析成选项？",
+      "answer": "在选项和模式后使用 -- 结束选项，再给出文件名。",
+      "explanation": "-- 之后的参数按操作数处理。",
+      "example": "grep -F error -- -data 把 -data 当作文件名。",
+      "tags": [
+        "GNU grep 搜索与排障",
+        "以连字符开头的文件名"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    }
+  ]
+}

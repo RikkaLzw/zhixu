@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "aws-vpc-flow-log-fields",
+    "title": "AWS VPC Flow Logs 文档：字段与采集边界",
+    "url": "https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "vpcflow-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "VPC Flow Logs 字段",
+      "knowledgePoint": "无数据与跳过记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VPC Flow Logs 的 log-status 为 NODATA 与 SKIPDATA 分别表示什么？",
+      "answer": "NODATA 表示聚合期间网卡无流量；SKIPDATA 表示部分流日志记录被跳过。",
+      "explanation": "SKIPDATA 可能源于内部容量约束或错误，不能当作没有流量。",
+      "example": "数据质量统计应区分无流量与记录缺失。",
+      "tags": [
+        "VPC Flow Logs 字段",
+        "无数据与跳过记录"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html"
+    },
+    {
+      "id": "vpcflow-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "VPC Flow Logs 字段",
+      "knowledgePoint": "聚合 TCP 标志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VPC Flow Logs 的 tcp-flags 为什么不能直接当作某一个 TCP 包的标志？",
+      "answer": "聚合区间内受支持的 TCP 标志可以按位或到同一记录。",
+      "explanation": "一个记录中的多个标志可能来自不同报文。",
+      "example": "短连接的 SYN 和 FIN 可在同一记录中得到值 3。",
+      "tags": [
+        "VPC Flow Logs 字段",
+        "聚合 TCP 标志"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html"
+    },
+    {
+      "id": "vpcflow-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "VPC Flow Logs 字段",
+      "knowledgePoint": "未支持标志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VPC Flow Logs 中只有单独 ACK 标志的流量，tcp-flags 可能是什么值？",
+      "answer": "为 0，因为单独 ACK 不在该字段列出的受支持标志中。",
+      "explanation": "SYN-ACK 是受支持的组合，其报告值为 18。",
+      "example": "不能由 tcp-flags=0 推断该流量一定没有任何 TCP 标志。",
+      "tags": [
+        "VPC Flow Logs 字段",
+        "未支持标志"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html"
+    },
+    {
+      "id": "vpcflow-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "VPC Flow Logs 字段",
+      "knowledgePoint": "包级原始地址",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VPC Flow Logs 的 pkt-srcaddr 和 pkt-dstaddr 有什么用途？",
+      "answer": "分别提供包级原始源地址和目的地址，可结合 srcaddr 与 dstaddr 区分原始端点和中间网络接口。",
+      "explanation": "NAT 网关等场景中，包级地址与对应接口地址可能不同。",
+      "example": "分析经过 NAT 的流量时，可结合包级地址与接口地址。",
+      "tags": [
+        "VPC Flow Logs 字段",
+        "包级原始地址"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/flow-log-records.html"
+    },
+    {
+      "id": "vpcflow-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "VPC Flow Logs 字段",
+      "knowledgePoint": "采集盲区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS VPC Flow Logs 是否记录所有 IP 流量？",
+      "answer": "不记录所有流量；例如实例访问 Amazon DNS、实例元数据地址以及 DHCP 流量属于文档列出的例外。",
+      "explanation": "不能因为日志没有记录就断言此类流量不存在。",
+      "example": "调查元数据地址访问时需要结合其他证据。",
+      "tags": [
+        "VPC Flow Logs 字段",
+        "采集盲区"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-limitations.html"
+    }
+  ]
+}

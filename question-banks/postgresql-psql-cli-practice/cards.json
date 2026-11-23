@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "postgresql-psql-cli-practice",
+    "title": "PostgreSQL 17 文档：psql 常用操作",
+    "url": "https://www.postgresql.org/docs/17/app-psql.html",
+    "type": "论文、官方文档或数据集说明",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "psqlcli-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "psql 命令行",
+      "knowledgePoint": "命令类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "psql 中以反斜杠开头的 \\d、\\timing 等命令由谁处理？",
+      "answer": "由 psql 客户端处理；它们是 psql 元命令，而不是普通 SQL 语句。",
+      "explanation": "SQL 语句则发送给 PostgreSQL 服务器执行。",
+      "example": "用 \\d 查看表定义。",
+      "tags": [
+        "psql 命令行",
+        "命令类别"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/app-psql.html"
+    },
+    {
+      "id": "psqlcli-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "psql 命令行",
+      "knowledgePoint": "描述关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "psql 的 \\d 表名 通常用于查看什么？",
+      "answer": "查看匹配关系的列、类型及相关索引、约束等定义。",
+      "explanation": "具体显示内容取决于关系类型和权限。",
+      "example": "用 \\d users 检查表结构。",
+      "tags": [
+        "psql 命令行",
+        "描述关系"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/app-psql.html"
+    },
+    {
+      "id": "psqlcli-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "psql 命令行",
+      "knowledgePoint": "客户端帮助",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "psql 的 \\? 与 \\h 的帮助范围有什么区别？",
+      "answer": "\\? 查看 psql 元命令等帮助；\\h 查看 SQL 命令语法帮助。",
+      "explanation": "具体可选主题或命令依版本而异。",
+      "example": "用 \\h SELECT 查看 SELECT 语法帮助。",
+      "tags": [
+        "psql 命令行",
+        "客户端帮助"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/app-psql.html"
+    },
+    {
+      "id": "psqlcli-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "psql 命令行",
+      "knowledgePoint": "客户端复制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "psql 的 \\copy 与服务器端 COPY 使用文件时有何关键区别？",
+      "answer": "\\copy 由 psql 客户端读写文件并通过连接传输数据；服务器端 COPY 由服务器访问文件。",
+      "explanation": "文件路径和访问权限分别属于客户端或服务器环境。",
+      "example": "从本机文件向远端数据库导入时核对文件位置。",
+      "tags": [
+        "psql 命令行",
+        "客户端复制"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/app-psql.html"
+    },
+    {
+      "id": "psqlcli-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "psql 命令行",
+      "knowledgePoint": "遇错停止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "psql 脚本中设置 ON_ERROR_STOP=on 会改变什么行为？",
+      "answer": "出现错误时停止当前脚本；非交互模式下以状态码 3 退出。",
+      "explanation": "默认会继续处理后续命令；连接等致命错误的退出码可能不同。",
+      "example": "自动执行迁移脚本时显式开启遇错停止。",
+      "tags": [
+        "psql 命令行",
+        "遇错停止"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/app-psql.html"
+    },
+    {
+      "id": "psqlcli-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "psql 命令行",
+      "knowledgePoint": "单事务执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "psql 的 --single-transaction 配合 -f 或 -c 通常做什么？",
+      "answer": "在这些命令前后分别发送 BEGIN 和 COMMIT，使它们运行于一个事务中。",
+      "explanation": "配合 ON_ERROR_STOP 可在出错时回滚；不支持事务块的命令等情况需要另行处理。",
+      "example": "批量执行可放入同一事务的数据库脚本。",
+      "tags": [
+        "psql 命令行",
+        "单事务执行"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/app-psql.html"
+    },
+    {
+      "id": "psqlcli-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "psql 命令行",
+      "knowledgePoint": "展示耗时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "psql 的 \\timing 命令有什么作用？",
+      "answer": "开启、关闭或切换 SQL 语句执行时间的显示。",
+      "explanation": "显示时间不是单独的数据库执行计划分析。",
+      "example": "排查交互式查询耗时。",
+      "tags": [
+        "psql 命令行",
+        "展示耗时"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/app-psql.html"
+    }
+  ]
+}

@@ -1,0 +1,243 @@
+{
+  "source": {
+    "id": "company-afl-interview",
+    "title": "蚂蚁安全面经启发：AFL++ 二进制目标与持久模式",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+    "type": "公开面经合集",
+    "note": "合集收录个人面试复盘，可能含转载；公司、岗位和经历为分享者自述。原帖涉及 QEMU 与源码插桩等话题，具体问题依据技术文档自行整理。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "aflint-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "二进制与源码插桩",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "AFL++ 的 QEMU 模式与编译时插桩在目标代码获取上有什么区别？",
+      "answer": "QEMU 模式可用于只有可执行文件的目标；编译时插桩通常需要能重新构建目标代码。",
+      "explanation": "面经询问了 QEMU 与源码模式；具体答案依据 AFL++ 文档整理。",
+      "example": "没有源码时为 Linux 二进制目标考虑 QEMU 模式。",
+      "tags": [
+        "二进制与源码插桩",
+        "模糊测试工程",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁安全岗位公开面经（合集收录，经历自述；主题启发）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "aflpp-tech-ref",
+          "title": "AFL++：二进制目标与持久模式",
+          "url": "https://github.com/AFLplusplus/AFLplusplus/blob/stable/docs/fuzzing_binary-only_targets.md",
+          "type": "开源项目文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "aflint-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "QEMU用户态模拟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 文档中的 Linux QEMU 模式使用哪类模拟？",
+      "answer": "它使用 QEMU 用户态模拟，为二进制程序提供运行时插桩。",
+      "explanation": "用户态模拟不等同于启动完整的虚拟机和客户操作系统。",
+      "example": "使用该模式测试没有源码的 Linux 程序。",
+      "tags": [
+        "QEMU用户态模拟",
+        "模糊测试工程",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁安全岗位公开面经（合集收录，经历自述；主题启发）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "aflpp-tech-ref",
+          "title": "AFL++：二进制目标与持久模式",
+          "url": "https://github.com/AFLplusplus/AFLplusplus/blob/stable/docs/fuzzing_binary-only_targets.md",
+          "type": "开源项目文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "aflint-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "持久模式执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 的持久模式如何减少反复启动目标的开销？",
+      "answer": "它在同一个已 fork 的进程中处理多个输入，而不是每次输入都创建新进程。",
+      "explanation": "目标必须允许重复调用并正确处理状态。",
+      "example": "在循环中把多个输入依次交给解析函数。",
+      "tags": [
+        "持久模式执行",
+        "模糊测试工程",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁安全岗位公开面经（合集收录，经历自述；主题启发）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "aflpp-tech-ref",
+          "title": "AFL++：二进制目标与持久模式",
+          "url": "https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.persistent_mode.md",
+          "type": "开源项目文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "aflint-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "持久模式状态重置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 AFL++ 持久模式需要在输入之间重置目标状态？",
+      "answer": "残留状态可能使前一次输入影响后续结果，造成误报或降低有效探索。",
+      "explanation": "还应检查资源泄漏及文件描述符等状态。",
+      "example": "每次调用后释放解析器对象并恢复初始状态。",
+      "tags": [
+        "持久模式状态重置",
+        "模糊测试工程",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁安全岗位公开面经（合集收录，经历自述；主题启发）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "aflpp-tech-ref",
+          "title": "AFL++：二进制目标与持久模式",
+          "url": "https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.persistent_mode.md",
+          "type": "开源项目文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "aflint-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "持久模式稳定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 持久模式的 stability 明显低于非持久模式时，可以优先检查什么？",
+      "answer": "可以检查目标是否在不同输入间保留了影响执行路径的状态。",
+      "explanation": "稳定性下降只是线索，不单独证明具体故障原因。",
+      "example": "检查缓存和全局变量是否在迭代间清理。",
+      "tags": [
+        "持久模式稳定性",
+        "模糊测试工程",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁安全岗位公开面经（合集收录，经历自述；主题启发）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "aflpp-tech-ref",
+          "title": "AFL++：二进制目标与持久模式",
+          "url": "https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.persistent_mode.md",
+          "type": "开源项目文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "aflint-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "延迟forkserver初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 延迟 forkserver 初始化的主要目的是什么？",
+      "answer": "把耗时且可安全复用的初始化放在 forkserver 之前，减少每次测试重复执行的工作。",
+      "explanation": "初始化位置仍需避免在克隆前读取模糊输入或创建不安全的运行状态。",
+      "example": "先加载固定配置，再启动 forkserver 并处理输入。",
+      "tags": [
+        "延迟forkserver初始化",
+        "模糊测试工程",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁安全岗位公开面经（合集收录，经历自述；主题启发）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "aflpp-tech-ref",
+          "title": "AFL++：二进制目标与持久模式",
+          "url": "https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.persistent_mode.md",
+          "type": "开源项目文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "aflint-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "延迟初始化与输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 AFL++ 延迟初始化的克隆点不宜放在读取模糊输入之后？",
+      "answer": "克隆点之后的每次执行需要获得当前测试输入；过早读取可能让子进程复用不适当的输入状态。",
+      "explanation": "文档也提醒注意线程、定时器和文件描述符等会影响克隆的状态。",
+      "example": "在读取输入长度之前启动 forkserver。",
+      "tags": [
+        "延迟初始化与输入",
+        "模糊测试工程",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁安全岗位公开面经（合集收录，经历自述；主题启发）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "aflpp-tech-ref",
+          "title": "AFL++：二进制目标与持久模式",
+          "url": "https://github.com/AFLplusplus/AFLplusplus/blob/stable/instrumentation/README.persistent_mode.md",
+          "type": "开源项目文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

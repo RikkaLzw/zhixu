@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "pandas-merge-key-practice",
+    "title": "pandas 2.2.3 文档：合并键与来源",
+    "url": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge.html",
+    "type": "论文、官方文档或数据集说明",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pdmerge-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 合并键",
+      "knowledgePoint": "空键匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 2.2.3 的 merge 中，左右连接键都为缺失值时可能怎样？",
+      "answer": "这些缺失键行会相互匹配，这与常见 SQL 连接对 NULL 的行为不同。",
+      "explanation": "重复缺失键还可能造成多行组合。",
+      "example": "合并前先检查是否应排除缺失键。",
+      "tags": [
+        "Pandas 合并键",
+        "空键匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge.html"
+    },
+    {
+      "id": "pdmerge-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 合并键",
+      "knowledgePoint": "来源指示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge 设置 indicator=True 后新增列表示什么？",
+      "answer": "新增 _merge 列，标明行来自左表、右表或两表均匹配。",
+      "explanation": "可用于核查外连接中未匹配的记录。",
+      "example": "检查 left_only、right_only 和 both 的数量。",
+      "tags": [
+        "Pandas 合并键",
+        "来源指示"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge.html"
+    },
+    {
+      "id": "pdmerge-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 合并键",
+      "knowledgePoint": "笛卡尔积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 2.2.3 使用 merge(how=\"cross\") 能否同时指定连接键，结果是什么？",
+      "answer": "不能指定连接列；结果是左右表行的笛卡尔积。",
+      "explanation": "结果行数会随两表大小相乘。",
+      "example": "2 行左表与 3 行右表生成 6 行。",
+      "tags": [
+        "Pandas 合并键",
+        "笛卡尔积"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge.html"
+    },
+    {
+      "id": "pdmerge-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 合并键",
+      "knowledgePoint": "同名列后缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge 的 suffixes 参数主要处理什么？",
+      "answer": "为左右表中重名的非连接列添加后缀，以区分来源。",
+      "explanation": "至少一侧的后缀需不是 None。",
+      "example": "把两个 value 列区分为 value_left 和 value_right。",
+      "tags": [
+        "Pandas 合并键",
+        "同名列后缀"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge.html"
+    },
+    {
+      "id": "pdmerge-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 合并键",
+      "knowledgePoint": "默认连接列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge 未指定 on 且不使用索引连接时，默认使用哪些列作为键？",
+      "answer": "使用两张表共有的列名作为连接键。",
+      "explanation": "隐式使用多个同名列可能与业务预期不同。",
+      "example": "明确写出 on 参数可提高可读性。",
+      "tags": [
+        "Pandas 合并键",
+        "默认连接列"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge.html"
+    },
+    {
+      "id": "pdmerge-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 合并键",
+      "knowledgePoint": "索引与列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 按列合并时，输入 DataFrame 的索引是否一定保留在结果中？",
+      "answer": "不一定；按列对列合并时，输入的 DataFrame 索引会被忽略。",
+      "explanation": "需要索引参与连接时可明确指定 left_index 或 right_index。",
+      "example": "若行标识保存在索引中，先明确是否需要保留。",
+      "tags": [
+        "Pandas 合并键",
+        "索引与列"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge.html"
+    }
+  ]
+}

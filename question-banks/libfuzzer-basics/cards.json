@@ -1,0 +1,232 @@
+{
+  "source": {
+    "id": "libfuzzer-basics",
+    "title": "LLVM libFuzzer 与 AddressSanitizer 文档",
+    "url": "https://llvm.org/docs/LibFuzzer.html",
+    "type": "官方文档与标准",
+    "note": "根据所列资料自行编写并用简体中文整理，示例为自编。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "lfuzz-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "覆盖引导",
+      "knowledgePoint": "覆盖引导模糊测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "覆盖率引导的模糊测试怎样利用执行反馈？",
+      "answer": "它观察输入触达的代码区域，保留带来新覆盖的输入并继续变异。",
+      "explanation": "覆盖反馈有助于探索新路径，但不是漏洞存在的直接证据。",
+      "example": "保存触达新分支的输入作为后续变异种子。",
+      "tags": [
+        "覆盖引导模糊测试",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "lfuzz-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "输入语料",
+      "knowledgePoint": "种子语料",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模糊测试的 seed corpus 有什么作用？",
+      "answer": "它提供初始输入样本，供引擎执行和变异以探索目标程序。",
+      "explanation": "复杂格式通常受益于多样且符合格式的初始样本。",
+      "example": "为图片解析器准备小型有效和无效图片作为种子。",
+      "tags": [
+        "种子语料",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "lfuzz-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "输入语料",
+      "knowledgePoint": "空种子语料",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 可以从没有初始种子的状态开始吗？",
+      "answer": "可以，但对于结构复杂的输入格式通常会更低效。",
+      "explanation": "引擎仍会生成和变异输入，只是可能难以触达深层逻辑。",
+      "example": "没有结构化种子时，解析器可能一直在格式检查处拒绝输入。",
+      "tags": [
+        "空种子语料",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "lfuzz-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "输入语料",
+      "knowledgePoint": "语料最小化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在保持覆盖的前提下最小化 fuzz corpus 有什么用途？",
+      "answer": "它减少冗余输入，使保存和重复运行语料的成本更低。",
+      "explanation": "这里保留的是所选覆盖标准，不能保证保留所有不同漏洞。",
+      "example": "从大量输入中选出仍覆盖相同代码区域的较小集合。",
+      "tags": [
+        "语料最小化",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "lfuzz-005",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "测试入口",
+      "knowledgePoint": "同进程多次执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 为什么要求目标函数适合在同一进程中被多次调用？",
+      "answer": "引擎会在同一进程内用许多不同输入反复执行目标函数。",
+      "explanation": "状态污染和资源泄漏可能影响后续输入的结果。",
+      "example": "每次测试结束后清理本次创建的对象。",
+      "tags": [
+        "同进程多次执行",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "lfuzz-006",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "测试入口",
+      "knowledgePoint": "任意输入容忍",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "libFuzzer 的目标函数应怎样处理空、超长或格式错误输入？",
+      "answer": "它应能接收并安全处理各种输入，而不是假设所有输入都合法。",
+      "explanation": "处理无效输入可以正常返回；目标不能因任意输入调用 exit 终止进程。",
+      "example": "输入长度为零时安全返回。",
+      "tags": [
+        "任意输入容忍",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "lfuzz-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "测试入口",
+      "knowledgePoint": "目标确定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 fuzz target 应尽量对相同输入保持确定性？",
+      "answer": "非确定性会让覆盖反馈和问题复现不稳定，降低模糊测试效率。",
+      "explanation": "无法消除的随机性应尽可能受控并记录。",
+      "example": "避免使用与输入无关的随机分支选择被测路径。",
+      "tags": [
+        "目标确定性",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "lfuzz-008",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "测试入口",
+      "knowledgePoint": "输入执行速度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么覆盖引导 fuzz target 通常应保持单次执行快速？",
+      "answer": "在相同时间预算内，更快的目标通常允许执行更多输入和变异。",
+      "explanation": "仍需保证真正执行到有意义的目标代码。",
+      "example": "去掉每次输入都输出的大量调试日志。",
+      "tags": [
+        "输入执行速度",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "lfuzz-009",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "检测工具",
+      "knowledgePoint": "AddressSanitizer作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AddressSanitizer 在模糊测试中主要帮助发现什么？",
+      "answer": "它在运行时检测多种内存错误，例如越界访问和释放后使用。",
+      "explanation": "是否能检测到取决于插桩、执行路径和错误类型。",
+      "example": "被测程序发生堆越界写入时生成诊断报告。",
+      "tags": [
+        "AddressSanitizer作用",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://clang.llvm.org/docs/AddressSanitizer.html"
+    },
+    {
+      "id": "lfuzz-010",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "检测工具",
+      "knowledgePoint": "覆盖率与漏洞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么代码覆盖率提高不等于一定发现了漏洞？",
+      "answer": "覆盖率只说明执行触达了哪些代码，不直接判断程序行为是否存在缺陷。",
+      "explanation": "仍需要检测机制、触发条件和人工分析。",
+      "example": "新输入执行到一条新分支，也可能没有产生任何错误。",
+      "tags": [
+        "覆盖率与漏洞",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "lfuzz-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "输入语料",
+      "knowledgePoint": "崩溃输入与语料",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "libFuzzer 发现导致崩溃的输入后通常会做什么？",
+      "answer": "它会报告错误并将触发输入写入磁盘，供后续复现。",
+      "explanation": "默认运行方式与 fork 等其他运行模式的停止行为可能不同。",
+      "example": "保留生成的 crash 文件并用相同构建复现。",
+      "tags": [
+        "崩溃输入与语料",
+        "模糊测试",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    }
+  ]
+}

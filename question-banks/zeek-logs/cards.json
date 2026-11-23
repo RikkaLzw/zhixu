@@ -7,17 +7,290 @@
     "note": "字段含义参考 Zeek 日志文档；检测特征和实验例子为原创应用。"
   },
   "cards": [
-    {"id":"zeek-001","category":"detection","level":"入门","question":"Zeek 的 conn.log 对 AI4SEC 流量检测有什么价值？","answer":"它以连接为单位记录网络活动，可以作为连接级特征和事件关联的基础。","explanation":"模型可利用连接端点、协议、持续时间和流量统计构建检测样本。","example":"按源主机和时间窗口汇总连接次数与目标端口数，分析扫描行为。","tags":["Zeek","conn.log","特征"],"evidence":"application","reference":"https://docs.zeek.org/en/current/logs/conn.html"},
-    {"id":"zeek-002","category":"detection","level":"入门","question":"Zeek 连接记录中的 uid 可用于什么？","answer":"uid 可用于关联与同一连接相关的 Zeek 日志记录。","explanation":"它是关联线索，跨不同传感器、数据源或采集批次时仍需确认作用范围。","example":"用 uid 将连接记录与相关的 DNS 或 HTTP 记录关联。","tags":["Zeek","uid","关联"],"evidence":"source","reference":"https://docs.zeek.org/en/current/logs/conn.html"},
-    {"id":"zeek-003","category":"detection","level":"入门","question":"Zeek 日志中的 orig 和 resp 分别表示什么？","answer":"orig 指连接发起方，resp 指连接响应方。","explanation":"建模时应明确方向，避免把源和目标的特征混在一起。","example":"统计发起方在一段时间内连接的不同响应方端口数。","tags":["方向","连接日志"],"evidence":"source","reference":"https://docs.zeek.org/en/current/logs/conn.html"},
-    {"id":"zeek-004","category":"detection","level":"实践","question":"如何用 Zeek 连接日志构造潜在扫描检测特征？","answer":"按发起方和时间窗口统计连接次数、不同目标数、不同端口数和失败比例。","explanation":"这些统计只是行为线索，还需要结合业务背景与标注结果判断。","example":"对五分钟窗口提取唯一目标 IP 数，并与正常运维扫描比较。","tags":["扫描检测","时间窗口"],"evidence":"application"},
-    {"id":"zeek-005","category":"detection","level":"进阶","question":"Zeek 连接状态字段为什么不能直接当作攻击标签？","answer":"连接状态描述连接过程，不直接说明行为是否恶意。","explanation":"连接失败可能来自网络故障、配置问题、正常探测或攻击。","example":"大量失败连接可作为模型特征，再结合来源、目标和其他事件研判。","tags":["conn_state","标签"],"evidence":"application","reference":"https://docs.zeek.org/en/current/scripts/base/protocols/conn/main.zeek.html"},
-    {"id":"zeek-006","category":"detection","level":"进阶","question":"为什么 Zeek 中的连接持续时间需要结合检测时机使用？","answer":"完整持续时间通常要在连接结束或记录产生时才能确定。","explanation":"如果系统要求连接进行中告警，应使用当前已经观察到的时长。","example":"训练实时模型时，仅取截止到预测时刻的连接统计。","tags":["持续时间","时间泄漏"],"evidence":"application"},
-    {"id":"zeek-007","category":"detection","level":"入门","question":"Zeek 的 dns.log 可以为恶意域名检测提供哪些信息？","answer":"它记录 DNS 查询及响应相关字段，可用于构造域名与查询行为特征。","explanation":"具体可用字段取决于配置和捕获情况。","example":"统计某主机查询失败比例、不同域名数量和查询频率。","tags":["DNS","域名检测"],"evidence":"source","reference":"https://docs.zeek.org/en/current/logs/dns.html"},
-    {"id":"zeek-008","category":"detection","level":"实践","question":"为什么恶意域名模型要组合字符串特征与查询行为？","answer":"域名形态和查询上下文提供不同证据，单一字符串特征容易误判。","explanation":"合法服务也可能使用长域名或随机子域名。","example":"将域名长度、字符分布与查询频率、响应状态联合分析。","tags":["DNS","特征工程"],"evidence":"application"},
-    {"id":"zeek-009","category":"detection","level":"进阶","question":"Zeek 日志字段缺失时，模型应如何处理？","answer":"区分字段确实不可得、未解析、无响应和数据丢失等情况，再设计缺失值处理。","explanation":"把所有缺失都当作零可能掩盖不同含义，还可能让模型学到采集环境差异。","example":"为响应字节数缺失增加缺失标记，并检查捕获配置。","tags":["缺失值","采集质量"],"evidence":"application"},
-    {"id":"zeek-010","category":"detection","level":"实践","question":"多传感器 Zeek 日志合并时应保留什么上下文？","answer":"保留传感器、采集时间、网络位置和原始连接标识。","explanation":"同一活动可能被多个传感器观察，关联和去重需要明确采集视角。","example":"合并前以传感器和连接标识追踪来源，再检查重复事件。","tags":["多传感器","数据溯源"],"evidence":"application"},
-    {"id":"zeek-011","category":"detection","level":"进阶","question":"如何把 Zeek 连接记录转成主机行为序列？","answer":"先按主机关联记录，再按时间排序并保留方向和事件类型。","explanation":"序列的窗口与预测时刻要事先固定，以免包含事后事件。","example":"用前十分钟连接序列预测接下来是否需要产生调查告警。","tags":["行为序列","时间窗口"],"evidence":"application"},
-    {"id":"zeek-012","category":"detection","level":"实践","question":"Zeek 日志产生的高风险分数为什么仍需回查原始事件？","answer":"分数只能提示优先级，原始事件和关联上下文用于验证原因。","explanation":"审查人员需要判断触发特征、业务合理性和其他证据是否支持结论。","example":"从高分主机回查对应 conn.log、dns.log 与资产信息。","tags":["证据","告警研判"],"evidence":"application"}
+    {
+      "id": "zeek-001",
+      "category": "detection",
+      "level": "入门",
+      "question": "Zeek 的 conn.log 对 AI4SEC 流量检测有什么价值？",
+      "answer": "它以连接为单位记录网络活动，可以作为连接级特征和事件关联的基础。",
+      "explanation": "模型可利用连接端点、协议、持续时间和流量统计构建检测样本。",
+      "example": "按源主机和时间窗口汇总连接次数与目标端口数，分析扫描行为。",
+      "tags": [
+        "Zeek",
+        "conn.log",
+        "特征"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.zeek.org/en/current/logs/conn.html",
+      "origin": "自行整理",
+      "subtopic": "连接日志",
+      "knowledgePoint": "连接记录用途",
+      "questionType": "安全场景"
+    },
+    {
+      "id": "zeek-002",
+      "category": "detection",
+      "level": "入门",
+      "question": "Zeek 连接记录中的 uid 可用于什么？",
+      "answer": "uid 可用于关联与同一连接相关的 Zeek 日志记录。",
+      "explanation": "它是关联线索，跨不同传感器、数据源或采集批次时仍需确认作用范围。",
+      "example": "用 uid 将连接记录与相关的 DNS 或 HTTP 记录关联。",
+      "tags": [
+        "Zeek",
+        "uid",
+        "关联"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/logs/conn.html",
+      "subtopic": "连接日志",
+      "knowledgePoint": "Zeek连接UID",
+      "questionType": "概念与原理",
+      "origin": "自行整理"
+    },
+    {
+      "id": "zeek-003",
+      "category": "detection",
+      "level": "入门",
+      "question": "Zeek 日志中的 orig 和 resp 分别表示什么？",
+      "answer": "orig 指连接发起方，resp 指连接响应方。",
+      "explanation": "建模时应明确方向，避免把源和目标的特征混在一起。",
+      "example": "统计发起方在一段时间内连接的不同响应方端口数。",
+      "tags": [
+        "方向",
+        "连接日志"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/logs/conn.html",
+      "subtopic": "连接日志",
+      "knowledgePoint": "发起方与响应方",
+      "questionType": "比较与选型",
+      "origin": "自行整理"
+    },
+    {
+      "id": "zeek-004",
+      "category": "detection",
+      "level": "实践",
+      "question": "如何用 Zeek 连接日志构造潜在扫描检测特征？",
+      "answer": "按发起方和时间窗口统计连接次数、不同目标数、不同端口数和失败比例。",
+      "explanation": "这些统计只是行为线索，还需要结合业务背景与标注结果判断。",
+      "example": "对五分钟窗口提取唯一目标 IP 数，并与正常运维扫描比较。",
+      "tags": [
+        "扫描检测",
+        "时间窗口"
+      ],
+      "evidence": "application",
+      "subtopic": "连接日志",
+      "knowledgePoint": "扫描行为窗口特征",
+      "questionType": "安全场景",
+      "origin": "自行整理",
+      "reference": "https://docs.zeek.org/en/current/logs/conn.html",
+      "supportingReferences": [
+        {
+          "id": "zeek-review-ref",
+          "title": "MITRE ATT&CK：Network Service Discovery",
+          "url": "https://attack.mitre.org/techniques/T1046/",
+          "type": "官方知识库",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "zeek-005",
+      "category": "detection",
+      "level": "进阶",
+      "question": "Zeek 连接状态字段为什么不能直接当作攻击标签？",
+      "answer": "连接状态描述连接过程，不直接说明行为是否恶意。",
+      "explanation": "连接失败可能来自网络故障、配置问题、正常探测或攻击。",
+      "example": "大量失败连接可作为模型特征，再结合来源、目标和其他事件研判。",
+      "tags": [
+        "conn_state",
+        "标签"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.zeek.org/en/current/scripts/base/protocols/conn/main.zeek.html",
+      "origin": "自行整理",
+      "subtopic": "连接日志",
+      "knowledgePoint": "连接状态与标签",
+      "questionType": "易错点"
+    },
+    {
+      "id": "zeek-006",
+      "category": "detection",
+      "level": "进阶",
+      "question": "为什么 Zeek 中的连接持续时间需要结合检测时机使用？",
+      "answer": "完整持续时间通常要在连接结束或记录产生时才能确定。",
+      "explanation": "如果系统要求连接进行中告警，应使用当前已经观察到的时长。",
+      "example": "训练实时模型时，仅取截止到预测时刻的连接统计。",
+      "tags": [
+        "持续时间",
+        "时间泄漏"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.zeek.org/en/current/scripts/base/protocols/conn/main.zeek.html"
+    },
+    {
+      "id": "zeek-007",
+      "category": "detection",
+      "level": "入门",
+      "question": "Zeek 的 dns.log 可以为恶意域名检测提供哪些信息？",
+      "answer": "它记录 DNS 查询及响应相关字段，可用于构造域名与查询行为特征。",
+      "explanation": "具体可用字段取决于配置和捕获情况。",
+      "example": "统计某主机查询失败比例、不同域名数量和查询频率。",
+      "tags": [
+        "DNS",
+        "域名检测"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/logs/dns.html",
+      "subtopic": "DNS日志",
+      "knowledgePoint": "DNS日志检测特征",
+      "questionType": "安全场景",
+      "origin": "自行整理"
+    },
+    {
+      "id": "zeek-008",
+      "category": "detection",
+      "level": "实践",
+      "question": "为什么恶意域名模型要组合字符串特征与查询行为？",
+      "answer": "域名形态和查询上下文提供不同证据，单一字符串特征容易误判。",
+      "explanation": "合法服务也可能使用长域名或随机子域名。",
+      "example": "将域名长度、字符分布与查询频率、响应状态联合分析。",
+      "tags": [
+        "DNS",
+        "特征工程",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "subtopic": "DNS日志",
+      "knowledgePoint": "域名与行为特征",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "reference": "https://docs.zeek.org/en/current/logs/dns.html",
+      "supportingReferences": [
+        {
+          "id": "zeek-review-ref",
+          "title": "Predicting Domain Generation Algorithms 原论文",
+          "url": "https://arxiv.org/abs/1611.00791",
+          "type": "研究论文",
+          "evidence": "source"
+        },
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全岗位公开面经（合集收录，经历为分享者自述）",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "zeek-009",
+      "category": "detection",
+      "level": "实践",
+      "question": "Zeek 日志字段缺失时，模型应如何处理？",
+      "answer": "区分字段确实不可得、未解析、无响应和数据丢失等情况，再设计缺失值处理。",
+      "explanation": "把所有缺失都当作零可能掩盖不同含义，还可能让模型学到采集环境差异。",
+      "example": "为响应字节数缺失增加缺失标记，并检查捕获配置。",
+      "tags": [
+        "缺失值",
+        "采集质量"
+      ],
+      "evidence": "application",
+      "subtopic": "网络日志数据质量",
+      "knowledgePoint": "字段缺失原因",
+      "questionType": "实践与诊断",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "zeek-conn-missing-ref",
+          "title": "Zeek 9.0.1：连接状态、可选字段与采集缺口",
+          "url": "https://docs.zeek.org/en/v9.0.1/scripts/base/protocols/conn/main.zeek.html#type-Conn::Info",
+          "type": "官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "sklearn-missing-indicator-ref",
+          "title": "scikit-learn 1.9.1：缺失指示与填充",
+          "url": "https://scikit-learn.org/1.9/modules/impute.html#marking-imputed-values",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "zeek-010",
+      "category": "detection",
+      "level": "实践",
+      "question": "多传感器 Zeek 日志合并时应保留什么上下文？",
+      "answer": "保留传感器、采集时间、网络位置和原始连接标识。",
+      "explanation": "同一活动可能被多个传感器观察，关联和去重需要明确采集视角。",
+      "example": "合并前以传感器和连接标识追踪来源，再检查重复事件。",
+      "tags": [
+        "多传感器",
+        "数据溯源"
+      ],
+      "evidence": "application",
+      "subtopic": "多源遥测",
+      "knowledgePoint": "多传感器采集上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "community-id-spec",
+          "title": "Community ID Flow Hashing 规范",
+          "url": "https://github.com/corelight/community-id-spec",
+          "type": "开放技术规范",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "zeek-011",
+      "category": "detection",
+      "level": "实践",
+      "question": "如何把 Zeek 连接记录转成主机行为序列？",
+      "answer": "先按主机关联记录，再按时间排序并保留方向和事件类型。",
+      "explanation": "序列的窗口与预测时刻要事先固定，以免包含事后事件。",
+      "example": "用前十分钟连接序列预测接下来是否需要产生调查告警。",
+      "tags": [
+        "行为序列",
+        "时间窗口"
+      ],
+      "evidence": "application",
+      "subtopic": "连接日志",
+      "knowledgePoint": "主机行为序列",
+      "questionType": "安全场景",
+      "origin": "自行整理",
+      "reference": "https://docs.zeek.org/en/current/logs/conn.html"
+    },
+    {
+      "id": "zeek-012",
+      "category": "detection",
+      "level": "实践",
+      "question": "基于 Zeek 日志的模型给出高风险分数后，为什么还要回查相关日志？",
+      "answer": "分数只是模型的判断线索；回查日志和相关上下文有助于核实触发原因和行为是否可疑。",
+      "explanation": "正常业务变更也可能触发异常告警，需结合资产信息和其他证据判断。",
+      "example": "从高分主机回查对应 conn.log、dns.log 与资产信息。",
+      "tags": [
+        "证据",
+        "告警研判"
+      ],
+      "evidence": "application",
+      "subtopic": "异常结果核查",
+      "knowledgePoint": "日志模型评分复核",
+      "questionType": "安全场景",
+      "origin": "自行整理",
+      "reference": "https://docs.zeek.org/en/current/logs/conn.html",
+      "supportingReferences": [
+        {
+          "id": "nist-ids-review-ref",
+          "title": "NIST SP 800-94：入侵检测告警与日志核查",
+          "url": "https://csrc.nist.gov/pubs/sp/800/94/final",
+          "type": "官方技术文档",
+          "evidence": "application"
+        }
+      ]
+    }
   ]
 }

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "syzkaller-syscall-fuzzing",
+    "title": "syzkaller 固定提交：系统调用模糊测试",
+    "url": "https://github.com/google/syzkaller/blob/b2c694599a95b18d4aa0f7aa91f52f331ebdbfd8/docs/internals.md",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题所列论文或固定版本资料自行整理，示例为自编。在线文档按 2026-11-21 查看内容。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "syzbase-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "syzkaller 内核模糊测试",
+      "knowledgePoint": "输入形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "syzkaller 的一个测试程序通常由什么组成？",
+      "answer": "由带具体参数值的系统调用序列组成。",
+      "explanation": "系统调用之间可以通过资源值形成依赖。",
+      "example": "先打开文件，再读取和关闭文件。",
+      "tags": [
+        "syzkaller 内核模糊测试",
+        "输入形式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/syzkaller/blob/b2c694599a95b18d4aa0f7aa91f52f331ebdbfd8/docs/syscall_descriptions.md"
+    },
+    {
+      "id": "syzbase-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "syzkaller 内核模糊测试",
+      "knowledgePoint": "接口描述",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "syzkaller 的系统调用描述主要用于什么？",
+      "answer": "描述接口和参数，使工具能够生成、变异和处理调用序列。",
+      "explanation": "描述仍需与被测内核接口匹配并验证。",
+      "example": "为新驱动的 ioctl 参数编写描述。",
+      "tags": [
+        "syzkaller 内核模糊测试",
+        "接口描述"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/syzkaller/blob/b2c694599a95b18d4aa0f7aa91f52f331ebdbfd8/docs/syscall_descriptions.md"
+    },
+    {
+      "id": "syzbase-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "syzkaller 内核模糊测试",
+      "knowledgePoint": "资源依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "syzkaller 如何利用资源类型安排依赖前序结果的系统调用？",
+      "answer": "通常先生成产生所需资源的调用，再把资源传给使用它的调用。",
+      "explanation": "资源方向和类型表达了调用间的约束。",
+      "example": "先创建文件描述符，再在后续调用中使用。",
+      "tags": [
+        "syzkaller 内核模糊测试",
+        "资源依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/syzkaller/blob/b2c694599a95b18d4aa0f7aa91f52f331ebdbfd8/docs/syscall_descriptions.md"
+    },
+    {
+      "id": "syzbase-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "syzkaller 内核模糊测试",
+      "knowledgePoint": "管理器职责",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "syzkaller 的 syz-manager 负责哪些核心工作？",
+      "answer": "管理测试虚拟机、生成与变异输入，并持久化语料和崩溃信息。",
+      "explanation": "具体运行行为还取决于配置及目标环境。",
+      "example": "管理器在宿主机协调多个测试实例。",
+      "tags": [
+        "syzkaller 内核模糊测试",
+        "管理器职责"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/syzkaller/blob/b2c694599a95b18d4aa0f7aa91f52f331ebdbfd8/docs/internals.md"
+    },
+    {
+      "id": "syzbase-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "syzkaller 内核模糊测试",
+      "knowledgePoint": "执行器职责",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "syz-executor 在测试虚拟机中主要做什么？",
+      "answer": "执行管理器分配的系统调用程序，并返回状态及覆盖等结果。",
+      "explanation": "执行器与管理器通过 RPC 通信。",
+      "example": "在客体内运行一条系统调用序列。",
+      "tags": [
+        "syzkaller 内核模糊测试",
+        "执行器职责"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/syzkaller/blob/b2c694599a95b18d4aa0f7aa91f52f331ebdbfd8/docs/internals.md"
+    },
+    {
+      "id": "syzbase-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "syzkaller 内核模糊测试",
+      "knowledgePoint": "崩溃日志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "syzkaller 崩溃目录中的 logN 与 reportN 分别包含什么？",
+      "answer": "logN 保存原始日志和崩溃前程序；reportN 保存处理并符号化后的崩溃报告。",
+      "explanation": "特殊的无输出故障可能没有可用的 reportN。",
+      "example": "用 log0 辅助复现，用 report0 查看报告。",
+      "tags": [
+        "syzkaller 内核模糊测试",
+        "崩溃日志"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/syzkaller/blob/b2c694599a95b18d4aa0f7aa91f52f331ebdbfd8/docs/internals.md"
+    },
+    {
+      "id": "syzbase-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "syzkaller 内核模糊测试",
+      "knowledgePoint": "描述验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为内核接口新增 syzkaller 描述后，为什么还要检查实际覆盖？",
+      "answer": "描述可能有错误或无法到达预期代码，运行覆盖提供间接验证线索。",
+      "explanation": "有覆盖并不单独证明描述完整或正确。",
+      "example": "检查目标驱动的预期代码是否执行。",
+      "tags": [
+        "syzkaller 内核模糊测试",
+        "描述验证"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/syzkaller/blob/b2c694599a95b18d4aa0f7aa91f52f331ebdbfd8/docs/syscall_descriptions.md"
+    },
+    {
+      "id": "syzbase-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "syzkaller 内核模糊测试",
+      "knowledgePoint": "异常参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "syzkaller 描述未手工列出所有异常整数值时，工具是否只能生成文档中的正常值？",
+      "answer": "不一定；模糊器自身可生成特殊值或利用比较操作数等机制。",
+      "explanation": "文档建议描述有意义的官方值，把通用异常值处理交给生成逻辑。",
+      "example": "为整数参数尝试边界值。",
+      "tags": [
+        "syzkaller 内核模糊测试",
+        "异常参数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/syzkaller/blob/b2c694599a95b18d4aa0f7aa91f52f331ebdbfd8/docs/syscall_descriptions.md"
+    }
+  ]
+}

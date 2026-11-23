@@ -1,0 +1,278 @@
+{
+  "source": {
+    "id": "c-memory-pointer-fundamentals",
+    "title": "C11 草案与 Linux 手册：指针和动态内存",
+    "url": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf",
+    "type": "协议标准、教材及官方手册",
+    "note": "依据逐题引用的标准、教材或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "cmembase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "malloc 初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C11 的 malloc 成功分配非零字节后，内存中的值是否已经初始化？",
+      "answer": "没有；分配区域的值是不确定的。",
+      "explanation": "必须先正确初始化，再按对应类型读取。",
+      "example": "分配一个 int 后，先赋值再使用。",
+      "tags": [
+        "C 指针与内存基础",
+        "malloc 初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "分配失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C 语言中为什么要检查 malloc 的返回值？",
+      "answer": "分配失败时它返回空指针；解引用空指针会产生未定义行为。",
+      "explanation": "申请较大的内存也可能因为环境限制而失败。",
+      "example": "为非零大小的分配检查返回值。",
+      "tags": [
+        "C 指针与内存基础",
+        "分配失败"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "calloc 初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C11 的 calloc 对新分配内存做什么初始化？",
+      "answer": "将分配区域的所有位设为零。",
+      "explanation": "全零位并不由 C 标准保证对应所有类型的空指针或浮点零。",
+      "example": "calloc 为整型数组准备全零位存储。",
+      "tags": [
+        "C 指针与内存基础",
+        "calloc 初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "free 空指针",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 C11 中调用 free(NULL) 会发生什么？",
+      "answer": "没有操作。",
+      "explanation": "其他非空实参仍须符合动态分配内存的释放要求。",
+      "example": "清理时可对可能为空的指针调用 free。",
+      "tags": [
+        "C 指针与内存基础",
+        "free 空指针"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "free 实参",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C11 的 free 能否释放指向已分配区域中间位置的指针？",
+      "answer": "不能；非空参数必须是尚未释放的相关分配函数返回的指针。",
+      "explanation": "传入内部地址或重复释放会导致未定义行为。",
+      "example": "应释放分配起始指针，而不是起始指针加一。",
+      "tags": [
+        "C 指针与内存基础",
+        "free 实参"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "realloc 失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对非零新大小调用 realloc 失败时，原来的内存块会怎样？",
+      "answer": "原内存块保持有效，内容不变，调用返回空指针。",
+      "explanation": "先把返回值放入临时变量，可避免失败时丢失原指针。",
+      "example": "用临时指针检查扩容是否成功。",
+      "tags": [
+        "C 指针与内存基础",
+        "realloc 失败"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "realloc 成功",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C11 的 realloc 成功改变非零大小时，原数据保留多少？",
+      "answer": "保留新旧大小中较小的那部分内容；新增加的部分值不确定。",
+      "explanation": "返回地址可能改变，应使用新返回的指针。",
+      "example": "数组扩容后初始化新增元素。",
+      "tags": [
+        "C 指针与内存基础",
+        "realloc 成功"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "数组参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C 函数参数声明为 int a[] 时，函数体中的 a 是数组对象吗？",
+      "answer": "不是；该参数声明会调整为 int 指针类型。",
+      "explanation": "函数内 sizeof(a) 由指针类型决定，不是调用者数组的总字节数。",
+      "example": "将数组长度作为单独参数传入。",
+      "tags": [
+        "C 指针与内存基础",
+        "数组参数"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "指针步长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C 中指向数组内非最后一个元素的指针 p 执行 p+1 时，指向什么？",
+      "answer": "指向同一数组的下一个元素；指针算术按元素类型调整，而不是固定增加一个字节。",
+      "explanation": "从末元素形成尾后指针是允许的，但不能解引用它。",
+      "example": "int 数组中 p+1 指向下一个 int。",
+      "tags": [
+        "C 指针与内存基础",
+        "指针步长"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "尾后指针",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C 中指向数组末元素后一位的指针能否被解引用？",
+      "answer": "不能；可形成该位置的指针，但它不指向可访问的数组元素。",
+      "explanation": "它常用作遍历的终止边界。",
+      "example": "循环在指针到达尾后位置时停止读取。",
+      "tags": [
+        "C 指针与内存基础",
+        "尾后指针"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "字符串长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C 的 strlen 与字符数组的 sizeof 各自计算什么？",
+      "answer": "strlen 计算首个空字符之前的字节数；sizeof 数组得到整个数组对象的字节数。",
+      "explanation": "strlen 要求指针指向有效的空字符结尾字符串。",
+      "example": "char s[10] = \"abc\" 时两者分别为 3 和 10。",
+      "tags": [
+        "C 指针与内存基础",
+        "字符串长度"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "字符串终止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C11 的 strncpy 复制 n 个字符时是否一定添加结尾空字符？",
+      "answer": "不一定；若源字符串前 n 个字符中没有空字符，目标不会因此自动获得结尾空字符。",
+      "explanation": "使用后应根据目标容量和需求处理终止条件。",
+      "example": "复制长度恰好达到上限时检查字符串终止。",
+      "tags": [
+        "C 指针与内存基础",
+        "字符串终止"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "参数传值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C 函数能通过指针参数修改调用者的对象，这是否意味着 C 按引用传递参数？",
+      "answer": "不是；C 按值传递指针，函数通过复制后的指针访问被指向的对象。",
+      "explanation": "修改函数内的指针变量本身不会自动改变调用者的指针变量。",
+      "example": "函数通过 int * 参数给调用者的整数赋值。",
+      "tags": [
+        "C 指针与内存基础",
+        "参数传值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    },
+    {
+      "id": "cmembase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C 指针与内存基础",
+      "knowledgePoint": "const 位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C 中 const int *p 与 int *const p 的 const 约束有什么区别？",
+      "answer": "前者不能通过 p 修改所指向的 int；后者不能给指针变量 p 重新赋值。",
+      "explanation": "前者指向的对象仍可能通过其他合法别名修改。",
+      "example": "只读指针参数与固定指向的指针变量。",
+      "tags": [
+        "C 指针与内存基础",
+        "const 位置"
+      ],
+      "evidence": "source",
+      "reference": "https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf"
+    }
+  ]
+}

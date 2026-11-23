@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "identity-lateral-detection",
+    "title": "MITRE ATT&CK v20：身份认证与远程服务威胁",
+    "url": "https://attack.mitre.org/versions/v20/techniques/T1621/",
+    "type": "研究论文与技术文档",
+    "note": "按逐题引用的课程、论文或固定版本知识库自行整理中文问答，例子为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "identitydetect-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "MFA疲劳检测",
+      "knowledgePoint": "MFA请求轰炸",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MITRE ATT&CK 中的 MFA 请求轰炸指什么行为？",
+      "answer": "攻击者反复触发多因素认证请求，试图让用户最终批准一次非本人发起的认证。",
+      "explanation": "该方式利用用户疲劳或困惑，不代表 MFA 本身没有价值。",
+      "example": "短时间内多次向同一用户发送推送请求。",
+      "tags": [
+        "MFA请求轰炸",
+        "MFA疲劳检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1621/"
+    },
+    {
+      "id": "identitydetect-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "MFA疲劳检测",
+      "knowledgePoint": "无密码重置请求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "攻击者没有受害者密码时，是否一定无法触发 MFA 请求？",
+      "answer": "不一定；如果自助密码重置配置会自动发出验证请求，攻击者可能通过该流程触发请求。",
+      "explanation": "是否可行取决于具体服务配置。",
+      "example": "利用开放的自助重置流程触发验证推送。",
+      "tags": [
+        "无密码重置请求",
+        "MFA疲劳检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1621/"
+    },
+    {
+      "id": "identitydetect-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "MFA疲劳检测",
+      "knowledgePoint": "MFA异常关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调查大量 MFA 请求时，为什么要结合登录来源和用户是否主动发起？",
+      "answer": "异常来源和用户未发起的请求可为调查提供上下文，而请求次数本身不足以判定攻击。",
+      "explanation": "用户误操作、设备故障等也可能产生重复请求。",
+      "example": "核对登录来源与用户报告的操作时间。",
+      "tags": [
+        "MFA异常关联",
+        "MFA疲劳检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1621/"
+    },
+    {
+      "id": "identitydetect-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "MFA疲劳检测",
+      "knowledgePoint": "重复请求限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "针对 MFA 请求轰炸，限制特定时间内的请求次数有什么作用？",
+      "answer": "它可以减少攻击者连续触发认证提示的机会。",
+      "explanation": "阈值需要结合正常用户和服务行为配置。",
+      "example": "身份提供方限制同一账号短时间内的验证推送。",
+      "tags": [
+        "重复请求限制",
+        "MFA疲劳检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1621/"
+    },
+    {
+      "id": "identitydetect-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "远程访问检测",
+      "knowledgePoint": "远程服务行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MITRE ATT&CK 的 Remote Services 技术描述什么行为？",
+      "answer": "攻击者可能使用有效账号登录支持远程连接的服务，并以该身份执行操作。",
+      "explanation": "远程服务也广泛用于合法管理，需要结合环境上下文分析。",
+      "example": "使用 SSH 或远程桌面登录另一台主机。",
+      "tags": [
+        "远程服务行为",
+        "远程访问检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1021/"
+    },
+    {
+      "id": "identitydetect-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "远程访问检测",
+      "knowledgePoint": "远程桌面会话",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "远程桌面协议（RDP）通常为远程用户提供什么类型的会话？",
+      "answer": "它提供远程系统桌面的交互式会话。",
+      "explanation": "可访问并不意味着登录者已通过认证或获得授权。",
+      "example": "管理员远程进入服务器图形桌面。",
+      "tags": [
+        "远程桌面会话",
+        "远程访问检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1021/001/"
+    },
+    {
+      "id": "identitydetect-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "远程访问检测",
+      "knowledgePoint": "远程登录后续行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调查可疑 RDP 登录时，关联会话后的异常进程或文件访问有什么价值？",
+      "answer": "它有助于判断登录之后是否出现值得进一步调查的行为。",
+      "explanation": "合法登录也可能触发管理命令，需结合账号和资产基线。",
+      "example": "远程登录后关联同会话中新启动的进程。",
+      "tags": [
+        "远程登录后续行为",
+        "远程访问检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1021/001/"
+    },
+    {
+      "id": "identitydetect-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "凭据材料滥用",
+      "knowledgePoint": "哈希传递",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "哈希传递（Pass the Hash）的核心做法是什么？",
+      "answer": "攻击者使用获取的密码哈希作为认证材料，无须知道对应的明文密码。",
+      "explanation": "这种行为可用于本地或远程认证，具体可行性取决于环境。",
+      "example": "使用泄露的账号哈希访问另一台系统。",
+      "tags": [
+        "哈希传递",
+        "凭据材料滥用"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1550/002/"
+    },
+    {
+      "id": "identitydetect-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "凭据材料滥用",
+      "knowledgePoint": "哈希转票据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Overpass the Hash 与普通 Pass the Hash 在后续凭据使用上有什么区别？",
+      "answer": "前者使用密码哈希取得有效 Kerberos 票据，随后可以使用该票据进行认证。",
+      "explanation": "具体条件取决于认证环境，不能把两种行为视为相同日志事件。",
+      "example": "从已有哈希获取 Kerberos 票据后访问服务。",
+      "tags": [
+        "哈希转票据",
+        "凭据材料滥用"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1550/002/"
+    },
+    {
+      "id": "identitydetect-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络发现检测",
+      "knowledgePoint": "扫描行为关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MITRE 的网络服务发现检测为什么建议关联进程与多目的地址连接？",
+      "answer": "进程创建和一段时间内对多个目标的探测可一起提供网络枚举的行为线索。",
+      "explanation": "扫描也可能来自授权资产管理或安全评估。",
+      "example": "关联扫描进程及其对多个内部地址的连续连接。",
+      "tags": [
+        "扫描行为关联",
+        "网络发现检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1046/"
+    },
+    {
+      "id": "identitydetect-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络发现检测",
+      "knowledgePoint": "网络发现渠道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "只观察 TCP 端口连接，为什么可能漏掉一些网络服务发现行为？",
+      "answer": "服务发现还可能使用其他机制，例如局域网中的 mDNS 查询。",
+      "explanation": "可见性取决于所采集的协议、主机事件和网络位置。",
+      "example": "Bonjour 服务查询不一定表现为传统 TCP 端口扫描。",
+      "tags": [
+        "网络发现渠道",
+        "网络发现检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1046/"
+    }
+  ]
+}

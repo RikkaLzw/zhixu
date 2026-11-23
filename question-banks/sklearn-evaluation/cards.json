@@ -7,21 +7,409 @@
     "note": "方法依据官方文档；卡片将其应用于安全检测，案例为原创。"
   },
   "cards": [
-    {"id":"eval-001","category":"foundations","level":"入门","question":"安全检测模型的训练集、验证集和测试集各承担什么角色？","answer":"训练集拟合模型，验证集选择模型和阈值，测试集用于最终独立评估。","explanation":"反复根据测试结果修改模型会使测试集逐渐失去独立性。","example":"用验证集确定告警阈值后，只在测试集报告一次最终告警效果。","tags":["训练集","验证集","测试集"],"evidence":"application"},
-    {"id":"eval-002","category":"foundations","level":"进阶","question":"安全数据预处理为什么要放进模型流水线？","answer":"流水线可确保每次训练或交叉验证只用相应训练数据拟合预处理。","explanation":"标准化、编码和特征选择若提前在全数据拟合，会泄漏验证或测试信息。","example":"将缺失值填充、编码与分类器组合后再执行交叉验证。","tags":["Pipeline","泄漏"],"evidence":"source"},
-    {"id":"eval-003","category":"foundations","level":"进阶","question":"为什么安全检测中的重采样不能先于数据切分？","answer":"全量数据重采样可能让相似或派生样本跨训练集与测试集。","explanation":"测试集应保留独立且符合评估目标的数据分布。","example":"只在每个训练折内过采样攻击样本，验证折保持原有比例。","tags":["重采样","数据泄漏"],"evidence":"application"},
-    {"id":"eval-004","category":"foundations","level":"入门","question":"安全告警中的精确率、召回率分别回答什么问题？","answer":"精确率回答告警有多准；召回率回答真实威胁被发现了多少。","explanation":"两者都基于明确的目标威胁和标签，不能脱离告警阈值解释。","example":"100 条告警里 20 条真实攻击，精确率是 20%；是否漏掉攻击还要看全部真实攻击数。","tags":["精确率","召回率"],"evidence":"application","reference":"https://scikit-learn.org/stable/modules/model_evaluation.html"},
-    {"id":"eval-005","category":"foundations","level":"进阶","question":"为什么攻击样本稀少时要关注精确率—召回率曲线？","answer":"它展示不同阈值下发现攻击与告警准确性之间的权衡。","explanation":"在正例稀少的场景，还应结合实际攻击比例和告警量解释曲线。","example":"比较两个阈值下的召回率及分析人员需要处理的告警数。","tags":["PR曲线","不平衡"],"evidence":"application","reference":"https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html"},
-    {"id":"eval-006","category":"foundations","level":"进阶","question":"平均精确率和单个阈值下的精确率有什么区别？","answer":"平均精确率概括排序在不同召回水平的表现；单点精确率对应某个固定阈值。","explanation":"部署仍须选定阈值，并测量该阈值下的告警量和漏报。","example":"模型平均精确率较高，也可能在团队可处理的每日告警量下召回不足。","tags":["平均精确率","阈值"],"evidence":"application","reference":"https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html"},
-    {"id":"eval-007","category":"foundations","level":"实践","question":"安全检测阈值应该怎样选择？","answer":"在验证集上结合漏报代价、误报量和可处理容量选择，再在测试集评估。","explanation":"阈值是业务决策的一部分，不应使用测试集反复调到最好。","example":"比较每天 50、100、200 条告警预算下的攻击召回率。","tags":["阈值","告警量"],"evidence":"application"},
-    {"id":"eval-008","category":"foundations","level":"进阶","question":"安全检测中的假正例率和告警精确率为什么不能混为一谈？","answer":"假正例率以真实正常样本为分母；精确率以所有告警为分母。","explanation":"当正常流量极多时，即使假正例率低，也可能产生大量误报。","example":"一百万条正常流量即使只有 0.1% 被误报，也会产生一千条误报告警。","tags":["误报率","精确率"],"evidence":"application"},
-    {"id":"eval-009","category":"foundations","level":"进阶","question":"为什么安全检测要报告告警数量，而不只报告 F1？","answer":"分析人员处理的是具体告警量，单一综合指标不能体现工作负荷。","explanation":"F1 合并精确率和召回率，但不直接告诉团队每天会收到多少条告警。","example":"同时报告每万条流量的告警数、精确率和攻击召回率。","tags":["告警量","F1"],"evidence":"application"},
-    {"id":"eval-010","category":"foundations","level":"实践","question":"为什么按攻击活动或主机分组比逐条随机划分更有挑战性？","answer":"分组划分能减少同一活动或设备的相似样本同时进入训练和测试。","explanation":"具体分组单位应匹配实际要泛化到的新对象。","example":"目标是发现新主机攻击时，把主机作为分组单位并检查各组标签。","tags":["分组切分","泛化"],"evidence":"application","reference":"https://scikit-learn.org/stable/modules/cross_validation.html"},
-    {"id":"eval-011","category":"foundations","level":"实践","question":"如何检查安全模型是否把数据集标识当作答案？","answer":"检查高贡献特征，并通过字段消融、按来源切分和外部验证复核。","explanation":"模型可能用采集来源、日期或主机标识区分标签，而非学习攻击行为。","example":"移除数据来源字段后重新训练，再比较跨来源测试集的表现。","tags":["捷径","特征消融"],"evidence":"application"},
-    {"id":"eval-012","category":"foundations","level":"进阶","question":"训练数据中的类别权重能解决安全检测的哪些问题？","answer":"它可以让模型训练时更重视代价较高或样本较少的类别。","explanation":"类别权重并不自动保证合适的告警阈值和真实环境效果。","example":"比较默认权重与平衡权重模型的召回率、误报量和精确率。","tags":["类别权重","不平衡"],"evidence":"application"},
-    {"id":"eval-013","category":"foundations","level":"实践","question":"安全模型误报分析应记录哪些内容？","answer":"记录原始证据、模型分数、真实标签、相关特征和误报原因。","explanation":"应区分标签错误、正常业务变化、特征不足和模型偏差。","example":"将正常批量备份被判成异常外联的原因归类为业务上下文缺失。","tags":["误报分析","模型改进"],"evidence":"application"},
-    {"id":"eval-014","category":"foundations","level":"实践","question":"面对同一天的大量相似攻击流，怎样避免高估有效发现？","answer":"除了逐流计分，还应按攻击活动或事件聚合结果。","explanation":"发现同一事件的一千条相似流，与发现一千个独立事件不是同一回事。","example":"同时报告按流召回率和按攻击活动统计的事件召回率。","tags":["事件级评估","相似样本"],"evidence":"application"},
-    {"id":"eval-015","category":"foundations","level":"进阶","question":"安全模型的评分高就一定表示其概率可信么？","answer":"不一定。模型分数需要通过独立数据检查概率校准情况。","explanation":"排序能力和概率是否接近真实发生比例是不同问题。","example":"检查预测概率约 0.8 的一组样本中，真实攻击比例是否接近 80%。","tags":["概率校准","风险评分"],"evidence":"application","reference":"https://scikit-learn.org/stable/modules/calibration.html"},
-    {"id":"eval-016","category":"foundations","level":"实践","question":"什么情况下需要重新评估已部署的安全模型？","answer":"业务流量、采集方式、攻击类型或告警效果明显变化时，应重新评估。","explanation":"要同时监测输入分布、预测分数、人工复核结果和反馈延迟。","example":"业务迁移导致异常告警激增时，先检查流量变化和标签，再决定是否更新模型。","tags":["漂移","监控"],"evidence":"application"}
+    {
+      "id": "eval-001",
+      "category": "foundations",
+      "level": "入门",
+      "question": "安全检测模型的训练集、验证集和测试集各承担什么角色？",
+      "answer": "训练集拟合模型，验证集选择模型和阈值，测试集用于最终独立评估。",
+      "explanation": "反复根据测试结果修改模型会使测试集逐渐失去独立性。",
+      "example": "用验证集确定告警阈值后，只在测试集报告一次最终告警效果。",
+      "tags": [
+        "训练集",
+        "验证集",
+        "测试集"
+      ],
+      "evidence": "application",
+      "origin": "自行整理",
+      "subtopic": "数据集划分",
+      "knowledgePoint": "训练验证测试角色",
+      "questionType": "概念与原理",
+      "reference": "https://scikit-learn.org/stable/modules/cross_validation.html"
+    },
+    {
+      "id": "eval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "question": "安全数据预处理为什么要放进模型流水线？",
+      "answer": "流水线可确保每次训练或交叉验证只用相应训练数据拟合预处理。",
+      "explanation": "标准化、编码和特征选择若提前在全数据拟合，会泄漏验证或测试信息。",
+      "example": "将缺失值填充、编码与分类器组合后再执行交叉验证。",
+      "tags": [
+        "Pipeline",
+        "泄漏"
+      ],
+      "evidence": "source",
+      "origin": "自行整理",
+      "subtopic": "数据泄漏",
+      "knowledgePoint": "交叉验证流水线",
+      "questionType": "设计与权衡",
+      "reference": "https://scikit-learn.org/stable/common_pitfalls.html#data-leakage"
+    },
+    {
+      "id": "eval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "question": "为什么安全检测中的重采样不能先于数据切分？",
+      "answer": "全量数据重采样可能让相似或派生样本跨训练集与测试集。",
+      "explanation": "测试集应保留独立且符合评估目标的数据分布。",
+      "example": "只在每个训练折内过采样攻击样本，验证折保持原有比例。",
+      "tags": [
+        "重采样",
+        "数据泄漏"
+      ],
+      "evidence": "application",
+      "origin": "自行整理",
+      "subtopic": "数据泄漏",
+      "knowledgePoint": "重采样与切分",
+      "questionType": "易错点",
+      "reference": "https://imbalanced-learn.org/stable/common_pitfalls.html#data-leakage"
+    },
+    {
+      "id": "eval-004",
+      "category": "foundations",
+      "level": "入门",
+      "question": "安全告警中的精确率、召回率分别回答什么问题？",
+      "answer": "精确率回答告警有多准；召回率回答真实威胁被发现了多少。",
+      "explanation": "两者都基于明确的目标威胁和标签，不能脱离告警阈值解释。",
+      "example": "100 条告警里 20 条真实攻击，精确率是 20%；是否漏掉攻击还要看全部真实攻击数。",
+      "tags": [
+        "精确率",
+        "召回率"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+    },
+    {
+      "id": "eval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "question": "为什么攻击样本稀少时要关注精确率—召回率曲线？",
+      "answer": "它展示不同阈值下发现攻击与告警准确性之间的权衡。",
+      "explanation": "在正例稀少的场景，还应结合实际攻击比例和告警量解释曲线。",
+      "example": "比较两个阈值下的召回率及分析人员需要处理的告警数。",
+      "tags": [
+        "PR曲线",
+        "不平衡"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html",
+      "origin": "自行整理",
+      "subtopic": "分类评估",
+      "knowledgePoint": "精确率召回率曲线",
+      "questionType": "设计与权衡"
+    },
+    {
+      "id": "eval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "question": "平均精确率和单个阈值下的精确率有什么区别？",
+      "answer": "平均精确率概括排序在不同召回水平的表现；单点精确率对应某个固定阈值。",
+      "explanation": "部署仍须选定阈值，并测量该阈值下的告警量和漏报。",
+      "example": "模型平均精确率较高，也可能在团队可处理的每日告警量下召回不足。",
+      "tags": [
+        "平均精确率",
+        "阈值"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html",
+      "origin": "自行整理",
+      "subtopic": "分类评估",
+      "knowledgePoint": "平均精确率",
+      "questionType": "比较与选型"
+    },
+    {
+      "id": "eval-007",
+      "category": "foundations",
+      "level": "实践",
+      "question": "安全检测阈值应该怎样选择？",
+      "answer": "在验证集上结合漏报代价、误报量和可处理容量选择，再在测试集评估。",
+      "explanation": "阈值是业务决策的一部分，不应使用测试集反复调到最好。",
+      "example": "比较每天 50、100、200 条告警预算下的攻击召回率。",
+      "tags": [
+        "阈值",
+        "告警量"
+      ],
+      "evidence": "application",
+      "origin": "自行整理",
+      "subtopic": "阈值选择",
+      "knowledgePoint": "验证集阈值选择",
+      "questionType": "设计与权衡",
+      "reference": "https://scikit-learn.org/stable/modules/classification_threshold.html"
+    },
+    {
+      "id": "eval-008",
+      "category": "foundations",
+      "level": "进阶",
+      "question": "安全检测中的假正例率和告警精确率为什么不能混为一谈？",
+      "answer": "假正例率以真实正常样本为分母；精确率以所有告警为分母。",
+      "explanation": "当正常流量极多时，即使假正例率低，也可能产生大量误报。",
+      "example": "一百万条正常流量即使只有 0.1% 被误报，也会产生一千条误报告警。",
+      "tags": [
+        "误报率",
+        "精确率"
+      ],
+      "evidence": "application",
+      "origin": "自行整理",
+      "subtopic": "分类评估",
+      "knowledgePoint": "假正例率与精确率",
+      "questionType": "比较与选型",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+    },
+    {
+      "id": "eval-009",
+      "category": "foundations",
+      "level": "进阶",
+      "question": "为什么安全检测要报告告警数量，而不只报告 F1？",
+      "answer": "分析人员处理的是具体告警量，单一综合指标不能体现工作负荷。",
+      "explanation": "F1 合并精确率和召回率，但不直接告诉团队每天会收到多少条告警。",
+      "example": "同时报告每万条流量的告警数、精确率和攻击召回率。",
+      "tags": [
+        "告警量",
+        "F1"
+      ],
+      "evidence": "application",
+      "subtopic": "部署评估",
+      "knowledgePoint": "告警量与F1",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-f-measure-metrics",
+      "supportingReferences": [
+        {
+          "id": "evaluation-review-ref",
+          "title": "NIST SP 800-94：告警与分析资源",
+          "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf",
+          "type": "官方技术标准",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "eval-010",
+      "category": "foundations",
+      "level": "实践",
+      "question": "为什么按攻击活动或主机分组比逐条随机划分更有挑战性？",
+      "answer": "分组划分能减少同一活动或设备的相似样本同时进入训练和测试。",
+      "explanation": "具体分组单位应匹配实际要泛化到的新对象。",
+      "example": "目标是发现新主机攻击时，把主机作为分组单位并检查各组标签。",
+      "tags": [
+        "分组切分",
+        "泛化"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data",
+      "subtopic": "数据切分",
+      "knowledgePoint": "攻击或主机分组评估",
+      "questionType": "设计与权衡",
+      "origin": "自行整理"
+    },
+    {
+      "id": "eval-011",
+      "category": "foundations",
+      "level": "实践",
+      "question": "如何检查安全模型是否把数据集标识当作答案？",
+      "answer": "检查高贡献特征，并通过字段消融、按来源切分和外部验证复核。",
+      "explanation": "模型可能用采集来源、日期或主机标识区分标签，而非学习攻击行为。",
+      "example": "移除数据来源字段后重新训练，再比较跨来源测试集的表现。",
+      "tags": [
+        "捷径",
+        "特征消融"
+      ],
+      "evidence": "application",
+      "subtopic": "安全模型评估",
+      "knowledgePoint": "数据集标识捷径",
+      "questionType": "实践与诊断",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "shortcut-learning-paper-ref",
+          "title": "Shortcut Learning in Deep Neural Networks",
+          "url": "https://arxiv.org/abs/2004.07780",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "eval-012",
+      "category": "foundations",
+      "level": "进阶",
+      "question": "训练数据中的类别权重能解决安全检测的哪些问题？",
+      "answer": "它可以让模型训练时更重视代价较高或样本较少的类别。",
+      "explanation": "类别权重并不自动保证合适的告警阈值和真实环境效果。",
+      "example": "比较默认权重与平衡权重模型的召回率、误报量和精确率。",
+      "tags": [
+        "类别权重",
+        "不平衡"
+      ],
+      "evidence": "application",
+      "origin": "自行整理",
+      "subtopic": "类别不平衡",
+      "knowledgePoint": "类别权重",
+      "questionType": "设计与权衡",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.utils.class_weight.compute_class_weight.html"
+    },
+    {
+      "id": "eval-013",
+      "category": "foundations",
+      "level": "实践",
+      "question": "安全模型误报分析应记录哪些内容？",
+      "answer": "记录原始证据、模型分数、真实标签、相关特征和误报原因。",
+      "explanation": "应区分标签错误、正常业务变化、特征不足和模型偏差。",
+      "example": "将正常批量备份被判成异常外联的原因归类为业务上下文缺失。",
+      "tags": [
+        "误报分析",
+        "模型改进"
+      ],
+      "evidence": "application",
+      "subtopic": "错误分析",
+      "knowledgePoint": "安全模型误报分析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#confusion-matrix",
+      "supportingReferences": [
+        {
+          "id": "evaluation-monitor-ref",
+          "title": "Google ML：生产模型监控",
+          "url": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "eval-014",
+      "category": "foundations",
+      "level": "实践",
+      "question": "当同一攻击活动包含大量相似流量时，为什么还应按活动统计检测结果？",
+      "answer": "同一活动的多条流可能主导逐流指标；按活动统计有助于了解不同攻击事件的发现情况。",
+      "explanation": "事件关联应依据时间、行为和其他上下文，不能仅凭相似流量就认定属于同一活动。",
+      "example": "同时报告按流召回率和按攻击活动统计的事件召回率。",
+      "tags": [
+        "事件级评估",
+        "相似样本"
+      ],
+      "evidence": "application",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "事件与逐流统计",
+      "questionType": "实践与诊断",
+      "origin": "自行整理"
+    },
+    {
+      "id": "eval-015",
+      "category": "foundations",
+      "level": "进阶",
+      "question": "安全模型的评分高就一定表示其概率可信么？",
+      "answer": "不一定。模型分数需要通过独立数据检查概率校准情况。",
+      "explanation": "排序能力和概率是否接近真实发生比例是不同问题。",
+      "example": "检查预测概率约 0.8 的一组样本中，真实攻击比例是否接近 80%。",
+      "tags": [
+        "概率校准",
+        "风险评分"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/calibration.html",
+      "origin": "自行整理",
+      "subtopic": "分类评估",
+      "knowledgePoint": "分数与概率校准",
+      "questionType": "易错点"
+    },
+    {
+      "id": "eval-016",
+      "category": "foundations",
+      "level": "实践",
+      "question": "什么情况下需要重新评估已部署的安全模型？",
+      "answer": "业务流量、采集方式、攻击类型或告警效果明显变化时，应重新评估。",
+      "explanation": "要同时监测输入分布、预测分数、人工复核结果和反馈延迟。",
+      "example": "业务迁移导致异常告警激增时，先检查流量变化和标签，再决定是否更新模型。",
+      "tags": [
+        "漂移",
+        "监控"
+      ],
+      "evidence": "application",
+      "subtopic": "部署监控",
+      "knowledgePoint": "安全模型重新评估",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "eval-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型任务",
+      "knowledgePoint": "监督分类与异常检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有监督分类与异常检测在常见训练目标上有什么区别？",
+      "answer": "监督分类利用标注学习类别；异常检测关注偏离参考数据的观测。",
+      "explanation": "异常并不自动意味着恶意，检测方法和训练假设可能不同。",
+      "example": "分类器区分已标注攻击类别；异常模型筛选偏离常态的行为。",
+      "tags": [
+        "监督分类与异常检测",
+        "模型任务",
+        "异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+      "supportingReferences": [
+        {
+          "id": "sklearn-supervised-ref",
+          "title": "scikit-learn：监督学习",
+          "url": "https://scikit-learn.org/stable/supervised_learning.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ],
+      "referenceId": "sklearn-anomaly-ref",
+      "referenceTitle": "scikit-learn：新颖性与异常检测",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "eval-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "类别不平衡",
+      "knowledgePoint": "类别不平衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全分类数据中的类别不平衡是什么意思？",
+      "answer": "不同类别的样本数明显不均衡，例如正常流量远多于攻击流量。",
+      "explanation": "评估应考虑真实场景的类别比例及误报漏报。",
+      "example": "训练数据含大量正常流量与少量已标注攻击。",
+      "tags": [
+        "类别不平衡",
+        "类别不平衡",
+        "类别比例"
+      ],
+      "evidence": "application",
+      "reference": "https://imbalanced-learn.org/stable/common_pitfalls.html",
+      "referenceId": "imbalanced-learning-ref",
+      "referenceTitle": "imbalanced-learn：类别不平衡与数据泄漏",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "eval-019",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "分类决策",
+      "knowledgePoint": "阈值与告警数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分数越高越可疑时，提高固定模型的告警阈值会怎样影响告警数？",
+      "answer": "在固定样本和评分上，告警数量不会增加。",
+      "explanation": "真实正例和假正例都可能被移出告警集合。",
+      "example": "在验证数据上比较两个阈值的告警数。",
+      "tags": [
+        "阈值与告警数量",
+        "分类决策",
+        "阈值"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/classification_threshold.html",
+      "referenceId": "sklearn-threshold-ref",
+      "referenceTitle": "scikit-learn：分类决策阈值",
+      "referenceType": "官方技术文档"
+    }
   ]
 }

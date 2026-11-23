@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "grpo-training-foundations",
+    "title": "DeepSeekMath 原论文 v1：GRPO 训练与监督",
+    "url": "https://arxiv.org/pdf/2402.03300v1",
+    "type": "教材、论文与官方技术文档",
+    "note": "逐题根据所列教材、论文或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "grpobase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GRPO 训练基础",
+      "knowledgePoint": "采样来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepSeekMath 原始 GRPO 对同一道题如何获得一组候选回答？",
+      "answer": "从用于采样的旧策略中为同一道题采样多个回答。",
+      "explanation": "组内回答随后分别获得奖励。",
+      "example": "对同一数学问题采样若干解答。",
+      "tags": [
+        "GRPO 训练基础",
+        "采样来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.03300v1"
+    },
+    {
+      "id": "grpobase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GRPO 训练基础",
+      "knowledgePoint": "结果优势",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepSeekMath 的结果监督 GRPO 中，同一回答的不同 token 使用什么优势值？",
+      "answer": "该回答中的 token 使用同一个由整条回答奖励得到的归一化优势。",
+      "explanation": "这是论文的结果监督形式，不代表所有实现或过程监督形式。",
+      "example": "最终奖励较高的回答为其 token 提供相同的相对优势。",
+      "tags": [
+        "GRPO 训练基础",
+        "结果优势"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.03300v1"
+    },
+    {
+      "id": "grpobase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GRPO 训练基础",
+      "knowledgePoint": "过程监督",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepSeekMath 的过程监督 GRPO 与结果监督在奖励位置上有什么区别？",
+      "answer": "过程监督可在每个推理步骤结束时提供奖励；结果监督在回答结束时提供奖励。",
+      "explanation": "过程监督的 token 优势使用后续步骤的归一化奖励。",
+      "example": "逐步评价解题过程，而不只评分最终答案。",
+      "tags": [
+        "GRPO 训练基础",
+        "过程监督"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.03300v1"
+    },
+    {
+      "id": "grpobase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GRPO 训练基础",
+      "knowledgePoint": "旧策略与参考",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepSeekMath 的 GRPO 目标中，旧策略和参考策略分别有什么作用？",
+      "answer": "旧策略用于采样并计算新旧策略概率比；参考策略用于计算 KL 正则项。",
+      "explanation": "论文迭代算法会在指定阶段更新参考策略，不能假设所有实现始终固定它。",
+      "example": "采样策略快照和正则化参照可有不同角色。",
+      "tags": [
+        "GRPO 训练基础",
+        "旧策略与参考"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.03300v1"
+    },
+    {
+      "id": "grpobase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GRPO 训练基础",
+      "knowledgePoint": "直接KL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepSeekMath 原论文的 GRPO 怎样处理 KL 惩罚以避免将其混入组内优势？",
+      "answer": "它把当前策略相对参考策略的 KL 正则项直接加入优化目标。",
+      "explanation": "论文以此避免把 KL 惩罚混入组内优势计算。",
+      "example": "训练时用 KL 系数控制偏离参考策略的惩罚强度。",
+      "tags": [
+        "GRPO 训练基础",
+        "直接KL"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.03300v1"
+    },
+    {
+      "id": "grpobase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GRPO 训练基础",
+      "knowledgePoint": "奖励相同",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始结果监督 GRPO 的组内奖励全部相同时，直接除以标准差会遇到什么问题？",
+      "answer": "组内标准差为零，原始归一化公式未定义；实现需要明确处理这一情况。",
+      "explanation": "例如加入数值稳定项或跳过无区分度的组，具体行为依实现。",
+      "example": "同题四个回答奖励都为 1。",
+      "tags": [
+        "GRPO 训练基础",
+        "奖励相同"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2402.03300v1"
+    },
+    {
+      "id": "grpobase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GRPO 训练基础",
+      "knowledgePoint": "相对平移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在标准差非零且没有额外数值稳定项的结果监督归一化公式中，同一组奖励统一加常数会改变相对优势吗？",
+      "answer": "不会；加常数同时平移各奖励和组均值，差值与标准差保持不变。",
+      "explanation": "此结论以同一组和所述公式为前提。",
+      "example": "奖励从 [1,2] 同时增加 3 后，组内归一化值不变。",
+      "tags": [
+        "GRPO 训练基础",
+        "相对平移"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2402.03300v1"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "cross-encoder-reranking-practice",
+    "title": "Sentence Transformers 5.1.2：CrossEncoder 重排",
+    "url": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/cross_encoder/CrossEncoder.py",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "crossrank-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉编码器重排实践",
+      "knowledgePoint": "排序模型维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers 5.1.2 的 CrossEncoder.rank 支持多标签输出模型直接排序吗？",
+      "answer": "不支持；该方法要求 num_labels=1，否则抛出异常。",
+      "explanation": "多标签模型可用 predict 获得各类分数，再按任务定义排序。",
+      "example": "二分类双输出模型需要先确定使用哪一类得分。",
+      "tags": [
+        "交叉编码器重排实践",
+        "排序模型维度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/cross_encoder/CrossEncoder.py"
+    },
+    {
+      "id": "crossrank-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉编码器重排实践",
+      "knowledgePoint": "原始文档索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CrossEncoder.rank 结果里的 corpus_id 是排序名次吗？",
+      "answer": "不是；它是文档在传入 documents 列表中的原始索引。",
+      "explanation": "结果按得分降序排列，但索引仍指向输入位置。",
+      "example": "排序第一的文档原本可能位于输入列表的第 3 项。",
+      "tags": [
+        "交叉编码器重排实践",
+        "原始文档索引"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/cross_encoder/CrossEncoder.py"
+    },
+    {
+      "id": "crossrank-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉编码器重排实践",
+      "knowledgePoint": "返回文档文本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CrossEncoder.rank 如何在结果中包含原始文档文本？",
+      "answer": "设置 return_documents=True，结果项会包含 text 字段。",
+      "explanation": "默认结果主要包含原始文档索引和得分。",
+      "example": "展示排序结果时可直接读取 text。",
+      "tags": [
+        "交叉编码器重排实践",
+        "返回文档文本"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/cross_encoder/CrossEncoder.py"
+    },
+    {
+      "id": "crossrank-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉编码器重排实践",
+      "knowledgePoint": "topk计算范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CrossEncoder.rank 设置 top_k 后，是否只对前 k 个输入文档计算得分？",
+      "answer": "不是；5.1.2 源码先给所有输入文档打分排序，再截取前 k 项。",
+      "explanation": "控制候选数量可影响重排成本；top_k 主要限制返回数量。",
+      "example": "100 个候选设 top_k=5，仍需对 100 个候选评分。",
+      "tags": [
+        "交叉编码器重排实践",
+        "topk计算范围"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/cross_encoder/CrossEncoder.py"
+    },
+    {
+      "id": "crossrank-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉编码器重排实践",
+      "knowledgePoint": "单标签softmax",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers 5.1.2 对单标签 CrossEncoder.predict 使用 apply_softmax=True 可能使得分怎样？",
+      "answer": "源码对形状为 (批次,1) 的输出沿类别维做 softmax，结果会变为 1。",
+      "explanation": "这会丢失单输出候选之间的分数差异；应核对目标版本和设置。",
+      "example": "两个不同 logits 经单元素 softmax 都变成 1。",
+      "tags": [
+        "交叉编码器重排实践",
+        "单标签softmax"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/cross_encoder/CrossEncoder.py"
+    },
+    {
+      "id": "crossrank-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉编码器重排实践",
+      "knowledgePoint": "激活函数状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CrossEncoder 5.1.2 调用 predict 时传入 activation_fn，后续不传该参数会自动恢复先前激活函数吗？",
+      "answer": "不会；该调用会更新实例的 activation_fn，后续默认使用当前实例中的函数。",
+      "explanation": "源码中的 set_default=False 不会把这次函数设为配置默认值，但会改变实例状态。",
+      "example": "先传 Identity，再不传参数，实例仍使用 Identity。",
+      "tags": [
+        "交叉编码器重排实践",
+        "激活函数状态"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/cross_encoder/CrossEncoder.py"
+    },
+    {
+      "id": "crossrank-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉编码器重排实践",
+      "knowledgePoint": "模型激活配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "能否假定所有单输出 CrossEncoder 模型都使用 Sigmoid 激活？",
+      "answer": "不能；模型配置可指定激活函数，只有未指定时才采用相应默认设置。",
+      "explanation": "应查看实际模型配置及当前实例状态，不能仅凭分数范围推断校准。",
+      "example": "重排模型可能直接输出未经过 Sigmoid 的 logits。",
+      "tags": [
+        "交叉编码器重排实践",
+        "模型激活配置"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/cross_encoder/CrossEncoder.py"
+    }
+  ]
+}

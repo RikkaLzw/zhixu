@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "pefile-static-parsing",
+    "title": "pefile 使用文档：PE 文件静态解析",
+    "url": "https://pefile.readthedocs.io/en/latest/usage/UsageExamples.html",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "pefile-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "pefile 静态解析",
+      "knowledgePoint": "快速加载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pefile.PE(..., fast_load=True) 与完整解析相比主要省略什么？",
+      "answer": "先加载基本头部并暂不解析数据目录。",
+      "explanation": "之后仍可按需解析目录；适用行为以 pefile 版本为准。",
+      "example": "只需初步查看 PE 头部时可选择快速加载。",
+      "tags": [
+        "pefile 静态解析",
+        "快速加载"
+      ],
+      "evidence": "source",
+      "reference": "https://pefile.readthedocs.io/en/latest/usage/UsageExamples.html"
+    },
+    {
+      "id": "pefile-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "pefile 静态解析",
+      "knowledgePoint": "按需解析目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pefile 快速加载后，如何解析指定的数据目录？",
+      "answer": "调用 parse_data_directories，并可通过 directories 参数选择目录编号。",
+      "explanation": "解析导入目录后才能使用相应的已解析目录信息。",
+      "example": "可传入 IMAGE_DIRECTORY_ENTRY_IMPORT 对应编号。",
+      "tags": [
+        "pefile 静态解析",
+        "按需解析目录"
+      ],
+      "evidence": "source",
+      "reference": "https://pefile.readthedocs.io/en/latest/usage/UsageExamples.html"
+    },
+    {
+      "id": "pefile-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "pefile 静态解析",
+      "knowledgePoint": "导入目录可缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 pefile 程序不能假定每个 PE 对象都具有 DIRECTORY_ENTRY_IMPORT？",
+      "answer": "文件可能没有相应目录，或尚未解析该目录。",
+      "explanation": "访问前应考虑目录是否存在及快速加载状态。",
+      "example": "可先按需解析，再检查属性是否存在。",
+      "tags": [
+        "pefile 静态解析",
+        "导入目录可缺失"
+      ],
+      "evidence": "source",
+      "reference": "https://pefile.readthedocs.io/en/latest/usage/UsageExamples.html"
+    },
+    {
+      "id": "pefile-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "pefile 静态解析",
+      "knowledgePoint": "导入符号遍历",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pefile 解析导入目录后，如何从一个导入库条目查看其符号？",
+      "answer": "库名可从条目的 dll 读取，导入符号可遍历其 imports。",
+      "explanation": "导入项信息来自静态 PE 数据，不等同于实际运行轨迹。",
+      "example": "遍历每个 entry.imports 获取导入项的名称等信息。",
+      "tags": [
+        "pefile 静态解析",
+        "导入符号遍历"
+      ],
+      "evidence": "source",
+      "reference": "https://pefile.readthedocs.io/en/latest/usage/UsageExamples.html"
+    },
+    {
+      "id": "pefile-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "pefile 静态解析",
+      "knowledgePoint": "区段列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pefile 解析 PE 后，如何遍历各个区段头？",
+      "answer": "遍历 PE 对象的 sections 列表。",
+      "explanation": "区段头包含名称、虚拟地址及磁盘布局等字段。",
+      "example": "for section in pe.sections 可逐个检查区段。",
+      "tags": [
+        "pefile 静态解析",
+        "区段列表"
+      ],
+      "evidence": "source",
+      "reference": "https://pefile.readthedocs.io/en/latest/usage/UsageExamples.html"
+    },
+    {
+      "id": "pefile-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "pefile 静态解析",
+      "knowledgePoint": "导出地址",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pefile 对非转发导出项给出的 address 是首选映像下的绝对地址吗？",
+      "answer": "不是；它是相对虚拟地址，可与 OPTIONAL_HEADER.ImageBase 相加得到首选基址下的地址。",
+      "explanation": "实际加载基址可能变化；转发导出项需要另外识别。",
+      "example": "首选基址为 0x10000000、导出 RVA 为 0x1000 时，得到 0x10001000。",
+      "tags": [
+        "pefile 静态解析",
+        "导出地址"
+      ],
+      "evidence": "source",
+      "reference": "https://pefile.readthedocs.io/en/latest/usage/UsageExamples.html"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "source": {
+    "id": "agent-a2a-design",
+    "title": "A2A 1.0.0：智能体协作与发现",
+    "url": "https://a2a-protocol.org/v1.0.0/specification/",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题链接的资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "a2adesign-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体协作协议",
+      "knowledgePoint": "A2A协议作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "A2A 1.0.0 主要支持什么类型的系统交互？",
+      "answer": "它支持不同智能体系统之间发现能力、交换消息和协作处理任务。",
+      "explanation": "协议不要求参与方公开内部模型、记忆或工具实现。",
+      "example": "一个智能体把子任务交给另一个独立服务。",
+      "tags": [
+        "A2A协议作用",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://a2a-protocol.org/v1.0.0/specification/"
+    },
+    {
+      "id": "a2adesign-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体协作协议",
+      "knowledgePoint": "Agent Card",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "A2A 1.0.0 的 Agent Card 主要提供什么信息？",
+      "answer": "它描述智能体的身份、能力、接口和认证要求等元数据。",
+      "explanation": "客户端可依据这些信息判断如何连接和交互。",
+      "example": "调用前读取远程智能体支持的能力。",
+      "tags": [
+        "Agent Card",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://a2a-protocol.org/v1.0.0/specification/"
+    },
+    {
+      "id": "a2adesign-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体协作协议",
+      "knowledgePoint": "任务与消息",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "A2A 1.0.0 中 Task 与 Message 的主要区别是什么？",
+      "answer": "Task 是具有状态和生命周期的工作单元；Message 是一次交互中的消息。",
+      "explanation": "一次请求也可能直接返回消息而不创建任务。",
+      "example": "长期执行的任务可通过多条消息补充信息。",
+      "tags": [
+        "任务与消息",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://a2a-protocol.org/v1.0.0/specification/"
+    },
+    {
+      "id": "a2adesign-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体协作协议",
+      "knowledgePoint": "消息与产物",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "A2A 1.0.0 的 Message 与 Artifact 侧重传递什么？",
+      "answer": "Message 用于交互和状态沟通；Artifact 用于承载与任务关联的结果产物。",
+      "explanation": "规范建议用 Artifact 交付任务结果。",
+      "example": "请求澄清使用消息，生成的报告作为任务产物。",
+      "tags": [
+        "消息与产物",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://a2a-protocol.org/v1.0.0/specification/"
+    },
+    {
+      "id": "a2adesign-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体协作协议",
+      "knowledgePoint": "A2A与MCP",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "A2A 与 MCP 的设计侧重点有什么区别？",
+      "answer": "A2A 侧重独立智能体间的任务协作；MCP 侧重连接客户端与工具、资源等上下文能力。",
+      "explanation": "两者可以共同用于一个系统，具体边界取决于实现。",
+      "example": "智能体之间用 A2A 协作，其中一个智能体再通过 MCP 调用工具。",
+      "tags": [
+        "A2A与MCP",
+        "Agent"
+      ],
+      "evidence": "application",
+      "reference": "https://a2a-protocol.org/v1.0.0/specification/",
+      "supportingReferences": [
+        {
+          "id": "mcp-agent",
+          "title": "MCP：架构概述",
+          "url": "https://modelcontextprotocol.io/docs/learn/architecture",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

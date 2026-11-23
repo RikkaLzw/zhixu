@@ -1,0 +1,45 @@
+{
+  "version": 18,
+  "note": "迁移用第十八版旧主卡快照；仅在原卡未编辑且目标卡可用时合并，保留学习记录及原卡归档。",
+  "cards": [
+    {
+      "id": "ai4sec-004",
+      "category": "foundations",
+      "question": "为什么相似样本不能随意分到训练集和测试集？",
+      "answer": "模型可能记住重复流量、同一攻击活动或相似代码，使测试结果不能反映对新样本的效果。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "10",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-004"
+        },
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-004"
+        }
+      ],
+      "explanation": "模型可能记住环境和活动特征，而不是泛化到新的攻击场景。",
+      "example": "先按攻击活动或时间组织分组，再检查训练与测试组是否存在高度相似流。",
+      "alternateQuestions": [
+        "为什么 CIC-IDS2017 的随机切分可能高估检测效果？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "数据泄漏",
+        "切分"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "source": {
+    "id": "legacy-review-sources-25",
+    "title": "自编旧题复核：安全检测与知识检索",
+    "url": "https://arxiv.org/abs/2401.16185",
+    "type": "研究论文与技术文档",
+    "note": "为已有主卡补充技术依据；来源卡通过别名合并，不增加重复主卡。"
+  },
+  "cards": [
+    {
+      "id": "legacy25-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "代码输入与表示",
+      "knowledgePoint": "漏洞模型输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "代码漏洞检测的模型通常以什么为输入？",
+      "answer": "可以输入函数代码、相关调用上下文、代码结构或数据流；具体范围由检测任务和模型决定。",
+      "explanation": "函数级和图模型所用输入范围不同。",
+      "example": "比较函数源代码与程序图表示。",
+      "tags": [
+        "漏洞模型输入",
+        "代码输入与表示"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.16185",
+      "supportingReferences": [
+        {
+          "id": "legacy25-devign",
+          "title": "Devign：程序图漏洞识别",
+          "url": "https://arxiv.org/abs/1909.03496",
+          "type": "技术资料",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "legacy25-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码上下文",
+      "knowledgePoint": "跨函数上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么函数级漏洞检测需要关注上下文？",
+      "answer": "漏洞触发条件可能涉及调用者、跨函数数据流或外部配置，只看单个函数可能缺少判断依据。",
+      "explanation": "上下文并非越多越好，应按任务选择并评估。",
+      "example": "检查输入在调用者中的来源和校验。",
+      "tags": [
+        "跨函数上下文",
+        "代码上下文"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.16185"
+    },
+    {
+      "id": "legacy25-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "模型评估",
+      "knowledgePoint": "漏洞误报定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么是代码漏洞检测的误报？",
+      "answer": "模型把实际不存在目标漏洞的代码判为有漏洞。需要检查代码上下文和触发条件。",
+      "explanation": "判断仍需依赖可信标签或人工复核。",
+      "example": "边界检查有效但模型报告越界。",
+      "tags": [
+        "漏洞误报定义",
+        "模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.16185",
+      "supportingReferences": [
+        {
+          "id": "legacy25-metrics",
+          "title": "scikit-learn：分类评价",
+          "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+          "type": "技术资料",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "legacy25-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "情报实体",
+      "knowledgePoint": "威胁情报对象提取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "威胁情报提取可以从报告中识别哪些对象？",
+      "answer": "可以提取域名、IP、文件哈希、漏洞编号和攻击行为，并保留对应的原文证据。",
+      "explanation": "不同对象类型需按各自语义和上下文解析。",
+      "example": "从报告提取文件哈希并链接到原文。",
+      "tags": [
+        "威胁情报对象提取",
+        "情报实体"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf",
+      "supportingReferences": [
+        {
+          "id": "legacy25-stix",
+          "title": "STIX 2.1 标准",
+          "url": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html",
+          "type": "技术资料",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "legacy25-005",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "安全知识检索",
+      "knowledgePoint": "来源与可追溯",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全知识检索为什么要保留资料来源？",
+      "answer": "来源让分析人员能够核对原文、判断资料的适用范围，并追溯模型回答的依据。",
+      "explanation": "来源链接需要与具体支持片段对应。",
+      "example": "从漏洞公告核对回答中的修复建议。",
+      "tags": [
+        "来源与可追溯",
+        "安全知识检索"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2005.11401"
+    },
+    {
+      "id": "legacy25-006",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "AI告警研判",
+      "knowledgePoint": "告警研判辅助",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如何用 AI 辅助安全告警研判？",
+      "answer": "汇集告警、日志、资产和情报，让模型提取证据、生成判断与待验证事项，再交给分析人员复核。",
+      "explanation": "系统应区分可验证事实与模型推测。",
+      "example": "汇总可疑登录的日志和资产背景供分析人员检查。",
+      "tags": [
+        "告警研判辅助",
+        "AI告警研判"
+      ],
+      "evidence": "application",
+      "reference": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary"
+    },
+    {
+      "id": "legacy25-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞定位",
+      "knowledgePoint": "细粒度定位的作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么漏洞定位比单纯输出有无漏洞更有用？",
+      "answer": "定位能帮助审计人员快速检查可疑代码和数据流，并验证模型给出的原因。",
+      "explanation": "定位只是待验证线索，仍需人工检查相关上下文。",
+      "example": "先检查模型标出的可疑语句及其调用和数据依赖。",
+      "tags": [
+        "漏洞定位",
+        "人工审计"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2203.05181v1#S1",
+      "referenceTitle": "LineVD：细粒度漏洞定位与预测验证",
+      "referenceType": "研究论文"
+    }
+  ]
+}

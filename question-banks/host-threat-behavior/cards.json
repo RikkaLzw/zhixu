@@ -1,0 +1,376 @@
+{
+  "source": {
+    "id": "host-threat-behavior",
+    "title": "MITRE ATT&CK v20：主机凭据、横向移动与防御受损",
+    "url": "https://attack.mitre.org/versions/v20/techniques/T1003/",
+    "type": "教材与官方技术资料",
+    "note": "逐题依据所列资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "hostthreat-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "凭据转储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK 的 OS Credential Dumping 主要涉及什么？",
+      "answer": "从操作系统的缓存、内存或存储结构中提取账户凭据材料，例如密码或哈希。",
+      "explanation": "被获取的材料可能被用于后续访问或横向移动。",
+      "example": "调查异常进程读取敏感凭据存储的行为。",
+      "tags": [
+        "凭据转储",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1003/"
+    },
+    {
+      "id": "hostthreat-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "SAM与NTDS",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 本地 SAM 与域控制器的 NTDS 数据库在账户范围上有什么区别？",
+      "answer": "SAM 包含该主机的本地账户；NTDS 保存 Active Directory 域数据，可包含域账户及其他域对象信息。",
+      "explanation": "访问两类存储的背景与潜在影响范围不同。",
+      "example": "本机账户库与域控制器目录数据库分别调查。",
+      "tags": [
+        "SAM与NTDS",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1003/002/",
+      "supportingReferences": [
+        {
+          "id": "attack-v20-ntds",
+          "title": "MITRE ATT&CK v20：NTDS",
+          "url": "https://attack.mitre.org/versions/v20/techniques/T1003/003/",
+          "type": "威胁知识库",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "hostthreat-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "NTDS备份风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调查 NTDS 凭据窃取时，为什么还要关注包含目录数据库的备份？",
+      "answer": "备份可能包含与活动域控制器数据库相同或相近的敏感目录信息。",
+      "explanation": "备份操作本身也可能是正常维护，需要结合访问上下文。",
+      "example": "检查不常见主体对目录数据库备份的访问。",
+      "tags": [
+        "NTDS备份风险",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1003/003/"
+    },
+    {
+      "id": "hostthreat-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "NTDS检测关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么调查疑似 NTDS 凭据转储时可以关联影子副本创建与目录数据库访问？",
+      "answer": "这些活动的组合可能表明有人试图复制或读取敏感域数据库。",
+      "explanation": "影子副本和数据库访问也可能用于合法备份，需结合主体与用途判断。",
+      "example": "异常进程创建副本后读取目录数据库值得进一步核查。",
+      "tags": [
+        "NTDS检测关联",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1003/003/"
+    },
+    {
+      "id": "hostthreat-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "Kerberoasting",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kerberoasting 利用 Kerberos 服务票据的什么风险获取凭据？",
+      "answer": "攻击者取得服务票据后，可能对其中受服务账户密钥保护的数据进行离线密码猜测。",
+      "explanation": "票据请求属于正常协议操作，风险取决于票据和账户条件。",
+      "example": "调查同一账户突然请求大量不同服务票据。",
+      "tags": [
+        "Kerberoasting",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1558/003/"
+    },
+    {
+      "id": "hostthreat-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "ASREP前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AS-REP Roasting 利用目标账户的哪种 Kerberos 配置？",
+      "answer": "目标账户禁用了 Kerberos 预身份验证，使攻击者可能取得可供离线密码猜测的响应数据。",
+      "explanation": "该配置本身不证明已发生密码破解。",
+      "example": "检查不需要预身份验证的账户及其异常请求。",
+      "tags": [
+        "ASREP前提",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1558/004/"
+    },
+    {
+      "id": "hostthreat-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "票据告警证据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么单条使用 RC4 的 Kerberos 服务票据事件不能直接证明 Kerberoasting？",
+      "answer": "单条事件可能有正常业务原因；应结合请求数量、目标服务、账户历史和进程等上下文。",
+      "explanation": "ATT&CK 的分析思路关注异常请求模式和相关活动。",
+      "example": "将短期大量不同 SPN 请求与账户基线比较。",
+      "tags": [
+        "票据告警证据",
+        "主机威胁检测"
+      ],
+      "evidence": "application",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1558/003/"
+    },
+    {
+      "id": "hostthreat-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "防御工具受损",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK v20 的 Disable or Modify Tools 描述哪类行为？",
+      "answer": "攻击者禁用、降级或篡改安全工具及其遥测，以削弱防御和可见性。",
+      "explanation": "影响可能涉及主机、网络或云端监测组件。",
+      "example": "安全代理进程被终止后日志突然减少。",
+      "tags": [
+        "防御工具受损",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1685/"
+    },
+    {
+      "id": "hostthreat-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "日志缺失证据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全代理不再上报日志时，为什么不能仅凭缺失数据认定发生防御规避？",
+      "answer": "停止上报可能来自故障、配置或恶意干预，应结合服务状态、进程和配置变更调查。",
+      "explanation": "上报缺口是需要验证的线索。",
+      "example": "关联代理退出时间与维护记录。",
+      "tags": [
+        "日志缺失证据",
+        "主机威胁检测"
+      ],
+      "evidence": "application",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1685/"
+    },
+    {
+      "id": "hostthreat-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "Windows日志清除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 安全审核事件 1102 表示什么？",
+      "answer": "它表示安全审核日志被清除。",
+      "explanation": "该事件需要结合主体、时间和其他日志判断是否属于异常活动。",
+      "example": "审查未经计划的安全日志清除事件。",
+      "tags": [
+        "Windows日志清除",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-1102",
+      "referenceTitle": "Microsoft：Windows 安全审核事件 1102",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "hostthreat-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "日志清除可见性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "没有看到 Windows 事件 1102，能否据此排除所有事件日志被清除？",
+      "answer": "不能；1102 针对安全审核日志，其他日志或采集缺失等情况需要另行检查。",
+      "explanation": "检测覆盖依赖日志源和采集链路。",
+      "example": "同时核查其他日志通道与日志转发状态。",
+      "tags": [
+        "日志清除可见性",
+        "主机威胁检测"
+      ],
+      "evidence": "application",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-1102",
+      "referenceTitle": "Microsoft：Windows 安全审核事件 1102",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "hostthreat-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "计划任务用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 计划任务为什么既可能用于正常管理，也可能用于持久化？",
+      "answer": "任务调度可按计划或启动时运行程序；攻击者也可能利用该机制重复执行恶意代码。",
+      "explanation": "任务存在本身不足以判定恶意。",
+      "example": "核查任务创建者、触发条件和执行程序。",
+      "tags": [
+        "计划任务用途",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1053/005/"
+    },
+    {
+      "id": "hostthreat-013",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "计划任务采集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么只监控 schtasks 进程可能漏掉部分计划任务创建？",
+      "answer": "任务还可通过图形界面、WMI 或其他接口创建，不一定启动该命令行工具。",
+      "explanation": "需要结合任务事件、相关进程和其他可用遥测。",
+      "example": "通过管理接口创建的任务可能没有 schtasks 进程。",
+      "tags": [
+        "计划任务采集",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1053/005/"
+    },
+    {
+      "id": "hostthreat-014",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "SMB管理共享",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK 中的 SMB/Windows Admin Shares 涉及什么远程访问？",
+      "answer": "使用有效账户通过 SMB 访问远程共享，可能用于远程文件交互或支持后续执行。",
+      "explanation": "管理共享也用于正常运维，需要结合账号、来源和目标。",
+      "example": "异常账户跨多台主机访问管理共享。",
+      "tags": [
+        "SMB管理共享",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1021/002/"
+    },
+    {
+      "id": "hostthreat-015",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "WinRM行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WinRM 在 Windows 远程管理中提供什么能力？",
+      "answer": "它提供远程管理服务和协议，用户可在远程系统上执行操作。",
+      "explanation": "恶意使用与授权管理可使用相同机制。",
+      "example": "关联远程认证会话与随后执行的进程。",
+      "tags": [
+        "WinRM行为",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1021/006/"
+    },
+    {
+      "id": "hostthreat-016",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "收集与外传",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK 的 Archive Collected Data 与实际数据外传有什么区别？",
+      "answer": "前者压缩或加密已收集的数据作准备；实际外传还需要数据离开环境的行为。",
+      "explanation": "发现归档文件不能单独证明数据已被传出。",
+      "example": "关联异常归档文件的创建与后续网络传输。",
+      "tags": [
+        "收集与外传",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1560/"
+    },
+    {
+      "id": "hostthreat-017",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "破坏与加密",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据销毁与为造成影响而加密数据，在主要效果上有什么区别？",
+      "answer": "数据销毁试图使数据不可恢复或不可用；影响性加密则通过加密使数据难以正常使用。",
+      "explanation": "两种行为都可能影响可用性，但应依据证据区分。",
+      "example": "大量覆盖文件与勒索式加密需要分别分析。",
+      "tags": [
+        "破坏与加密",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1485/",
+      "supportingReferences": [
+        {
+          "id": "attack-v20-encrypt-impact",
+          "title": "MITRE ATT&CK v20：Data Encrypted for Impact",
+          "url": "https://attack.mitre.org/versions/v20/techniques/T1486/",
+          "type": "威胁知识库",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "hostthreat-018",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机威胁检测",
+      "knowledgePoint": "删除与覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能把普通文件删除直接等同于彻底擦除文件内容？",
+      "answer": "常见删除操作可能仅移除文件引用，内容仍可能通过取证方法恢复；覆盖等操作可能使恢复更困难。",
+      "explanation": "实际恢复能力取决于文件系统、介质和后续操作。",
+      "example": "调查时区分删除文件与覆盖原始内容。",
+      "tags": [
+        "删除与覆盖",
+        "主机威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/versions/v20/techniques/T1485/"
+    }
+  ]
+}

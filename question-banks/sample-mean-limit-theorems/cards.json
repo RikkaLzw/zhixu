@@ -1,0 +1,97 @@
+{
+  "source": {
+    "id": "sample-mean-limit-theorems",
+    "title": "概率教材：大数定律与中心极限定理",
+    "url": "https://www.probabilitycourse.com/chapter7/7_1_2_central_limit_theorem.php",
+    "type": "概率课程教材",
+    "note": "依据逐题引用的资料自行整理；示例为自编，版本与前提见题目。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "limitstat-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "样本均值与极限定理",
+      "knowledgePoint": "大数定律与中心极限",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "大数定律和中心极限定理对样本均值分别关注什么？",
+      "answer": "对独立同分布、方差有限且非零的样本，大数定律关注均值趋近总体期望；中心极限定理关注标准化后的抽样分布。",
+      "explanation": "两者都涉及大量样本，但结论的对象不同。",
+      "example": "一个结论说明均值的极限，另一个说明标准化后的分布。",
+      "tags": [
+        "样本均值与极限定理",
+        "大数定律与中心极限"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter7/7_1_2_central_limit_theorem.php",
+      "supportingReferences": [
+        {
+          "id": "probabilitycourse-lln",
+          "title": "ProbabilityCourse：大数定律",
+          "url": "https://www.probabilitycourse.com/chapter7/7_1_1_law_of_large_numbers.php",
+          "type": "概率课程教材",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "limitstat-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "样本均值与极限定理",
+      "knowledgePoint": "原始数据分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "独立同分布数据满足常见中心极限定理条件时，增大样本量会让原始观测本身变成正态分布吗？",
+      "answer": "不会；结论针对适当标准化的样本和或样本均值的分布。",
+      "explanation": "原始观测仍来自原来的总体分布。",
+      "example": "大量伯努利观测仍取 0 或 1。",
+      "tags": [
+        "样本均值与极限定理",
+        "原始数据分布"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter7/7_1_2_central_limit_theorem.php"
+    },
+    {
+      "id": "limitstat-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "样本均值与极限定理",
+      "knowledgePoint": "有限样本近似",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "满足中心极限定理的常见条件时，任意小样本的样本均值是否都严格服从正态分布？",
+      "answer": "不一定；定理给出样本量趋于无穷时的分布收敛，有限样本通常只是近似。",
+      "explanation": "近似质量取决于总体分布和样本量。",
+      "example": "高度偏斜分布的小样本均值可能明显偏离正态。",
+      "tags": [
+        "样本均值与极限定理",
+        "有限样本近似"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter7/7_1_2_central_limit_theorem.php"
+    },
+    {
+      "id": "limitstat-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "样本均值与极限定理",
+      "knowledgePoint": "连续性修正",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "用连续正态分布近似整数计数的 P(a≤X≤b) 时，连续性修正常怎样调整边界？",
+      "answer": "可用 a−0.5 与 b+0.5 作为连续区间边界。",
+      "explanation": "这是近似时常用的修正，不能保证所有情况下的误差都更小。",
+      "example": "把整数事件 8≤X≤10 对应到约 7.5 至 10.5 的连续区间。",
+      "tags": [
+        "样本均值与极限定理",
+        "连续性修正"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter7/7_1_2_central_limit_theorem.php"
+    }
+  ]
+}

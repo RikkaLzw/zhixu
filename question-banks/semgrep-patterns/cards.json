@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "semgrep-patterns",
+    "title": "Semgrep 规则结构与污点净化",
+    "url": "https://semgrep.dev/docs/writing-rules/rule-syntax/",
+    "type": "官方技术文档与标准",
+    "note": "依据逐题链接的原始资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "srule-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码规则编写",
+      "knowledgePoint": "规则模式组合",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Semgrep 的 patterns 与 pattern-either 如何组合子模式？",
+      "answer": "patterns 对子模式执行逻辑 AND；pattern-either 执行逻辑 OR。",
+      "explanation": "组合规则仍要考虑匹配范围与元变量绑定。",
+      "example": "同时满足调用和上下文条件用 patterns。",
+      "tags": [
+        "规则模式组合",
+        "Semgrep"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/rule-syntax/"
+    },
+    {
+      "id": "srule-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码规则编写",
+      "knowledgePoint": "代码上下文限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep 的 pattern-inside 对匹配结果有什么限制？",
+      "answer": "它只保留位于所指定代码结构内部的匹配结果。",
+      "explanation": "可用于约束函数或条件块内部的代码。",
+      "example": "仅检查某个处理函数内的危险调用。",
+      "tags": [
+        "代码上下文限制",
+        "Semgrep"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/rule-syntax/"
+    },
+    {
+      "id": "srule-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码规则编写",
+      "knowledgePoint": "匹配位置聚焦",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Semgrep 的 focus-metavariable 主要改变什么？",
+      "answer": "它把结果聚焦到其他模式已绑定的元变量所对应的代码区域。",
+      "explanation": "它本身不是独立的代码匹配模式。",
+      "example": "将一个较大函数中的发现定位到特定参数。",
+      "tags": [
+        "匹配位置聚焦",
+        "Semgrep"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/rule-syntax/"
+    },
+    {
+      "id": "srule-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码规则编写",
+      "knowledgePoint": "规则元数据",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Semgrep 规则中的 metadata 会自动改变代码匹配逻辑吗？",
+      "answer": "不会；metadata 用于附加自定义信息，不改变 Semgrep 的匹配行为。",
+      "explanation": "检测条件仍由模式等实际规则字段决定。",
+      "example": "给规则附加漏洞分类时，仍需配置检测模式。",
+      "tags": [
+        "规则元数据",
+        "Semgrep"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/rule-syntax/"
+    }
+  ]
+}

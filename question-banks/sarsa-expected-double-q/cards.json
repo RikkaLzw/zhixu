@@ -1,0 +1,176 @@
+{
+  "source": {
+    "id": "sarsa-expected-double-q",
+    "title": "Sutton 与 Barto 第二版：Sarsa 与双重 Q 学习",
+    "url": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf",
+    "type": "官方文档、教材或论文",
+    "note": "依据逐题列出的资料自行整理；面经主题延伸注明非原题。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "rltd-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sarsa 与双重 Q 学习",
+      "knowledgePoint": "名称来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sarsa 名称对应的一步交互包含哪五项？",
+      "answer": "当前状态 S、当前动作 A、奖励 R、下一状态 S′ 和下一动作 A′。",
+      "explanation": "五项构成从一个状态动作对到下一状态动作对的转移。",
+      "example": "执行 A 后观察奖励和 S′，再按策略选 A′。",
+      "tags": [
+        "强化学习",
+        "名称来源"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "rltd-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sarsa 与双重 Q 学习",
+      "knowledgePoint": "与 Q-learning 比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sarsa 与 Q-learning 的一步目标对下一动作价值有何区别？",
+      "answer": "Sarsa 目标为 R + γQ(S′, A′)，A′ 按行为策略选取；Q-learning 目标为 R + γmaxₐ Q(S′, a)。",
+      "explanation": "Sarsa 由行为策略的下一动作构造目标，是典型在策略方法；Q-learning 的目标可与探索行为不同。",
+      "example": "下一动作估值为 2 和 6 时，探索选到 2 会使两个目标不同。",
+      "tags": [
+        "强化学习",
+        "与 Q-learning 比较",
+        "公开面经",
+        "百度",
+        "主题延伸"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型公开面经：强化学习主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900226%E3%80%91%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "rltd-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sarsa 与双重 Q 学习",
+      "knowledgePoint": "Expected Sarsa 目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Expected Sarsa 如何处理下一状态的动作价值？",
+      "answer": "按目标策略在下一状态的动作概率，对各动作价值求加权平均。",
+      "explanation": "这是对下一动作选择求期望，而不是从中只采样一个动作。",
+      "example": "两动作概率为 0.75、0.25 时按对应比例加权。",
+      "tags": [
+        "强化学习",
+        "Expected Sarsa 目标"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "rltd-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sarsa 与双重 Q 学习",
+      "knowledgePoint": "动作采样方差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "相对于一步 Sarsa，Expected Sarsa 对下一动作的随机性有什么影响？",
+      "answer": "它计算策略下的动作期望，消除了目标中由采样下一动作引入的方差。",
+      "explanation": "环境转移和奖励本身仍可能有随机性。",
+      "example": "同一后继状态重复出现时，无须重新采样一个下一动作来构造目标。",
+      "tags": [
+        "强化学习",
+        "动作采样方差"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "rltd-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sarsa 与双重 Q 学习",
+      "knowledgePoint": "贪心策略期望",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "若下一状态策略只选择价值最大的动作，Expected Sarsa 的目标与 Q-learning 有什么关系？",
+      "answer": "在同一价值表下，两者的后继价值项相同，都是最大动作价值。",
+      "explanation": "有多个并列最大动作时，在这些动作间分配概率也得到相同最大值。",
+      "example": "策略以概率 1 选择当前最大值动作。",
+      "tags": [
+        "强化学习",
+        "贪心策略期望"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "rltd-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sarsa 与双重 Q 学习",
+      "knowledgePoint": "最大化偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Q-learning 的最大化偏差可能怎样产生？",
+      "answer": "用同一组含噪估计既选择最大动作又估计其价值，可能高估最大真实价值。",
+      "explanation": "噪声、估计相关性和问题结构会影响偏差大小。",
+      "example": "多个真实价值相等的动作中，最高估计常来自正向噪声。",
+      "tags": [
+        "强化学习",
+        "最大化偏差"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "rltd-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sarsa 与双重 Q 学习",
+      "knowledgePoint": "双重 Q 目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "表格型 Double Q-learning 更新 Q₁ 时，怎样选择并评估下一动作？",
+      "answer": "用 Q₁ 选择使其值最大的动作，再用 Q₂ 评估该动作的价值。",
+      "explanation": "更新 Q₂ 时两张表的角色对调。",
+      "example": "Q₁ 选中动作 B 时，目标读取 Q₂ 对 B 的估值。",
+      "tags": [
+        "强化学习",
+        "双重 Q 目标"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "rltd-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sarsa 与双重 Q 学习",
+      "knowledgePoint": "悬崖示例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sutton 与 Barto 的悬崖行走示例中，固定 ε 探索时 Sarsa 为什么可能学到更保守路线？",
+      "answer": "Sarsa 的目标反映行为策略仍会探索，靠近悬崖的风险会影响其价值估计。",
+      "explanation": "该实验结果依赖具体环境和策略，不保证所有任务中 Sarsa 都更好。",
+      "example": "绕远一些可降低探索时跌入悬崖的风险。",
+      "tags": [
+        "强化学习",
+        "悬崖示例"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "postgresql-keyset-pagination",
+    "title": "PostgreSQL 17：游标式分页与行比较",
+    "url": "https://www.postgresql.org/docs/17/queries-limit.html",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgpage-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PostgreSQL 游标式分页",
+      "knowledgePoint": "LIMIT数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 LIMIT 10 是否保证查询一定返回 10 行？",
+      "answer": "不保证；它最多返回 10 行，符合条件的行不足时可以更少。",
+      "explanation": "LIMIT 控制结果行数上限，不会生成缺失的数据。",
+      "example": "只有 3 行满足条件时，LIMIT 10 返回 3 行。",
+      "tags": [
+        "PostgreSQL 游标式分页",
+        "LIMIT数量"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-limit.html"
+    },
+    {
+      "id": "pgpage-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PostgreSQL 游标式分页",
+      "knowledgePoint": "LIMIT与OFFSET顺序",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 查询同时指定 OFFSET 20 和 LIMIT 10 时，如何应用它们？",
+      "answer": "先跳过 20 行，再从其后的结果中最多返回 10 行。",
+      "explanation": "稳定分页还需要能确定唯一顺序的 ORDER BY。",
+      "example": "结果共 25 行时，该页最多得到最后 5 行。",
+      "tags": [
+        "PostgreSQL 游标式分页",
+        "LIMIT与OFFSET顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-limit.html"
+    },
+    {
+      "id": "pgpage-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 游标式分页",
+      "knowledgePoint": "键集分页条件",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "按非空且唯一的 id 升序时，如何用上一页最后的 id 请求下一页？",
+      "answer": "使用 WHERE id > 上一页最后的 id，配合 ORDER BY id ASC 和 LIMIT。",
+      "explanation": "这属于键集分页；条件与排序方向必须一致。",
+      "example": "最后 id 为 100 时可查询 WHERE id > 100 ORDER BY id ASC LIMIT 20。",
+      "tags": [
+        "PostgreSQL 游标式分页",
+        "键集分页条件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-comparisons.html"
+    },
+    {
+      "id": "pgpage-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 游标式分页",
+      "knowledgePoint": "组合键降序分页",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "created_at 与 id 均非空、id 唯一且均降序时，下一页如何使用两列游标？",
+      "answer": "用 WHERE (created_at, id) < (上一页时间, 上一页 id)，配合两列均降序的 ORDER BY。",
+      "explanation": "PostgreSQL 行比较从左到右比较；id 用于打破相同时间的并列。",
+      "example": "ORDER BY created_at DESC, id DESC LIMIT 20 可配合该条件。",
+      "tags": [
+        "PostgreSQL 游标式分页",
+        "组合键降序分页"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-comparisons.html"
+    },
+    {
+      "id": "pgpage-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 游标式分页",
+      "knowledgePoint": "行比较与NULL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 行比较用于分页时，排序键含 NULL 为什么需要特别设计？",
+      "answer": "行比较在决定结果所需的一对字段中遇到 NULL 时，结果可能为未知，无法简单地选中该行。",
+      "explanation": "应使用非空排序键，或显式设计 NULL 排序与翻页条件。",
+      "example": "不能直接假定 (nullable_time, id) < (t, i) 包含所有 NULL 时间行。",
+      "tags": [
+        "PostgreSQL 游标式分页",
+        "行比较与NULL"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-comparisons.html"
+    },
+    {
+      "id": "pgpage-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "PostgreSQL 游标式分页",
+      "knowledgePoint": "混合排序方向",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "排序为 created_at DESC、id ASC，两列非空且 id 唯一时，能否直接用 (created_at, id) < (t, i) 取下一页？",
+      "answer": "不能；应使用 created_at < t OR (created_at = t AND id > i)，以匹配两列各自的排序方向。",
+      "explanation": "PostgreSQL 的行小于比较按从左到右的统一比较方向进行，第二列的升序需要单独处理。",
+      "example": "上一页末尾为时间 t、编号 i 时，同一时间下 id 大于 i 的行属于后续结果。",
+      "tags": [
+        "PostgreSQL 游标式分页",
+        "混合排序方向"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-comparisons.html"
+    },
+    {
+      "id": "pgpage-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "PostgreSQL 游标式分页",
+      "knowledgePoint": "复合索引选型",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "对按 created_at、id 均降序的键集分页，哪类索引可能帮助数据库按顺序读取？",
+      "answer": "以 created_at 和 id 为键的 B-tree 复合索引可能帮助满足范围条件与排序。",
+      "explanation": "实际是否使用索引取决于过滤条件、统计信息和优化器估计，需查看执行计划。",
+      "example": "可评估 CREATE INDEX ON events (created_at DESC, id DESC)。",
+      "tags": [
+        "PostgreSQL 游标式分页",
+        "复合索引选型"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/indexes-ordering.html"
+    }
+  ]
+}

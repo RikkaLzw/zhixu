@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "volatility3-linux-memory",
+    "title": "Volatility 3 v2.26.2 文档：Linux 内存调查",
+    "url": "https://volatility3.readthedocs.io/en/v2.26.2/getting-started-linux-tutorial.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本与环境为准。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "vol3-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Volatility 内存调查",
+      "knowledgePoint": "输入镜像",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Volatility 3 v2.26.2 的 -f 参数在常见离线调查中指定什么？",
+      "answer": "指定要分析的内存镜像文件。",
+      "explanation": "镜像的采集质量和时间会影响分析结果。",
+      "example": "以 -f memory.vmem 指定采集文件。",
+      "tags": [
+        "Volatility 内存调查",
+        "输入镜像"
+      ],
+      "evidence": "source",
+      "reference": "https://volatility3.readthedocs.io/en/v2.26.2/getting-started-linux-tutorial.html"
+    },
+    {
+      "id": "vol3-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Volatility 内存调查",
+      "knowledgePoint": "内核标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Volatility 3 v2.26.2 的 banners 插件可用于什么？",
+      "answer": "从内存中查找内核版本等 banner，辅助确定合适的 Linux 符号表。",
+      "explanation": "可能找到多个 banner，应结合镜像和其他证据判断。",
+      "example": "用候选内核版本定位相应符号文件。",
+      "tags": [
+        "Volatility 内存调查",
+        "内核标识"
+      ],
+      "evidence": "source",
+      "reference": "https://volatility3.readthedocs.io/en/v2.26.2/getting-started-linux-tutorial.html"
+    },
+    {
+      "id": "vol3-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Volatility 内存调查",
+      "knowledgePoint": "符号表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Volatility 3 v2.26.2 分析 Linux 内存时为什么要准备匹配的符号表？",
+      "answer": "插件需要内核类型与结构布局等信息来解释内存内容。",
+      "explanation": "缺少合适符号时插件可能无法正常运行或解析。",
+      "example": "按实际内核版本查找对应的 ISF。",
+      "tags": [
+        "Volatility 内存调查",
+        "符号表"
+      ],
+      "evidence": "source",
+      "reference": "https://volatility3.readthedocs.io/en/v2.26.2/getting-started-linux-tutorial.html"
+    },
+    {
+      "id": "vol3-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Volatility 内存调查",
+      "knowledgePoint": "进程列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Volatility 3 v2.26.2 的 linux.pslist 主要通过什么方式列举进程？",
+      "answer": "遍历内存中的内核任务链表，输出进程及相关字段。",
+      "explanation": "链表结果不保证包含所有已隐藏或已结束的进程。",
+      "example": "查看 PID、PPID 及用户／组信息。",
+      "tags": [
+        "Volatility 内存调查",
+        "进程列表"
+      ],
+      "evidence": "source",
+      "reference": "https://volatility3.readthedocs.io/en/v2.26.2/getting-started-linux-tutorial.html"
+    },
+    {
+      "id": "vol3-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Volatility 内存调查",
+      "knowledgePoint": "进程树",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Volatility 3 v2.26.2 的 linux.pstree 如何组织进程结果？",
+      "answer": "按父子关系以树形展示进程层级。",
+      "explanation": "异常父子关系只是调查线索，需要结合其他证据。",
+      "example": "查看 shell 是否由预期的服务进程启动。",
+      "tags": [
+        "Volatility 内存调查",
+        "进程树"
+      ],
+      "evidence": "source",
+      "reference": "https://volatility3.readthedocs.io/en/v2.26.2/getting-started-linux-tutorial.html"
+    },
+    {
+      "id": "vol3-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Volatility 内存调查",
+      "knowledgePoint": "命令历史",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Volatility 3 v2.26.2 的 linux.bash 用于从内存中寻找什么？",
+      "answer": "恢复内存中可识别的 Bash 命令历史。",
+      "explanation": "结果取决于内存内容和插件识别范围，不代表完整命令审计日志。",
+      "example": "结合其他日志验证可疑命令。",
+      "tags": [
+        "Volatility 内存调查",
+        "命令历史"
+      ],
+      "evidence": "source",
+      "reference": "https://volatility3.readthedocs.io/en/v2.26.2/getting-started-linux-tutorial.html"
+    },
+    {
+      "id": "vol3-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Volatility 内存调查",
+      "knowledgePoint": "内核模块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Volatility 3 v2.26.2 的 linux.lsmod 主要展示什么？",
+      "answer": "展示内存中识别到的已加载 Linux 内核模块。",
+      "explanation": "结果应与镜像采集时刻和解析条件一起解释。",
+      "example": "调查异常内核模块时可作为线索。",
+      "tags": [
+        "Volatility 内存调查",
+        "内核模块"
+      ],
+      "evidence": "source",
+      "reference": "https://volatility3.readthedocs.io/en/v2.26.2/getting-started-linux-tutorial.html"
+    }
+  ]
+}

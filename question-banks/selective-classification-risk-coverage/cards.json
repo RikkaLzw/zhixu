@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "selective-classification-risk-coverage",
+    "title": "Geifman 与 El-Yaniv 2017：选择性分类",
+    "url": "https://arxiv.org/pdf/1705.08500v2",
+    "type": "教材、官方文档与论文",
+    "note": "依据逐题引用的文档、教材或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "selrisk-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "拒判与风险覆盖",
+      "knowledgePoint": "选择函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "选择性分类器中的选择函数 g(x) 决定什么？",
+      "answer": "决定对样本输出分类结果，还是拒绝该次预测。",
+      "explanation": "分类器本身产生预测，选择函数控制是否接受该预测。",
+      "example": "低置信度告警可以交由人工复核。",
+      "tags": [
+        "拒判与风险覆盖",
+        "选择函数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1705.08500v2"
+    },
+    {
+      "id": "selrisk-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "拒判与风险覆盖",
+      "knowledgePoint": "覆盖率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "选择性分类中的 coverage 衡量什么？",
+      "answer": "衡量未被拒绝、由分类器接受处理的样本比例或概率。",
+      "explanation": "覆盖率和错误率的分母不同，评估时应分别报告。",
+      "example": "100 个样本接受 80 个时，经验覆盖率为 80%。",
+      "tags": [
+        "拒判与风险覆盖",
+        "覆盖率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1705.08500v2"
+    },
+    {
+      "id": "selrisk-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "拒判与风险覆盖",
+      "knowledgePoint": "选择性风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "以 0-1 损失评价时，选择性风险衡量什么？",
+      "answer": "衡量被接受样本中的错误比例。",
+      "explanation": "被拒绝样本不进入该风险的分母。",
+      "example": "接受 80 个样本，其中 4 个预测错误，经验选择性风险为 5%。",
+      "tags": [
+        "拒判与风险覆盖",
+        "选择性风险"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1705.08500v2"
+    },
+    {
+      "id": "selrisk-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "拒判与风险覆盖",
+      "knowledgePoint": "零覆盖边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如果某次评估没有接受任何样本，能否按错误数除以接受数计算选择性风险？",
+      "answer": "不能；接受数为零时该比例的分母为零。",
+      "explanation": "应明确报告零覆盖，不能把风险直接当作零。",
+      "example": "阈值极高导致全部拒判时，不能声称接受预测的错误率为 0。",
+      "tags": [
+        "拒判与风险覆盖",
+        "零覆盖边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1705.08500v2"
+    },
+    {
+      "id": "selrisk-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "拒判与风险覆盖",
+      "knowledgePoint": "风险覆盖曲线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "风险—覆盖曲线展示了什么关系？",
+      "answer": "展示选择性风险如何随覆盖率变化。",
+      "explanation": "可通过改变选择阈值得到不同工作点。",
+      "example": "比较两个拒判策略时可在相近覆盖率下比较风险。",
+      "tags": [
+        "拒判与风险覆盖",
+        "风险覆盖曲线"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1705.08500v2"
+    },
+    {
+      "id": "selrisk-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "拒判与风险覆盖",
+      "knowledgePoint": "风险保证条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "选择性分类论文中的风险上界能否自动保证任意分布漂移后的风险？",
+      "answer": "不能；论文的概率保证依赖样本独立同分布等前提，分布变化需要重新评估。",
+      "explanation": "有界风险是带置信水平的统计结论，而非逐条预测的正确性证明。",
+      "example": "攻击类型变化后应重新测量接受样本的错误率。",
+      "tags": [
+        "拒判与风险覆盖",
+        "风险保证条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1705.08500v2"
+    }
+  ]
+}

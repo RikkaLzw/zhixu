@@ -1,0 +1,50 @@
+{
+  "source": {
+    "id": "rslora-rank-stability",
+    "title": "rsLoRA 原论文 v1：秩与训练稳定性",
+    "url": "https://arxiv.org/abs/2312.03732v1",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题列出的资料自行整理；代码行为以题中版本为准。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "rslora-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "rsLoRA 秩稳定性",
+      "knowledgePoint": "高秩学习",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "rsLoRA 原论文认为固定 α 的原始 LoRA 缩放在秩增大时可能带来什么问题？",
+      "answer": "缩放因子随秩增大下降过快，可能使学习信号衰减，高秩适配器难以充分发挥额外容量。",
+      "explanation": "这是论文在其分析假设和实验设置下提出的结论。",
+      "example": "增加适配器秩后训练损失改善仍很小。",
+      "tags": [
+        "LoRA",
+        "高秩学习"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2312.03732v1"
+    },
+    {
+      "id": "rslora-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "rsLoRA 秩稳定性",
+      "knowledgePoint": "理论边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "rsLoRA 的秩稳定性理论能否保证更高秩在所有任务上都有更好效果？",
+      "answer": "不能；理论讨论特定假设下的稳定或塌缩，不保证不同秩学到的特征一定带来更高性能。",
+      "explanation": "实际结果还依赖数据、超参数和资源预算。",
+      "example": "对目标任务分别验证不同秩的效果与成本。",
+      "tags": [
+        "LoRA",
+        "理论边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2312.03732v1"
+    }
+  ]
+}

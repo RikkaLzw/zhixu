@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "distillation-distilbert",
+    "title": "DistilBERT 原论文 v4：知识蒸馏与预训练",
+    "url": "https://arxiv.org/abs/1910.01108v4",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题所列论文或固定版本资料自行整理，示例为自编。在线文档按 2026-11-21 查看内容。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "distillbert-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "知识蒸馏与 DistilBERT",
+      "knowledgePoint": "教师与学生",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "知识蒸馏中的教师模型和学生模型分别承担什么作用？",
+      "answer": "教师提供学习信号，学生通过训练学习模仿这些信号。",
+      "explanation": "学生通常更紧凑，但具体结构和目标取决于任务。",
+      "example": "用大型语言模型的输出训练较小模型。",
+      "tags": [
+        "知识蒸馏与 DistilBERT",
+        "教师与学生"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1910.01108v4"
+    },
+    {
+      "id": "distillbert-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏与 DistilBERT",
+      "knowledgePoint": "教师推理依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "训练完成的独立学生模型在推理时必须同时运行教师模型吗？",
+      "answer": "通常不需要；学生可以单独运行。",
+      "explanation": "这是蒸馏为独立学生模型的常见部署形式。",
+      "example": "用训练后的轻量模型在设备上预测。",
+      "tags": [
+        "知识蒸馏与 DistilBERT",
+        "教师推理依赖"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1910.01108v4"
+    },
+    {
+      "id": "distillbert-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏与 DistilBERT",
+      "knowledgePoint": "共同温度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DistilBERT 论文在蒸馏训练时如何为教师和学生设置 softmax 温度？",
+      "answer": "两者使用相同的温度。",
+      "explanation": "论文推理时恢复普通 softmax，即温度设为 1。",
+      "example": "同一批次的教师与学生输出用相同 T。",
+      "tags": [
+        "知识蒸馏与 DistilBERT",
+        "共同温度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1910.01108v4"
+    },
+    {
+      "id": "distillbert-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏与 DistilBERT",
+      "knowledgePoint": "预训练阶段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DistilBERT 论文把蒸馏放在预训练阶段有什么目的？",
+      "answer": "先获得可迁移到多个下游任务的通用小模型。",
+      "explanation": "论文也研究了在特定任务适配阶段再做蒸馏。",
+      "example": "预训练后分别微调用于分类和问答。",
+      "tags": [
+        "知识蒸馏与 DistilBERT",
+        "预训练阶段"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1910.01108v4"
+    },
+    {
+      "id": "distillbert-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏与 DistilBERT",
+      "knowledgePoint": "层数压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 DistilBERT 的 Transformer 层数相对教师 BERT 如何变化？",
+      "answer": "减少到教师层数的一半。",
+      "explanation": "这里描述论文中的原始结构，不代表所有蒸馏模型都如此。",
+      "example": "12 层 BERT 的学生使用 6 层。",
+      "tags": [
+        "知识蒸馏与 DistilBERT",
+        "层数压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1910.01108v4"
+    },
+    {
+      "id": "distillbert-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏与 DistilBERT",
+      "knowledgePoint": "学生初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DistilBERT 论文如何利用教师权重初始化学生的 Transformer 层？",
+      "answer": "从教师层中隔一层取一层来初始化学生。",
+      "explanation": "论文利用两者共享的隐藏维度完成这种初始化。",
+      "example": "从较深教师模型选取部分层的参数。",
+      "tags": [
+        "知识蒸馏与 DistilBERT",
+        "学生初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1910.01108v4"
+    },
+    {
+      "id": "distillbert-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏与 DistilBERT",
+      "knowledgePoint": "三重损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DistilBERT 原论文的三重训练损失由哪几类目标组成？",
+      "answer": "蒸馏损失、掩码语言模型损失和余弦嵌入损失。",
+      "explanation": "三项在训练中组合使用，权重和实现应按论文设置理解。",
+      "example": "学生同时拟合教师输出与掩码词目标。",
+      "tags": [
+        "知识蒸馏与 DistilBERT",
+        "三重损失"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1910.01108v4"
+    },
+    {
+      "id": "distillbert-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏与 DistilBERT",
+      "knowledgePoint": "隐藏状态对齐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DistilBERT 的余弦嵌入损失主要希望对齐什么？",
+      "answer": "教师和学生隐藏状态向量的方向。",
+      "explanation": "它与拟合输出概率分布的蒸馏损失关注不同的信号。",
+      "example": "让同一输入的隐藏表示方向更接近。",
+      "tags": [
+        "知识蒸馏与 DistilBERT",
+        "隐藏状态对齐"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1910.01108v4"
+    },
+    {
+      "id": "distillbert-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏与 DistilBERT",
+      "knowledgePoint": "下一句预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DistilBERT 原论文的预训练是否使用 BERT 原始的下一句预测目标？",
+      "answer": "没有；论文使用动态掩码训练而不使用下一句预测目标。",
+      "explanation": "这是该论文的训练配置，不是知识蒸馏的通用限制。",
+      "example": "预训练时保留掩码语言模型目标。",
+      "tags": [
+        "知识蒸馏与 DistilBERT",
+        "下一句预测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1910.01108v4"
+    }
+  ]
+}

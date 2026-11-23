@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "mlflow-model-registry-practice",
+    "title": "MLflow 2.22.0：模型注册与别名",
+    "url": "https://github.com/mlflow/mlflow/blob/v2.22.0/docs/docs/model-registry/index.mdx",
+    "type": "固定版本文档、源码或论文",
+    "note": "依据逐题所列资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "mlreg-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MLflow 模型注册",
+      "knowledgePoint": "注册模型与版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow Model Registry 中的注册模型与模型版本是什么关系？",
+      "answer": "一个有唯一名称的注册模型可以包含多个版本。",
+      "explanation": "同名模型的新版本通常获得递增的版本号。",
+      "example": "同一检测模型登记不同训练产物。",
+      "tags": [
+        "MLflow 模型注册",
+        "注册模型与版本"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mlflow/mlflow/blob/v2.22.0/docs/docs/model-registry/index.mdx"
+    },
+    {
+      "id": "mlreg-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MLflow 模型注册",
+      "knowledgePoint": "别名含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow 的模型别名与固定版本号有什么主要区别？",
+      "answer": "别名是指向某个版本的可变命名引用，版本号用于标识具体版本。",
+      "explanation": "别名可以重新指向同一注册模型的其他版本。",
+      "example": "将 champion 从版本 1 改为版本 2。",
+      "tags": [
+        "MLflow 模型注册",
+        "别名含义"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mlflow/mlflow/blob/v2.22.0/docs/docs/model-registry/index.mdx"
+    },
+    {
+      "id": "mlreg-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MLflow 模型注册",
+      "knowledgePoint": "别名URI",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "MLflow 如何用别名 URI 指向注册模型 MyModel 的 champion 版本？",
+      "answer": "使用 models:/MyModel@champion。",
+      "explanation": "解析结果取决于该别名当时指向的版本。",
+      "example": "生产代码通过别名查找当前候选模型。",
+      "tags": [
+        "MLflow 模型注册",
+        "别名URI"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mlflow/mlflow/blob/v2.22.0/docs/docs/model-registry/index.mdx"
+    },
+    {
+      "id": "mlreg-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MLflow 模型注册",
+      "knowledgePoint": "删除别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow 删除注册模型的某个别名时，会同时删除其指向的模型版本吗？",
+      "answer": "不会；删除别名只移除该命名引用。",
+      "explanation": "模型版本仍可通过版本号查找。",
+      "example": "移除 champion 后版本 2 仍存在。",
+      "tags": [
+        "MLflow 模型注册",
+        "删除别名"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mlflow/mlflow/blob/v2.22.0/mlflow/tracking/client.py"
+    },
+    {
+      "id": "mlreg-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MLflow 模型注册",
+      "knowledgePoint": "保留别名",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "MLflow 2.22.0 能把 v9 这样的名称设置为自定义模型别名吗？",
+      "answer": "不能；v 加数字的别名格式被保留。",
+      "explanation": "可改用 champion 等非保留名称。",
+      "example": "避免将 v9 作为 set_registered_model_alias 的别名。",
+      "tags": [
+        "MLflow 模型注册",
+        "保留别名"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mlflow/mlflow/blob/v2.22.0/mlflow/tracking/client.py"
+    },
+    {
+      "id": "mlreg-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MLflow 模型注册",
+      "knowledgePoint": "版本标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow 的模型版本标签通常用来表达什么？",
+      "answer": "它们是附加在具体版本上的键值元数据，可记录验证状态等属性。",
+      "explanation": "标签本身不会替代对模型实际行为的验证。",
+      "example": "为版本 2 标记 validation_status=passed。",
+      "tags": [
+        "MLflow 模型注册",
+        "版本标签"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mlflow/mlflow/blob/v2.22.0/docs/docs/model-registry/index.mdx"
+    }
+  ]
+}

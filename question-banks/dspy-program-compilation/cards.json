@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "dspy-program-compilation",
+    "title": "DSPy 原论文 v1：模块化语言模型程序",
+    "url": "https://arxiv.org/pdf/2310.03714v1",
+    "type": "教材、官方文档与原论文",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "dspypaper-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DSPy 程序与优化",
+      "knowledgePoint": "签名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DSPy 原论文中的 signature 主要声明什么？",
+      "answer": "声明模块输入字段、输出字段及可选指令，描述期望的文本转换接口。",
+      "explanation": "签名提供行为提示，并不自动证明输出正确。",
+      "example": "question -> answer 表示由问题生成答案。",
+      "tags": [
+        "DSPy 程序与优化",
+        "签名"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.03714v1"
+    },
+    {
+      "id": "dspypaper-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DSPy 程序与优化",
+      "knowledgePoint": "Predict模块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DSPy 原论文的 Predict 模块怎样实现一个 signature？",
+      "answer": "根据输入和示例构造提示、调用语言模型，并解析输出字段。",
+      "explanation": "它可嵌入更大的多步骤程序。",
+      "example": "Predict 可实现问题到答案的映射。",
+      "tags": [
+        "DSPy 程序与优化",
+        "Predict模块"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.03714v1"
+    },
+    {
+      "id": "dspypaper-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DSPy 程序与优化",
+      "knowledgePoint": "程序组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DSPy 程序如何表达多阶段语言模型任务？",
+      "answer": "将具有各自签名的模块与普通控制流组合成程序。",
+      "explanation": "模块输出可作为后续模块输入。",
+      "example": "先生成检索查询，再根据检索内容回答。",
+      "tags": [
+        "DSPy 程序与优化",
+        "程序组合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.03714v1"
+    },
+    {
+      "id": "dspypaper-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DSPy 程序与优化",
+      "knowledgePoint": "Teleprompter",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DSPy 原论文中的 teleprompter 通常接收什么并产生什么？",
+      "answer": "接收程序、训练数据和评估指标，产生优化后的程序。",
+      "explanation": "优化方式可包括选择示例或微调，取决于具体方法。",
+      "example": "用问答正确率作为指标优化问答程序。",
+      "tags": [
+        "DSPy 程序与优化",
+        "Teleprompter"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.03714v1"
+    },
+    {
+      "id": "dspypaper-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DSPy 程序与优化",
+      "knowledgePoint": "Bootstrap轨迹",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DSPy 原论文的 BootstrapFewShot 如何获得候选示例？",
+      "answer": "运行教师程序并记录多阶段轨迹，用指标筛选通过的轨迹，再为模块收集示例。",
+      "explanation": "只有最终轨迹满足筛选规则才会被用作候选示例。",
+      "example": "从成功回答的检索轨迹中提取模块输入输出。",
+      "tags": [
+        "DSPy 程序与优化",
+        "Bootstrap轨迹"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.03714v1"
+    },
+    {
+      "id": "dspypaper-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DSPy 程序与优化",
+      "knowledgePoint": "默认教师",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DSPy 原论文描述的 BootstrapFewShot 未指定教师程序时，使用什么？",
+      "answer": "使用待编译程序的零样本版本生成候选轨迹。",
+      "explanation": "这是论文所述方法的默认构造。",
+      "example": "先运行未附示例的程序，再筛选成功轨迹。",
+      "tags": [
+        "DSPy 程序与优化",
+        "默认教师"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.03714v1"
+    },
+    {
+      "id": "dspypaper-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DSPy 程序与优化",
+      "knowledgePoint": "示例与权重",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "DSPy 原论文的 BootstrapFewShot 与 BootstrapFinetune 在优化结果上有什么主要区别？",
+      "answer": "前者主要收集提示示例；后者可用示例对语言模型权重进行微调。",
+      "explanation": "并非每次 DSPy 编译都需要修改模型权重。",
+      "example": "分别比较添加少样本示例与训练较小模型。",
+      "tags": [
+        "DSPy 程序与优化",
+        "示例与权重"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.03714v1"
+    }
+  ]
+}

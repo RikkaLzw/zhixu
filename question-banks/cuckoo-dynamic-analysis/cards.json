@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "cuckoo-dynamic-analysis",
+    "title": "Cuckoo Sandbox 2.0.7：动态分析与结果",
+    "url": "https://cuckoo.readthedocs.io/en/2.0.7/introduction/what/",
+    "type": "研究论文与技术文档",
+    "note": "逐题依据原论文、固定版本文档或官方 Schema 自行整理；示例为自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "sandbox-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "动态沙箱基础",
+      "knowledgePoint": "沙箱主客机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo Sandbox 2.0.7 中的 Host 与 Guest 分别承担什么任务？",
+      "answer": "Host 管理分析任务，Guest 是实际运行并观察样本的隔离环境。",
+      "explanation": "Guest 可以由受支持的虚拟机或物理机实现。",
+      "example": "管理节点向隔离分析机分配样本。",
+      "tags": [
+        "沙箱主客机",
+        "动态沙箱基础"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/introduction/what/"
+    },
+    {
+      "id": "sandbox-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "动态沙箱基础",
+      "knowledgePoint": "分析环境隔离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么动态恶意软件分析通常在隔离环境中执行样本？",
+      "answer": "隔离环境用于限制样本对其他系统的影响，并便于收集执行行为。",
+      "explanation": "隔离的实际效果取决于环境和网络配置。",
+      "example": "在独立分析机中运行待分析文件。",
+      "tags": [
+        "分析环境隔离",
+        "动态沙箱基础"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/introduction/what/"
+    },
+    {
+      "id": "sandbox-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "动态沙箱基础",
+      "knowledgePoint": "进程调用轨迹",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo Sandbox 可以收集样本及其派生进程的哪类执行轨迹？",
+      "answer": "可以收集进程执行期间的调用轨迹。",
+      "explanation": "能看到哪些调用取决于环境、监测组件和实际执行路径。",
+      "example": "观察样本及子进程的系统调用记录。",
+      "tags": [
+        "进程调用轨迹",
+        "动态沙箱基础"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/introduction/what/"
+    },
+    {
+      "id": "sandbox-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "动态沙箱基础",
+      "knowledgePoint": "沙箱网络记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo 2.0.7 的 dump.pcap 保存什么？",
+      "answer": "它保存分析期间由网络抓包工具生成的网络流量记录。",
+      "explanation": "流量记录不自动包含加密通信的明文内容。",
+      "example": "分析样本运行期间的网络连接。",
+      "tags": [
+        "沙箱网络记录",
+        "动态沙箱基础"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/usage/results/"
+    },
+    {
+      "id": "sandbox-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "动态沙箱基础",
+      "knowledgePoint": "沙箱文件产物",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo 2.0.7 的分析结果 files/ 目录通常包含什么？",
+      "answer": "包含样本操作过且 Cuckoo 成功提取的文件。",
+      "explanation": "实际可见结果取决于文件操作和采集是否成功。",
+      "example": "查看样本运行中释放并被收集的文件。",
+      "tags": [
+        "沙箱文件产物",
+        "动态沙箱基础"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/usage/results/"
+    },
+    {
+      "id": "sandbox-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "动态沙箱基础",
+      "knowledgePoint": "文件产物元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo 2.0.7 的 files.json 可为已收集文件提供哪些上下文？",
+      "answer": "在信息可用时，它记录操作该文件的进程及其在 Guest 中的原始路径等元数据。",
+      "explanation": "字段是否存在取决于采集结果。",
+      "example": "把释放文件关联到相应的执行进程。",
+      "tags": [
+        "文件产物元数据",
+        "动态沙箱基础"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/usage/results/"
+    },
+    {
+      "id": "sandbox-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "动态沙箱基础",
+      "knowledgePoint": "沙箱执行错误",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么检查 Cuckoo 的 analysis.log 有助于理解缺失行为？",
+      "answer": "它记录 Guest 内分析执行过程及可能出现的错误。",
+      "explanation": "执行失败与样本未触发某行为应区分。",
+      "example": "先排查分析过程中是否发生启动错误。",
+      "tags": [
+        "沙箱执行错误",
+        "动态沙箱基础"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/usage/results/"
+    },
+    {
+      "id": "sandbox-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "动态沙箱基础",
+      "knowledgePoint": "系统内存转储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo 2.0.7 的 memory.dmp 是否在每次分析中必然存在？",
+      "answer": "不一定；只有启用相关内存转储时才可能生成。",
+      "explanation": "采集失败或配置不同也可能影响结果。",
+      "example": "分析前确认是否需要并启用完整内存转储。",
+      "tags": [
+        "系统内存转储",
+        "动态沙箱基础"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/usage/results/"
+    },
+    {
+      "id": "sandbox-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "动态沙箱基础",
+      "knowledgePoint": "TLS密钥与抓包",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo 2.0.7 的 tlsmaster.txt 在成功捕获到密钥时可用于什么？",
+      "answer": "捕获的 TLS 主密钥可用于解密相应的 SSL/TLS 流量。",
+      "explanation": "并非每次分析或每条加密连接都会成功捕获密钥。",
+      "example": "用匹配的密钥和抓包分析相应 HTTPS 会话。",
+      "tags": [
+        "TLS密钥与抓包",
+        "动态沙箱基础"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/usage/results/"
+    },
+    {
+      "id": "sandbox-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "动态沙箱配置",
+      "knowledgePoint": "分析时长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo 2.0.7 提交任务时的 timeout 参数主要控制什么？",
+      "answer": "它设置分析运行的最长时间，单位为秒。",
+      "explanation": "实际行为是否发生还取决于触发条件和环境。",
+      "example": "为不同任务记录其分析时长。",
+      "tags": [
+        "分析时长",
+        "动态沙箱配置"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/usage/submit/"
+    },
+    {
+      "id": "sandbox-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "动态沙箱配置",
+      "knowledgePoint": "强制运行时长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo 2.0.7 的 enforce-timeout 参数有什么作用？",
+      "answer": "它要求分析持续到设定的超时时间，而不是依据内部机制提前结束。",
+      "explanation": "这不能保证样本一定触发全部行为。",
+      "example": "需要观察延迟行为时配置完整运行时长。",
+      "tags": [
+        "强制运行时长",
+        "动态沙箱配置"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/usage/submit/"
+    },
+    {
+      "id": "sandbox-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "动态沙箱配置",
+      "knowledgePoint": "系统时钟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cuckoo 2.0.7 的 clock 参数用于调整什么？",
+      "answer": "它可设置 Guest 分析环境的系统时间。",
+      "explanation": "不同时间设置可能影响受日期条件控制的程序行为。",
+      "example": "复现实验时记录 Guest 的时钟配置。",
+      "tags": [
+        "系统时钟",
+        "动态沙箱配置"
+      ],
+      "evidence": "source",
+      "reference": "https://cuckoo.readthedocs.io/en/2.0.7/usage/submit/"
+    }
+  ]
+}

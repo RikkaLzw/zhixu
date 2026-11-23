@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "http-status-range-fundamentals",
+    "title": "RFC 9110：HTTP 常见状态码与范围请求",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "type": "协议标准、教材及官方手册",
+    "note": "依据逐题引用的标准、教材或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "httpstatus-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "400 请求错误",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 400 Bad Request 通常表示什么？",
+      "answer": "服务器因其认为存在客户端请求错误而不能或不愿处理该请求。",
+      "explanation": "例子包括错误的请求语法或消息帧。",
+      "example": "客户端发送格式错误的请求。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "400 请求错误"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.1"
+    },
+    {
+      "id": "httpstatus-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "408 请求超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 408 Request Timeout 通常表示哪一方等待什么超时？",
+      "answer": "服务器在愿意等待的时间内没有收到完整的请求消息。",
+      "explanation": "它不等同于网关等待上游响应超时的 504。",
+      "example": "客户端发送请求消息过慢。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "408 请求超时"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.9"
+    },
+    {
+      "id": "httpstatus-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "409 状态冲突",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 409 Conflict 通常表示什么？",
+      "answer": "请求与目标资源的当前状态冲突，服务器无法完成请求。",
+      "explanation": "响应通常应帮助用户理解或解决冲突。",
+      "example": "编辑版本与服务器当前版本冲突。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "409 状态冲突"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.10"
+    },
+    {
+      "id": "httpstatus-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "410 已永久消失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 410 Gone 与 404 的语义有什么区别？",
+      "answer": "410 表示源服务器认为资源不再可用且这一情况可能是永久的；404 未表明缺失是暂时还是永久。",
+      "explanation": "410 不表示客户端能知道资源何时被移除。",
+      "example": "已永久移除的页面返回 410。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "410 已永久消失"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.11"
+    },
+    {
+      "id": "httpstatus-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "413 内容过大",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 413 Content Too Large 表示什么？",
+      "answer": "服务器因请求内容超过其愿意或能够处理的大小而拒绝处理。",
+      "explanation": "如果限制是暂时的，服务器可以用 Retry-After 表示何时重试。",
+      "example": "上传文件超出服务器允许的大小。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "413 内容过大"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.14"
+    },
+    {
+      "id": "httpstatus-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "415 媒体类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 415 Unsupported Media Type 通常表明什么？",
+      "answer": "服务器拒绝处理请求，因为内容的格式不受目标资源的该方法支持。",
+      "explanation": "问题可能与 Content-Type、Content-Encoding 或直接检查的数据格式有关。",
+      "example": "端点只支持 JSON，但收到不支持的内容格式。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "415 媒体类型"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.16"
+    },
+    {
+      "id": "httpstatus-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "422 无法处理内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 422 Unprocessable Content 与无法理解请求语法有什么区别？",
+      "answer": "服务器理解内容类型且语法正确，但无法处理其中包含的指令。",
+      "explanation": "这与内容语法本身有误是不同情况。",
+      "example": "格式正确的数据包含无法执行的指令。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "422 无法处理内容"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.21"
+    },
+    {
+      "id": "httpstatus-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "500 与 501",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 500 和 501 的规范语义有什么区别？",
+      "answer": "500 表示服务器遇到意外状况而无法完成请求；501 表示服务器不支持完成请求所需的功能。",
+      "explanation": "501 不等同于服务器认识某方法但目标资源不允许该方法的 405。",
+      "example": "服务器不支持其无法识别的请求方法。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "500 与 501"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.6.2"
+    },
+    {
+      "id": "httpstatus-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "503 服务暂不可用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 503 Service Unavailable 通常表示什么？",
+      "answer": "服务器因暂时过载或维护而无法处理请求；响应可包含 Retry-After。",
+      "explanation": "实际重试策略仍需考虑幂等性和退避。",
+      "example": "维护期间服务暂时不可用。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "503 服务暂不可用"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.6.4"
+    },
+    {
+      "id": "httpstatus-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "303 重定向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 303 See Other 引导客户端如何取得另一资源？",
+      "answer": "它引导客户端对 Location 标识的另一资源发起检索请求，通常使用 GET 或 HEAD。",
+      "explanation": "常用于将操作结果引导至可检索的页面。",
+      "example": "提交表单后跳转到结果页面。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "303 重定向"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.4.4"
+    },
+    {
+      "id": "httpstatus-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "206 部分内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 206 Partial Content 通常表示什么？",
+      "answer": "服务器成功处理范围请求，响应包含所选表示的一部分。",
+      "explanation": "单个部分的响应用 Content-Range 说明所含范围。",
+      "example": "断点续传请求文件的一段字节。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "206 部分内容"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.3.7"
+    },
+    {
+      "id": "httpstatus-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "范围请求限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 服务器收到 Range 请求后一定要返回 206 吗？",
+      "answer": "不一定；服务器可以忽略 Range 并按普通请求返回完整表示。",
+      "explanation": "客户端需要根据状态码和响应头判断实际结果。",
+      "example": "文件服务忽略范围请求并返回 200。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "范围请求限制"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-14.2"
+    },
+    {
+      "id": "httpstatus-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 状态码与范围请求",
+      "knowledgePoint": "If-Match",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 的 If-Match 常用于避免哪类并发更新问题？",
+      "answer": "它可要求当前表示的实体标签匹配，避免覆盖其他客户端已更新的内容。",
+      "explanation": "服务器按强比较规则检查标签；条件失败时可返回 412。",
+      "example": "客户端带上读取时的 ETag 再提交修改。",
+      "tags": [
+        "HTTP 状态码与范围请求",
+        "If-Match"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.1"
+    }
+  ]
+}

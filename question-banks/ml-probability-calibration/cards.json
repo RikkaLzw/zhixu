@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "ml-probability-calibration",
+    "title": "scikit-learn：概率校准与评分",
+    "url": "https://scikit-learn.org/stable/modules/calibration.html",
+    "type": "教材与技术文档",
+    "note": "逐题根据所列教材或技术文档自行整理；例子用于说明适用条件。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "calibrate-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准",
+      "knowledgePoint": "校准概率含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二分类模型的概率校准良好时，预测概率接近 0.8 的样本通常应有什么性质？",
+      "answer": "在足够多的同类预测中，正类实际比例应大约为 80%。",
+      "explanation": "这是分布层面的频率解释，不保证某个样本一定为正类。",
+      "example": "统计预测概率约为 0.8 的一组样本。",
+      "tags": [
+        "校准概率含义",
+        "概率校准"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/calibration.html"
+    },
+    {
+      "id": "calibrate-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准",
+      "knowledgePoint": "校准数据独立",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么拟合概率校准器时宜使用基础分类器未用于拟合的样本？",
+      "answer": "基础模型对训练数据往往过于乐观；使用这些预测拟合校准器可能使概率估计有偏。",
+      "explanation": "可以使用独立校准集或合适的交叉验证。",
+      "example": "用留出的校准集拟合分数到概率的映射。",
+      "tags": [
+        "校准数据独立",
+        "概率校准"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/calibration.html"
+    },
+    {
+      "id": "calibrate-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准",
+      "knowledgePoint": "Brier分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二分类 Brier 分数衡量什么？",
+      "answer": "它是预测正类概率与真实 0/1 标签之差的平方的平均值；通常越低越好。",
+      "explanation": "它评估概率预测，不能只用于判断分类标签是否正确。",
+      "example": "比较一组告警概率与最终标签的平方误差。",
+      "tags": [
+        "Brier分数",
+        "概率校准"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html"
+    },
+    {
+      "id": "calibrate-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准",
+      "knowledgePoint": "Brier与单独校准",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Brier 分数更低能否单独证明模型概率校准更好？",
+      "answer": "不能；Brier 分数同时受到校准、区分能力和数据不确定性等因素影响。",
+      "explanation": "需要结合可靠性曲线或分解结果判断校准。",
+      "example": "更强的区分能力可能掩盖较差的校准。",
+      "tags": [
+        "Brier与单独校准",
+        "概率校准"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/calibration.html"
+    },
+    {
+      "id": "calibrate-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准",
+      "knowledgePoint": "单调校准与排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "严格单调递增的分数校准映射会改变样本之间的排序吗？",
+      "answer": "不会；严格单调递增映射保持任意两个不同分数的先后顺序。",
+      "explanation": "非严格单调映射可能产生并列分数，从而影响某些排序指标。",
+      "example": "将分数统一经过严格递增函数后比较排序。",
+      "tags": [
+        "单调校准与排序",
+        "概率校准"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/calibration.html"
+    },
+    {
+      "id": "calibrate-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准",
+      "knowledgePoint": "等距与等频分箱",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "校准曲线中的等宽分箱与等频分箱有何区别？",
+      "answer": "等宽分箱按相同的概率区间宽度划分；等频分箱尽量让各箱包含相近数量的样本。",
+      "explanation": "分箱选择会影响图上每个点的稳定性和解释。",
+      "example": "预测集中在低概率时，两种分箱得到的区间不同。",
+      "tags": [
+        "等距与等频分箱",
+        "概率校准"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/calibration.html"
+    },
+    {
+      "id": "calibrate-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准",
+      "knowledgePoint": "校准与分布变化",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "在一个数据集上校准良好的模型，换到分布不同的环境后一定仍然校准良好吗？",
+      "answer": "不一定；输入、类别比例或标签关系变化都可能改变概率与实际频率的对应关系。",
+      "explanation": "部署后应在具有代表性且有标签的数据上重新检查。",
+      "example": "实验室数据与生产告警流量的正类比例差异明显。",
+      "tags": [
+        "校准与分布变化",
+        "概率校准"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/calibration.html"
+    }
+  ]
+}

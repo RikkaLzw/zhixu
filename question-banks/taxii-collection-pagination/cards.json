@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "taxii-collection-pagination",
+    "title": "TAXII 2.1 标准：集合增量与分页",
+    "url": "https://docs.oasis-open.org/cti/taxii/v2.1/os/taxii-v2.1-os.html",
+    "type": "固定版本论文、标准或官方文档",
+    "note": "根据逐题引用的资料自行整理，示例自编；行为以指定版本与前提为准。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "taxiipage-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "TAXII 集合获取",
+      "knowledgePoint": "增量时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TAXII 2.1 的 added_after 按什么时间筛选对象？",
+      "answer": "筛选加入集合的时间晚于指定时间戳的对象。",
+      "explanation": "它与 STIX 对象内的 created 或 modified 时间并非同一字段。",
+      "example": "增量拉取集合时记录服务器收录时间。",
+      "tags": [
+        "TAXII 集合获取",
+        "增量时间"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/taxii/v2.1/os/taxii-v2.1-os.html"
+    },
+    {
+      "id": "taxiipage-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "TAXII 集合获取",
+      "knowledgePoint": "默认版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TAXII 2.1 对象查询未指定版本与使用 match[version]=all 时分别返回什么？",
+      "answer": "未指定时默认返回每个匹配对象的最新版本；all 请求所有版本。",
+      "explanation": "all 不得与其他版本参数值组合。",
+      "example": "同步时明确是否需要历史版本。",
+      "tags": [
+        "TAXII 集合获取",
+        "默认版本"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/taxii/v2.1/os/taxii-v2.1-os.html"
+    },
+    {
+      "id": "taxiipage-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "TAXII 集合获取",
+      "knowledgePoint": "分页令牌",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TAXII 2.1 对象分页响应的 more=true 时，客户端怎样继续获取结果？",
+      "answer": "保留原过滤条件；有 next 时使用该令牌，否则可用 X-TAXII-Date-Added-Last 作为 added_after。",
+      "explanation": "next 为不透明值；内容可能在连续请求之间变化。",
+      "example": "按服务端返回的游标获取后续页面。",
+      "tags": [
+        "TAXII 集合获取",
+        "分页令牌"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/taxii/v2.1/os/taxii-v2.1-os.html"
+    },
+    {
+      "id": "taxiipage-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "TAXII 集合获取",
+      "knowledgePoint": "限制数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TAXII 2.1 的 limit 是否保证服务器每次都返回恰好该数量的对象？",
+      "answer": "不保证；limit 是客户端希望单次返回的最大数量，服务器可以返回更少。",
+      "explanation": "还应检查 more 等分页信息。",
+      "example": "limit=100 的一页可能少于 100 条。",
+      "tags": [
+        "TAXII 集合获取",
+        "限制数量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/taxii/v2.1/os/taxii-v2.1-os.html"
+    },
+    {
+      "id": "taxiipage-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "TAXII 集合获取",
+      "knowledgePoint": "清单用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TAXII 2.1 的对象 manifest 返回对象本身还是对象元数据？",
+      "answer": "返回对象的元数据；一条 manifest-record 描述对象的一个版本。",
+      "explanation": "元数据包括标识、版本及加入集合的时间等。",
+      "example": "先检查清单，再决定是否获取对象内容。",
+      "tags": [
+        "TAXII 集合获取",
+        "清单用途"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/taxii/v2.1/os/taxii-v2.1-os.html"
+    },
+    {
+      "id": "taxiipage-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "TAXII 集合获取",
+      "knowledgePoint": "分页变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TAXII 2.1 的响应显示 more=true，下一页一定还有对象吗？",
+      "answer": "不一定；后续请求前对象可能从集合中被删除。",
+      "explanation": "分页客户端需要处理集合在请求之间变化的情况。",
+      "example": "增量同步时处理空的后续响应。",
+      "tags": [
+        "TAXII 集合获取",
+        "分页变化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/taxii/v2.1/os/taxii-v2.1-os.html"
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "bilstm-crf-foundations",
+    "title": "PyTorch 教程：BiLSTM 与条件随机场",
+    "url": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion",
+    "type": "论文与官方技术文档",
+    "note": "根据逐题引用的论文或官方文档自行整理；例子为自编，具体方法和适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "crfbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "条件概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性链 CRF 建模的是标签序列与输入之间的哪种概率？",
+      "answer": "它直接建模给定输入序列时，整个标签序列的条件概率 P(y|x)。",
+      "explanation": "这与 HMM 常用的状态和观测联合概率建模方式不同。",
+      "example": "给一句话计算某一 BIO 标签序列的概率。",
+      "tags": [
+        "条件概率",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "线性链依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一阶线性链 CRF 如何在相邻标签之间表达依赖？",
+      "answer": "它的序列得分包含相邻标签之间的转移项。",
+      "explanation": "具体实现还可使用输入相关的特征。",
+      "example": "实体内部标签与实体开始标签的转移得分不同。",
+      "tags": [
+        "线性链依赖",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "发射与转移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BiLSTM-CRF 示例中的发射分数和转移分数分别评价什么？",
+      "answer": "发射分数评价当前位置的标签与输入表示，转移分数评价相邻标签的组合。",
+      "explanation": "示例用 BiLSTM 的当前位置输出产生发射分数。",
+      "example": "比较一个词标为 B-PER 的分数及其与前一标签的转移。",
+      "tags": [
+        "发射与转移",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "序列得分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 教程的 BiLSTM-CRF 如何得到一条标签序列的总得分？",
+      "answer": "沿序列累加相应位置的发射分数和相邻标签的转移分数。",
+      "explanation": "示例还显式处理开始和结束标签。",
+      "example": "计算完整 BIO 序列的分数。",
+      "tags": [
+        "序列得分",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "全局归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性链 CRF 的配分函数对什么求和？",
+      "answer": "对输入下所有允许的标签序列，将各序列得分取指数后求和。",
+      "explanation": "用该值归一化后得到标签序列条件概率。",
+      "example": "比较同一输入下不同标签路径的概率。",
+      "tags": [
+        "全局归一化",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性链 CRF 对一条标注序列的负对数似然可写成什么形式？",
+      "answer": "它等于该输入的对数配分函数减去真实标签序列的得分。",
+      "explanation": "最小化该损失会提高真实序列的条件概率。",
+      "example": "使用人工标注的实体标签计算训练损失。",
+      "tags": [
+        "训练目标",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "路径级预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性链 CRF 的解码目标为什么不同于独立对每个位置取最高发射分数？",
+      "answer": "CRF 要寻找总得分最高的整条标签路径，路径得分还包含标签之间的转移。",
+      "explanation": "逐位置局部最优未必组成全局最优序列。",
+      "example": "避免只根据每个词的分数选择不协调的标签组合。",
+      "tags": [
+        "路径级预测",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "转移矩阵方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch BiLSTM-CRF 教程中转移矩阵 P[j,k] 表示哪个方向的转移分数？",
+      "answer": "表示从标签 k 转移到标签 j 的分数。",
+      "explanation": "其他实现可能采用相反的矩阵索引约定。",
+      "example": "读取 P[B-PER,O] 时检查实现所用方向。",
+      "tags": [
+        "转移矩阵方向",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "转移分数解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BiLSTM-CRF 示例中的转移矩阵元素能否直接当作归一化转移概率？",
+      "answer": "不能；它们是参与整个序列打分的可学习分数。",
+      "explanation": "序列条件概率通过对全部标签路径进行归一化得到。",
+      "example": "负的转移分数仍可参与合法路径得分。",
+      "tags": [
+        "转移分数解释",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "上下文输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BiLSTM-CRF 中双向 LSTM 给当前位置提供什么信息？",
+      "answer": "它将输入序列当前位置前后的上下文编码进位置表示，再用于计算发射分数。",
+      "explanation": "可见上下文受实际输入截断和模型实现限制。",
+      "example": "利用实体词前后的文本帮助判断标签。",
+      "tags": [
+        "上下文输入",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "边界状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "序列 CRF 为什么常显式表示开始和结束状态？",
+      "answer": "它可以分别建模序列起始和终止处的标签转移。",
+      "explanation": "具体实现可能使用特殊标签或单独的参数向量。",
+      "example": "为句首标签添加开始转移得分。",
+      "tags": [
+        "边界状态",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    },
+    {
+      "id": "crfbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注与 CRF",
+      "knowledgePoint": "数值稳定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CRF 在对数空间计算路径分数求和时，为什么常使用 log-sum-exp？",
+      "answer": "它在不直接累加大量指数值的情况下计算对数和，降低数值溢出或下溢风险。",
+      "explanation": "稳定实现通常先减去参与项的最大值。",
+      "example": "计算多条高分路径对应的对数配分函数。",
+      "tags": [
+        "数值稳定",
+        "序列标注与 CRF"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/nlp/advanced_tutorial.html#bi-lstm-conditional-random-field-discussion"
+    }
+  ]
+}

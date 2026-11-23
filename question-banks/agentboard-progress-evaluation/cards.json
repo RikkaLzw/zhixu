@@ -1,0 +1,110 @@
+{
+  "source": {
+    "id": "agentboard-progress-evaluation",
+    "title": "AgentBoard 论文 v2：Agent 进度评估",
+    "url": "https://arxiv.org/pdf/2401.13178v2",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "agentboard-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AgentBoard 进度与动作",
+      "knowledgePoint": "指标目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBoard 为什么在任务成功率之外引入 progress rate？",
+      "answer": "它用于刻画任务未完全成功时的中间进展，区分接近完成和几乎没有进展的轨迹。",
+      "explanation": "进度依赖任务的状态匹配或子目标标注规则。 蚂蚁公开复盘提及大模型评估指标；此题为主题延伸，非原题。",
+      "example": "比较两个都未完成任务但进展不同的智能体。",
+      "tags": [
+        "AgentBoard 进度与动作",
+        "指标目的",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2401.13178v2",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁大模型公开面经：评估指标主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900320%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentboard-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AgentBoard 进度与动作",
+      "knowledgePoint": "历史最大值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBoard 论文定义的进度率会因后续状态退步而下降吗？",
+      "answer": "不会；它记录截至当前时间达到过的最高匹配分数。",
+      "explanation": "连续状态可用与目标的匹配程度计算分数；这里记录历史最佳，而非保证当前状态仍保持该进度。",
+      "example": "先完成部分步骤又撤销时，进度率可保持先前最大值。",
+      "tags": [
+        "AgentBoard 进度与动作",
+        "历史最大值"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2401.13178v2"
+    },
+    {
+      "id": "agentboard-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AgentBoard 进度与动作",
+      "knowledgePoint": "子目标匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBoard 的离散子目标进度如何从一条轨迹得到？",
+      "answer": "计算各状态下匹配子目标的比例，再取截至当前的最大值。",
+      "explanation": "不能把不同时间分别达成的子目标简单按并集计数。",
+      "example": "逐步比较状态与人工标注的子目标。",
+      "tags": [
+        "AgentBoard 进度与动作",
+        "子目标匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2401.13178v2"
+    },
+    {
+      "id": "agentboard-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AgentBoard 进度与动作",
+      "knowledgePoint": "动作落地",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBoard 论文中的 grounding accuracy 衡量什么？",
+      "answer": "衡量产生的动作中有效动作的比例。",
+      "explanation": "动作有效并不保证完成任务或计划合理。 蚂蚁公开复盘提及大模型评估指标；此题为主题延伸，非原题。",
+      "example": "区分工具调用格式错误和任务目标未达成。",
+      "tags": [
+        "AgentBoard 进度与动作",
+        "动作落地",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2401.13178v2",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁大模型公开面经：评估指标主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900320%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

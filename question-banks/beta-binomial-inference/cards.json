@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "beta-binomial-inference",
+    "title": "Think Bayes 2：Beta 与二项共轭更新",
+    "url": "https://allendowney.github.io/ThinkBayes2/chap18.html",
+    "type": "教材、论文与官方技术文档",
+    "note": "逐题根据所列教材、论文或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "betabayes-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "贝叶斯共轭更新",
+      "knowledgePoint": "共轭先验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "贝叶斯建模中的共轭先验有什么特点？",
+      "answer": "给定某类似然后，所得后验仍属于与先验相同的分布族。",
+      "explanation": "参数可以改变，但分布族不变。",
+      "example": "Beta 先验与二项似然得到 Beta 后验。",
+      "tags": [
+        "贝叶斯共轭更新",
+        "共轭先验"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap18.html"
+    },
+    {
+      "id": "betabayes-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "贝叶斯共轭更新",
+      "knowledgePoint": "概率分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Beta 分布常用作伯努利成功概率的先验？",
+      "answer": "它的取值范围在 0 到 1 之间，可表示对未知概率的不同先验判断。",
+      "explanation": "Beta 分布的两个正参数决定其形状。",
+      "example": "用不同 Beta 分布表达对攻击发生率的不同先验。",
+      "tags": [
+        "贝叶斯共轭更新",
+        "概率分布"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap18.html"
+    },
+    {
+      "id": "betabayes-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "贝叶斯共轭更新",
+      "knowledgePoint": "均匀先验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Beta(1,1) 对未知概率表示什么先验？",
+      "answer": "它是在 0 到 1 上的均匀先验。",
+      "explanation": "均匀先验是建模选择，并非对所有参数变换都保持均匀。",
+      "example": "观察数据前，各等宽概率区间有相同先验质量。",
+      "tags": [
+        "贝叶斯共轭更新",
+        "均匀先验"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap18.html"
+    },
+    {
+      "id": "betabayes-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯共轭更新",
+      "knowledgePoint": "二项更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对独立同分布伯努利试验，Beta(a,b) 先验观测到 s 次成功、f 次失败后，后验是什么？",
+      "answer": "后验为 Beta(a+s,b+f)。",
+      "explanation": "假设各次试验共享同一未知成功概率，且 a、b 为正。",
+      "example": "Beta(1,1) 观察到 3 次成功和 2 次失败后为 Beta(4,3)。",
+      "tags": [
+        "贝叶斯共轭更新",
+        "二项更新"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap18.html"
+    },
+    {
+      "id": "betabayes-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯共轭更新",
+      "knowledgePoint": "后验均值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Beta(a,b) 分布的均值是什么？",
+      "answer": "均值为 a/(a+b)。",
+      "explanation": "该值是分布的一个摘要，不能完整表示不确定性。",
+      "example": "Beta(4,3) 的均值为 4/7。",
+      "tags": [
+        "贝叶斯共轭更新",
+        "后验均值"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap18.html"
+    },
+    {
+      "id": "betabayes-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯共轭更新",
+      "knowledgePoint": "预测概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Beta—伯努利模型中，下一次试验成功的后验预测概率是什么？",
+      "answer": "等于当前成功概率后验分布的均值。",
+      "explanation": "这里假设下一次试验仍由相同的未知概率生成。",
+      "example": "Beta(4,3) 后验预测下一次成功概率为 4/7。",
+      "tags": [
+        "贝叶斯共轭更新",
+        "预测概率"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap18.html"
+    },
+    {
+      "id": "betabayes-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯共轭更新",
+      "knowledgePoint": "样本依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Beta—二项共轭更新中的共享成功概率假设为什么重要？",
+      "answer": "若试验概率随时间、对象或环境变化，直接把所有结果当作同一概率的独立试验可能产生误导。",
+      "explanation": "此时需要调整模型或分层考虑。",
+      "example": "把不同资产的告警统一视作同一误报率可能不合适。",
+      "tags": [
+        "贝叶斯共轭更新",
+        "样本依赖"
+      ],
+      "evidence": "application",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap18.html"
+    }
+  ]
+}

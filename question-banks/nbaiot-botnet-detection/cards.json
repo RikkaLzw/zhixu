@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "nbaiot-botnet-detection",
+    "title": "N-BaIoT 原论文 v1：IoT 僵尸网络异常检测",
+    "url": "https://arxiv.org/abs/1805.03409v1",
+    "type": "论文与官方技术文档",
+    "note": "根据所引论文或固定版本官方文档自行整理；例子为自编，使用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "nbaiot-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "N-BaIoT 设备流量检测",
+      "knowledgePoint": "检测对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N-BaIoT 原论文主要检测什么类型的行为？",
+      "answer": "检测受感染 IoT 设备发出的异常网络流量，重点关注僵尸网络攻击行为。",
+      "explanation": "论文实验使用隔离实验室中的设备与攻击流量。",
+      "example": "摄像头感染后发起异常洪泛流量。",
+      "tags": [
+        "N-BaIoT 设备流量检测",
+        "检测对象"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1805.03409v1"
+    },
+    {
+      "id": "nbaiot-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "N-BaIoT 设备流量检测",
+      "knowledgePoint": "按设备建模",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N-BaIoT 为什么为每台 IoT 设备单独训练模型？",
+      "answer": "不同设备的正常通信模式可能不同，单独建模有助于适应设备差异。",
+      "explanation": "设备更换或正常行为变化后仍需重新评估模型。",
+      "example": "分别为摄像头和门铃建模。",
+      "tags": [
+        "N-BaIoT 设备流量检测",
+        "按设备建模"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1805.03409v1"
+    },
+    {
+      "id": "nbaiot-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "N-BaIoT 设备流量检测",
+      "knowledgePoint": "特征快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N-BaIoT 在每个数据包到达时主要构造什么输入？",
+      "answer": "构造多时间尺度的网络统计特征快照。",
+      "explanation": "论文使用源主机、通信双方及套接字等不同聚合范围。",
+      "example": "用最近多个时间尺度的流量统计描述当前行为。",
+      "tags": [
+        "N-BaIoT 设备流量检测",
+        "特征快照"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1805.03409v1"
+    },
+    {
+      "id": "nbaiot-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "N-BaIoT 设备流量检测",
+      "knowledgePoint": "训练数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N-BaIoT 自编码器主要使用哪类流量训练？",
+      "answer": "使用各设备采集到的正常流量训练重构模型。",
+      "explanation": "正常训练集的代表性和污染程度会影响实际检测。",
+      "example": "从设备正常运行期间收集基线样本。",
+      "tags": [
+        "N-BaIoT 设备流量检测",
+        "训练数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1805.03409v1"
+    },
+    {
+      "id": "nbaiot-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "N-BaIoT 设备流量检测",
+      "knowledgePoint": "优化阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N-BaIoT 论文怎样从正常优化集的重构误差设置单样本阈值？",
+      "answer": "使用优化集均方重构误差的样本均值加一个样本标准差。",
+      "explanation": "这是论文中的具体设置，不是自编码器异常检测通用阈值。",
+      "example": "优化集 MSE 均值 0.1、标准差 0.02 时阈值为 0.12。",
+      "tags": [
+        "N-BaIoT 设备流量检测",
+        "优化阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1805.03409v1"
+    },
+    {
+      "id": "nbaiot-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "N-BaIoT 设备流量检测",
+      "knowledgePoint": "滑窗投票",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N-BaIoT 对滑动窗口中的样本结果使用多数投票有什么目的？",
+      "answer": "减少单个正常样本误报对流级告警的影响。",
+      "explanation": "聚合也可能增加发现异常所需的时间。",
+      "example": "窗口内超过半数样本异常时判为异常流。",
+      "tags": [
+        "N-BaIoT 设备流量检测",
+        "滑窗投票"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1805.03409v1"
+    },
+    {
+      "id": "nbaiot-008",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "N-BaIoT 设备流量检测",
+      "knowledgePoint": "实验攻击范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N-BaIoT 原论文的实验室评估使用哪两类 IoT 僵尸网络？",
+      "answer": "Mirai 和 BASHLITE。",
+      "explanation": "论文使用的设备与攻击设置不能代表全部真实环境。",
+      "example": "在隔离网络中采集感染前后的流量。",
+      "tags": [
+        "N-BaIoT 设备流量检测",
+        "实验攻击范围"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1805.03409v1"
+    }
+  ]
+}

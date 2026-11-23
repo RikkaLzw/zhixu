@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "masked-autoencoder-vision-foundations",
+    "title": "MAE 原论文 v3：图像掩码自编码",
+    "url": "https://arxiv.org/abs/2111.06377v3",
+    "type": "论文、官方文档与源码",
+    "note": "根据逐题标注的论文、版本化文档或源码自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "maevision-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图像掩码自编码",
+      "knowledgePoint": "MAE目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MAE 图像自监督预训练的基本任务是什么？",
+      "answer": "随机遮盖图像块，根据可见图像块重建被遮盖区域的像素。",
+      "explanation": "预训练重建任务不要求图像分类标签。",
+      "example": "根据可见图像块预测缺失部分。",
+      "tags": [
+        "图像掩码自编码",
+        "MAE目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2111.06377v3"
+    },
+    {
+      "id": "maevision-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图像掩码自编码",
+      "knowledgePoint": "高比例掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MAE 原论文为什么采用较高比例的随机图像块遮盖？",
+      "answer": "高比例遮盖减少可见块的局部冗余，使重建任务更有挑战。",
+      "explanation": "论文实验中 75% 遮盖比例效果较好，不代表所有数据和模型都应固定使用该比例。",
+      "example": "随机保留约四分之一的图像块。",
+      "tags": [
+        "图像掩码自编码",
+        "高比例掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2111.06377v3"
+    },
+    {
+      "id": "maevision-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像掩码自编码",
+      "knowledgePoint": "编码器输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MAE 预训练的编码器如何处理被遮盖图像块？",
+      "answer": "它只处理可见图像块，被遮盖位置不以 mask token 输入编码器。",
+      "explanation": "减少编码器处理的 token 数可以降低计算和内存消耗。",
+      "example": "编码器只接收随机保留的图像块。",
+      "tags": [
+        "图像掩码自编码",
+        "编码器输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2111.06377v3"
+    },
+    {
+      "id": "maevision-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像掩码自编码",
+      "knowledgePoint": "解码器输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MAE 解码器怎样获得完整位置的输入序列？",
+      "answer": "它把可见块的编码表示与用于缺失位置的共享 mask token 组合，并加入位置嵌入。",
+      "explanation": "位置嵌入让解码器区分缺失块的位置。",
+      "example": "恢复所有图像块的位置后进行重建。",
+      "tags": [
+        "图像掩码自编码",
+        "解码器输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2111.06377v3"
+    },
+    {
+      "id": "maevision-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像掩码自编码",
+      "knowledgePoint": "非对称结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MAE 为什么采用较大编码器与较轻解码器的非对称设计？",
+      "answer": "较大编码器只处理可见块，完整序列由较轻解码器处理，从而减少预训练计算。",
+      "explanation": "轻量程度及实际加速取决于具体实现和配置。",
+      "example": "将大量缺失位置留到较小的解码器处理。",
+      "tags": [
+        "图像掩码自编码",
+        "非对称结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2111.06377v3"
+    },
+    {
+      "id": "maevision-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像掩码自编码",
+      "knowledgePoint": "重建损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MAE 原论文的像素重建损失在哪些图像块上计算？",
+      "answer": "计算被遮盖图像块的预测像素与目标像素之间的均方误差。",
+      "explanation": "论文还比较了对每个图像块的像素做归一化作为重建目标。",
+      "example": "可见块的重建误差不计入该默认损失。",
+      "tags": [
+        "图像掩码自编码",
+        "重建损失"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2111.06377v3"
+    },
+    {
+      "id": "maevision-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像掩码自编码",
+      "knowledgePoint": "下游表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "完成 MAE 预训练后，论文怎样利用编码器进行图像识别？",
+      "answer": "丢弃预训练解码器，使用编码器处理未遮盖图像并用于下游识别。",
+      "explanation": "论文比较了端到端微调和线性探测。",
+      "example": "预训练后在图像分类数据上微调编码器。",
+      "tags": [
+        "图像掩码自编码",
+        "下游表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2111.06377v3"
+    },
+    {
+      "id": "maevision-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像掩码自编码",
+      "knowledgePoint": "掩码采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MAE 论文中的随机掩码如何选择图像块？",
+      "answer": "从图像块中按均匀分布无放回随机抽取一定比例。",
+      "explanation": "这与按固定中心区域遮盖不同。",
+      "example": "每张图像随机选择缺失的块。",
+      "tags": [
+        "图像掩码自编码",
+        "掩码采样"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2111.06377v3"
+    }
+  ]
+}

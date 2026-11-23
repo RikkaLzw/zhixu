@@ -1,0 +1,278 @@
+{
+  "source": {
+    "id": "ipv6-dhcp-fundamentals",
+    "title": "IPv6、邻居发现与 DHCP：RFC 协议基础",
+    "url": "https://www.rfc-editor.org/rfc/rfc8200.html",
+    "type": "官方技术文档与协议标准",
+    "note": "依据逐题引用的官方文档或协议标准自行整理；示例自编，版本和前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "ipv6net-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "IPv6 基础首部",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 的基础首部长度是多少？",
+      "answer": "固定为 40 字节；扩展首部可在基础首部之后出现。",
+      "explanation": "固定基础首部不表示整个首部链长度固定。",
+      "example": "扩展首部会增加实际的首部总长度。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "IPv6 基础首部"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8200.html"
+    },
+    {
+      "id": "ipv6net-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "下一首部",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 首部中的 Next Header 字段主要指向什么？",
+      "answer": "它标识紧随其后的扩展首部类型或上层协议。",
+      "explanation": "扩展首部也可以包含 Next Header 以形成首部链。",
+      "example": "基础首部后可能依次出现扩展首部和 TCP。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "下一首部"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8200.html"
+    },
+    {
+      "id": "ipv6net-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "广播与组播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 是否像 IPv4 一样定义广播地址？",
+      "answer": "没有；IPv6 使用组播等机制承担相应的多接收者通信功能。",
+      "explanation": "组播地址的接收范围还受组播作用域约束。",
+      "example": "邻居发现使用 IPv6 组播。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "广播与组播"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4291.html"
+    },
+    {
+      "id": "ipv6net-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "特殊地址",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 的 :: 和 ::1 分别代表什么？",
+      "answer": ":: 是未指定地址；::1 是回环地址。",
+      "explanation": "未指定地址不能作为普通数据包的目标地址。",
+      "example": "本机 IPv6 回环通信可使用 ::1。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "特殊地址"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4291.html"
+    },
+    {
+      "id": "ipv6net-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "链路本地地址",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 链路本地单播地址常见前缀是什么，能否由路由器转发到其他链路？",
+      "answer": "前缀为 fe80::/10；路由器不得转发源或目的地址为链路本地地址的包。",
+      "explanation": "它适用于同一链路内通信。",
+      "example": "邻居发现可以使用链路本地地址。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "链路本地地址"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4291.html"
+    },
+    {
+      "id": "ipv6net-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "邻居发现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 的邻居发现协议通常怎样解析同一链路上的邻居链路层地址？",
+      "answer": "通过 ICMPv6 邻居请求（NS）和邻居通告（NA）交换相关信息。",
+      "explanation": "邻居发现还承担路由器发现和邻居可达性检测等功能。",
+      "example": "解析下一跳的链路层地址后发送帧。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "邻居发现"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4861.html"
+    },
+    {
+      "id": "ipv6net-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "路由器发现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 主机通常通过什么消息发现本链路上的路由器？",
+      "answer": "路由器通告（RA）提供路由器及相关配置；主机也可发送路由器请求（RS）促使路由器通告。",
+      "explanation": "RA 的内容和生存时间影响主机可用的配置信息。",
+      "example": "主机上线后发送 RS 并接收 RA。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "路由器发现"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4861.html"
+    },
+    {
+      "id": "ipv6net-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "无状态地址配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 SLAAC 通常利用路由器通告中的什么信息生成地址？",
+      "answer": "利用满足条件的前缀信息，并结合接口标识形成地址。",
+      "explanation": "地址的有效期和首选期等也受到配置影响。",
+      "example": "主机根据 RA 中的前缀生成单播地址。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "无状态地址配置"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4862.html"
+    },
+    {
+      "id": "ipv6net-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "重复地址检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 的重复地址检测（DAD）主要用于什么？",
+      "answer": "在使用候选单播地址前检查链路上是否已有节点使用该地址。",
+      "explanation": "该过程使用邻居发现消息，具体行为和例外由协议规定。",
+      "example": "新主机配置地址前进行冲突检测。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "重复地址检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4862.html"
+    },
+    {
+      "id": "ipv6net-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "IPv6 分片",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 路由器会像 IPv4 路由器那样替转发中的包进行分片吗？",
+      "answer": "不会；IPv6 分片由源节点进行，而不是由中途路由器完成。",
+      "explanation": "源节点可根据路径 MTU 调整包大小或使用分片首部。",
+      "example": "大于路径 MTU 的包需要由源端处理。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "IPv6 分片"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8200.html"
+    },
+    {
+      "id": "ipv6net-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "IPv6 路径 MTU",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 路由器遇到超过下一跳链路 MTU 且无法转发的包时，通常如何通知源端？",
+      "answer": "丢弃该包并向源端发送 ICMPv6 Packet Too Big 消息。",
+      "explanation": "该信息可帮助源端调整路径 MTU。",
+      "example": "源端收到报文后降低后续包大小。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "IPv6 路径 MTU"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8200.html"
+    },
+    {
+      "id": "ipv6net-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "DHCP 获取地址",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DHCPv4 客户端首次获取地址时，常见的四类消息依次是什么？",
+      "answer": "通常依次为 DHCPDISCOVER、DHCPOFFER、DHCPREQUEST、DHCPACK。",
+      "explanation": "实际交互可能因重试或配置而有变化。",
+      "example": "客户端发现服务器、选择提供的租约并确认。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "DHCP 获取地址"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2131.html"
+    },
+    {
+      "id": "ipv6net-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "DHCP 租约",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DHCP 分配地址的租约是什么意思？",
+      "answer": "地址被分配给客户端使用一段有限时间，客户端通常需要按协议续租。",
+      "explanation": "具体租期取决于服务器配置和协商。",
+      "example": "客户端在租约到期前尝试更新租约。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "DHCP 租约"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2131.html"
+    },
+    {
+      "id": "ipv6net-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv6 与 DHCP 基础",
+      "knowledgePoint": "DHCP 中继",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DHCPv4 relay agent 在客户端与服务器不处于同一网段时有什么作用？",
+      "answer": "中继客户端与服务器之间的 DHCP 消息，使服务器能够服务远端网络。",
+      "explanation": "客户端的广播通常不会被普通路由器直接转发到其他子网。",
+      "example": "多个网段通过中继使用集中部署的 DHCP 服务器。",
+      "tags": [
+        "IPv6 与 DHCP 基础",
+        "DHCP 中继"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2131.html"
+    }
+  ]
+}

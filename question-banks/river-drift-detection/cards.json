@@ -1,0 +1,230 @@
+{
+  "source": {
+    "id": "river-drift-detection",
+    "title": "River 0.21.2：流式漂移检测器",
+    "url": "https://riverml.xyz/0.21.2/api/drift/ADWIN/",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材、标准或固定版本文档自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "driftkit-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "流式输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的漂移检测器通常如何处理流式数值？",
+      "answer": "对每个观测调用 update，并通过 drift_detected 检查本次更新是否报告变化。",
+      "explanation": "输入可以是特征值或有标签时的预测误差等监测信号。",
+      "example": "逐条更新误差率检测器。",
+      "tags": [
+        "流式输入",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/ADWIN/"
+    },
+    {
+      "id": "driftkit-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "ADWIN窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的 ADWIN 为什么使用可变长度窗口？",
+      "answer": "它依据近期数据是否出现变化来调整保留的历史窗口长度。",
+      "explanation": "检测到变化后会丢弃窗口中较旧的部分。",
+      "example": "流量统计量变化后缩短历史窗口。",
+      "tags": [
+        "ADWIN窗口",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/ADWIN/"
+    },
+    {
+      "id": "driftkit-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "ADWIN比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ADWIN 通过比较窗口中什么统计量判断变化？",
+      "answer": "它比较较旧与较新子窗口的均值是否出现足够大的差异。",
+      "explanation": "它不能保证发现所有均值不变的分布变化。",
+      "example": "比较安全事件处理时间在两个时间段的平均值。",
+      "tags": [
+        "ADWIN比较",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/ADWIN/"
+    },
+    {
+      "id": "driftkit-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "ADWIN检查频率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的 ADWIN 参数 clock 控制什么？",
+      "answer": "它控制每隔多少个新观测检查一次变化；默认值为 32。",
+      "explanation": "较大的值可能减少计算频率，也可能增加检测延迟。",
+      "example": "设为 1 时每个观测都检查。",
+      "tags": [
+        "ADWIN检查频率",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/ADWIN/"
+    },
+    {
+      "id": "driftkit-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "ADWIN预热",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的 ADWIN grace_period 与 PageHinkley min_instances 都有什么作用？",
+      "answer": "它们规定开始检测变化前至少需要接收多少个观测。",
+      "explanation": "预热期间检测器仍会接收观测；两个参数的默认值不同。",
+      "example": "启动时先积累一段数据。",
+      "tags": [
+        "ADWIN预热",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/ADWIN/",
+      "supportingReferences": [
+        {
+          "id": "river-pagehinkley-0212",
+          "title": "River 0.21.2：Page-Hinkley",
+          "url": "https://riverml.xyz/0.21.2/api/drift/PageHinkley/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "driftkit-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "ADWIN窗口统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的 ADWIN 属性 width 和 estimation 分别表示什么？",
+      "answer": "width 是当前自适应窗口的大小；estimation 是窗口内数值均值的估计。",
+      "explanation": "窗口大小会随检测与更新过程变化。",
+      "example": "观察检测后保留了多少近期样本。",
+      "tags": [
+        "ADWIN窗口统计",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/ADWIN/"
+    },
+    {
+      "id": "driftkit-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "Page-Hinkley目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的 PageHinkley 主要监测哪种变化？",
+      "answer": "它主要监测输入数值均值的变化。",
+      "explanation": "输入信号的选择决定报告变化的实际含义。",
+      "example": "监测人工审核处理时长的均值上升。",
+      "tags": [
+        "Page-Hinkley目标",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/PageHinkley/"
+    },
+    {
+      "id": "driftkit-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "Page-Hinkley方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的 PageHinkley 参数 mode 如何选择变化方向？",
+      "answer": "up 关注均值上升，down 关注下降，both 关注两个方向。",
+      "explanation": "默认 mode 为 both。",
+      "example": "只关心错误率上升时使用 up。",
+      "tags": [
+        "Page-Hinkley方向",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/PageHinkley/"
+    },
+    {
+      "id": "driftkit-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "KSWIN统计检验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的 KSWIN 使用什么统计检验比较窗口？",
+      "answer": "它使用 Kolmogorov–Smirnov 检验比较样本的经验累积分布。",
+      "explanation": "这与只监测均值变化的检测器侧重点不同。",
+      "example": "比较近期与较早延迟样本的分布。",
+      "tags": [
+        "KSWIN统计检验",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/KSWIN/"
+    },
+    {
+      "id": "driftkit-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "KSWIN窗口构成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的 KSWIN 如何构造近期样本和对照样本？",
+      "answer": "它使用滑动窗口中最近的 stat_size 个样本，并从更早部分随机抽取同样数量的样本进行比较。",
+      "explanation": "window_size 应足以容纳所需样本。",
+      "example": "比较最近一段与窗口中较早的一段。",
+      "tags": [
+        "KSWIN窗口构成",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/KSWIN/"
+    },
+    {
+      "id": "driftkit-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式漂移检测",
+      "knowledgePoint": "KSWIN随机种子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "River 0.21.2 的 KSWIN 设置 seed 主要有什么作用？",
+      "answer": "它控制检测器的随机抽样，使相同条件下的实验更易复现。",
+      "explanation": "随机种子不能保证不同实现或不同版本结果完全相同。",
+      "example": "对比不同设置时固定 seed。",
+      "tags": [
+        "KSWIN随机种子",
+        "流式漂移检测"
+      ],
+      "evidence": "source",
+      "reference": "https://riverml.xyz/0.21.2/api/drift/KSWIN/"
+    }
+  ]
+}

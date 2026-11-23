@@ -1,0 +1,230 @@
+{
+  "source": {
+    "id": "mysql-logging-recovery",
+    "title": "MySQL 8.4 官方文档：日志与恢复",
+    "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-redo-log.html",
+    "type": "官方文档与系统手册",
+    "note": "按逐题引用的文档自行整理；示例为自编，具体适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "mysqllog-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "redo 与 undo",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 的 redo log 与 undo log 在恢复中的主要作用有什么区别？",
+      "answer": "redo 在崩溃恢复时重做尚未写入数据文件的修改；undo 保存撤销事务修改所需的信息。",
+      "explanation": "undo 也可用于重建一致性读所需的旧版本。",
+      "example": "回滚事务时需要撤销其尚未提交的修改。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "redo 与 undo"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-undo-logs.html",
+      "supportingReferences": [
+        {
+          "id": "mysql84-redo",
+          "title": "MySQL 8.4：InnoDB Redo Log",
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-redo-log.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "mysqllog-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "日志序列号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 8.4 InnoDB redo log 的 LSN 表示什么？",
+      "answer": "它是用于表示 redo 日志数据推进位置的递增日志序列号。",
+      "explanation": "LSN 可帮助定位日志写入与检查点进度。",
+      "example": "检查点推进后，旧日志空间可逐渐重用。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "日志序列号"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-redo-log.html"
+    },
+    {
+      "id": "mysqllog-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "日志缓冲区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 8.4 InnoDB 的 log buffer 用来暂存什么？",
+      "answer": "暂存写入磁盘 redo log 文件之前的 redo 日志数据。",
+      "explanation": "缓冲区大小和日志刷盘策略是不同设置。",
+      "example": "大型事务产生的日志可先进入缓冲区。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "日志缓冲区"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-redo-log-buffer.html"
+    },
+    {
+      "id": "mysqllog-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "binlog 内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 8.4 的 binary log 通常记录什么？",
+      "answer": "记录描述数据库变化的事件，例如表结构或数据变化。",
+      "explanation": "具体事件内容依二进制日志格式而异。",
+      "example": "副本可消费日志中的变更事件。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "binlog 内容"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/binary-log.html"
+    },
+    {
+      "id": "mysqllog-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "binlog 查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 8.4 的 binary log 会把普通不修改数据的 SELECT 作为查询日志记录吗？",
+      "answer": "不会；若要记录所有语句，可考虑 general query log。",
+      "explanation": "不同日志的用途和开销不同。",
+      "example": "排查某条只读查询不能依赖 binlog 一定包含该语句。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "binlog 查询"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/binary-log.html"
+    },
+    {
+      "id": "mysqllog-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "binlog 复制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 主从复制使用源服务器的 binary log 有什么用途？",
+      "answer": "源服务器将日志中的变更信息发送给副本，由副本重现相应变更。",
+      "explanation": "复制的具体延迟与可靠性取决于配置及运行状态。",
+      "example": "副本可根据源端事件更新自己的数据。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "binlog 复制"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/binary-log.html"
+    },
+    {
+      "id": "mysqllog-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "时间点恢复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 的 binary log 怎样配合备份进行时间点恢复？",
+      "answer": "恢复备份后，按需要重放备份之后记录的变更，直到目标时间或位置。",
+      "explanation": "需要预先启用并保留所需日志，单靠 binlog 不等于完整备份。",
+      "example": "误操作前的备份和后续日志可用于恢复到误操作前。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "时间点恢复"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/binary-log.html"
+    },
+    {
+      "id": "mysqllog-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "行与语句格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 8.4 的 statement-based 与 row-based binary logging 记录重点有什么区别？",
+      "answer": "前者主要记录 SQL 语句；后者记录各表行受到的变更。",
+      "explanation": "MySQL 8.4 默认使用行格式；语句格式对某些非确定性语句可能不安全。",
+      "example": "同一更新可用语句事件或行变更事件表示。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "行与语句格式"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/binary-log-formats.html"
+    },
+    {
+      "id": "mysqllog-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "混合日志格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 8.4 的 MIXED 二进制日志格式如何选择记录方式？",
+      "answer": "一般使用语句格式，某些情况下自动切换为行格式。",
+      "explanation": "具体切换条件以该版本文档为准。",
+      "example": "无法安全使用语句格式的情况可能使用行格式。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "混合日志格式"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/binary-log-formats.html"
+    },
+    {
+      "id": "mysqllog-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "单事务日志文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 MySQL 的某个 binary log 文件可能超过 max_binlog_size？",
+      "answer": "大事务整体写入一个日志文件，不会为了大小限制跨文件拆开。",
+      "explanation": "因此该设置不是每个文件大小的严格上限。",
+      "example": "单个事务本身很大时，当前日志文件可超出设置值。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "单事务日志文件"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/binary-log.html"
+    },
+    {
+      "id": "mysqllog-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL 日志与恢复",
+      "knowledgePoint": "删除复制日志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "清理 MySQL 源端 binary log 前，为什么要确认副本是否仍需要它？",
+      "answer": "若副本尚未读取的日志被删除，副本可能无法继续接收所需的历史事件。",
+      "explanation": "还应考虑时间点恢复所需的日志保留范围。",
+      "example": "落后的副本可能仍依赖较早的日志文件。",
+      "tags": [
+        "MySQL 日志与恢复",
+        "删除复制日志"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/binary-log.html"
+    }
+  ]
+}

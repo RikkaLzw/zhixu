@@ -1,0 +1,373 @@
+{
+  "source": {
+    "id": "linux-socket-programming",
+    "title": "Linux 手册：TCP 与 UDP 套接字编程",
+    "url": "https://man7.org/linux/man-pages/man2/socket.2.html",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或手册自行整理；例子为自编，适用环境与前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sockbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "套接字类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 创建 IPv4 TCP 套接字时，socket 的地址族和类型通常使用什么？",
+      "answer": "使用 AF_INET 和 SOCK_STREAM；协议参数为 0 时选择该组合的默认协议。",
+      "explanation": "IPv6 使用 AF_INET6，具体接口还需检查错误。",
+      "example": "socket(AF_INET, SOCK_STREAM, 0)。",
+      "tags": [
+        "套接字类型",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/socket.2.html"
+    },
+    {
+      "id": "sockbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "本地地址绑定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "bind 在网络套接字上通常做什么？",
+      "answer": "它为套接字指定一个本地地址；对 IP 套接字通常包括地址和端口。",
+      "explanation": "地址是否可用受系统配置和权限影响。",
+      "example": "服务端先将套接字绑定到本地端口。",
+      "tags": [
+        "本地地址绑定",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/bind.2.html"
+    },
+    {
+      "id": "sockbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "临时端口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux IPv4 套接字绑定端口 0 时，实际端口通常如何确定？",
+      "answer": "内核自动选择一个可用的本地临时端口。",
+      "explanation": "之后可用 getsockname 查询实际地址和端口。",
+      "example": "测试服务绑定 127.0.0.1:0。",
+      "tags": [
+        "临时端口",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/bind.2.html"
+    },
+    {
+      "id": "sockbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "通配地址",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux IPv4 服务绑定 0.0.0.0 与绑定 127.0.0.1 有什么常见区别？",
+      "answer": "0.0.0.0 代表所有本地 IPv4 地址；127.0.0.1 代表本机回环地址。",
+      "explanation": "实际可访问性还受接口、防火墙等条件影响。",
+      "example": "仅供本机使用的服务可绑定回环地址。",
+      "tags": [
+        "通配地址",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/ip.7.html"
+    },
+    {
+      "id": "sockbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "监听队列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "现代 Linux 的 TCP listen(backlog) 主要限制哪一类等待队列？",
+      "answer": "它限制已建立、等待应用 accept 的连接队列长度。",
+      "explanation": "实际值还受内核 somaxconn 上限约束。",
+      "example": "服务器接收新连接前，这些连接等待被取出。",
+      "tags": [
+        "监听队列",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/listen.2.html"
+    },
+    {
+      "id": "sockbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "接受连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 服务端的 accept 成功时，会替换原有监听套接字吗？",
+      "answer": "不会；它返回新的已连接套接字，原监听套接字仍可接受其他连接。",
+      "explanation": "新套接字用于和该客户端通信。",
+      "example": "在监听描述符上继续调用 accept。",
+      "tags": [
+        "接受连接",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/accept.2.html"
+    },
+    {
+      "id": "sockbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "非阻塞接受",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 非阻塞监听套接字没有待接受连接时，accept 通常返回什么？",
+      "answer": "调用失败并设置 EAGAIN 或 EWOULDBLOCK。",
+      "explanation": "这表示当前不能立即接受连接，不等于监听套接字已经失效。",
+      "example": "事件循环等待可读通知后再尝试。",
+      "tags": [
+        "非阻塞接受",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/accept.2.html"
+    },
+    {
+      "id": "sockbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "接受套接字标志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 accept 返回的新套接字会自动继承监听套接字的 O_NONBLOCK 吗？",
+      "answer": "不会；应显式设置非阻塞，或使用支持相应标志的 accept4。",
+      "explanation": "不同系统的继承行为可能不同。",
+      "example": "事件循环不能仅凭监听套接字的标志假设新连接也非阻塞。",
+      "tags": [
+        "接受套接字标志",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/accept.2.html"
+    },
+    {
+      "id": "sockbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "UDP connect",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 Linux IPv4 UDP 套接字调用 connect 会像 TCP 一样建立握手连接吗？",
+      "answer": "不会；它设置默认目标并关联接收来源等套接字状态。",
+      "explanation": "UDP 仍是数据报协议，交付不因此得到保证。",
+      "example": "设置默认目标后可以使用 send 发送数据报。",
+      "tags": [
+        "UDP connect",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/connect.2.html"
+    },
+    {
+      "id": "sockbase-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "发送返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 套接字的 send 返回正数字节数后，能否假定本次调用已接收待发送缓冲区的全部数据？",
+      "answer": "不能；返回值可能小于请求长度，应用应处理未发送部分。",
+      "explanation": "成功也不证明对方应用已处理数据。",
+      "example": "按返回字节数继续发送剩余缓冲区。",
+      "tags": [
+        "发送返回值",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/send.2.html"
+    },
+    {
+      "id": "sockbase-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "流读取结束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对已连接的 TCP 流套接字，以非零缓冲长度调用 recv 返回 0 通常表示什么？",
+      "answer": "对端已正常关闭其发送方向，且待接收数据已读完。",
+      "explanation": "数据报套接字可收到零长度数据报，不能套用相同解释。",
+      "example": "读取循环将该结果视为流结束。",
+      "tags": [
+        "流读取结束",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/recv.2.html"
+    },
+    {
+      "id": "sockbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "非阻塞读取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "非阻塞套接字的 recv 返回 EAGAIN 或 EWOULDBLOCK 通常表示什么？",
+      "answer": "当前读取会阻塞，暂时没有可立即读取的数据。",
+      "explanation": "它不等同于对端已正常关闭；仍需处理其他错误。",
+      "example": "等待下一次可读事件后再尝试。",
+      "tags": [
+        "非阻塞读取",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/recv.2.html"
+    },
+    {
+      "id": "sockbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "窥视数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux recv 的 MSG_PEEK 标志有什么作用？",
+      "answer": "它读取接收队列开头的数据，但不从队列移除。",
+      "explanation": "后续普通读取仍可取得尚未消费的数据。",
+      "example": "先查看协议头，再按需要读取。",
+      "tags": [
+        "窥视数据",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/recv.2.html"
+    },
+    {
+      "id": "sockbase-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "UDP 接收截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通 Linux IPv4 UDP 接收时，缓冲区小于一个数据报会怎样？",
+      "answer": "该数据报被截断，超出缓冲区的部分不会由下一次普通接收补回。",
+      "explanation": "recvmsg 可通过 MSG_TRUNC 标志报告截断。",
+      "example": "用 4 字节缓冲区接收 6 字节数据报。",
+      "tags": [
+        "UDP 接收截断",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/udp.7.html"
+    },
+    {
+      "id": "sockbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "异步连接结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 非阻塞 TCP connect 返回 EINPROGRESS 后，如何确认连接最终是否成功？",
+      "answer": "等待套接字变为可写等完成事件，再通过 getsockopt 的 SO_ERROR 检查结果。",
+      "explanation": "SO_ERROR 为 0 表示该连接尝试未报告错误；非零值是错误码。",
+      "example": "事件循环不能把 EINPROGRESS 直接当作连接成功。",
+      "tags": [
+        "异步连接结果",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/connect.2.html"
+    },
+    {
+      "id": "sockbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "SO_ERROR",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 getsockopt(SO_ERROR) 读取后会如何处理待报告的套接字错误？",
+      "answer": "它读取并清除待报告的套接字错误。",
+      "explanation": "读取到 0 表示没有待报告的错误。",
+      "example": "非阻塞连接完成后检查其结果。",
+      "tags": [
+        "SO_ERROR",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/socket.7.html"
+    },
+    {
+      "id": "sockbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "关闭发送方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 TCP 套接字调用 shutdown(SHUT_WR) 的主要作用是什么？",
+      "answer": "关闭本端进一步发送的能力，接收方向仍可继续使用。",
+      "explanation": "对端仍可发送剩余响应。",
+      "example": "请求发完后通知对端本端不会继续发送。",
+      "tags": [
+        "关闭发送方向",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/shutdown.2.html"
+    },
+    {
+      "id": "sockbase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "可读与 EOF",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "select 报告一个流套接字可读，是否一定表示有正长度的数据可读？",
+      "answer": "不一定；流到达文件结束状态时也会被报告为可读。",
+      "explanation": "调用 recv 后还需检查返回值。",
+      "example": "对端正常关闭发送方向后，读取可返回 0。",
+      "tags": [
+        "可读与 EOF",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/select.2.html"
+    },
+    {
+      "id": "sockbase-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 套接字编程",
+      "knowledgePoint": "网络字节序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C 套接字编程中的 htons 与 ntohs 分别做什么？",
+      "answer": "htons 将 16 位数从主机字节序转为网络字节序；ntohs 做反向转换。",
+      "explanation": "在不同字节序的主机上不要假定转换总是空操作。",
+      "example": "向 sockaddr_in 的端口字段写入网络字节序端口。",
+      "tags": [
+        "网络字节序",
+        "Linux 套接字编程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/byteorder.3.html"
+    }
+  ]
+}

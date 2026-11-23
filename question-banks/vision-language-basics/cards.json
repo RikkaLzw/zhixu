@@ -1,0 +1,153 @@
+{
+  "source": {
+    "id": "vision-language-basics",
+    "title": "CLIP、ViT 与视觉分割",
+    "url": "https://arxiv.org/abs/2103.00020",
+    "type": "研究论文与技术文档",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "vl-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "CLIP预训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CLIP 如何利用图文对进行预训练？",
+      "answer": "它联合训练图像编码器和文本编码器，使匹配的图文表示更接近，并区分批内不匹配的组合。",
+      "explanation": "训练目标是图文配对对比学习，并非直接生成图片说明文字。",
+      "example": "用配对截图和描述训练可比较的图文表示。",
+      "tags": [
+        "CLIP预训练目标",
+        "图文模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2103.00020",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；原帖提及 CLIP 训练",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型实习一面（作者自述）；CLIP 损失主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "vl-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "CLIP零样本分类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CLIP 如何进行零样本图像分类？",
+      "answer": "把候选类别写成文本描述，分别编码文本和图像，再比较图像与各类别文本的相似度。",
+      "explanation": "类别描述措辞会影响评估，零样本也不保证目标数据未出现在预训练中。",
+      "example": "比较页面截图与多个候选描述的匹配分数。",
+      "tags": [
+        "CLIP零样本分类",
+        "图文模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2103.00020"
+    },
+    {
+      "id": "vl-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "CLIP提示词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CLIP 零样本分类时，为什么类别文本的提示词可能影响结果？",
+      "answer": "提示词提供上下文，有助于减少类别名称歧义，并使文本更接近训练中的图文描述。",
+      "explanation": "原论文发现合适的描述模板能改善多个基准的表现，但效果依任务而异。",
+      "example": "用“a photo of a boxer dog”区分犬种与拳击手。",
+      "tags": [
+        "CLIP提示词",
+        "图文模型",
+        "提示词"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2103.00020"
+    },
+    {
+      "id": "vl-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉模型",
+      "knowledgePoint": "ViT图像分块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Vision Transformer（ViT）如何把图像转换为 Transformer 输入？",
+      "answer": "它把图像分成固定大小的图像块，将每块展平并线性映射成向量，再组成序列。",
+      "explanation": "各图像块类似文本模型中的输入 token。",
+      "example": "把页面截图分块后送入视觉编码器。",
+      "tags": [
+        "ViT图像分块",
+        "视觉模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2010.11929"
+    },
+    {
+      "id": "vl-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉模型",
+      "knowledgePoint": "ViT分类标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 ViT 的分类标记在图像分类中起什么作用？",
+      "answer": "它作为可学习标记加入图像块序列，其经过编码器后的输出表示用于分类。",
+      "explanation": "这是原始 ViT 分类架构中的一种汇聚方式。",
+      "example": "将分类标记输出送入分类头预测截图类别。",
+      "tags": [
+        "ViT分类标记",
+        "视觉模型",
+        "分类"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2010.11929"
+    },
+    {
+      "id": "vl-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉任务",
+      "knowledgePoint": "语义与实例分割",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "语义分割和实例分割如何区分同类的多个目标？",
+      "answer": "语义分割为像素分配类别；实例分割还区分同一类别中的不同目标实例。",
+      "explanation": "两者都产生像素级结果，实例分割常为每个目标输出掩码。",
+      "example": "两个按钮可有相同语义类别，但分别对应两个实例。",
+      "tags": [
+        "语义与实例分割",
+        "视觉任务"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/main/en/tasks/semantic_segmentation",
+      "supportingReferences": [
+        {
+          "id": "vision-instance-ref",
+          "title": "Hugging Face：Instance segmentation",
+          "url": "https://huggingface.co/docs/transformers/main/en/tasks/instance_segmentation",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "source": {
+    "id": "gnu-tar-gzip-commands",
+    "title": "GNU tar 1.35 与 gzip：归档和压缩常用命令",
+    "url": "https://man7.org/linux/man-pages/man1/tar.1.html",
+    "type": "协议标准、教材及官方手册",
+    "note": "依据逐题引用的标准、教材或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "archivecmd-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "归档与压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tar 归档和 gzip 压缩分别解决什么问题？",
+      "answer": "tar 将文件和目录组织成归档；gzip 对数据流进行压缩。",
+      "explanation": ".tar.gz 常表示先归档再用 gzip 压缩。",
+      "example": "把目录打包并压缩成一个文件。",
+      "tags": [
+        "Linux 归档与压缩",
+        "归档与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tar.1.html",
+      "supportingReferences": [
+        {
+          "id": "gnu-gzip-man",
+          "title": "GNU gzip 手册",
+          "url": "https://manpages.ubuntu.com/manpages/noble/en/man1/gzip.1.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "archivecmd-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "创建 gzip 归档",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tar 的 tar -czf archive.tar.gz dir 通常做什么？",
+      "answer": "创建包含 dir 的 tar 归档，并通过 gzip 压缩后写入指定文件。",
+      "explanation": "-c 创建，-z 使用 gzip，-f 指定归档文件。",
+      "example": "备份一个项目目录。",
+      "tags": [
+        "Linux 归档与压缩",
+        "创建 gzip 归档"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tar.1.html"
+    },
+    {
+      "id": "archivecmd-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "查看归档",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tar 的 tar -tf archive.tar 通常做什么？",
+      "answer": "列出归档成员名称，不执行解包。",
+      "explanation": "查看成员列表不等于验证所有内容可信。",
+      "example": "解包前先查看归档结构。",
+      "tags": [
+        "Linux 归档与压缩",
+        "查看归档"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tar.1.html"
+    },
+    {
+      "id": "archivecmd-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "解包到目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tar 中 tar -xf archive.tar -C target 通常将文件解到哪里？",
+      "answer": "解到 target 指定的已有目录。",
+      "explanation": "-C 改变处理后续文件名时使用的工作目录。",
+      "example": "把归档解到新建的临时目录。",
+      "tags": [
+        "Linux 归档与压缩",
+        "解包到目录"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tar.1.html"
+    },
+    {
+      "id": "archivecmd-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "归档文件选项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tar 的 -f 选项指定什么？",
+      "answer": "指定要读取或写入的归档文件名。",
+      "explanation": "短选项组合的参数必须与该选项正确对应。",
+      "example": "tar -cf backup.tar dir 将归档写入 backup.tar。",
+      "tags": [
+        "Linux 归档与压缩",
+        "归档文件选项"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tar.1.html"
+    },
+    {
+      "id": "archivecmd-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "详细输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tar 的 -v 选项通常用于什么？",
+      "answer": "请求详细输出，例如列出处理的文件名。",
+      "explanation": "它不改变创建或提取归档这一操作类型。",
+      "example": "创建归档时显示正在处理的文件。",
+      "tags": [
+        "Linux 归档与压缩",
+        "详细输出"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tar.1.html"
+    },
+    {
+      "id": "archivecmd-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "排除路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tar 创建归档时 --exclude=PATTERN 有什么作用？",
+      "answer": "排除名称匹配给定模式的文件。",
+      "explanation": "应注意 shell 引号及 tar 自身的模式匹配规则。",
+      "example": "排除构建产生的临时目录。",
+      "tags": [
+        "Linux 归档与压缩",
+        "排除路径"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tar.1.html"
+    },
+    {
+      "id": "archivecmd-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "剥离目录前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tar 提取时 --strip-components=N 有什么作用？",
+      "answer": "从归档成员名中去掉前 N 个路径组成部分。",
+      "explanation": "应结合归档结构确认提取后的路径。",
+      "example": "去掉归档中的顶层项目目录。",
+      "tags": [
+        "Linux 归档与压缩",
+        "剥离目录前缀"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tar.1.html"
+    },
+    {
+      "id": "archivecmd-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "压缩完整性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU gzip 的 -t 选项检查什么？",
+      "answer": "测试压缩文件的完整性。",
+      "explanation": "通过完整性检查不表示内容本身可信或适合执行。",
+      "example": "在传输后检查 gzip 文件是否损坏。",
+      "tags": [
+        "Linux 归档与压缩",
+        "压缩完整性"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/noble/en/man1/gzip.1.html"
+    },
+    {
+      "id": "archivecmd-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 归档与压缩",
+      "knowledgePoint": "压缩标准输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU gzip 的 -c 选项常用于什么？",
+      "answer": "把压缩或解压结果写到标准输出，并保留输入文件。",
+      "explanation": "常与 shell 重定向或管道配合。",
+      "example": "gzip -c file > file.gz。",
+      "tags": [
+        "Linux 归档与压缩",
+        "压缩标准输出"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/noble/en/man1/gzip.1.html"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "graphplan-planning-graphs",
+    "title": "Graphplan 原论文：规划图与互斥",
+    "url": "https://www.cs.cmu.edu/~avrim/Papers/graphplan.pdf",
+    "type": "经典规划研究论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，版本与前提见题目。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "graphplan-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Graphplan 规划图",
+      "knowledgePoint": "图层构造",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graphplan 的规划图通常交替包含哪两类层？",
+      "answer": "交替包含命题层和动作层。",
+      "explanation": "动作的前置条件来自前一命题层，动作效果连接到后一命题层。",
+      "example": "初始命题层之后展开可用动作和后续命题。",
+      "tags": [
+        "Graphplan 规划图",
+        "图层构造"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cmu.edu/~avrim/Papers/graphplan.pdf"
+    },
+    {
+      "id": "graphplan-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graphplan 规划图",
+      "knowledgePoint": "持久动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graphplan 规划图中的 no-op 动作有什么作用？",
+      "answer": "将某个为真的命题从一层延续到下一层。",
+      "explanation": "它不表示额外改变该命题，而是表达命题的持久性。",
+      "example": "没有移动时，物品仍在原位置。",
+      "tags": [
+        "Graphplan 规划图",
+        "持久动作"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cmu.edu/~avrim/Papers/graphplan.pdf"
+    },
+    {
+      "id": "graphplan-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graphplan 规划图",
+      "knowledgePoint": "动作干扰",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graphplan 中一个动作删除另一个动作的前置条件时，这两个同层动作如何处理？",
+      "answer": "将它们标记为互斥，不能作为同一步中兼容的动作同时选取。",
+      "explanation": "互斥也可能由动作效果之间的干扰产生。",
+      "example": "移动载具与要求载具停在原地的装载动作发生冲突。",
+      "tags": [
+        "Graphplan 规划图",
+        "动作干扰"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cmu.edu/~avrim/Papers/graphplan.pdf"
+    },
+    {
+      "id": "graphplan-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graphplan 规划图",
+      "knowledgePoint": "竞争需求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graphplan 的 competing needs 如何使两个动作互斥？",
+      "answer": "如果两个动作各自需要的一对前置命题在前一层互斥，这两个动作就被标记为互斥。",
+      "explanation": "互斥关系随规划图层次传播。",
+      "example": "一个载具不能同时满足位于甲地和位于乙地的前置条件。",
+      "tags": [
+        "Graphplan 规划图",
+        "竞争需求"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cmu.edu/~avrim/Papers/graphplan.pdf"
+    },
+    {
+      "id": "graphplan-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graphplan 规划图",
+      "knowledgePoint": "命题互斥",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graphplan 何时会因支持动作互斥而把同层两个命题标为互斥？",
+      "answer": "当产生第一个命题的每种动作都与产生第二个命题的每种动作互斥时。",
+      "explanation": "判断基于前一动作层的支持关系。",
+      "example": "两个位置事实的所有支持动作彼此冲突。",
+      "tags": [
+        "Graphplan 规划图",
+        "命题互斥"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cmu.edu/~avrim/Papers/graphplan.pdf"
+    },
+    {
+      "id": "graphplan-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graphplan 规划图",
+      "knowledgePoint": "互斥不完备",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "规划图中两个命题没有被 Graphplan 的规则标记为互斥，能否单独保证它们可在有效计划中共同达到？",
+      "answer": "不能；论文中的互斥传播规则不保证识别所有互斥关系。",
+      "explanation": "仍需在规划图上搜索可行的动作组合。",
+      "example": "多个目标两两未标互斥时，整体目标仍可能不可行。",
+      "tags": [
+        "Graphplan 规划图",
+        "互斥不完备"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cmu.edu/~avrim/Papers/graphplan.pdf"
+    },
+    {
+      "id": "graphplan-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graphplan 规划图",
+      "knowledgePoint": "反向提取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graphplan 在目标出现于某命题层后，怎样尝试提取计划？",
+      "answer": "从目标向前一动作层反向选择能产生目标且互不冲突的动作，再把其前置条件作为子目标。",
+      "explanation": "若某组选择失败，算法可以回溯尝试其他动作。",
+      "example": "先选择产生最终目标的动作，再递归求其前置条件。",
+      "tags": [
+        "Graphplan 规划图",
+        "反向提取"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cmu.edu/~avrim/Papers/graphplan.pdf"
+    },
+    {
+      "id": "graphplan-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graphplan 规划图",
+      "knowledgePoint": "失败记忆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graphplan 在某一层发现一个子目标集合不可解后，记录它有什么作用？",
+      "answer": "可在同一层再次遇到该目标集合时避免重复搜索。",
+      "explanation": "论文把目标集合及所在时间层作为记忆信息。",
+      "example": "重复子问题再次出现时直接回溯。",
+      "tags": [
+        "Graphplan 规划图",
+        "失败记忆"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cmu.edu/~avrim/Papers/graphplan.pdf"
+    }
+  ]
+}

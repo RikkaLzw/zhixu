@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "lats-search-reflection",
+    "title": "LATS 原论文 v3：语言智能体搜索与反馈",
+    "url": "https://arxiv.org/pdf/2310.04406v3",
+    "type": "官方技术文档、固定版本源码或研究论文",
+    "note": "依照逐题所列资料自行整理，示例自编；涉及实现的行为以指定版本为准。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "lats-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LATS 语言智能体搜索",
+      "knowledgePoint": "状态组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LATS 论文的搜索节点状态通常包含哪些信息？",
+      "answer": "包含初始问题、到当前节点的动作序列及相应观察序列。",
+      "explanation": "环境反馈作为观察进入后续搜索上下文。",
+      "example": "网页操作后的页面状态可成为观察。",
+      "tags": [
+        "LATS 语言智能体搜索",
+        "状态组成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.04406v3"
+    },
+    {
+      "id": "lats-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LATS 语言智能体搜索",
+      "knowledgePoint": "价值组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LATS 论文中的节点价值估计结合哪两类信息？",
+      "answer": "结合语言模型自评得分与自一致性得分。",
+      "explanation": "组合权重由超参数控制；估计仍可能不准确。",
+      "example": "多次采样与模型评分共同影响节点价值。",
+      "tags": [
+        "LATS 语言智能体搜索",
+        "价值组成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.04406v3"
+    },
+    {
+      "id": "lats-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LATS 语言智能体搜索",
+      "knowledgePoint": "失败反思",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LATS 在一条轨迹未成功后，如何利用语言模型反思？",
+      "answer": "根据失败轨迹和最终反馈生成对错误及改进方案的文字反思。",
+      "explanation": "失败轨迹和反思可保存在外部记忆中供后续尝试使用。",
+      "example": "总结网页操作失败后再尝试其他路径。",
+      "tags": [
+        "LATS 语言智能体搜索",
+        "失败反思"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.04406v3"
+    },
+    {
+      "id": "lats-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LATS 语言智能体搜索",
+      "knowledgePoint": "停止条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LATS 论文的搜索过程在什么情况下停止？",
+      "answer": "任务成功或达到设定的计算预算时停止。",
+      "explanation": "预算上限控制搜索成本，但可能提前终止尚未找到解的任务。",
+      "example": "达到最大轨迹采样数后结束。",
+      "tags": [
+        "LATS 语言智能体搜索",
+        "停止条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.04406v3"
+    }
+  ]
+}

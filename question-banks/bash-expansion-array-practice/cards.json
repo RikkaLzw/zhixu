@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "bash-expansion-array-practice",
+    "title": "Bash 手册：参数展开与数组",
+    "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
+    "type": "官方文档与系统手册",
+    "note": "按逐题引用的文档自行整理；示例为自编，具体适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "bashadv-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "未设置与空值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 参数展开中 ${x-default} 与 ${x:-default} 对空字符串有什么区别？",
+      "answer": "前者只在 x 未设置时使用默认值；后者在 x 未设置或为空时使用默认值。",
+      "explanation": "冒号会同时测试参数是否为空。",
+      "example": "x 已设置为空时，前者展开为空，后者展开为 default。",
+      "tags": [
+        "Bash 参数与数组",
+        "未设置与空值"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "字符串长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 ${#value} 通常得到什么？",
+      "answer": "得到变量值的字符长度。",
+      "explanation": "长度受当前字符集等环境因素影响，不一定等于编码后的字节数。",
+      "example": "value=abc 时展开为 3。",
+      "tags": [
+        "Bash 参数与数组",
+        "字符串长度"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "长前缀删除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 ${value##pattern} 与 ${value#pattern} 删除前缀有何区别？",
+      "answer": "## 删除最长匹配前缀；# 删除最短匹配前缀。",
+      "explanation": "两者都只从字符串开头尝试匹配。",
+      "example": "value=a/b/c 时 ${value##*/} 得到 c。",
+      "tags": [
+        "Bash 参数与数组",
+        "长前缀删除"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "长短后缀删除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 ${value%pattern} 与 ${value%%pattern} 删除后缀有何区别？",
+      "answer": "% 删除最短匹配后缀；%% 删除最长匹配后缀。",
+      "explanation": "匹配模式从字符串末尾计算。",
+      "example": "value=a.b.c 时 ${value%.*} 得到 a.b，而 ${value%%.*} 得到 a。",
+      "tags": [
+        "Bash 参数与数组",
+        "长短后缀删除"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "替换全部匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 ${value//pattern/replacement} 对匹配部分做什么？",
+      "answer": "将所有匹配 pattern 的部分替换为 replacement。",
+      "explanation": "pattern 使用 shell 模式；变量本身不会因此被赋予新值。",
+      "example": "对 a-b-c 执行替换可生成 a_b_c。",
+      "tags": [
+        "Bash 参数与数组",
+        "替换全部匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "数组元素边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中 \"${arr[@]}\" 展开数组时如何处理包含空格的元素？",
+      "answer": "每个数组元素分别展开为一个参数，并保留元素内部的空格。",
+      "explanation": "整个展开应在双引号内使用，以避免额外的词拆分。",
+      "example": "数组中一个元素是 a b 时，它仍作为一个参数。",
+      "tags": [
+        "Bash 参数与数组",
+        "数组元素边界"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "数组元素数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中 ${#arr[@]} 表示什么？",
+      "answer": "表示数组当前已赋值元素的个数。",
+      "explanation": "索引数组可以有间隔，元素数不一定等于最大下标加一。",
+      "example": "只设置下标 0 与 9 时，元素个数是 2。",
+      "tags": [
+        "Bash 参数与数组",
+        "数组元素数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "数组下标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 如何列出数组中已赋值元素的索引或键？",
+      "answer": "使用 ${!arr[@]} 展开数组 arr 中已赋值元素的索引或键。",
+      "explanation": "索引数组和关联数组都可用此形式枚举键。",
+      "example": "设置下标 0 和 9 后，可列出这两个下标。",
+      "tags": [
+        "Bash 参数与数组",
+        "数组下标"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "数组类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 declare -a 与 declare -A 分别声明什么？",
+      "answer": "-a 声明索引数组；-A 声明关联数组。",
+      "explanation": "关联数组使用字符串键，且属于 Bash 功能。",
+      "example": "declare -A counts 可声明按名称计数的映射。",
+      "tags": [
+        "Bash 参数与数组",
+        "数组类型"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "函数局部变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 函数中的 local 变量有什么作用范围？",
+      "answer": "它在函数及其调用的函数中可见，并在函数返回后恢复外层同名变量。",
+      "explanation": "Bash 的局部变量采用动态作用域。",
+      "example": "函数内 local x 不会永久覆盖外层 x。",
+      "tags": [
+        "Bash 参数与数组",
+        "函数局部变量"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "位置参数移动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 shift 命令通常怎样改变位置参数？",
+      "answer": "默认将位置参数左移一位，原 $2 成为 $1。",
+      "explanation": "可指定移动数量，$0 不受影响。",
+      "example": "处理完第一个命令行参数后可用 shift 继续。",
+      "tags": [
+        "Bash 参数与数组",
+        "位置参数移动"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "bashadv-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 参数与数组",
+      "knowledgePoint": "进程替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中的 <(command) 通常为另一个命令提供什么？",
+      "answer": "提供一个文件名形式的入口，使其能够读取 command 的输出。",
+      "explanation": "进程替换依赖系统支持，不是所有 shell 的通用语法。",
+      "example": "diff <(sort a) <(sort b) 可比较排序后的输出。",
+      "tags": [
+        "Bash 参数与数组",
+        "进程替换"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    }
+  ]
+}

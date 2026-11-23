@@ -1,0 +1,78 @@
+{
+  "source": {
+    "id": "company-memory-interviews",
+    "title": "大厂公开面经：模型显存与持续学习",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "cmem-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型训练与记忆",
+      "knowledgePoint": "FP16权重估算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "仅保存 N 个 FP16 模型参数时，理论权重存储量如何估算？",
+      "answer": "每个 FP16 参数占 2 字节，理论权重存储量为 2N 字节。",
+      "explanation": "这不含激活、KV 缓存、优化器状态、梯度和框架开销，不能直接当作训练总显存。",
+      "example": "14B 参数约占 28 GB 十进制字节的纯 FP16 权重。",
+      "tags": [
+        "FP16权重估算",
+        "模型训练与记忆",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "company-training-reference",
+          "title": "Hugging Face：GPU memory usage",
+          "url": "https://huggingface.co/docs/transformers/main/en/model_memory_anatomy",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "cmem-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型训练与记忆",
+      "knowledgePoint": "蒸馏减轻遗忘",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Learning without Forgetting 用什么思路减轻旧任务遗忘？",
+      "answer": "在学习新任务时，用原模型对新数据的旧任务响应作为约束，同时优化新任务。",
+      "explanation": "原论文研究的是视觉分类持续学习；能否用于其他场景及效果需单独评估。",
+      "example": "新任务训练时约束模型保持原有任务的响应。",
+      "tags": [
+        "蒸馏减轻遗忘",
+        "模型训练与记忆",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-tencent",
+      "referenceTitle": "腾讯公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "company-training-reference",
+          "title": "Learning without Forgetting 原论文",
+          "url": "https://arxiv.org/abs/1606.09282",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

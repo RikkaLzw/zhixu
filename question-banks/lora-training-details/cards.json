@@ -1,0 +1,327 @@
+{
+  "source": {
+    "id": "lora-training-details",
+    "title": "PEFT 0.17.0：LoRA 训练配置与适配器",
+    "url": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py",
+    "type": "固定版本官方源码",
+    "note": "依据 PEFT 0.17.0 固定版本官方源码整理；代表性配置与合并行为以 PyTorch 2.7.1 CPU 合成模型验证，量化与 GPU 路径未实测。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "loradetail-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "全部线性层目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 LoRA target_modules=\"all-linear\" 对 Transformers PreTrainedModel 会自动包含输出层吗？",
+      "answer": "通常不会；该特殊目标选择线性和 Conv1D 模块时会排除输出层。",
+      "explanation": "若任务需要训练额外输出头，应根据模型结构单独配置并检查可训练参数。",
+      "example": "选择 all-linear 后核对输出头是否在训练范围。",
+      "tags": [
+        "全部线性层目标",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L204",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "排除目标模块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 exclude_modules 有什么用途？",
+      "answer": "它指定需要从 LoRA 适配目标中排除的模块。",
+      "explanation": "可与目标选择配合，在较大的候选范围中排除不需要适配的模块。",
+      "example": "为目标模块指定列表，同时排除某个投影层。",
+      "tags": [
+        "排除目标模块",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L216",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "按层指定秩和缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 rank_pattern 与 alpha_pattern 用来覆盖哪些默认设置？",
+      "answer": "rank_pattern 覆盖匹配层的秩 r；alpha_pattern 覆盖匹配层的 lora_alpha。",
+      "explanation": "不同层可使用不同配置，未匹配的层使用相应默认值。",
+      "example": "为某个投影层指定不同的低秩维度。",
+      "tags": [
+        "按层指定秩和缩放",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L267",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "按层筛选配置冲突",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 在 target_modules 为字符串时，可以同时设置 layers_to_transform 吗？",
+      "answer": "不可以；该组合会在配置校验时抛出 ValueError。",
+      "explanation": "target_modules 使用列表时，才可结合该层索引筛选选项。",
+      "example": "筛选特定层时避免把目标模块写成正则字符串。",
+      "tags": [
+        "按层筛选配置冲突",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L607",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "权重方向配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 fan_in_fan_out 应在目标层具有哪种权重存储方向时设为 True？",
+      "answer": "目标权重按 (fan_in, fan_out) 方向存储时。",
+      "explanation": "例如 GPT-2 使用的 Conv1D 与常见线性层的权重存储方向不同。",
+      "example": "适配 GPT-2 的 Conv1D 时检查该选项。",
+      "tags": [
+        "权重方向配置",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L224",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "参数与模块目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 target_parameters 适合解决什么 LoRA 目标选择问题？",
+      "answer": "它允许直接指定参数名，适用于某些无法用常规模块 forward 注入 LoRA 的参数。",
+      "explanation": "例如部分混合专家层直接使用 nn.Parameter 而不是 nn.Linear。",
+      "example": "按参数名称选择专家权重。",
+      "tags": [
+        "参数与模块目标",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L314",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "选择性训练词嵌入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 trainable_token_indices 支持什么训练方式？",
+      "answer": "它可以只选择部分 token 索引对应的嵌入进行微调，而不必训练整个嵌入矩阵。",
+      "explanation": "可以指定输入嵌入的索引列表，也可按嵌入模块名称指定索引。",
+      "example": "为新加入的特殊 token 选择训练索引。",
+      "tags": [
+        "选择性训练词嵌入",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L280",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "量化准备与适配器顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么通常要在插入并启用 LoRA 适配器之前调用 PEFT 0.17 的 prepare_model_for_kbit_training？",
+      "answer": "该函数会冻结调用时模型中已有的参数；先插入 LoRA 再调用可能把适配器参数也冻结。",
+      "explanation": "准备完成后应检查实际需要训练的参数 requires_grad。",
+      "example": "先准备量化基座，再创建 LoRA 适配器。",
+      "tags": [
+        "量化准备与适配器顺序",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/utils/other.py#L111",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "量化训练准备边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 prepare_model_for_kbit_training 本身负责把普通模型权重量化成 4 位吗？",
+      "answer": "不负责；应先按所用量化方案加载或量化模型，再调用该函数准备训练。",
+      "explanation": "该函数处理参数冻结等准备工作，不等同于选择和执行量化。",
+      "example": "先使用量化加载配置，再准备模型。",
+      "tags": [
+        "量化训练准备边界",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/utils/other.py#L111",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "EVA初始化依据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 EVA 数据驱动 LoRA 初始化依据什么数据？",
+      "answer": "它利用微调数据经过模型层时产生的输入激活，并基于奇异值分解初始化适配器。",
+      "explanation": "这与默认零更新初始化的依据不同。",
+      "example": "用训练数据收集层输入激活后执行 EVA 初始化。",
+      "tags": [
+        "EVA初始化依据",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L240",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-011",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "LoftQ初始化前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 使用 init_lora_weights=\"loftq\" 和 loftq_config 时，为何不应预先传入量化模型？",
+      "answer": "因为该 LoftQ 初始化过程会自行对基座权重进行量化。",
+      "explanation": "这一前提针对该初始化路径，不能推广为所有量化微调方法都自行量化。",
+      "example": "按 LoftQ 配置处理未量化的基座模型。",
+      "tags": [
+        "LoftQ初始化前提",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L286",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "层复制与适配器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 layer_replication 复制模型层时，基座权重与 LoRA 适配器如何处理？",
+      "answer": "复制层可以共享原有基座权重，但各复制层拥有各自的 LoRA 适配器。",
+      "explanation": "层复制可调整层堆叠，而不必为复制层重复存储基座权重。",
+      "example": "将某段层范围复制到新的层序列中。",
+      "tags": [
+        "层复制与适配器",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L305",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-013",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "安全合并检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 中标准线性 LoRA 的 safe_merge=True 会进行什么检查？",
+      "answer": "它在副本上合并，并检查合并后的权重及相关偏置是否为有限数；出现 NaN 或无穷大时会报错。",
+      "explanation": "这是数值检查，不能据此认定模型输出或部署行为安全。",
+      "example": "合并前发现适配器权重含 NaN 时抛出错误。",
+      "tags": [
+        "安全合并检查",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/layer.py#L629",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-014",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "卸载与合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于尚未合并的 LoRA 适配器，PEFT 0.17 的 unload 与 merge_and_unload 有什么区别？",
+      "answer": "unload 移除适配器而不合并其更新；merge_and_unload 先将更新合并到基座权重再卸载。",
+      "explanation": "前提是所用适配器和模型实现支持相应操作。",
+      "example": "只恢复未合并的基座结构时使用 unload。",
+      "tags": [
+        "卸载与合并",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/model.py#L898",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    },
+    {
+      "id": "loradetail-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA 训练与部署",
+      "knowledgePoint": "LoRA分支偏置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 lora_bias 与 bias 配置的对象有何区别？",
+      "answer": "lora_bias 控制 LoRA B 分支的偏置；bias 控制是否训练原有模块的相关偏置。",
+      "explanation": "两种偏置来自不同位置，配置和合并支持需按模型实现核对。",
+      "example": "检查 B 分支偏置是否启用。",
+      "tags": [
+        "LoRA分支偏置",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/config.py#L310",
+      "referenceTitle": "PEFT 0.17.0：LoRA 训练配置与适配器"
+    }
+  ]
+}

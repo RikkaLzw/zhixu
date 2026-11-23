@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "sklearn-cohen-kappa-practice",
+    "title": "scikit-learn 1.7 文档：Cohen 标注一致性",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.cohen_kappa_score.html",
+    "type": "官方文档或教材",
+    "note": "依据 scikit-learn 1.7 官方文档及 Cohen 1960 指标定义自行整理；示例自编。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "kappa-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Cohen 标注一致性",
+      "knowledgePoint": "一致性目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cohen kappa 主要用于衡量什么？",
+      "answer": "它衡量两位标注者在分类标签上的一致程度，并考虑按各自标签分布估计的偶然一致。",
+      "explanation": "两个输入需要针对同一组样本逐项对齐。",
+      "example": "比较两名分析人员对告警的标签。",
+      "tags": [
+        "Cohen 标注一致性",
+        "一致性目标"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.cohen_kappa_score.html"
+    },
+    {
+      "id": "kappa-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Cohen 标注一致性",
+      "knowledgePoint": "期望一致",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cohen kappa 公式中的 p_e 通常怎样估计？",
+      "answer": "根据两位标注者各自的经验类别分布，估计随机独立分配时的一致比例。",
+      "explanation": "p_e 并非简单假设每个类别概率都相等。",
+      "example": "两位标注者都偏好某类别会影响期望一致率。",
+      "tags": [
+        "Cohen 标注一致性",
+        "期望一致"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.cohen_kappa_score.html"
+    },
+    {
+      "id": "kappa-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Cohen 标注一致性",
+      "knowledgePoint": "零与负值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cohen kappa 为 0 或负数分别表示什么？",
+      "answer": "0 表示观察一致率等于该指标模型下的期望一致率；负数表示观察一致率更低。",
+      "explanation": "它不单独证明标注过程是否真的随机。",
+      "example": "两位标注者经常给出相反标签可能产生负值。",
+      "tags": [
+        "Cohen 标注一致性",
+        "零与负值"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.cohen_kappa_score.html"
+    },
+    {
+      "id": "kappa-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Cohen 标注一致性",
+      "knowledgePoint": "交换标注者",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 cohen_kappa_score 交换 y1 和 y2 会改变分数吗？",
+      "answer": "不会；Cohen kappa 对两位标注者的输入是对称的。",
+      "explanation": "对应样本的顺序仍应保持一致。",
+      "example": "交换甲和乙的标签数组后得到相同分数。",
+      "tags": [
+        "Cohen 标注一致性",
+        "交换标注者"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.cohen_kappa_score.html"
+    },
+    {
+      "id": "kappa-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Cohen 标注一致性",
+      "knowledgePoint": "有序标签权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 cohen_kappa_score 为何提供 linear 和 quadratic 权重？",
+      "answer": "它们按类别顺序中的距离给不一致赋予不同权重，常用于有序类别。",
+      "explanation": "类别顺序必须有实际含义，权重选择会影响分数。",
+      "example": "严重等级相差两级可比相差一级受到更大惩罚。",
+      "tags": [
+        "Cohen 标注一致性",
+        "有序标签权重"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.cohen_kappa_score.html"
+    },
+    {
+      "id": "kappa-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Cohen 标注一致性",
+      "knowledgePoint": "退化标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的两位标注者都只给所有样本相同的单一类别时，Cohen kappa 可能是什么？",
+      "answer": "公式的分母可能为零，接口可返回 NaN，而非自动返回 1。",
+      "explanation": "该情形下观察和期望一致率都可能为 1。",
+      "example": "两人均对所有样本标记为同一类别。",
+      "tags": [
+        "Cohen 标注一致性",
+        "退化标签"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.cohen_kappa_score.html"
+    },
+    {
+      "id": "kappa-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Cohen 标注一致性",
+      "knowledgePoint": "一致与正确",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两位标注者的 Cohen kappa 很高，能否单独证明他们的标签都正确？",
+      "answer": "不能；一致性衡量两人是否一致，并不提供独立真实标签。",
+      "explanation": "两位标注者也可能共享相同的系统性错误。",
+      "example": "两人按相同但有误的规则标注仍可能高度一致。",
+      "tags": [
+        "Cohen 标注一致性",
+        "一致与正确"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.cohen_kappa_score.html"
+    }
+  ]
+}

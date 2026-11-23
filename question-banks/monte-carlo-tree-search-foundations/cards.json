@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "monte-carlo-tree-search-foundations",
+    "title": "MCTS 综述 v1：蒙特卡洛树搜索",
+    "url": "https://arxiv.org/abs/2103.04931v1",
+    "type": "协议标准、官方文档与论文",
+    "note": "依据逐题标注的规范、固定版本文档或论文自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "mctsbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "蒙特卡洛树搜索",
+      "knowledgePoint": "搜索基本步骤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基本蒙特卡洛树搜索的一轮通常包含哪四个阶段？",
+      "answer": "选择、扩展、模拟和回传。",
+      "explanation": "具体实现可以修改模拟和扩展策略。",
+      "example": "多轮搜索后根据根节点统计选择动作。",
+      "tags": [
+        "蒙特卡洛树搜索",
+        "搜索基本步骤"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2103.04931v1"
+    },
+    {
+      "id": "mctsbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "蒙特卡洛树搜索",
+      "knowledgePoint": "选择与扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MCTS 的选择和扩展分别处理什么？",
+      "answer": "选择沿已有搜索树按策略向下走；扩展把尚未加入树的新状态加入。",
+      "explanation": "到达终止状态时不一定需要扩展。",
+      "example": "从根节点选择已有子节点后添加一个新子节点。",
+      "tags": [
+        "蒙特卡洛树搜索",
+        "选择与扩展"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2103.04931v1"
+    },
+    {
+      "id": "mctsbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "蒙特卡洛树搜索",
+      "knowledgePoint": "模拟作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基本 MCTS 的模拟或 rollout 阶段主要做什么？",
+      "answer": "从选中状态按模拟策略继续执行，得到可用于评估的结果。",
+      "explanation": "基本形式可随机模拟到终止；变体也可提前终止并使用价值估计。",
+      "example": "从游戏状态随机走到结束并取得得分。",
+      "tags": [
+        "蒙特卡洛树搜索",
+        "模拟作用"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2103.04931v1"
+    },
+    {
+      "id": "mctsbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "蒙特卡洛树搜索",
+      "knowledgePoint": "UCT选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UCT 在选择动作时如何平衡利用与探索？",
+      "answer": "它结合动作的经验平均回报和随访问次数变化的探索奖励。",
+      "explanation": "探索项通常根据父状态和动作访问次数计算；探索系数越大，越偏向较少采样的动作。",
+      "example": "较少尝试的动作可获得更高探索奖励。",
+      "tags": [
+        "蒙特卡洛树搜索",
+        "UCT选择"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2103.04931v1"
+    },
+    {
+      "id": "mctsbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "蒙特卡洛树搜索",
+      "knowledgePoint": "UCT未访问动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用含动作访问数作分母的 UCT 公式时，未访问动作通常如何处理？",
+      "answer": "需要单独处理；综述介绍的基本方法先让每个动作至少被尝试一次。",
+      "explanation": "直接代入零访问次数会使公式无定义。",
+      "example": "新节点下先尝试尚未采样的动作。",
+      "tags": [
+        "蒙特卡洛树搜索",
+        "UCT未访问动作"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2103.04931v1"
+    },
+    {
+      "id": "mctsbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "蒙特卡洛树搜索",
+      "knowledgePoint": "有限预算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MCTS 在有限模拟预算下是否保证一定选到全局最优动作？",
+      "answer": "不保证；统计估计仍有误差，结果受预算、模拟策略和问题结构影响。",
+      "explanation": "理论收敛结论有各自前提，不能直接当作有限预算保证。",
+      "example": "高分支状态中某动作可能尚未充分采样。",
+      "tags": [
+        "蒙特卡洛树搜索",
+        "有限预算"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2103.04931v1"
+    }
+  ]
+}

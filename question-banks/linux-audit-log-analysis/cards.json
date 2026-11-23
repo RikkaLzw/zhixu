@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "linux-audit-log-analysis",
+    "title": "RHEL 9 文档：Linux Audit 日志字段",
+    "url": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening#understanding-audit-log-files_auditing-the-system",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "laudit-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Linux Audit 日志",
+      "knowledgePoint": "多记录事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux Audit 同一事件的多条记录怎样关联？",
+      "answer": "同一事件的记录共享时间戳和事件序号，可据此关联 SYSCALL、CWD、PATH 等记录。",
+      "explanation": "不要把每行都视为独立事件；聚合多主机日志时还应保留主机来源。",
+      "example": "将同一次文件访问的 syscall 与路径信息关联。",
+      "tags": [
+        "Linux Audit 日志",
+        "多记录事件"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening#understanding-audit-log-files_auditing-the-system"
+    },
+    {
+      "id": "laudit-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Linux Audit 日志",
+      "knowledgePoint": "登录身份",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux Audit 的 auid 通常记录什么身份？",
+      "answer": "记录登录用户的 audit user ID，即 loginuid。",
+      "explanation": "该身份可由后续进程继承，用户切换后仍可能保持原登录身份；也可能未设置。",
+      "example": "分析 su 后的操作时区分 auid 与当前 uid。",
+      "tags": [
+        "Linux Audit 日志",
+        "登录身份"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening#understanding-audit-log-files_auditing-the-system"
+    },
+    {
+      "id": "laudit-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Linux Audit 日志",
+      "knowledgePoint": "路径条数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux Audit 的 SYSCALL 记录中 items 字段表示什么？",
+      "answer": "表示该事件关联的 PATH 辅助记录数量。",
+      "explanation": "PATH 的 item 字段从 0 开始标记各条记录。",
+      "example": "items=2 表示关联两个 PATH 记录。",
+      "tags": [
+        "Linux Audit 日志",
+        "路径条数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening#understanding-audit-log-files_auditing-the-system"
+    },
+    {
+      "id": "laudit-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Linux Audit 日志",
+      "knowledgePoint": "工作目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux Audit 的 CWD 记录在分析相对路径时有什么作用？",
+      "answer": "记录系统调用发生时进程的工作目录，可帮助还原相关相对路径。",
+      "explanation": "具体记录是否出现取决于事件及审计配置。",
+      "example": "结合 CWD 和 PATH 解释相对文件名。",
+      "tags": [
+        "Linux Audit 日志",
+        "工作目录"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening#understanding-audit-log-files_auditing-the-system"
+    },
+    {
+      "id": "laudit-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Linux Audit 日志",
+      "knowledgePoint": "调用结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux Audit 的 SYSCALL 记录中 success 字段表示什么？",
+      "answer": "表示该记录的系统调用成功还是失败。",
+      "explanation": "它不直接表示整个业务流程或所有后续操作是否成功。",
+      "example": "success=no 表示被记录的系统调用失败。",
+      "tags": [
+        "Linux Audit 日志",
+        "调用结果"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening#understanding-audit-log-files_auditing-the-system"
+    },
+    {
+      "id": "laudit-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Linux Audit 日志",
+      "knowledgePoint": "命令行编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux Audit 的 PROCTITLE 记录通常如何表示命令行，怎样便于查看？",
+      "answer": "proctitle 常以十六进制编码记录命令行，可用 ausearch -i 解释为可读形式。",
+      "explanation": "解读结果仍应结合其他记录及日志来源。",
+      "example": "排查审计事件时查看解释后的命令行。",
+      "tags": [
+        "Linux Audit 日志",
+        "命令行编码"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening#understanding-audit-log-files_auditing-the-system"
+    },
+    {
+      "id": "laudit-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Linux Audit 日志",
+      "knowledgePoint": "审计规则键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux Audit 记录中的 key 通常有什么作用？",
+      "answer": "标识产生该事件的审计规则所关联的管理员自定义键。",
+      "explanation": "键有助于按规则用途筛选事件。",
+      "example": "用规则键查找对某文件的审计记录。",
+      "tags": [
+        "Linux Audit 日志",
+        "审计规则键"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening#understanding-audit-log-files_auditing-the-system"
+    }
+  ]
+}

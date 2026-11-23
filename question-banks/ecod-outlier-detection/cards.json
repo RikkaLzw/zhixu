@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "ecod-outlier-detection",
+    "title": "ECOD 原论文 v3：经验分布异常检测",
+    "url": "https://arxiv.org/abs/2201.00382v3",
+    "type": "论文与官方技术文档",
+    "note": "根据所引论文或固定版本官方文档自行整理；例子为自编，使用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "ecodstudy-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "ECOD 经验分布异常检测",
+      "knowledgePoint": "方法直觉",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECOD 原论文用什么直觉识别异常值？",
+      "answer": "把分布尾部的罕见观测作为异常线索。",
+      "explanation": "罕见不必然等于恶意或错误。",
+      "example": "某流量特征远高于参考样本中的大多数值。",
+      "tags": [
+        "ECOD 经验分布异常检测",
+        "方法直觉"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.00382v3"
+    },
+    {
+      "id": "ecodstudy-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "ECOD 经验分布异常检测",
+      "knowledgePoint": "边缘经验分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECOD 如何为多维数据估计分布信息？",
+      "answer": "分别为每个特征维度计算一维经验累积分布。",
+      "explanation": "它不直接估计完整的高维联合经验分布。",
+      "example": "分别查看连接数和传输字节的经验分位位置。",
+      "tags": [
+        "ECOD 经验分布异常检测",
+        "边缘经验分布"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.00382v3"
+    },
+    {
+      "id": "ecodstudy-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "ECOD 经验分布异常检测",
+      "knowledgePoint": "左尾计算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECOD 论文的一维左尾经验分布在数值 z 处如何计算？",
+      "answer": "计算参考样本中取值小于或等于 z 的比例。",
+      "explanation": "相等值也计入论文的左尾经验分布。",
+      "example": "[1,2,2,4] 中 z=2 的左尾比例为 3/4。",
+      "tags": [
+        "ECOD 经验分布异常检测",
+        "左尾计算"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.00382v3"
+    },
+    {
+      "id": "ecodstudy-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "ECOD 经验分布异常检测",
+      "knowledgePoint": "右尾与相等值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECOD 论文为何单独计算右尾中大于或等于 z 的比例？",
+      "answer": "这样左右尾对相等值采用对称的包含方式。",
+      "explanation": "它不同于直接用 1 减去包含等号的左尾比例。",
+      "example": "样本 [1,2,2,4] 在 z=2 的右尾比例为 3/4。",
+      "tags": [
+        "ECOD 经验分布异常检测",
+        "右尾与相等值"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.00382v3"
+    },
+    {
+      "id": "ecodstudy-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "ECOD 经验分布异常检测",
+      "knowledgePoint": "分数方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECOD 使用负对数尾部概率时，较小的尾部概率通常对应怎样的分量分数？",
+      "answer": "对应更高的负对数分量分数。",
+      "explanation": "多维最终分数还取决于其他维度及论文的聚合规则。",
+      "example": "-log(0.01) 大于 -log(0.1)。",
+      "tags": [
+        "ECOD 经验分布异常检测",
+        "分数方向"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.00382v3"
+    },
+    {
+      "id": "ecodstudy-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "ECOD 经验分布异常检测",
+      "knowledgePoint": "联合分布假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECOD 原论文在跨维度组合尾部信息时采用什么简化假设？",
+      "answer": "假设不同特征维度相互独立。",
+      "explanation": "实际安全特征可能高度相关，因此结果需要实证评估。",
+      "example": "连接包数和字节数常有相关性。",
+      "tags": [
+        "ECOD 经验分布异常检测",
+        "联合分布假设"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.00382v3"
+    },
+    {
+      "id": "ecodstudy-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "ECOD 经验分布异常检测",
+      "knowledgePoint": "偏度与方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECOD 自动尾部聚合使用特征分布的什么统计量选择尾部方向？",
+      "answer": "使用该维度的样本偏度。",
+      "explanation": "论文仍同时计算仅左尾和仅右尾分数并参与最终聚合。",
+      "example": "偏度为负时自动项使用左尾。",
+      "tags": [
+        "ECOD 经验分布异常检测",
+        "偏度与方向"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.00382v3"
+    },
+    {
+      "id": "ecodstudy-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "ECOD 经验分布异常检测",
+      "knowledgePoint": "可解释性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECOD 如何帮助分析人员定位异常分数可能来自哪些特征？",
+      "answer": "查看各维度的尾部概率或相应分数贡献。",
+      "explanation": "维度贡献是统计线索，不自动给出业务因果解释。",
+      "example": "检查字节数维度是否处于极端尾部。",
+      "tags": [
+        "ECOD 经验分布异常检测",
+        "可解释性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.00382v3"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "source": {
+    "id": "company-huawei-memory",
+    "title": "MITRE CWE 与华为公开面经：内存生命周期",
+    "url": "https://cwe.mitre.org/data/definitions/416.html",
+    "type": "公开弱点资料",
+    "note": "复盘原帖未注明岗位；内存题为主题启发，参考 MITRE CWE。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "hwmem-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "内存生命周期",
+      "knowledgePoint": "悬垂别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "释放一块内存后，把其中一个指针设为 NULL 就能消除所有释放后使用风险吗？",
+      "answer": "不能；其他仍指向该内存的别名可能继续被使用。",
+      "explanation": "仅清空一个指针无法自动更新其他副本，仍需管理对象的所有权和生命周期。",
+      "example": "两个指针指向同一对象，只清空其中一个。",
+      "tags": [
+        "悬垂别名",
+        "内存安全",
+        "公开面经",
+        "华为"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/416.html",
+      "referenceTitle": "MITRE CWE-416：Use After Free",
+      "referenceType": "公开弱点资料",
+      "supportingReferences": [
+        {
+          "id": "company-huawei",
+          "title": "华为公开面经（合集收录，岗位未注明；经历为分享者自述）；内存漏洞主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x7f-%E5%8D%8E%E4%B8%BA",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "hwmem-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "内存生命周期",
+      "knowledgePoint": "释放内存再分配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么释放后仍通过旧指针写入可能破坏其他数据？",
+      "answer": "释放的内存可能已被重新分配给其他对象，旧指针写入可能修改新对象的数据。",
+      "explanation": "具体后果取决于程序和运行环境，也可能导致崩溃。",
+      "example": "一个对象释放后，其内存被另一个对象复用。",
+      "tags": [
+        "释放内存再分配",
+        "内存安全",
+        "公开面经",
+        "华为"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/416.html",
+      "referenceTitle": "MITRE CWE-416：Use After Free",
+      "referenceType": "公开弱点资料",
+      "supportingReferences": [
+        {
+          "id": "company-huawei",
+          "title": "华为公开面经（合集收录，岗位未注明；经历为分享者自述）；内存漏洞主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x7f-%E5%8D%8E%E4%B8%BA",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

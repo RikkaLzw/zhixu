@@ -1,0 +1,297 @@
+{
+  "source": {
+    "id": "sklearn-supervised",
+    "title": "scikit-learn 1.9.1 监督学习与集成文档",
+    "url": "https://scikit-learn.org/stable/modules/tree.html",
+    "type": "技术文档",
+    "note": "根据逐题标注的文档自行整理；示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "supervised-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "监督学习",
+      "knowledgePoint": "决策树分裂",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "决策树分类中的节点分裂通常依据什么选择？",
+      "answer": "它比较候选特征和阈值，选择能改善子节点纯度的分裂。",
+      "explanation": "具体准则和搜索方式取决于算法与参数。",
+      "example": "按连接次数阈值将样本分成左右两组。",
+      "tags": [
+        "决策树分裂",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/tree.html"
+    },
+    {
+      "id": "supervised-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "节点纯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分类树中纯节点的基尼不纯度是多少？",
+      "answer": "若节点中的样本都属于同一类别，基尼不纯度为 0。",
+      "explanation": "不纯度为 0 只描述该节点的训练样本，不保证新数据正确。",
+      "example": "一个节点内全是同一类别时，其基尼不纯度为 0。",
+      "tags": [
+        "节点纯度",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/tree.html"
+    },
+    {
+      "id": "supervised-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "监督学习",
+      "knowledgePoint": "树深与泛化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "限制决策树最大深度主要用于控制什么？",
+      "answer": "它限制树的复杂度，有助于减轻对训练数据的过拟合。",
+      "explanation": "深度过小也可能导致欠拟合，需用验证数据选择。",
+      "example": "比较不同 max_depth 下的验证表现。",
+      "tags": [
+        "树深与泛化",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/tree.html"
+    },
+    {
+      "id": "supervised-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "叶节点最少样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "决策树的 min_samples_leaf 主要限制什么？",
+      "answer": "它限制每个叶节点所需的最少训练样本数。",
+      "explanation": "提高该限制可减少由极少样本形成的叶节点，但也可能限制模型表达能力。",
+      "example": "禁止把只有一个训练样本的分支作为叶节点。",
+      "tags": [
+        "叶节点最少样本",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/tree.html"
+    },
+    {
+      "id": "supervised-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "叶节点概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 决策树分类器如何得到叶节点的类别概率估计？",
+      "answer": "根据该叶节点中各类训练样本的比例估计类别概率。",
+      "explanation": "若使用样本权重，应以实现的加权计数为准；该估计不保证已校准。",
+      "example": "叶节点中 8 个未加权样本有 2 个属于目标类，估计比例为 1/4。",
+      "tags": [
+        "叶节点概率",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/tree.html"
+    },
+    {
+      "id": "supervised-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "Bagging采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bagging 怎样构建多个基础模型的训练集？",
+      "answer": "通常对原始训练样本做有放回抽样，为不同模型形成不同的训练子集。",
+      "explanation": "多个模型的输出再进行汇总。",
+      "example": "为多棵树分别生成自助采样数据。",
+      "tags": [
+        "Bagging采样",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html"
+    },
+    {
+      "id": "supervised-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "随机森林特征随机性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "随机森林为何在节点分裂时考虑随机特征子集？",
+      "answer": "它增加树之间的差异，使集成平均更有机会降低方差。",
+      "explanation": "特征子集大小需要结合数据和任务调节。",
+      "example": "不同树的节点只从部分输入字段中寻找分裂。",
+      "tags": [
+        "随机森林特征随机性",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html"
+    },
+    {
+      "id": "supervised-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "监督学习",
+      "knowledgePoint": "袋外样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用自助采样的随机森林中，袋外样本是什么？",
+      "answer": "对某棵树来说，它是该树自助训练样本中没有被抽到的数据。",
+      "explanation": "可以用未训练过该样本的树估计袋外表现；最终评估仍应考虑独立测试。",
+      "example": "某条训练记录没有被一棵树抽中，可用于该树的袋外预测。",
+      "tags": [
+        "袋外样本",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html"
+    },
+    {
+      "id": "supervised-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "Boosting顺序训练",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "梯度提升与 Bagging 在基础模型构建顺序上有什么区别？",
+      "answer": "梯度提升逐步加入模型以改进当前损失；Bagging 通常独立训练多个抽样模型后汇总。",
+      "explanation": "梯度提升的每一步依赖当前集成的预测。",
+      "example": "用新树拟合当前损失的负梯度。",
+      "tags": [
+        "Boosting顺序训练",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html"
+    },
+    {
+      "id": "supervised-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "提升学习率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "梯度提升树中的学习率控制什么？",
+      "answer": "它控制每一步新树对集成预测的贡献大小。",
+      "explanation": "学习率通常与树的数量共同调节，较小学习率不保证自动更好。",
+      "example": "将每棵新树的贡献缩小后加入现有模型。",
+      "tags": [
+        "提升学习率",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html"
+    },
+    {
+      "id": "supervised-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "监督学习",
+      "knowledgePoint": "SVM支持向量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "支持向量机中的支持向量是什么？",
+      "answer": "它们是参与决定所学决策函数的部分训练样本。",
+      "explanation": "具体支持向量取决于数据、核函数及正则化设置。",
+      "example": "拟合后可查看模型识别出的支持向量。",
+      "tags": [
+        "SVM支持向量",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html"
+    },
+    {
+      "id": "supervised-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "SVM特征缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么训练支持向量机前通常要考虑特征缩放？",
+      "answer": "特征尺度会影响距离或核函数计算，从而影响决策边界。",
+      "explanation": "缩放参数应只在训练数据上拟合，并用于后续数据。",
+      "example": "先按训练集统计量标准化，再转换测试样本。",
+      "tags": [
+        "SVM特征缩放",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html"
+    },
+    {
+      "id": "supervised-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "SVM正则化C",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在其他条件相同时，SVM 的较大 C 通常意味着什么？",
+      "answer": "它对训练样本违反间隔或错误分类施加更强惩罚，倾向更贴合训练数据。",
+      "explanation": "这不保证测试效果更好，需在验证集选择。",
+      "example": "比较多个 C 值的验证集表现。",
+      "tags": [
+        "SVM正则化C",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html"
+    },
+    {
+      "id": "supervised-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "RBF核gamma",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RBF 核 SVM 中 gamma 变大通常怎样改变单个训练样本的影响范围？",
+      "answer": "影响范围通常变得更局部，其他样本需要更接近才受到类似影响。",
+      "explanation": "gamma 和 C 需共同选择。",
+      "example": "较大的 gamma 会使相似度随距离更快衰减。",
+      "tags": [
+        "RBF核gamma",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html"
+    },
+    {
+      "id": "supervised-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督学习",
+      "knowledgePoint": "可靠性曲线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "概率校准中的可靠性曲线通常比较哪两个量？",
+      "answer": "比较各预测概率区间的平均预测概率与该区间的实际正类比例。",
+      "explanation": "每个区间应有足够样本，才能较稳定地解释结果。",
+      "example": "预测约 0.8 的一组样本中，检查实际正类是否约占 80%。",
+      "tags": [
+        "可靠性曲线",
+        "监督学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/calibration.html"
+    }
+  ]
+}

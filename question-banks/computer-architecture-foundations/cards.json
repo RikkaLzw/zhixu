@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "computer-architecture-foundations",
+    "title": "MIT 计算机结构与 Python 二进制文档",
+    "url": "https://computationstructures.org/notes/isas/notes.html",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理，示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "archbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "存储程序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "冯·诺依曼存储程序思想的基本含义是什么？",
+      "answer": "程序指令和数据都以编码形式存储在可访问的存储器中，处理器读取指令执行。",
+      "explanation": "指令也可以作为存储内容被处理。",
+      "example": "同一主存保存程序和输入数据。",
+      "tags": [
+        "存储程序",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/isas/notes.html#TARGET_14.2.1"
+    },
+    {
+      "id": "archbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "数据通路与控制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CPU 数据通路与控制逻辑分别承担什么任务？",
+      "answer": "数据通路执行数据运算和传送；控制逻辑解释指令并产生控制信号。",
+      "explanation": "两者协同完成指令执行。",
+      "example": "控制信号选择 ALU 的加法操作。",
+      "tags": [
+        "数据通路与控制",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/isas/notes.html#TARGET_14.2.2"
+    },
+    {
+      "id": "archbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "算术逻辑单元",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CPU 的 ALU 通常执行哪些操作？",
+      "answer": "它执行加法、比较和按位逻辑等算术或逻辑运算。",
+      "explanation": "具体支持的操作取决于处理器设计。",
+      "example": "计算两个寄存器值的和。",
+      "tags": [
+        "算术逻辑单元",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/isas/notes.html#TARGET_14.8.1"
+    },
+    {
+      "id": "archbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "通用寄存器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CPU 的通用寄存器在执行指令时有什么作用？",
+      "answer": "它们保存可供指令读取或写入的操作数及中间结果。",
+      "explanation": "寄存器数量和用途由架构规定。",
+      "example": "将加法结果写回目标寄存器。",
+      "tags": [
+        "通用寄存器",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/isas/notes.html#TARGET_14.2.2.1"
+    },
+    {
+      "id": "archbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "程序计数器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "程序计数器 PC 在处理器中通常记录什么？",
+      "answer": "它记录当前或下一条待取指令的地址，具体时点由架构定义。",
+      "explanation": "分支或异常可改变后续执行地址。",
+      "example": "顺序执行时 PC 指向后续指令。",
+      "tags": [
+        "程序计数器",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/isas/notes.html#TARGET_14.2.2"
+    },
+    {
+      "id": "archbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "指令集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "指令集架构 ISA 主要向程序定义什么？",
+      "answer": "它定义程序可见的机器指令、寄存器和指令行为等接口。",
+      "explanation": "具体指令编码和状态依 ISA 而异。",
+      "example": "同一 ISA 的不同处理器可执行兼容机器码。",
+      "tags": [
+        "指令集",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/isas/notes.html#TARGET_14.3"
+    },
+    {
+      "id": "archbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "架构与实现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "支持相同指令集的两个 CPU 是否必须使用相同内部实现？",
+      "answer": "不必；它们可以采用不同微架构，只要对外满足对应 ISA 的规定。",
+      "explanation": "性能、功耗和内部设计可不同。",
+      "example": "不同型号处理器实现同一指令集。",
+      "tags": [
+        "架构与实现",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/isas/notes.html#TARGET_14.3"
+    },
+    {
+      "id": "archbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "操作码与操作数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "机器指令的操作码与操作数字段各表示什么？",
+      "answer": "操作码指定执行哪类操作；操作数字段指定操作所用的数据或其位置。",
+      "explanation": "具体编码格式随 ISA 变化。",
+      "example": "加法指令编码操作及源、目标寄存器。",
+      "tags": [
+        "操作码与操作数",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/isas/notes.html#TARGET_14.8"
+    },
+    {
+      "id": "archbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "加载存储架构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在典型 load/store 架构中，算术指令通常直接对哪里操作？",
+      "answer": "通常对寄存器中的操作数运算；加载和存储指令负责在寄存器与内存间移动数据。",
+      "explanation": "这是该架构风格的常见规则，并非所有 ISA 都如此。",
+      "example": "先加载两个值再进行寄存器加法。",
+      "tags": [
+        "加载存储架构",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/isas/notes.html#TARGET_14.7"
+    },
+    {
+      "id": "archbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "字节与位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一个字节通常由多少位组成？",
+      "answer": "计算机和网络文档中的字节通常为 8 位。",
+      "explanation": "位是单个二进制数位。",
+      "example": "一个字节可表示 256 种不同的位模式。",
+      "tags": [
+        "字节与位",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-1.2.1"
+    },
+    {
+      "id": "archbase-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "大小端",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多字节整数的大端序与小端序在内存中的主要区别是什么？",
+      "answer": "大端序将最高有效字节放在较低地址；小端序将最低有效字节放在较低地址。",
+      "explanation": "字节序描述多字节值的排列，不改变该数值本身。",
+      "example": "0x03ff 可排列为 03 ff 或 ff 03。",
+      "tags": [
+        "大小端",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/struct.html#byte-order-size-and-alignment"
+    },
+    {
+      "id": "archbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "计算机组成与表示",
+      "knowledgePoint": "网络字节序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "常用网络字节序是大端还是小端？",
+      "answer": "网络字节序采用大端序。",
+      "explanation": "协议字段的其他编码规则仍应参考具体协议。",
+      "example": "Python struct 格式前缀 ! 表示网络字节序。",
+      "tags": [
+        "网络字节序",
+        "计算机组成与表示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/struct.html#byte-order-size-and-alignment"
+    }
+  ]
+}

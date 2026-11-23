@@ -1,0 +1,50 @@
+{
+  "source": {
+    "id": "autogen-conversation-basics",
+    "title": "AutoGen 原论文 v2：可对话智能体",
+    "url": "https://arxiv.org/abs/2308.08155v2",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题所列论文或固定版本资料自行整理，示例为自编。在线文档按 2026-11-21 查看内容。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "autogenbase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AutoGen 多智能体对话",
+      "knowledgePoint": "预设角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AutoGen 原论文中的 AssistantAgent 与 UserProxyAgent 分别对应什么常见角色？",
+      "answer": "前者通常充当模型助手；后者可代理用户输入或执行代码、函数。",
+      "explanation": "这是论文介绍的预设方式，具体权限与行为由配置决定。",
+      "example": "助手提出代码，用户代理返回执行结果。",
+      "tags": [
+        "AutoGen 多智能体对话",
+        "预设角色"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.08155v2"
+    },
+    {
+      "id": "autogenbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AutoGen 多智能体对话",
+      "knowledgePoint": "回复函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AutoGen 原论文中的自定义 reply function 用于什么？",
+      "answer": "定义智能体接到特定消息后的处理和回复行为。",
+      "explanation": "回复逻辑可结合程序控制、工具或人工输入。",
+      "example": "消息含代码时调用配置好的执行器。",
+      "tags": [
+        "AutoGen 多智能体对话",
+        "回复函数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.08155v2"
+    }
+  ]
+}

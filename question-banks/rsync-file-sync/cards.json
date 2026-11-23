@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "rsync-file-sync",
+    "title": "rsync 手册：文件同步基础",
+    "url": "https://download.samba.org/pub/rsync/rsync.1",
+    "type": "官方文档与手册",
+    "note": "依据逐题链接自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "rsyncops-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "rsync 文件同步",
+      "knowledgePoint": "源目录斜杠",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "rsync 复制目录时，源路径 dir/ 与 dir 在已有目标目录中的常见区别是什么？",
+      "answer": "dir/ 复制目录内容；dir 通常在目标中保留一层 dir 目录。",
+      "explanation": "具体目标路径是否存在也会影响最终目录结构。",
+      "example": "目标目录 dst 已存在时，可比较 rsync -a dir/ dst/ 与 rsync -a dir dst/。",
+      "tags": [
+        "rsync 文件同步",
+        "源目录斜杠"
+      ],
+      "evidence": "source",
+      "reference": "https://download.samba.org/pub/rsync/rsync.1"
+    },
+    {
+      "id": "rsyncops-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "rsync 文件同步",
+      "knowledgePoint": "归档模式",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "rsync -a 包含递归复制，并自动包含 ACL 和扩展属性吗？",
+      "answer": "包含递归及多项常见属性保留，但不自动包含 ACL 和扩展属性。",
+      "explanation": "需要时应单独指定 -A 和 -X，并考虑文件系统和权限支持。",
+      "example": "备份含 ACL 的目录时需核对选项和目标环境。",
+      "tags": [
+        "rsync 文件同步",
+        "归档模式"
+      ],
+      "evidence": "source",
+      "reference": "https://download.samba.org/pub/rsync/rsync.1"
+    },
+    {
+      "id": "rsyncops-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "rsync 文件同步",
+      "knowledgePoint": "预演模式",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "rsync -n 或 --dry-run 有什么作用？",
+      "answer": "执行预演，不实际修改目标；可配合 -v 或 --itemize-changes 查看计划。",
+      "explanation": "预演适合在实际同步或删除前检查操作范围。",
+      "example": "使用 rsync -anv src/ dst/ 预览。",
+      "tags": [
+        "rsync 文件同步",
+        "预演模式"
+      ],
+      "evidence": "source",
+      "reference": "https://download.samba.org/pub/rsync/rsync.1"
+    },
+    {
+      "id": "rsyncops-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "rsync 文件同步",
+      "knowledgePoint": "默认快速检查",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "rsync 默认的快速检查主要根据什么决定文件数据是否需要更新？",
+      "answer": "主要比较文件大小和最后修改时间。",
+      "explanation": "这些条件相同不代表文件内容一定完全相同。",
+      "example": "大小和修改时间均相同但内容变化的文件可能被跳过。",
+      "tags": [
+        "rsync 文件同步",
+        "默认快速检查"
+      ],
+      "evidence": "source",
+      "reference": "https://download.samba.org/pub/rsync/rsync.1"
+    },
+    {
+      "id": "rsyncops-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "rsync 文件同步",
+      "knowledgePoint": "校验和检查",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "rsync -c 在传输前怎样判断已有文件是否需要更新？",
+      "answer": "对大小相同的文件改用校验和比较，而非只依赖修改时间。",
+      "explanation": "计算校验和需要读取文件，可能增加磁盘 I/O。",
+      "example": "核对可能内容变化但时间戳相同的文件时可考虑 -c。",
+      "tags": [
+        "rsync 文件同步",
+        "校验和检查"
+      ],
+      "evidence": "source",
+      "reference": "https://download.samba.org/pub/rsync/rsync.1"
+    },
+    {
+      "id": "rsyncops-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "rsync 文件同步",
+      "knowledgePoint": "保留较新目标",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "rsync -u 遇到接收端修改时间更新的文件时通常怎样处理？",
+      "answer": "跳过接收端时间更新的文件。",
+      "explanation": "判断依赖时间戳；它不是双向冲突解决方案。",
+      "example": "目标文件比来源文件更新时，-u 可避免覆盖该文件。",
+      "tags": [
+        "rsync 文件同步",
+        "保留较新目标"
+      ],
+      "evidence": "source",
+      "reference": "https://download.samba.org/pub/rsync/rsync.1"
+    },
+    {
+      "id": "rsyncops-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "rsync 文件同步",
+      "knowledgePoint": "删除多余目标",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "rsync --delete 在同步的接收端目录中主要删除什么？",
+      "answer": "删除接收端中来源侧不存在的多余文件。",
+      "explanation": "使用前应确认同步范围，并先预演；排除规则会影响删除行为。",
+      "example": "rsync -an --delete src/ dst/ 可先查看计划删除项。",
+      "tags": [
+        "rsync 文件同步",
+        "删除多余目标"
+      ],
+      "evidence": "source",
+      "reference": "https://download.samba.org/pub/rsync/rsync.1"
+    },
+    {
+      "id": "rsyncops-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "rsync 文件同步",
+      "knowledgePoint": "保留部分文件",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "rsync -P 相当于组合了哪两个常见选项？",
+      "answer": "相当于 --partial 和 --progress。",
+      "explanation": "它保留部分传输的文件并显示传输进度。",
+      "example": "大文件传输可使用 rsync -P。",
+      "tags": [
+        "rsync 文件同步",
+        "保留部分文件"
+      ],
+      "evidence": "source",
+      "reference": "https://download.samba.org/pub/rsync/rsync.1"
+    },
+    {
+      "id": "rsyncops-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "rsync 文件同步",
+      "knowledgePoint": "逐项变更说明",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "rsync --itemize-changes 有什么作用？",
+      "answer": "为正在更新的项目输出变更摘要。",
+      "explanation": "摘要代码区分文件类型及变更属性。",
+      "example": "rsync -ani src/ dst/ 可预览逐项变化。",
+      "tags": [
+        "rsync 文件同步",
+        "逐项变更说明"
+      ],
+      "evidence": "source",
+      "reference": "https://download.samba.org/pub/rsync/rsync.1"
+    }
+  ]
+}

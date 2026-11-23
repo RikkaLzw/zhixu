@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "vulrepair-data-quality-study",
+    "title": "VulRepair 固定提交与数据质量研究",
+    "url": "https://github.com/awsm-research/VulRepair/blob/dd5fc245dee85ecac164a713c0de197feb0ff9fb/README.md",
+    "type": "固定版本论文、标准或官方文档",
+    "note": "根据逐题引用的资料自行整理，示例自编；行为以指定版本与前提为准。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "vulrepair-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulRepair 漏洞修复与数据质量",
+      "knowledgePoint": "任务形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulRepair 复现资料中的 source 与 target 分别是什么？",
+      "answer": "source 是预处理后的 C 语言漏洞函数，target 是对应的参考修复。",
+      "explanation": "这是一种监督式代码修复数据形式。",
+      "example": "根据有漏洞的函数生成候选修复。",
+      "tags": [
+        "VulRepair 漏洞修复与数据质量",
+        "任务形式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/VulRepair/blob/dd5fc245dee85ecac164a713c0de197feb0ff9fb/README.md"
+    },
+    {
+      "id": "vulrepair-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulRepair 漏洞修复与数据质量",
+      "knowledgePoint": "模型构成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulRepair 的主要复现实验采用什么模型与分词方式？",
+      "answer": "使用 T5 类模型、BPE 分词以及程序语言和自然语言预训练。",
+      "explanation": "项目提供其他模型或分词组合用于比较。",
+      "example": "比较预训练修复模型与未预训练模型。",
+      "tags": [
+        "VulRepair 漏洞修复与数据质量",
+        "模型构成"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/VulRepair/blob/dd5fc245dee85ecac164a713c0de197feb0ff9fb/README.md"
+    },
+    {
+      "id": "vulrepair-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulRepair 漏洞修复与数据质量",
+      "knowledgePoint": "跨集重复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulRepair 官方复现库提示其基准训练集与测试集存在什么数据质量问题？",
+      "answer": "存在训练与测试集间的重复样本，可能使评测高估泛化能力。",
+      "explanation": "官方提示和后续研究都应结合具体数据版本与去重方法解释。",
+      "example": "建立新的切分时核查跨集合重复。",
+      "tags": [
+        "VulRepair 漏洞修复与数据质量",
+        "跨集重复"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/VulRepair/blob/dd5fc245dee85ecac164a713c0de197feb0ff9fb/README.md"
+    },
+    {
+      "id": "vulrepair-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulRepair 漏洞修复与数据质量",
+      "knowledgePoint": "研究结果边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据质量研究重新评估 VulRepair 时，为什么要说明从训练集还是测试集移除重复项？",
+      "answer": "两种做法分别改变训练数据或测试总体，因而评测口径不同。",
+      "explanation": "论文分别报告两种处理后的结果，不能把它们当成同一个实验。",
+      "example": "比较结果时同时记录去重规则和受影响的数据集。",
+      "tags": [
+        "VulRepair 漏洞修复与数据质量",
+        "研究结果边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2503.06387v1"
+    }
+  ]
+}

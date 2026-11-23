@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "active-learning-security-evaluation",
+    "title": "Settles 主动学习综述：安全标注与评估",
+    "url": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf",
+    "type": "研究综述、互联网草案或官方文档",
+    "note": "按逐题引用资料自行整理；安全场景示例为自编。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "activelearn-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "主动学习",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "主动学习与被动随机标注的主要区别是什么？",
+      "answer": "主动学习根据当前模型或数据策略选择哪些未标注样本请求标注。",
+      "explanation": "选择策略需要与标注预算和任务目标匹配。",
+      "example": "优先让分析人员复核一部分安全日志。",
+      "tags": [
+        "主动学习",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "池式与流式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "池式主动学习和流式选择采样如何选择样本？",
+      "answer": "池式方法从一批未标注样本中评估和选择；流式方法通常逐个判断到达的样本是否请求标注。",
+      "explanation": "实际系统可结合窗口和资源约束实现。",
+      "example": "从现有告警池排名或在线处理新告警。",
+      "tags": [
+        "池式与流式",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "查询合成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "主动学习中的 membership query synthesis 与从样本池查询有什么区别？",
+      "answer": "前者可构造新的待标注输入；后者从已有未标注样本中选择。",
+      "explanation": "合成的输入可能难以让人工标注或不符合真实分布。",
+      "example": "选择已有网页而不是凭空生成网页供复核。",
+      "tags": [
+        "查询合成",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "二分类不确定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二分类模型以预测概率做不确定性抽样时，通常优先选择概率接近多少的样本？",
+      "answer": "通常优先选择正类概率接近 0.5 的样本。",
+      "explanation": "这是基于当前模型概率的策略，不保证样本最有业务价值。",
+      "example": "在待复核告警中优先选择预测分数接近中间的样本。",
+      "tags": [
+        "二分类不确定性",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "多类最小置信度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多分类最小置信度采样通常怎样选择样本？",
+      "answer": "选择其最高预测类别概率较低的样本。",
+      "explanation": "该策略只直接使用概率最大的类别值。",
+      "example": "比较两个日志样本的最大类别概率。",
+      "tags": [
+        "多类最小置信度",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "多类预测熵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基于预测熵的不确定性采样关注预测分布的什么特征？",
+      "answer": "它根据所有类别概率计算熵，优先选择预测分布更分散的样本。",
+      "explanation": "它与只看最大类别概率的方法在多分类时可能排序不同。",
+      "example": "比较多类恶意软件分类的预测分布。",
+      "tags": [
+        "多类预测熵",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "委员会分歧",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Query-by-Committee 主动学习如何利用多个模型？",
+      "answer": "它维护一组不同假设的模型，优先查询成员预测分歧较大的样本。",
+      "explanation": "分歧程度可用投票熵等方式衡量。",
+      "example": "多个恶意软件分类器对同一文件判断不同。",
+      "tags": [
+        "委员会分歧",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "离群样本风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单纯的不确定性采样为什么可能把标注预算花在离群样本上？",
+      "answer": "少量不代表整体数据的样本也可能靠近决策边界并获得高不确定度。",
+      "explanation": "是否需要优先标注离群样本取决于任务目标。",
+      "example": "一个异常格式日志可能难以分类但很少再出现。",
+      "tags": [
+        "离群样本风险",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "密度加权",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "密度加权主动学习为什么会结合样本代表性？",
+      "answer": "它倾向同时考虑样本的信息量及其与其他未标注样本的相似程度。",
+      "explanation": "密度度量需要适合数据表示。",
+      "example": "在相似告警较密集的区域选择有信息的样本。",
+      "tags": [
+        "密度加权",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "批量冗余",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "批量主动学习为什么不能总是简单选取单样本得分最高的前 N 条？",
+      "answer": "高分样本可能信息重复；批量选择还应考虑样本间多样性。",
+      "explanation": "一次选出一批时无法在每个标签返回后立即更新模型。",
+      "example": "避免把同一模板的大量重复告警同时送审。",
+      "tags": [
+        "批量冗余",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "标注数量与成本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "主动学习减少了需要标注的样本数，是否一定减少总标注成本？",
+      "answer": "不一定；不同样本所需的人员、时间或调查成本可能不同。",
+      "explanation": "应同时记录标注数量和实际成本。",
+      "example": "疑难安全事件比普通日志需要更长调查时间。",
+      "tags": [
+        "标注数量与成本",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "随机基线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "评估主动学习是否值得使用时，为什么要比较相同预算下的随机选样？",
+      "answer": "随机采样提供被动学习基线，有助于判断查询策略是否带来额外收益。",
+      "explanation": "比较时应统一模型、数据切分和标注预算等条件。",
+      "example": "对比相同复核时间下的模型效果。",
+      "tags": [
+        "随机基线",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    },
+    {
+      "id": "activelearn-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "主动学习与安全标注",
+      "knowledgePoint": "标注准确性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "主动学习中的“oracle”一定提供完全正确的标签吗？",
+      "answer": "不一定；实际人工标注可能存在错误或分歧，需考虑复核与标签质量。",
+      "explanation": "理论分析常采用理想化的无噪声标注假设。",
+      "example": "不同分析人员对证据不足的告警有不同判断。",
+      "tags": [
+        "标注准确性",
+        "主动学习与安全标注"
+      ],
+      "evidence": "source",
+      "reference": "https://minds.wisconsin.edu/bitstream/handle/1793/60660/TR1648.pdf"
+    }
+  ]
+}

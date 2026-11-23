@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "phishpedia-visual-identification",
+    "title": "Phishpedia 原论文：视觉品牌识别",
+    "url": "https://www.usenix.org/system/files/sec21-lin.pdf",
+    "type": "原论文、官方文档与固定版本源码",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编，具体条件见各卡。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "phishpedia-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "视觉钓鱼识别",
+      "knowledgePoint": "身份标识选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Phishpedia 原论文检测到多个 logo 候选时，如何选择身份 logo？",
+      "answer": "它按对象检测置信度排序，取最高的候选作为身份 logo。",
+      "explanation": "最高检测置信度不保证该 logo 一定代表页面所属品牌。",
+      "example": "页面含多个品牌标识时仍可能选错身份 logo。",
+      "tags": [
+        "视觉钓鱼识别",
+        "身份标识选择"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "phishpedia-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "视觉钓鱼识别",
+      "knowledgePoint": "合法域名参考",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Phishpedia 为什么为同一品牌维护多个合法域名？",
+      "answer": "同一品牌可能使用多个合法域名；完整记录它们有助于减少将合法页面判断为钓鱼的误报。",
+      "explanation": "判断效果仍受品牌参考列表覆盖和更新情况影响。",
+      "example": "同一品牌在不同地区可能使用不同合法域名。",
+      "tags": [
+        "视觉钓鱼识别",
+        "合法域名参考"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "phishpedia-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "视觉钓鱼识别",
+      "knowledgePoint": "新增品牌",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Phishpedia 如何在运行时扩充需要保护的品牌集合？",
+      "answer": "可以向目标品牌列表加入该品牌的参考 logo 和合法域名。",
+      "explanation": "论文的向量相似匹配允许增加参考项，而不要求每次重新训练整个分类网络。",
+      "example": "为新银行添加其标识和合法域名。",
+      "tags": [
+        "视觉钓鱼识别",
+        "新增品牌"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "phishpedia-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "视觉钓鱼识别",
+      "knowledgePoint": "表征训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Phishpedia 原论文如何得到用于 logo 相似度比较的图像表示？",
+      "answer": "先在 Logo2K+ 上训练品牌分类网络，再利用其骨干网络及全局平均池化构造向量表示。",
+      "explanation": "论文没有直接采用常规三元组训练作为最终方案。",
+      "example": "比较两个 logo 的向量相似度。",
+      "tags": [
+        "视觉钓鱼识别",
+        "表征训练"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "phishpedia-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "视觉钓鱼识别",
+      "knowledgePoint": "输入框角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Phishpedia 检测输入框在结果中主要有什么作用？",
+      "answer": "它与身份 logo 和目标品牌一起用于生成可视化解释。",
+      "explanation": "其品牌判断流程主要结合 logo 相似度与页面域名。",
+      "example": "在截图上标出疑似凭据输入框。",
+      "tags": [
+        "视觉钓鱼识别",
+        "输入框角色"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "phishpedia-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "视觉钓鱼识别",
+      "knowledgePoint": "样本筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Phishpedia 原论文清理已失效或空白页面后再评估，为什么应记录这一筛选条件？",
+      "answer": "评估样本主要是当时可访问且可分析的页面，未必代表所有已收集 URL。",
+      "explanation": "页面失效与采集时间会影响样本组成。",
+      "example": "短期失效的钓鱼 URL 可能未进入最终分析集。",
+      "tags": [
+        "视觉钓鱼识别",
+        "样本筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    }
+  ]
+}

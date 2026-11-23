@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "colbertv2-compression",
+    "title": "ColBERTv2 原论文：多向量检索与压缩",
+    "url": "https://arxiv.org/pdf/2112.01488v2",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据逐题引用的论文或教材自行整理；例子为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "colbert2-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "压缩动机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 论文为什么要压缩文档的 token 向量？",
+      "answer": "后期交互需要为文档保存多个 token 向量，索引空间可能显著大于单向量表示。",
+      "explanation": "压缩与检索质量之间仍有权衡。",
+      "example": "大规模语料的每篇文档包含多条向量。",
+      "tags": [
+        "压缩动机",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "残差表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 如何用聚类中心和残差表示一个文档 token 向量？",
+      "answer": "记录最近聚类中心的编号，并量化保存该向量与中心之差。",
+      "explanation": "量化后的残差是近似表示。",
+      "example": "用中心 ID 和压缩残差表示 token 向量。",
+      "tags": [
+        "残差表示",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "向量重建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 检索时如何近似重建被压缩的向量？",
+      "answer": "取出对应中心向量，加上解码后的量化残差。",
+      "explanation": "重建向量通常与原始向量存在量化误差。",
+      "example": "为候选文档恢复 token 向量进行评分。",
+      "tags": [
+        "向量重建",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "残差量化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 论文如何压缩残差的各维度？",
+      "answer": "将每个残差维度量化为 1 位或 2 位。",
+      "explanation": "这是论文评估的压缩设置，不代表所有实现都固定如此。",
+      "example": "分别比较每维 1 位和 2 位的索引。",
+      "tags": [
+        "残差量化",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "去噪监督",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 论文如何利用交叉编码器改进检索器监督？",
+      "answer": "它用交叉编码器为查询与候选文档打分，并通过蒸馏训练后期交互检索器。",
+      "explanation": "教师分数也可能存在误差，不能当作绝对真值。",
+      "example": "用教师评分区分更相关和较不相关的候选。",
+      "tags": [
+        "去噪监督",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "困难负例更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 为什么可以迭代刷新训练时检索出的负例？",
+      "answer": "更新后的检索器可产生新的困难候选，使训练继续针对当前模型容易混淆的文档。",
+      "explanation": "未标注文档可能是潜在正例，需要考虑错误负标签。",
+      "example": "重新索引训练语料并为查询检索候选。",
+      "tags": [
+        "困难负例更新",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "倒排索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 的索引反转阶段如何组织文档 token 向量？",
+      "answer": "它把分配到同一聚类中心的向量编号组织成倒排列表。",
+      "explanation": "检索时可通过中心快速找到一部分候选向量。",
+      "example": "按中心 ID 查询关联的 token 向量。",
+      "tags": [
+        "倒排索引",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "候选中心",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 检索的候选生成阶段如何使用 nprobe？",
+      "answer": "对查询向量选取若干最近的聚类中心，再从对应倒排列表获取候选。",
+      "explanation": "nprobe 控制搜索范围，精度与成本取决于实际数据和实现。",
+      "example": "为每个查询 token 查找附近中心。",
+      "tags": [
+        "候选中心",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "候选与重排",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 如何在候选生成和最终排序阶段使用文档向量？",
+      "answer": "候选生成使用选中中心附近的部分向量近似评分，排序阶段加载候选文档的完整压缩向量集合再评分。",
+      "explanation": "最终评分仍基于压缩后重建的向量。",
+      "example": "先筛少量文档再对其所有 token 向量评分。",
+      "tags": [
+        "候选与重排",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "近似下界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 在候选生成阶段只对部分文档向量取最大值时，所得分数与使用全部同一组重建向量的分数有什么关系？",
+      "answer": "对同一查询和非空候选集合，部分向量上的 MaxSim 之和不大于全部向量上的结果。",
+      "explanation": "该比较固定重建向量；量化误差使其不必是原始未压缩向量分数的下界。",
+      "example": "先用检索到的向量计算候选分数。",
+      "tags": [
+        "近似下界",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    },
+    {
+      "id": "colbert2-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多向量检索与压缩",
+      "knowledgePoint": "LoTTE定位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERTv2 论文的 LoTTE 数据集主要评估什么检索情形？",
+      "answer": "评估面向不同领域、长尾主题的自然语言查询检索。",
+      "explanation": "论文将其作为域外评估资源，不能覆盖所有业务领域。",
+      "example": "在科技和生活等主题上评估检索器。",
+      "tags": [
+        "LoTTE定位",
+        "多向量检索与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2112.01488v2"
+    }
+  ]
+}

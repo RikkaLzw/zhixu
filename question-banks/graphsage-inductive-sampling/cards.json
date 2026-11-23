@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "graphsage-inductive-sampling",
+    "title": "GraphSAGE 原论文 v4：采样与聚合",
+    "url": "https://arxiv.org/pdf/1706.02216v4",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "sagepaper-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GraphSAGE 采样与聚合",
+      "knowledgePoint": "固定邻居采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphSAGE 原论文为什么按层采样固定数量的邻居？",
+      "answer": "它控制每个小批次的计算和内存规模，避免高连接度节点导致邻域过大。",
+      "explanation": "采样会丢弃本次未抽中的邻居信息。",
+      "example": "每层最多采样若干邻居可使批次资源更可预测。",
+      "tags": [
+        "GraphSAGE 采样与聚合",
+        "固定邻居采样"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1706.02216v4"
+    },
+    {
+      "id": "sagepaper-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GraphSAGE 采样与聚合",
+      "knowledgePoint": "节点与邻居拼接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphSAGE 基本聚合算法如何结合节点自身与邻居的上一层表示？",
+      "answer": "先聚合邻居表示，再与节点自身表示拼接，经过线性变换和非线性函数。",
+      "explanation": "论文还讨论了不采用这种拼接的卷积式变体。",
+      "example": "目标节点与邻居的信息可以使用不同的变换参数。",
+      "tags": [
+        "GraphSAGE 采样与聚合",
+        "节点与邻居拼接"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1706.02216v4"
+    },
+    {
+      "id": "sagepaper-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GraphSAGE 采样与聚合",
+      "knowledgePoint": "LSTM聚合次序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphSAGE 论文中的 LSTM 聚合器是否天然对邻居顺序不敏感？",
+      "answer": "不是；LSTM 按序处理输入，论文通过随机排列邻居来适配无序邻居集合。",
+      "explanation": "随机排列不等于数学上保证任意排列结果相同。",
+      "example": "对同一组邻居改变输入顺序可能改变 LSTM 输出。",
+      "tags": [
+        "GraphSAGE 采样与聚合",
+        "LSTM聚合次序"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1706.02216v4"
+    },
+    {
+      "id": "sagepaper-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GraphSAGE 采样与聚合",
+      "knowledgePoint": "池化聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphSAGE 的 pooling 聚合器如何组合邻居表示？",
+      "answer": "先对每个邻居独立应用可训练变换，再对变换结果逐元素取最大值。",
+      "explanation": "共享变换加对称池化支持对无序邻居集合进行聚合。",
+      "example": "不同邻居可能分别决定输出向量的不同维度。",
+      "tags": [
+        "GraphSAGE 采样与聚合",
+        "池化聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1706.02216v4"
+    },
+    {
+      "id": "sagepaper-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GraphSAGE 采样与聚合",
+      "knowledgePoint": "无监督正负采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphSAGE 原论文的无监督目标如何构造相近节点与负样本？",
+      "answer": "利用短随机游走中共同出现的节点作为正关联，并从负采样分布抽取其他节点。",
+      "explanation": "该目标用于学习节点表示，之后可供下游任务使用。",
+      "example": "相近节点对与随机负样本对提供不同训练信号。",
+      "tags": [
+        "GraphSAGE 采样与聚合",
+        "无监督正负采样"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1706.02216v4"
+    }
+  ]
+}

@@ -1,0 +1,243 @@
+{
+  "source": {
+    "id": "vision-detector-architectures",
+    "title": "YOLOv3 / Mask R-CNN：目标检测架构",
+    "url": "https://arxiv.org/abs/1804.02767",
+    "type": "研究论文",
+    "note": "依据论文整理；阿里视觉岗位个人复盘提及 YOLOv3 和 Mask R-CNN，延伸题标注主题启发。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "detector-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "目标检测架构",
+      "knowledgePoint": "单阶段与两阶段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "以 YOLOv3 和 Mask R-CNN 为例，单阶段与两阶段检测的主要流程有什么区别？",
+      "answer": "YOLOv3 从特征图直接预测候选框及类别；Mask R-CNN 先生成候选区域，再对候选区域进行检测和掩码预测。",
+      "explanation": "两种架构的实际速度和精度仍取决于模型、硬件与配置。",
+      "example": "对比直接密集预测和先生成候选区域的流程。",
+      "tags": [
+        "单阶段与两阶段",
+        "计算机视觉",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1804.02767",
+      "referenceTitle": "YOLOv3 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里视觉算法公开面经（个人自述，2019届实习）",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        },
+        {
+          "id": "maskrcnn-paper-ref",
+          "title": "Mask R-CNN 原论文",
+          "url": "https://arxiv.org/abs/1703.06870",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "detector-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "目标检测架构",
+      "knowledgePoint": "Mask R-CNN分支",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mask R-CNN 相比 Faster R-CNN 增加了什么输出？",
+      "answer": "它增加实例掩码分支，为每个候选目标预测像素级掩码。",
+      "explanation": "分类和边界框预测仍然存在。",
+      "example": "检测出物体边界框后，也给出该实例的像素区域。",
+      "tags": [
+        "Mask R-CNN分支",
+        "计算机视觉",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1703.06870",
+      "referenceTitle": "Mask R-CNN 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里视觉算法公开面经（个人自述，2019届实习）；目标检测主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "detector-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "目标检测架构",
+      "knowledgePoint": "锚框作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基于锚框的检测器如何利用不同形状的锚框预测目标位置？",
+      "answer": "不同尺度和长宽比的锚框提供参考，模型再预测位置和尺寸的调整量。",
+      "explanation": "锚框只是初始参考，调整后的候选框可能与它不同。",
+      "example": "同一位置设置较宽、较高和不同大小的参考框。",
+      "tags": [
+        "锚框作用",
+        "计算机视觉",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1506.01497",
+      "referenceTitle": "Faster R-CNN 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里视觉算法公开面经（个人自述，2019届实习）；目标检测主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "detector-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "目标检测架构",
+      "knowledgePoint": "目标性与类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 YOLOv3 的框预测中，目标性分数与类别预测各关注什么？",
+      "answer": "目标性分数关注框是否对应目标；类别预测关注该框可能属于哪些类别。",
+      "explanation": "两类预测承担不同作用，具体使用方式取决于实现。",
+      "example": "区分候选框是否包含物体与该物体的类别。",
+      "tags": [
+        "目标性与类别",
+        "计算机视觉",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1804.02767",
+      "referenceTitle": "YOLOv3 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里视觉算法公开面经（个人自述，2019届实习）；目标检测主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "detector-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "目标检测架构",
+      "knowledgePoint": "YOLO多尺度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 YOLOv3 在多少个尺度上预测边界框？",
+      "answer": "它在三个不同尺度的特征图上进行边界框预测。",
+      "explanation": "论文通过上采样和特征拼接结合不同层的信息。",
+      "example": "较细和较粗的特征图分别参与预测。",
+      "tags": [
+        "YOLO多尺度",
+        "计算机视觉",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1804.02767",
+      "referenceTitle": "YOLOv3 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里视觉算法公开面经（个人自述，2019届实习）；目标检测主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "detector-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "目标检测架构",
+      "knowledgePoint": "YOLO类别输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 YOLOv3 的类别预测为什么使用独立的 logistic 分类器？",
+      "answer": "独立分类器允许一个框对应多个不互斥的类别，不要求所有类别共享一个 softmax 分布。",
+      "explanation": "模型采用什么标签仍取决于训练数据。",
+      "example": "同一对象可同时标为人和女性。",
+      "tags": [
+        "YOLO类别输出",
+        "计算机视觉",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1804.02767",
+      "referenceTitle": "YOLOv3 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里视觉算法公开面经（个人自述，2019届实习）；目标检测主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "detector-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "目标检测架构",
+      "knowledgePoint": "实例掩码损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Mask R-CNN 的掩码损失对哪些 RoI 计算？",
+      "answer": "论文中的掩码损失只对正样本 RoI 计算。",
+      "explanation": "正样本的掩码目标来自与该区域匹配的真实实例掩码。",
+      "example": "匹配到真实目标的候选区域参与掩码训练。",
+      "tags": [
+        "实例掩码损失",
+        "计算机视觉",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1703.06870",
+      "referenceTitle": "Mask R-CNN 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里视觉算法公开面经（个人自述，2019届实习）；目标检测主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "dpr-dense-passage-retrieval",
+    "title": "DPR 原论文：稠密段落检索",
+    "url": "https://arxiv.org/pdf/2004.04906v3",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的论文或固定版本官方文档自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "dprbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "稠密段落检索",
+      "knowledgePoint": "向量匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPR 原论文如何对问题向量和候选段落向量计算相似度？",
+      "answer": "使用两个向量的点积。",
+      "explanation": "未归一化时点积还受向量长度影响。",
+      "example": "用问题向量与文档向量相乘得到检索分数。",
+      "tags": [
+        "稠密段落检索",
+        "向量匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.04906v3"
+    },
+    {
+      "id": "dprbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "稠密段落检索",
+      "knowledgePoint": "预计算段落",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPR 为什么可以在收到问题前为语料建立段落向量索引？",
+      "answer": "段落编码不依赖具体问题，可以离线编码并索引。",
+      "explanation": "更新段落编码器后通常需要重新生成对应文档向量。",
+      "example": "先编码知识库，查询时再编码用户问题。",
+      "tags": [
+        "稠密段落检索",
+        "预计算段落"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.04906v3"
+    },
+    {
+      "id": "dprbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "稠密段落检索",
+      "knowledgePoint": "负例选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPR 原论文的 BM25 负例怎样选择？",
+      "answer": "从 BM25 返回的高排名段落中选取不包含答案的段落。",
+      "explanation": "不包含答案字符串不保证该段落在所有标注口径下都不相关。",
+      "example": "把词面相似但未命中答案的段落作为困难候选。",
+      "tags": [
+        "稠密段落检索",
+        "负例选择"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.04906v3"
+    },
+    {
+      "id": "dprbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稠密段落检索",
+      "knowledgePoint": "检索目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPR 训练损失如何利用正例与负例的相似度？",
+      "answer": "它在正例和候选负例的分数上归一化，优化正例的负对数概率。",
+      "explanation": "负例选择会影响模型学习到的区分能力。",
+      "example": "提高正确段落相对于其他段落的得分。",
+      "tags": [
+        "稠密段落检索",
+        "检索目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.04906v3"
+    },
+    {
+      "id": "dprbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稠密段落检索",
+      "knowledgePoint": "论文段落切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPR 原论文的维基百科检索语料如何划分段落？",
+      "answer": "把文章划为不重叠、每段约 100 个词的文本块。",
+      "explanation": "这是论文实验设置，不代表所有任务的最佳切块方式。",
+      "example": "每个文本块作为一个检索单位。",
+      "tags": [
+        "稠密段落检索",
+        "论文段落切分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.04906v3"
+    },
+    {
+      "id": "dprbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稠密段落检索",
+      "knowledgePoint": "标题输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPR 原论文如何利用维基百科文章标题编码段落？",
+      "answer": "在段落文本前加入对应文章标题，并用特殊分隔符分开。",
+      "explanation": "标题可提供正文片段缺少的实体上下文。",
+      "example": "给脱离正文上下文的段落保留文章标题。",
+      "tags": [
+        "稠密段落检索",
+        "标题输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.04906v3"
+    },
+    {
+      "id": "dprbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稠密段落检索",
+      "knowledgePoint": "训练标签来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPR 原论文对只有问题和答案、没有金标准段落的训练集，如何寻找正例段落？",
+      "answer": "用问题和答案进行 BM25 查询，从结果中选取排名最高且包含答案的段落。",
+      "explanation": "若前 100 条没有答案，论文丢弃该训练问题。",
+      "example": "用答案匹配构造弱监督段落标注。",
+      "tags": [
+        "稠密段落检索",
+        "训练标签来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.04906v3"
+    }
+  ]
+}

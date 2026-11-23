@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "scipy-signal-peak-detection",
+    "title": "SciPy 1.15.3 文档：一维信号峰值",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.signal.find_peaks.html",
+    "type": "官方文档、标准或固定版本论文",
+    "note": "依据逐题引用的资料自行整理，示例自编；具体行为以指定版本和前提为准。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "peakapi-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序峰值检测",
+      "knowledgePoint": "局部峰值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 find_peaks 首先按什么基本规则寻找峰值？",
+      "answer": "在一维序列中通过比较邻近样本寻找局部最大值，再按可选条件筛选。",
+      "explanation": "它输出的是峰值索引及所计算的属性。",
+      "example": "定位指标序列中局部突起的位置。",
+      "tags": [
+        "时序峰值检测",
+        "局部峰值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.signal.find_peaks.html"
+    },
+    {
+      "id": "peakapi-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序峰值检测",
+      "knowledgePoint": "平台位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 find_peaks 如何确定平顶峰的代表索引？",
+      "answer": "返回平顶中间的索引；平顶宽度为偶数时向下取整。",
+      "explanation": "平顶两侧应满足局部峰值条件。",
+      "example": "[0,3,3,0] 的代表峰索引是 1。",
+      "tags": [
+        "时序峰值检测",
+        "平台位置"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.signal.find_peaks.html"
+    },
+    {
+      "id": "peakapi-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序峰值检测",
+      "knowledgePoint": "高度与阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 find_peaks 中 height 和 threshold 有什么区别？",
+      "answer": "height 约束峰值本身的高度；threshold 约束峰值与直接相邻样本的垂直差值。",
+      "explanation": "二者衡量不同属性，可能筛出不同的峰。",
+      "example": "筛高峰与筛邻点突变可以使用不同条件。",
+      "tags": [
+        "时序峰值检测",
+        "高度与阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.signal.find_peaks.html"
+    },
+    {
+      "id": "peakapi-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序峰值检测",
+      "knowledgePoint": "峰距",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 find_peaks 使用 distance 时如何处理间距过近的峰？",
+      "answer": "先移除较小的峰，直到保留峰之间满足最小样本间距。",
+      "explanation": "该间距按采样点数计，换算成时间需要知道采样频率。",
+      "example": "避免把很近的多个尖峰都计为独立事件。",
+      "tags": [
+        "时序峰值检测",
+        "峰距"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.signal.find_peaks.html"
+    },
+    {
+      "id": "peakapi-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序峰值检测",
+      "knowledgePoint": "突出度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "峰值突出度 prominence 与峰的绝对高度有什么区别？",
+      "answer": "突出度是峰值与其最低轮廓线的垂直差；绝对高度直接看峰值本身。",
+      "explanation": "SciPy 用峰两侧基点中较高者确定最低轮廓线；背景高的峰不一定更突出。",
+      "example": "在缓慢变化的背景上筛选明显的局部峰。",
+      "tags": [
+        "时序峰值检测",
+        "突出度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.signal.peak_prominences.html"
+    },
+    {
+      "id": "peakapi-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序峰值检测",
+      "knowledgePoint": "属性计算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 find_peaks 如何只计算 prominence 而不按其范围过滤峰？",
+      "answer": "传入 prominence=(None, None)，并从返回的属性字典读取 prominences。",
+      "explanation": "该开放区间技巧不适用于 distance。",
+      "example": "先记录所有峰的突出度，再自行选择阈值。",
+      "tags": [
+        "时序峰值检测",
+        "属性计算"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.signal.find_peaks.html"
+    },
+    {
+      "id": "peakapi-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序峰值检测",
+      "knowledgePoint": "缺失值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "输入信号含 NaN 时，SciPy 文档对 find_peaks 有什么提示？",
+      "answer": "结果可能异常，应先处理或移除 NaN。",
+      "explanation": "具体缺失处理方法应符合数据语义和时间间隔。",
+      "example": "检查监控序列中的缺失点后再识别峰值。",
+      "tags": [
+        "时序峰值检测",
+        "缺失值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.signal.find_peaks.html"
+    }
+  ]
+}

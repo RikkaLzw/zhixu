@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "fuzzgpt-history-guided-generation",
+    "title": "FuzzGPT 原论文 v1：历史缺陷引导生成",
+    "url": "https://arxiv.org/abs/2304.02014v1",
+    "type": "官方文档、教材或论文",
+    "note": "依据逐题列出的资料自行整理；面经主题延伸注明非原题。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fuzzgpt-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FuzzGPT 历史缺陷引导",
+      "knowledgePoint": "少样本示例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzGPT 论文的 few-shot 示例包含哪些与历史缺陷相关的信息？",
+      "answer": "包含目标或出错 API 名称、缺陷描述和相应代码片段。",
+      "explanation": "少样本提示把示例放进上下文，无需为每次提示更新模型参数。",
+      "example": "用历史 API、问题标题和代码作为生成示例。",
+      "tags": [
+        "AI 辅助模糊测试",
+        "少样本示例"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.02014v1"
+    },
+    {
+      "id": "fuzzgpt-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FuzzGPT 历史缺陷引导",
+      "knowledgePoint": "先描述再生成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzGPT 论文的 few-shot 提示为什么先生成潜在缺陷描述再生成代码？",
+      "answer": "描述为后续代码提供潜在异常行为的线索，引导生成针对边界情况的程序。",
+      "explanation": "生成的描述只是模型输出，还需运行和核验。",
+      "example": "先描述目标 API 的潜在异常，再生成调用代码。",
+      "tags": [
+        "AI 辅助模糊测试",
+        "先描述再生成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.02014v1"
+    },
+    {
+      "id": "fuzzgpt-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FuzzGPT 历史缺陷引导",
+      "knowledgePoint": "无历史指令变体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzGPT 论文是否只研究必须提供历史缺陷代码的生成方式？",
+      "answer": "不是；论文也探索直接用指令要求 ChatGPT 生成特殊程序的变体，不提供历史缺陷信息。",
+      "explanation": "该变体与历史代码引导的主要方法应分别描述。",
+      "example": "要求生成目标 API 的边界输入程序。",
+      "tags": [
+        "AI 辅助模糊测试",
+        "无历史指令变体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.02014v1"
+    },
+    {
+      "id": "fuzzgpt-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FuzzGPT 历史缺陷引导",
+      "knowledgePoint": "历史样本筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzGPT 原论文如何限制用于其历史缺陷代码数据集的样本？",
+      "answer": "清理后排除无法通过语法检查或超过 256 token 的代码片段。",
+      "explanation": "这一筛选影响可用于提示和微调的历史样本范围。",
+      "example": "过长的历史代码不会进入论文所述训练样本。",
+      "tags": [
+        "AI 辅助模糊测试",
+        "历史样本筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.02014v1"
+    }
+  ]
+}

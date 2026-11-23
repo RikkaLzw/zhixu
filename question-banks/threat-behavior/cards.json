@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "threat-behavior",
+    "title": "ATT&CK 安全行为与检测上下文",
+    "url": "https://attack.mitre.org/techniques/T1046/",
+    "type": "官方技术文档与标准",
+    "note": "根据逐题依据自行编写中文问答，示例为自编；公开面经为个人复盘，公司经历未经企业确认。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "behavior-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络侦察",
+      "knowledgePoint": "网络服务发现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK 的 Network Service Discovery 主要寻找什么？",
+      "answer": "它指尝试枚举远程主机或网络设备上运行的服务。",
+      "explanation": "端口扫描和服务发现也可能来自授权运维或资产管理。",
+      "example": "调查一台主机对大量目标端口的探测行为。",
+      "tags": [
+        "网络服务发现",
+        "网络侦察"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1046/"
+    },
+    {
+      "id": "behavior-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "账号风险",
+      "knowledgePoint": "有效账号滥用",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么一次使用有效账号的成功登录仍需要结合行为上下文？",
+      "answer": "攻击者也可能使用被盗或被滥用的有效凭据成功认证。",
+      "explanation": "应结合登录来源、设备、时间和后续行为，而不是只看成功状态。",
+      "example": "异常来源的成功登录后出现不寻常的权限操作。",
+      "tags": [
+        "有效账号滥用",
+        "账号风险"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1078/"
+    },
+    {
+      "id": "behavior-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常通信",
+      "knowledgePoint": "Web协议伪装",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么 HTTPS 或 WebSocket 通信本身不能证明外联是正常业务？",
+      "answer": "攻击者也可能用常见 Web 协议与受控服务器通信，混入正常流量。",
+      "explanation": "是否可疑还需结合目的地、进程、频率和业务背景。",
+      "example": "检查从非预期进程发起的持续外联。",
+      "tags": [
+        "Web协议伪装",
+        "异常通信"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1071/001/"
+    },
+    {
+      "id": "behavior-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常通信",
+      "knowledgePoint": "C2通道外传",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK 的 Exfiltration Over C2 Channel 指什么？",
+      "answer": "它指攻击者通过已有命令与控制通道传出窃取的数据。",
+      "explanation": "通信协议与正常业务相同时，仍需结合数据流向和上下文分析。",
+      "example": "调查既有外联通道上的异常数据上传。",
+      "tags": [
+        "C2通道外传",
+        "异常通信"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1041/"
+    },
+    {
+      "id": "behavior-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机行为",
+      "knowledgePoint": "进程注入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "进程注入的一般含义是什么？",
+      "answer": "它是在另一个存活进程的地址空间中执行代码的方法。",
+      "explanation": "具体实现有多种；单一事件不足以确认完整注入链。",
+      "example": "关联可疑进程访问与后续目标进程行为。",
+      "tags": [
+        "进程注入",
+        "主机行为"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1055/"
+    },
+    {
+      "id": "behavior-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机行为",
+      "knowledgePoint": "远程线程与注入",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "发现跨进程创建线程事件，能否仅凭该事件确认恶意进程注入？",
+      "answer": "不能；它是需要结合源、目标进程和后续行为分析的线索。",
+      "explanation": "调试、安全软件等合法工具也可能产生跨进程操作。",
+      "example": "检查来源进程、目标进程及执行的相关上下文。",
+      "tags": [
+        "远程线程与注入",
+        "主机行为"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1055/"
+    },
+    {
+      "id": "behavior-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "凭据访问",
+      "knowledgePoint": "LSASS访问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么访问 LSASS 进程内存的行为可能值得重点调查？",
+      "answer": "LSASS 内存可能含有凭据材料，攻击者可能尝试读取或转储它们。",
+      "explanation": "访问事件并不自动证明凭据已被窃取，仍需判断访问进程和权限。",
+      "example": "结合进程访问日志与生成的转储文件调查。",
+      "tags": [
+        "LSASS访问",
+        "凭据访问"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1003/001/"
+    },
+    {
+      "id": "behavior-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "脚本执行",
+      "knowledgePoint": "PowerShell宿主盲区",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "没有 powershell.exe 进程，能否排除 PowerShell 脚本执行？",
+      "answer": "不能；程序也可能通过 PowerShell 的底层程序集执行相关代码。",
+      "explanation": "检测应结合脚本日志、程序集加载及进程上下文。",
+      "example": "检查应用加载 System.Management.Automation 的相关事件。",
+      "tags": [
+        "PowerShell宿主盲区",
+        "脚本执行"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1059/001/"
+    },
+    {
+      "id": "behavior-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "文件传输",
+      "knowledgePoint": "工具传入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK 的 Ingress Tool Transfer 描述什么文件传输行为？",
+      "answer": "它指攻击者把工具或其他文件从外部系统带入受影响环境，也可能在受害设备之间传输。",
+      "explanation": "应结合传输方向、来源和文件用途判断活动。",
+      "example": "调查受影响主机从外部下载的工具文件。",
+      "tags": [
+        "工具传入",
+        "文件传输"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1105/"
+    },
+    {
+      "id": "behavior-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机行为",
+      "knowledgePoint": "加密数据影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK 的 Data Encrypted for Impact 主要描述什么行为？",
+      "answer": "攻击者加密目标数据，使系统或网络资源难以访问，以造成业务影响。",
+      "explanation": "合法备份或加密软件也会修改大量文件，需要结合进程和业务背景。",
+      "example": "调查未经授权的批量文件加密及服务中断。",
+      "tags": [
+        "加密数据影响",
+        "主机行为"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1486/"
+    }
+  ]
+}

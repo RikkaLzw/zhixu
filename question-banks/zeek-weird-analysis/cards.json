@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "zeek-weird-analysis",
+    "title": "Zeek 6.0.9：Weird 记录与处理",
+    "url": "https://docs.zeek.org/en/v6.0.9/scripts/base/frameworks/notice/weird.zeek.html",
+    "type": "教材、官方文档与论文",
+    "note": "依据逐题引用的文档、教材或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "zeekweird-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "Zeek Weird 协议异常",
+      "knowledgePoint": "Weird名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek Weird::Info 的 name 字段表示什么？",
+      "answer": "表示该异常或特殊活动的名称。",
+      "explanation": "它标识观察到的类型，不能单独替代对连接上下文的分析。",
+      "example": "bad_TCP_checksum 是一种 weird 名称。",
+      "tags": [
+        "Zeek Weird 协议异常",
+        "Weird名称"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/frameworks/notice/weird.zeek.html"
+    },
+    {
+      "id": "zeekweird-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Zeek Weird 协议异常",
+      "knowledgePoint": "连接编号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek Weird::Info 的 uid 字段为什么是可选的？",
+      "answer": "只有该 weird 与连接关联时，才有相应连接唯一编号。",
+      "explanation": "没有 uid 时不能假定一定能通过连接编号关联 conn.log。",
+      "example": "某些 weird 可能缺少关联连接。",
+      "tags": [
+        "Zeek Weird 协议异常",
+        "连接编号"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/frameworks/notice/weird.zeek.html"
+    },
+    {
+      "id": "zeekweird-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "Zeek Weird 协议异常",
+      "knowledgePoint": "附加信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek Weird::Info 的 addl 字段通常承载什么？",
+      "answer": "承载该 weird 随附的额外信息（如果有）。",
+      "explanation": "字段是可选的，内容因 weird 类型而异。",
+      "example": "调查时可将名称与附加信息一起查看。",
+      "tags": [
+        "Zeek Weird 协议异常",
+        "附加信息"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/frameworks/notice/weird.zeek.html"
+    },
+    {
+      "id": "zeekweird-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Zeek Weird 协议异常",
+      "knowledgePoint": "notice标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek Weird::Info 的 notice 字段表示什么？",
+      "answer": "表示该 weird 是否也被转换成 notice。",
+      "explanation": "它是可选布尔字段，默认值为 false。",
+      "example": "有 weird 记录不意味着该字段必为 true。",
+      "tags": [
+        "Zeek Weird 协议异常",
+        "notice标记"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/frameworks/notice/weird.zeek.html"
+    },
+    {
+      "id": "zeekweird-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Zeek Weird 协议异常",
+      "knowledgePoint": "来源分析器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek Weird::Info 的 source 字段在分析器报告异常时通常表示什么？",
+      "answer": "通常表示报告该 weird 的分析器名称。",
+      "explanation": "字段可选，具体来源应结合部署和事件上下文。",
+      "example": "调查协议解析问题时可查看 source。",
+      "tags": [
+        "Zeek Weird 协议异常",
+        "来源分析器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/frameworks/notice/weird.zeek.html"
+    },
+    {
+      "id": "zeekweird-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Zeek Weird 协议异常",
+      "knowledgePoint": "逐源主机记录",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Zeek Weird::ACTION_LOG_PER_ORIG 与 ACTION_LOG_PER_CONN 分别按什么粒度记录？",
+      "answer": "前者按源主机记录，后者按连接记录。",
+      "explanation": "不同粒度会影响日志数量与重复事件的可见性。",
+      "example": "一个源主机的多个连接在两种策略下可能有不同记录数。",
+      "tags": [
+        "Zeek Weird 协议异常",
+        "逐源主机记录"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/frameworks/notice/weird.zeek.html"
+    },
+    {
+      "id": "zeekweird-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Zeek Weird 协议异常",
+      "knowledgePoint": "类型忽略",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Zeek Weird::ignore_hosts 用什么组合来完全忽略指定异常？",
+      "answer": "使用主机地址与 weird 名称的组合。",
+      "explanation": "应结合调查目标审慎配置，否则可能丢失需要观察的异常。",
+      "example": "可以为某台主机屏蔽一个已知无害的特定 weird。",
+      "tags": [
+        "Zeek Weird 协议异常",
+        "类型忽略"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/frameworks/notice/weird.zeek.html"
+    },
+    {
+      "id": "zeekweird-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Zeek Weird 协议异常",
+      "knowledgePoint": "默认动作",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Zeek 6.0.9 的 Weird::actions 表没有为某个名称单独配置时，默认动作是什么？",
+      "answer": "默认采用 Weird::ACTION_LOG。",
+      "explanation": "不同 weird 可以在该表中配置其他动作。",
+      "example": "未单独配置的 weird 默认请求记录。",
+      "tags": [
+        "Zeek Weird 协议异常",
+        "默认动作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/frameworks/notice/weird.zeek.html"
+    }
+  ]
+}

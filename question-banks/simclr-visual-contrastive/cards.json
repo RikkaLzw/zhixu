@@ -1,0 +1,110 @@
+{
+  "source": {
+    "id": "simclr-visual-contrastive",
+    "title": "SimCLR 原论文 v3：视觉对比学习",
+    "url": "https://arxiv.org/pdf/2002.05709v3",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "simclr-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SimCLR 视觉表示",
+      "knowledgePoint": "正样本构造",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SimCLR 如何构造自监督图像对比学习的正样本对？",
+      "answer": "对同一原始图像分别随机应用数据增强，得到两个相关视图。",
+      "explanation": "增强方式决定模型学习哪些变化下的相似性。",
+      "example": "同一图像的两种随机裁剪作为正对。",
+      "tags": [
+        "SimCLR 视觉表示",
+        "正样本构造"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2002.05709v3"
+    },
+    {
+      "id": "simclr-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SimCLR 视觉表示",
+      "knowledgePoint": "编码与投影",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SimCLR 的编码器和投影头在训练中分别做什么？",
+      "answer": "编码器生成图像表示；投影头把表示映射到计算对比损失的空间。",
+      "explanation": "论文研究发现非线性投影头有助于表示学习。 字节公开复盘提及对比学习损失；此题为主题延伸，非原题。",
+      "example": "先用编码器提特征，再用 MLP 得到对比向量。",
+      "tags": [
+        "SimCLR 视觉表示",
+        "编码与投影",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2002.05709v3",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型公开面经：对比损失主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "simclr-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SimCLR 视觉表示",
+      "knowledgePoint": "下游表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SimCLR 原论文完成预训练后，通常怎样使用投影头？",
+      "answer": "丢弃投影头，使用编码器输出的表示进行下游任务。",
+      "explanation": "具体后续系统仍可根据任务重新设计。",
+      "example": "在线性评估中冻结编码器并训练分类器。",
+      "tags": [
+        "SimCLR 视觉表示",
+        "下游表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2002.05709v3"
+    },
+    {
+      "id": "simclr-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SimCLR 视觉表示",
+      "knowledgePoint": "批内负例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SimCLR 对 N 个原图构造两视图时，每个锚点通常有多少批内负例？",
+      "answer": "有 2(N−1) 个其他图像的增强视图作为负例。",
+      "explanation": "锚点自身被排除，同一原图的另一视图是正例。 字节公开复盘提及对比学习损失；此题为主题延伸，非原题。",
+      "example": "N=4 时每个锚点有 6 个负例。",
+      "tags": [
+        "SimCLR 视觉表示",
+        "批内负例",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2002.05709v3",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型公开面经：对比损失主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

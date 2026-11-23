@@ -1,0 +1,595 @@
+{
+  "source": {
+    "id": "os-cpu-scheduling-fundamentals",
+    "title": "OSTEP：CPU 调度与多级反馈队列",
+    "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf",
+    "type": "教材、研究论文与官方源码",
+    "note": "按逐题引用资料自行整理；安全场景示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "cpusched-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "周转时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调度中作业的周转时间如何定义？",
+      "answer": "作业完成时间减去到达时间。",
+      "explanation": "它覆盖等待和执行等作业在系统中的时间。",
+      "example": "作业到达后等待 CPU，再执行到完成。",
+      "tags": [
+        "周转时间",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "响应时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSTEP 的 CPU 调度模型中，作业响应时间如何定义？",
+      "answer": "作业首次被调度运行的时间减去到达时间。",
+      "explanation": "交互系统通常关注用户首次得到服务的等待。",
+      "example": "任务到达后首次获得 CPU。",
+      "tags": [
+        "响应时间",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "先来先服务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在作业不阻塞且运行至完成的模型中，非抢占式先来先服务（FCFS）按什么顺序选择作业？",
+      "answer": "按作业到达就绪队列的顺序运行。",
+      "explanation": "实际作业可能因 I/O 等原因阻塞；相同到达时间也需要其他规则决定先后。",
+      "example": "先排队的批处理任务先运行。",
+      "tags": [
+        "先来先服务",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "护航效应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FCFS 调度中的护航效应（convoy effect）是什么？",
+      "answer": "较短作业排在较长作业之后，需要等待较长作业占用完资源。",
+      "explanation": "这可能拉高短作业的周转时间。",
+      "example": "短任务排在长 CPU 任务后面。",
+      "tags": [
+        "护航效应",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "最短作业优先",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在所有作业同时到达且运行时长已知的简单模型中，最短作业优先如何影响平均周转时间？",
+      "answer": "按时长从短到长运行可最小化该模型的平均周转时间。",
+      "explanation": "这个结论依赖同时到达、时长已知等模型假设。",
+      "example": "先完成多个短作业再运行长作业。",
+      "tags": [
+        "最短作业优先",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "抢占式最短剩余时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "最短剩余时间优先（STCF）遇到剩余时间更短的新就绪作业时通常怎样做？",
+      "answer": "可抢占当前作业，运行剩余时间最短的就绪作业。",
+      "explanation": "实际系统通常无法事先精确知道作业剩余时间。",
+      "example": "短作业到达时暂时停止长作业。",
+      "tags": [
+        "抢占式最短剩余时间",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "轮转调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "轮转调度（Round Robin）如何在同优先级就绪作业间分配 CPU？",
+      "answer": "每个作业运行一个时间片，未完成时通常回到队列等待下一轮。",
+      "explanation": "作业提前阻塞或完成时可提前让出 CPU。",
+      "example": "多个交互任务轮流运行。",
+      "tags": [
+        "轮转调度",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "时间片权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "轮转调度的时间片太短可能带来什么代价？",
+      "answer": "频繁切换会增加上下文切换等开销，降低用于实际工作的时间比例。",
+      "explanation": "较长时间片通常会降低切换频率，但可能增加其他作业等待响应的时间。",
+      "example": "将时间片减小到接近切换开销。",
+      "tags": [
+        "时间片权衡",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "调度抢占",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "抢占式 CPU 调度与非抢占式调度有什么基本区别？",
+      "answer": "抢占式调度可暂停正在运行的作业以运行其他作业；非抢占式通常等当前作业主动让出或结束。",
+      "explanation": "定时器和上下文切换是实现抢占的常见机制。",
+      "example": "时间片到期后切换到另一个进程。",
+      "tags": [
+        "调度抢占",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "MLFQ优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSTEP 的多级反馈队列（MLFQ）模型如何选择不同优先级的就绪作业？",
+      "answer": "先运行更高优先级队列中的作业；同级作业采用轮转。",
+      "explanation": "这描述教材中的 MLFQ 规则，具体操作系统实现可能不同。",
+      "example": "高优先级任务就绪时暂缓低优先级任务。",
+      "tags": [
+        "MLFQ优先级",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-mlfq.pdf"
+    },
+    {
+      "id": "cpusched-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "MLFQ反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLFQ 为什么利用作业过去的 CPU 使用行为调整优先级？",
+      "answer": "它尝试在无法预知作业时长时，从已观察行为区分不同需求，并兼顾交互响应。",
+      "explanation": "历史行为只是启发式，任务行为也可能变化。",
+      "example": "持续占用 CPU 的作业逐渐移到较低队列。",
+      "tags": [
+        "MLFQ反馈",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-mlfq.pdf"
+    },
+    {
+      "id": "cpusched-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "优先级提升",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSTEP 的 MLFQ 周期性提升所有作业优先级有什么目的？",
+      "answer": "它帮助长期处于低优先级的作业获得运行机会，也能重新适应行为变化。",
+      "explanation": "提升间隔会影响响应与调度行为。",
+      "example": "把长期等待的批处理作业提升至顶层。",
+      "tags": [
+        "优先级提升",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-mlfq.pdf"
+    },
+    {
+      "id": "cpusched-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "MLFQ累计计时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSTEP 改进版 MLFQ 为什么累计统计作业在同一优先级的 CPU 使用时间？",
+      "answer": "避免作业在时间片用尽前频繁发起 I/O 来反复重置额度，从而长期保持高优先级。",
+      "explanation": "耗尽该级总额度后会按规则降低优先级。",
+      "example": "累计多次短运行的 CPU 时间。",
+      "tags": [
+        "MLFQ累计计时",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-mlfq.pdf"
+    },
+    {
+      "id": "cpusched-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "FCFS 周转时间计算",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "A、B、C 都在时刻 0 到达，FCFS 顺序为 A、B、C，CPU 运行时间分别为 4、3、1 个时间单位；平均周转时间是多少？",
+      "answer": "完成时间分别为 4、7、8，平均周转时间为 (4+7+8)/3 = 19/3，约 6.33 个时间单位。",
+      "explanation": "所有作业的到达时间都是 0，因此各自周转时间等于完成时间。",
+      "example": "FCFS 按给定队列顺序连续运行，不发生抢占。",
+      "tags": [
+        "FCFS",
+        "周转时间",
+        "场景计算"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "SJF 周转时间计算",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "A、B、C 都在时刻 0 到达，运行时间分别为 4、3、1 个时间单位；非抢占 SJF 的平均周转时间是多少？",
+      "answer": "运行顺序为 C、B、A，完成时间为 1、4、8，平均周转时间为 (1+4+8)/3 = 13/3，约 4.33 个时间单位。",
+      "explanation": "该模型假定运行时间已知，且所有作业同时到达。",
+      "example": "从最短作业开始，再依次运行时长为 3 和 4 的作业。",
+      "tags": [
+        "SJF",
+        "周转时间",
+        "场景计算"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "到达时间与等待指标",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "FCFS 下，A 在时刻 0 到达并运行 5 个时间单位；B 在时刻 2 到达，随后于时刻 5 首次运行、时刻 7 完成。B 的响应时间和周转时间各是多少？",
+      "answer": "响应时间为 5-2=3，周转时间为 7-2=5 个时间单位。",
+      "explanation": "响应时间只计算从到达到首次运行的等待；周转时间计算从到达到完成的总时间。",
+      "example": "同一作业的首次运行时刻可以早于完成时刻，因此两个指标通常不同。",
+      "tags": [
+        "响应时间",
+        "周转时间",
+        "到达时间"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-018",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "非抢占 SJF 与晚到作业",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "非抢占 SJF 下，A 在时刻 0 到达且需要 8 个时间单位；B 在时刻 1 到达且需要 2 个时间单位。B 最早何时开始运行？",
+      "answer": "B 在时刻 8 开始运行。A 在时刻 0 是唯一就绪作业，非抢占 SJF 不会因 B 到达而中断 A。",
+      "explanation": "新作业较短并不意味着非抢占策略会立刻切换当前作业。",
+      "example": "A 从 0 运行到 8，之后 B 才进入 CPU。",
+      "tags": [
+        "SJF",
+        "非抢占",
+        "作业到达"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "STCF 抢占计算",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "STCF 下，A 在时刻 0 到达且需要 8 个时间单位；B 在时刻 1 到达且需要 2 个时间单位。假设无切换开销，B 的周转时间是多少？",
+      "answer": "A 先运行 1 个单位后剩余 7；B 到达后抢占 A，并在时刻 3 完成，所以 B 的周转时间为 3-1=2。",
+      "explanation": "STCF 在新作业到达时比较就绪作业的剩余运行时间。",
+      "example": "B 完成后，A 再运行剩余的 7 个时间单位。",
+      "tags": [
+        "STCF",
+        "抢占",
+        "周转时间"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "RR 首次响应计算",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "A、B、C 在时刻 0 按此顺序进入 RR 就绪队列，时间片为 2 个时间单位且忽略切换开销；C 的响应时间是多少？",
+      "answer": "C 在 A 和 B 各运行一个时间片后首次获得 CPU，因此响应时间为 4 个时间单位。",
+      "explanation": "响应时间计到首次运行，不需要等 C 的 CPU 工作全部完成。",
+      "example": "队列先后执行 A[0,2)、B[2,4)、C[4,6)。",
+      "tags": [
+        "RR",
+        "时间片",
+        "响应时间"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "RR 周转时间权衡",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "A、B、C 都在时刻 0 到达，各需要 2 个时间单位；RR 时间片为 1 且无切换开销。平均周转时间是多少？",
+      "answer": "完成时间为 4、5、6，平均周转时间为 5 个时间单位。",
+      "explanation": "RR 让作业较早轮流开始，但会推迟它们完成；在此模型中，非抢占 SJF 的平均周转时间为 4。",
+      "example": "RR 的运行顺序是 A、B、C、A、B、C。",
+      "tags": [
+        "RR",
+        "周转时间",
+        "调度权衡"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》§7.7",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "RR 最坏首次响应时间",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "N 个作业同时就绪并采用 RR，时间片为 q；忽略切换开销时，排在队尾作业的首次响应时间上界约是多少？",
+      "answer": "在其前面有 N-1 个作业且都用满时间片时，上界约为 (N-1)q。",
+      "explanation": "该式限定为单 CPU、初始就绪队列已知且不计切换开销的简化模型。",
+      "example": "N=5、q=3 时，队尾作业约等待 4×3=12 个时间单位。",
+      "tags": [
+        "RR",
+        "响应时间",
+        "时间片"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》练习题",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "SJF 长作业响应时间",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "三项作业同时到达，运行时间分别为 2、4、8 个时间单位；采用非抢占 SJF 时，最长作业的响应时间是多少？",
+      "answer": "短作业先运行 2+4 个时间单位，最长作业首次运行时刻为 6，因此其响应时间是 6。",
+      "explanation": "平均周转时间较优并不保证每个作业都能很快开始运行。",
+      "example": "作业顺序为 2、4、8。",
+      "tags": [
+        "SJF",
+        "长作业",
+        "响应时间"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "时间片切换开销比例",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "RR 每个 9 毫秒时间片后产生 1 毫秒切换开销；假设每个时间片都用满且只考虑这项开销，CPU 用于作业工作的比例是多少？",
+      "answer": "每个周期有 9 毫秒工作和 1 毫秒开销，工作比例为 9/(9+1)=90%。",
+      "explanation": "时间片缩短会提高轮转频率，但可能增加切换开销占比；实际开销还受硬件缓存等因素影响。",
+      "example": "该比例不包括 I/O 等待或其他内核开销。",
+      "tags": [
+        "RR",
+        "上下文切换",
+        "性能计算"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》§7.7",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-025",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "RR 长期 CPU 份额",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "三个同优先级、持续就绪且运行时间足够长的作业使用相同 RR 时间片；忽略切换开销时，每个作业长期大约获得多少 CPU 份额？",
+      "answer": "每个作业长期大约获得三分之一 CPU 时间。",
+      "explanation": "RR 在活跃的同级作业间轮转；短时间窗口中的实际份额会受作业到达、阻塞和完成影响。",
+      "example": "每轮每个作业各获得一个时间片。",
+      "tags": [
+        "RR",
+        "公平性",
+        "CPU 份额"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》§7.7",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-026",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "I/O 阻塞后的 CPU 调度",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "作业 A 正在运行时发出磁盘 I/O 请求并进入等待，作业 B 此时仍在就绪队列。单 CPU 调度器通常应选择什么？",
+      "answer": "选择 B 运行；A 在 I/O 完成前处于阻塞状态，不能继续使用 CPU。",
+      "explanation": "I/O 等待期间运行其他就绪作业可以让 CPU 与设备工作重叠。",
+      "example": "A 等磁盘返回时，CPU 执行 B 的可运行代码。",
+      "tags": [
+        "I/O 阻塞",
+        "就绪队列",
+        "CPU 利用率"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》§7.8",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "CPU 与 I/O 重叠计算",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "A 在时刻 0 先运行：需要 CPU 2 个时间单位、I/O 5 个时间单位、再用 CPU 1 个时间单位；B 需要连续 CPU 4 个时间单位。按非抢占 CPU burst 的 FCFS 调度，A 何时完成？",
+      "answer": "A 在时刻 8 完成：A 先运行到 2，I/O 到 7 才结束，之后运行最后 1 个 CPU 时间单位。",
+      "explanation": "B 在 A 等 I/O 时于时刻 2 到 6 使用 CPU，因此 CPU 与设备活动发生重叠。",
+      "example": "时刻 6 到 7 没有就绪作业，CPU 空闲；A 于时刻 7 重新就绪。",
+      "tags": [
+        "CPU burst",
+        "I/O 重叠",
+        "调度计算"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 7 章《调度：导论》§7.8",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "cpusched-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "Lottery 票数与期望份额",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "Lottery scheduling 中，竞争进程 A 有 75 张票、B 有 25 张票；它们长期期望获得的 CPU 份额各是多少？",
+      "answer": "A 的期望份额为 75%，B 为 25%；每轮抽签仍带有随机波动。",
+      "explanation": "票数占全部票数的比例表示期望资源份额，而不是每个短时间窗口的确定配额。",
+      "example": "每个时间片按总票数抽出一张中奖票。",
+      "tags": [
+        "Lottery scheduling",
+        "比例份额",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 9 章《比例份额调度》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-lottery.pdf"
+    },
+    {
+      "id": "cpusched-029",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "Lottery 单次抽中概率",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "Lottery scheduling 总共有 100 张有效票，其中 A 持有 20 张；一次抽签选中 A 的概率是多少？",
+      "answer": "概率为 20/100=20%。",
+      "explanation": "每张票被等概率抽取，进程的中奖概率等于其票数占总票数的比例。",
+      "example": "抽到属于 A 的任一票时，A 获得该轮 CPU。",
+      "tags": [
+        "Lottery scheduling",
+        "概率",
+        "CPU 份额"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 9 章《比例份额调度》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-lottery.pdf"
+    },
+    {
+      "id": "cpusched-030",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 调度",
+      "knowledgePoint": "Lottery 短期分配波动",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Lottery scheduling 中，持有 20% 票数的进程在前 10 次抽签中赢了 8 次；这是否单凭该结果就说明调度器违背了份额规则？",
+      "answer": "不能；随机调度不保证每个短窗口都精确达到票数比例，短期结果可能偏离期望。",
+      "explanation": "票数控制的是单次概率和长期期望份额，不能据有限样本要求精确配额。",
+      "example": "更多抽签通常有助于观察到更接近目标的长期比例，但仍不是每段窗口的硬保证。",
+      "tags": [
+        "Lottery scheduling",
+        "随机性",
+        "公平份额"
+      ],
+      "evidence": "source",
+      "referenceTitle": "OSTEP 第 9 章《比例份额调度》",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched-lottery.pdf"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "ephishgen-dataset-evaluation",
+    "title": "E-PhishGEN 原论文 v1：钓鱼邮件基准",
+    "url": "https://arxiv.org/abs/2509.01791v1",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的固定版本或在线官方资料自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "ephish-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "合成钓鱼邮件评测",
+      "knowledgePoint": "合成来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E-PhishLLM 数据集中的邮件主要来自什么方式？",
+      "answer": "论文使用 E-PhishGEN 和语言模型生成合成邮件，包括正常与钓鱼邮件。",
+      "explanation": "合成邮件不等同于真实收件箱中的自然分布。",
+      "example": "用生成数据补充检测器评估。",
+      "tags": [
+        "合成钓鱼邮件评测",
+        "合成来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2509.01791v1"
+    },
+    {
+      "id": "ephish-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "合成钓鱼邮件评测",
+      "knowledgePoint": "生成上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E-PhishGEN 的两个主要模块分别产生什么？",
+      "answer": "先生成合成组织和员工背景，再根据背景生成邮件。",
+      "explanation": "背景信息用于构造邮件上下文。",
+      "example": "比较不同组织环境下生成的邮件样本。",
+      "tags": [
+        "合成钓鱼邮件评测",
+        "生成上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2509.01791v1"
+    },
+    {
+      "id": "ephish-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "合成钓鱼邮件评测",
+      "knowledgePoint": "语言范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E-PhishLLM 论文生成的数据涵盖哪些语言？",
+      "answer": "涵盖英语、意大利语和德语。",
+      "explanation": "不同语言的样本比例并不相同。",
+      "example": "按语言分别报告检测表现。",
+      "tags": [
+        "合成钓鱼邮件评测",
+        "语言范围"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2509.01791v1"
+    },
+    {
+      "id": "ephish-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "合成钓鱼邮件评测",
+      "knowledgePoint": "评测语言边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E-PhishGEN 论文对 E-PhishLLM 的检测器评测是否覆盖了全部三种语言？",
+      "answer": "论文中的该组检测器评测只使用英语部分，以便和既有英文方法比较。",
+      "explanation": "不能把该结果直接当作对其他两种语言的验证。",
+      "example": "补充德语和意大利语的独立测试。",
+      "tags": [
+        "合成钓鱼邮件评测",
+        "评测语言边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2509.01791v1"
+    },
+    {
+      "id": "ephish-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "合成钓鱼邮件评测",
+      "knowledgePoint": "生成失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E-PhishGEN 论文怎样处理部分生成结果不符合预期格式的情况？",
+      "answer": "将格式错误等失败的生成结果丢弃。",
+      "explanation": "过滤会影响最终数据的组成，使用时应记录筛选过程。",
+      "example": "模型未按要求生成有效 JSON 时不纳入数据集。",
+      "tags": [
+        "合成钓鱼邮件评测",
+        "生成失败"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2509.01791v1"
+    },
+    {
+      "id": "ephish-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "合成钓鱼邮件评测",
+      "knowledgePoint": "用户研究边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E-PhishGEN 论文的用户研究评价了邮件的什么质量，结果有哪些边界？",
+      "answer": "参与者对钓鱼邮件的说服力、书写和真实性进行评分；样本和参与者数量有限。",
+      "explanation": "研究还告知参与者主题是钓鱼，可能影响评分。",
+      "example": "人工主观评分不能直接等同于真实用户点击率。",
+      "tags": [
+        "合成钓鱼邮件评测",
+        "用户研究边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2509.01791v1"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "security-dataset-documentation",
+    "title": "Datasheets / Hugging Face：安全数据集说明",
+    "url": "https://arxiv.org/abs/1803.09010",
+    "type": "官方文档与研究资料",
+    "note": "按逐题所列资料自行整理；安全场景示例用于说明，不代表原资料中的实际事件。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "secdoc-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全数据集说明",
+      "knowledgePoint": "数据集说明目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据集说明文件为什么要记录数据如何产生？",
+      "answer": "它帮助使用者理解数据来源、采集、处理和适用范围，判断是否适合目标任务。",
+      "explanation": "说明文件不能代替独立质量检查。",
+      "example": "记录网络流量由哪些环境与采集流程得到。",
+      "tags": [
+        "数据集说明目的",
+        "安全数据集说明"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.09010"
+    },
+    {
+      "id": "secdoc-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全数据集说明",
+      "knowledgePoint": "样本单位说明",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据集说明为什么要明确一条样本代表什么？",
+      "answer": "样本可能是事件、连接、文件或聚合窗口，单位不同会影响标签解释和评估。",
+      "explanation": "还应说明样本之间可能存在的关联。",
+      "example": "同一主机一天的数据可构成一个窗口样本，也可包含许多单条事件。",
+      "tags": [
+        "样本单位说明",
+        "安全数据集说明"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1803.09010"
+    },
+    {
+      "id": "secdoc-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全数据集说明",
+      "knowledgePoint": "采样总体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么数据集说明要区分采样样本与其来源总体？",
+      "answer": "采样过程可能遗漏某些环境或行为，样本分布未必代表目标总体。",
+      "explanation": "应记录采样方式和已知覆盖限制。",
+      "example": "来自少数实验网络的流量不一定代表所有生产网络。",
+      "tags": [
+        "采样总体",
+        "安全数据集说明"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1803.09010"
+    },
+    {
+      "id": "secdoc-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全数据集说明",
+      "knowledgePoint": "标签来源记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全数据集为什么应记录标签由什么方式产生？",
+      "answer": "规则、人工复核和外部情报等标签来源具有不同的错误与覆盖限制。",
+      "explanation": "标签来源也有助于排查与检测规则相关的捷径。",
+      "example": "标明某攻击标签来自自动规则还是人工确认。",
+      "tags": [
+        "标签来源记录",
+        "安全数据集说明"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1803.09010"
+    },
+    {
+      "id": "secdoc-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全数据集说明",
+      "knowledgePoint": "标注准则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么仅公布标签名称不足以完整说明安全数据集的标注？",
+      "answer": "还需要说明标签判定标准、标注流程和不确定样本如何处理。",
+      "explanation": "相同标签名称可能因判定规则不同而不可直接比较。",
+      "example": "说明何种证据足以标记样本为恶意。",
+      "tags": [
+        "标注准则",
+        "安全数据集说明"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1803.09010"
+    },
+    {
+      "id": "secdoc-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全数据集说明",
+      "knowledgePoint": "标注分歧",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多个标注者对安全事件结论不同，为什么需要记录分歧？",
+      "answer": "分歧可揭示证据不足或标准不清，单一最终标签可能掩盖这些不确定性。",
+      "explanation": "解决分歧的方法及未解决情况应一并记录。",
+      "example": "两名分析人员对某连接是否恶意持不同意见。",
+      "tags": [
+        "标注分歧",
+        "安全数据集说明"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1803.09010"
+    },
+    {
+      "id": "secdoc-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全数据集说明",
+      "knowledgePoint": "外部链接依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据集包含外部网址或文件引用时，为什么要记录获取时间和依赖状态？",
+      "answer": "外部内容可能变化、失效或受访问限制，之后取得的数据未必与原始版本一致。",
+      "explanation": "可在允许的条件下保存快照和访问说明。",
+      "example": "钓鱼页面链接一段时间后可能已经下线。",
+      "tags": [
+        "外部链接依赖",
+        "安全数据集说明"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1803.09010"
+    },
+    {
+      "id": "secdoc-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全数据集说明",
+      "knowledgePoint": "原始数据与特征",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "数据集提供原始样本还是预先提取的特征，会影响哪些后续操作？",
+      "answer": "它影响使用者能否重新提取特征、检查原始证据或采用其他表示方式。",
+      "explanation": "即使提供原始数据，也仍需核对使用权限和敏感信息。",
+      "example": "只有 PE 特征向量时无法直接检查原始可执行文件。",
+      "tags": [
+        "原始数据与特征",
+        "安全数据集说明"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1803.09010"
+    },
+    {
+      "id": "secdoc-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全数据集说明",
+      "knowledgePoint": "数据集文档与质量",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "数据集有完整说明文件，是否就能证明其标签完全正确？",
+      "answer": "不能；文档提供来源和限制，标签质量仍需要抽查、复核和独立评估。",
+      "explanation": "文档可以帮助找到需要优先检查的问题。",
+      "example": "即使记录了标注流程，仍抽查样本与证据是否一致。",
+      "tags": [
+        "数据集文档与质量",
+        "安全数据集说明"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1803.09010"
+    }
+  ]
+}

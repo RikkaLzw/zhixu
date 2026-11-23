@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "llmfuzz-dl-library",
+    "title": "LLMFuzz 原论文 v2：深度学习库模糊测试",
+    "url": "https://arxiv.org/pdf/2212.14834v2",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据逐题引用的论文或教材自行整理；例子为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "dlfuzz-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "研究任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "arXiv:2212.14834v2 中的 LLMFuzz 主要生成什么来测试深度学习库？",
+      "answer": "生成调用深度学习库 API 的程序，并运行这些程序以发现潜在缺陷。",
+      "explanation": "该版本论文测试 TensorFlow 和 PyTorch；论文不同版本的名称可能变化。",
+      "example": "生成包含多个张量操作的测试代码。",
+      "tags": [
+        "研究任务",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "API序列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 为什么关注多个 API 组成的调用序列？",
+      "answer": "部分缺陷需要多个 API 的数据依赖或交互才能触发，孤立测试单个调用可能遗漏。",
+      "explanation": "完整模型测试也未必覆盖所有可能的 API 组合。",
+      "example": "把一个张量操作的输出传给另一个操作。",
+      "tags": [
+        "API序列",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "种子生成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 原论文怎样提示生成模型构造初始种子？",
+      "answer": "它按步骤要求导入目标库、生成输入数据并调用目标 API。",
+      "explanation": "生成结果仍需要执行和筛选。",
+      "example": "为某个矩阵运算 API 生成初始程序。",
+      "tags": [
+        "种子生成",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "两类模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 原论文在初始生成与变异阶段分别利用哪类代码生成能力？",
+      "answer": "初始阶段使用自回归代码生成，变异阶段使用代码片段填充模型。",
+      "explanation": "填充模型可参考被遮盖位置前后的上下文。",
+      "example": "先生成程序，再替换其中一个代码片段。",
+      "tags": [
+        "两类模型",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "参数变异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 的参数替换变异如何构造模型输入？",
+      "answer": "它遮盖目标调用的参数位置，让填充模型生成新的参数代码。",
+      "explanation": "生成参数仍可能不满足 API 的形状或类型要求。",
+      "example": "替换矩阵乘法调用中的参数列表。",
+      "tags": [
+        "参数变异",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "前后缀变异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 的前缀或后缀变异如何扩展原始测试程序？",
+      "answer": "它遮盖或添加目标调用之前或之后的代码片段，让模型生成新的上下文代码。",
+      "explanation": "后缀可以继续使用目标调用的输出。",
+      "example": "在目标 API 之后加入另一个张量运算。",
+      "tags": [
+        "前后缀变异",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "方法变异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 的方法变异主要替换什么？",
+      "answer": "它遮盖一个库 API 的方法名，让模型结合原有参数生成其他调用。",
+      "explanation": "替换后的调用仍需执行检查是否有效。",
+      "example": "保留输入并尝试相关的库函数。",
+      "tags": [
+        "方法变异",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "变异算子选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 怎样自适应选择代码变异算子？",
+      "answer": "它将算子选择建模为多臂老虎机，并用 Thompson Sampling 根据历史结果采样选择。",
+      "explanation": "论文按被测 API 重新初始化算子的先验。",
+      "example": "比较不同算子产生有效且新颖程序的表现。",
+      "tags": [
+        "变异算子选择",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "算子反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 的变异算子选择使用什么反馈更新成功率估计？",
+      "answer": "使用生成样本是否有效且不同于历史样本的结果更新算子后验。",
+      "explanation": "成功率是生成质量信号，不等于漏洞发现概率。",
+      "example": "根据有效和无效变异数量更新 Beta 分布。",
+      "tags": [
+        "算子反馈",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "适应度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 为测试程序设计的适应度由哪些因素构成？",
+      "answer": "它结合静态数据流图深度、不同库 API 数，并惩罚相同输入上的重复 API 调用。",
+      "explanation": "论文形式为 D+U−R，用于优先选择后续变异种子。",
+      "example": "更长的依赖链与不同 API 可提高分数。",
+      "tags": [
+        "适应度",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "适应度边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 程序的静态适应度更高，是否保证执行时能发现缺陷？",
+      "answer": "不保证；适应度用于引导生成，真实覆盖和缺陷仍需执行与验证。",
+      "explanation": "静态数据流深度只是程序复杂度的近似信号。",
+      "example": "高分程序运行后仍可能没有触发异常。",
+      "tags": [
+        "适应度边界",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "有效程序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 原论文如何定义用于统计的有效生成程序？",
+      "answer": "程序无异常执行完成，并至少调用一次目标 API。",
+      "explanation": "论文还在统计独特有效程序时去除重复代码。",
+      "example": "仅导入库但未调用目标 API 不计为有效程序。",
+      "tags": [
+        "有效程序",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    },
+    {
+      "id": "dlfuzz-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "深度学习库模糊测试",
+      "knowledgePoint": "中间结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMFuzz 跨 CPU 和 GPU 做差分检查时，为什么记录中间变量？",
+      "answer": "它可以比较程序执行中间步骤的结果，而不只比较最终输出。",
+      "explanation": "观察到差异后仍需判断数值误差、非确定性或真实实现缺陷。",
+      "example": "定位两个后端从哪一步开始出现明显差异。",
+      "tags": [
+        "中间结果",
+        "深度学习库模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.14834v2"
+    }
+  ]
+}

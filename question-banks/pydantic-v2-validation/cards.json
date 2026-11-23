@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "pydantic-v2-validation",
+    "title": "Pydantic 2.12 文档：模型与校验器",
+    "url": "https://docs.pydantic.dev/2.12/concepts/models/",
+    "type": "论文、官方文档或数据集说明",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pydv2-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "模型校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 2 的 BaseModel.model_validate 与 model_validate_json 的常见用途是什么？",
+      "answer": "前者校验 Python 对象；后者解析并校验 JSON 数据。",
+      "explanation": "失败时通常抛出 ValidationError。",
+      "example": "接收外部输入后转换为具名模型。",
+      "tags": [
+        "Pydantic 模型校验",
+        "模型校验"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/models/"
+    },
+    {
+      "id": "pydv2-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "解析与强制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 默认模型校验是否只接受与类型注解完全一致的输入类型？",
+      "answer": "不一定；默认模式可能按规则转换兼容输入，例如将数字字符串解析为整数。",
+      "explanation": "严格模式和具体字段类型会改变可接受的输入。",
+      "example": "把字符串 \"3\" 校验成整数 3。",
+      "tags": [
+        "Pydantic 模型校验",
+        "解析与强制"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/models/"
+    },
+    {
+      "id": "pydv2-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "多余字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 2.12 的模型对未声明的额外字段默认怎样处理？",
+      "answer": "默认忽略额外字段；可配置 extra=\"forbid\" 拒绝或 extra=\"allow\" 保留。",
+      "explanation": "允许额外字段并不等于自动满足业务约束。",
+      "example": "接口要求不接受意外字段时使用 forbid。",
+      "tags": [
+        "Pydantic 模型校验",
+        "多余字段"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/models/"
+    },
+    {
+      "id": "pydv2-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "直接构造",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 的 model_construct 与常规模型校验有什么区别？",
+      "answer": "model_construct 创建模型时跳过验证，也不会自动将嵌套字典转换为嵌套模型。",
+      "explanation": "只适用于已可信或已验证的数据；默认值仍可能被使用。",
+      "example": "避免把未验证的外部数据直接交给 model_construct。",
+      "tags": [
+        "Pydantic 模型校验",
+        "直接构造"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/models/"
+    },
+    {
+      "id": "pydv2-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "导出区别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 2 的普通 BaseModel 中，model_dump、model_dump_json 和 model_json_schema 分别提供什么？",
+      "answer": "分别返回模型数据字典、模型数据的 JSON 字符串，以及描述模型的 JSON Schema 字典。",
+      "explanation": "模型数据和描述数据结构的 schema 用途不同；RootModel 的导出可能不是字典。",
+      "example": "用 schema 描述接口输入格式，用 dump 输出实际数据。",
+      "tags": [
+        "Pydantic 模型校验",
+        "导出区别"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/models/"
+    },
+    {
+      "id": "pydv2-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "模型复制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 2 的 model_copy 默认是浅复制还是深复制？",
+      "answer": "默认浅复制；可通过 deep=True 请求深复制。",
+      "explanation": "浅复制时嵌套的可变对象可能仍被共享。",
+      "example": "需要独立修改嵌套模型时考虑深复制。",
+      "tags": [
+        "Pydantic 模型校验",
+        "模型复制"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/models/"
+    },
+    {
+      "id": "pydv2-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "默认值校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 2.12 默认会对字段默认值运行自定义字段校验器吗？",
+      "answer": "默认不会；可通过配置要求验证默认值。",
+      "explanation": "传入字段值与使用默认值的校验路径可能不同。",
+      "example": "希望默认值也符合约束时启用默认值校验。",
+      "tags": [
+        "Pydantic 模型校验",
+        "默认值校验"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/validators/"
+    },
+    {
+      "id": "pydv2-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "前后字段校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 2 的 field_validator 中 mode=\"before\" 与 mode=\"after\" 有什么区别？",
+      "answer": "before 在内部类型校验前处理原始输入；after 在内部校验后处理结果。",
+      "explanation": "before 输入类型可能多样；校验器应返回处理后的值。",
+      "example": "先标准化原始字符串，再检查解析后的整数。",
+      "tags": [
+        "Pydantic 模型校验",
+        "前后字段校验"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/validators/"
+    },
+    {
+      "id": "pydv2-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "整体验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 的 model_validator 适合检查什么？",
+      "answer": "检查涉及整个模型或多个字段之间的约束。",
+      "explanation": "after 模式运行于整个模型校验之后，并应返回校验后的实例。",
+      "example": "检查开始时间是否早于结束时间。",
+      "tags": [
+        "Pydantic 模型校验",
+        "整体验证"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/validators/"
+    },
+    {
+      "id": "pydv2-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pydantic 模型校验",
+      "knowledgePoint": "字段顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pydantic 字段校验器通过 ValidationInfo.data 访问其他字段时，为什么要注意字段顺序？",
+      "answer": "其中只能可靠访问已经完成校验的字段。",
+      "explanation": "定义顺序不同或前一字段验证失败时，目标字段可能不可用。",
+      "example": "跨字段约束也可考虑模型级校验。",
+      "tags": [
+        "Pydantic 模型校验",
+        "字段顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pydantic.dev/2.12/concepts/validators/"
+    }
+  ]
+}

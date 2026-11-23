@@ -1,0 +1,113 @@
+{
+  "source": {
+    "id": "vision-detection",
+    "title": "Hugging Face：图像目标检测教程",
+    "url": "https://huggingface.co/docs/transformers/tasks/object_detection",
+    "type": "官方文档与标准",
+    "note": "根据所列资料自行编写并用简体中文整理，示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "vision-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "视觉任务",
+      "knowledgePoint": "目标检测输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图像目标检测模型通常输出什么？",
+      "answer": "它为检测到的目标输出类别和位置，位置常用边界框表示。",
+      "explanation": "一张图中可以有多个同类或不同类目标。",
+      "example": "检测页面截图中的多个按钮并给出各自边界框。",
+      "tags": [
+        "目标检测输出",
+        "多模态",
+        "计算机视觉"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/tasks/object_detection"
+    },
+    {
+      "id": "vision-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "视觉任务",
+      "knowledgePoint": "整图分类粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "整图分类模型通常为图像输出哪种粒度的预测？",
+      "answer": "它通常为整幅图像输出类别或类别分数。",
+      "explanation": "目标检测还需要为各个目标给出位置。",
+      "example": "整图判定“有按钮”与定位每个按钮是不同任务。",
+      "tags": [
+        "整图分类粒度",
+        "多模态",
+        "计算机视觉"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/tasks/object_detection"
+    },
+    {
+      "id": "vision-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "标注格式",
+      "knowledgePoint": "COCO边界框",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCO 格式中的边界框 [x, y, w, h] 通常表示什么？",
+      "answer": "x、y 是框左上角坐标，w、h 是框的宽和高。",
+      "explanation": "使用前应核对坐标单位及所用数据集约定。",
+      "example": "[10,20,30,40] 表示从左上角位置向右宽 30、高 40 的框。",
+      "tags": [
+        "COCO边界框",
+        "多模态",
+        "计算机视觉"
+      ],
+      "evidence": "source",
+      "reference": "https://albumentations.ai/docs/3-basic-usage/bounding-boxes-augmentations/",
+      "referenceTitle": "Albumentations：目标检测边界框格式"
+    },
+    {
+      "id": "vision-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "数据处理",
+      "knowledgePoint": "图像变换与标注",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "目标检测训练时对图像做裁剪或缩放，为什么要同步处理边界框？",
+      "answer": "图像坐标系改变后，旧边界框可能不再对应目标位置。",
+      "explanation": "变换后还应检查框是否仍有效且位于图像范围内。",
+      "example": "缩小截图时同步缩放按钮框坐标。",
+      "tags": [
+        "图像变换与标注",
+        "多模态",
+        "计算机视觉"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/tasks/object_detection"
+    },
+    {
+      "id": "vision-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "数据质量",
+      "knowledgePoint": "退化边界框",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "目标检测数据中的零宽或零高边界框为什么需要检查？",
+      "answer": "它们不能表示有效的二维区域，可能导致训练或评估异常。",
+      "explanation": "应结合数据标注规则修正或过滤。",
+      "example": "训练前发现宽度为零的框并回查标注。",
+      "tags": [
+        "退化边界框",
+        "多模态",
+        "计算机视觉"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/tasks/object_detection"
+    }
+  ]
+}

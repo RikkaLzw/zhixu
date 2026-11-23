@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "megavul-dataset-construction",
+    "title": "MegaVul 原论文 v1：漏洞代码数据构建",
+    "url": "https://arxiv.org/abs/2406.12415v1",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的固定版本或在线官方资料自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "megavul-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "MegaVul 漏洞代码数据",
+      "knowledgePoint": "函数提取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MegaVul 原论文用什么工具提取 C/C++ 函数？",
+      "answer": "使用增强语法规则的 Tree-sitter 解析器提取函数。",
+      "explanation": "论文还在解析前临时处理部分宏，以减小解析干扰。",
+      "example": "从变更文件中分离完整函数。",
+      "tags": [
+        "MegaVul 漏洞代码数据",
+        "函数提取"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2406.12415v1"
+    },
+    {
+      "id": "megavul-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MegaVul 漏洞代码数据",
+      "knowledgePoint": "宏处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MegaVul 为什么在函数解析前临时移除部分宏？",
+      "answer": "减少宏对语法解析和函数边界识别的干扰。",
+      "explanation": "这是一项提取步骤，研究中仍需核对最终代码与处理方式。",
+      "example": "解析含项目特定修饰宏的函数。",
+      "tags": [
+        "MegaVul 漏洞代码数据",
+        "宏处理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2406.12415v1"
+    },
+    {
+      "id": "megavul-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MegaVul 漏洞代码数据",
+      "knowledgePoint": "代码表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MegaVul 原论文除原始函数外还提供哪些类型的补充表示？",
+      "answer": "包括函数签名、抽象化代码、Joern 解析的程序图及代码变更信息。",
+      "explanation": "不同表示服务于不同模型和分析任务。",
+      "example": "使用 AST、PDG 或差异信息辅助代码研究。",
+      "tags": [
+        "MegaVul 漏洞代码数据",
+        "代码表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2406.12415v1"
+    },
+    {
+      "id": "megavul-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MegaVul 漏洞代码数据",
+      "knowledgePoint": "标识符抽象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MegaVul 的抽象化函数为什么会把部分标识符替换成符号？",
+      "answer": "它为基于 token 的模型减少词汇规模并提供不同粒度的代码表示。",
+      "explanation": "抽象化也会丢失部分原始命名信息。",
+      "example": "将变量名替换成 VAR 类符号。",
+      "tags": [
+        "MegaVul 漏洞代码数据",
+        "标识符抽象"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2406.12415v1"
+    },
+    {
+      "id": "megavul-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MegaVul 漏洞代码数据",
+      "knowledgePoint": "修复去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MegaVul 如何处理同一修复提交被多个 CVE 引用的情况？",
+      "answer": "论文保留一份提交副本，避免把同一修复作为多个独立来源重复计入。",
+      "explanation": "不同哈希但内容相同的回移修复也需要额外去重。",
+      "example": "多个漏洞编号引用同一 Git 提交。",
+      "tags": [
+        "MegaVul 漏洞代码数据",
+        "修复去重"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2406.12415v1"
+    },
+    {
+      "id": "megavul-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MegaVul 漏洞代码数据",
+      "knowledgePoint": "测试代码过滤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MegaVul 论文怎样过滤一部分与单元测试相关的文件或函数？",
+      "answer": "根据名称识别并过滤与单元测试相关的文件或函数。",
+      "explanation": "基于名称的规则可能遗漏或误判，不能保证结果完美。",
+      "example": "排除名称表明是单元测试的函数。",
+      "tags": [
+        "MegaVul 漏洞代码数据",
+        "测试代码过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2406.12415v1"
+    }
+  ]
+}

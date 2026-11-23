@@ -1,0 +1,401 @@
+{
+  "source": {
+    "id": "cwe-fundamentals",
+    "title": "MITRE CWE 与 OWASP：常见代码漏洞",
+    "url": "https://cwe.mitre.org/data/definitions/89.html",
+    "type": "官方技术文档",
+    "note": "依据所列资料自行整理为简体中文问答；例子为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "weakness-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "注入",
+      "knowledgePoint": "SQL注入",
+      "questionType": "概念与原理",
+      "question": "SQL 注入的核心问题是什么？",
+      "answer": "外部输入被错误地解释为 SQL 命令结构，从而改变原本预期的查询。",
+      "explanation": "检测时需要追踪输入如何进入数据库查询，并检查是否安全绑定。",
+      "example": "把用户输入直接拼接到 SQL 查询中。",
+      "tags": [
+        "SQL注入",
+        "注入"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/89.html",
+      "referenceTitle": "MITRE CWE-89：SQL Injection",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "注入",
+      "knowledgePoint": "SQL参数绑定边界",
+      "questionType": "易错点",
+      "question": "参数化 SQL 查询主要保护哪部分输入？",
+      "answer": "参数绑定将数据值与 SQL 语法分开；动态表名、列名或排序方向通常需要固定映射或允许列表。",
+      "explanation": "参数绑定不替代访问授权检查。",
+      "example": "排序字段从预定义的列名集合中选择。",
+      "tags": [
+        "SQL参数绑定边界",
+        "注入",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html",
+      "referenceTitle": "OWASP：SQL Injection Prevention",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节安全岗位公开面经（合集收录，经历为分享者自述）",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x47-%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "weakness-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "输出安全",
+      "knowledgePoint": "反射与存储XSS",
+      "questionType": "比较与选型",
+      "question": "反射型 XSS 与存储型 XSS 在输入传播上有什么区别？",
+      "answer": "反射型危险输入随请求被返回给受害者；存储型输入先被保存，随后展示给访问者。",
+      "explanation": "两者都涉及不安全地把可控内容放入页面。",
+      "example": "用户评论被保存后在其他用户页面中呈现。",
+      "tags": [
+        "反射与存储XSS",
+        "输出安全"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/79.html",
+      "referenceTitle": "MITRE CWE-79：Cross-site Scripting",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "输出安全",
+      "knowledgePoint": "上下文编码",
+      "questionType": "概念与原理",
+      "question": "为什么防止 XSS 的输出编码要考虑输出上下文？",
+      "answer": "HTML 文本、属性、JavaScript 和 URL 等上下文使用不同的语法规则，需要匹配对应的编码或安全处理方式。",
+      "explanation": "允许用户提供 HTML 时，还需要合适的 HTML 清理策略。",
+      "example": "将数据放入 HTML 属性时使用适用于属性上下文的处理。",
+      "tags": [
+        "上下文编码",
+        "输出安全"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html",
+      "referenceTitle": "OWASP：XSS Prevention",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-005",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "文件访问",
+      "knowledgePoint": "路径遍历",
+      "questionType": "概念与原理",
+      "question": "路径遍历漏洞允许外部输入造成什么偏离？",
+      "answer": "它可能使文件路径解析到预期受限目录之外的位置。",
+      "explanation": "相对路径和绝对路径都可能造成越界访问。",
+      "example": "用于读取附件的路径被解析到附件目录之外。",
+      "tags": [
+        "路径遍历",
+        "文件访问"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/22.html",
+      "referenceTitle": "MITRE CWE-22：Path Traversal",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-006",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "注入",
+      "knowledgePoint": "操作系统命令注入",
+      "questionType": "概念与原理",
+      "question": "操作系统命令注入的核心问题是什么？",
+      "answer": "外部输入改变了应用原本要交给操作系统执行的命令。",
+      "explanation": "分析时应检查输入到命令执行位置的传播和解释方式。",
+      "example": "应用把未经安全处理的输入拼到命令字符串。",
+      "tags": [
+        "操作系统命令注入",
+        "注入"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/78.html",
+      "referenceTitle": "MITRE CWE-78：OS Command Injection",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "注入",
+      "knowledgePoint": "命令参数隔离",
+      "questionType": "易错点",
+      "question": "使用不经 shell 的参数列表后，还需要检查目标程序参数吗？",
+      "answer": "需要；虽然可以避免 shell 解释输入中的控制字符，目标程序仍可能把输入解释为选项或特殊参数。",
+      "explanation": "应使用符合需求的参数校验和允许列表。",
+      "example": "限制工具的操作模式，避免用户输入被当作额外选项。",
+      "tags": [
+        "命令参数隔离",
+        "注入"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/78.html",
+      "referenceTitle": "MITRE CWE-78：OS Command Injection",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-008",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "服务端请求",
+      "knowledgePoint": "SSRF",
+      "questionType": "概念与原理",
+      "question": "服务端请求伪造（SSRF）的核心风险是什么？",
+      "answer": "服务端按外部可控目标发起请求，却没有充分限制请求目的地。",
+      "explanation": "受影响的服务可能被用于访问原本无法由外部直接访问的内部服务。",
+      "example": "图片抓取功能被引导访问内部地址。",
+      "tags": [
+        "SSRF",
+        "服务端请求"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/918.html",
+      "referenceTitle": "MITRE CWE-918：SSRF",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "服务端请求",
+      "knowledgePoint": "SSRF重定向",
+      "questionType": "易错点",
+      "question": "为什么 SSRF 防护不能只检查最初提交的 URL？",
+      "answer": "可信的初始地址可能重定向到未授权地址，后续请求也需要受到限制。",
+      "explanation": "可禁用自动重定向，或对每次跳转目标重新实施合适的检查。",
+      "example": "外部页面将服务端抓取重定向到内部服务。",
+      "tags": [
+        "SSRF重定向",
+        "服务端请求"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html",
+      "referenceTitle": "OWASP：SSRF Prevention",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度公开面经（合集收录，经历为分享者自述）；原帖提及 SSRF 和 307 跳转，防护为主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x83-%E7%99%BE%E5%BA%A6",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "weakness-010",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "请求安全",
+      "knowledgePoint": "CSRF",
+      "questionType": "概念与原理",
+      "question": "CSRF 利用了 Web 应用对什么的信任？",
+      "answer": "应用可能把浏览器自动附带的用户凭据当作请求确由用户本人有意发起的证据。",
+      "explanation": "攻击只能利用应用暴露的功能和受害者已有权限。",
+      "example": "受害者浏览器携带会话 Cookie 发出非本人意图的状态变更请求。",
+      "tags": [
+        "CSRF",
+        "请求安全"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/352.html",
+      "referenceTitle": "MITRE CWE-352：CSRF",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-011",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "请求安全",
+      "knowledgePoint": "CSRF令牌校验",
+      "questionType": "概念与原理",
+      "question": "CSRF 令牌需要在哪里校验才有防护作用？",
+      "answer": "服务端需要验证状态变更请求中提交的有效令牌。",
+      "explanation": "应优先使用框架提供并正确配置的防护机制。",
+      "example": "修改账户设置时检查请求携带的 CSRF 令牌。",
+      "tags": [
+        "CSRF令牌校验",
+        "请求安全",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html",
+      "referenceTitle": "OWASP：CSRF Prevention",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度安全岗位公开面经（合集收录，经历为分享者自述）",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x2b-%E7%99%BE%E5%BA%A6",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "weakness-012",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "反序列化",
+      "knowledgePoint": "不可信数据反序列化",
+      "questionType": "概念与原理",
+      "question": "为什么对不可信数据进行不安全反序列化存在风险？",
+      "answer": "部分反序列化机制可能在恢复对象时触发非预期行为；具体后果取决于格式和运行环境。",
+      "explanation": "检测应结合所用序列化库及输入可信边界。",
+      "example": "外部提交的对象数据被直接交给可执行对象恢复机制。",
+      "tags": [
+        "不可信数据反序列化",
+        "反序列化"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/502.html",
+      "referenceTitle": "MITRE CWE-502：Deserialization of Untrusted Data",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-013",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "内存安全",
+      "knowledgePoint": "越界读取与写入",
+      "questionType": "比较与选型",
+      "question": "越界读取与越界写入的区别是什么？",
+      "answer": "越界读取访问了目标缓冲区之外的数据；越界写入修改了目标缓冲区之外的内存。",
+      "explanation": "两类问题的具体后果取决于程序和运行环境。",
+      "example": "数组下标超过长度时，读与写分别属于不同错误。",
+      "tags": [
+        "越界读取与写入",
+        "内存安全"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/787.html",
+      "referenceTitle": "MITRE CWE-787：Out-of-bounds Write",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "cwe-read-ref",
+          "title": "MITRE CWE-125：Out-of-bounds Read",
+          "url": "https://cwe.mitre.org/data/definitions/125.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "weakness-014",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "内存安全",
+      "knowledgePoint": "释放后使用",
+      "questionType": "概念与原理",
+      "question": "什么是释放后使用（use-after-free）？",
+      "answer": "程序在内存被释放后仍通过旧引用访问该内存。",
+      "explanation": "该内存可能已被重新分配，旧引用不再有效。",
+      "example": "对象释放后仍调用指向它的指针。",
+      "tags": [
+        "释放后使用",
+        "内存安全"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/416.html",
+      "referenceTitle": "MITRE CWE-416：Use After Free",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-huawei",
+          "title": "华为公开面经（合集收录，岗位未注明；经历为分享者自述）；内存漏洞主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x7f-%E5%8D%8E%E4%B8%BA",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "weakness-015",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "内存安全",
+      "knowledgePoint": "空指针解引用",
+      "questionType": "概念与原理",
+      "question": "什么是空指针解引用？",
+      "answer": "程序把空指针当作有效地址进行访问。",
+      "explanation": "具体表现由语言和运行环境决定。",
+      "example": "未检查对象获取失败就使用其指针。",
+      "tags": [
+        "空指针解引用",
+        "内存安全"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/476.html",
+      "referenceTitle": "MITRE CWE-476：NULL Pointer Dereference",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-016",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "数值安全",
+      "knowledgePoint": "整数溢出",
+      "questionType": "概念与原理",
+      "question": "固定宽度整数运算为什么需要关注溢出？",
+      "answer": "运算结果可能超出可表示范围，实际行为取决于语言、类型和运行环境。",
+      "explanation": "溢出可能影响长度计算或边界检查，不能假定所有语言都会回绕。",
+      "example": "计算分配缓冲区所需大小前检查乘法范围。",
+      "tags": [
+        "整数溢出",
+        "数值安全"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/190.html",
+      "referenceTitle": "MITRE CWE-190：Integer Overflow",
+      "origin": "自行整理"
+    },
+    {
+      "id": "weakness-017",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "访问控制",
+      "knowledgePoint": "身份认证与授权",
+      "questionType": "比较与选型",
+      "question": "身份认证与授权分别回答什么问题？",
+      "answer": "认证检查请求者是谁；授权检查该主体是否被允许访问资源或执行操作。",
+      "explanation": "通过认证不意味着自动具备所有资源的访问权限。",
+      "example": "用户登录后仍要检查能否读取指定文件。",
+      "tags": [
+        "身份认证与授权",
+        "访问控制"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/862.html",
+      "referenceTitle": "MITRE CWE-862：Missing Authorization",
+      "origin": "自行整理"
+    }
+  ]
+}

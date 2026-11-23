@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "codet5-identifier-pretraining",
+    "title": "CodeT5 原论文 v1：代码模型标识符预训练",
+    "url": "https://arxiv.org/abs/2109.00859v1",
+    "type": "协议标准、官方文档与论文",
+    "note": "依据逐题标注的规范、固定版本文档或论文自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "codet5-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "CodeT5 代码预训练",
+      "knowledgePoint": "模型架构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeT5 原论文采用什么模型结构来统一代码理解和生成任务？",
+      "answer": "它采用基于 T5 的 Transformer 编码器—解码器结构。",
+      "explanation": "下游任务可按输入与目标形式构造成不同任务。",
+      "example": "代码缺陷分类或代码摘要生成。",
+      "tags": [
+        "CodeT5 代码预训练",
+        "模型架构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2109.00859v1"
+    },
+    {
+      "id": "codet5-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "CodeT5 代码预训练",
+      "knowledgePoint": "标识符标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeT5 的 identifier tagging 预训练任务让模型判断什么？",
+      "answer": "对代码位置判断其 token 是否属于标识符。",
+      "explanation": "论文利用代码解析得到的 token 类型构造二元标记。",
+      "example": "区分函数名与运算符。",
+      "tags": [
+        "CodeT5 代码预训练",
+        "标识符标记"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2109.00859v1"
+    },
+    {
+      "id": "codet5-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeT5 代码预训练",
+      "knowledgePoint": "标识符遮盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeT5 的 masked identifier prediction 如何遮盖同一标识符的多次出现？",
+      "answer": "论文为同一标识符的所有出现位置使用相同的专属 sentinel 标记。",
+      "explanation": "解码器据代码上下文恢复被遮盖的标识符。",
+      "example": "同一变量多次出现时使用同一个标记。",
+      "tags": [
+        "CodeT5 代码预训练",
+        "标识符遮盖"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2109.00859v1"
+    },
+    {
+      "id": "codet5-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeT5 代码预训练",
+      "knowledgePoint": "Span预测区别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeT5 的 masked span prediction 与 masked identifier prediction 主要按什么方式选择遮盖内容？",
+      "answer": "前者随机选择连续片段；后者针对代码中的标识符进行遮盖。",
+      "explanation": "两种任务均使用序列生成形式恢复目标。",
+      "example": "随机遮盖一段代码或遮盖变量名。",
+      "tags": [
+        "CodeT5 代码预训练",
+        "Span预测区别"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2109.00859v1"
+    },
+    {
+      "id": "codet5-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeT5 代码预训练",
+      "knowledgePoint": "完整词遮盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeT5 的 masked span prediction 为什么先在子词切分前采样遮盖片段？",
+      "answer": "这样可避免只遮盖一个词的一部分子词。",
+      "explanation": "论文沿用 T5 风格的片段恢复目标。",
+      "example": "变量名被切成多个子词时按完整词采样。",
+      "tags": [
+        "CodeT5 代码预训练",
+        "完整词遮盖"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2109.00859v1"
+    },
+    {
+      "id": "codet5-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeT5 代码预训练",
+      "knowledgePoint": "双向生成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeT5 的 bimodal dual generation 包含哪两个方向？",
+      "answer": "包含自然语言生成代码，以及由代码生成自然语言描述。",
+      "explanation": "该目标使用成对的代码与自然语言数据。",
+      "example": "说明生成函数和函数生成摘要。",
+      "tags": [
+        "CodeT5 代码预训练",
+        "双向生成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2109.00859v1"
+    },
+    {
+      "id": "codet5-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeT5 代码预训练",
+      "knowledgePoint": "预训练数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeT5 的标识符感知去噪任务只能在带注释的代码上训练吗？",
+      "answer": "不能；论文在仅有代码和代码—自然语言成对数据上都使用这些任务。",
+      "explanation": "双向生成任务则依赖成对数据。",
+      "example": "无注释代码仍可用于标识符标记。",
+      "tags": [
+        "CodeT5 代码预训练",
+        "预训练数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2109.00859v1"
+    }
+  ]
+}

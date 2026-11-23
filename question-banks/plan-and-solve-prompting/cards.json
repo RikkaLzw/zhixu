@@ -1,0 +1,50 @@
+{
+  "source": {
+    "id": "plan-and-solve-prompting",
+    "title": "Plan-and-Solve 论文 v3：提示与错误类型",
+    "url": "https://arxiv.org/pdf/2305.04091v3",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "plansolve-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Plan-and-Solve 提示",
+      "knowledgePoint": "缺步错误",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Plan-and-Solve 论文提出制定计划主要针对哪类推理错误？",
+      "answer": "针对推理过程中遗漏必要中间步骤的错误。",
+      "explanation": "计划本身仍可能不完整或执行错误。",
+      "example": "先分解多步问题再检查各子任务。",
+      "tags": [
+        "Plan-and-Solve 提示",
+        "缺步错误"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.04091v3"
+    },
+    {
+      "id": "plansolve-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Plan-and-Solve 提示",
+      "knowledgePoint": "PS加增强",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Plan-and-Solve 论文中的 PS+ 相比基本 PS 增加了什么提示？",
+      "answer": "增加提取相关变量、计算中间结果及注意计算等更详细的指令。",
+      "explanation": "这些提示旨在减少计算和步骤遗漏问题，但不保证答案正确。",
+      "example": "对算术推理显式列出相关变量与中间结果。",
+      "tags": [
+        "Plan-and-Solve 提示",
+        "PS加增强"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.04091v3"
+    }
+  ]
+}

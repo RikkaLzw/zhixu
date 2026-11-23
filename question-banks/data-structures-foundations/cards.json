@@ -1,0 +1,316 @@
+{
+  "source": {
+    "id": "data-structures-foundations",
+    "title": "Open Data Structures：常见数据结构与算法",
+    "url": "https://opendatastructures.org/ods-python/index.html",
+    "type": "教材与官方技术文档",
+    "note": "依教材或官方文档自行整理，具体实现和版本条件见卡片。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "dsbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "栈与队列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "栈和队列分别按什么顺序取出元素？",
+      "answer": "栈通常后进先出（LIFO）；队列通常先进先出（FIFO）。",
+      "explanation": "二者的限制体现了不同的访问顺序。",
+      "example": "撤销操作常用栈，任务排队常用队列。",
+      "tags": [
+        "栈与队列",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/1_2_Interfaces.html"
+    },
+    {
+      "id": "dsbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "数组访问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定元素大小的数组按下标访问通常需要多少时间？",
+      "answer": "在支持随机访问的常见模型下，按下标访问是 O(1)。",
+      "explanation": "这不意味着在中间插入也一定是 O(1)。",
+      "example": "直接读取数组第 i 项。",
+      "tags": [
+        "数组访问",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/2_Array_Based_Lists.html"
+    },
+    {
+      "id": "dsbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "数组中间插入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "顺序数组中间插入一个元素为什么通常需要 O(n) 时间？",
+      "answer": "插入位置之后的元素可能需要整体移动，以腾出空间。",
+      "explanation": "末尾追加和中间插入的成本不同。",
+      "example": "在数组开头插入元素时移动后续元素。",
+      "tags": [
+        "数组中间插入",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/2_Array_Based_Lists.html"
+    },
+    {
+      "id": "dsbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "链表随机访问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单链表按位置访问第 i 个元素通常为什么需要 O(i) 时间？",
+      "answer": "它通常要从头节点沿 next 引用逐个走到目标位置。",
+      "explanation": "链表不提供普通数组那样的直接下标访问。",
+      "example": "从链表头遍历到第十个节点。",
+      "tags": [
+        "链表随机访问",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/3_Linked_Lists.html"
+    },
+    {
+      "id": "dsbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "链表已知节点插入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "已知单链表中的某个节点，在它后面插入新节点通常需要多少时间？",
+      "answer": "只需调整局部引用，通常为 O(1)。",
+      "explanation": "若还需要先查找该节点，查找时间要另算。",
+      "example": "已持有目标节点引用后插入新节点。",
+      "tags": [
+        "链表已知节点插入",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/3_Linked_Lists.html"
+    },
+    {
+      "id": "dsbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "动态数组追加",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按倍数扩容的动态数组，末尾追加的摊还时间通常是多少？",
+      "answer": "通常为 O(1)；少数触发扩容的追加需要复制已有元素。",
+      "explanation": "摊还复杂度描述操作序列的平均成本，不保证每次都为常数。",
+      "example": "多次追加时偶尔分配更大数组。",
+      "tags": [
+        "动态数组追加",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/2_Array_Based_Lists.html"
+    },
+    {
+      "id": "dsbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "哈希冲突",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "哈希表中的冲突是什么？",
+      "answer": "不同键被映射到相同的哈希位置或桶，需要进一步区分。",
+      "explanation": "不同键发生冲突并不意味着它们相等。",
+      "example": "多个键落到同一个桶。",
+      "tags": [
+        "哈希冲突",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/5_Hash_Tables.html"
+    },
+    {
+      "id": "dsbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "冲突处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "哈希表的链地址法与开放寻址法如何处理冲突？",
+      "answer": "链地址法在同一桶中组织多个条目；开放寻址法按探测规则寻找表中其他位置。",
+      "explanation": "两类实现的删除和扩容细节不同。",
+      "example": "碰撞后把条目加入桶或继续探测空槽。",
+      "tags": [
+        "冲突处理",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/5_Hash_Tables.html"
+    },
+    {
+      "id": "dsbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "哈希查找复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "哈希表查找一定是最坏 O(1) 吗？",
+      "answer": "不一定；在合适的哈希分布与负载条件下期望为 O(1)，最坏情况可能退化到 O(n)。",
+      "explanation": "冲突与实现策略会影响查找成本。",
+      "example": "大量键集中到同一个链时需要逐个比较。",
+      "tags": [
+        "哈希查找复杂度",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/5_Hash_Tables.html"
+    },
+    {
+      "id": "dsbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "二分查找前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对有序随机访问数组进行二分查找，通常需要多少次比较？",
+      "answer": "通常为 O(log n) 次比较。",
+      "explanation": "需要有序输入，且随机访问应足够高效。",
+      "example": "每次排除大约一半的候选区间。",
+      "tags": [
+        "二分查找前提",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/bisect.html"
+    },
+    {
+      "id": "dsbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "二分重复值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通二分查找命中重复元素时，是否一定返回第一个匹配位置？",
+      "answer": "不一定；若要找最左或最右位置，需要采用相应的边界查找规则。",
+      "explanation": "找到一个匹配值与找到边界是不同目标。",
+      "example": "在多个相同日期中定位第一个位置。",
+      "tags": [
+        "二分重复值",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/bisect.html"
+    },
+    {
+      "id": "dsbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "归并排序复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准归并排序的最坏时间复杂度通常是多少？",
+      "answer": "通常为 O(n log n)。",
+      "explanation": "常见数组实现需要额外空间合并结果。",
+      "example": "递归划分后逐层合并有序段。",
+      "tags": [
+        "归并排序复杂度",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/11_Sorting_Algorithms.html"
+    },
+    {
+      "id": "dsbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "快速排序最坏情况",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通快速排序的最坏时间复杂度可能是多少？",
+      "answer": "若划分持续极不均衡，最坏可达到 O(n²)。",
+      "explanation": "枢轴选择策略会影响出现这种情况的机会。",
+      "example": "每次只把一个元素分到较小的一侧。",
+      "tags": [
+        "快速排序最坏情况",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/11_Sorting_Algorithms.html"
+    },
+    {
+      "id": "dsbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "二叉堆性质",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "最小二叉堆的父节点与子节点满足什么顺序关系？",
+      "answer": "每个父节点的键不大于其子节点的键。",
+      "explanation": "堆不要求整棵树按中序遍历完全有序。",
+      "example": "堆顶保存一个最小键。",
+      "tags": [
+        "二叉堆性质",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/10_Heaps.html"
+    },
+    {
+      "id": "dsbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "二叉搜索树退化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通二叉搜索树的查找最坏为什么可能达到 O(n)？",
+      "answer": "如果树高度退化到与节点数同阶，查找可能沿一条长路径遍历。",
+      "explanation": "自平衡搜索树通过维护平衡限制高度。",
+      "example": "按有序键依次插入可能形成很长的链。",
+      "tags": [
+        "二叉搜索树退化",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/6_2_BinarySearchTree_Unbala.html"
+    },
+    {
+      "id": "dsbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据结构与算法",
+      "knowledgePoint": "大O含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "算法的 O(n) 描述是否等同于实际运行时间恰好为 n 秒？",
+      "answer": "不是；它描述渐近上界中的增长趋势，实际耗时还受常数、输入和环境影响。",
+      "explanation": "复杂度通常需要说明时间还是空间及分析前提。",
+      "example": "比较输入规模增大时循环次数的增长。",
+      "tags": [
+        "大O含义",
+        "数据结构与算法"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-python/1_5_Correctness_Time_Comple.html"
+    }
+  ]
+}

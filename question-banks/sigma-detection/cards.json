@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "sigma-detection",
+    "title": "Sigma 2.1.0 规则与关联规范",
+    "url": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html",
+    "type": "技术文档",
+    "note": "依据逐题注明的资料及对应版本整理，示例为自行编写。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "sigma-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "选择映射逻辑",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 中同一个选择映射的多个字段默认如何组合？",
+      "answer": "各字段条件默认按逻辑 AND 组合。",
+      "explanation": "同一字段的值列表默认是 OR；实际转换结果还需在目标后端验证。",
+      "example": "EventID 为 4625 且主机名为指定值时命中。",
+      "tags": [
+        "选择映射逻辑",
+        "检测规则"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html"
+    },
+    {
+      "id": "sigma-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "值列表 all",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 中字段值列表上的 all 修饰符有什么作用？",
+      "answer": "它要求列表中的各个值都满足匹配，替代默认的 OR 语义。",
+      "explanation": "all 用于列表，具体后端需支持相应转换。",
+      "example": "命令行字段同时包含两个指定片段。",
+      "tags": [
+        "值列表 all",
+        "检测规则"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-appendix-modifiers.html"
+    },
+    {
+      "id": "sigma-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "字段存在性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 exists 修饰符能证明字段值非空吗？",
+      "answer": "不能；它只检查字段是否存在，字段值仍可能为空或 null。",
+      "explanation": "是否存在与值是否有效是不同检查。",
+      "example": "字段存在但值为空，仍可能满足 exists: true。",
+      "tags": [
+        "字段存在性",
+        "检测规则"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-appendix-modifiers.html"
+    },
+    {
+      "id": "sigma-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "大小写与正则",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 中普通字符串与正则表达式默认如何处理大小写？",
+      "answer": "普通字符串默认不区分大小写；正则表达式默认区分大小写。",
+      "explanation": "可使用相应修饰符改变默认行为，后端实现也应验证。",
+      "example": "普通字符串可匹配不同大小写，而正则需要显式忽略大小写。",
+      "tags": [
+        "大小写与正则",
+        "检测规则"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-appendix-modifiers.html"
+    },
+    {
+      "id": "sigma-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "包含和前缀",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 中 contains 与 startswith 分别约束什么？",
+      "answer": "contains 要求值出现在字段内容中；startswith 要求值出现在字段开头。",
+      "explanation": "两者匹配范围不同，应按检测意图选择。",
+      "example": "检查命令行包含参数时使用 contains。",
+      "tags": [
+        "包含和前缀",
+        "检测规则"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-appendix-modifiers.html"
+    },
+    {
+      "id": "sigma-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "事件数与去重值数",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 关联中的 event_count 与 value_count 统计什么？",
+      "answer": "event_count 统计匹配事件数；value_count 统计指定字段的不同值数。",
+      "explanation": "二者都在指定时间范围及分组内计算。",
+      "example": "多次失败登录计事件数，而不同用户名数可用 value_count。",
+      "tags": [
+        "事件数与去重值数",
+        "检测规则"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigma-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "时序关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 temporal_ordered 比 temporal 多要求什么？",
+      "answer": "它还要求被关联的事件按规则列出的顺序发生。",
+      "explanation": "不支持事件顺序的后端可能产生额外误报。",
+      "example": "先失败登录，再成功登录。",
+      "tags": [
+        "时序关联",
+        "检测规则"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigma-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "关联分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 关联规则的 group-by 用于什么？",
+      "answer": "它按指定字段分别关联和统计事件。",
+      "explanation": "分组字段需要与实际数据中的实体标识一致。",
+      "example": "按用户名分组统计每个账号的失败登录。",
+      "tags": [
+        "关联分组",
+        "检测规则"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigma-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "窗口边界漏检",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么固定时间桶实现 Sigma 关联可能漏掉跨桶行为？",
+      "answer": "落在相邻桶中的事件即使间隔很短，也可能不会被同一个桶统计。",
+      "explanation": "应核查目标后端的时间窗口实现，并用边界样本测试。",
+      "example": "整点前后的两次事件被分到不同小时桶。",
+      "tags": [
+        "窗口边界漏检",
+        "检测规则"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    }
+  ]
+}

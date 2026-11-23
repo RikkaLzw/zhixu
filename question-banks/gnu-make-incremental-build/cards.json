@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "gnu-make-incremental-build",
+    "title": "GNU Make 4.4.1 手册：增量构建与变量",
+    "url": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "makebuild-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GNU Make 构建实践",
+      "knowledgePoint": "默认目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU Make 在没有命令行目标且未另行设置默认目标时通常构建什么？",
+      "answer": "构建 makefile 中首个符合默认目标规则的目标。",
+      "explanation": "模式规则等不作为普通默认目标；可显式设置 .DEFAULT_GOAL。",
+      "example": "常把 all 放在前面作为项目默认目标。",
+      "tags": [
+        "GNU Make 构建实践",
+        "默认目标"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi"
+    },
+    {
+      "id": "makebuild-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GNU Make 构建实践",
+      "knowledgePoint": "自动目标变量",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU Make 规则的 recipe 中，自动变量 $@ 通常代表什么？",
+      "answer": "当前规则的目标名。",
+      "explanation": "自动变量根据当前规则执行时的目标和先决条件确定。",
+      "example": "编译目标 app.o 时，$@ 可表示 app.o。",
+      "tags": [
+        "GNU Make 构建实践",
+        "自动目标变量"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi"
+    },
+    {
+      "id": "makebuild-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GNU Make 构建实践",
+      "knowledgePoint": "自动先决条件变量",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU Make 规则的 recipe 中，$< 通常代表什么？",
+      "answer": "第一个先决条件的名称。",
+      "explanation": "隐式规则有其对第一个先决条件的具体规则。",
+      "example": "单个源文件的编译规则中可用 $< 指代源文件。",
+      "tags": [
+        "GNU Make 构建实践",
+        "自动先决条件变量"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi"
+    },
+    {
+      "id": "makebuild-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU Make 构建实践",
+      "knowledgePoint": "自动变量去重",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "GNU Make 的 $^ 与 $+ 对重复出现的普通先决条件有何区别？",
+      "answer": "$^ 去掉重复项；$+ 保留重复项和列出顺序。",
+      "explanation": "两者都不包含仅顺序先决条件。",
+      "example": "重复列出的静态库有时需要用 $+ 保持链接顺序。",
+      "tags": [
+        "GNU Make 构建实践",
+        "自动变量去重"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi"
+    },
+    {
+      "id": "makebuild-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU Make 构建实践",
+      "knowledgePoint": "仅顺序先决条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU Make 中 target: source | directory 的 directory 是什么先决条件？",
+      "answer": "仅顺序先决条件：先构建它，但它变新本身不会使 target 过期。",
+      "explanation": "目录时间戳变化通常不应触发所有目标重建。",
+      "example": "构建产物前先创建输出目录。",
+      "tags": [
+        "GNU Make 构建实践",
+        "仅顺序先决条件"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi"
+    },
+    {
+      "id": "makebuild-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU Make 构建实践",
+      "knowledgePoint": "递归与即时变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU Make 中变量用 = 与 := 赋值时，右侧何时展开？",
+      "answer": "= 定义递归展开变量，通常在变量使用时展开；:= 在赋值时立即展开右侧。",
+      "explanation": "在赋值后改变被引用变量时，两者可能产生不同结果。",
+      "example": "x = $(y) 与 x := $(y) 可能得到不同结果。",
+      "tags": [
+        "GNU Make 构建实践",
+        "递归与即时变量"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi"
+    },
+    {
+      "id": "makebuild-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GNU Make 构建实践",
+      "knowledgePoint": "模拟执行",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU Make 的 -n 通常用于什么？",
+      "answer": "打印计划执行的 recipe，通常不实际执行这些命令。",
+      "explanation": "少数命令如递归 make 等有特殊处理，不能把 -n 当作绝对无副作用保证。",
+      "example": "make -n 可预览预期的构建步骤。",
+      "tags": [
+        "GNU Make 构建实践",
+        "模拟执行"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi"
+    },
+    {
+      "id": "makebuild-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU Make 构建实践",
+      "knowledgePoint": "并行构建依赖",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "GNU Make 使用 -j 并行构建时，为什么仍要完整声明目标之间的依赖？",
+      "answer": "Make 依据依赖图安排执行顺序，缺失依赖可能导致任务并发运行并产生竞态。",
+      "explanation": "不能依靠串行运行时偶然成立的顺序保证正确构建。",
+      "example": "生成头文件的步骤应作为使用它的目标的先决条件。",
+      "tags": [
+        "GNU Make 构建实践",
+        "并行构建依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi"
+    },
+    {
+      "id": "makebuild-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU Make 构建实践",
+      "knowledgePoint": "recipe 命令行 shell",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "默认 GNU Make 中，recipe 的不同命令行是否共享同一个 shell 的 cd 状态？",
+      "answer": "通常不共享；每个命令行一般由独立 shell 执行。",
+      "explanation": "可在同一命令行组合命令，或明确使用 .ONESHELL 改变行为。",
+      "example": "先写 cd dir，下一行 pwd 通常不会留在 dir。",
+      "tags": [
+        "GNU Make 构建实践",
+        "recipe 命令行 shell"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mirror/make/4.4.1/doc/make.texi"
+    }
+  ]
+}

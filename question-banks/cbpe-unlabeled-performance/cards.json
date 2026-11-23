@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "cbpe-unlabeled-performance",
+    "title": "NannyML 0.13.1：无标签分类性能估计",
+    "url": "https://github.com/NannyML/nannyml/blob/v0.13.1/docs/how_it_works/performance_estimation.rst",
+    "type": "NannyML 固定版本文档",
+    "note": "依据逐题所列固定版本资料自行整理；示例为自编，适用条件见题目。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "cbpe-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CBPE 无标签性能估计",
+      "knowledgePoint": "方法用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NannyML 的 CBPE 主要为哪类任务估计缺少真实标签时的性能？",
+      "answer": "为分类模型估计性能，利用预测类别和类别概率等模型输出。",
+      "explanation": "估计结果依赖概率可靠性及其他假设，不能替代真实标签验证。",
+      "example": "标签延迟时先监测二分类告警模型的预估性能。",
+      "tags": [
+        "CBPE 无标签性能估计",
+        "方法用途"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NannyML/nannyml/blob/v0.13.1/docs/how_it_works/performance_estimation.rst"
+    },
+    {
+      "id": "cbpe-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CBPE 无标签性能估计",
+      "knowledgePoint": "标签条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CBPE 在当前分析窗口没有真实标签时，是否意味着历史参考数据也不需要标签？",
+      "answer": "不意味着；历史有标签参考数据可用于检查和拟合概率校准。",
+      "explanation": "分析窗口缺标签与整个建模流程完全没有标签是不同条件。",
+      "example": "用历史已标注告警校准概率，再估计近期未标注窗口。",
+      "tags": [
+        "CBPE 无标签性能估计",
+        "标签条件"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NannyML/nannyml/blob/v0.13.1/docs/how_it_works/performance_estimation.rst"
+    },
+    {
+      "id": "cbpe-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CBPE 无标签性能估计",
+      "knowledgePoint": "正预测期望",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "在二分类 CBPE 中，预测类别由概率阈值确定时，预测为正的样本其校准后正类概率 p 对预估真阳性数贡献多少？",
+      "answer": "贡献 p；同一条预测对预估假阳性数贡献 1-p。",
+      "explanation": "这里将概率解释为正类的可信发生概率，并按预测类别分配贡献。",
+      "example": "一条预测为正且 p=0.8 的样本贡献 0.8 个预估真阳性。",
+      "tags": [
+        "CBPE 无标签性能估计",
+        "正预测期望"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NannyML/nannyml/blob/v0.13.1/docs/how_it_works/performance_estimation.rst"
+    },
+    {
+      "id": "cbpe-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CBPE 无标签性能估计",
+      "knowledgePoint": "负预测期望",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "在二分类 CBPE 中，预测类别由概率阈值确定时，预测为负的样本其校准后正类概率 p 对预估真阴性数贡献多少？",
+      "answer": "贡献 1-p；同一条预测对预估假阴性数贡献 p。",
+      "explanation": "混淆矩阵各项的估计值是概率贡献的总和，可以不是整数。",
+      "example": "预测为负且 p=0.2 时，真阴性贡献为 0.8。",
+      "tags": [
+        "CBPE 无标签性能估计",
+        "负预测期望"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NannyML/nannyml/blob/v0.13.1/docs/how_it_works/performance_estimation.rst"
+    },
+    {
+      "id": "cbpe-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CBPE 无标签性能估计",
+      "knowledgePoint": "预估准确率",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "CBPE 得到某窗口的预估真阳性数和真阴性数后，如何估计准确率？",
+      "answer": "将二者相加，再除以窗口样本总数。",
+      "explanation": "结果是基于概率的估计，不能当作已经观察到的真实准确率。",
+      "example": "10 条记录的预估 TP 与 TN 之和为 8 时，预估准确率为 0.8。",
+      "tags": [
+        "CBPE 无标签性能估计",
+        "预估准确率"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NannyML/nannyml/blob/v0.13.1/docs/how_it_works/performance_estimation.rst"
+    },
+    {
+      "id": "cbpe-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CBPE 无标签性能估计",
+      "knowledgePoint": "概率校准前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 CBPE 需要关注预测概率在分析数据上的校准？",
+      "answer": "若概率不能合理反映对应样本的真实正类频率，累加概率得到的性能估计可能偏差很大。",
+      "explanation": "历史数据上校准良好也不能自动保证未来分布变化后仍然校准。",
+      "example": "输出 0.9 的一组样本实际只有约一半为正时，估计可能失真。",
+      "tags": [
+        "CBPE 无标签性能估计",
+        "概率校准前提"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NannyML/nannyml/blob/v0.13.1/docs/how_it_works/performance_estimation.rst"
+    },
+    {
+      "id": "cbpe-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "CBPE 无标签性能估计",
+      "knowledgePoint": "概念漂移限制",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "当输入与真实目标之间的关系发生概念漂移时，CBPE 能保证仍然准确吗？",
+      "answer": "不能；真实关系变化可能破坏原有概率与标签的对应关系。",
+      "explanation": "需要获取后续真实标签并重新检查模型和估计方法。",
+      "example": "攻击者改变行为后，原告警分数可能不再代表原有威胁概率。",
+      "tags": [
+        "CBPE 无标签性能估计",
+        "概念漂移限制"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NannyML/nannyml/blob/v0.13.1/docs/how_it_works/performance_estimation.rst"
+    },
+    {
+      "id": "cbpe-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CBPE 无标签性能估计",
+      "knowledgePoint": "未知输入区域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 CBPE 对训练时未覆盖的新输入区域需要格外谨慎？",
+      "answer": "模型在该区域的概率可能外推不准，导致依据这些概率的性能估计失真。",
+      "explanation": "单独观察输入漂移或一个历史校准结果不能证明新区域的概率可靠。",
+      "example": "首次出现的新设备类型可能没有足够历史标注支持。",
+      "tags": [
+        "CBPE 无标签性能估计",
+        "未知输入区域"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NannyML/nannyml/blob/v0.13.1/docs/how_it_works/performance_estimation.rst"
+    }
+  ]
+}

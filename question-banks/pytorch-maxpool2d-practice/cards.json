@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "pytorch-maxpool2d-practice",
+    "title": "PyTorch 2.7 文档：二维最大池化",
+    "url": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.MaxPool2d.html",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptpool-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维池化",
+      "knowledgePoint": "默认步幅",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 nn.MaxPool2d 未指定 stride 时使用什么步幅？",
+      "answer": "默认步幅等于 kernel_size。",
+      "explanation": "池化分别作用于每个通道的空间维度。",
+      "example": "kernel_size=2 时默认以 2 为步幅。",
+      "tags": [
+        "PyTorch 二维池化",
+        "默认步幅"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.MaxPool2d.html"
+    },
+    {
+      "id": "ptpool-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维池化",
+      "knowledgePoint": "边缘填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 MaxPool2d 对浮点输入启用 padding 时，隐式填充值怎样处理？",
+      "answer": "按负无穷处理，使填充不会因零值大于负输入而成为最大值。",
+      "explanation": "实际可用的 padding 大小受接口约束。",
+      "example": "全为负数的窗口不会因填充得到 0。",
+      "tags": [
+        "PyTorch 二维池化",
+        "边缘填充"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.MaxPool2d.html"
+    },
+    {
+      "id": "ptpool-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维池化",
+      "knowledgePoint": "向上取整",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch MaxPool2d 的 ceil_mode=True 对边缘窗口有什么影响？",
+      "answer": "使用向上取整的输出尺寸规则，允许从有效区域或左侧填充开始的窗口越过边界。",
+      "explanation": "从右侧填充区域开始的窗口会被忽略。",
+      "example": "比较长度为 3、窗口和步幅为 2 时的输出尺寸。",
+      "tags": [
+        "PyTorch 二维池化",
+        "向上取整"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.MaxPool2d.html"
+    },
+    {
+      "id": "ptpool-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维池化",
+      "knowledgePoint": "返回索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch MaxPool2d 设置 return_indices=True 会额外返回什么？",
+      "answer": "返回各池化输出对应的最大值位置索引。",
+      "explanation": "这些索引可用于配合 MaxUnpool2d。",
+      "example": "保留最大值位置用于稀疏还原。",
+      "tags": [
+        "PyTorch 二维池化",
+        "返回索引"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.MaxPool2d.html"
+    },
+    {
+      "id": "ptpool-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维池化",
+      "knowledgePoint": "反池化局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 MaxUnpool2d 为什么只是 MaxPool2d 的部分逆操作？",
+      "answer": "池化丢弃了非最大值；反池化只能按索引放回最大值，其余位置填零。",
+      "explanation": "有重复索引时结果可能不确定。",
+      "example": "一个 2×2 窗口只保留了一个最大值。",
+      "tags": [
+        "PyTorch 二维池化",
+        "反池化局限"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.MaxUnpool2d.html"
+    },
+    {
+      "id": "ptpool-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维池化",
+      "knowledgePoint": "输出大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 PyTorch MaxUnpool2d 有时需要显式传入 output_size？",
+      "answer": "不同的输入尺寸可能池化成相同输出尺寸，需要指定期望的还原形状。",
+      "explanation": "指定形状仍不能恢复池化时丢失的值。",
+      "example": "池化后的形状可能不足以唯一确定原图尺寸。",
+      "tags": [
+        "PyTorch 二维池化",
+        "输出大小"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.MaxUnpool2d.html"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "langchain-model-structured-output",
+    "title": "langchain-core 1.8.4 源码：结构化输出包装",
+    "url": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/language_models/chat_models.py",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "lcstruct-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 结构化输出",
+      "knowledgePoint": "基本用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 BaseChatModel.with_structured_output 主要提供什么？",
+      "answer": "返回一个包装后的 Runnable，按给定 schema 解析模型的结构化输出。",
+      "explanation": "实际模型实现和所支持的 schema 类型可能不同。",
+      "example": "用结构化字段接收分类标签和理由。",
+      "tags": [
+        "LangChain 结构化输出",
+        "基本用途"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/language_models/chat_models.py"
+    },
+    {
+      "id": "lcstruct-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 结构化输出",
+      "knowledgePoint": "Pydantic校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 基类的 with_structured_output 使用 Pydantic 类与非 Pydantic schema，结果及校验有什么区别？",
+      "answer": "Pydantic 类返回经该类校验的实例；非 Pydantic schema 返回字典，不执行 Pydantic 校验。",
+      "explanation": "此处指 include_raw=False 的基类实现；实际模型也可能覆盖此方法。",
+      "example": "JSON Schema 返回的字典仍需检查业务约束。",
+      "tags": [
+        "LangChain 结构化输出",
+        "Pydantic校验"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/language_models/chat_models.py"
+    },
+    {
+      "id": "lcstruct-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 结构化输出",
+      "knowledgePoint": "原始输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 基类的 with_structured_output 中，include_raw=True 与 False 对输出及解析失败如何处理？",
+      "answer": "True 返回 raw、parsed、parsing_error，失败时 parsed 为 None 并保留异常；False 返回解析结果，失败时抛出异常。",
+      "explanation": "模型调用本身失败与输出解析失败应分别处理。",
+      "example": "保留 raw 消息可帮助排查缺失字段。",
+      "tags": [
+        "LangChain 结构化输出",
+        "原始输出"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/language_models/chat_models.py"
+    },
+    {
+      "id": "lcstruct-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 结构化输出",
+      "knowledgePoint": "工具绑定前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 BaseChatModel 基类实现 with_structured_output 依赖模型实现什么接口？",
+      "answer": "依赖 bind_tools；若模型类仍使用基类未实现的 bind_tools，会抛出 NotImplementedError。",
+      "explanation": "具体模型也可能覆盖该方法并采用其他策略。",
+      "example": "不能假设所有聊天模型包装器都支持同一种结构化输出。",
+      "tags": [
+        "LangChain 结构化输出",
+        "工具绑定前提"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/language_models/chat_models.py"
+    }
+  ]
+}

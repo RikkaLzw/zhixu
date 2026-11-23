@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "pissa-low-rank-initialization",
+    "title": "PiSSA 原论文 v2：主奇异值参数高效微调",
+    "url": "https://arxiv.org/pdf/2404.02948v2",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "pissa-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PiSSA 初始化",
+      "knowledgePoint": "初始化依据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PiSSA 原论文怎样初始化可训练的低秩适配器？",
+      "answer": "对预训练权重做奇异值分解，利用主要奇异值及对应奇异向量初始化两个低秩矩阵。",
+      "explanation": "这里选取较大的奇异值及其方向；常见 LoRA 的低秩分支初始乘积则为零。",
+      "example": "选取前 r 个奇异方向构造秩为 r 的适配器。",
+      "tags": [
+        "PiSSA 初始化",
+        "初始化依据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2404.02948v2"
+    },
+    {
+      "id": "pissa-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PiSSA 初始化",
+      "knowledgePoint": "残差权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PiSSA 初始化后的残差权重在微调时如何处理？",
+      "answer": "将原权重减去低秩主成分得到的残差保持冻结。",
+      "explanation": "可训练的是低秩适配器矩阵。",
+      "example": "W 可写成冻结的 W_res 加上可训练的 AB。",
+      "tags": [
+        "PiSSA 初始化",
+        "残差权重"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2404.02948v2"
+    },
+    {
+      "id": "pissa-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PiSSA 初始化",
+      "knowledgePoint": "初始等价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "不考虑数值误差和额外量化时，PiSSA 刚初始化后的有效权重与原权重有什么关系？",
+      "answer": "冻结残差与初始化的低秩部分相加，重构原权重。",
+      "explanation": "这不意味着初始化的低秩分支本身为零。",
+      "example": "初始化后 W_res + AB = W。",
+      "tags": [
+        "PiSSA 初始化",
+        "初始等价"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2404.02948v2"
+    }
+  ]
+}

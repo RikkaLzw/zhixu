@@ -1,0 +1,232 @@
+{
+  "source": {
+    "id": "hf-transformer",
+    "title": "Hugging Face LLM Course：Transformer 与 BPE",
+    "url": "https://huggingface.co/learn/llm-course/chapter1/4",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "nlp-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformer 结构",
+      "knowledgePoint": "编码器",
+      "questionType": "概念与原理",
+      "question": "Transformer 编码器通常怎样处理输入序列？",
+      "answer": "编码器通过多层变换构造输入的上下文表示，通常可利用输入中的双向上下文。",
+      "explanation": "编码器表示可用于分类、实体识别等理解任务。",
+      "example": "句子分类器基于编码器输出判断文本类别。",
+      "tags": [
+        "编码器",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter1/4",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformer 结构",
+      "knowledgePoint": "解码器",
+      "questionType": "概念与原理",
+      "question": "自回归 Transformer 解码器生成序列时能利用哪些目标端 token？",
+      "answer": "生成下一个 token 时，可使用已给定的提示和先前生成的目标端 token，不能看到未来目标。",
+      "explanation": "因果注意力掩码使训练时也保持这一约束。",
+      "example": "预测目标序列第 4 个 token 时只能使用先前目标内容。",
+      "tags": [
+        "解码器",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter1/4",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformer 结构",
+      "knowledgePoint": "编码器解码器",
+      "questionType": "概念与原理",
+      "question": "编码器—解码器结构适合什么类型的任务？",
+      "answer": "它适合根据输入序列生成另一个序列，例如翻译或摘要。",
+      "explanation": "编码器表示输入，解码器结合该表示生成目标序列。",
+      "example": "输入英文句子，逐步生成中文翻译。",
+      "tags": [
+        "编码器解码器",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter1/4",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "注意力",
+      "knowledgePoint": "自注意力",
+      "questionType": "概念与原理",
+      "question": "自注意力层如何利用同一序列中的上下文？",
+      "answer": "每个位置根据与其他可见位置的相关性聚合信息，形成上下文相关表示。",
+      "explanation": "哪些位置可见取决于模型结构和注意力掩码。",
+      "example": "表示一个代词时，模型可关注句中的相关名词。",
+      "tags": [
+        "自注意力",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter1/4",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "注意力",
+      "knowledgePoint": "交叉注意力",
+      "questionType": "概念与原理",
+      "question": "编码器—解码器中的交叉注意力连接了什么？",
+      "answer": "解码器使用交叉注意力访问编码器对输入序列产生的表示。",
+      "explanation": "这使生成目标 token 时能够参考输入内容。",
+      "example": "翻译生成某个词时参考源句中的相关部分。",
+      "tags": [
+        "交叉注意力",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter1/4",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "注意力",
+      "knowledgePoint": "填充掩码",
+      "questionType": "概念与原理",
+      "question": "批处理中的 padding mask 有什么作用？",
+      "answer": "它让模型在注意力计算中忽略为对齐长度而添加的填充位置。",
+      "explanation": "真实 token 的可见性仍由其他掩码和模型结构共同决定。",
+      "example": "短句补齐到批次最大长度后，屏蔽补齐的位置。",
+      "tags": [
+        "填充掩码",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter1/4",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型结构",
+      "knowledgePoint": "架构与检查点",
+      "questionType": "比较与选型",
+      "question": "模型架构与模型检查点有什么区别？",
+      "answer": "架构定义层和运算的组织方式；检查点保存可加载到架构中的模型权重等状态。",
+      "explanation": "同一架构可以对应不同训练结果的检查点。",
+      "example": "同一网络结构可加载不同语料训练得到的权重。",
+      "tags": [
+        "架构与检查点",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter1/4",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分词",
+      "knowledgePoint": "子词分词",
+      "questionType": "概念与原理",
+      "question": "子词分词为什么能处理词表外的新词？",
+      "answer": "它通常把新词拆成词表中已有的较小片段，再由这些片段组合表示。",
+      "explanation": "实际能否覆盖所有输入取决于基础词表和未知符号处理方式。",
+      "example": "把少见复合词拆成多个常见子词。",
+      "tags": [
+        "子词分词",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter6/5",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词",
+      "knowledgePoint": "BPE 合并规则",
+      "questionType": "概念与原理",
+      "question": "BPE 训练时通常按什么原则扩展词表？",
+      "answer": "反复选择语料中频繁出现的相邻符号对进行合并，形成新的 token。",
+      "explanation": "具体统计受预分词方式和实现的平局规则影响。",
+      "example": "经常相邻出现的两个字符可被合并为一个子词。",
+      "tags": [
+        "BPE 合并规则",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter6/5",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词",
+      "knowledgePoint": "BPE 推理",
+      "questionType": "概念与原理",
+      "question": "标准确定性 BPE 分词器如何切分新的文本？",
+      "answer": "先做相应的规范化和预分词，再按学习到的合并规则将基本符号组合成 token。",
+      "explanation": "推理阶段使用已学规则，不重新根据当前句子训练词表。",
+      "example": "使用固定分词器处理一条从未见过的句子。",
+      "tags": [
+        "BPE 推理",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter6/5",
+      "origin": "自行整理"
+    },
+    {
+      "id": "nlp-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词",
+      "knowledgePoint": "字节级 BPE",
+      "questionType": "概念与原理",
+      "question": "字节级 BPE 的基础符号为何有助于覆盖多种字符？",
+      "answer": "它以字节作为基本单位，能够用有限的字节表表示 Unicode 文本编码。",
+      "explanation": "具体分词器还需正确处理编码及特殊 token。",
+      "example": "未在训练语料中出现的字符仍可由其 UTF-8 字节表示。",
+      "tags": [
+        "字节级 BPE",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter6/5",
+      "origin": "自行整理"
+    }
+  ]
+}

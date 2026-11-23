@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "beir-retrieval-evaluation",
+    "title": "BEIR 检索评测：原论文与方法",
+    "url": "https://arxiv.org/html/2104.08663v3",
+    "type": "研究论文",
+    "note": "根据指定版本论文逐题整理；实践推论标为 application，原研究结论保留环境及实验前提。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "beir-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BEIR 检索评测",
+      "knowledgePoint": "零样本检索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BEIR 中零样本检索评估关注什么？",
+      "answer": "关注模型不使用目标数据集的监督训练样本时，在目标检索任务上的效果。",
+      "explanation": "零样本口径不保证预训练语料中从未出现目标文本。",
+      "example": "用已有检索模型评估新的医学文献检索任务。",
+      "tags": [
+        "零样本检索",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2104.08663v3#S1",
+      "referenceTitle": "BEIR 检索评测 原论文：S1"
+    },
+    {
+      "id": "beir-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BEIR 检索评测",
+      "knowledgePoint": "检索评测数据格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BEIR 使用的统一检索数据格式包含哪些主要部分？",
+      "answer": "包含文档集合 corpus、查询 queries 和查询与文档的相关性标注 qrels。",
+      "explanation": "三者通过标识关联，以便在同一评测接口中使用不同数据集。",
+      "example": "用查询 ID 和文档 ID 对照相关性标注。",
+      "tags": [
+        "检索评测数据格式",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2104.08663v3#S3.SS2",
+      "referenceTitle": "BEIR 检索评测 原论文：S3.SS2"
+    },
+    {
+      "id": "beir-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BEIR 检索评测",
+      "knowledgePoint": "未评判与不相关",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么检索评估中没有相关性标注的文档不能直接等同于已确认不相关？",
+      "answer": "它可能只是没有进入人工评判的候选池，实际仍可能与查询相关。",
+      "explanation": "部分评估实现会把未评判结果当作不相关，这会影响指标。",
+      "example": "新检索器找到一个尚未评判但有用的片段。",
+      "tags": [
+        "未评判与不相关",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2104.08663v3#S6",
+      "referenceTitle": "BEIR 检索评测 原论文：S6"
+    },
+    {
+      "id": "beir-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BEIR 检索评测",
+      "knowledgePoint": "候选池选择偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "只用词法检索结果建立相关性标注候选池，可能怎样影响向量检索评估？",
+      "answer": "缺少词面重合但语义相关的结果可能未被标注，使向量检索的有效结果被低估。",
+      "explanation": "偏差大小取决于候选池和评估任务。",
+      "example": "查询与相关文档使用不同术语时，候选池可能漏掉该文档。",
+      "tags": [
+        "候选池选择偏差",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2104.08663v3#S6",
+      "referenceTitle": "BEIR 检索评测 原论文：S6"
+    },
+    {
+      "id": "beir-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BEIR 检索评测",
+      "knowledgePoint": "Hole指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BEIR 论文使用的 Hole@10 衡量什么？",
+      "answer": "它衡量结果前 10 条中未被评判人员标注过的文档比例。",
+      "explanation": "该值反映标注空缺，不直接表示结果的真实相关性。",
+      "example": "某系统前 10 条中有两条未评判，其单查询比例为 20%。",
+      "tags": [
+        "Hole指标",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2104.08663v3#S6",
+      "referenceTitle": "BEIR 检索评测 原论文：S6"
+    },
+    {
+      "id": "beir-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BEIR 检索评测",
+      "knowledgePoint": "多系统候选池",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么建立检索评估候选池时可以合并多个不同系统的结果？",
+      "answer": "不同系统可能找回不同的相关文档，合并结果供人工评判能减少单一系统造成的选择偏差。",
+      "explanation": "多系统池化只能减轻偏差，不能保证所有相关文档都被覆盖。",
+      "example": "汇总词法和向量检索的候选再标注。",
+      "tags": [
+        "多系统候选池",
+        "检索"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2104.08663v3#S6",
+      "referenceTitle": "BEIR 检索评测 原论文：S6"
+    },
+    {
+      "id": "beir-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BEIR 检索评测",
+      "knowledgePoint": "检索效果与资源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较检索系统时，为什么除了相关性指标还应报告延迟和索引大小？",
+      "answer": "更高的检索质量可能伴随更高查询成本或存储占用，实际可用性取决于这些取舍。",
+      "explanation": "比较资源时需要说明硬件、索引与检索配置。",
+      "example": "比较重排模型的效果和单次查询耗时。",
+      "tags": [
+        "检索效果与资源",
+        "检索"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2104.08663v3#S5.SS1",
+      "referenceTitle": "BEIR 检索评测 原论文：S5.SS1"
+    },
+    {
+      "id": "beir-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BEIR 检索评测",
+      "knowledgePoint": "长文档截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 BEIR 原论文实验中，只输入文档前 512 个 wordpiece 可能遗漏什么？",
+      "answer": "超过截断位置的相关内容可能没有进入神经检索模型的输入。",
+      "explanation": "这是该论文实验的设置，具体系统可以采用其他长度或切块策略。",
+      "example": "答案线索位于长文档末尾时未被模型看到。",
+      "tags": [
+        "长文档截断",
+        "检索"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2104.08663v3#S4",
+      "referenceTitle": "BEIR 检索评测 原论文：S4"
+    },
+    {
+      "id": "beir-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BEIR 检索评测",
+      "knowledgePoint": "跨领域评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么检索模型在训练域表现好，仍需要在目标领域单独评估？",
+      "answer": "不同领域的查询、文档和相关性分布可能变化，训练域成绩不保证目标领域同样有效。",
+      "explanation": "BEIR 的多任务实验发现域内表现不是域外泛化的可靠指标。",
+      "example": "通用问答表现好的检索器还需用安全公告查询测试。",
+      "tags": [
+        "跨领域评估",
+        "检索"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2104.08663v3#S5",
+      "referenceTitle": "BEIR 检索评测 原论文：S5"
+    }
+  ]
+}

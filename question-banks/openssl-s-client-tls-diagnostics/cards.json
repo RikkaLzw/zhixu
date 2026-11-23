@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "openssl-s-client-tls-diagnostics",
+    "title": "OpenSSL 3.5 文档：TLS 客户端诊断",
+    "url": "https://docs.openssl.org/3.5/man1/openssl-s_client/",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sclient-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenSSL TLS 诊断",
+      "knowledgePoint": "名称验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "openssl s_client 的 -servername 与 -verify_hostname 各有什么作用？",
+      "answer": "前者设置发送的 SNI；后者要求校验证书是否匹配指定主机名。",
+      "explanation": "连接服务器 IP 可用 -connect IP:端口，并用 -servername 指定 SNI；验证还要检查信任链等。",
+      "example": "同时发送目标域名并检查证书名称。",
+      "tags": [
+        "OpenSSL TLS 诊断",
+        "名称验证"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.openssl.org/3.5/man1/openssl-s_client/"
+    },
+    {
+      "id": "sclient-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenSSL TLS 诊断",
+      "knowledgePoint": "验证错误处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenSSL 3.5 的 s_client 默认遇到证书验证错误会立刻终止握手吗？",
+      "answer": "默认作为诊断工具可能继续；设置 -verify_return_error 可在验证错误时终止。",
+      "explanation": "不能仅凭握手继续就认为服务器证书可信。",
+      "example": "检查自签名证书时观察默认诊断与严格模式的区别。",
+      "tags": [
+        "OpenSSL TLS 诊断",
+        "验证错误处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.openssl.org/3.5/man1/openssl-s_client/"
+    },
+    {
+      "id": "sclient-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenSSL TLS 诊断",
+      "knowledgePoint": "展示证书",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "openssl s_client -showcerts 显示的证书列表是什么？",
+      "answer": "显示服务器发送的证书列表及其顺序，不等于已验证的证书链。",
+      "explanation": "是否可信应结合验证结果和信任配置判断。",
+      "example": "查看服务器是否发送中间证书。",
+      "tags": [
+        "OpenSSL TLS 诊断",
+        "展示证书"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.openssl.org/3.5/man1/openssl-s_client/"
+    },
+    {
+      "id": "sclient-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenSSL TLS 诊断",
+      "knowledgePoint": "信任证书",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "openssl s_client 的 -CAfile 常用于什么？",
+      "answer": "指定用于证书验证的可信 CA 证书文件。",
+      "explanation": "信任文件内容与主机名、有效期等检查共同影响验证结果。",
+      "example": "在测试环境使用指定 CA 验证服务端证书。",
+      "tags": [
+        "OpenSSL TLS 诊断",
+        "信任证书"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.openssl.org/3.5/man1/openssl-s_client/"
+    },
+    {
+      "id": "sclient-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenSSL TLS 诊断",
+      "knowledgePoint": "ALPN",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "openssl s_client -alpn 参数用于什么？",
+      "answer": "向服务器通告以逗号分隔的应用层协议列表。",
+      "explanation": "服务器是否选择某个协议取决于双方协商。",
+      "example": "通告 h2 和 http/1.1 以检查协商结果。",
+      "tags": [
+        "OpenSSL TLS 诊断",
+        "ALPN"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.openssl.org/3.5/man1/openssl-s_client/"
+    },
+    {
+      "id": "sclient-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenSSL TLS 诊断",
+      "knowledgePoint": "STARTTLS",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "openssl s_client -starttls smtp 的作用是什么？",
+      "answer": "先执行 SMTP 所需的协议交互，再切换到 TLS。",
+      "explanation": "其他受支持协议使用各自的关键字。",
+      "example": "排查使用 STARTTLS 的邮件服务。",
+      "tags": [
+        "OpenSSL TLS 诊断",
+        "STARTTLS"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.openssl.org/3.5/man1/openssl-s_client/"
+    },
+    {
+      "id": "sclient-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenSSL TLS 诊断",
+      "knowledgePoint": "协议限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "openssl s_client -tls1_2 通常把连接限制到哪个 TLS 协议版本？",
+      "answer": "限制使用 TLS 1.2。",
+      "explanation": "若服务器不支持该版本，握手可能失败。",
+      "example": "诊断服务器的特定协议兼容性。",
+      "tags": [
+        "OpenSSL TLS 诊断",
+        "协议限制"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.openssl.org/3.5/man1/openssl-s_client/"
+    }
+  ]
+}

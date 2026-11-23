@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "torchvision-random-image-augmentation",
+    "title": "torchvision 0.22 文档：随机图像增强",
+    "url": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.RandomResizedCrop.html",
+    "type": "官方文档、固定版本源码或论文",
+    "note": "依据 torchvision 0.22 官方文档自行整理；本地验证使用 0.22.1。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "tvaug-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "随机图像增强",
+      "knowledgePoint": "随机裁剪面积与比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 RandomResizedCrop 中 scale 与 ratio 分别约束什么？",
+      "answer": "scale 约束裁剪区域面积相对于原图面积的范围；ratio 约束裁剪区域的宽高比范围。",
+      "explanation": "裁剪完成后会将区域缩放到 size 指定的输出尺寸。",
+      "example": "scale 包含 0.25 时可采样面积约为原图四分之一的区域。",
+      "tags": [
+        "随机图像增强",
+        "随机裁剪面积与比例"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.RandomResizedCrop.html"
+    },
+    {
+      "id": "tvaug-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "随机图像增强",
+      "knowledgePoint": "擦除输入类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 RandomErasing 能直接处理 PIL 图像吗？",
+      "answer": "不能；该变换作用于张量图像，不支持直接输入 PIL 图像。",
+      "explanation": "使用前应转换为适当的张量表示。",
+      "example": "先转换图片，再执行随机擦除。",
+      "tags": [
+        "随机图像增强",
+        "擦除输入类型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.RandomErasing.html"
+    },
+    {
+      "id": "tvaug-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "随机图像增强",
+      "knowledgePoint": "擦除填充值",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 RandomErasing 在 value=0 与 value=\"random\" 时怎样填充擦除区域？",
+      "answer": "value=0 用零填充；value=\"random\" 为擦除区域的像素生成随机值。",
+      "explanation": "填充值位于该变换接收到的张量数值空间中。",
+      "example": "用随机值替代矩形区域的像素。",
+      "tags": [
+        "随机图像增强",
+        "擦除填充值"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.RandomErasing.html"
+    },
+    {
+      "id": "tvaug-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "随机图像增强",
+      "knowledgePoint": "色相与负值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 torchvision 0.22 的 ColorJitter 色相变换不适合接收含负像素值的图像？",
+      "answer": "色相调整需要转换到 HSV，文档要求输入像素为非负值。",
+      "explanation": "归一化后或某些插值产生的负值可能违反该前提。",
+      "example": "先做颜色变换，再执行可能产生负值的归一化。",
+      "tags": [
+        "随机图像增强",
+        "色相与负值"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.ColorJitter.html"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "model-card-security-evaluation",
+    "title": "Model Cards：安全模型评估与报告",
+    "url": "https://arxiv.org/abs/1810.03993",
+    "type": "官方文档与研究资料",
+    "note": "按逐题所列资料自行整理；安全场景示例用于说明，不代表原资料中的实际事件。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "modelreport-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估报告",
+      "knowledgePoint": "模型卡与数据集说明",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "模型卡和数据集说明分别主要记录什么？",
+      "answer": "模型卡记录模型的用途、评估和限制；数据集说明记录数据来源、构成、处理和使用条件。",
+      "explanation": "二者互补，不能相互替代全部内容。",
+      "example": "模型卡引用训练数据集的说明文件。",
+      "tags": [
+        "模型卡与数据集说明",
+        "模型评估报告"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1810.03993"
+    },
+    {
+      "id": "modelreport-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估报告",
+      "knowledgePoint": "预期用途与范围外用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模型卡为什么要区分预期用途和范围外用途？",
+      "answer": "模型的评估与设计通常针对特定任务和环境，范围外使用可能缺少可靠证据。",
+      "explanation": "范围说明不是对未评估用途必然失效的断言。",
+      "example": "在流量分类数据上评估的模型未必适合直接用于用户身份归因。",
+      "tags": [
+        "预期用途与范围外用途",
+        "模型评估报告"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1810.03993"
+    },
+    {
+      "id": "modelreport-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估报告",
+      "knowledgePoint": "指标与任务目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模型报告为什么要说明选择某项评估指标的原因？",
+      "answer": "指标需要反映任务目标及错误造成的影响，单一分数的意义取决于使用场景。",
+      "explanation": "可同时报告其他有助于理解取舍的指标。",
+      "example": "告警排序除了总体指标，还要考虑分析人员处理量。",
+      "tags": [
+        "指标与任务目标",
+        "模型评估报告"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1810.03993"
+    },
+    {
+      "id": "modelreport-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估报告",
+      "knowledgePoint": "报告决策阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么报告安全分类模型效果时应说明使用的判定阈值？",
+      "answer": "阈值决定分数如何转为告警，改变阈值会改变具体的误报、漏报和告警数量。",
+      "explanation": "阈值应在合适的验证数据上选择，再独立评估。",
+      "example": "记录风险分数达到多少时产生告警。",
+      "tags": [
+        "报告决策阈值",
+        "模型评估报告"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1810.03993"
+    },
+    {
+      "id": "modelreport-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估报告",
+      "knowledgePoint": "报告评估数据条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模型效果报告为什么要说明评估数据和预处理条件？",
+      "answer": "评估结论依赖数据来源、样本构成和处理方式，否则难以判断结果是否适用于目标环境。",
+      "explanation": "报告应能定位所用数据版本与评估协议。",
+      "example": "说明测试集采集环境和特征处理方式。",
+      "tags": [
+        "报告评估数据条件",
+        "模型评估报告"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1810.03993"
+    },
+    {
+      "id": "modelreport-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估报告",
+      "knowledgePoint": "切片样本量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "报告安全模型的分组指标时，为什么应同时给出各组样本量？",
+      "answer": "样本很少的组，其指标波动可能很大；样本量有助于理解结果的不确定性。",
+      "explanation": "样本量本身不能消除选择偏差。",
+      "example": "报告少见攻击类型的召回率时同时给出对应样本数。",
+      "tags": [
+        "切片样本量",
+        "模型评估报告"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1810.03993"
+    },
+    {
+      "id": "modelreport-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估报告",
+      "knowledgePoint": "组合切片",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "模型报告中的交叉分组分析与单一分组分析有什么区别？",
+      "answer": "交叉分组同时考虑多个条件的组合；单一分组只按一个条件划分。",
+      "explanation": "交叉后样本可能更少，需要同时说明样本量。",
+      "example": "同时按协议类型和资产类别查看误报。",
+      "tags": [
+        "组合切片",
+        "模型评估报告"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1810.03993"
+    },
+    {
+      "id": "modelreport-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估报告",
+      "knowledgePoint": "缺失评估信息",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "模型卡没有给出某类场景的评估结果，能否认为该场景性能与总体一致？",
+      "answer": "不能；缺失结果表示未提供相应证据，不能自动推断性能。",
+      "explanation": "应检查是否有其他可信评估或开展补充测试。",
+      "example": "模型报告未列出某种操作系统的效果。",
+      "tags": [
+        "缺失评估信息",
+        "模型评估报告"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1810.03993"
+    },
+    {
+      "id": "modelreport-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估报告",
+      "knowledgePoint": "基座模型关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "微调模型的说明为什么应记录它基于哪个模型版本？",
+      "answer": "基座模型及其版本影响能力、依赖和复现条件，记录关系有助于追溯模型来源。",
+      "explanation": "适配器还需说明如何与基座组合。",
+      "example": "记录一个安全文本分类适配器对应的基座检查点。",
+      "tags": [
+        "基座模型关系",
+        "模型评估报告"
+      ],
+      "evidence": "application",
+      "reference": "https://huggingface.co/docs/hub/model-cards"
+    }
+  ]
+}

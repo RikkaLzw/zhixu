@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "cicflowmeter-feature-contracts",
+    "title": "CICFlowMeter 固定提交：流量特征语义",
+    "url": "https://github.com/ahlashkari/CICFlowMeter/blob/98a5ebad0df579cc8b43eedd3421b3ae87699901/src/main/java/cic/cs/unb/ca/jnetpcap/BasicFlow.java",
+    "type": "论文与固定版本技术文档",
+    "note": "依据 CICFlowMeter 提交 98a5ebad 固定源码自行整理；不同实现可能有差异，未运行原项目。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "cicflow-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "网络流量特征提取",
+      "knowledgePoint": "五元组键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 CICFlowMeter 的 fwdFlowId 由哪些字段构成？",
+      "answer": "按源 IP、目的 IP、源端口、目的端口和协议组成字符串键。",
+      "explanation": "实现的 bwdFlowId 交换源与目的字段。",
+      "example": "同一通信的反向报文可通过反向键匹配。",
+      "tags": [
+        "网络流量特征提取",
+        "五元组键"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ahlashkari/CICFlowMeter/blob/98a5ebad0df579cc8b43eedd3421b3ae87699901/src/main/java/cic/cs/unb/ca/jnetpcap/BasicPacketInfo.java"
+    },
+    {
+      "id": "cicflow-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "网络流量特征提取",
+      "knowledgePoint": "前向方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 CICFlowMeter 对初次创建的双向流，通常如何确定前向方向？",
+      "answer": "以用于创建该流的首个观测包的源地址作为前向来源。",
+      "explanation": "首包是否是连接真正发起方取决于抓包是否完整。",
+      "example": "抓包从响应开始时，前向未必表示客户端到服务器。",
+      "tags": [
+        "网络流量特征提取",
+        "前向方向"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ahlashkari/CICFlowMeter/blob/98a5ebad0df579cc8b43eedd3421b3ae87699901/src/main/java/cic/cs/unb/ca/jnetpcap/BasicFlow.java"
+    },
+    {
+      "id": "cicflow-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "网络流量特征提取",
+      "knowledgePoint": "流持续时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 CICFlowMeter 如何计算一个流记录的持续时间？",
+      "answer": "使用流最后观察时间减去首包时间，单位为微秒。",
+      "explanation": "持续时间依赖被捕获并分到该记录中的报文。",
+      "example": "首尾时间相差 500,000 微秒时持续时间为 0.5 秒。",
+      "tags": [
+        "网络流量特征提取",
+        "流持续时间"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ahlashkari/CICFlowMeter/blob/98a5ebad0df579cc8b43eedd3421b3ae87699901/src/main/java/cic/cs/unb/ca/jnetpcap/BasicFlow.java"
+    },
+    {
+      "id": "cicflow-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络流量特征提取",
+      "knowledgePoint": "到达间隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 CICFlowMeter 的 flow IAT 和方向 IAT 的统计范围有什么区别？",
+      "answer": "flow IAT 使用流中相邻报文的时间差；方向 IAT 分别使用同方向相邻报文的时间差。",
+      "explanation": "统计结果依赖报文顺序及提取实现。",
+      "example": "双向交替报文的前向间隔与整体间隔可能不同。",
+      "tags": [
+        "网络流量特征提取",
+        "到达间隔"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ahlashkari/CICFlowMeter/blob/98a5ebad0df579cc8b43eedd3421b3ae87699901/src/main/java/cic/cs/unb/ca/jnetpcap/BasicFlow.java"
+    },
+    {
+      "id": "cicflow-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络流量特征提取",
+      "knowledgePoint": "载荷字节统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 CICFlowMeter 的前向包长度统计读取报文的哪个字段？",
+      "answer": "读取 BasicPacketInfo 的 payloadBytes 字段。",
+      "explanation": "不能不经核对就把该字段理解为含所有协议头的完整链路帧长。",
+      "example": "对前向载荷字节求和与统计头部字节是不同操作。",
+      "tags": [
+        "网络流量特征提取",
+        "载荷字节统计"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ahlashkari/CICFlowMeter/blob/98a5ebad0df579cc8b43eedd3421b3ae87699901/src/main/java/cic/cs/unb/ca/jnetpcap/BasicFlow.java"
+    },
+    {
+      "id": "cicflow-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络流量特征提取",
+      "knowledgePoint": "零时长速率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 CICFlowMeter 计算整体流字节数／秒时，零持续时间可能产生什么数值？",
+      "answer": "Java 浮点除法可能产生 Infinity 或 NaN。",
+      "explanation": "预处理应区分这些非有限值与普通的零速率。",
+      "example": "零持续时间且字节数为正时可能得到 Infinity。",
+      "tags": [
+        "网络流量特征提取",
+        "零时长速率"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ahlashkari/CICFlowMeter/blob/98a5ebad0df579cc8b43eedd3421b3ae87699901/src/main/java/cic/cs/unb/ca/jnetpcap/BasicFlow.java"
+    },
+    {
+      "id": "cicflow-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络流量特征提取",
+      "knowledgePoint": "流超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 CICFlowMeter 的 flowTimeout 判断比较当前报文时间与哪个时间？",
+      "answer": "比较当前报文时间与流的开始时间，超过阈值后结束旧流并创建新流。",
+      "explanation": "该分支在后续匹配报文到达时执行；不是独立的空闲计时器。",
+      "example": "同一五元组持续很久时可能分成多个流记录。",
+      "tags": [
+        "网络流量特征提取",
+        "流超时"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ahlashkari/CICFlowMeter/blob/98a5ebad0df579cc8b43eedd3421b3ae87699901/src/main/java/cic/cs/unb/ca/jnetpcap/FlowGenerator.java"
+    }
+  ]
+}

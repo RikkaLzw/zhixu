@@ -1,0 +1,29 @@
+{
+  "version": 55,
+  "note": "澄清模型漂移口径前的旧题快照，用于保护个人编辑、来源和学习记录。",
+  "cards": [
+    {
+      "id": "ai4sec-015",
+      "category": "detection",
+      "question": "安全检测中的模型漂移指什么？",
+      "answer": "业务环境、用户行为或攻击方式变化后，模型输入或预测效果发生变化，需要持续监测和复评。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "knowledgeArea": "17",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-015"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    }
+  ]
+}

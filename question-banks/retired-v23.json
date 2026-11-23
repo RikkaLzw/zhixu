@@ -1,0 +1,64 @@
+{
+  "version": 23,
+  "note": "将 AI 辅助模糊测试实验和测试入口审查组合题拆分前的内容快照。",
+  "cards": [
+    {
+      "id": "fuzz-012",
+      "category": "vulnerabilities",
+      "question": "如何组织 AI 辅助模糊测试的完整实验？",
+      "answer": "固定目标版本和资源，生成测试入口，编译运行，比较覆盖并复核崩溃。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "knowledgeArea": "14",
+      "level": "实践",
+      "tags": [
+        "实验流程",
+        "复现"
+      ],
+      "explanation": "全程记录提示词、模型版本和构建参数，确保实验可复现。",
+      "example": "对同一项目比较多次生成的有效目标及新增覆盖。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fuzz-010",
+      "category": "vulnerabilities",
+      "question": "AI 生成的 fuzz harness 常见需要人工检查哪些内容？",
+      "answer": "检查 API 用法、输入边界、初始化与资源清理是否符合项目约束。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "knowledgeArea": "14",
+      "level": "实践",
+      "tags": [
+        "代码审查",
+        "harness"
+      ],
+      "explanation": "生成代码可能使用不存在的函数，或错误处理所有权。",
+      "example": "核对头文件、函数签名和输入缓冲区的生命周期。",
+      "sources": [
+        {
+          "id": "oss-fuzz-gen",
+          "title": "Google OSS-Fuzz-gen 大模型生成模糊测试目标",
+          "url": "https://github.com/google/oss-fuzz-gen",
+          "type": "开源安全项目",
+          "evidence": "application",
+          "sourceCardId": "fuzz-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

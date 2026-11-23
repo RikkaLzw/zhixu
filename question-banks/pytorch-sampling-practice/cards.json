@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "pytorch-sampling-practice",
+    "title": "PyTorch 2.7.1：数据采样器",
+    "url": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py",
+    "type": "教材、官方文档与固定版本源码",
+    "note": "依据逐题所列文档、教材或固定版本源码自行整理；示例为自编，使用条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "ptsampler-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "样本权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch WeightedRandomSampler 的 weights 对应类别还是样本索引？",
+      "answer": "它按位置给待抽取的样本索引赋权；用于类别重采样时需要为每个样本提供相应权重。",
+      "explanation": "采样器从 0 到 len(weights)-1 的索引中抽取。",
+      "example": "同一少数类的多个样本可各自获得较大权重。",
+      "tags": [
+        "PyTorch 数据采样",
+        "样本权重"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py"
+    },
+    {
+      "id": "ptsampler-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "权重归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7.1 的 WeightedRandomSampler 要求权重之和必须为 1 吗？",
+      "answer": "不要求；权重表示相对抽样权重。",
+      "explanation": "有效权重仍须满足底层 torch.multinomial 的输入条件。",
+      "example": "[1, 3] 和 [0.25, 0.75] 表达相同的相对权重。",
+      "tags": [
+        "PyTorch 数据采样",
+        "权重归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py"
+    },
+    {
+      "id": "ptsampler-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "抽样数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch WeightedRandomSampler 的 num_samples 决定什么？",
+      "answer": "决定每次遍历该采样器要抽取多少个索引，也决定它的长度。",
+      "explanation": "这个数量可以与原数据集大小不同。",
+      "example": "从 100 条数据中有放回抽取 200 次。",
+      "tags": [
+        "PyTorch 数据采样",
+        "抽样数量"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py"
+    },
+    {
+      "id": "ptsampler-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "有放回采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch WeightedRandomSampler 的 replacement=True 与 False 对同次遍历中的索引重复有什么区别？",
+      "answer": "True 有放回，索引可能重复；False 无放回，同次采样不会重复索引。",
+      "explanation": "replacement 默认为 True；无放回抽样还需满足底层采样的输入条件。",
+      "example": "较高权重的样本在有放回采样时可能多次出现。",
+      "tags": [
+        "PyTorch 数据采样",
+        "有放回采样"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py"
+    },
+    {
+      "id": "ptsampler-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "精确类别比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对类别不平衡数据使用 WeightedRandomSampler，能否保证每个小批次的类别比例恰好相等？",
+      "answer": "不能；它按权重随机抽样，有限批次的类别数量仍会波动。",
+      "explanation": "若需要每批严格配额，应使用满足该约束的批采样策略。",
+      "example": "期望比例为一半时，某个小批次仍可能大多属于同一类。",
+      "tags": [
+        "PyTorch 数据采样",
+        "精确类别比例"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py"
+    },
+    {
+      "id": "ptsampler-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "子集采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch SubsetRandomSampler 如何处理传入的索引序列？",
+      "answer": "它随机排列给定序列的位置，再按排列顺序产出相应索引。",
+      "explanation": "输入序列若包含重复索引，输出也可能重复该索引。",
+      "example": "输入 [2, 2, 9] 时两个 2 都会被输出。",
+      "tags": [
+        "PyTorch 数据采样",
+        "子集采样"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py"
+    },
+    {
+      "id": "ptsampler-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "批采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch BatchSampler 在基础采样器之上增加什么能力？",
+      "answer": "它把基础采样器产生的索引按指定批量大小组合成索引列表。",
+      "explanation": "它输出索引批次；数据读取和整理由 DataLoader 等后续步骤处理。",
+      "example": "顺序索引 0 到 4 可组成 [0,1,2] 和 [3,4]。",
+      "tags": [
+        "PyTorch 数据采样",
+        "批采样"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py"
+    },
+    {
+      "id": "ptsampler-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "末尾不足批",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch BatchSampler 的 drop_last 对最后一个不足 batch_size 的批次有什么影响？",
+      "answer": "True 丢弃该不足批次；False 保留它。",
+      "explanation": "完整批次不会因为 drop_last=True 被丢弃。",
+      "example": "7 个索引按 3 个一批时，可保留或丢弃最后 1 个。",
+      "tags": [
+        "PyTorch 数据采样",
+        "末尾不足批"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py"
+    },
+    {
+      "id": "ptsampler-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "自定义批采样器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch DataLoader 使用自定义 batch_sampler 时，批量大小和末尾不足批次应由哪里决定？",
+      "answer": "应由传入的 batch_sampler 决定；不能再通过 DataLoader 指定冲突的 batch_size 或 drop_last。",
+      "explanation": "batch_sampler 已经输出每个批次的索引列表。",
+      "example": "在 BatchSampler 中设置批量大小和 drop_last。",
+      "tags": [
+        "PyTorch 数据采样",
+        "自定义批采样器"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/data.html"
+    },
+    {
+      "id": "ptsampler-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 数据采样",
+      "knowledgePoint": "超长无放回遍历",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7.1 RandomSampler 在 replacement=False 且 num_samples 大于数据集长度时，整个输出仍保证索引不重复吗？",
+      "answer": "不保证；该实现依次生成多轮随机排列，因此不同轮之间可能重复索引。",
+      "explanation": "每个完整排列内部不重复；这是针对该版本实现的行为。",
+      "example": "3 个样本抽取 7 个索引必然发生重复。",
+      "tags": [
+        "PyTorch 数据采样",
+        "超长无放回遍历"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/utils/data/sampler.py"
+    }
+  ]
+}

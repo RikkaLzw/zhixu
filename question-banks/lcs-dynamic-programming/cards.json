@@ -1,0 +1,173 @@
+{
+  "source": {
+    "id": "lcs-dynamic-programming",
+    "title": "最长公共子序列与动态规划：维基百科",
+    "url": "https://en.wikipedia.org/wiki/Longest_common_subsequence",
+    "type": "教材与算法资料",
+    "note": "依据逐题引用的资料自行整理；示例为自编，涉及实现行为时以题目所述版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "lcsdp-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "最长公共子序列",
+      "knowledgePoint": "子序列定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "字符串的子序列必须由连续字符组成吗？",
+      "answer": "不必；删除零个或多个字符后保留原相对顺序即可，不要求相邻。",
+      "explanation": "连续子串则要求字符在原字符串中连续。",
+      "example": "ACE 是 ABCDE 的子序列，但不是它的连续子串。",
+      "tags": [
+        "最长公共子序列",
+        "子序列定义"
+      ],
+      "evidence": "source",
+      "reference": "https://en.wikipedia.org/wiki/Longest_common_subsequence",
+      "supportingReferences": [
+        {
+          "id": "nist-lcs",
+          "title": "NIST 算法词典：最长公共子序列",
+          "url": "https://www.nist.gov/dads/HTML/longestCommonSubsequence.html",
+          "type": "NIST 算法词典",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "lcsdp-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "最长公共子序列",
+      "knowledgePoint": "状态含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "求两个序列的最长公共子序列时，二维动态规划中的 dp[i][j] 通常表示什么？",
+      "answer": "表示第一个序列的前 i 个元素与第二个序列的前 j 个元素的最长公共子序列长度。",
+      "explanation": "这里的下标采用前缀长度，i 或 j 为 0 表示空前缀。",
+      "example": "dp[2][3] 对应第一个序列前两项与第二个序列前三项。",
+      "tags": [
+        "最长公共子序列",
+        "状态含义"
+      ],
+      "evidence": "source",
+      "reference": "https://en.wikipedia.org/wiki/Longest_common_subsequence"
+    },
+    {
+      "id": "lcsdp-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最长公共子序列",
+      "knowledgePoint": "匹配时转移",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "最长公共子序列的前缀动态规划中，若两个非空前缀的最后元素相等，dp[i][j] 如何转移？",
+      "answer": "dp[i][j] = dp[i-1][j-1] + 1。",
+      "explanation": "相同的末尾元素可以接到更短前缀的一个最优公共子序列之后。",
+      "example": "比较 AB 与 CB 的最后一个 B，取 dp[1][1] 加 1。",
+      "tags": [
+        "最长公共子序列",
+        "匹配时转移"
+      ],
+      "evidence": "source",
+      "reference": "https://en.wikipedia.org/wiki/Longest_common_subsequence"
+    },
+    {
+      "id": "lcsdp-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最长公共子序列",
+      "knowledgePoint": "不匹配时转移",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "最长公共子序列的前缀动态规划中，若两个非空前缀的最后元素不同，dp[i][j] 如何转移？",
+      "answer": "取 max(dp[i-1][j], dp[i][j-1])。",
+      "explanation": "末尾不同，最优解至少可以通过去掉其中一个末尾元素得到。",
+      "example": "比较 AB 与 AC 时，分别考虑去掉 B 或去掉 C。",
+      "tags": [
+        "最长公共子序列",
+        "不匹配时转移"
+      ],
+      "evidence": "source",
+      "reference": "https://en.wikipedia.org/wiki/Longest_common_subsequence"
+    },
+    {
+      "id": "lcsdp-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "最长公共子序列",
+      "knowledgePoint": "边界条件",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "求最长公共子序列时，dp[0][j] 与 dp[i][0] 应初始化为多少？",
+      "answer": "均为 0，因为空序列与任何序列的最长公共子序列长度都是 0。",
+      "explanation": "边界条件让第一行和第一列的后续转移有确定的依据。",
+      "example": "空字符串与 ABC 的公共子序列长度为 0。",
+      "tags": [
+        "最长公共子序列",
+        "边界条件"
+      ],
+      "evidence": "source",
+      "reference": "https://en.wikipedia.org/wiki/Longest_common_subsequence"
+    },
+    {
+      "id": "lcsdp-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "最长公共子序列",
+      "knowledgePoint": "贪心反例",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "依次扫描第一个字符串，贪心匹配第二个字符串中当前位置之后首次出现的同一字符，一定能得到最长公共子序列吗？",
+      "answer": "不一定；例如 ABC 与 BCA 这样匹配只得到 A，但 BC 是长度为 2 的公共子序列。",
+      "explanation": "提早选择一个匹配可能阻碍后面更多字符的匹配。",
+      "example": "先匹配 BCA 末尾的 A 后，就没有位置继续匹配 B 和 C。",
+      "tags": [
+        "最长公共子序列",
+        "贪心反例"
+      ],
+      "evidence": "source",
+      "reference": "https://en.wikipedia.org/wiki/Longest_common_subsequence"
+    },
+    {
+      "id": "lcsdp-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最长公共子序列",
+      "knowledgePoint": "复杂度与空间",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "两个序列长度分别为 m、n 时，标准二维最长公共子序列动态规划的时间和空间复杂度是多少？",
+      "answer": "填满二维表通常需要 O(mn) 时间和 O(mn) 空间；只求长度可用滚动数组将空间降到 O(min(m,n))。",
+      "explanation": "压缩空间时需保留转移所需的上一行及左上角信息；若还要恢复序列，则需要额外处理。",
+      "example": "只求两个很长文本的 LCS 长度时可选择按较短序列分配滚动数组。",
+      "tags": [
+        "最长公共子序列",
+        "复杂度与空间"
+      ],
+      "evidence": "source",
+      "reference": "https://en.wikipedia.org/wiki/Longest_common_subsequence"
+    },
+    {
+      "id": "lcsdp-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "最长公共子序列",
+      "knowledgePoint": "恢复方案",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "有完整的最长公共子序列长度表时，怎样恢复一条最优公共子序列？",
+      "answer": "从右下角沿转移关系回溯；末尾元素相等时记录该元素并向左上移动，否则转到能保留最优值的相邻状态，最后反转记录。",
+      "explanation": "相等的候选转移可能产生多条不同的最优序列。",
+      "example": "ABC 与 BCA 的一种最长公共子序列是 BC。",
+      "tags": [
+        "最长公共子序列",
+        "恢复方案"
+      ],
+      "evidence": "source",
+      "reference": "https://en.wikipedia.org/wiki/Longest_common_subsequence"
+    }
+  ]
+}

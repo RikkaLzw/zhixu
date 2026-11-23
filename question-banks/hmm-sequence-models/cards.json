@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "hmm-sequence-models",
+    "title": "Berkeley CS188：隐马尔可夫模型与 Viterbi",
+    "url": "https://inst.eecs.berkeley.edu/~cs188/textbook/hmms/hmm.html",
+    "type": "教材与官方技术资料",
+    "note": "逐题依据所列资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "hmm-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "隐马尔可夫模型",
+      "knowledgePoint": "HMM模型参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准离散 HMM 通常用哪三类概率描述？",
+      "answer": "初始状态分布、状态转移概率和给定状态的观测概率。",
+      "explanation": "转移刻画状态如何变化，观测概率刻画状态产生证据的方式。",
+      "example": "用初始词性概率、词性转移概率和词的发射概率建模。",
+      "tags": [
+        "HMM模型参数",
+        "隐马尔可夫模型"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/hmms/hmm.html"
+    },
+    {
+      "id": "hmm-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "隐马尔可夫模型",
+      "knowledgePoint": "转移与发射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HMM 的转移概率和发射概率分别使用什么条件？",
+      "answer": "转移概率描述给定前一状态的当前状态分布；发射概率描述给定当前状态的观测分布。",
+      "explanation": "两者的条件方向不同。",
+      "example": "P(当前词性|前一词性) 与 P(当前词|当前词性)。",
+      "tags": [
+        "转移与发射",
+        "隐马尔可夫模型"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/hmms/hmm.html"
+    },
+    {
+      "id": "hmm-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "隐马尔可夫模型",
+      "knowledgePoint": "联合概率分解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一阶 HMM 如何分解一条状态和观测序列的联合概率？",
+      "answer": "将初始状态与首个观测概率相乘，再乘各时间步的转移概率和对应观测概率。",
+      "explanation": "分解决定了动态规划能够复用前缀结果。",
+      "example": "三步序列使用一次初始项和两次状态转移项。",
+      "tags": [
+        "联合概率分解",
+        "隐马尔可夫模型"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/hmms/viterbi.html"
+    },
+    {
+      "id": "hmm-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "隐马尔可夫模型",
+      "knowledgePoint": "前向与路径解码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HMM 的前向算法与 Viterbi 算法分别主要计算什么？",
+      "answer": "前向算法对可能历史求和以计算状态概率；Viterbi 寻找给定观测下概率最大的完整状态路径。",
+      "explanation": "求和与取最大值回答的是不同问题。",
+      "example": "一个用于当前词性的概率，一个用于整句最可能词性序列。",
+      "tags": [
+        "前向与路径解码",
+        "隐马尔可夫模型"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/hmms/viterbi.html"
+    },
+    {
+      "id": "hmm-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "隐马尔可夫模型",
+      "knowledgePoint": "状态边缘与整条路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "逐个时间点选择边缘概率最大的状态，一定得到概率最大的整条 HMM 状态路径吗？",
+      "answer": "不一定；逐点最优与整条序列的联合概率最优是不同目标。",
+      "explanation": "逐点选择还可能组合出转移概率很低或为零的路径。",
+      "example": "各位置最高概率的标签组合未必是 Viterbi 路径。",
+      "tags": [
+        "状态边缘与整条路径",
+        "隐马尔可夫模型"
+      ],
+      "evidence": "application",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/hmms/viterbi.html"
+    },
+    {
+      "id": "hmm-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "隐马尔可夫模型",
+      "knowledgePoint": "最优路径回溯",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Viterbi 为什么需要记录每个时间步、每个状态的最优前驱？",
+      "answer": "前向计算确定最佳路径分数后，需要沿这些前驱反向回溯以重建整条最佳路径。",
+      "explanation": "只保留最终最大分数不足以直接还原每一步状态。",
+      "example": "从末状态沿已保存的前驱回到序列开头。",
+      "tags": [
+        "最优路径回溯",
+        "隐马尔可夫模型"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/hmms/viterbi.html"
+    },
+    {
+      "id": "hmm-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "隐马尔可夫模型",
+      "knowledgePoint": "发射证据更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HMM 前向过滤中，得到预测状态分布后如何结合当前观测？",
+      "answer": "按各状态产生该观测的概率加权预测分布，再归一化得到更新后的状态分布。",
+      "explanation": "观测概率高的状态会相对获得更大权重。",
+      "example": "看到某词后提高更可能生成该词的词性概率。",
+      "tags": [
+        "发射证据更新",
+        "隐马尔可夫模型"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/hmms/hmm.html"
+    },
+    {
+      "id": "hmm-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "隐马尔可夫模型",
+      "knowledgePoint": "有限状态复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准稠密离散 HMM 有 N 个状态、序列长度 T 时，Viterbi 常见时间复杂度是多少？",
+      "answer": "为每个时间步的每个状态比较 N 个前驱，时间复杂度为 O(TN²)。",
+      "explanation": "稀疏转移结构或特殊实现可改变实际成本。",
+      "example": "状态数翻倍时，稠密前驱比较量约变为四倍。",
+      "tags": [
+        "有限状态复杂度",
+        "隐马尔可夫模型"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/hmms/viterbi.html"
+    }
+  ]
+}

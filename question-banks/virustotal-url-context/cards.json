@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "virustotal-url-context",
+    "title": "VirusTotal：网址与文件分析上下文",
+    "url": "https://docs.virustotal.com/reference/url-object",
+    "type": "官方技术文档",
+    "note": "根据逐题所列资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "vtctx-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网址分析",
+      "knowledgePoint": "网址标识形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirusTotal API 接受哪两种网址标识形式？",
+      "answer": "可使用规范化网址的 SHA-256，或去掉等号填充的 URL 安全 Base64 编码。",
+      "explanation": "自行计算 SHA-256 前需按其规则规范化 URL；Base64 形式由服务端规范化。",
+      "example": "使用无填充 Base64 标识查询一个网址。",
+      "tags": [
+        "网址标识形式",
+        "VirusTotal"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/url"
+    },
+    {
+      "id": "vtctx-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网址分析",
+      "knowledgePoint": "原始与最终网址",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "VirusTotal URL 对象中的 url 与 last_final_url 分别表示什么？",
+      "answer": "url 是提交分析的原始网址；last_final_url 是重定向最终到达的网址。",
+      "explanation": "遇到跳转时，分析人员需要分别核对入口和最终目标。",
+      "example": "短网址跳转到登录页面时记录两个地址。",
+      "tags": [
+        "原始与最终网址",
+        "VirusTotal"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/url-object"
+    },
+    {
+      "id": "vtctx-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网址分析",
+      "knowledgePoint": "跳转链终点",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "VirusTotal 的 redirection_chain 是否包含 last_final_url？",
+      "answer": "文档说明跳转链不包含最后一个 URL，最终地址保存在 last_final_url。",
+      "explanation": "还原完整路径时需要结合两个字段。",
+      "example": "将跳转链和最终落地地址一起展示。",
+      "tags": [
+        "跳转链终点",
+        "VirusTotal"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/url-object"
+    },
+    {
+      "id": "vtctx-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网址分析",
+      "knowledgePoint": "引擎原始与归一结果",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "VirusTotal URL 引擎结果的 category 与 result 有什么区别？",
+      "answer": "category 是统一的结果类别；result 是该引擎提供的原始结果名称。",
+      "explanation": "不同引擎的原始命名可能不同。",
+      "example": "一个引擎的原始结果为 phishing，而归一类别为 malicious。",
+      "tags": [
+        "引擎原始与归一结果",
+        "VirusTotal"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/url-object"
+    },
+    {
+      "id": "vtctx-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网址分析",
+      "knowledgePoint": "社区声誉与引擎检测",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "VirusTotal 的 reputation 与 last_analysis_stats 分别来自什么？",
+      "answer": "reputation 汇总社区投票；last_analysis_stats 汇总最近一次扫描的引擎结果类别数量。",
+      "explanation": "两者反映不同来源的信息，不能互相当作同一指标。",
+      "example": "分别查看社区票数与恶意引擎报告数量。",
+      "tags": [
+        "社区声誉与引擎检测",
+        "VirusTotal"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/url-object"
+    },
+    {
+      "id": "vtctx-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网址分析",
+      "knowledgePoint": "首次提交与最近扫描",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "VirusTotal 的 first_submission_date 与 last_analysis_date 有什么区别？",
+      "answer": "前者是首次提交到 VirusTotal 的时间；后者是最近一次扫描时间。",
+      "explanation": "首次提交时间并不一定是该对象在互联网或系统中真正首次出现的时间。",
+      "example": "判断报告是否需要更新时查看最近扫描时间。",
+      "tags": [
+        "首次提交与最近扫描",
+        "VirusTotal"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/url-object"
+    },
+    {
+      "id": "vtctx-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "文件分析",
+      "knowledgePoint": "文件创建时间可信度",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "VirusTotal 文件对象的 creation_date 能否直接当作可信编译时间？",
+      "answer": "不能；该时间来自可提取的文件元数据，可能被恶意软件作者伪造。",
+      "explanation": "应与其他独立时间线证据交叉核对。",
+      "example": "文件自报时间早于其首次提交时间时继续核查。",
+      "tags": [
+        "文件创建时间可信度",
+        "VirusTotal"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/files"
+    },
+    {
+      "id": "vtctx-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "文件分析",
+      "knowledgePoint": "提交次数含义",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "VirusTotal 的 times_submitted 能否直接表示文件或网址的感染主机数？",
+      "answer": "不能；它记录提交或检查该对象的次数，并不等于受影响主机数。",
+      "explanation": "提交次数会受重复查询和数据来源影响。",
+      "example": "同一文件被重复提交多次不代表同样数量的感染设备。",
+      "tags": [
+        "提交次数含义",
+        "VirusTotal"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/files"
+    }
+  ]
+}

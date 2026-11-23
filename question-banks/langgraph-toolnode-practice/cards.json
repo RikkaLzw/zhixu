@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "langgraph-toolnode-practice",
+    "title": "LangGraph Prebuilt 1.0.13 源码：工具节点",
+    "url": "https://files.pythonhosted.org/packages/b5/a4/f8ac75fa7c503103f0cf7680944e28bbaaef74c19a8d163d7346869cc369/langgraph_prebuilt-1.0.13.tar.gz",
+    "type": "固定版本源码",
+    "note": "依据 langgraph-prebuilt 1.0.13 源代码包中 langgraph/prebuilt/tool_node.py 自行整理；实际运行还依赖兼容的 LangGraph 与 LangChain Core。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "lgnode-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph 工具节点",
+      "knowledgePoint": "工具执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langgraph-prebuilt 1.0.13 的 ToolNode 在工具调用工作流中做什么？",
+      "answer": "它根据工具调用选择并执行已注册的工具，生成工具消息或其他受支持的输出。",
+      "explanation": "ToolNode 可作为图中的执行节点。",
+      "example": "模型给出工具调用后，图将其交给工具节点。",
+      "tags": [
+        "LangGraph 工具节点",
+        "工具执行"
+      ],
+      "evidence": "source",
+      "reference": "https://files.pythonhosted.org/packages/b5/a4/f8ac75fa7c503103f0cf7680944e28bbaaef74c19a8d163d7346869cc369/langgraph_prebuilt-1.0.13.tar.gz"
+    },
+    {
+      "id": "lgnode-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph 工具节点",
+      "knowledgePoint": "状态输入输出",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "langgraph-prebuilt 1.0.13 的 ToolNode 接收含 messages 的字典状态并执行普通工具后，结果通常是什么形状？",
+      "answer": "返回以 messages 为键、工具消息列表为值的字典；可通过 messages_key 改用其他键名。",
+      "explanation": "消息列表输入和 Command 返回值有不同的输出形式。",
+      "example": "状态使用 messages 时，节点返回新的工具消息列表。",
+      "tags": [
+        "LangGraph 工具节点",
+        "状态输入输出"
+      ],
+      "evidence": "source",
+      "reference": "https://files.pythonhosted.org/packages/b5/a4/f8ac75fa7c503103f0cf7680944e28bbaaef74c19a8d163d7346869cc369/langgraph_prebuilt-1.0.13.tar.gz"
+    },
+    {
+      "id": "lgnode-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph 工具节点",
+      "knowledgePoint": "默认错误处理",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "langgraph-prebuilt 1.0.13 的 ToolNode 默认如何区分工具参数校验错误和普通执行异常？",
+      "answer": "参数校验导致的工具调用错误会转成描述性错误消息；普通执行异常默认继续向外抛出。",
+      "explanation": "这里指默认的 handle_tool_errors 设置。",
+      "example": "模型给出类型错误的参数时可收到错误工具消息。",
+      "tags": [
+        "LangGraph 工具节点",
+        "默认错误处理"
+      ],
+      "evidence": "source",
+      "reference": "https://files.pythonhosted.org/packages/b5/a4/f8ac75fa7c503103f0cf7680944e28bbaaef74c19a8d163d7346869cc369/langgraph_prebuilt-1.0.13.tar.gz"
+    },
+    {
+      "id": "lgnode-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph 工具节点",
+      "knowledgePoint": "捕获执行异常",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "langgraph-prebuilt 1.0.13 中为 ToolNode 设置 handle_tool_errors=True 对普通工具执行异常有什么作用？",
+      "answer": "节点会捕获普通工具执行异常，并返回包含错误内容的 ToolMessage。",
+      "explanation": "图控制流异常有单独处理，不应把此选项理解为吞掉所有系统异常。",
+      "example": "工具抛出 ValueError 后产生错误工具消息。",
+      "tags": [
+        "LangGraph 工具节点",
+        "捕获执行异常"
+      ],
+      "evidence": "source",
+      "reference": "https://files.pythonhosted.org/packages/b5/a4/f8ac75fa7c503103f0cf7680944e28bbaaef74c19a8d163d7346869cc369/langgraph_prebuilt-1.0.13.tar.gz"
+    },
+    {
+      "id": "lgnode-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph 工具节点",
+      "knowledgePoint": "按字段或完整状态注入",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "langgraph-prebuilt 1.0.13 的 InjectedState 指定字段名和不指定字段时分别注入什么？",
+      "answer": "指定字段名时注入图状态中该字段的值；不指定时注入整个图状态。",
+      "explanation": "ToolNode 在工具执行时注入状态，模型不需要提供这些注入参数。",
+      "example": "工具读取图状态中的用户标识。",
+      "tags": [
+        "LangGraph 工具节点",
+        "按字段或完整状态注入"
+      ],
+      "evidence": "source",
+      "reference": "https://files.pythonhosted.org/packages/b5/a4/f8ac75fa7c503103f0cf7680944e28bbaaef74c19a8d163d7346869cc369/langgraph_prebuilt-1.0.13.tar.gz"
+    },
+    {
+      "id": "lgnode-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph 工具节点",
+      "knowledgePoint": "注入存储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langgraph-prebuilt 1.0.13 的 InjectedStore 主要向工具注入什么？",
+      "answer": "它注入图运行所配置的 store，使工具能够访问该存储。",
+      "explanation": "存储是否持久化取决于具体 store 实现及配置。",
+      "example": "使用内存 store 测试工具的键值访问。",
+      "tags": [
+        "LangGraph 工具节点",
+        "注入存储"
+      ],
+      "evidence": "source",
+      "reference": "https://files.pythonhosted.org/packages/b5/a4/f8ac75fa7c503103f0cf7680944e28bbaaef74c19a8d163d7346869cc369/langgraph_prebuilt-1.0.13.tar.gz"
+    },
+    {
+      "id": "lgnode-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph 工具节点",
+      "knowledgePoint": "工具条件路由",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langgraph-prebuilt 1.0.13 的 tools_condition 如何依据最后一条消息选择路由？",
+      "answer": "最后一条消息包含工具调用时返回 tools；否则返回 __end__。",
+      "explanation": "它用于条件边，返回值需与图中的路由配置相匹配。",
+      "example": "模型直接回答时走结束分支。",
+      "tags": [
+        "LangGraph 工具节点",
+        "工具条件路由"
+      ],
+      "evidence": "source",
+      "reference": "https://files.pythonhosted.org/packages/b5/a4/f8ac75fa7c503103f0cf7680944e28bbaaef74c19a8d163d7346869cc369/langgraph_prebuilt-1.0.13.tar.gz"
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "source": {
+    "id": "langchain-retrieval",
+    "title": "LangChain 检索文档与 Pinecone 重排教程",
+    "url": "https://docs.langchain.com/oss/python/langchain/retrieval",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "retrieve-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文档处理",
+      "knowledgePoint": "文档加载",
+      "questionType": "概念与原理",
+      "question": "检索系统中的文档加载器通常负责什么？",
+      "answer": "它从外部来源读取内容，并转换成便于后续处理的统一文档表示。",
+      "explanation": "文档还可以附带来源等元数据。",
+      "example": "从 PDF 读取内容后构造可索引文档。",
+      "tags": [
+        "文档加载",
+        "检索",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/retrieval",
+      "origin": "自行整理"
+    },
+    {
+      "id": "retrieve-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文档处理",
+      "knowledgePoint": "检索切块",
+      "questionType": "概念与原理",
+      "question": "为什么检索系统通常把长文档切成较小片段？",
+      "answer": "较小片段可以被分别检索，也更容易放入模型有限的上下文窗口。",
+      "explanation": "块过小或过大都可能影响检索与上下文质量。",
+      "example": "把一本长手册切成若干可检索段落。",
+      "tags": [
+        "检索切块",
+        "检索",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/retrieval",
+      "origin": "自行整理"
+    },
+    {
+      "id": "retrieve-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "向量检索",
+      "knowledgePoint": "文本嵌入",
+      "questionType": "概念与原理",
+      "question": "文本 embedding 在语义检索中承担什么作用？",
+      "answer": "它把文本映射成数值向量，使系统可以比较向量空间中的相似程度。",
+      "explanation": "向量相似度只是检索线索，不自动证明答案正确。",
+      "example": "将查询和文档片段编码后计算相似度。",
+      "tags": [
+        "文本嵌入",
+        "检索",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/retrieval",
+      "origin": "自行整理"
+    },
+    {
+      "id": "retrieve-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "检索组件",
+      "knowledgePoint": "向量数据库",
+      "questionType": "概念与原理",
+      "question": "向量数据库或向量存储的主要用途是什么？",
+      "answer": "它保存向量及相关数据，并支持依据向量相似性搜索候选内容。",
+      "explanation": "实际系统还可能提供元数据过滤和索引更新功能。",
+      "example": "按查询向量查找相近的文档片段。",
+      "tags": [
+        "向量数据库",
+        "检索",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/retrieval",
+      "origin": "自行整理"
+    },
+    {
+      "id": "retrieve-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "检索架构",
+      "knowledgePoint": "两步式RAG",
+      "questionType": "概念与原理",
+      "question": "两步式 RAG 的检索与生成以什么顺序执行？",
+      "answer": "先检索相关内容，再将结果作为上下文交给生成模型。",
+      "explanation": "固定流程使调用路径相对可预测。",
+      "example": "每次回答文档问题前先执行一次检索。",
+      "tags": [
+        "两步式RAG",
+        "检索",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/retrieval",
+      "origin": "自行整理"
+    },
+    {
+      "id": "retrieve-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索架构",
+      "knowledgePoint": "Agentic RAG",
+      "questionType": "比较与选型",
+      "question": "Agentic RAG 与固定两步式 RAG 在检索决策上有什么区别？",
+      "answer": "Agentic RAG 由智能体在执行过程中决定何时及如何调用检索工具；两步式流程固定先检索再生成。",
+      "explanation": "动态决策更灵活，但调用次数和延迟可能更不稳定。",
+      "example": "智能体先查文档，再视结果决定是否补充检索。",
+      "tags": [
+        "Agentic RAG",
+        "检索",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/retrieval",
+      "origin": "自行整理"
+    },
+    {
+      "id": "retrieve-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "重排",
+      "knowledgePoint": "两阶段检索",
+      "questionType": "概念与原理",
+      "question": "两阶段检索中的重排发生在什么时候？",
+      "answer": "先用检索器从大集合召回候选，再用重排器对这些候选重新排序。",
+      "explanation": "第二阶段只处理第一阶段返回的集合。",
+      "example": "先召回 50 个片段，再重排并选出最相关的少数片段。",
+      "tags": [
+        "两阶段检索",
+        "检索",
+        "RAG",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://www.pinecone.io/learn/series/rag/rerankers/",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900303%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "retrieve-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "重排",
+      "knowledgePoint": "交叉编码器重排",
+      "questionType": "概念与原理",
+      "question": "交叉编码器重排器怎样评估查询与候选文档的相关性？",
+      "answer": "它把查询和候选文档作为一对输入，计算该对的相关性得分。",
+      "explanation": "对每个候选都做一次配对计算，通常比预计算文档向量更耗时。",
+      "example": "对查询与每个召回段落分别打分并重新排序。",
+      "tags": [
+        "交叉编码器重排",
+        "检索",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://www.pinecone.io/learn/series/rag/rerankers/",
+      "origin": "自行整理"
+    },
+    {
+      "id": "retrieve-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "重排",
+      "knowledgePoint": "重排召回上限",
+      "questionType": "概念与原理",
+      "question": "重排器能否找回第一阶段完全没有召回的文档？",
+      "answer": "不能；常见的第二阶段重排只能重新排列已提供给它的候选。",
+      "explanation": "若相关文档不在候选集中，应优先改进召回阶段。",
+      "example": "相关手册从未进入前 50 个候选时，仅修改重排顺序无效。",
+      "tags": [
+        "重排召回上限",
+        "检索",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://www.pinecone.io/learn/series/rag/rerankers/",
+      "origin": "自行整理"
+    }
+  ]
+}

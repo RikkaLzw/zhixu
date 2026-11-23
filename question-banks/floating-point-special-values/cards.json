@@ -1,0 +1,116 @@
+{
+  "source": {
+    "id": "floating-point-special-values",
+    "title": "Python 3.14：浮点特殊值与比较",
+    "url": "https://docs.python.org/3.14/library/math.html",
+    "type": "教材、标准与官方文档",
+    "note": "依据逐题引用的教材、标准或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "floatsys-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "浮点特殊值与比较",
+      "knowledgePoint": "NaN相等",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 浮点 NaN 与自身使用 == 比较时结果是什么？",
+      "answer": "结果为 False；NaN 不与任何数值相等，包括其自身。",
+      "explanation": "应使用 math.isnan 检查 NaN。",
+      "example": "x=float(\"nan\") 时 x == x 为 False。",
+      "tags": [
+        "浮点特殊值与比较",
+        "NaN相等"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/math.html#math.nan"
+    },
+    {
+      "id": "floatsys-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浮点特殊值与比较",
+      "knowledgePoint": "NaN与无穷",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 的 math.isnan 和 math.isinf 分别检查什么？",
+      "answer": "isnan 检查 NaN；isinf 检查正无穷或负无穷。",
+      "explanation": "对有限值这两个检查都返回 False。",
+      "example": "math.isinf(-math.inf) 为 True。",
+      "tags": [
+        "浮点特殊值与比较",
+        "NaN与无穷"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/math.html#math.isnan"
+    },
+    {
+      "id": "floatsys-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "浮点特殊值与比较",
+      "knowledgePoint": "接近零比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用 Python math.isclose 比较非零小数与 0 时，为什么常需要设置正的 abs_tol？",
+      "answer": "默认 abs_tol 为 0，仅用小于 1 的相对容差时非零数不会与 0 判为接近。",
+      "explanation": "绝对容差应按实际数据尺度设定。",
+      "example": "math.isclose(1e-10, 0, abs_tol=1e-9) 为 True。",
+      "tags": [
+        "浮点特殊值与比较",
+        "接近零比较"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/math.html#math.isclose"
+    },
+    {
+      "id": "floatsys-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "浮点特殊值与比较",
+      "knowledgePoint": "无穷比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python math.isclose 中 NaN 和无穷大如何参与接近比较？",
+      "answer": "NaN 与任何值都不接近；正无穷和负无穷只分别与自身接近。",
+      "explanation": "这些特殊值按文档规定单独处理。",
+      "example": "math.isclose(math.inf, math.inf) 为 True。",
+      "tags": [
+        "浮点特殊值与比较",
+        "无穷比较"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/math.html#math.isclose"
+    },
+    {
+      "id": "floatsys-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "浮点特殊值与比较",
+      "knowledgePoint": "加法结合律",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有限精度浮点数加法为什么可能不满足结合律？",
+      "answer": "中间结果会舍入，改变计算顺序可能改变最终值。",
+      "explanation": "这并不意味着数学上的实数加法不满足结合律。",
+      "example": "常见双精度下 (1e16 + -1e16) + 1 与 1e16 + (-1e16 + 1) 不同。",
+      "tags": [
+        "浮点特殊值与比较",
+        "加法结合律"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/tutorial/floatingpoint.html",
+      "supportingReferences": [
+        {
+          "id": "python-fsum-314",
+          "title": "Python 3.14：精确浮点求和",
+          "url": "https://docs.python.org/3.14/library/math.html#math.fsum",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

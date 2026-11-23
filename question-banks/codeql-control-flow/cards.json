@@ -1,0 +1,97 @@
+{
+  "source": {
+    "id": "codeql-control-flow",
+    "title": "CodeQL Python 控制流分析",
+    "url": "https://codeql.github.com/docs/codeql-language-guides/analyzing-control-flow-in-python/",
+    "type": "官方技术文档与标准",
+    "note": "依据逐题链接的原始资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "cfg-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码控制流",
+      "knowledgePoint": "控制流与数据流",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "控制流图和数据流图分别描述程序的什么关系？",
+      "answer": "控制流图描述可能的执行先后路径；数据流图描述值在程序元素之间的传播。",
+      "explanation": "两种图从不同角度辅助判断漏洞触发条件。",
+      "example": "分支是否会执行属于控制流，输入是否传到危险调用属于数据流。",
+      "tags": [
+        "控制流与数据流",
+        "静态分析"
+      ],
+      "evidence": "application",
+      "reference": "https://codeql.github.com/docs/codeql-language-guides/analyzing-control-flow-in-python/",
+      "supportingReferences": [
+        {
+          "id": "codeql-flow",
+          "title": "CodeQL Python：数据流分析",
+          "url": "https://codeql.github.com/docs/codeql-language-guides/analyzing-data-flow-in-python/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "cfg-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码控制流",
+      "knowledgePoint": "基本块作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeQL 使用基本块进行控制流分析有什么好处？",
+      "answer": "基本块将控制流节点分组，减少分析单位数量，复杂查询通常更省时间和内存。",
+      "explanation": "基本块仍可用于推理可达性等控制流性质。",
+      "example": "在较大函数中按基本块分析路径。",
+      "tags": [
+        "基本块作用",
+        "静态分析"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/codeql-language-guides/analyzing-control-flow-in-python/"
+    },
+    {
+      "id": "cfg-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码控制流",
+      "knowledgePoint": "语法节点与控制流节点",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "在 CodeQL Python 分析中，一个语法节点可以对应多个控制流节点吗？",
+      "answer": "可以；同一个语法元素可能处于不同的控制流路径中。",
+      "explanation": "一个语法节点也可能没有控制流节点，例如该语句不可达。",
+      "example": "finally 中同一语句可能经正常、异常或跳出路径执行。",
+      "tags": [
+        "语法节点与控制流节点",
+        "静态分析"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/codeql-language-guides/analyzing-control-flow-in-python/"
+    },
+    {
+      "id": "cfg-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码控制流",
+      "knowledgePoint": "不可达语句判断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 CodeQL Python 控制流图中，语句没有对应控制流节点通常说明什么？",
+      "answer": "说明该语句在构建的控制流图中不可达。",
+      "explanation": "结论依赖分析所构建的图，不应泛化为所有动态运行情况的证明。",
+      "example": "检查无对应控制流节点的 Python 语句。",
+      "tags": [
+        "不可达语句判断",
+        "静态分析"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/codeql-language-guides/analyzing-control-flow-in-python/"
+    }
+  ]
+}

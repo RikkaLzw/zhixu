@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "velociraptor-vql-investigation",
+    "title": "Velociraptor VQL 文档固定提交：调查查询",
+    "url": "https://github.com/Velocidex/velociraptor-docs/blob/c434e83b464aa5e50c3989ab3f2a1209f68206dc/content/docs/vql/fundamentals/index.md",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "vqlinvest-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "Velociraptor VQL 调查",
+      "knowledgePoint": "插件产出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Velociraptor VQL 中 FROM 后面的插件通常提供什么？",
+      "answer": "插件执行相应操作并产生供查询处理的行。",
+      "explanation": "VQL 数据源不一定是磁盘上的静态数据库表。",
+      "example": "查询进程信息时可使用相应进程插件产生行。",
+      "tags": [
+        "Velociraptor VQL 调查",
+        "插件产出"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Velocidex/velociraptor-docs/blob/c434e83b464aa5e50c3989ab3f2a1209f68206dc/content/docs/vql/fundamentals/index.md"
+    },
+    {
+      "id": "vqlinvest-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Velociraptor VQL 调查",
+      "knowledgePoint": "插件参数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "VQL 调用插件时，参数通常如何传递？",
+      "answer": "使用参数名和对应值的形式传递。",
+      "explanation": "不同插件的必需参数和可选参数不同。",
+      "example": "可用类似 plugin(path=路径) 的形式指定命名参数。",
+      "tags": [
+        "Velociraptor VQL 调查",
+        "插件参数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Velocidex/velociraptor-docs/blob/c434e83b464aa5e50c3989ab3f2a1209f68206dc/content/docs/vql/fundamentals/index.md"
+    },
+    {
+      "id": "vqlinvest-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Velociraptor VQL 调查",
+      "knowledgePoint": "惰性与物化",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "VQL 中 LET x = 查询 与 LET x <= 查询 在求值时机上有什么区别？",
+      "answer": "前者保存惰性表达式，在引用时求值；后者立即求值并物化结果。",
+      "explanation": "对大型结果立即物化可能增加内存消耗。",
+      "example": "需要复用固定结果时可评估物化方式。",
+      "tags": [
+        "Velociraptor VQL 调查",
+        "惰性与物化"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Velocidex/velociraptor-docs/blob/c434e83b464aa5e50c3989ab3f2a1209f68206dc/content/docs/vql/fundamentals/index.md"
+    },
+    {
+      "id": "vqlinvest-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Velociraptor VQL 调查",
+      "knowledgePoint": "存储查询作用域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VQL 惰性存储查询在被引用时使用什么作用域？",
+      "answer": "使用引用位置的作用域求值。",
+      "explanation": "因此同一存储查询可能在不同外层行的上下文中得到不同结果。",
+      "example": "foreach 对每个进程引用查询时，可使用当前进程行的字段。",
+      "tags": [
+        "Velociraptor VQL 调查",
+        "存储查询作用域"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Velocidex/velociraptor-docs/blob/c434e83b464aa5e50c3989ab3f2a1209f68206dc/content/docs/vql/fundamentals/index.md"
+    },
+    {
+      "id": "vqlinvest-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Velociraptor VQL 调查",
+      "knowledgePoint": "foreach",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VQL 的 foreach 插件如何组合外层结果和查询？",
+      "answer": "它遍历 row 输入，并在每个输入行的上下文中执行 query。",
+      "explanation": "这可用于按记录扩展相关信息。",
+      "example": "对每个进程记录查询其可执行文件的属性。",
+      "tags": [
+        "Velociraptor VQL 调查",
+        "foreach"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Velocidex/velociraptor-docs/blob/c434e83b464aa5e50c3989ab3f2a1209f68206dc/content/docs/vql/fundamentals/index.md"
+    },
+    {
+      "id": "vqlinvest-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Velociraptor VQL 调查",
+      "knowledgePoint": "关联运算符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VQL 的点运算符对字典或对象通常有什么作用？",
+      "answer": "按右侧名称读取左侧对象中的字段。",
+      "explanation": "当左侧是存储查询或列表时，还涉及对集合结果的处理。",
+      "example": "X.Name 读取 X 中的 Name 字段。",
+      "tags": [
+        "Velociraptor VQL 调查",
+        "关联运算符"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Velocidex/velociraptor-docs/blob/c434e83b464aa5e50c3989ab3f2a1209f68206dc/content/docs/vql/fundamentals/index.md"
+    },
+    {
+      "id": "vqlinvest-007",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "Velociraptor VQL 调查",
+      "knowledgePoint": "查询展开内存",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "VQL 对大型存储查询使用点运算符提取列时，为什么要注意内存？",
+      "answer": "它可能把查询结果展开为数组，大量结果会占用较多内存。",
+      "explanation": "惰性定义并不意味着后续操作永远不会物化结果。",
+      "example": "对包含大量文件记录的查询直接取某一列可能耗尽内存。",
+      "tags": [
+        "Velociraptor VQL 调查",
+        "查询展开内存"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Velocidex/velociraptor-docs/blob/c434e83b464aa5e50c3989ab3f2a1209f68206dc/content/docs/vql/fundamentals/index.md"
+    },
+    {
+      "id": "vqlinvest-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Velociraptor VQL 调查",
+      "knowledgePoint": "提前结束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VQL 的惰性查询配合 LIMIT 有什么潜在优势？",
+      "answer": "在满足所需结果数量后，查询可以提前取消后续工作。",
+      "explanation": "实际工作量仍取决于插件和查询执行方式。",
+      "example": "只需要少量文件记录时可避免等待完整结果。",
+      "tags": [
+        "Velociraptor VQL 调查",
+        "提前结束"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Velocidex/velociraptor-docs/blob/c434e83b464aa5e50c3989ab3f2a1209f68206dc/content/docs/vql/fundamentals/index.md"
+    }
+  ]
+}

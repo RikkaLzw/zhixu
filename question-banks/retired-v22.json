@@ -1,0 +1,114 @@
+{
+  "version": 22,
+  "note": "修正分类、类别不平衡及阈值问题并合并预处理重复题前的快照。",
+  "cards": [
+    {
+      "id": "ai4sec-001",
+      "category": "foundations",
+      "question": "AI4SEC 中的分类和异常检测有什么区别？",
+      "answer": "分类利用已标注样本学习已知类别；异常检测寻找偏离常态的样本，还需要结合上下文判断是否构成攻击。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "03",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-009",
+      "category": "foundations",
+      "question": "安全模型训练中的类别不平衡是什么？",
+      "answer": "正常样本与攻击样本数量差异很大，模型容易偏向多数类，需要结合类别权重、采样和合适指标处理。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "03",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-010",
+      "category": "foundations",
+      "question": "为什么特征处理要先划分数据集？",
+      "answer": "应只在训练集拟合预处理参数，再应用到验证集和测试集，避免测试数据的信息进入训练过程。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "03",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-010"
+        },
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "unsw-005"
+        }
+      ],
+      "explanation": "编码规则应由训练集确定，并明确处理测试中未见过的类别。",
+      "example": "把编码和分类器放入同一个训练流水线。",
+      "alternateQuestions": [
+        "为什么 UNSW-NB15 中的类别特征要在训练集拟合编码器？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "实践",
+      "tags": [
+        "预处理",
+        "数据泄漏"
+      ]
+    },
+    {
+      "id": "ai4sec-013",
+      "category": "detection",
+      "question": "提高检测阈值通常会带来什么变化？",
+      "answer": "通常会减少告警量，并改变误报和漏报；具体变化应在验证数据上测量。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "knowledgeArea": "11",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-013"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    }
+  ]
+}

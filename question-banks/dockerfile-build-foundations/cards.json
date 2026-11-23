@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "dockerfile-build-foundations",
+    "title": "Docker 官方文档：Dockerfile 构建基础",
+    "url": "https://docs.docker.com/reference/dockerfile/",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；具体实现和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "dockbuild-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "构建与启动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 中 RUN 与 CMD 的作用时间有什么区别？",
+      "answer": "RUN 在构建镜像时执行命令；CMD 指定容器运行时的默认命令或参数。",
+      "explanation": "CMD 本身不会在镜像构建时执行该默认命令。",
+      "example": "RUN 安装依赖，CMD 指定启动服务。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "构建与启动"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "默认命令覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 同一个构建阶段有多个 CMD 指令时，哪一个生效？",
+      "answer": "同一阶段中最后一个 CMD 生效。",
+      "explanation": "启动容器时提供命令或参数可覆盖 CMD 默认值。",
+      "example": "后写的 CMD 会替换前面的默认设置。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "默认命令覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "入口与默认参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 使用 exec 形式的 ENTRYPOINT 和 CMD 时，它们通常怎样配合？",
+      "answer": "ENTRYPOINT 指定默认可执行程序；CMD 提供可在运行时替换的默认参数。",
+      "explanation": "docker run 镜像名后提供的参数会替换 CMD 并追加给 exec 形式的 ENTRYPOINT。",
+      "example": "ENTRYPOINT 为程序，CMD 可给出默认端口参数。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "入口与默认参数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "覆盖入口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "docker run 的 --entrypoint 选项有什么作用？",
+      "answer": "它覆盖镜像配置的默认 ENTRYPOINT。",
+      "explanation": "可用于有意指定另一可执行入口。",
+      "example": "临时指定一个诊断程序作为容器入口。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "覆盖入口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "执行形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 的 shell 形式和 exec 形式在启动命令时有什么区别？",
+      "answer": "shell 形式通过命令 shell 执行；exec 形式使用 JSON 数组，不自动启动 shell。",
+      "explanation": "需要通配符、变量展开等 shell 功能时，应显式使用 shell 或采用 shell 形式。",
+      "example": "RUN [\"echo\", \"$NAME\"] 不会自动展开 shell 变量。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "执行形式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "入口信号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 的 shell 形式 ENTRYPOINT 为什么可能使应用收不到 docker stop 发送的信号？",
+      "answer": "入口在 shell 的子进程中运行，应用通常不是 PID 1；shell 默认不转发该信号。",
+      "explanation": "exec 形式或在合适的 shell 脚本中使用 exec 可改善信号传递。",
+      "example": "需要让服务在停止时正常清理资源。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "入口信号"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "构建与运行变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 的 ARG 与 ENV 对容器运行时环境有什么常见区别？",
+      "answer": "ARG 用于构建时，默认不作为环境变量保留到最终容器；ENV 设置的值会保留为镜像环境配置。",
+      "explanation": "ARG 的值仍可能出现在镜像历史或构建证明中，不适合传入秘密。",
+      "example": "构建选项可用 ARG，运行时默认配置可用 ENV。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "构建与运行变量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "跨阶段变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 在第一个 FROM 前定义 ARG 后，构建阶段想继续使用它通常需要做什么？",
+      "answer": "需要在该构建阶段重新声明同名 ARG，才能在阶段内使用该值。",
+      "explanation": "FROM 前的全局 ARG 可用于 FROM，但不自动进入阶段作用域。",
+      "example": "ARG VERSION 定义后，在 FROM 之后再写 ARG VERSION。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "跨阶段变量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "工作目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 的 WORKDIR 对后续指令有什么作用？",
+      "answer": "它设置后续 RUN、CMD、ENTRYPOINT、COPY 和 ADD 等指令的工作目录；目录不存在时会创建。",
+      "explanation": "相对 WORKDIR 基于前一次 WORKDIR；基础镜像也可能设置了工作目录。",
+      "example": "WORKDIR /app 后的相对路径以 /app 为基准。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "工作目录"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "多阶段构建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 的多阶段构建为什么可以减小最终镜像？",
+      "answer": "后续阶段可通过 COPY --from 只复制前一阶段需要的产物，省去未复制的构建工具和中间文件。",
+      "explanation": "最终大小仍取决于选用的基础镜像和复制内容。",
+      "example": "编译阶段生成可执行文件，运行阶段只复制该文件。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "多阶段构建"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbuild-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Dockerfile 构建基础",
+      "knowledgePoint": "ADD 与 COPY",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 的 ADD 相比 COPY 支持哪些额外来源或处理能力？",
+      "answer": "ADD 支持远程 URL 等来源，并能自动解压符合条件的本地 tar 归档；普通 COPY 主要复制指定来源内容。",
+      "explanation": "ADD 不会因远程 URL 内容看似归档就自动解压。",
+      "example": "本地归档解压与远程下载的处理方式不同。",
+      "tags": [
+        "Dockerfile 构建基础",
+        "ADD 与 COPY"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    }
+  ]
+}

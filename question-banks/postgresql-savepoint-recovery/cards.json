@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "postgresql-savepoint-recovery",
+    "title": "PostgreSQL 17：事务错误与保存点恢复",
+    "url": "https://www.postgresql.org/docs/17/tutorial-transactions.html",
+    "type": "PostgreSQL 17 官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，涉及实现行为时以题目所述版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgsave-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "PostgreSQL 保存点与恢复",
+      "knowledgePoint": "事务错误恢复",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的显式事务因语句错误进入中止状态后，如何继续同一个事务而不是整体回滚？",
+      "answer": "如果错误发生前建立了可用保存点，可执行 ROLLBACK TO SAVEPOINT 回退到该保存点，再继续事务。",
+      "explanation": "没有可用保存点时需要结束并回滚事务；并非任意错误都能只靠重试下一条普通语句恢复。",
+      "example": "先 SAVEPOINT s，语句失败后 ROLLBACK TO s，再执行修正后的写入。",
+      "tags": [
+        "PostgreSQL 保存点与恢复",
+        "事务错误恢复"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-transactions.html"
+    },
+    {
+      "id": "pgsave-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 保存点与恢复",
+      "knowledgePoint": "回退后重用",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 执行 ROLLBACK TO SAVEPOINT s 后，保存点 s 是否还存在？",
+      "answer": "仍然存在，可在需要时再次回滚到它；之后建立的保存点会被销毁。",
+      "explanation": "这允许事务从同一保存点尝试不同的后续操作。",
+      "example": "回退到 s 后再次写入，再次 ROLLBACK TO s。",
+      "tags": [
+        "PostgreSQL 保存点与恢复",
+        "回退后重用"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-rollback-to.html"
+    },
+    {
+      "id": "pgsave-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 保存点与恢复",
+      "knowledgePoint": "释放保存点",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 RELEASE SAVEPOINT 会提交外层事务吗？",
+      "answer": "不会；它移除指定保存点而保留其后的更改，外层事务仍需单独提交或回滚。",
+      "explanation": "释放某保存点时，其后建立的保存点也会被释放。",
+      "example": "RELEASE SAVEPOINT s 后，外层 ROLLBACK 仍可撤销该事务的更改。",
+      "tags": [
+        "PostgreSQL 保存点与恢复",
+        "释放保存点"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-release-savepoint.html"
+    }
+  ]
+}

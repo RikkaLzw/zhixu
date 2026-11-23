@@ -1,0 +1,31 @@
+{
+  "source": {
+    "id": "ids-protocol-analysis",
+    "title": "NIST SP 800-94 协议与异常检测",
+    "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf",
+    "type": "官方技术标准",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "idsproto-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "入侵检测",
+      "knowledgePoint": "协议分析与异常画像",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NIST SP 800-94 中状态协议分析与基于异常的检测使用的参照有什么区别？",
+      "answer": "状态协议分析对照通常预定义的协议行为模型；异常检测对照特定环境的正常行为画像。",
+      "explanation": "两种方法可以结合，协议分析的实现仍受解析能力和可见性限制。",
+      "example": "按协议状态检查消息顺序，同时对连接频率做异常分析。",
+      "tags": [
+        "协议分析与异常画像",
+        "入侵检测"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "binary-tree-traversal-fundamentals",
+    "title": "Open Data Structures 与 Cornell 课程：二叉树",
+    "url": "https://opendatastructures.org/ods-java/6_1_BinaryTree_Basic_Binary.html",
+    "type": "协议标准、教材及官方手册",
+    "note": "依据逐题引用的标准、教材或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "bintree-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "二叉树结构与遍历",
+      "knowledgePoint": "深度与高度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "以边数计数时，树中节点的深度和高度分别是什么？",
+      "answer": "深度是根到该节点路径的边数；高度是该节点到最深后代路径的最大边数。",
+      "explanation": "不同教材有时以节点数计数，使用时需说明口径。",
+      "example": "根的深度为 0，叶子的高度为 0。",
+      "tags": [
+        "二叉树结构与遍历",
+        "深度与高度"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-java/6_1_BinaryTree_Basic_Binary.html"
+    },
+    {
+      "id": "bintree-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "二叉树结构与遍历",
+      "knowledgePoint": "子树大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如何递归计算二叉树中一个节点的子树节点数？",
+      "answer": "将左右子树的节点数相加，再加上当前节点；空子树大小为 0。",
+      "explanation": "该计算会遍历所涉及的节点。",
+      "example": "只有一个节点的子树大小为 1。",
+      "tags": [
+        "二叉树结构与遍历",
+        "子树大小"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-java/6_1_BinaryTree_Basic_Binary.html"
+    },
+    {
+      "id": "bintree-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "二叉树结构与遍历",
+      "knowledgePoint": "递归高度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "以边数计数且空子树高度约定为 -1 时，二叉树节点高度如何递归计算？",
+      "answer": "取左右子树高度的较大值再加 1。",
+      "explanation": "该约定使叶子节点高度为 0。",
+      "example": "只有根节点的树高度为 0。",
+      "tags": [
+        "二叉树结构与遍历",
+        "递归高度"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-java/6_1_BinaryTree_Basic_Binary.html"
+    },
+    {
+      "id": "bintree-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉树结构与遍历",
+      "knowledgePoint": "先序遍历",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二叉树的先序遍历按什么顺序访问当前节点及其子树？",
+      "answer": "先访问当前节点，再先序遍历左子树和右子树。",
+      "explanation": "先序是深度优先遍历的一种。",
+      "example": "根 A、左右子 B 和 C 的先序结果为 A、B、C。",
+      "tags": [
+        "二叉树结构与遍历",
+        "先序遍历"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cornell.edu/courses/cs2112/2021fa/lectures/trees/"
+    },
+    {
+      "id": "bintree-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉树结构与遍历",
+      "knowledgePoint": "中序遍历",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通二叉树的中序遍历按什么顺序访问当前节点及其子树？",
+      "answer": "先中序遍历左子树，再访问当前节点，最后遍历右子树。",
+      "explanation": "只有满足搜索树等额外条件时才可推得键的排序性质。",
+      "example": "根 A、左右子 B 和 C 的中序结果为 B、A、C。",
+      "tags": [
+        "二叉树结构与遍历",
+        "中序遍历"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cornell.edu/courses/cs2112/2021fa/lectures/trees/"
+    },
+    {
+      "id": "bintree-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉树结构与遍历",
+      "knowledgePoint": "后序遍历",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二叉树的后序遍历按什么顺序访问当前节点及其子树？",
+      "answer": "先后序遍历左子树和右子树，最后访问当前节点。",
+      "explanation": "先处理子树有助于计算依赖子树结果的信息。",
+      "example": "删除树时先处理子节点再处理父节点。",
+      "tags": [
+        "二叉树结构与遍历",
+        "后序遍历"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.cornell.edu/courses/cs2112/2021fa/lectures/trees/"
+    },
+    {
+      "id": "bintree-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉树结构与遍历",
+      "knowledgePoint": "层序遍历",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二叉树的层序遍历通常使用什么数据结构？",
+      "answer": "使用队列，按从根开始逐层、每层从左到右的顺序处理节点。",
+      "explanation": "取出一个节点时将其存在的子节点依次入队。",
+      "example": "先访问根，再访问根的左右子节点。",
+      "tags": [
+        "二叉树结构与遍历",
+        "层序遍历"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-java/6_1_BinaryTree_Basic_Binary.html"
+    }
+  ]
+}

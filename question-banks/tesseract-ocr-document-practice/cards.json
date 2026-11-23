@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "tesseract-ocr-document-practice",
+    "title": "Tesseract 文档：OCR 页面设置与结果",
+    "url": "https://tesseract-ocr.github.io/tessdoc/",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据题目所列固定版本资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "ocrpractice-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Tesseract 文档 OCR 实践",
+      "knowledgePoint": "单块页面模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tesseract 的 --psm 6 按什么版面假设处理图像？",
+      "answer": "把图像视为单个均匀的文本块。",
+      "explanation": "页面分割模式应根据实际版面选择。",
+      "example": "识别裁剪后的一段文本。",
+      "tags": [
+        "Tesseract 文档 OCR 实践",
+        "单块页面模式"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html"
+    },
+    {
+      "id": "ocrpractice-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Tesseract 文档 OCR 实践",
+      "knowledgePoint": "单行页面模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tesseract 的 --psm 7 假定输入是什么？",
+      "answer": "假定输入是一行文本。",
+      "explanation": "不同版本可通过 tesseract -h 或 --help-psm 核对模式列表。",
+      "example": "识别裁剪的一行标签。",
+      "tags": [
+        "Tesseract 文档 OCR 实践",
+        "单行页面模式"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html"
+    },
+    {
+      "id": "ocrpractice-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Tesseract 文档 OCR 实践",
+      "knowledgePoint": "多语言识别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tesseract 命令行的 -l eng+chi_sim 表示什么？",
+      "answer": "同时指定英语和简体中文识别数据。",
+      "explanation": "需要安装对应的 traineddata 文件。",
+      "example": "识别中英文混排的文档。",
+      "tags": [
+        "Tesseract 文档 OCR 实践",
+        "多语言识别"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html"
+    },
+    {
+      "id": "ocrpractice-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Tesseract 文档 OCR 实践",
+      "knowledgePoint": "语言顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tesseract 文档对多个识别语言的指定顺序有什么提醒？",
+      "answer": "语言顺序可能影响识别结果和运行时间。",
+      "explanation": "对于目标数据应测试合适的语言组合与顺序。",
+      "example": "比较 eng+hin 与 hin+eng 的识别表现。",
+      "tags": [
+        "Tesseract 文档 OCR 实践",
+        "语言顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html"
+    },
+    {
+      "id": "ocrpractice-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Tesseract 文档 OCR 实践",
+      "knowledgePoint": "TSV结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tesseract 的 TSV 与 hOCR 输出分别用什么形式保存文本和版面信息？",
+      "answer": "TSV 用表格字段记录层级、坐标和文本；hOCR 用 HTML 结构记录文本及边界框等信息。",
+      "explanation": "两种格式均可用于将识别文本与页面位置关联。",
+      "example": "把 OCR 的词及位置导入后续文档解析。",
+      "tags": [
+        "Tesseract 文档 OCR 实践",
+        "TSV结构"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html"
+    },
+    {
+      "id": "ocrpractice-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Tesseract 文档 OCR 实践",
+      "knowledgePoint": "训练数据与引擎",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tesseract 的 tessdata_fast 和 tessdata_best 数据文件支持传统引擎模式 --oem 0 吗？",
+      "answer": "不支持；这些数据文件只支持基于 LSTM 的引擎。",
+      "explanation": "配置 OCR 引擎时需匹配使用的数据文件。",
+      "example": "使用 tessdata_fast 时选择支持的 LSTM 模式。",
+      "tags": [
+        "Tesseract 文档 OCR 实践",
+        "训练数据与引擎"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/Data-Files.html"
+    },
+    {
+      "id": "ocrpractice-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Tesseract 文档 OCR 实践",
+      "knowledgePoint": "边框影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tesseract 处理极小文字区域时，过紧裁剪或过大空白边框可能产生什么问题？",
+      "answer": "过紧可能影响分割；过大空白可能导致页面被当作空页。",
+      "explanation": "可尝试适度边框并在目标样本上验证。",
+      "example": "识别单词前保留少量白边。",
+      "tags": [
+        "Tesseract 文档 OCR 实践",
+        "边框影响"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html"
+    },
+    {
+      "id": "ocrpractice-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Tesseract 文档 OCR 实践",
+      "knowledgePoint": "透明通道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tesseract 4 文档描述移除 alpha 通道时如何处理透明图像？",
+      "answer": "通过与白色背景混合移除透明通道。",
+      "explanation": "某些字幕等图像可能因此识别不佳，可自行预处理。",
+      "example": "白色文字与透明背景混合后对比度下降。",
+      "tags": [
+        "Tesseract 文档 OCR 实践",
+        "透明通道"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html"
+    }
+  ]
+}

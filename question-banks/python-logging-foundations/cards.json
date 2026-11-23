@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "python-logging-foundations",
+    "title": "Python 3.14：logging 配置与日志处理",
+    "url": "https://docs.python.org/3.14/howto/logging.html",
+    "type": "教材、论文与官方技术文档",
+    "note": "逐题根据所列教材、论文或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pylogging-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "日志等级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python logging 的常用日志级别按严重程度从低到高怎样排列？",
+      "answer": "通常为 DEBUG、INFO、WARNING、ERROR、CRITICAL。",
+      "explanation": "消息只有通过相应级别和过滤条件后才会被处理。",
+      "example": "调试信息通常用 DEBUG，严重错误可用 ERROR。",
+      "tags": [
+        "Python 日志实践",
+        "日志等级"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/logging.html"
+    },
+    {
+      "id": "pylogging-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "默认阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的根 logger 默认有效级别是什么？",
+      "answer": "默认是 WARNING。",
+      "explanation": "应用可以显式配置其他级别。",
+      "example": "未重新配置时，低于 WARNING 的根日志通常不会显示。",
+      "tags": [
+        "Python 日志实践",
+        "默认阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/logging.html"
+    },
+    {
+      "id": "pylogging-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "记录器名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 中常用 logging.getLogger(__name__) 创建 logger 有什么好处？",
+      "answer": "它按模块名称组织 logger，便于通过层级统一配置和区分来源。",
+      "explanation": "同名调用通常得到同一个 logger 实例。",
+      "example": "package.module 的日志可归入 package 层级。",
+      "tags": [
+        "Python 日志实践",
+        "记录器名称"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/logging.html"
+    },
+    {
+      "id": "pylogging-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "处理器职责",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python logging 的 Logger、Handler 和 Formatter 分别承担什么职责？",
+      "answer": "Logger 接收并筛选日志，Handler 将记录发送到目标，Formatter 负责生成显示格式。",
+      "explanation": "一个 logger 可以使用多个 handler。",
+      "example": "同一记录可分别写入终端和文件。",
+      "tags": [
+        "Python 日志实践",
+        "处理器职责"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/logging.html"
+    },
+    {
+      "id": "pylogging-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "继承等级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python logging 中非根 logger 的级别为 NOTSET 时，如何确定有效级别？",
+      "answer": "沿 logger 父层级向上查找，直到找到非 NOTSET 级别或根 logger。",
+      "explanation": "有效级别决定该 logger 是否处理某个等级的事件。",
+      "example": "子 logger 未设级别时可继承父级配置。",
+      "tags": [
+        "Python 日志实践",
+        "继承等级"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/logging.html"
+    },
+    {
+      "id": "pylogging-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "父处理器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python logging 的 propagate=True 时，子 logger 产生的记录怎样传给祖先？",
+      "answer": "记录会直接传给祖先的 handler；祖先 logger 自身的级别和过滤器不会再次应用。",
+      "explanation": "祖先 handler 的级别和过滤器仍会生效。",
+      "example": "子 logger 已接收的记录可由根 handler 输出。",
+      "tags": [
+        "Python 日志实践",
+        "父处理器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/logging.html"
+    },
+    {
+      "id": "pylogging-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "重复输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 日志为什么有时会在控制台重复出现两次？",
+      "answer": "同一记录可能由子 logger 的 handler 和传播路径上的祖先 handler 分别输出。",
+      "explanation": "应检查 handler 配置和 propagate 设置。",
+      "example": "子 logger 与根 logger 都有控制台 handler。",
+      "tags": [
+        "Python 日志实践",
+        "重复输出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/logging.html"
+    },
+    {
+      "id": "pylogging-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "初始配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 logging.basicConfig 在根 logger 已有 handler 时默认会怎样？",
+      "answer": "默认不做配置；设置 force=True 可先移除并关闭根 logger 已有的 handler。",
+      "explanation": "需要避免无意覆盖应用已经设置的日志处理器。",
+      "example": "在交互环境中重复 basicConfig 未必会改掉格式。",
+      "tags": [
+        "Python 日志实践",
+        "初始配置"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/logging.html"
+    },
+    {
+      "id": "pylogging-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "异常记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python logging 的 logger.exception 通常在什么位置调用，有什么效果？",
+      "answer": "通常在异常处理代码中调用，并在日志中附带当前异常的堆栈信息。",
+      "explanation": "它默认以 ERROR 级别记录。",
+      "example": "except 块中记录错误并保留回溯。",
+      "tags": [
+        "Python 日志实践",
+        "异常记录"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/logging.html"
+    },
+    {
+      "id": "pylogging-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "延迟格式化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python logging 使用 logger.debug(\"value=%s\", value) 有什么格式化特点？",
+      "answer": "消息参数格式化会推迟到实际需要格式化记录时。",
+      "explanation": "传入的参数表达式仍在调用前求值，昂贵计算需另行控制。",
+      "example": "使用 isEnabledFor 判断后再执行昂贵的调试计算。",
+      "tags": [
+        "Python 日志实践",
+        "延迟格式化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/logging.html"
+    },
+    {
+      "id": "pylogging-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "大小轮转",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 RotatingFileHandler 与 TimedRotatingFileHandler 分别依据什么触发轮转？",
+      "answer": "前者依据文件大小，后者依据时间间隔。",
+      "explanation": "轮转和保留文件的具体行为受参数配置影响。",
+      "example": "按文件大小或按天切分日志。",
+      "tags": [
+        "Python 日志实践",
+        "大小轮转"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/logging.handlers.html"
+    },
+    {
+      "id": "pylogging-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 日志实践",
+      "knowledgePoint": "时间轮转时机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python TimedRotatingFileHandler 到达轮转时间后，即使没有新日志也一定立即生成新文件吗？",
+      "answer": "不一定；轮转检查在输出日志记录时发生。",
+      "explanation": "实际文件时间戳因此可能出现间隔。",
+      "example": "长时间无日志后下一条记录才触发轮转。",
+      "tags": [
+        "Python 日志实践",
+        "时间轮转时机"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/logging.handlers.html"
+    }
+  ]
+}

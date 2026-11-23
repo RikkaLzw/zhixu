@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "whisper-speech-training-inference",
+    "title": "Whisper 原论文 v1：语音训练与长音频",
+    "url": "https://arxiv.org/pdf/2212.04356v1",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "whisperbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Whisper 语音识别实践",
+      "knowledgePoint": "弱监督数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文的弱监督训练主要使用什么数据？",
+      "answer": "使用网络音频及其文本转写等配对数据，而不是只从无转写音频学习。",
+      "explanation": "弱监督转写可能有噪声，论文对数据源进行筛选。",
+      "example": "字幕与音频对齐的质量会影响训练。",
+      "tags": [
+        "Whisper 语音识别实践",
+        "弱监督数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.04356v1"
+    },
+    {
+      "id": "whisperbase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Whisper 语音识别实践",
+      "knowledgePoint": "语言不一致筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文处理中，当音频语言与转写语言不一致时如何处理？",
+      "answer": "通常不作为语音识别训练样本；若文本是英语，则作为到英语的语音翻译样本。",
+      "explanation": "语言由论文所用检测器判断，因此检测误差也可能影响数据。",
+      "example": "非英语语音配英语文本可被用于 X→en 翻译。",
+      "tags": [
+        "Whisper 语音识别实践",
+        "语言不一致筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.04356v1"
+    },
+    {
+      "id": "whisperbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Whisper 语音识别实践",
+      "knowledgePoint": "音频输入采样率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文在计算输入梅尔频谱前把音频重采样到多少？",
+      "answer": "重采样到 16 kHz。",
+      "explanation": "使用预训练模型时应匹配其预处理约定。",
+      "example": "将其他采样率音频按模型要求重采样。",
+      "tags": [
+        "Whisper 语音识别实践",
+        "音频输入采样率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.04356v1"
+    },
+    {
+      "id": "whisperbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Whisper 语音识别实践",
+      "knowledgePoint": "无语音标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文如何利用没有语音的音频片段训练模型？",
+      "answer": "用这些片段训练模型预测 no-speech 标记。",
+      "explanation": "论文对无语音片段进行下采样，而不是全部丢弃。",
+      "example": "静音片段可用于训练语音活动判断。",
+      "tags": [
+        "Whisper 语音识别实践",
+        "无语音标记"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.04356v1"
+    },
+    {
+      "id": "whisperbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Whisper 语音识别实践",
+      "knowledgePoint": "前文损失掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文把前文转写作为解码上下文时，是否对这些前文 token 计算训练损失？",
+      "answer": "不计算；论文只对前文上下文的损失位置做掩码。",
+      "explanation": "其他待预测的任务与文本 token 仍参与训练。",
+      "example": "历史转写作为条件，而当前片段文本作为预测目标。",
+      "tags": [
+        "Whisper 语音识别实践",
+        "前文损失掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.04356v1"
+    },
+    {
+      "id": "whisperbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Whisper 语音识别实践",
+      "knowledgePoint": "长音频窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文如何处理长于模型音频窗口的录音？",
+      "answer": "连续处理 30 秒窗口，并依据预测时间戳移动后续窗口。",
+      "explanation": "时间戳或转写错误可能影响后续窗口。",
+      "example": "逐段转写长会议录音。",
+      "tags": [
+        "Whisper 语音识别实践",
+        "长音频窗口"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.04356v1"
+    },
+    {
+      "id": "whisperbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Whisper 语音识别实践",
+      "knowledgePoint": "无语音概率限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文的长音频处理中，为什么不只用 no-speech 概率判断静音？",
+      "answer": "论文观察到单独使用该概率不足，并结合平均生成对数概率进行判断。",
+      "explanation": "该规则属于论文实验中的推理策略，不保证覆盖所有环境。",
+      "example": "低质量转写与静音判断需要结合多个信号。",
+      "tags": [
+        "Whisper 语音识别实践",
+        "无语音概率限制"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.04356v1"
+    }
+  ]
+}

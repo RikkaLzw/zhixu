@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "iscxvpn2016-traffic-dataset",
+    "title": "UNB 官方说明：ISCXVPN2016 流量数据",
+    "url": "https://www.unb.ca/cic/datasets/vpn.html",
+    "type": "数据集官方说明",
+    "note": "依据数据集官方说明自行整理；示例为自编。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "vpn2016-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "ISCXVPN2016 流量数据",
+      "knowledgePoint": "数据任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ISCXVPN2016 数据集主要对什么网络流量进行区分和分类？",
+      "answer": "它包含常规连接与 VPN 连接中的多种应用流量，可用于 VPN 与应用流量分类研究。",
+      "explanation": "标签不应直接等同于恶意或正常的安全威胁标签。",
+      "example": "比较 VoIP 流量在 VPN 与非 VPN 条件下的分类表现。",
+      "tags": [
+        "ISCXVPN2016",
+        "数据任务"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/vpn.html"
+    },
+    {
+      "id": "vpn2016-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "ISCXVPN2016 流量数据",
+      "knowledgePoint": "活动类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ISCXVPN2016 官方说明涵盖哪些应用活动？",
+      "answer": "包括浏览、邮件、聊天、流媒体、文件传输、VoIP 和 P2P 等活动。",
+      "explanation": "不同活动也有常规与 VPN 会话区分。",
+      "example": "分别查看聊天和文件传输流量。",
+      "tags": [
+        "ISCXVPN2016",
+        "活动类别"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/vpn.html"
+    },
+    {
+      "id": "vpn2016-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "ISCXVPN2016 流量数据",
+      "knowledgePoint": "VPN 实验条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ISCXVPN2016 的 VPN 流量在官方说明中使用哪种连接方式？",
+      "answer": "使用外部 VPN 服务提供商，通过 OpenVPN 的 UDP 模式连接。",
+      "explanation": "针对这一条件的结果不能直接代表所有 VPN 协议和服务商。",
+      "example": "把模型迁移到其他 VPN 协议时单独验证。",
+      "tags": [
+        "ISCXVPN2016",
+        "VPN 实验条件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/vpn.html"
+    },
+    {
+      "id": "vpn2016-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "ISCXVPN2016 流量数据",
+      "knowledgePoint": "发布形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ISCXVPN2016 官方说明提供了哪些网络数据形式？",
+      "answer": "提供完整的 PCAP 抓包文件以及由 ISCXFlowMeter 生成的流级 CSV。",
+      "explanation": "选择数据形式时要明确预测单位和可用特征。",
+      "example": "使用 PCAP 进行报文分析，或使用 CSV 进行流级分类。",
+      "tags": [
+        "ISCXVPN2016",
+        "发布形式"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/vpn.html"
+    },
+    {
+      "id": "vpn2016-005",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "ISCXVPN2016 流量数据",
+      "knowledgePoint": "流量采集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ISCXVPN2016 官方说明使用哪些工具捕获网络流量？",
+      "answer": "使用 Wireshark 和 tcpdump 进行抓包。",
+      "explanation": "采集工具和后续流特征生成工具承担不同职责。",
+      "example": "先捕获报文，再用流量工具生成 CSV 特征。",
+      "tags": [
+        "ISCXVPN2016",
+        "流量采集"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/vpn.html"
+    },
+    {
+      "id": "vpn2016-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "ISCXVPN2016 流量数据",
+      "knowledgePoint": "采集标签边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ISCXVPN2016 在采集某种应用流量时，为便于标注采取了什么环境控制？",
+      "answer": "关闭不必要的服务和应用，并按本地客户端源或目的 IP 过滤报文。",
+      "explanation": "这不保证每个捕获流都只对应目标活动，官方说明中也提到语音应用可能伴随浏览流量。",
+      "example": "采集语音会话时仍需检查伴随的浏览流。",
+      "tags": [
+        "ISCXVPN2016",
+        "采集标签边界"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/vpn.html"
+    }
+  ]
+}

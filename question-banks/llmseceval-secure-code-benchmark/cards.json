@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "llmseceval-secure-code-benchmark",
+    "title": "LLMSecEval 固定提交：安全代码生成评测",
+    "url": "https://github.com/tuhh-softsec/LLMSecEval/blob/39e97f046dbb2c4c604d31b86f2a4d3d27827388/Dataset/README.md",
+    "type": "固定版本论文、官方文档与数据规范",
+    "note": "依据逐题引用的资料自行整理；示例为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "llmseceval-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "LLMSecEval 安全代码评测",
+      "knowledgePoint": "基准任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMSecEval 数据集的主要用途是什么？",
+      "answer": "用安全相关自然语言提示评估大模型生成代码的安全性。",
+      "explanation": "提示覆盖的是特定安全场景，不是完整的软件需求集合。",
+      "example": "向代码模型输入提示后审查生成结果。",
+      "tags": [
+        "LLMSecEval 安全代码评测",
+        "基准任务"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tuhh-softsec/LLMSecEval/blob/39e97f046dbb2c4c604d31b86f2a4d3d27827388/README.md"
+    },
+    {
+      "id": "llmseceval-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "LLMSecEval 安全代码评测",
+      "knowledgePoint": "基准范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMSecEval 固定提交的提示覆盖了哪些 CWE 场景范围？",
+      "answer": "其 150 个提示覆盖 2021 年 Top 25 中的 18 类 CWE 场景。",
+      "explanation": "这个覆盖范围不等于涵盖所有 CWE 或所有相关变体。",
+      "example": "报告模型结果时应注明数据集和版本。",
+      "tags": [
+        "LLMSecEval 安全代码评测",
+        "基准范围"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tuhh-softsec/LLMSecEval/blob/39e97f046dbb2c4c604d31b86f2a4d3d27827388/Dataset/README.md"
+    },
+    {
+      "id": "llmseceval-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "LLMSecEval 安全代码评测",
+      "knowledgePoint": "来源代码标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMSecEval 的 Vulnerable 字段或 CWE 标签能直接判断新生成代码是否有漏洞吗？",
+      "answer": "不能；前者标记原始来源代码，后者描述相关安全场景，生成代码需另行验证。",
+      "explanation": "不同模型对同一提示的实现可能有不同安全性。",
+      "example": "同一 CWE 场景可能产生安全或不安全实现。",
+      "tags": [
+        "LLMSecEval 安全代码评测",
+        "来源代码标签"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tuhh-softsec/LLMSecEval/blob/39e97f046dbb2c4c604d31b86f2a4d3d27827388/Dataset/README.md"
+    },
+    {
+      "id": "llmseceval-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "LLMSecEval 安全代码评测",
+      "knowledgePoint": "提示隐去漏洞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMSecEval 的自然语言提示如何处理对漏洞的直接提及？",
+      "answer": "数据集说明提示经过清理，移除了对漏洞的直接提及。",
+      "explanation": "这使提示更接近描述功能的任务，而非直接要求生成漏洞。",
+      "example": "描述文件操作需求而不直接写漏洞名称。",
+      "tags": [
+        "LLMSecEval 安全代码评测",
+        "提示隐去漏洞"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tuhh-softsec/LLMSecEval/blob/39e97f046dbb2c4c604d31b86f2a4d3d27827388/Dataset/README.md"
+    },
+    {
+      "id": "llmseceval-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "LLMSecEval 安全代码评测",
+      "knowledgePoint": "原始语言字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMSecEval 的 Language 字段表示生成代码必须使用的语言吗？",
+      "answer": "不是；它表示用于生成该提示的源代码语言。",
+      "explanation": "实际生成时采用的语言需要在实验设置中明确记录。",
+      "example": "提示来源为 C 代码，实验也可能要求生成其他语言。",
+      "tags": [
+        "LLMSecEval 安全代码评测",
+        "原始语言字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tuhh-softsec/LLMSecEval/blob/39e97f046dbb2c4c604d31b86f2a4d3d27827388/Dataset/README.md"
+    },
+    {
+      "id": "llmseceval-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "LLMSecEval 安全代码评测",
+      "knowledgePoint": "提示质量评价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMSecEval 中的 Naturalness 与 Adequacy 分别评价提示的什么方面？",
+      "answer": "Naturalness 关注语言流畅性；Adequacy 关注提示对源代码内容的表达充分程度。",
+      "explanation": "这些是提示质量评价，并非直接测量生成代码安全性。",
+      "example": "提示语法流畅不保证内容完整。",
+      "tags": [
+        "LLMSecEval 安全代码评测",
+        "提示质量评价"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tuhh-softsec/LLMSecEval/blob/39e97f046dbb2c4c604d31b86f2a4d3d27827388/Dataset/README.md"
+    },
+    {
+      "id": "llmseceval-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "LLMSecEval 安全代码评测",
+      "knowledgePoint": "修订提示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMSecEval 的 Manually-fixed NL Prompt 字段用于记录什么？",
+      "answer": "记录对部分低评分机器生成提示进行人工修订后的版本。",
+      "explanation": "比较实验时应记录选用了原始提示还是修订提示。",
+      "example": "同一场景可能有机器提示与人工修订版本。",
+      "tags": [
+        "LLMSecEval 安全代码评测",
+        "修订提示"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tuhh-softsec/LLMSecEval/blob/39e97f046dbb2c4c604d31b86f2a4d3d27827388/Dataset/README.md"
+    }
+  ]
+}

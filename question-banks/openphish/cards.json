@@ -7,17 +7,318 @@
     "note": "来源说明参考 OpenPhish；检测设计与示例为原创应用，使用数据前需核对访问条件。"
   },
   "cards": [
-    {"id":"phish-001","category":"detection","level":"入门","question":"钓鱼网址数据可以支持什么 AI4SEC 任务？","answer":"可以用于训练或验证识别钓鱼网址的模型。","explanation":"OpenPhish 数据库说明其记录结构化钓鱼网站信息，并可用于分析和 AI 数据用途。","example":"在授权数据上训练网址风险排序模型。","tags":["钓鱼检测","数据来源"],"evidence":"source"},
-    {"id":"phish-002","category":"detection","level":"进阶","question":"只有钓鱼网址列表能直接构建可靠的二分类测试集吗？","answer":"不能；二分类评估还需要来源可靠、与目标环境匹配的正常样本。","explanation":"正负样本采集方式不同还可能产生来源捷径。","example":"说明正常网址的采集范围和时间，而不是把未列入黑名单的地址全部当作安全。","tags":["负样本","标签质量"],"evidence":"application"},
-    {"id":"phish-003","category":"detection","level":"实践","question":"钓鱼网址模型可以使用哪些不访问网页的特征？","answer":"可以使用网址长度、字符分布、路径结构等词法特征。","explanation":"这些特征采集成本较低，但单独使用可能难以判断页面意图。","example":"在离线样本上统计主机名长度和特殊字符数量。","tags":["URL特征","静态检测"],"evidence":"application"},
-    {"id":"phish-004","category":"detection","level":"进阶","question":"为什么钓鱼网址检测要按域名分组评估？","answer":"同一域名下的多个相似网址若跨训练和测试，会高估对新域名的泛化。","explanation":"分组规则应说明如何处理子域名、重定向和公共托管域。","example":"将同一可注册域名的样本分到同一集合，并单独检查公共托管服务。","tags":["域名分组","去重"],"evidence":"application"},
-    {"id":"phish-005","category":"detection","level":"进阶","question":"为什么钓鱼网址模型要考虑数据的时间变化？","answer":"钓鱼网址寿命和攻击方式会变化，历史样本的效果可能不能代表后续流量。","explanation":"时间外测试应保证训练时没有使用之后才确认的信息。","example":"用早期数据训练，在后续采集的数据上测试。","tags":["时间切分","漂移"],"evidence":"application"},
-    {"id":"phish-006","category":"detection","level":"实践","question":"钓鱼网址标签为什么需要记录确认时间？","answer":"模型预测时可能还不知道该网址之后才获得的确认结果。","explanation":"标注可以用于事后评估，但不能作为预测时可用特征。","example":"保存首次观察时间与钓鱼确认时间，并分别用于特征和标签。","tags":["标签时间","数据泄漏"],"evidence":"application"},
-    {"id":"phish-007","category":"detection","level":"进阶","question":"为什么不能只依赖网址中是否出现敏感词判断钓鱼？","answer":"正常网址也可能包含相关词语，钓鱼网址也可能没有这些词。","explanation":"需要结合多个特征、上下文和验证结果。","example":"比较简单关键词规则与多特征模型的误报。","tags":["特征","误报"],"evidence":"application"},
-    {"id":"phish-008","category":"detection","level":"实践","question":"采集钓鱼页面内容用于模型分析时需要什么条件？","answer":"应在授权的隔离环境中采集，并控制外部访问与敏感信息处理。","explanation":"页面内容和截图能补充证据，但采集过程带来额外成本。","example":"隔离浏览器记录页面截图和跳转链，而不输入真实账号。","tags":["页面采集","隔离环境"],"evidence":"application"},
-    {"id":"phish-009","category":"detection","level":"进阶","question":"为什么钓鱼网页的截图模型需要检查品牌和模板泄漏？","answer":"同一钓鱼模板或品牌页面跨集合时，模型可能记住外观而非识别新攻击。","explanation":"可按模板、域名、时间或品牌分组评估。","example":"留出某些页面模板，检查模型在新模板上的误报与召回。","tags":["视觉检测","模板泄漏"],"evidence":"application"},
-    {"id":"phish-010","category":"detection","level":"实践","question":"如何评估钓鱼网址模型的告警负担？","answer":"结合实际流量比例，报告误报量、精确率和发现钓鱼的召回率。","explanation":"实验集中的正负比例可能与真实访问流量不同。","example":"报告每十万次网址检查产生的误报数。","tags":["告警量","评估"],"evidence":"application"},
-    {"id":"phish-011","category":"detection","level":"进阶","question":"钓鱼网址模型为什么要记录数据源及许可？","answer":"不同数据源的采集方法、更新频率、覆盖范围和使用条件可能不同。","explanation":"训练与分发前应核对来源规则并保留版本信息。","example":"在数据清单中记录采集时间、来源和允许的用途。","tags":["数据治理","来源"],"evidence":"application"},
-    {"id":"phish-012","category":"detection","level":"实践","question":"如何分析钓鱼网址模型的误报？","answer":"回查网址结构、业务背景、训练来源和人工确认结果。","explanation":"短链接、登录页面或新注册域名本身不能单独证明钓鱼。","example":"检查合法企业登录页面为何被高分标记。","tags":["误报分析","钓鱼检测"],"evidence":"application"}
+    {
+      "id": "phish-001",
+      "category": "detection",
+      "level": "入门",
+      "question": "钓鱼网址数据可以支持什么 AI4SEC 任务？",
+      "answer": "可以用于训练或验证识别钓鱼网址的模型。",
+      "explanation": "OpenPhish 数据库说明其记录结构化钓鱼网站信息，并可用于分析和 AI 数据用途。",
+      "example": "在授权数据上训练网址风险排序模型。",
+      "tags": [
+        "钓鱼检测",
+        "数据来源"
+      ],
+      "evidence": "source",
+      "subtopic": "钓鱼数据来源",
+      "knowledgePoint": "钓鱼数据任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html"
+    },
+    {
+      "id": "phish-002",
+      "category": "detection",
+      "level": "进阶",
+      "question": "只有钓鱼网址列表能直接构建可靠的二分类测试集吗？",
+      "answer": "不能；二分类评估还需要来源可靠、与目标环境匹配的正常样本。",
+      "explanation": "正负样本采集方式不同还可能产生来源捷径。",
+      "example": "说明正常网址的采集范围和时间，而不是把未列入黑名单的地址全部当作安全。",
+      "tags": [
+        "负样本",
+        "标签质量"
+      ],
+      "evidence": "application",
+      "subtopic": "钓鱼数据评估",
+      "knowledgePoint": "正负样本覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "phish-metrics-ref",
+          "title": "scikit-learn：混淆矩阵",
+          "url": "https://scikit-learn.org/stable/modules/model_evaluation.html#confusion-matrix",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "phish-003",
+      "category": "detection",
+      "level": "入门",
+      "question": "钓鱼网址模型可以使用哪些不访问网页的特征？",
+      "answer": "可以使用网址长度、字符分布、路径结构等词法特征。",
+      "explanation": "这些特征采集成本较低，但单独使用可能难以判断页面意图。",
+      "example": "在离线样本上统计主机名长度和特殊字符数量。",
+      "tags": [
+        "URL特征",
+        "静态检测"
+      ],
+      "evidence": "application",
+      "subtopic": "网址特征",
+      "knowledgePoint": "离线URL词法特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "urlnet-paper-ref",
+          "title": "URLNet: Learning a URL Representation with Deep Learning",
+          "url": "https://arxiv.org/abs/1802.03162",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "phish-004",
+      "category": "detection",
+      "level": "进阶",
+      "question": "为什么钓鱼网址检测要按域名分组评估？",
+      "answer": "同一域名下的多个相似网址若跨训练和测试，会高估对新域名的泛化。",
+      "explanation": "分组规则应说明如何处理子域名、重定向和公共托管域。",
+      "example": "将同一可注册域名的样本分到同一集合，并单独检查公共托管服务。",
+      "tags": [
+        "域名分组",
+        "去重"
+      ],
+      "evidence": "application",
+      "subtopic": "数据切分",
+      "knowledgePoint": "按域名分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "phish-group-ref",
+          "title": "scikit-learn：分组交叉验证",
+          "url": "https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "phish-005",
+      "category": "detection",
+      "level": "进阶",
+      "question": "为什么钓鱼网址模型要考虑数据的时间变化？",
+      "answer": "钓鱼网址寿命和攻击方式会变化，历史样本的效果可能不能代表后续流量。",
+      "explanation": "时间外测试应保证训练时没有使用之后才确认的信息。",
+      "example": "用早期数据训练，在后续采集的数据上测试。",
+      "tags": [
+        "时间切分",
+        "漂移"
+      ],
+      "evidence": "application"
+    },
+    {
+      "id": "phish-006",
+      "category": "detection",
+      "level": "实践",
+      "question": "钓鱼网址标签为什么需要记录确认时间？",
+      "answer": "模型预测时可能还不知道该网址之后才获得的确认结果。",
+      "explanation": "标注可以用于事后评估，但不能作为预测时可用特征。",
+      "example": "保存首次观察时间与钓鱼确认时间，并分别用于特征和标签。",
+      "tags": [
+        "标签时间",
+        "数据泄漏"
+      ],
+      "evidence": "application",
+      "subtopic": "标签与时间",
+      "knowledgePoint": "标签确认时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "phish-leak-ref",
+          "title": "scikit-learn：数据泄漏",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html#data-leakage",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "phish-007",
+      "category": "detection",
+      "level": "进阶",
+      "question": "为什么不能只依赖网址中是否出现敏感词判断钓鱼？",
+      "answer": "正常网址也可能包含相关词语，钓鱼网址也可能没有这些词。",
+      "explanation": "需要结合多个特征、上下文和验证结果。",
+      "example": "比较简单关键词规则与多特征模型的误报。",
+      "tags": [
+        "特征",
+        "误报"
+      ],
+      "evidence": "application",
+      "subtopic": "URL词法特征",
+      "knowledgePoint": "单一关键词局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "urlnet-ref",
+          "title": "URLNet：恶意网址词法表示与分类",
+          "url": "https://arxiv.org/abs/1802.03162",
+          "type": "研究论文",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "phish-008",
+      "category": "detection",
+      "level": "实践",
+      "question": "采集钓鱼页面内容用于模型分析时需要什么条件？",
+      "answer": "应在授权的隔离环境中采集，并控制外部访问与敏感信息处理。",
+      "explanation": "页面内容和截图能补充证据，但采集过程带来额外成本。",
+      "example": "隔离浏览器记录页面截图和跳转链，而不输入真实账号。",
+      "tags": [
+        "页面采集",
+        "隔离环境"
+      ],
+      "evidence": "application",
+      "subtopic": "页面采集",
+      "knowledgePoint": "隔离采集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "phish-sandbox-ref",
+          "title": "NIST SP 800-83r1：隔离测试系统",
+          "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-83r1.pdf",
+          "type": "官方标准",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "phish-009",
+      "category": "detection",
+      "level": "进阶",
+      "question": "评估钓鱼截图模型对新品牌或新模板泛化时，为什么要按对应对象分组？",
+      "answer": "避免目标品牌或模板同时进入训练和测试，使评估更接近对未见对象的泛化。",
+      "explanation": "分组单位应与目标场景一致；如果目标是在已知品牌上识别新页面，不必强制留出所有品牌。",
+      "example": "留出某些页面模板，检查模型在新模板上的误报与召回。",
+      "tags": [
+        "视觉检测",
+        "模板泄漏"
+      ],
+      "evidence": "application",
+      "subtopic": "数据切分",
+      "knowledgePoint": "品牌与模板分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "phish-group-ref",
+          "title": "scikit-learn：分组交叉验证",
+          "url": "https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "phish-010",
+      "category": "detection",
+      "level": "实践",
+      "question": "如何评估钓鱼网址模型的告警负担？",
+      "answer": "结合实际流量比例，报告误报量、精确率和发现钓鱼的召回率。",
+      "explanation": "实验集中的正负比例可能与真实访问流量不同。",
+      "example": "报告每十万次网址检查产生的误报数。",
+      "tags": [
+        "告警量",
+        "评估"
+      ],
+      "evidence": "application",
+      "subtopic": "检测评估",
+      "knowledgePoint": "钓鱼告警负担",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "phish-time-ref",
+          "title": "TESSERACT：时间与类别比例",
+          "url": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "phish-011",
+      "category": "detection",
+      "level": "进阶",
+      "question": "钓鱼网址模型为什么要记录数据源及许可？",
+      "answer": "不同数据源的采集方法、更新频率、覆盖范围和使用条件可能不同。",
+      "explanation": "训练与分发前应核对来源规则并保留版本信息。",
+      "example": "在数据清单中记录采集时间、来源和允许的用途。",
+      "tags": [
+        "数据治理",
+        "来源"
+      ],
+      "evidence": "application",
+      "subtopic": "数据治理",
+      "knowledgePoint": "钓鱼数据来源与使用条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "openphish-terms-ref",
+          "title": "OpenPhish Terms of Use",
+          "url": "https://www.openphish.com/terms.html",
+          "type": "服务条款",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "phish-012",
+      "category": "detection",
+      "level": "实践",
+      "question": "如何分析钓鱼网址模型的误报？",
+      "answer": "回查网址结构、业务背景、训练来源和人工确认结果。",
+      "explanation": "短链接、登录页面或新注册域名本身不能单独证明钓鱼。",
+      "example": "检查合法企业登录页面为何被高分标记。",
+      "tags": [
+        "误报分析",
+        "钓鱼检测"
+      ],
+      "evidence": "application",
+      "subtopic": "错误分析",
+      "knowledgePoint": "钓鱼误报分析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://www.openphish.com/phishing_database.html",
+      "supportingReferences": [
+        {
+          "id": "phish-visual-ref",
+          "title": "PhishIntention：合法页面误报",
+          "url": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
   ]
 }

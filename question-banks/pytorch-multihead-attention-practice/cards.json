@@ -1,0 +1,138 @@
+{
+  "source": {
+    "id": "pytorch-multihead-attention-practice",
+    "title": "PyTorch 2.7 文档：多头注意力接口",
+    "url": "https://pytorch.org/docs/2.7/generated/torch.nn.MultiheadAttention.html",
+    "type": "官方文档、固定版本源码或论文",
+    "note": "依据 PyTorch 2.7 官方文档自行整理；百度公开面经主题延伸明确标为非原题。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptmha-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 多头注意力",
+      "knowledgePoint": "查询与源长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 MultiheadAttention 在交叉注意力中，查询长度和键值长度可以不同吗？",
+      "answer": "可以；查询长度 L 决定输出序列长度，键和值共享源序列长度 S。",
+      "explanation": "查询、键和值的批次需兼容。",
+      "example": "三个查询位置关注五个源位置。",
+      "tags": [
+        "PyTorch 多头注意力",
+        "查询与源长度"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.MultiheadAttention.html"
+    },
+    {
+      "id": "ptmha-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 多头注意力",
+      "knowledgePoint": "两种掩码",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 MultiheadAttention 中 key_padding_mask 与 attn_mask 分别限制什么？",
+      "answer": "key_padding_mask 按批次和键位置施加掩码；attn_mask 按查询与键的位置对施加掩码。",
+      "explanation": "布尔掩码的 True 表示屏蔽，浮点掩码加到注意力分数；两者同时给出时类型应匹配。",
+      "example": "对填充位置使用 key_padding_mask，对禁止的位置对使用 attn_mask。",
+      "tags": [
+        "PyTorch 多头注意力",
+        "两种掩码",
+        "公开面经",
+        "百度",
+        "主题延伸"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.MultiheadAttention.html",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型公开面经：手写多头注意力主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900317%E3%80%91%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "ptmha-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 多头注意力",
+      "knowledgePoint": "二维三维掩码",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 MultiheadAttention 支持的二维和三维 attn_mask 形状分别是什么？",
+      "answer": "二维为 (L,S)，可广播到各批次和头；三维为 (N×头数,L,S)，可为每个样本和头提供掩码。",
+      "explanation": "L 是查询长度，S 是键长度，N 是批次大小。",
+      "example": "不同样本使用不同禁止位置时使用三维掩码。",
+      "tags": [
+        "PyTorch 多头注意力",
+        "二维三维掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.MultiheadAttention.html"
+    },
+    {
+      "id": "ptmha-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 多头注意力",
+      "knowledgePoint": "返回各头权重",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 MultiheadAttention 在需要权重时，average_attn_weights=False 对输出有什么影响？",
+      "answer": "它返回每个头的注意力权重；批量输入时形状为 (N,头数,L,S)。",
+      "explanation": "默认 True 会在头维上求平均，得到 (N,L,S)。",
+      "example": "分别检查两个注意力头的权重。",
+      "tags": [
+        "PyTorch 多头注意力",
+        "返回各头权重"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.MultiheadAttention.html"
+    },
+    {
+      "id": "ptmha-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 多头注意力",
+      "knowledgePoint": "跳过权重输出",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 MultiheadAttention 设置 need_weights=False 会怎样？",
+      "answer": "它不返回注意力权重，并可使用优化的 scaled_dot_product_attention 路径。",
+      "explanation": "是否命中具体优化实现还取决于环境及输入条件。",
+      "example": "只需要注意力输出时关闭权重返回。",
+      "tags": [
+        "PyTorch 多头注意力",
+        "跳过权重输出"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.MultiheadAttention.html"
+    },
+    {
+      "id": "ptmha-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 多头注意力",
+      "knowledgePoint": "键值维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 MultiheadAttention 中 kdim 和 vdim 未指定时默认是什么？",
+      "answer": "两者默认使用 embed_dim。",
+      "explanation": "它们分别描述输入键与输入值的特征维度。",
+      "example": "未单独设置时查询、键和值的输入特征维度均按 embed_dim 配置。",
+      "tags": [
+        "PyTorch 多头注意力",
+        "键值维度"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.MultiheadAttention.html"
+    }
+  ]
+}

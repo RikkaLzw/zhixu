@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "incident-prioritization",
+    "title": "NIST SP 800-61r3 事件管理",
+    "url": "https://doi.org/10.6028/NIST.SP.800-61r3",
+    "type": "官方技术标准",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "irprio-001",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "事件管理",
+      "knowledgePoint": "事件先后与风险",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 为什么不建议仅按报告先后处理事件？",
+      "answer": "响应资源有限，应结合影响、紧急程度等风险因素安排优先级。",
+      "explanation": "具体评估因素应根据组织环境确定。",
+      "example": "优先处置正在影响关键业务且仍在扩散的事件。",
+      "tags": [
+        "事件先后与风险",
+        "事件管理"
+      ],
+      "evidence": "source",
+      "reference": "https://doi.org/10.6028/NIST.SP.800-61r3"
+    },
+    {
+      "id": "irprio-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件管理",
+      "knowledgePoint": "Escalation与Elevation",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 中事件 escalation 和 elevation 一般有什么区别？",
+      "answer": "escalation 通常指增加响应资源或调整时间安排；elevation 通常指引入更高层管理人员。",
+      "explanation": "组织应在响应计划中明确自己的升级流程。",
+      "example": "技术团队需要更多人手与需要管理层决策是不同情形。",
+      "tags": [
+        "Escalation与Elevation",
+        "事件管理"
+      ],
+      "evidence": "source",
+      "reference": "https://doi.org/10.6028/NIST.SP.800-61r3"
+    },
+    {
+      "id": "irprio-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件管理",
+      "knowledgePoint": "恢复速度与调查",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "选择事件响应策略时，快速恢复与继续观察攻击行为可能有什么取舍？",
+      "answer": "立即恢复可能缩短业务中断，但可能减少观察攻击行为或深入调查的机会。",
+      "explanation": "应结合事件影响、调查需要及授权选择策略。",
+      "example": "在隔离受影响系统时同步考虑需要保留的调查证据。",
+      "tags": [
+        "恢复速度与调查",
+        "事件管理"
+      ],
+      "evidence": "source",
+      "reference": "https://doi.org/10.6028/NIST.SP.800-61r3"
+    },
+    {
+      "id": "irprio-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件管理",
+      "knowledgePoint": "响应状态追踪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么要持续跟踪事件中各项响应行动的状态？",
+      "answer": "它有助于掌握已分配行动的进度、预计时间和下一步，并及时调整资源。",
+      "explanation": "状态记录可与事件摘要和关联指标一起维护。",
+      "example": "记录某设备隔离任务的负责人、状态和后续步骤。",
+      "tags": [
+        "响应状态追踪",
+        "事件管理"
+      ],
+      "evidence": "source",
+      "reference": "https://doi.org/10.6028/NIST.SP.800-61r3"
+    }
+  ]
+}

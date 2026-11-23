@@ -1,0 +1,349 @@
+{
+  "source": {
+    "id": "google-sre-service-level-objectives",
+    "title": "Google SRE Book：服务级别目标与可用性",
+    "url": "https://sre.google/sre-book/service-level-objectives/",
+    "type": "官方工程手册",
+    "note": "依据 Google SRE Book 第 4 章及可用性表整理；自编示例中的年度停机时间按 365 天连续运行计算；在线资料于 2026-11-23 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sreslo-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "SLA与SLO区别",
+      "questionType": "概念比较",
+      "origin": "自行整理",
+      "question": "SRE 中的 SLO 与 SLA 有什么关键区别？",
+      "answer": "SLO 是针对服务水平指标设定的目标；SLA 是面向用户的服务承诺，通常约定未达标时的后果。内部 SLO 不一定构成 SLA。",
+      "explanation": "SLO 描述工程目标，SLA 描述服务提供方对用户承担的约定及相应后果。",
+      "example": "团队可以内部按 30 天成功率目标监控服务，而合同另行定义服务抵扣所依据的可用性承诺。",
+      "tags": [
+        "SRE",
+        "SLO",
+        "SLA",
+        "服务目标"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "以用户体验选择SLI",
+      "questionType": "设计原则",
+      "origin": "自行整理",
+      "question": "选择 SLI 时，为什么应优先考虑用户可感知的服务行为？",
+      "answer": "用户关心请求是否成功、够快以及结果是否有用；只选内部资源指标可能无法反映实际服务体验。",
+      "explanation": "CPU、内存等指标适合诊断原因，但不自动等同于用户得到的服务水平。",
+      "example": "CPU 使用率正常时，数据库锁等待仍可能让用户请求超时。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "用户体验",
+        "监控"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "健康检查与用户可用性",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "所有主机健康检查都通过，为什么仍不能据此断定用户请求可用？",
+      "answer": "健康检查只覆盖部分组件状态；DNS、网关、依赖或请求处理仍可能失败，应检查完整用户请求路径。",
+      "explanation": "单个组件健康与端到端服务成功不是同一个观测对象。",
+      "example": "应用进程正常，但数据库连接池耗尽，用户查询仍会失败。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "健康检查",
+        "端到端"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "请求服务可用性指标",
+      "questionType": "指标设计",
+      "origin": "自行整理",
+      "question": "对请求驱动的 API，常见的请求可用性 SLI 如何定义？",
+      "answer": "统计符合条件的成功请求占全部符合条件请求的比例，并明确成功和失败的判定规则。",
+      "explanation": "按请求计数能反映用户实际经历的成功情况；统计边界应说明哪些请求属于分母。",
+      "example": "一个窗口收到 10,000 个有效请求，其中 9,990 个成功，则该窗口成功率为 99.9%。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "API",
+        "成功率"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "延迟阈值型SLI",
+      "questionType": "指标设计",
+      "origin": "自行整理",
+      "question": "怎样定义一个便于设置 SLO 的请求延迟 SLI？",
+      "answer": "统计延迟低于约定阈值的请求占符合条件请求的比例，并在 SLO 中指定目标比例和统计窗口。",
+      "explanation": "阈值型比例可以直接说明有多少用户请求达到了可接受的响应时间。",
+      "example": "定义延迟不超过 300 毫秒的请求比例，再设定该比例在窗口内应达到的目标。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "延迟",
+        "百分比"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "平均值与尾延迟",
+      "questionType": "指标解释",
+      "origin": "自行整理",
+      "question": "为什么服务的平均延迟不能单独代表所有用户的响应体验？",
+      "answer": "平均值可能掩盖少数极慢请求；还应检查延迟分布或高分位表现。",
+      "explanation": "少量长尾请求对平均值的影响可能很小，却会让受影响用户等待很久。",
+      "example": "多数请求耗时 20 毫秒、少数请求耗时 8 秒时，平均值未必能清楚呈现这部分长尾体验。",
+      "tags": [
+        "SRE",
+        "延迟",
+        "尾延迟",
+        "分位数"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "按工作负载拆分SLO",
+      "questionType": "指标设计",
+      "origin": "自行整理",
+      "question": "当交互请求和离线批处理的用户需求不同时，为什么可分别定义 SLI 或 SLO？",
+      "answer": "两类工作负载的成功标准和时间尺度不同；分别度量可避免一个总体指标掩盖某类用户的退化。",
+      "explanation": "指标应对应要保证的服务体验，不同工作负载未必适合相同延迟阈值。",
+      "example": "交互查询关注秒级响应，夜间批任务则关注是否在约定截止时间前完成。",
+      "tags": [
+        "SRE",
+        "SLO",
+        "工作负载",
+        "服务分层"
+      ],
+      "evidence": "application",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "数据处理新鲜度",
+      "questionType": "指标选择",
+      "origin": "自行整理",
+      "question": "对持续接收新数据的处理服务，什么 SLI 可以表达结果是否及时更新？",
+      "answer": "可以度量结果数据的新鲜度，例如最新成功处理数据的时间与当前时间之间的年龄。",
+      "explanation": "服务端点能响应，不代表输出数据已经处理到用户需要的时间点。",
+      "example": "定义仪表盘中最新指标数据的年龄不超过 5 分钟的时间比例。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "数据新鲜度",
+        "数据管道"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "数据处理覆盖率",
+      "questionType": "指标选择",
+      "origin": "自行整理",
+      "question": "批处理服务只看作业成功状态有什么局限？",
+      "answer": "作业可能以成功状态结束却漏处理部分输入；还应度量预期输入中被处理的覆盖比例。",
+      "explanation": "运行状态和业务数据是否完整是不同的服务属性。",
+      "example": "作业退出码为零，但某个分区未被读取，导致当天记录覆盖不足。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "数据覆盖率",
+        "批处理"
+      ],
+      "evidence": "application",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "吞吐量SLI",
+      "questionType": "指标选择",
+      "origin": "自行整理",
+      "question": "为什么数据处理服务有时应把吞吐量作为 SLI？",
+      "answer": "用户可能关心单位时间内完成的数据量或任务量；仅看请求成功率无法说明处理能力是否满足需求。",
+      "explanation": "吞吐量指标要配合工作负载和时间窗口定义，避免把负载增加误读成服务能力下降。",
+      "example": "度量每小时成功处理的事件数，并关注它是否达到业务所需水平。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "吞吐量",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "数据处理正确性",
+      "questionType": "指标选择",
+      "origin": "自行整理",
+      "question": "数据处理服务为什么可能需要单独定义正确性 SLI？",
+      "answer": "作业完成或及时输出不保证结果正确；需要度量结果满足业务校验规则的比例或数量。",
+      "explanation": "正确性维度应明确可验证的规则，不能仅用进程健康或任务完成状态替代。",
+      "example": "检查转换后的记录是否满足字段约束，并统计通过校验的输出比例。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "数据正确性",
+        "数据质量"
+      ],
+      "evidence": "application",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "耐久性与可用性",
+      "questionType": "概念比较",
+      "origin": "自行整理",
+      "question": "存储服务中的数据耐久性与可用性有什么区别？",
+      "answer": "可用性关注需要时能否访问服务或数据；耐久性关注数据在较长时间内是否仍被保存。",
+      "explanation": "存储请求当前成功，不足以证明数据未来不会丢失；相反，仍保存的数据也可能暂时不可访问。",
+      "example": "对象已持久保存但服务暂时不可达，是耐久性与可用性表现不同的情况。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "存储",
+        "耐久性",
+        "可用性"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "目标与成本权衡",
+      "questionType": "设计权衡",
+      "origin": "自行整理",
+      "question": "设定 SLO 时为什么不应只追求尽可能多的可用性位数？",
+      "answer": "更高目标可能要求更多冗余和工程成本；应根据用户需求、当前能力和可接受风险设定目标。",
+      "explanation": "目标应指导服务投入和权衡，而不是单纯比较不同服务的数字。",
+      "example": "若用户能接受数分钟的年度维护窗口，把系统提升到更高可用性等级可能没有相称收益。",
+      "tags": [
+        "SRE",
+        "SLO",
+        "可用性",
+        "工程成本"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "时间可用率与请求成功率",
+      "questionType": "概念比较",
+      "origin": "自行整理",
+      "question": "基于运行时间计算的可用率，能否直接说明某段时间内有多少请求失败？",
+      "answer": "不能。时间可用率按时间计量，请求成功率按请求计量；流量分布变化时两者可能明显不同。",
+      "explanation": "应根据服务的用户体验选择时间窗口或请求事件作为统计分母。",
+      "example": "一分钟故障若发生在请求高峰，对请求成功率的影响可能远大于相同时长的低峰故障。",
+      "tags": [
+        "SRE",
+        "SLI",
+        "可用率",
+        "请求成功率"
+      ],
+      "evidence": "application",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "sreslo-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "99.9%年度停机时间",
+      "questionType": "数值计算",
+      "origin": "自行整理",
+      "question": "按 365 天一年计算，时间可用率为 99.9% 时，全年大约允许多少停机时间？",
+      "answer": "约 8.76 小时，即约 8 小时 45 分钟。",
+      "explanation": "以全年 8,760 小时乘以 0.1% 的不可用比例，得到 8.76 小时。",
+      "example": "8,760 × (1 - 0.999) = 8.76 小时；该换算适用于时间型可用率。",
+      "tags": [
+        "SRE",
+        "SLO",
+        "可用性",
+        "停机时间"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/availability-table/"
+    },
+    {
+      "id": "sreslo-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SRE 服务级别目标",
+      "knowledgePoint": "99.99%年度停机时间",
+      "questionType": "数值计算",
+      "origin": "自行整理",
+      "question": "按 Google SRE 可用性表，99.99% 的时间可用率一年大约对应多少停机时间？",
+      "answer": "约 52.6 分钟。",
+      "explanation": "一年 8,760 小时中有 0.01% 不可用，对应约 0.876 小时或 52.6 分钟。",
+      "example": "8760 × 0.0001 × 60 = 52.56 分钟，四舍五入约为 52.6 分钟。",
+      "tags": [
+        "SRE",
+        "SLO",
+        "可用性",
+        "停机时间"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/availability-table/"
+    }
+  ]
+}

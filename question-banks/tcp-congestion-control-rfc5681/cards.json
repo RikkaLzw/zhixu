@@ -1,0 +1,76 @@
+{
+  "source": {
+    "id": "tcp-congestion-control-rfc5681",
+    "title": "RFC 5681：TCP 拥塞控制",
+    "url": "https://www.rfc-editor.org/rfc/rfc5681.html",
+    "type": "固定版本互联网标准文档",
+    "note": "题目限定为 RFC 5681（2009）规定的经典拥塞控制行为；其他算法和后续规范可能有所不同。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "tcpcc-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 拥塞控制",
+      "knowledgePoint": "发送窗口上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 RFC 5681，TCP 发送数据量受拥塞窗口 cwnd 和接收窗口 rwnd 中哪一个约束？",
+      "answer": "由两者中较小的窗口约束。",
+      "explanation": "cwnd 反映拥塞控制限制，rwnd 反映接收端通告的接收能力。",
+      "example": "即使网络拥塞窗口较大，发送方也不能超过较小的接收窗口。",
+      "tags": ["TCP", "拥塞控制", "接收窗口"],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5681.html"
+    },
+    {
+      "id": "tcpcc-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 拥塞控制",
+      "knowledgePoint": "飞行数据量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5681 中的 FlightSize 表示什么？",
+      "answer": "表示已经发送但尚未被累计确认的数据量。",
+      "explanation": "该值描述当前仍在网络中的未确认数据。",
+      "example": "已发送 10 KB、累计确认 6 KB 时，FlightSize 为 4 KB。",
+      "tags": ["TCP", "FlightSize", "确认"],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5681.html"
+    },
+    {
+      "id": "tcpcc-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 拥塞控制",
+      "knowledgePoint": "丢包后的慢启动阈值",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "按 RFC 5681，发送方检测到丢包后设置 ssthresh 时使用什么上限公式？",
+      "answer": "ssthresh 设置为不高于 max(FlightSize / 2, 2 × SMSS)。",
+      "explanation": "这里使用丢包检测时的 FlightSize；SMSS 是发送方最大报文段大小。",
+      "example": "若 FlightSize 为 10 个 SMSS，阈值上限为 5 个 SMSS。",
+      "tags": ["TCP", "ssthresh", "丢包恢复"],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5681.html"
+    },
+    {
+      "id": "tcpcc-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 拥塞控制",
+      "knowledgePoint": "重传超时后的窗口",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "按 RFC 5681，重传计时器因丢包超时后，拥塞窗口最多降到什么量级？",
+      "answer": "降至不超过一个完整段的 Loss Window，再通过慢启动增长。",
+      "explanation": "这是 RFC 5681 对超时丢包恢复的规则，具体系统也可能实现后续规范或其他拥塞算法。",
+      "example": "超时后先以一个完整段开始探测，再向新的 ssthresh 增长。",
+      "tags": ["TCP", "拥塞窗口", "重传超时"],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5681.html"
+    }
+  ]
+}

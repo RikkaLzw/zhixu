@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "linux-select-poll-io",
+    "title": "Linux select、poll 与 epoll 手册",
+    "url": "https://man7.org/linux/man-pages/man2/select.2.html",
+    "type": "Linux 与 GNU 官方手册",
+    "note": "逐题依据手册自行整理，示例自编；命令和实现行为以题中所述环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "iowait-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "I/O 多路复用",
+      "knowledgePoint": "集合改写",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux select 返回后为何常在下一轮调用前重新准备 fd_set？",
+      "answer": "select 原地修改描述符集合，只保留对应类型已就绪的描述符。",
+      "explanation": "循环中可从保存的原始集合复制后再调用。",
+      "example": "下一轮继续等待之前重新设置读集合。",
+      "tags": [
+        "I/O 多路复用",
+        "集合改写"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/select.2.html"
+    },
+    {
+      "id": "iowait-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "I/O 多路复用",
+      "knowledgePoint": "nfds参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux select 的 nfds 参数通常应如何设置？",
+      "answer": "设为三个待检查集合中最大文件描述符编号加一。",
+      "explanation": "它是扫描范围上界，不是描述符数量。",
+      "example": "最大编号为 10 时，nfds 设为 11。",
+      "tags": [
+        "I/O 多路复用",
+        "nfds参数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/select.2.html"
+    },
+    {
+      "id": "iowait-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "I/O 多路复用",
+      "knowledgePoint": "glibc限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 glibc fd_set 对 select 可监视的描述符编号有什么常见限制？",
+      "answer": "描述符编号必须小于 FD_SETSIZE；glibc 中该值通常固定为 1024。",
+      "explanation": "这是用户态 fd_set 接口限制，不能把它理解为所有系统的相同限制。",
+      "example": "编号为 1024 的描述符不能安全放入该 fd_set。",
+      "tags": [
+        "I/O 多路复用",
+        "glibc限制"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/select.2.html"
+    },
+    {
+      "id": "iowait-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "I/O 多路复用",
+      "knowledgePoint": "输入输出字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux pollfd 的 events 与 revents 字段分别用于什么？",
+      "answer": "events 指定请求关注的事件；revents 返回实际发生的事件及错误状态。",
+      "explanation": "POLLERR、POLLHUP 和 POLLNVAL 可在 revents 中报告。",
+      "example": "请求 POLLIN 后检查返回的 revents。",
+      "tags": [
+        "I/O 多路复用",
+        "输入输出字段"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/poll.2.html"
+    },
+    {
+      "id": "iowait-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "I/O 多路复用",
+      "knowledgePoint": "暂忽略描述符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux poll 的 pollfd.fd 为负数时如何处理该项？",
+      "answer": "该项的 events 被忽略，返回的 revents 为 0。",
+      "explanation": "可用这一规则暂时忽略数组中的某个条目。",
+      "example": "将不用的 fd 设为 -1。",
+      "tags": [
+        "I/O 多路复用",
+        "暂忽略描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/poll.2.html"
+    },
+    {
+      "id": "iowait-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "I/O 多路复用",
+      "knowledgePoint": "挂断与剩余数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux poll 报告管道或流套接字 POLLHUP 后，是否一定已经没有数据可读？",
+      "answer": "不一定；对端关闭后仍可能有未读取的数据，读尽后才会看到 EOF。",
+      "explanation": "检查挂断时仍要处理缓冲区中剩余的数据。",
+      "example": "对端发送数据后关闭，接收端仍可先读出数据。",
+      "tags": [
+        "I/O 多路复用",
+        "挂断与剩余数据"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/poll.2.html"
+    },
+    {
+      "id": "iowait-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "I/O 多路复用",
+      "knowledgePoint": "EOF可读",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux select 将描述符标记为可读，是否保证 read 返回正数？",
+      "answer": "不保证；到达文件结束时也可能被标记为可读，此时 read 可返回 0。",
+      "explanation": "实际读取仍需区分数据、EOF 和错误。",
+      "example": "管道所有写端关闭且数据读尽后会出现 EOF。",
+      "tags": [
+        "I/O 多路复用",
+        "EOF可读"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/select.2.html"
+    },
+    {
+      "id": "iowait-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "I/O 多路复用",
+      "knowledgePoint": "poll与epoll",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux poll 和 epoll 在关注描述符集合的管理方式上有什么主要区别？",
+      "answer": "poll 在调用时传入描述符数组；epoll 在内核对象中维护关注列表，可分别增删并等待就绪事件。",
+      "explanation": "性能取决于工作负载，不能仅凭接口名称断言所有场景均更快。",
+      "example": "长连接服务可维护 epoll 关注集合。",
+      "tags": [
+        "I/O 多路复用",
+        "poll与epoll"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/epoll.7.html"
+    }
+  ]
+}

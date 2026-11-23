@@ -1,0 +1,354 @@
+{
+  "source": {
+    "id": "sorting-heap-algorithms",
+    "title": "Princeton Algorithms：排序与二叉堆",
+    "url": "https://algs4.cs.princeton.edu/21elementary/",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理；示例为自编，版本和前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sortalg-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "选择排序思路",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "选择排序如何逐步得到有序结果？",
+      "answer": "反复从未排序部分选出最小元素，并将其放到该部分的起始位置。",
+      "explanation": "每轮扩大已排好序的前缀。",
+      "example": "在剩余数组中寻找最小值并交换到前面。",
+      "tags": [
+        "选择排序思路",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/21elementary/"
+    },
+    {
+      "id": "sortalg-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "插入排序思路",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "插入排序如何处理下一个元素？",
+      "answer": "把它插入已排序前缀中的正确位置，必要时向后移动较大的元素。",
+      "explanation": "已处理部分始终保持有序。",
+      "example": "把一张新牌插入手中已排好序的牌。",
+      "tags": [
+        "插入排序思路",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/21elementary/"
+    },
+    {
+      "id": "sortalg-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "选择排序比较次数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典数组选择排序遇到已排序输入时，比较次数会降为线性吗？",
+      "answer": "不会；该实现仍会扫描每轮剩余元素，比较次数为 Θ(n²)。",
+      "explanation": "这里指不带提前结束等额外优化的经典实现。",
+      "example": "有序数组仍需每轮寻找剩余最小值。",
+      "tags": [
+        "选择排序比较次数",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/21elementary/"
+    },
+    {
+      "id": "sortalg-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "插入排序最好情况",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典插入排序处理已经升序排列的数组时，时间复杂度是多少？",
+      "answer": "在顺序比较和移动元素的标准实现中为 Θ(n)。",
+      "explanation": "每个元素只需很少的检查，不发生逆序元素移动。",
+      "example": "输入已按升序排列。",
+      "tags": [
+        "插入排序最好情况",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/21elementary/"
+    },
+    {
+      "id": "sortalg-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "数组逆序对",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数组中的逆序对是什么意思？",
+      "answer": "按升序排序时，若 i < j 且 a[i] > a[j]，则这两个位置构成逆序对。",
+      "explanation": "逆序对反映输入偏离升序的程度。",
+      "example": "序列 2、1 中的 2 和 1 是一对逆序。",
+      "tags": [
+        "数组逆序对",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/21elementary/"
+    },
+    {
+      "id": "sortalg-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "归并有序数组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "顺序合并两个长度分别为 m、n 的有序数组，通常需要多少时间？",
+      "answer": "依次比较两侧当前元素并推进指针，时间为 O(m+n)。",
+      "explanation": "结果元素总数为 m+n。",
+      "example": "合并两个按时间排序的列表。",
+      "tags": [
+        "归并有序数组",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/22mergesort/"
+    },
+    {
+      "id": "sortalg-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "归并排序辅助空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "常见数组归并排序实现为合并操作准备的辅助数组需要多少额外空间？",
+      "answer": "通常为 O(n) 额外空间。",
+      "explanation": "这是常见数组实现的空间代价，不适用于所有特殊实现。",
+      "example": "为长度为 n 的数组分配合并缓冲区。",
+      "tags": [
+        "归并排序辅助空间",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/22mergesort/"
+    },
+    {
+      "id": "sortalg-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "自底向上归并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "自底向上归并排序如何组织合并过程？",
+      "answer": "先合并相邻的短有序段，再逐轮合并更长的有序段，直到覆盖整个数组。",
+      "explanation": "它不必依靠自顶向下的递归划分。",
+      "example": "从长度 1 的段开始依次合并。",
+      "tags": [
+        "自底向上归并",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/22mergesort/"
+    },
+    {
+      "id": "sortalg-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "快速排序划分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Princeton 教材中的双路快速排序完成一次划分后，枢轴具有什么性质？",
+      "answer": "枢轴已处于一个最终排序位置；左侧的键不大于它，右侧的键不小于它。",
+      "explanation": "不同实现的划分方式及等值元素的处理可能不同。",
+      "example": "选取枢轴后分别处理它两侧的区间。",
+      "tags": [
+        "快速排序划分",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/23quicksort/"
+    },
+    {
+      "id": "sortalg-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "随机快排期望",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "随机化快速排序对 n 个元素的期望时间复杂度通常是多少？",
+      "answer": "在常见随机化划分模型下为 O(n log n)。",
+      "explanation": "期望复杂度不排除个别划分退化到平方时间。",
+      "example": "先随机打乱数组，再进行普通快速排序。",
+      "tags": [
+        "随机快排期望",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/23quicksort/"
+    },
+    {
+      "id": "sortalg-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "快排三路划分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "快速排序的三路划分为什么适合有大量重复键的输入？",
+      "answer": "它把等于枢轴的元素归为一组，递归时无需再次排序这一组。",
+      "explanation": "重复值多时可减少不必要的划分工作。",
+      "example": "把数组分为小于、等于和大于枢轴三部分。",
+      "tags": [
+        "快排三路划分",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/23quicksort/"
+    },
+    {
+      "id": "sortalg-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "快速选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "快速选择（quickselect）与完整快速排序的目标有什么不同？",
+      "answer": "快速选择只寻找指定排名的元素，每轮只继续处理包含目标的那一侧。",
+      "explanation": "它通常不需要将所有元素排好序。",
+      "example": "寻找数组的第 k 小元素。",
+      "tags": [
+        "快速选择",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/25applications/"
+    },
+    {
+      "id": "sortalg-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "堆数组子节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在从 0 开始编号的数组二叉堆中，下标 i 的左右子节点下标是什么？",
+      "answer": "分别是 2i+1 和 2i+2；只有下标仍在堆范围内时子节点才存在。",
+      "explanation": "数组按完全二叉树的层序排列。",
+      "example": "根节点 0 的子节点为 1 和 2。",
+      "tags": [
+        "堆数组子节点",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/24pq/"
+    },
+    {
+      "id": "sortalg-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "二叉堆插入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "向二叉堆插入元素后，常用什么方式恢复堆序？",
+      "answer": "先把元素放在末尾，再沿父节点方向向上调整，最坏需要 O(log n) 时间。",
+      "explanation": "堆的高度为对数级。",
+      "example": "新元素比父节点更小时在最小堆中上浮。",
+      "tags": [
+        "二叉堆插入",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/24pq/"
+    },
+    {
+      "id": "sortalg-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "二叉堆删除堆顶",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "从二叉堆删除堆顶后，常用什么方式恢复堆序？",
+      "answer": "把末尾元素移到根部，再沿子节点方向向下调整，最坏需要 O(log n) 时间。",
+      "explanation": "调整时选择合适的子节点交换。",
+      "example": "从最小堆取出最小值后下沉新根。",
+      "tags": [
+        "二叉堆删除堆顶",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/24pq/"
+    },
+    {
+      "id": "sortalg-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "自底向上建堆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 n 个元素执行自底向下的二叉堆建堆，时间复杂度是多少？",
+      "answer": "可以在线性时间 O(n) 内完成。",
+      "explanation": "多数节点接近树底，向下调整的距离较短。",
+      "example": "从最后一个非叶节点开始依次下沉。",
+      "tags": [
+        "自底向上建堆",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/24pq/"
+    },
+    {
+      "id": "sortalg-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "堆排序复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准数组堆排序的最坏时间复杂度是多少？",
+      "answer": "为 O(n log n)。",
+      "explanation": "它先建堆，再反复将堆顶元素放入最终位置。",
+      "example": "对数组原地建最大堆后依次取出最大值。",
+      "tags": [
+        "堆排序复杂度",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/24pq/"
+    },
+    {
+      "id": "sortalg-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "排序与堆",
+      "knowledgePoint": "比较排序下界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基于比较的通用排序算法最坏情况下能否对任意 n 个互异键保证线性比较次数？",
+      "answer": "不能；最坏情况下需要 Ω(n log n) 次比较。",
+      "explanation": "该下界针对仅通过键比较决定顺序的通用算法。",
+      "example": "不能把比较排序下界直接套用于所有非比较排序。",
+      "tags": [
+        "比较排序下界",
+        "排序与堆"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/22mergesort/"
+    }
+  ]
+}

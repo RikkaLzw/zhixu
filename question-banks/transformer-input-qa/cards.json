@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "transformer-input-qa",
+    "title": "Transformers 与 PyTorch：输入掩码和抽取问答",
+    "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.MultiheadAttention.html",
+    "type": "教材与技术文档",
+    "note": "逐题根据所列教材或技术文档自行整理；例子用于说明适用条件。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "nlpinput-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "因果与填充掩码",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "因果掩码与填充掩码各自限制什么？",
+      "answer": "因果掩码限制位置看到未来 token；填充掩码排除批处理时添加的填充位置。",
+      "explanation": "同一注意力层可能需要同时考虑两类限制。",
+      "example": "自回归生成时同时屏蔽未来位置和补齐位置。",
+      "tags": [
+        "因果与填充掩码",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.MultiheadAttention.html"
+    },
+    {
+      "id": "nlpinput-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "BERT注意力掩码取值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Transformers 5.23 的 BERT attention_mask 中，1 和 0 通常分别表示什么？",
+      "answer": "1 表示该 token 未被屏蔽，0 表示该 token 被屏蔽。",
+      "explanation": "不同 API 的布尔或数值掩码约定可能相反，应查对应文档。",
+      "example": "普通 token 标为 1，填充 token 标为 0。",
+      "tags": [
+        "BERT注意力掩码取值",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/model_doc/bert"
+    },
+    {
+      "id": "nlpinput-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "PyTorch掩码布尔语义",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "在 PyTorch 2.15 中，SDPA 的布尔 attn_mask 与 MultiheadAttention 的 key_padding_mask 对 True 的含义相同吗？",
+      "answer": "不同：SDPA 中 True 表示可参与注意力，MultiheadAttention 的 key_padding_mask 中 True 表示该键位置被屏蔽。",
+      "explanation": "迁移掩码时除了检查取值，还需检查张量形状和广播。",
+      "example": "将一种 API 的布尔掩码传入另一种之前核对并转换。",
+      "tags": [
+        "PyTorch掩码布尔语义",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.functional.scaled_dot_product_attention.html"
+    },
+    {
+      "id": "nlpinput-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "SDPA显式Dropout",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "PyTorch 2.15 的 scaled_dot_product_attention 会自动根据模块 eval 状态关闭 dropout 吗？",
+      "answer": "不会；只要传入的 dropout_p 大于 0，该函数就会应用 dropout。",
+      "explanation": "调用方应在评估时显式传入 0。",
+      "example": "训练传入配置概率，评估传入 0.0。",
+      "tags": [
+        "SDPA显式Dropout",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.functional.scaled_dot_product_attention.html"
+    },
+    {
+      "id": "nlpinput-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "注意力查询长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "缩放点积注意力的输出序列长度通常与查询长度还是键长度对应？",
+      "answer": "输出沿序列维度通常有一个结果对应每个查询位置，因此与查询长度对应。",
+      "explanation": "每个查询可对所有允许的键位置计算权重。",
+      "example": "一个查询访问十个键时，得到一个查询位置的输出。",
+      "tags": [
+        "注意力查询长度",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.functional.scaled_dot_product_attention.html"
+    },
+    {
+      "id": "nlpinput-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "多头维度整除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.15 的 MultiheadAttention 为什么要求 embed_dim 能被 num_heads 整除？",
+      "answer": "该实现将嵌入维度拆分到各个头，每个头使用 embed_dim / num_heads 的维度。",
+      "explanation": "这是该实现的约束，不应泛化为所有自定义注意力实现。",
+      "example": "嵌入维度为 64 时可分为 8 个等宽头。",
+      "tags": [
+        "多头维度整除",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.MultiheadAttention.html"
+    },
+    {
+      "id": "nlpinput-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "BERT片段标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERT 输入中的 token_type_ids 通常用来标记什么？",
+      "answer": "它们区分输入中的第一段与第二段，以便为序列对提供片段信息。",
+      "explanation": "不同模型可能不使用这种输入字段。",
+      "example": "把句子 A 和句子 B 标为不同片段。",
+      "tags": [
+        "BERT片段标识",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/model_doc/bert"
+    },
+    {
+      "id": "nlpinput-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "BERT下一句预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 BERT 的下一句预测任务主要判断什么？",
+      "answer": "判断句子对中的第二句是否是第一句在原始文本中实际相邻的后续句子。",
+      "explanation": "这是原始 BERT 的预训练目标，不代表所有后续模型都使用它。",
+      "example": "区分相邻句子对与构造的非相邻句子对。",
+      "tags": [
+        "BERT下一句预测",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/model_doc/bert"
+    },
+    {
+      "id": "nlpinput-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "抽取式与生成式问答",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "抽取式问答与生成式问答在答案产生方式上有什么不同？",
+      "answer": "抽取式从给定上下文中选取答案片段；生成式生成回答文本。",
+      "explanation": "生成式回答仍可能基于上下文，但不必逐字复制某个连续片段。",
+      "example": "从安全公告中定位漏洞编号，或生成一段解释。",
+      "tags": [
+        "抽取式与生成式问答",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/tasks/question_answering"
+    },
+    {
+      "id": "nlpinput-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "抽取问答位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "常见抽取式问答模型如何表示答案位置？",
+      "answer": "它为上下文 token 预测答案的起始位置和结束位置。",
+      "explanation": "还需要把位置映射回原文，并处理无答案或无效跨度等情况。",
+      "example": "预测公告中答案片段的起始与结束 token。",
+      "tags": [
+        "抽取问答位置",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/tasks/question_answering"
+    },
+    {
+      "id": "nlpinput-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "问答只截断上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "将问题和上下文组成序列对时，Transformers 教程为什么示例使用 only_second 截断？",
+      "answer": "示例把问题放在第一序列、上下文放在第二序列，因此该设置只截断第二序列的上下文。",
+      "explanation": "应先确认序列顺序；答案落在被截断区域时需单独处理。",
+      "example": "保留问题并截短超长的检索文本。",
+      "tags": [
+        "问答只截断上下文",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/tasks/question_answering"
+    },
+    {
+      "id": "nlpinput-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "问答答案超出窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "抽取式问答中，答案被上下文截断掉时为什么不能直接沿用原答案位置？",
+      "answer": "原答案不再位于该输入窗口，原位置不能作为窗口内有效答案跨度。",
+      "explanation": "可按任务定义使用滑窗或无答案处理，并保留原文偏移。",
+      "example": "长公告的答案位于模型可见窗口之外。",
+      "tags": [
+        "问答答案超出窗口",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "application",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/tasks/question_answering"
+    },
+    {
+      "id": "nlpinput-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 输入与问答",
+      "knowledgePoint": "BERT词嵌入查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERT 将 token ID 转为模型输入表示时，词嵌入层主要做什么？",
+      "answer": "它用 token ID 查找对应的可训练向量表示。",
+      "explanation": "BERT 的输入表示还结合位置和片段等信息。",
+      "example": "同一词表编号查到对应的嵌入向量。",
+      "tags": [
+        "BERT词嵌入查询",
+        "Transformer 输入与问答"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/model_doc/bert"
+    }
+  ]
+}

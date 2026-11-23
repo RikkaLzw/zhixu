@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "urlhaus-threat-feed",
+    "title": "URLhaus 社区文档：恶意 URL 情报边界",
+    "url": "https://urlhaus.abuse.ch/api/",
+    "type": "官方资料与技术文档",
+    "note": "依据逐题引用的官方资料自行整理；示例为自编，在线资料查看于 2026-11-21。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "urlfeed-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "恶意 URL 情报源",
+      "knowledgePoint": "收录范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "URLhaus 社区情报主要收录哪类网址？",
+      "answer": "主要收录直接用于分发恶意软件载荷的 URL。",
+      "explanation": "其提交策略不把普通钓鱼网站或只提供跳转的短链作为该类样本。",
+      "example": "区分恶意软件下载地址与凭据钓鱼页面。",
+      "tags": [
+        "恶意 URL 情报源",
+        "收录范围"
+      ],
+      "evidence": "source",
+      "reference": "https://urlhaus.abuse.ch/api/"
+    },
+    {
+      "id": "urlfeed-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "恶意 URL 情报源",
+      "knowledgePoint": "URL 与主机名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "URLhaus 的 URL 清单与 DNS RPZ 数据在匹配粒度上有什么区别？",
+      "answer": "URL 清单保留完整 URL；RPZ 提取主机名，用于 DNS 层处理域名。",
+      "explanation": "主机名匹配无法区分同一主机上的不同路径。",
+      "example": "一个主机的两个不同路径可能命中同一域名规则。",
+      "tags": [
+        "恶意 URL 情报源",
+        "URL 与主机名"
+      ],
+      "evidence": "source",
+      "reference": "https://urlhaus.abuse.ch/api/"
+    },
+    {
+      "id": "urlfeed-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "恶意 URL 情报源",
+      "knowledgePoint": "载荷哈希",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "URLhaus 的 Collected Payloads CSV 使用什么标识下载到的载荷？",
+      "answer": "使用 MD5 或 SHA-256 等文件哈希标识收集到的载荷。",
+      "explanation": "哈希描述文件内容，并不直接表示网址。",
+      "example": "用 SHA-256 关联多个地址下载到的相同文件。",
+      "tags": [
+        "恶意 URL 情报源",
+        "载荷哈希"
+      ],
+      "evidence": "source",
+      "reference": "https://urlhaus.abuse.ch/api/"
+    },
+    {
+      "id": "urlfeed-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "恶意 URL 情报源",
+      "knowledgePoint": "载荷标签边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "URLhaus 收集到的所有载荷都一定是恶意文件吗？",
+      "answer": "不一定；官方指出网址被清理后也可能提供其他内容。",
+      "explanation": "采集时间和内容分析结果应与 URL 记录分别保留。",
+      "example": "同一 URL 在清理前后可能返回不同内容。",
+      "tags": [
+        "恶意 URL 情报源",
+        "载荷标签边界"
+      ],
+      "evidence": "source",
+      "reference": "https://urlhaus.abuse.ch/api/"
+    },
+    {
+      "id": "urlfeed-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "恶意 URL 情报源",
+      "knowledgePoint": "清单筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 URLhaus 于 2026-11-21 的文档，其 full database dump 包含哪些 URL？",
+      "answer": "包含仍活跃的恶意软件分发 URL，或过去 90 天内加入的 URL。",
+      "explanation": "这不是所有历史记录的无条件完整清单，筛选规则可能改变。",
+      "example": "构建历史评估时记录所用清单和抓取日期。",
+      "tags": [
+        "恶意 URL 情报源",
+        "清单筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://urlhaus.abuse.ch/api/"
+    },
+    {
+      "id": "urlfeed-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "恶意 URL 情报源",
+      "knowledgePoint": "规则粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 URLhaus 于 2026-11-21 的文档，其 Snort／Suricata 规则主要匹配什么？",
+      "answer": "匹配 HTTP GET 流中出现的确切恶意 URL。",
+      "explanation": "规则集还有活跃或近期加入等筛选条件。",
+      "example": "完整 URL 规则与仅按域名匹配有不同覆盖。",
+      "tags": [
+        "恶意 URL 情报源",
+        "规则粒度"
+      ],
+      "evidence": "source",
+      "reference": "https://urlhaus.abuse.ch/api/"
+    },
+    {
+      "id": "urlfeed-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "恶意 URL 情报源",
+      "knowledgePoint": "热门域名排除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 URLhaus 于 2026-11-21 的文档，RPZ 为什么排除属于 Tranco Top 1M 域名的主机名？",
+      "answer": "该排除规则旨在降低误报。",
+      "explanation": "排除热门域名不证明该域名上所有 URL 都安全。",
+      "example": "共享热门站点托管的恶意路径可能不在 RPZ 中。",
+      "tags": [
+        "恶意 URL 情报源",
+        "热门域名排除"
+      ],
+      "evidence": "source",
+      "reference": "https://urlhaus.abuse.ch/api/"
+    }
+  ]
+}

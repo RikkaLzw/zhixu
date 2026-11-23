@@ -1,0 +1,474 @@
+{
+  "source": {
+    "id": "sentinel-rule-operations",
+    "title": "Microsoft Sentinel 定时检测与告警运营",
+    "url": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md",
+    "type": "固定版本官方技术文档",
+    "note": "依据 Microsoft Sentinel 截至 2026 年 4 月固定文档快照整理；未在真实 Sentinel 环境运行规则，数据延迟例子以合成时间线验证。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "sentinelops-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "查询周期与回看",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 定时规则的查询间隔与回看期各控制什么？",
+      "answer": "查询间隔决定多久运行一次；回看期决定每次查询覆盖多长的历史时间。",
+      "explanation": "两者需结合数据延迟和检测逻辑配置。",
+      "example": "每 5 分钟运行一次并查看最近 10 分钟数据。",
+      "tags": [
+        "查询周期与回看",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#query-scheduling",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-002",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "重叠回看与重复结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 定时规则的查询间隔短于回看期时，为什么可能重复处理同一事件？",
+      "answer": "相邻查询的时间范围会重叠，同一事件可能同时落在多个查询窗口中。",
+      "explanation": "是否实际产生重复告警还取决于查询和去重逻辑。",
+      "example": "每 5 分钟查询最近 10 分钟的事件。",
+      "tags": [
+        "重叠回看与重复结果",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#query-scheduling",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-003",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "周期与回看缺口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 文档快照为何不允许定时查询间隔超过回看期？",
+      "answer": "这样会在相邻查询范围之间留下未覆盖的时间缺口。",
+      "explanation": "该约束针对文档所述的定时分析规则配置。",
+      "example": "每 10 分钟只查看最近 5 分钟会留下空档。",
+      "tags": [
+        "周期与回看缺口",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#query-scheduling",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-004",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "单次运行阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 定时分析规则的告警阈值是跨多次运行累计判断吗？",
+      "answer": "不是；阈值分别应用于每一次规则运行的查询结果。",
+      "explanation": "需要跨更长时间聚合时，应在查询和回看设计中表达所需范围。",
+      "example": "每次运行分别比较返回结果数量和阈值。",
+      "tags": [
+        "单次运行阈值",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#alert-threshold",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "阈值与查询结果粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么分析 Microsoft Sentinel 定时规则的结果数量阈值时，要先看查询返回的是什么粒度？",
+      "answer": "阈值针对查询返回的结果数量；若查询先做了聚合，一行结果不一定等于一条原始事件。",
+      "explanation": "统计聚合组数与统计原始事件数会产生不同含义。",
+      "example": "查询按账号聚合后，一行可包含多次登录。",
+      "tags": [
+        "阈值与查询结果粒度",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#alert-threshold",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-006",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "事件到告警分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 定时规则的事件分组有哪些常见模式？",
+      "answer": "可以把一次查询的结果汇总为一条告警，也可以按每条查询结果生成告警。",
+      "explanation": "实际产生告警还受阈值和平台限制影响。",
+      "example": "分析大量相似事件时选择汇总，关注单条对象时选择逐条告警。",
+      "tags": [
+        "事件到告警分组",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#event-grouping",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "逐事件告警上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 Microsoft Sentinel 2026 年 4 月文档，逐事件告警模式下查询返回超过 150 条结果时如何处理？",
+      "answer": "前 149 条各生成一条告警，第 150 条告警汇总整批结果。",
+      "explanation": "这是该版本文档描述的平台行为，数值可能随产品调整。",
+      "example": "查询返回 200 条结果时不能假设一定生成 200 条独立告警。",
+      "tags": [
+        "逐事件告警上限",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#event-grouping",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "事件分组与告警分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 的事件分组和告警分组分别连接哪两层对象？",
+      "answer": "事件分组决定查询结果如何形成告警；告警分组决定多条告警如何归入事件。",
+      "explanation": "这里的“事件”在两处分别指原始事件和安全事件，需结合上下文区分。",
+      "example": "多条日志先形成告警，多条告警再形成安全事件。",
+      "tags": [
+        "事件分组与告警分组",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#event-grouping",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-009",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "告警实体映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 定时规则中的实体映射有什么作用？",
+      "answer": "它把查询结果字段映射为平台识别的实体类型，便于告警展示和关联。",
+      "explanation": "例如可将查询结果中的账号字段映射为账户实体。",
+      "example": "在告警中呈现检测到的用户和主机。",
+      "tags": [
+        "告警实体映射",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#entity-mapping",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-010",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "告警自定义详情",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 定时规则的自定义详情用于什么？",
+      "answer": "它把选定的查询结果字段展示在告警及关联事件中，方便直接查看。",
+      "explanation": "需要完整原始事件时仍可能要进一步查看查询结果。",
+      "example": "在告警详情中展示进程命令行字段。",
+      "tags": [
+        "告警自定义详情",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#custom-details",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-011",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "告警归并条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 把告警归为同一事件时，可以依据什么条件？",
+      "answer": "可配置按匹配的实体或指定详情归组，也可把该规则产生的告警全部归为一组。",
+      "explanation": "不同分组条件会改变事件粒度与分析工作量。",
+      "example": "按目标账号分组，或把同一规则的告警全部归组。",
+      "tags": [
+        "告警归并条件",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#alert-grouping",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-012",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "实体相同与攻击归因",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按相同实体把多条告警归为一组，能否单凭分组结果认定它们属于同一次攻击？",
+      "answer": "不能；共享账号或主机只是一种关联线索，仍应结合时间和具体行为核验。",
+      "explanation": "分组规则是组织告警的机制，不自动证明攻击因果关系。",
+      "example": "同一共享服务器可能同时出现互不相关的异常活动。",
+      "tags": [
+        "实体相同与攻击归因",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#alert-grouping",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-013",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "停止查询式抑制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 定时规则的 Stop running query after alert is generated 做什么？",
+      "answer": "在产生告警后暂停该规则查询一段配置的时间。",
+      "explanation": "暂停执行规则与仅隐藏界面上的告警不同。",
+      "example": "规则告警后暂停 30 分钟。",
+      "tags": [
+        "停止查询式抑制",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#suppression",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-014",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "抑制期间的覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "定时检测规则在告警后暂停查询期间，没有新告警能否证明没有新威胁？",
+      "answer": "不能；规则未运行时可能未检查到这段时间内的相关事件。",
+      "explanation": "暂停有助于控制重复告警，但应评估检测覆盖及其他规则。",
+      "example": "抑制窗口中的第二次攻击可能不会由该规则及时报告。",
+      "tags": [
+        "抑制期间的覆盖",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#suppression",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-015",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "结果模拟的边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 规则的结果模拟能否单独证明规则的精确率或召回率？",
+      "answer": "不能；模拟展示历史查询结果量，精确率和召回率还需要可信标注或其他核验。",
+      "explanation": "结果量可以帮助估计告警负荷，但不直接区分威胁和良性活动。",
+      "example": "结果很多可能是高覆盖，也可能包含大量误报。",
+      "tags": [
+        "结果模拟的边界",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#results-simulation",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-016",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "数据摄取延迟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对按事件时间筛选、相邻窗口无重叠且没有延迟补偿的定时查询，日志晚到为什么可能漏检？",
+      "answer": "事件到达时原窗口已查询完，下一窗口又可能因事件时间过早而排除它。",
+      "explanation": "实际影响取决于延迟分布、窗口和补偿逻辑。",
+      "example": "事件产生后两分钟才进入日志库，恰好错过其所属查询。",
+      "tags": [
+        "数据摄取延迟",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/ingestion-delay.md#why-delay-is-significant",
+      "referenceTitle": "Microsoft Sentinel 摄取延迟：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-017",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "内置延迟补偿边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 2026 年 4 月文档中的定时规则为何相对计划时间延后运行？",
+      "answer": "文档描述延后 5 分钟，以缓解数据从产生到摄取之间的延迟。",
+      "explanation": "这不是所有日志延迟都不超过 5 分钟的保证，仍需检查数据源实际情况。",
+      "example": "比较数据源延迟分布与规则安排。",
+      "tags": [
+        "内置延迟补偿边界",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#query-scheduling",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-018",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "延迟测量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 的摄取延迟教程如何估计单条日志从产生到摄取的间隔？",
+      "answer": "比较该日志的 TimeGenerated 与 ingestion_time()。",
+      "explanation": "具体解释受数据源时间戳质量与摄取时间记录条件影响。",
+      "example": "按日志类型统计摄取时间与产生时间的差值。",
+      "tags": [
+        "延迟测量",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/ingestion-delay.md#how-to-handle-delay",
+      "referenceTitle": "Microsoft Sentinel 摄取延迟：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-019",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "延迟补偿去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 摄取延迟教程如何减少延长回看窗口带来的重复结果？",
+      "answer": "示例同时保留扩展的事件时间窗口，并限制摄取时间落在本次规则周期内。",
+      "explanation": "这是教程示例中的窗口分配方法，不会自动消除数据源自身的重复事件。",
+      "example": "按最近一个查询周期的摄取时间筛选已到达记录。",
+      "tags": [
+        "延迟补偿去重",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/ingestion-delay.md#how-to-handle-delay",
+      "referenceTitle": "Microsoft Sentinel 摄取延迟：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-020",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "跨源摄取延迟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "跨多种日志源关联事件时，为什么需要分别了解各来源的摄取延迟？",
+      "answer": "不同来源到达时间可能不同，过短的查询窗口可能使关联时缺少较晚到达的记录。",
+      "explanation": "应结合各来源延迟和查询方式设计回看与复核。",
+      "example": "认证日志已到而终端日志仍在传输。",
+      "tags": [
+        "跨源摄取延迟",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/ingestion-delay.md#calculate-ingestion-delay",
+      "referenceTitle": "Microsoft Sentinel 摄取延迟：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-021",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "不创建事件的告警",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 定时规则关闭事件创建后，是否仍可能产生告警？",
+      "answer": "可能；该设置控制是否从规则告警创建安全事件，规则仍可用于收集告警。",
+      "explanation": "适用于只收集信息以供后续分析的场景。",
+      "example": "信息性规则生成告警，但不自动建立事件。",
+      "tags": [
+        "不创建事件的告警",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#incident-settings",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    },
+    {
+      "id": "sentinelops-022",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "定时检测与告警运营",
+      "knowledgePoint": "自动化规则与剧本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 的自动化规则与 playbook 在处置中各有什么用途？",
+      "answer": "自动化规则可执行基本分诊、分配和状态管理；playbook 可承载更复杂的任务或远程系统响应。",
+      "explanation": "实际自动操作仍取决于权限、配置和组织流程。",
+      "example": "事件创建后自动分配负责人，必要时调用剧本。",
+      "tags": [
+        "自动化规则与剧本",
+        "安全运营",
+        "Microsoft Sentinel"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MicrosoftDocs/azure-docs/blob/aad9a353dbbb164ea86b8c072c2eeec0902958a4/articles/sentinel/scheduled-rules-overview.md#automated-response",
+      "referenceTitle": "Microsoft Sentinel 定时规则：2026 年 4 月文档快照"
+    }
+  ]
+}

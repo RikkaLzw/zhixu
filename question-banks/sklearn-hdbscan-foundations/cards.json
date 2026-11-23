@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "sklearn-hdbscan-foundations",
+    "title": "scikit-learn 1.7：HDBSCAN 密度聚类",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题标注的文档或论文自行整理；示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "hdbscan-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "变密度聚类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 HDBSCAN 怎样处理不同密度的簇？",
+      "answer": "它综合多个密度阈值下的层次聚类结果，选择较稳定的簇。",
+      "explanation": "这有助于发现不同密度的簇，但不保证任何数据都能得到理想划分。",
+      "example": "同时聚类稠密和较稀疏的样本群。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "变密度聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "最小簇大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn HDBSCAN 的 min_cluster_size 表示什么？",
+      "answer": "它设置一个分组被视为簇所需的最少样本数。",
+      "explanation": "更小的分组可被视为噪声；参数选择会影响结果。",
+      "example": "要求每个簇至少包含 10 个样本。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "最小簇大小"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "邻居数默认值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 HDBSCAN 中，min_samples=None 默认使用什么值？",
+      "answer": "默认使用 min_cluster_size 的值。",
+      "explanation": "min_samples 与 min_cluster_size 可以分别指定。",
+      "example": "只设 min_cluster_size=10 时，min_samples 默认取 10。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "邻居数默认值"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "邻居数口径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 HDBSCAN 计算 min_samples 邻居时是否计入样本自身？",
+      "answer": "计入；它与 scikit-learn-contrib/hdbscan 的参数计数口径不同。",
+      "explanation": "官方文档指出，对齐两种实现的结果时此处的值需比另一实现大 1。",
+      "example": "比较两种 HDBSCAN 实现时核对参数口径。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "邻居数口径"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "核心距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HDBSCAN 中一个样本的核心距离通常怎样定义？",
+      "answer": "它是该点到第 min_samples 个最近邻的距离；scikit-learn 的计数包括自身。",
+      "explanation": "距离度量取决于配置。",
+      "example": "用核心距离衡量该点附近的局部稠密程度。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "核心距离"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/clustering.html#hdbscan"
+    },
+    {
+      "id": "hdbscan-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "互可达距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HDBSCAN 的互可达距离由哪三个距离取最大值？",
+      "answer": "取两个样本各自的核心距离，以及这两个样本之间的距离，三者的最大值。",
+      "explanation": "这是用户指南介绍的标准互可达距离形式。",
+      "example": "当一端位于稀疏区域时，其核心距离可能主导结果。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "互可达距离"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/clustering.html#hdbscan"
+    },
+    {
+      "id": "hdbscan-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "预计算距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn HDBSCAN 设置 metric=\"precomputed\" 时，fit 的输入表示什么？",
+      "answer": "输入应是样本之间的方形距离矩阵。",
+      "explanation": "不能把一般的特征矩阵误当作距离矩阵。",
+      "example": "先计算样本两两距离，再传入聚类器。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "预计算距离"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "异常标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用普通特征数组时，scikit-learn 1.7 的 HDBSCAN 标签 -2 和 -3 分别表示什么？",
+      "answer": "-2 表示含无穷值的样本，-3 表示含缺失值的样本。",
+      "explanation": "同时含缺失值和无穷值时标记为 -3；普通噪声样本为 -1。",
+      "example": "排查异常标签时区分噪声与数据质量问题。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "异常标签"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "成员强度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn HDBSCAN 的 probabilities_ 如何解释？",
+      "answer": "它表示样本属于所分配簇的成员强度，与样本在簇中的持续程度相关。",
+      "explanation": "它不是监督分类模型对类别的校准概率；噪声样本的值为 0。",
+      "example": "比较同一簇中样本的相对成员强度。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "成员强度"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "簇选择方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HDBSCAN 的 eom 与 leaf 簇选择方法有什么主要区别？",
+      "answer": "eom 倾向选择较持久的簇；leaf 从树的叶节点选择较细粒度的簇。",
+      "explanation": "两种方法都依赖输入数据和其他参数。",
+      "example": "根据分析目的比较较粗和较细的聚类结果。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "簇选择方法"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "单簇默认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn HDBSCAN 默认允许只返回一个簇吗？",
+      "answer": "默认不允许；设置 allow_single_cluster=True 可允许出现单簇结果。",
+      "explanation": "允许单簇不等于保证结果一定是单簇。",
+      "example": "数据确实可能只有一个群体时检查该选项。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "单簇默认"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "簇中心差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn HDBSCAN 的 centroid 与 medoid 中，哪个保证是拟合数据中的样本点？",
+      "answer": "medoid 是簇内样本点；centroid 是加权平均位置，不保证为已有样本。",
+      "explanation": "簇中心需要特征数据；本地 scikit-learn 1.7.2 中含非有限值且启用 store_centers 的示例会报错，应先处理异常值。",
+      "example": "选择真实样本作为簇代表。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "簇中心差异"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    },
+    {
+      "id": "hdbscan-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HDBSCAN 密度聚类",
+      "knowledgePoint": "平面切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn HDBSCAN 的 dbscan_clustering 与普通 DBSCAN 结果为什么可能不同？",
+      "answer": "该方法返回给定距离切分下的 DBSCAN* 结果，DBSCAN* 不包含普通 DBSCAN 的边界点分配。",
+      "explanation": "两者对非核心点的处理不同。",
+      "example": "从已拟合层次结构导出某个距离阈值下的聚类。",
+      "tags": [
+        "HDBSCAN 密度聚类",
+        "平面切分"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.cluster.HDBSCAN.html"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "linux-clock-measurement",
+    "title": "Linux 手册：时钟与耗时测量",
+    "url": "https://man7.org/linux/man-pages/man2/clock_gettime.2.html",
+    "type": "Linux man-pages 系统手册",
+    "note": "依据逐题引用的资料自行整理；示例为自编，涉及实现行为时以题目所述版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "clockcs-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 时钟与耗时",
+      "knowledgePoint": "实时时钟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux CLOCK_REALTIME 表示什么时间，人工调整系统时间会影响它吗？",
+      "answer": "它是系统范围的可设置实时时钟，表示自纪元以来的时间；人工调整系统时间可能使其跳变。",
+      "explanation": "它还可能受到 NTP 等服务的频率调整影响，适合表示日历时间。",
+      "example": "日志记录事件发生的墙上时间可使用实时时钟。",
+      "tags": [
+        "Linux 时钟与耗时",
+        "实时时钟"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/clock_gettime.2.html"
+    },
+    {
+      "id": "clockcs-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 时钟与耗时",
+      "knowledgePoint": "测量时间差",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Linux 程序计算请求耗时，为什么通常选 CLOCK_MONOTONIC 而不是直接对两次 CLOCK_REALTIME 相减？",
+      "answer": "CLOCK_MONOTONIC 不受系统时间被手动修改等不连续跳变影响，通常适合测量同一系统内的经过时间。",
+      "explanation": "它仍可能受 NTP 等渐进频率调整影响；Linux 上该时钟不计系统挂起时间。",
+      "example": "测量请求开始和结束的单调时钟差值。",
+      "tags": [
+        "Linux 时钟与耗时",
+        "测量时间差"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/clock_gettime.2.html"
+    },
+    {
+      "id": "clockcs-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 时钟与耗时",
+      "knowledgePoint": "单调非严格递增",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 连续两次读取 CLOCK_MONOTONIC，后一次结果一定大于前一次吗？",
+      "answer": "不一定；结果保证不倒退，但两次读取可能相等。",
+      "explanation": "时钟分辨率和平台实现会影响短间隔读取结果。",
+      "example": "极短时间内连续调用可能得到相同时间戳。",
+      "tags": [
+        "Linux 时钟与耗时",
+        "单调非严格递增"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/clock_gettime.2.html"
+    },
+    {
+      "id": "clockcs-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 时钟与耗时",
+      "knowledgePoint": "系统挂起",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Linux CLOCK_BOOTTIME 与 CLOCK_MONOTONIC 在系统挂起期间有什么区别？",
+      "answer": "CLOCK_BOOTTIME 包含系统挂起的时间，CLOCK_MONOTONIC 不包含。",
+      "explanation": "两者都是不受系统时间不连续跳变影响的时钟；CLOCK_BOOTTIME 是 Linux 特有时钟。",
+      "example": "希望计入笔记本休眠时长时可考虑 CLOCK_BOOTTIME。",
+      "tags": [
+        "Linux 时钟与耗时",
+        "系统挂起"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/clock_gettime.2.html"
+    },
+    {
+      "id": "clockcs-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 时钟与耗时",
+      "knowledgePoint": "原始单调时钟",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Linux CLOCK_MONOTONIC_RAW 与 CLOCK_MONOTONIC 对 NTP 等频率调整的处理有何区别？",
+      "answer": "CLOCK_MONOTONIC_RAW 不受此类频率调整影响，CLOCK_MONOTONIC 会受影响。",
+      "explanation": "两者在 Linux 上都不计系统挂起时间，RAW 是 Linux 特有时钟。",
+      "example": "评估原始硬件时钟变化时可考虑 MONOTONIC_RAW。",
+      "tags": [
+        "Linux 时钟与耗时",
+        "原始单调时钟"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/clock_gettime.2.html"
+    },
+    {
+      "id": "clockcs-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 时钟与耗时",
+      "knowledgePoint": "进程 CPU 时间",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Linux CLOCK_PROCESS_CPUTIME_ID 测得的是什么，是否等同于墙上经过时间？",
+      "answer": "它累计该进程所有线程消耗的 CPU 时间，不等同于墙上经过时间。",
+      "explanation": "阻塞等待通常不会像执行计算那样消耗 CPU 时间；多个线程并行工作时累计 CPU 时间也可能超过经过时间。",
+      "example": "多线程计算可观察到进程 CPU 时间大于实际等待时间。",
+      "tags": [
+        "Linux 时钟与耗时",
+        "进程 CPU 时间"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/clock_gettime.2.html"
+    },
+    {
+      "id": "clockcs-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 时钟与耗时",
+      "knowledgePoint": "线程 CPU 时间",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Linux CLOCK_THREAD_CPUTIME_ID 与 CLOCK_PROCESS_CPUTIME_ID 分别累计哪些 CPU 时间？",
+      "answer": "前者累计调用线程的 CPU 时间，后者累计整个进程所有线程的 CPU 时间。",
+      "explanation": "具体可用性依赖平台；这里讨论 Linux 支持的时钟。",
+      "example": "分别测量当前线程和整个多线程进程的处理器时间。",
+      "tags": [
+        "Linux 时钟与耗时",
+        "线程 CPU 时间"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/clock_gettime.2.html"
+    },
+    {
+      "id": "clockcs-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 时钟与耗时",
+      "knowledgePoint": "分辨率含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux clock_getres 返回的时钟分辨率能否单独证明测得时间的准确度？",
+      "answer": "不能；它描述时钟的分辨率，不能单凭这一值保证实际时间与真实时间之间的误差。",
+      "explanation": "读取开销、调度、时钟同步与平台实现都可能影响测量或时间准确度。",
+      "example": "纳秒单位的接口不代表事件耗时测量一定精确到一纳秒。",
+      "tags": [
+        "Linux 时钟与耗时",
+        "分辨率含义"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/clock_gettime.2.html"
+    }
+  ]
+}

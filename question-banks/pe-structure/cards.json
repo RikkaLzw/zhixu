@@ -1,0 +1,152 @@
+{
+  "source": {
+    "id": "pe-structure",
+    "title": "Microsoft PE 格式：静态恶意软件分析基础",
+    "url": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+    "type": "官方技术文档",
+    "note": "依据所引原文自行整理成中文问答，例子为自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "pe-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "文件结构",
+      "knowledgePoint": "PE 节",
+      "questionType": "概念与原理",
+      "question": "PE 文件中的 section 表示什么？",
+      "answer": "节是 PE 或 COFF 文件中组织代码或数据的基本单元。",
+      "explanation": "节头包含位置、大小和属性等信息，可用于静态特征提取。",
+      "example": "从可执行文件中提取各节大小。",
+      "tags": [
+        "PE 节",
+        "文件结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+      "origin": "自行整理",
+      "referenceTitle": "Microsoft：PE Format"
+    },
+    {
+      "id": "pe-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "文件结构",
+      "knowledgePoint": "RVA 与文件偏移",
+      "questionType": "比较与选型",
+      "question": "PE 的 RVA 与磁盘文件偏移有什么区别？",
+      "answer": "RVA 是装入内存后的地址减去映像基址；文件偏移是数据在磁盘文件中的位置。",
+      "explanation": "两者通常不同，解析时不能直接将 RVA 当成文件偏移。",
+      "example": "读取数据目录前先依据节信息转换地址。",
+      "tags": [
+        "RVA 与文件偏移",
+        "文件结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+      "origin": "自行整理",
+      "referenceTitle": "Microsoft：PE Format"
+    },
+    {
+      "id": "pe-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "文件结构",
+      "knowledgePoint": "PE 入口点",
+      "questionType": "概念与原理",
+      "question": "PE 可选头中的 AddressOfEntryPoint 表示什么？",
+      "answer": "它表示映像装入内存后入口点相对于映像基址的地址。",
+      "explanation": "对程序映像而言该字段表示程序起始地址；它是 RVA 而非磁盘偏移。",
+      "example": "静态分析时定位程序入口点所在的节。",
+      "tags": [
+        "PE 入口点",
+        "文件结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+      "origin": "自行整理",
+      "referenceTitle": "Microsoft：PE Format"
+    },
+    {
+      "id": "pe-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "文件结构",
+      "knowledgePoint": "PE32 与 PE32+",
+      "questionType": "概念与原理",
+      "question": "PE 可选头中的 Magic 字段如何区分 PE32 与 PE32+？",
+      "answer": "0x10B 表示 PE32，0x20B 表示 PE32+。",
+      "explanation": "解析器应按对应格式解释后续字段布局。",
+      "example": "读取 Magic 后选择匹配的可选头结构。",
+      "tags": [
+        "PE32 与 PE32+",
+        "文件结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+      "origin": "自行整理",
+      "referenceTitle": "Microsoft：PE Format"
+    },
+    {
+      "id": "pe-005",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "节特征",
+      "knowledgePoint": "节的磁盘与内存大小",
+      "questionType": "比较与选型",
+      "question": "PE 映像节的 VirtualSize 与 SizeOfRawData 分别描述什么？",
+      "answer": "VirtualSize 是节装入内存后的大小；SizeOfRawData 是节在磁盘上的已初始化数据大小。",
+      "explanation": "两者可以不同；VirtualSize 更大时，额外部分按规范补零。",
+      "example": "比较节头中的两个大小字段。",
+      "tags": [
+        "节的磁盘与内存大小",
+        "节特征"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+      "origin": "自行整理",
+      "referenceTitle": "Microsoft：PE Format"
+    },
+    {
+      "id": "pe-006",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "节特征",
+      "knowledgePoint": "节访问属性",
+      "questionType": "概念与原理",
+      "question": "PE 节头中的可读、可写和可执行标志可以提供什么信息？",
+      "answer": "它们描述该节的相应内存访问属性，可作为分析文件结构的特征。",
+      "explanation": "某种标志组合本身不能证明文件恶意。",
+      "example": "检查可执行节是否还声明可写。",
+      "tags": [
+        "节访问属性",
+        "节特征"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+      "origin": "自行整理",
+      "referenceTitle": "Microsoft：PE Format"
+    },
+    {
+      "id": "pe-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "解析健壮性",
+      "knowledgePoint": "可选头边界",
+      "questionType": "易错点",
+      "question": "解析 PE 数据目录前为什么要检查可选头的大小？",
+      "answer": "可选头大小不是固定值，读取目录前要确认目标字段没有越过声明的头部边界。",
+      "explanation": "还应检查 NumberOfRvaAndSizes，避免访问不存在的目录项。",
+      "example": "解析格式异常的文件时先验证头部长度。",
+      "tags": [
+        "可选头边界",
+        "解析健壮性"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+      "origin": "自行整理",
+      "referenceTitle": "Microsoft：PE Format"
+    }
+  ]
+}

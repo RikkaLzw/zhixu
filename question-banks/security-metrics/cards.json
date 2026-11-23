@@ -1,0 +1,194 @@
+{
+  "source": {
+    "id": "security-metrics",
+    "title": "scikit-learn：分类模型评估指标",
+    "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+    "type": "官方技术文档",
+    "note": "依据所列资料自行整理为简体中文问答；例子为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "metric-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "混淆矩阵",
+      "knowledgePoint": "scikit混淆矩阵轴",
+      "questionType": "概念与原理",
+      "question": "在 scikit-learn 的混淆矩阵中，行和列分别对应什么？",
+      "answer": "行对应真实类别，列对应预测类别。",
+      "explanation": "使用其他工具时应确认其轴的约定是否相同。",
+      "example": "行是真实攻击、列是预测正常的格子表示漏报。",
+      "tags": [
+        "scikit混淆矩阵轴",
+        "混淆矩阵"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#confusion-matrix",
+      "referenceTitle": "scikit-learn：Confusion matrix",
+      "origin": "自行整理"
+    },
+    {
+      "id": "metric-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分类评估",
+      "knowledgePoint": "F1定义",
+      "questionType": "概念与原理",
+      "question": "二分类中的 F1 分数如何综合精确率和召回率？",
+      "answer": "F1 是精确率和召回率的调和平均数。",
+      "explanation": "零分母场景的处理需说明所用工具和约定。",
+      "example": "精确率和召回率一项很低时，F1 通常也受影响。",
+      "tags": [
+        "F1定义",
+        "分类评估",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-f-measure-metrics",
+      "referenceTitle": "scikit-learn：Precision, recall and F-measures",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节跳动公开面经（2020届，作者自述）",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "metric-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分类评估",
+      "knowledgePoint": "F-beta权重",
+      "questionType": "概念与原理",
+      "question": "F-beta 中 beta 大于 1 时，更强调精确率还是召回率？",
+      "answer": "更强调召回率。",
+      "explanation": "beta 小于 1 时则相对更强调精确率；具体阈值仍需结合任务选择。",
+      "example": "漏报代价高时可考虑比较更重视召回的 F-beta。",
+      "tags": [
+        "F-beta权重",
+        "分类评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-f-measure-metrics",
+      "referenceTitle": "scikit-learn：F-measures",
+      "origin": "自行整理"
+    },
+    {
+      "id": "metric-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分类评估",
+      "knowledgePoint": "平衡准确率",
+      "questionType": "概念与原理",
+      "question": "测试集中各类均有真实样本时，多分类平衡准确率如何计算？",
+      "answer": "计算每个类别的召回率，再对各类别的召回率取算术平均。",
+      "explanation": "它能减少多数类数量对总体准确率的主导，但仍需检查各类结果。",
+      "example": "分别计算正常和攻击的召回率，再取平均。",
+      "tags": [
+        "平衡准确率",
+        "分类评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#balanced-accuracy-score",
+      "referenceTitle": "scikit-learn：Balanced accuracy",
+      "origin": "自行整理"
+    },
+    {
+      "id": "metric-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多类评估",
+      "knowledgePoint": "宏平均与加权平均",
+      "questionType": "比较与选型",
+      "question": "宏平均与按类别支持数加权平均有什么区别？",
+      "answer": "宏平均给每个类别相同权重；加权平均按各类别的真实样本数加权。",
+      "explanation": "少数类别的差表现可能被加权平均掩盖。",
+      "example": "对各攻击类型分别计算 F1 后再采用两种平均方式。",
+      "tags": [
+        "宏平均与加权平均",
+        "多类评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#multiclass-and-multilabel-classification",
+      "referenceTitle": "scikit-learn：Multiclass averaging",
+      "origin": "自行整理"
+    },
+    {
+      "id": "metric-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多类评估",
+      "knowledgePoint": "微平均",
+      "questionType": "概念与原理",
+      "question": "多分类指标的微平均通常如何汇总各类别？",
+      "answer": "先汇总各类别的真正例、假正例和假负例数量，再据此计算指标。",
+      "explanation": "在单标签多分类并包含所有类别时，微平均精确率、召回率和 F1 等于准确率。",
+      "example": "先汇总全部攻击类别的计数，再计算微平均 F1。",
+      "tags": [
+        "微平均",
+        "多类评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#multiclass-and-multilabel-classification",
+      "referenceTitle": "scikit-learn：Multiclass averaging",
+      "origin": "自行整理"
+    },
+    {
+      "id": "metric-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分类评估",
+      "knowledgePoint": "ROC曲线坐标",
+      "questionType": "概念与原理",
+      "question": "二分类 ROC 曲线通常使用哪两个量作为坐标？",
+      "answer": "横轴是假正例率，纵轴是真正例率，两者随判定阈值变化。",
+      "explanation": "真正例率也称召回率或敏感度。",
+      "example": "比较不同阈值下误报率与攻击发现率。",
+      "tags": [
+        "ROC曲线坐标",
+        "分类评估",
+        "公开面经",
+        "地平线"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#receiver-operating-characteristic-roc",
+      "referenceTitle": "scikit-learn：ROC",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-horizon",
+          "title": "地平线机器人公开面经（2019届，作者自述）",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "metric-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类评估",
+      "knowledgePoint": "基率与精确率",
+      "questionType": "设计与权衡",
+      "question": "当真正例率和假正例率均固定且非零时，正类比例降低会怎样影响精确率？",
+      "answer": "精确率会降低，因为告警中来自负类的假正例占比会上升。",
+      "explanation": "该结论依赖真正例率和假正例率保持不变。",
+      "example": "将实验室模型迁到攻击更稀少的生产流量时重新估计告警准确率。",
+      "tags": [
+        "基率与精确率",
+        "分类评估"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/model_evaluation.html#precision-recall-f-measure-metrics",
+      "referenceTitle": "scikit-learn：Precision and recall",
+      "origin": "自行整理"
+    }
+  ]
+}

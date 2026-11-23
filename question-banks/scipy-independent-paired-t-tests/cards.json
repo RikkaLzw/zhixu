@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "scipy-independent-paired-t-tests",
+    "title": "SciPy 1.15.3 文档：独立样本与配对 t 检验",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ttest_ind.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "scipytest-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "独立与配对 t 检验",
+      "knowledgePoint": "独立样本原假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 的 ttest_ind 通常检验两个独立总体均值的什么假设？",
+      "answer": "原假设是两个独立总体的均值相等。",
+      "explanation": "默认的经典独立样本 t 检验还假设总体方差相等。",
+      "example": "比较来自两组独立用户的平均响应时间。",
+      "tags": [
+        "独立与配对 t 检验",
+        "独立样本原假设"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ttest_ind.html"
+    },
+    {
+      "id": "scipytest-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "独立与配对 t 检验",
+      "knowledgePoint": "Welch检验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 ttest_ind 中 equal_var=False 表示什么？",
+      "answer": "使用不假设两总体方差相等的 Welch t 检验。",
+      "explanation": "两个样本仍应符合独立样本检验的设计前提。",
+      "example": "两组样本方差明显不同时可考虑 Welch 方法。",
+      "tags": [
+        "独立与配对 t 检验",
+        "Welch检验"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ttest_ind.html"
+    },
+    {
+      "id": "scipytest-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "独立与配对 t 检验",
+      "knowledgePoint": "单侧方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 的 ttest_ind(a, b, alternative=\"less\") 对应什么备择假设？",
+      "answer": "第一个总体的均值小于第二个总体的均值。",
+      "explanation": "应在观察结果前根据研究问题选择检验方向。",
+      "example": "检验方案 A 的平均时延是否低于方案 B。",
+      "tags": [
+        "独立与配对 t 检验",
+        "单侧方向"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ttest_ind.html"
+    },
+    {
+      "id": "scipytest-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "独立与配对 t 检验",
+      "knowledgePoint": "配对检验自由度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 ttest_rel 对 n 对完整数据计算时，自由度 df 是多少？",
+      "answer": "自由度为 n−1。",
+      "explanation": "若使用 nan_policy=\"omit\"，应按保留下来的完整配对数计算。",
+      "example": "4 对完整观测的自由度为 3。",
+      "tags": [
+        "独立与配对 t 检验",
+        "配对检验自由度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ttest_rel.html"
+    },
+    {
+      "id": "scipytest-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "独立与配对 t 检验",
+      "knowledgePoint": "修剪检验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 ttest_ind 中 trim=0.1 表示怎样处理各组样本？",
+      "answer": "每组排序后在两端各修剪 floor(0.1×样本数) 个值，再进行修剪 t 检验。",
+      "explanation": "修剪会改变统计目标，应事先确定方法。",
+      "example": "每组 20 个样本时，每端各修剪 2 个。",
+      "tags": [
+        "独立与配对 t 检验",
+        "修剪检验"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ttest_ind.html"
+    },
+    {
+      "id": "scipytest-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "独立与配对 t 检验",
+      "knowledgePoint": "配对对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 的 ttest_rel 适合什么样的观测？",
+      "answer": "适合一一对应的两组相关观测；基于每对差值检验总体平均差是否为零。",
+      "explanation": "同一对象前后测量是常见配对设计。",
+      "example": "比较同一批用户优化前后的时延。",
+      "tags": [
+        "独立与配对 t 检验",
+        "配对对象"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ttest_rel.html"
+    },
+    {
+      "id": "scipytest-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "独立与配对 t 检验",
+      "knowledgePoint": "配对缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 ttest_rel 使用 nan_policy=\"omit\" 时，某一对只有一个值为 NaN 会怎样？",
+      "answer": "该对观测被排除，保留完整配对进行计算。",
+      "explanation": "分别删除两列缺失值可能破坏配对关系。",
+      "example": "某人的后测缺失时，该人的这一对不参与检验。",
+      "tags": [
+        "独立与配对 t 检验",
+        "配对缺失"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ttest_rel.html"
+    },
+    {
+      "id": "scipytest-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "独立与配对 t 检验",
+      "knowledgePoint": "置信区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 ttest_rel 返回对象的 confidence_interval() 提供什么？",
+      "answer": "提供所选置信水平下总体平均配对差的置信区间。",
+      "explanation": "区间方向由第一个输入减去第二个输入决定。",
+      "example": "结果包含 low 和 high 两个边界。",
+      "tags": [
+        "独立与配对 t 检验",
+        "置信区间"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ttest_rel.html"
+    }
+  ]
+}

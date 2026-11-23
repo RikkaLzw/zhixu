@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "elastic-threshold-rule-practice",
+    "title": "Elastic Security 8.17 文档：阈值与指标匹配规则",
+    "url": "https://www.elastic.co/guide/en/security/8.17/rules-ui-create.html",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "elasticth-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Elastic 安全检测规则",
+      "knowledgePoint": "阈值分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elastic Security 8.17 阈值规则中的 Group by 与 Threshold 如何配合？",
+      "answer": "按指定字段值分组，并在某组匹配事件数量达到阈值时产生告警。",
+      "explanation": "多个 Group by 字段组成一个分组键。",
+      "example": "来源 IP 和目的 IP 相同的一组事件达到 10 条时触发。",
+      "tags": [
+        "Elastic 安全检测规则",
+        "阈值分组"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/security/8.17/rules-ui-create.html"
+    },
+    {
+      "id": "elasticth-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Elastic 安全检测规则",
+      "knowledgePoint": "无分组阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elastic Security 8.17 阈值规则不指定 Group by 时，如何判断是否触发？",
+      "answer": "当匹配搜索结果的总数达到或超过阈值时产生告警。",
+      "explanation": "此时不是按某个字段分别计数。",
+      "example": "所有匹配事件达到设定数量后触发。",
+      "tags": [
+        "Elastic 安全检测规则",
+        "无分组阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/security/8.17/rules-ui-create.html"
+    },
+    {
+      "id": "elasticth-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Elastic 安全检测规则",
+      "knowledgePoint": "唯一值计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elastic Security 8.17 阈值规则中的 Count 条件用于限制什么？",
+      "answer": "限制指定字段的不同值数量，即基数。",
+      "explanation": "它与分组内匹配事件的总条数不是同一指标。",
+      "example": "可要求某组事件至少涉及两个不同进程名。",
+      "tags": [
+        "Elastic 安全检测规则",
+        "唯一值计数"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/security/8.17/rules-ui-create.html"
+    },
+    {
+      "id": "elasticth-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Elastic 安全检测规则",
+      "knowledgePoint": "合成告警",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elastic Security 8.17 阈值规则产生的告警为什么不包含所有来源事件字段？",
+      "answer": "它是基于聚合结果的合成告警；未参与分组的字段可能在各来源事件中不同。",
+      "explanation": "需要调查细节时应回查相应来源事件。",
+      "example": "多个来源事件的不同进程路径不会自动都出现在聚合告警中。",
+      "tags": [
+        "Elastic 安全检测规则",
+        "合成告警"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/security/8.17/rules-ui-create.html"
+    },
+    {
+      "id": "elasticth-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Elastic 安全检测规则",
+      "knowledgePoint": "阈值告警计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elastic Security 8.17 阈值告警中，哪个字段记录达到阈值的文档数量？",
+      "answer": "kibana.alert.threshold_result.count。",
+      "explanation": "该字段来自阈值聚合结果。",
+      "example": "查看该字段可了解本次分组内计数。",
+      "tags": [
+        "Elastic 安全检测规则",
+        "阈值告警计数"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/security/8.17/rules-ui-create.html"
+    },
+    {
+      "id": "elasticth-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Elastic 安全检测规则",
+      "knowledgePoint": "嵌套分组限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elastic Security 8.17 阈值规则能否使用 nested 字段作为 Group by？",
+      "answer": "不能；文档列明 Group by 不支持 nested 字段。",
+      "explanation": "字段映射影响规则能否按预期分组。",
+      "example": "设计规则前应检查字段类型。",
+      "tags": [
+        "Elastic 安全检测规则",
+        "嵌套分组限制"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/security/8.17/rules-ui-create.html"
+    },
+    {
+      "id": "elasticth-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Elastic 安全检测规则",
+      "knowledgePoint": "指标匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elastic Security 8.17 指标匹配规则如何比较事件和威胁指标？",
+      "answer": "比较配置的事件字段与指标字段，值相同时生成告警。",
+      "explanation": "匹配字段和时间范围应结合情报质量进行配置。",
+      "example": "可将事件中的目标 IP 与指标索引中的 IP 字段匹配。",
+      "tags": [
+        "Elastic 安全检测规则",
+        "指标匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/security/8.17/rules-ui-create.html"
+    },
+    {
+      "id": "elasticth-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Elastic 安全检测规则",
+      "knowledgePoint": "指标字段限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elastic Security 8.17 指标匹配规则对映射字段的值有什么限制？",
+      "answer": "只支持单值字段。",
+      "explanation": "多值字段不能直接按该规则的文档约定进行指标映射。",
+      "example": "映射前应检查事件和指标字段的数据结构。",
+      "tags": [
+        "Elastic 安全检测规则",
+        "指标字段限制"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/security/8.17/rules-ui-create.html"
+    }
+  ]
+}

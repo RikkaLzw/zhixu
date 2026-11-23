@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "splunk-spl-security-analysis",
+    "title": "Splunk Enterprise 9.4 搜索手册：SPL 安全日志分析",
+    "url": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/stats",
+    "type": "官方文档与教材",
+    "note": "依据题目所列文档或教材自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "splunkops-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "分组统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk SPL 的 stats count BY user 通常返回什么？",
+      "answer": "按 user 的不同取值分组，返回每组的事件数量。",
+      "explanation": "stats 把输入结果转成聚合结果表。",
+      "example": "统计每个账号的登录事件数量。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "分组统计"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/stats"
+    },
+    {
+      "id": "splunkops-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "字段计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk 的 stats count 与 stats count(user) 统计对象有什么区别？",
+      "answer": "前者统计输入结果数量，后者统计 user 字段出现的次数。",
+      "explanation": "字段缺失时，两者可能不同。",
+      "example": "三条事件只有两条有 user 字段时得到不同计数。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "字段计数"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/statistical-and-charting-functions/aggregate-functions"
+    },
+    {
+      "id": "splunkops-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "去重计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk SPL 的 stats dc(src_ip) 计算什么？",
+      "answer": "计算 src_ip 字段不同取值的数量。",
+      "explanation": "dc 是 distinct_count 的简写；这是去重数量而非事件总数。",
+      "example": "同一地址出现三次只计作一个不同地址。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "去重计数"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/statistical-and-charting-functions/aggregate-functions"
+    },
+    {
+      "id": "splunkops-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "列表与集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk 聚合函数 list(field) 与 values(field) 对重复值和顺序如何处理？",
+      "answer": "list 保留按事件顺序出现的值；values 返回去重后按字典序排列的值。",
+      "explanation": "list 文档默认最多返回前 100 个值。",
+      "example": "输入 b、a、b 时两种结果不同。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "列表与集合"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/statistical-and-charting-functions/multivalue-stats-and-chart-functions"
+    },
+    {
+      "id": "splunkops-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "统计与原事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk 的 stats 和 eventstats 在输出事件上有什么主要区别？",
+      "answer": "stats 输出聚合结果表；eventstats 把聚合值添加回输出事件。",
+      "explanation": "eventstats 允许继续结合单条事件和组内统计值分析。",
+      "example": "给每条事件附上其账号组的平均值。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "统计与原事件"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/eventstats"
+    },
+    {
+      "id": "splunkops-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "时间与输入顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "想按事件时间取最新字段值时，为什么 Splunk 建议使用 latest 而非 last？",
+      "answer": "latest 按时间选择；last 依据事件处理顺序，未必对应最新时间。",
+      "explanation": "时间字段缺失或无效时仍需检查数据。",
+      "example": "日志到达顺序与事件发生顺序不一致。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "时间与输入顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/stats"
+    },
+    {
+      "id": "splunkops-007",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "去重保留",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk 的 dedup user 默认怎样处理同一 user 的多个结果？",
+      "answer": "按搜索顺序保留第一个，移除后续相同 user 的结果。",
+      "explanation": "保留的是哪条记录依赖输入顺序。",
+      "example": "同一账号多条事件只保留一条。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "去重保留"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/dedup"
+    },
+    {
+      "id": "splunkops-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "去重空字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk 的 dedup user 默认如何处理 user 为 null 或缺失的事件？",
+      "answer": "默认丢弃这些事件；可用 keepempty=true 保留。",
+      "explanation": "多字段去重时，只要所选字段之一缺失，默认就会丢弃该事件。",
+      "example": "部分日志未提取到账号字段。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "去重空字段"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/dedup"
+    },
+    {
+      "id": "splunkops-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "相邻去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk 的 dedup consecutive=true 与默认去重有何区别？",
+      "answer": "它只移除连续出现的重复字段组合，非连续重复可以保留。",
+      "explanation": "该结果依赖事件排列顺序。",
+      "example": "序列 A、B、A 中两个 A 均可能保留。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "相邻去重"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/dedup"
+    },
+    {
+      "id": "splunkops-010",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "时间聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk 的 timechart span=1h count 通常做什么？",
+      "answer": "按一小时的时间桶统计事件数量，形成时间序列。",
+      "explanation": "时间范围和桶边界会影响结果。",
+      "example": "观察每小时的登录失败次数。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "时间聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/timechart"
+    },
+    {
+      "id": "splunkops-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "时间序列限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk timechart 按字段拆分序列时，limit=0 的作用是什么？",
+      "answer": "不按序列数量进行筛选，使用所有不同的拆分字段值。",
+      "explanation": "显式 where 子句等配置可能影响相关选项的适用。",
+      "example": "展示全部账号的事件趋势。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "时间序列限制"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/timechart"
+    },
+    {
+      "id": "splunkops-012",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "条件过滤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Splunk 的 where 命令如何筛选结果？",
+      "answer": "它保留 eval 布尔表达式计算为 true 的结果。",
+      "explanation": "表达式语法及字段类型会影响筛选。",
+      "example": "统计之后保留次数大于阈值的账号。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "条件过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/where"
+    },
+    {
+      "id": "splunkops-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Splunk SPL 日志查询",
+      "knowledgePoint": "字段比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Splunk 的 where 表达式中，未加引号的名称通常如何解释？",
+      "answer": "通常作为字段名，因此可直接比较两个字段的值。",
+      "explanation": "字符串字面值应按 SPL 表达式语法加引号。",
+      "example": "比较 ipaddress 和 clientip 字段是否相同。",
+      "tags": [
+        "Splunk SPL 日志查询",
+        "字段比较"
+      ],
+      "evidence": "source",
+      "reference": "https://help.splunk.com/en/splunk-enterprise/search/spl-search-reference/9.4/search-commands/where"
+    }
+  ]
+}

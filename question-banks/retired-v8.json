@@ -1,0 +1,64 @@
+{
+  "version": 8,
+  "note": "迁移用的第八版旧主卡快照；仅合并未编辑且目标卡存在的记录，归档旧卡并保留学习进度。",
+  "cards": [
+    {
+      "id": "isof-005",
+      "category": "detection",
+      "question": "用 Isolation Forest 检测主机异常时，样本单位可以怎样选择？",
+      "answer": "可以将一台主机在一个固定时间窗口内的行为汇总作为样本。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "knowledgeArea": "11",
+      "level": "实践",
+      "tags": [
+        "样本单位",
+        "主机行为"
+      ],
+      "explanation": "窗口过短可能噪声较大，过长可能延迟发现，需要结合目标行为验证。",
+      "example": "按主机和一小时窗口统计不同目的地址数与连接次数。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-009",
+      "category": "detection",
+      "question": "为什么安全异常检测需要和简单统计基线比较？",
+      "answer": "简单频率阈值可能已经识别大部分异常，比较后才能看出模型增益。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "knowledgeArea": "11",
+      "level": "实践",
+      "tags": [
+        "基线",
+        "异常检测"
+      ],
+      "explanation": "比较应使用相同数据窗口和告警数量。",
+      "example": "在相同每日告警预算下对比连接数阈值与 Isolation Forest。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

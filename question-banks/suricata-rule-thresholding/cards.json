@@ -1,0 +1,173 @@
+{
+  "source": {
+    "id": "suricata-rule-thresholding",
+    "title": "Suricata 8.0.1：规则告警阈值",
+    "url": "https://docs.suricata.io/en/suricata-8.0.1/rules/thresholding.html",
+    "type": "教材、官方文档与固定版本源码",
+    "note": "依据逐题所列文档、教材或固定版本源码自行整理；示例为自编，使用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "surith-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Suricata 告警阈值",
+      "knowledgePoint": "阈值作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata 8.0.1 规则中的 threshold 主要控制什么？",
+      "answer": "它控制匹配规则后告警输出的频率或触发条件。",
+      "explanation": "规则匹配与最终输出告警的次数并不一定相同。",
+      "example": "同一来源在短时间内多次匹配可只输出部分告警。",
+      "tags": [
+        "Suricata 告警阈值",
+        "阈值作用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/thresholding.html"
+    },
+    {
+      "id": "surith-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Suricata 告警阈值",
+      "knowledgePoint": "limit模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata 的 threshold type limit 如何限制告警？",
+      "answer": "对指定跟踪对象，它在指定时间段内最多输出 count 次告警。",
+      "explanation": "额外匹配仍可能发生，只是不一定产生新的告警。",
+      "example": "count 1、seconds 180 限制该对象在周期内的告警数量。",
+      "tags": [
+        "Suricata 告警阈值",
+        "limit模式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/thresholding.html"
+    },
+    {
+      "id": "surith-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 告警阈值",
+      "knowledgePoint": "both模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata 的 threshold type both 怎样结合次数和告警上限？",
+      "answer": "同一跟踪对象在指定时间内达到 count 次匹配后，最多输出一次告警。",
+      "explanation": "官方示例的 count 5、seconds 360 每 6 分钟最多输出一次。",
+      "example": "重复异常响应达到阈值时输出受限数量的告警。",
+      "tags": [
+        "Suricata 告警阈值",
+        "both模式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/thresholding.html"
+    },
+    {
+      "id": "surith-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 告警阈值",
+      "knowledgePoint": "detection_filter",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata detection_filter 与 type threshold 对达到初始阈值后的匹配有什么区别？",
+      "answer": "type threshold 在时间窗内每达到 count 次匹配就告警并重置计数；detection_filter 超过 count 后对后续匹配持续告警，直到窗口结束。",
+      "explanation": "跟踪键决定哪些匹配共享计数；Suricata 8.0.1 源码对 detection_filter 使用大于 count 的条件。",
+      "example": "count 为 5 时，detection_filter 从同一窗口的第 6 次匹配开始告警。",
+      "tags": [
+        "Suricata 告警阈值",
+        "detection_filter"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/thresholding.html",
+      "supportingReferences": [
+        {
+          "id": "suricata-801-threshold-code",
+          "title": "Suricata 8.0.1：阈值计数实现",
+          "url": "https://github.com/OISF/suricata/blob/suricata-8.0.1/src/detect-engine-threshold.c",
+          "type": "固定版本源码",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "surith-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 告警阈值",
+      "knowledgePoint": "跟踪键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata 阈值的 track by_src、by_dst 和 by_both 分别按什么跟踪？",
+      "answer": "分别按源 IP、目的 IP，以及源 IP 与目的 IP 的组合跟踪。",
+      "explanation": "跟踪键影响哪些命中共享计数。",
+      "example": "多个源访问同一目标时，by_src 与 by_dst 的聚合方式不同。",
+      "tags": [
+        "Suricata 告警阈值",
+        "跟踪键"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/thresholding.html"
+    },
+    {
+      "id": "surith-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 告警阈值",
+      "knowledgePoint": "退避次数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata 的 backoff count 1、multiplier 10 会在哪些匹配次数输出告警？",
+      "answer": "按文档示例，在第 1、10、100、1000 等次匹配时告警。",
+      "explanation": "该模式只支持 track by_flow；达到当前触发计数后，下一触发值按 multiplier 扩大。",
+      "example": "单条持续频繁匹配的流不会每次都生成告警。",
+      "tags": [
+        "Suricata 告警阈值",
+        "退避次数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/thresholding.html"
+    },
+    {
+      "id": "surith-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 告警阈值",
+      "knowledgePoint": "状态动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata 规则设置告警阈值后，flowbits 等状态动作也被阈值限制吗？",
+      "answer": "不会；规则中的 flowbits、flowints 等动作仍会在规则匹配时执行。",
+      "explanation": "减少告警输出并不等于跳过这些状态更新。",
+      "example": "即使该次匹配不输出告警，规则仍可能设置 flowbit。",
+      "tags": [
+        "Suricata 告警阈值",
+        "状态动作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/thresholding.html"
+    },
+    {
+      "id": "surith-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 告警阈值",
+      "knowledgePoint": "拦截动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata 在 IPS 模式使用阈值时，drop 或 reject 是否只应用于触发告警的那个报文？",
+      "answer": "不是；文档说明这些规则动作仍应用于每个匹配报文。",
+      "explanation": "阈值控制告警，并不会把拦截动作推迟到告警次数达到后。",
+      "example": "未触发新告警的匹配报文仍可能被丢弃。",
+      "tags": [
+        "Suricata 告警阈值",
+        "拦截动作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/thresholding.html"
+    }
+  ]
+}

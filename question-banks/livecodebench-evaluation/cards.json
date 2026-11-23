@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "livecodebench-evaluation",
+    "title": "LiveCodeBench 原论文 v2：代码模型持续评估",
+    "url": "https://arxiv.org/pdf/2403.07974v2",
+    "type": "原论文与固定版本源码或官方说明",
+    "note": "根据逐题所列原论文、官方说明或固定版本源码自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "livecode-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "代码模型持续评估",
+      "knowledgePoint": "动态题目",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LiveCodeBench 为什么持续收集带发布日期的竞赛题？",
+      "answer": "可以按模型训练截止时间选择较新的题目，降低直接见过评测原题的风险。",
+      "explanation": "论文收集 LeetCode、AtCoder 和 Codeforces 题目；时间筛选依赖发布日期和模型截止时间的可靠性，不能绝对排除污染。",
+      "example": "比较模型在截止日前后发布题目上的表现。",
+      "tags": [
+        "代码模型持续评估",
+        "动态题目"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2403.07974v2"
+    },
+    {
+      "id": "livecode-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码模型持续评估",
+      "knowledgePoint": "评估场景",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LiveCodeBench 原论文除了代码生成，还考查哪些场景？",
+      "answer": "还考查自我修复、代码执行输出预测和测试输出预测。",
+      "explanation": "这些场景覆盖不同的代码理解与修复能力。",
+      "example": "正确生成程序并不等于一定能预测已有程序的输出。",
+      "tags": [
+        "代码模型持续评估",
+        "评估场景"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2403.07974v2"
+    },
+    {
+      "id": "livecode-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码模型持续评估",
+      "knowledgePoint": "自我修复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LiveCodeBench 的自我修复场景向模型提供什么额外信息？",
+      "answer": "候选程序失败后，向模型提供异常信息或失败测试等反馈，再要求生成修复版本。",
+      "explanation": "论文使用最终通过测试的结果评估。",
+      "example": "根据某个失败输入及错误提示修复程序。",
+      "tags": [
+        "代码模型持续评估",
+        "自我修复"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2403.07974v2"
+    },
+    {
+      "id": "livecode-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码模型持续评估",
+      "knowledgePoint": "修复得分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LiveCodeBench 原论文自我修复的最终 pass@1 是否只统计原始程序失败后修复成功的题？",
+      "answer": "不是；它统计原始程序或尝试修复后的最终程序通过测试的比例。",
+      "explanation": "原始程序已正确的题仍计入最终成绩。",
+      "example": "首次生成通过的题目不需要修复也可计为成功。",
+      "tags": [
+        "代码模型持续评估",
+        "修复得分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2403.07974v2"
+    },
+    {
+      "id": "livecode-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码模型持续评估",
+      "knowledgePoint": "两种输出预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LiveCodeBench 的代码执行与测试输出预测，提供给模型的核心输入有什么区别？",
+      "answer": "代码执行给出程序和测试输入；测试输出预测给出题目描述和指定输入，但不提供该程序实现。",
+      "explanation": "两者都要求预测对应输出。",
+      "example": "一个任务阅读函数代码，另一个直接依据自然语言题意。",
+      "tags": [
+        "代码模型持续评估",
+        "两种输出预测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2403.07974v2"
+    },
+    {
+      "id": "livecode-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码模型持续评估",
+      "knowledgePoint": "测试收集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LiveCodeBench 原论文在平台不能直接提供测试时，如何补充测试？",
+      "answer": "使用模型生成符合题目约束的输入生成器，并从生成器采样测试输入。",
+      "explanation": "论文也收集部分平台返回的失败测试；测试质量仍影响评估。",
+      "example": "用输入生成器构造多组满足约束的数据。",
+      "tags": [
+        "代码模型持续评估",
+        "测试收集"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2403.07974v2"
+    },
+    {
+      "id": "livecode-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码模型持续评估",
+      "knowledgePoint": "结果口径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较不同模型的 LiveCodeBench 成绩时为什么要说明题目时间窗口？",
+      "answer": "不同时间窗口的题目集合、难度和潜在污染风险可能不同，分数不能无条件直接比较。",
+      "explanation": "还应记录模型版本与生成配置。",
+      "example": "训练截止日期不同的模型可能使用不同的后续题目集合。",
+      "tags": [
+        "代码模型持续评估",
+        "结果口径"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2403.07974v2"
+    }
+  ]
+}

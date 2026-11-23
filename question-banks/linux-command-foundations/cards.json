@@ -1,0 +1,713 @@
+{
+  "source": {
+    "id": "linux-command-foundations",
+    "title": "GNU/Linux 常用命令、Bash 与系统手册",
+    "url": "https://www.gnu.org/software/coreutils/manual/html_node/index.html",
+    "type": "协议标准与官方系统文档",
+    "note": "逐题依据协议或手册自行整理；实际行为可能依实现、版本及环境而异。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "linuxbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "工作目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pwd 命令通常显示什么？",
+      "answer": "显示当前工作目录的路径。",
+      "explanation": "逻辑路径与物理路径的显示可能受选项影响。",
+      "example": "进入项目目录后用 pwd 确认所在位置。",
+      "tags": [
+        "工作目录",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/pwd-invocation.html"
+    },
+    {
+      "id": "linuxbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "切换目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 cd 命令主要做什么？",
+      "answer": "它改变当前 shell 的工作目录。",
+      "explanation": "相对路径从当前工作目录解析。",
+      "example": "使用 cd 子目录进入项目中的目录。",
+      "tags": [
+        "切换目录",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html"
+    },
+    {
+      "id": "linuxbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "隐藏文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU ls -a 与默认 ls 在显示文件名上有什么区别？",
+      "answer": "ls -a 也显示以点开头的名称，包括 . 和 ..。",
+      "explanation": "默认 ls 通常不显示以点开头的文件名。",
+      "example": "列出目录中的隐藏配置文件。",
+      "tags": [
+        "隐藏文件",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/Which-files-are-listed.html"
+    },
+    {
+      "id": "linuxbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "递归创建目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "mkdir -p 的常见作用是什么？",
+      "answer": "它按需创建父目录；目录已存在且符合要求时不因其存在而报错。",
+      "explanation": "目标路径中其他错误仍可能导致失败。",
+      "example": "创建 logs/app/archive 多级目录。",
+      "tags": [
+        "递归创建目录",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/mkdir-invocation.html"
+    },
+    {
+      "id": "linuxbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "创建或更新时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "默认 touch 对不存在和已存在的普通文件分别通常做什么？",
+      "answer": "不存在时创建空文件；存在时更新其时间戳。",
+      "explanation": "权限或路径问题仍可能导致失败。",
+      "example": "创建一个占位文件或更新已有文件时间。",
+      "tags": [
+        "创建或更新时间",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/touch-invocation.html"
+    },
+    {
+      "id": "linuxbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "复制目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU cp 复制目录及其内容时常用什么选项？",
+      "answer": "可使用 -r 或 -R 递归复制目录。",
+      "explanation": "复制属性和符号链接的行为还取决于其他选项。",
+      "example": "将项目目录复制到备份目录。",
+      "tags": [
+        "复制目录",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/cp-invocation.html"
+    },
+    {
+      "id": "linuxbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "移动重命名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "mv 命令通常用于什么？",
+      "answer": "它移动文件或目录，也可在同一目录中重命名。",
+      "explanation": "覆盖行为取决于选项、环境和目标状态。",
+      "example": "把 report.txt 重命名为 report-old.txt。",
+      "tags": [
+        "移动重命名",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/mv-invocation.html"
+    },
+    {
+      "id": "linuxbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "查看长文本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "cat 与 less 查看文本时有什么主要区别？",
+      "answer": "cat 把内容输出到标准输出；less 以分页方式交互查看内容。",
+      "explanation": "less 适合浏览较长输出。",
+      "example": "用 less 查看长日志。",
+      "tags": [
+        "查看长文本",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html",
+      "supportingReferences": [
+        {
+          "id": "linux-less-man",
+          "title": "Linux man-pages：less(1)",
+          "url": "https://man7.org/linux/man-pages/man1/less.1.html",
+          "type": "官方系统文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "linuxbase-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "查看头尾",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "head -n 和 tail -n 通常分别查看什么？",
+      "answer": "head 查看开头若干行；tail 查看末尾若干行。",
+      "explanation": "具体行数由 -n 参数指定。",
+      "example": "查看日志最后 20 行。",
+      "tags": [
+        "查看头尾",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html",
+      "supportingReferences": [
+        {
+          "id": "gnu-head",
+          "title": "GNU coreutils：head",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/head-invocation.html",
+          "type": "官方系统文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "linuxbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "日志轮转跟随",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tail -f 与 tail -F 在文件轮转时有什么区别？",
+      "answer": "-f 默认跟随已打开的文件；-F 按名称跟随并在文件暂时不可用时重试。",
+      "explanation": "日志按名称被替换时，-F 通常更符合持续查看新文件的需求。",
+      "example": "查看会被轮转替换的应用日志。",
+      "tags": [
+        "日志轮转跟随",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html"
+    },
+    {
+      "id": "linuxbase-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "grep选项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU grep 的 -i 和 -n 分别有什么作用？",
+      "answer": "-i 忽略大小写；-n 在匹配输出前显示行号。",
+      "explanation": "两个选项可以一起使用。",
+      "example": "在日志中查找不区分大小写的 error 并显示行号。",
+      "tags": [
+        "grep选项",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/grep/manual/grep.html"
+    },
+    {
+      "id": "linuxbase-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "grep正则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU grep 的 -E 指定什么匹配方式？",
+      "answer": "它使用扩展正则表达式（ERE）解释模式。",
+      "explanation": "正则表达式不是普通的固定字符串；需要固定字符串匹配时可考虑 -F。",
+      "example": "使用扩展正则中的 | 表示备选。",
+      "tags": [
+        "grep正则",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/grep/manual/grep.html"
+    },
+    {
+      "id": "linuxbase-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "grep退出状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU grep 不使用 -q 时，退出状态 0、1、2 通常分别表示什么？",
+      "answer": "0 表示有匹配，1 表示无匹配，2 表示发生错误。",
+      "explanation": "脚本中应区分没有结果和搜索失败。",
+      "example": "文件不可读取时不能当成正常的无匹配。",
+      "tags": [
+        "grep退出状态",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/grep/manual/grep.html"
+    },
+    {
+      "id": "linuxbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "find名称匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么在 find 的 -name 模式中常把 *.log 用引号括起来？",
+      "answer": "引号让 find 接收模式本身，避免 shell 提前把通配符展开为当前目录文件名。",
+      "explanation": "find 随后按名称匹配该模式。",
+      "example": "用 find 递归查找以 .log 结尾的文件。",
+      "tags": [
+        "find名称匹配",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "linuxbase-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "find文件类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "find 的 -type f 常用于筛选什么？",
+      "answer": "筛选普通文件。",
+      "explanation": "它与按文件名扩展名筛选是不同条件。",
+      "example": "在目录树中查找普通文件。",
+      "tags": [
+        "find文件类型",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "linuxbase-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "换行计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU wc -l 实际统计什么？",
+      "answer": "统计输入中的换行符数量。",
+      "explanation": "如果末尾一行没有换行符，该行不会增加换行符计数。",
+      "example": "比较末尾有无换行符的文本文件。",
+      "tags": [
+        "换行计数",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/wc-invocation.html"
+    },
+    {
+      "id": "linuxbase-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "数值排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU sort 的默认排序与 sort -n 有什么常见区别？",
+      "answer": "默认按当前排序规则比较文本；-n 按数字值比较。",
+      "explanation": "默认文本顺序受 locale 等环境影响。",
+      "example": "对 2 和 10 排序时选择数值排序。",
+      "tags": [
+        "数值排序",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/sort-invocation.html"
+    },
+    {
+      "id": "linuxbase-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "相邻去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么统计重复文本行时常先 sort 再使用 uniq -c？",
+      "answer": "uniq 只合并相邻的相同输入行；排序可把相同行集中。",
+      "explanation": "排序依据应与希望合并的内容一致。",
+      "example": "汇总文本中每个不同名称的出现次数。",
+      "tags": [
+        "相邻去重",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/uniq-invocation.html"
+    },
+    {
+      "id": "linuxbase-019",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "管道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Shell 管道中的 | 通常把什么连接到什么？",
+      "answer": "它将前一个命令的标准输出连接到后一个命令的标准输入。",
+      "explanation": "标准错误默认不会自动进入该管道。",
+      "example": "把命令输出传给 grep 筛选。",
+      "tags": [
+        "管道",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/bash/manual/html_node/Pipelines.html"
+    },
+    {
+      "id": "linuxbase-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "覆盖追加",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Shell 重定向 > 和 >> 在写入普通文件时有什么区别？",
+      "answer": "> 通常覆盖或截断目标文件；>> 将输出追加到文件末尾。",
+      "explanation": "两者都可以在文件不存在时创建文件。",
+      "example": "保存新日志与向已有日志追加内容。",
+      "tags": [
+        "覆盖追加",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/bash/manual/html_node/Redirections.html"
+    },
+    {
+      "id": "linuxbase-021",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "错误输出重定向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Shell 中 2>file 重定向哪个输出流？",
+      "answer": "它把标准错误输出重定向到指定文件。",
+      "explanation": "标准输出的文件描述符通常是 1。",
+      "example": "把错误信息单独保存到文件。",
+      "tags": [
+        "错误输出重定向",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/bash/manual/html_node/Redirections.html"
+    },
+    {
+      "id": "linuxbase-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "重定向顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 shell 中 >file 2>&1 与 2>&1 >file 可能得到不同结果？",
+      "answer": "重定向按顺序处理；2>&1 复制执行到该位置时标准输出的目标。",
+      "explanation": "先复制再改变标准输出不会回头修改标准错误的目标。",
+      "example": "分别观察两种写法下的错误输出位置。",
+      "tags": [
+        "重定向顺序",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/bash/manual/html_node/Redirections.html"
+    },
+    {
+      "id": "linuxbase-023",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "命令条件执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Shell 的 cmd1 && cmd2 与 cmd1 || cmd2 分别在什么时候执行第二条命令？",
+      "answer": "&& 在前一命令成功时执行后者；|| 在前一命令失败时执行后者。",
+      "explanation": "一般以退出状态 0 表示成功。",
+      "example": "构建成功后再运行下一步骤。",
+      "tags": [
+        "命令条件执行",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/bash/manual/html_node/Lists.html"
+    },
+    {
+      "id": "linuxbase-024",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "退出状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Shell 中退出状态 0 与非零值通常分别表示什么？",
+      "answer": "0 通常表示成功；非零值表示失败或其他程序定义的状态。",
+      "explanation": "具体非零值含义由命令定义。",
+      "example": "grep 用不同状态区分匹配、无匹配和错误。",
+      "tags": [
+        "退出状态",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html"
+    },
+    {
+      "id": "linuxbase-025",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "目录执行权限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 目录的执行（x）权限通常控制什么？",
+      "answer": "它控制对该目录进行路径遍历和访问其中条目的能力。",
+      "explanation": "读取目录名称列表与遍历路径是不同权限。",
+      "example": "访问目录内已知文件名时需要相应目录的遍历权限。",
+      "tags": [
+        "目录执行权限",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/path_resolution.7.html"
+    },
+    {
+      "id": "linuxbase-026",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "八进制权限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "chmod 755 通常为文件所有者、所属组和其他用户分别设置什么权限？",
+      "answer": "所有者为 rwx，所属组和其他用户均为 r-x。",
+      "explanation": "权限是否允许实际操作还取决于文件类型及其他访问控制机制。",
+      "example": "把脚本设为所有者可写、其他用户可读可执行。",
+      "tags": [
+        "八进制权限",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/chmod-invocation.html"
+    },
+    {
+      "id": "linuxbase-027",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "所有者和组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "chown user:group 文件通常用于改变什么？",
+      "answer": "改变文件的所有者和所属组。",
+      "explanation": "是否允许更改取决于权限和系统规则。",
+      "example": "调整服务数据目录的属主和属组。",
+      "tags": [
+        "所有者和组",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/chown-invocation.html"
+    },
+    {
+      "id": "linuxbase-028",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "软硬链接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "硬链接和符号链接在指向对象上有什么主要区别？",
+      "answer": "硬链接是指向同一文件对象的另一个目录项；符号链接保存一个路径供后续解析。",
+      "explanation": "符号链接的目标可以不存在。",
+      "example": "移动或删除原路径后比较两类链接的行为。",
+      "tags": [
+        "软硬链接",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/ln-invocation.html"
+    },
+    {
+      "id": "linuxbase-029",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "磁盘用量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "df 和 du 查看磁盘时关注的对象有什么区别？",
+      "answer": "df 汇报文件系统的空间使用情况；du 汇总文件或目录占用的空间。",
+      "explanation": "它们统计范围不同，结果不必完全一致。",
+      "example": "用 df 看分区剩余空间，再用 du 查找较大的目录。",
+      "tags": [
+        "磁盘用量",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/df-invocation.html",
+      "supportingReferences": [
+        {
+          "id": "gnu-du",
+          "title": "GNU coreutils：du",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/du-invocation.html",
+          "type": "官方系统文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "linuxbase-030",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "进程列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ps 与 top 在查看进程时有什么常见区别？",
+      "answer": "ps 通常给出一次进程状态快照；top 通常持续刷新进程与资源信息。",
+      "explanation": "具体显示字段取决于命令和选项。",
+      "example": "先用 ps 查进程，再用 top 观察变化。",
+      "tags": [
+        "进程列表",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/ps.1.html",
+      "supportingReferences": [
+        {
+          "id": "linux-top-man",
+          "title": "Linux man-pages：top(1)",
+          "url": "https://man7.org/linux/man-pages/man1/top.1.html",
+          "type": "官方系统文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "linuxbase-031",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "终止信号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SIGTERM 和 SIGKILL 在终止进程时有什么主要区别？",
+      "answer": "SIGTERM 可以被进程捕获或处理；SIGKILL 不能被捕获、阻塞或忽略。",
+      "explanation": "进程的终止时间还受系统状态影响。",
+      "example": "先请求进程正常退出，再根据需要处理未退出的进程。",
+      "tags": [
+        "终止信号",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/signal.7.html"
+    },
+    {
+      "id": "linuxbase-032",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "监听套接字",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux ss -ltnp 常用于查看什么？",
+      "answer": "它用于查看监听中的 TCP 套接字，并请求显示数字地址和进程信息。",
+      "explanation": "能否看到完整进程信息取决于权限。",
+      "example": "检查某个 TCP 端口由哪个进程监听。",
+      "tags": [
+        "监听套接字",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ss.8.html"
+    },
+    {
+      "id": "linuxbase-033",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "服务状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在使用 systemd 的系统上，systemctl status 服务名常用于什么？",
+      "answer": "用于查看指定单元的状态及相关的近期运行信息。",
+      "explanation": "这需要系统使用 systemd，并受访问权限影响。",
+      "example": "检查某服务是否处于运行状态。",
+      "tags": [
+        "服务状态",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/latest/systemctl.html"
+    },
+    {
+      "id": "linuxbase-034",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "环境变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中 export 变量名的作用是什么？",
+      "answer": "它把变量标记为环境变量，使后续启动的子进程继承该变量。",
+      "explanation": "子进程修改自己的环境通常不会反向修改父 shell。",
+      "example": "为后续命令提供配置值。",
+      "tags": [
+        "环境变量",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html"
+    },
+    {
+      "id": "linuxbase-035",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "本地帮助手册",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "man 命令通常用于什么？",
+      "answer": "它显示命令、系统调用或其他主题的本地手册页。",
+      "explanation": "同名主题可能存在不同手册分区。",
+      "example": "阅读 man 7 signal 了解信号。",
+      "tags": [
+        "本地帮助手册",
+        "Linux 常用命令"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/man.1.html"
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "source": {
+    "id": "company-vision-interviews",
+    "title": "视觉算法公开面经：目标检测与卷积",
+    "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+    "type": "公开面经（个人自述）",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "cvint-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉面经",
+      "knowledgePoint": "RoI池化作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fast R-CNN 中 RoI Pooling 的主要作用是什么？",
+      "answer": "它把不同大小的候选区域特征转换成固定空间尺寸的特征图。",
+      "explanation": "每个候选区域随后可以使用统一形状的分类和回归网络。",
+      "example": "不同大小的区域都池化为 7×7 特征图。",
+      "tags": [
+        "RoI池化作用",
+        "视觉面经",
+        "公开面经",
+        "地平线机器人"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-horizon",
+      "referenceTitle": "地平线机器人公开面经（2019届，作者自述）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "vision-paper-ref",
+          "title": "Fast R-CNN 原论文",
+          "url": "https://arxiv.org/abs/1504.08083",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "cvint-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉面经",
+      "knowledgePoint": "RoIAlign与量化",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Mask R-CNN 的 RoIAlign 与 RoIPool 如何处理区域坐标？",
+      "answer": "RoIPool 会量化区域和分箱坐标；RoIAlign 避免这些量化，并用双线性插值采样特征。",
+      "explanation": "减少坐标错位对像素级掩码预测尤其有用。",
+      "example": "候选框边界落在特征网格之间时，按浮点位置插值。",
+      "tags": [
+        "RoIAlign与量化",
+        "视觉面经",
+        "公开面经",
+        "地平线机器人"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-horizon",
+      "referenceTitle": "地平线机器人公开面经（2019届，作者自述）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "vision-paper-ref",
+          "title": "Mask R-CNN 原论文",
+          "url": "https://arxiv.org/abs/1703.06870",
+          "type": "研究论文",
+          "evidence": "source"
+        },
+        {
+          "id": "company-bytedance",
+          "title": "字节跳动公开面经（2020届，作者自述）",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "cvint-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉面经",
+      "knowledgePoint": "特征金字塔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FPN 如何为不同尺度的目标提供特征？",
+      "answer": "它结合自顶向下路径与横向连接，在多个分辨率上构造语义较强的特征图。",
+      "explanation": "多尺度特征有助于处理大小不同的目标，但实际效果仍需评估。",
+      "example": "用不同层级特征检测截图中大小不同的元素。",
+      "tags": [
+        "特征金字塔",
+        "视觉面经",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-58",
+      "referenceTitle": "58同城公开面经（2020届，作者自述）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "vision-paper-ref",
+          "title": "Feature Pyramid Networks 原论文",
+          "url": "https://arxiv.org/abs/1612.03144",
+          "type": "研究论文",
+          "evidence": "source"
+        },
+        {
+          "id": "company-alibaba",
+          "title": "阿里公开面经（2019届，作者自述）",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "cvint-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉面经",
+      "knowledgePoint": "Focal Loss权重",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Focal Loss 中的 α 与 γ 分别调节什么？",
+      "answer": "α 控制类别权重；γ 调节对易分类样本损失的抑制程度。",
+      "explanation": "γ 增大通常使容易样本的相对贡献更低，不能保证所有类别不平衡问题都被解决。",
+      "example": "密集检测中降低大量容易背景样本对训练的主导。",
+      "tags": [
+        "Focal Loss权重",
+        "视觉面经",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-58",
+      "referenceTitle": "58同城公开面经（2020届，作者自述）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "vision-paper-ref",
+          "title": "Focal Loss 原论文",
+          "url": "https://arxiv.org/abs/1708.02002",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "cvint-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉面经",
+      "knowledgePoint": "Soft-NMS",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Soft-NMS 与常见硬阈值 NMS 怎样处理高重叠候选框？",
+      "answer": "硬 NMS 会移除超过阈值的低分框；Soft-NMS 按重叠程度降低其分数，后续仍可能被筛除。",
+      "explanation": "它可能缓解相邻目标被直接删除，但并不保证没有漏检或误报。",
+      "example": "对拥挤页面中的邻近按钮保留降分后的候选。",
+      "tags": [
+        "Soft-NMS",
+        "视觉面经",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-58",
+      "referenceTitle": "58同城公开面经（2020届，作者自述）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "vision-paper-ref",
+          "title": "Soft-NMS 原论文",
+          "url": "https://arxiv.org/abs/1704.04503",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "cvint-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉面经",
+      "knowledgePoint": "RPN候选区域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faster R-CNN 中的区域建议网络（RPN）产生什么？",
+      "answer": "它预测候选目标区域及相应的目标性分数，供后续检测阶段使用。",
+      "explanation": "目标性表示区域像目标而非背景的程度，不是最终具体类别。",
+      "example": "先提出候选区域，再对候选区域分类并细化边界框。",
+      "tags": [
+        "RPN候选区域",
+        "视觉面经",
+        "公开面经",
+        "地平线机器人"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-horizon",
+      "referenceTitle": "地平线机器人公开面经（2019届，作者自述）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "vision-paper-ref",
+          "title": "Faster R-CNN 原论文",
+          "url": "https://arxiv.org/abs/1506.01497",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "cvint-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉面经",
+      "knowledgePoint": "卷积感受野",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "卷积网络中某个特征位置的感受野是什么？",
+      "answer": "它是输入中可能影响该特征位置的区域。",
+      "explanation": "多个卷积层堆叠时，感受野可逐层扩大。",
+      "example": "输出位置综合输入图像中的局部区域信息。",
+      "tags": [
+        "卷积感受野",
+        "视觉面经",
+        "公开面经",
+        "华为海思"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-huawei",
+      "referenceTitle": "华为海思公开面经（2020届，作者自述）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "vision-paper-ref",
+          "title": "动手学深度学习：Feature Map and Receptive Field",
+          "url": "https://d2l.ai/chapter_convolutional-neural-networks/conv-layer.html#feature-map-and-receptive-field",
+          "type": "教材",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "cvint-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉面经",
+      "knowledgePoint": "Inception多尺度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Inception 模块怎样同时利用不同尺度的图像信息？",
+      "answer": "它并行应用不同大小的卷积等操作，再合并各分支输出。",
+      "explanation": "具体 Inception 变体的分支结构可能不同。",
+      "example": "在同一层同时提取较小和较大邻域的特征。",
+      "tags": [
+        "Inception多尺度",
+        "视觉面经",
+        "公开面经",
+        "华为海思"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-huawei",
+      "referenceTitle": "华为海思公开面经（2020届，作者自述）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "vision-paper-ref",
+          "title": "Going Deeper with Convolutions 原论文",
+          "url": "https://arxiv.org/abs/1409.4842",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

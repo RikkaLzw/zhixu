@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "sqlalchemy-optimistic-versioning",
+    "title": "SQLAlchemy 2.0：版本列与并发冲突",
+    "url": "https://docs.sqlalchemy.org/en/20/orm/versioning.html",
+    "type": "教材、标准与官方文档",
+    "note": "依据逐题引用的教材、标准或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sqlver-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库乐观并发控制",
+      "knowledgePoint": "版本列用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy ORM 的 version_id_col 主要用于发现什么问题？",
+      "answer": "它帮助发现并发修改同一行或复用过期对象数据导致的版本冲突。",
+      "explanation": "它检查 ORM 持有的版本与数据库行版本是否一致。",
+      "example": "两个会话都根据旧版本修改同一行。",
+      "tags": [
+        "数据库乐观并发控制",
+        "版本列用途"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/orm/versioning.html"
+    },
+    {
+      "id": "sqlver-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库乐观并发控制",
+      "knowledgePoint": "条件更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "版本号控制的 SQL UPDATE 为什么在 WHERE 条件中同时检查主键和旧版本号？",
+      "answer": "这样只有当前行版本仍等于读取时版本才会更新，避免静默覆盖较新的修改。",
+      "explanation": "更新成功时版本值也应按配置变化。",
+      "example": "版本已从 1 变为 2 时，基于版本 1 的更新匹配不到该行。",
+      "tags": [
+        "数据库乐观并发控制",
+        "条件更新"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/orm/versioning.html"
+    },
+    {
+      "id": "sqlver-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库乐观并发控制",
+      "knowledgePoint": "冲突异常",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "SQLAlchemy 2.0 的版本检查更新没有匹配到任何行时通常抛出什么异常？",
+      "answer": "ORM 会抛出 StaleDataError，表示预期更新的行版本已不匹配或行已不存在。",
+      "explanation": "具体并发行为还受数据库隔离级别影响。",
+      "example": "两个会话更新同一版本，后提交者需要处理冲突。",
+      "tags": [
+        "数据库乐观并发控制",
+        "冲突异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/orm/versioning.html"
+    },
+    {
+      "id": "sqlver-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库乐观并发控制",
+      "knowledgePoint": "批量更新边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy 2.0 的版本列检查会自动覆盖 Query.update() 的多行批量更新吗？",
+      "answer": "不会；该版本检查主要作用于 Session.flush() 中对单个内存对象的写入。",
+      "explanation": "批量更新需要自行设计所需的并发保护。",
+      "example": "批量 SQL 不会逐一比较已加载对象的旧版本。",
+      "tags": [
+        "数据库乐观并发控制",
+        "批量更新边界"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/orm/versioning.html"
+    },
+    {
+      "id": "sqlver-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库乐观并发控制",
+      "knowledgePoint": "非空版本",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "SQLAlchemy 2.0 的版本列是否支持 NULL 版本值？",
+      "answer": "不支持；文档强烈建议将版本列设为 NOT NULL。",
+      "explanation": "列约束与初始化应和版本生成策略配合。",
+      "example": "为整数版本列声明非空约束。",
+      "tags": [
+        "数据库乐观并发控制",
+        "非空版本"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/orm/versioning.html"
+    },
+    {
+      "id": "sqlver-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库乐观并发控制",
+      "knowledgePoint": "冲突处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "乐观并发控制发现版本冲突后，为什么通常需要重新读取再决定是否重试？",
+      "answer": "因为旧数据可能已过期，直接重放旧结果可能覆盖新的业务状态。",
+      "explanation": "是否合并、重试或提示用户取决于业务语义。",
+      "example": "用户修改前先加载新版本并检查差异。",
+      "tags": [
+        "数据库乐观并发控制",
+        "冲突处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/orm/versioning.html"
+    }
+  ]
+}

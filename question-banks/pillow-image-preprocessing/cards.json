@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "pillow-image-preprocessing",
+    "title": "Pillow 12.1.1 源码：图像读取与变换",
+    "url": "https://raw.githubusercontent.com/python-pillow/Pillow/12.1.1/src/PIL/Image.py",
+    "type": "官方文档、标准或固定版本论文",
+    "note": "依据逐题引用的资料自行整理，示例自编；具体行为以指定版本和前提为准。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "pilimage-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pillow 图像预处理",
+      "knowledgePoint": "延迟读取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pillow 12.1.1 的 Image.open 会立即读取全部图像像素吗？",
+      "answer": "通常不会；它先识别图像，实际像素在需要时或调用 load() 时读取。",
+      "explanation": "文件生命周期需要与延迟读取相匹配。",
+      "example": "在 with 块内完成图像加载和处理。",
+      "tags": [
+        "Pillow 图像预处理",
+        "延迟读取"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/python-pillow/Pillow/12.1.1/src/PIL/Image.py"
+    },
+    {
+      "id": "pilimage-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pillow 图像预处理",
+      "knowledgePoint": "尺寸顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pillow 图像的 size 以及 resize 的 size 参数按什么顺序表示尺寸？",
+      "answer": "按 (宽度, 高度) 的顺序，以像素为单位。",
+      "explanation": "这与某些数组常用的高度、宽度顺序不同。",
+      "example": "Image.new(\"RGB\", (640, 480)) 创建宽 640、高 480 的图像。",
+      "tags": [
+        "Pillow 图像预处理",
+        "尺寸顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/python-pillow/Pillow/12.1.1/src/PIL/Image.py"
+    },
+    {
+      "id": "pilimage-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pillow 图像预处理",
+      "knowledgePoint": "裁剪边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pillow 12.1.1 的 crop((left, upper, right, lower)) 返回区域的宽高如何计算？",
+      "answer": "宽度为 right-left，高度为 lower-upper。",
+      "explanation": "右边界和下边界不作为区域内的像素位置。",
+      "example": "crop((1,2,6,7)) 返回 5×5 区域。",
+      "tags": [
+        "Pillow 图像预处理",
+        "裁剪边界"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/python-pillow/Pillow/12.1.1/src/PIL/Image.py"
+    },
+    {
+      "id": "pilimage-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pillow 图像预处理",
+      "knowledgePoint": "缩放副本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pillow 的 resize 和 thumbnail 对原图有什么不同？",
+      "answer": "resize 返回缩放后的副本；thumbnail 原地修改图像并保持宽高比。",
+      "explanation": "thumbnail 结果不超过给定边界；需要保留原图时可先 copy。",
+      "example": "分别保留原图和生成受限尺寸的缩略图。",
+      "tags": [
+        "Pillow 图像预处理",
+        "缩放副本"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/python-pillow/Pillow/12.1.1/src/PIL/Image.py"
+    },
+    {
+      "id": "pilimage-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pillow 图像预处理",
+      "knowledgePoint": "图像模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pillow 的 RGB 与 RGBA 模式在通道上有什么区别？",
+      "answer": "RGB 有红、绿、蓝三个通道；RGBA 额外包含透明度通道 A。",
+      "explanation": "转换为 RGB 时需要考虑透明度信息的处理。",
+      "example": "处理带透明背景的图片时检查图像模式。",
+      "tags": [
+        "Pillow 图像预处理",
+        "图像模式"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/python-pillow/Pillow/12.1.1/src/PIL/Image.py"
+    },
+    {
+      "id": "pilimage-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pillow 图像预处理",
+      "knowledgePoint": "模式转换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pillow 的 image.convert(\"RGB\") 会原地改变原图吗？",
+      "answer": "不会；它返回转换后的图像副本。",
+      "explanation": "如需后续使用转换结果，应保存返回值。",
+      "example": "统一不同输入图像的颜色模式。",
+      "tags": [
+        "Pillow 图像预处理",
+        "模式转换"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/python-pillow/Pillow/12.1.1/src/PIL/Image.py"
+    },
+    {
+      "id": "pilimage-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pillow 图像预处理",
+      "knowledgePoint": "旋转扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pillow 12.1.1 的 rotate 设置 expand=True 有什么作用？",
+      "answer": "扩大输出尺寸，以容纳按默认中心旋转后的整张图像。",
+      "explanation": "默认不扩展时输出尺寸与原图相同，旋转后内容可能被裁切。",
+      "example": "旋转图片时保留角落内容。",
+      "tags": [
+        "Pillow 图像预处理",
+        "旋转扩展"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/python-pillow/Pillow/12.1.1/src/PIL/Image.py"
+    }
+  ]
+}

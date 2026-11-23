@@ -1,0 +1,663 @@
+{
+  "source": {
+    "id": "java-language-collections-foundations",
+    "title": "Java SE 21 JLS 与 Java SE 21 API：集合、泛型、异常和语言特性",
+    "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html",
+    "type": "标准与官方 API 文档",
+    "note": "依据逐题引用的 Java SE 21 JLS 和标准库 API 整理；实现相关行为限定于 Java 21 文档说明。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "jcore-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "Collection 与 Map",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Java 的 Collection 和 Map 在数据模型上有什么主要区别？",
+      "answer": "Collection 表示一组元素；Map 表示键到值的映射，不是 Collection 的子接口。",
+      "explanation": "Map 的键用于定位对应值，而不是把键值对当作普通集合元素。",
+      "example": "名单可用 List 表示，用户编号到用户对象的对应关系可用 Map 表示。",
+      "tags": [
+        "Java",
+        "Collection",
+        "Map"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html"
+    },
+    {
+      "id": "jcore-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "List 顺序与重复元素",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java List 对元素顺序和重复项通常有什么保证？",
+      "answer": "List 是有序集合，调用者可按位置访问元素，并且通常允许重复元素。",
+      "explanation": "具体实现仍可能对 null 等元素施加额外限制。",
+      "example": "ArrayList 可以依次保存相同值两次，并按索引读取。",
+      "tags": [
+        "Java",
+        "List",
+        "集合顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html"
+    },
+    {
+      "id": "jcore-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "Set 元素唯一性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java Set 如何定义集合中不能出现重复元素？",
+      "answer": "Set 不允许存在两个按 equals 比较相等的元素。",
+      "explanation": "使用哈希集合时，还需遵守元素的 equals 与 hashCode 合约。",
+      "example": "向 HashSet 加入一个已存在的相等值时，不会增加第二个等价元素。",
+      "tags": [
+        "Java",
+        "Set",
+        "唯一性"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html"
+    },
+    {
+      "id": "jcore-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "Map 键唯一性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java Map 中相等的两个键能分别映射到不同值吗？",
+      "answer": "不能；Map 中每个键至多对应一个值，按 equals 相等的键被视为同一个键。",
+      "explanation": "对已有键放入新值通常会替换该键的旧映射。",
+      "example": "对同一用户编号再次 put 会更新其对应的用户对象。",
+      "tags": [
+        "Java",
+        "Map",
+        "键唯一性"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html"
+    },
+    {
+      "id": "jcore-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "HashMap 迭代顺序",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Java 21 HashMap 是否保证按插入顺序或键排序迭代？",
+      "answer": "不保证；应用不应依赖 HashMap 的迭代顺序表达业务顺序。",
+      "explanation": "HashMap 的迭代顺序可能随实现细节和内部结构变化而改变。",
+      "example": "不要依赖 HashMap 的遍历结果生成稳定的排序报表。",
+      "tags": [
+        "Java",
+        "HashMap",
+        "迭代顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html"
+    },
+    {
+      "id": "jcore-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "HashMap 空键与空值",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Java 21 HashMap 对 null 键和值有什么支持？",
+      "answer": "HashMap 支持一个 null 键，并允许多个 null 值。",
+      "explanation": "其他 Map 实现可以采用不同规则，不能把此行为泛化到所有 Map。",
+      "example": "HashMap 可同时保存 null 键映射和多个值为 null 的映射。",
+      "tags": [
+        "Java",
+        "HashMap",
+        "null"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html"
+    },
+    {
+      "id": "jcore-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "fail-fast 迭代器",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "HashMap 迭代器的 fail-fast 行为能否作为并发正确性的保障？",
+      "answer": "不能；文档将 ConcurrentModificationException 的检测描述为尽力而为，不应依赖它保证程序正确性。",
+      "explanation": "fail-fast 主要帮助尽早发现错误用法，不会自动使集合线程安全。",
+      "example": "并发修改 HashMap 时不能指望迭代器一定及时抛出异常。",
+      "tags": [
+        "Java",
+        "HashMap",
+        "fail-fast"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/HashMap.html"
+    },
+    {
+      "id": "jcore-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "ConcurrentHashMap 空键限制",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Java 21 ConcurrentHashMap 是否接受 null 键或 null 值？",
+      "answer": "不接受 null 键或 null 值。",
+      "explanation": "并发读取中 null 可作为未发现映射的明确标记，避免与显式空值产生歧义。",
+      "example": "put(key, null) 会被拒绝，而不是记录一个空值映射。",
+      "tags": [
+        "Java",
+        "ConcurrentHashMap",
+        "null"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html",
+      "supportingReferences": [
+        {
+          "id": "java-se21-concurrentmap-api",
+          "title": "Java SE 21 ConcurrentMap API",
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ConcurrentMap.html",
+          "type": "Java SE 21 API",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "jcore-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "ConcurrentHashMap 迭代器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java 21 ConcurrentHashMap 的迭代器如何观察并发修改？",
+      "answer": "其迭代器是弱一致的，可与并发更新同时工作，不抛 ConcurrentModificationException。",
+      "explanation": "弱一致不等同于某一时刻的全量快照，遍历可能反映部分并发更新。",
+      "example": "遍历期间其他线程更新映射，迭代仍可继续进行。",
+      "tags": [
+        "Java",
+        "ConcurrentHashMap",
+        "弱一致迭代器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html"
+    },
+    {
+      "id": "jcore-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "TreeMap 排序规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TreeMap 按什么规则确定键的排序？",
+      "answer": "它按键的自然顺序或构造时提供的 Comparator 排序。",
+      "explanation": "若排序规则与 equals 不一致，TreeMap 的行为可能不符合一般 Map 按 equals 定义键唯一性的预期。",
+      "example": "可传入忽略大小写的 Comparator 作为字符串键的排序规则。",
+      "tags": [
+        "Java",
+        "TreeMap",
+        "Comparator"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/TreeMap.html"
+    },
+    {
+      "id": "jcore-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "List.of 不可修改",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Java 9 及之后的 List.of 创建的列表可以添加元素或包含 null 吗？",
+      "answer": "不可以；List.of 创建不可修改列表，并拒绝 null 元素。",
+      "explanation": "对其执行添加、删除或替换操作会抛 UnsupportedOperationException。",
+      "example": "List.of 创建的字符串列表可用作固定值列表，但不能再 add 新元素。",
+      "tags": [
+        "Java",
+        "List.of",
+        "不可修改集合"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html"
+    },
+    {
+      "id": "jcore-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "Arrays.asList 固定大小",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Arrays.asList 返回的列表与普通可变长 ArrayList 有什么重要区别？",
+      "answer": "它是由指定数组支持的固定大小列表；可替换元素，但不能增删元素。",
+      "explanation": "列表与数组共享元素存储，修改其中一方的元素通常会反映到另一方。",
+      "example": "Arrays.asList(array).set(0, value) 会更新对应数组位置。",
+      "tags": [
+        "Java",
+        "Arrays.asList",
+        "固定大小"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html"
+    },
+    {
+      "id": "jcore-013",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Java 集合框架",
+      "knowledgePoint": "同步集合遍历",
+      "questionType": "实践规则",
+      "origin": "自行整理",
+      "question": "遍历 Collections.synchronizedList 返回的列表时，还需要什么同步措施？",
+      "answer": "遍历整个过程仍应在该同步列表对象的监视器上同步。",
+      "explanation": "逐个方法调用具备同步包装，不代表由多次调用组成的遍历自动成为原子操作。",
+      "example": "在 synchronized(list) 块内完成迭代。",
+      "tags": [
+        "Java",
+        "同步集合",
+        "迭代"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collections.html"
+    },
+    {
+      "id": "jcore-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 泛型",
+      "knowledgePoint": "泛型不变性",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Java 中 List<Integer> 能否直接赋值给 List<Number>？",
+      "answer": "不能；即使 Integer 是 Number 的子类型，List<Integer> 也不是 List<Number> 的子类型。",
+      "explanation": "泛型类型参数默认是不变的，以防通过父类型列表写入不兼容元素。",
+      "example": "若允许这种赋值，调用方就可能把 Double 放进实际只存 Integer 的列表。",
+      "tags": [
+        "Java",
+        "泛型",
+        "不变性"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-4.html#jls-4.10.2"
+    },
+    {
+      "id": "jcore-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 泛型",
+      "knowledgePoint": "extends 通配符",
+      "questionType": "适用场景",
+      "origin": "自行整理",
+      "question": "List<? extends Number> 作为参数时，通常适合哪类访问？",
+      "answer": "适合从列表中读取 Number 值；通常不能向其中添加具体 Number 子类型。",
+      "explanation": "列表实际类型可能是 List<Integer> 或 List<Double>，编译器无法保证写入值与其元素类型匹配。",
+      "example": "统计函数可以读取每个 Number 并计算总和。",
+      "tags": [
+        "Java",
+        "泛型通配符",
+        "extends"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-4.html#jls-4.5.1"
+    },
+    {
+      "id": "jcore-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 泛型",
+      "knowledgePoint": "super 通配符",
+      "questionType": "适用场景",
+      "origin": "自行整理",
+      "question": "List<? super Integer> 作为参数时，通常适合哪类访问？",
+      "answer": "可以安全地向列表写入 Integer；读取元素时只能保证得到 Object。",
+      "explanation": "实际列表可能是 List<Integer>、List<Number> 或 List<Object>。",
+      "example": "把一批 Integer 追加到接收方列表中。",
+      "tags": [
+        "Java",
+        "泛型通配符",
+        "super"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-4.html#jls-4.5.1"
+    },
+    {
+      "id": "jcore-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 泛型",
+      "knowledgePoint": "类型擦除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java 泛型的类型擦除主要意味着什么？",
+      "answer": "编译器把类型变量擦除为其上界或 Object，并在必要处插入类型转换；普通泛型参数通常不形成独立运行时类型。",
+      "explanation": "编译期仍会进行泛型类型检查，擦除不代表源码阶段没有类型安全检查。",
+      "example": "List<String> 和 List<Integer> 通常共享同一个运行时 List 类。",
+      "tags": [
+        "Java",
+        "泛型",
+        "类型擦除"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-4.html#jls-4.6"
+    },
+    {
+      "id": "jcore-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 泛型",
+      "knowledgePoint": "原始类型",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Java 原始类型 List 与参数化类型 List<String> 有什么主要差别？",
+      "answer": "原始类型省略了泛型实参，失去相应的编译期类型检查，可能产生未经检查的操作和运行时类型错误。",
+      "explanation": "原始类型主要为兼容旧代码保留；新代码通常应使用参数化类型。",
+      "example": "原始 List 可混入不同类型对象，之后按 String 读取时可能发生 ClassCastException。",
+      "tags": [
+        "Java",
+        "泛型",
+        "原始类型"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-4.html#jls-4.8"
+    },
+    {
+      "id": "jcore-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 泛型",
+      "knowledgePoint": "泛型数组创建限制",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "为什么 Java 通常禁止创建 List<String>[] 这类参数化类型数组？",
+      "answer": "数组运行时保留组件类型并执行存储检查，而泛型实参通常经类型擦除；二者的类型检查模型无法安全组合。",
+      "explanation": "可再具体化的类型如 List<?>[] 是另一种情况，不能据此推断任意参数化数组都允许。",
+      "example": "编译器拒绝 new List<String>[10]。",
+      "tags": [
+        "Java",
+        "泛型",
+        "数组"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-4.html#jls-4.7"
+    },
+    {
+      "id": "jcore-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java 异常处理",
+      "knowledgePoint": "受检与非受检异常",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Java 受检异常与非受检异常在编译期处理要求上有什么区别？",
+      "answer": "受检异常需要在调用处捕获或由方法声明继续抛出；RuntimeException、Error 及其子类属于非受检异常。",
+      "explanation": "异常层级决定编译期检查要求，不代表每个受检异常都必须在本方法内立即恢复。",
+      "example": "IOException 通常需要捕获或声明，NullPointerException 不要求这样处理。",
+      "tags": [
+        "Java",
+        "异常",
+        "受检异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-11.html#jls-11.1.1"
+    },
+    {
+      "id": "jcore-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 异常处理",
+      "knowledgePoint": "try-with-resources 关闭顺序",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Java try-with-resources 声明多个资源时按什么顺序关闭？",
+      "answer": "资源按声明顺序的逆序关闭。",
+      "explanation": "后创建的资源通常依赖先创建的资源，因此先关闭后创建者。",
+      "example": "先声明文件，再声明包装它的缓冲流，关闭时先关缓冲流再关文件。",
+      "tags": [
+        "Java",
+        "try-with-resources",
+        "资源关闭"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.20.3"
+    },
+    {
+      "id": "jcore-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 异常处理",
+      "knowledgePoint": "抑制异常",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "try-with-resources 的主体和 close 都抛异常时，关闭异常如何处理？",
+      "answer": "主体抛出的异常作为主要异常传播，close 抛出的异常作为被抑制异常附加到主要异常。",
+      "explanation": "可通过 Throwable.getSuppressed() 查看被抑制的异常。",
+      "example": "读取文件时先发生解析错误，随后流关闭失败；解析错误仍是主要异常。",
+      "tags": [
+        "Java",
+        "异常",
+        "suppressed"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.20.3"
+    },
+    {
+      "id": "jcore-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 异常处理",
+      "knowledgePoint": "catch 子类顺序",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "多个 catch 子句同时处理异常父类和子类时，通常应按什么顺序排列？",
+      "answer": "先写更具体的子类，再写较一般的父类；父类在前会使后面的子类分支不可达并导致编译错误。",
+      "explanation": "异常对象会匹配第一个可处理它的 catch 子句。",
+      "example": "先 catch FileNotFoundException，再 catch IOException。",
+      "tags": [
+        "Java",
+        "异常",
+        "catch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.20.1"
+    },
+    {
+      "id": "jcore-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 异常处理",
+      "knowledgePoint": "finally 异常完成",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Java finally 块自身以 return 或 throw 异常结束时，会怎样影响 try 中的结果？",
+      "answer": "finally 的异常完成可能取代 try 或 catch 原本要返回的值或抛出的异常。",
+      "explanation": "因此通常不应在 finally 中写 return 或无意覆盖原异常的 throw。",
+      "example": "try 抛出的 IOException 可能被 finally 中另一个异常遮蔽。",
+      "tags": [
+        "Java",
+        "finally",
+        "异常控制流"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.20.2"
+    },
+    {
+      "id": "jcore-025",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java Stream",
+      "knowledgePoint": "中间操作惰性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java Stream 的 filter、map 等中间操作何时执行？",
+      "answer": "中间操作通常是惰性的，只有遇到终止操作时才开始处理数据。",
+      "explanation": "这样运行时可以融合流水线并避免不必要的中间集合。",
+      "example": "创建 stream.filter(...).map(...) 不会单独遍历元素，调用 collect 后才执行。",
+      "tags": [
+        "Java",
+        "Stream",
+        "惰性求值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Stream.html"
+    },
+    {
+      "id": "jcore-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java Stream",
+      "knowledgePoint": "Stream 单次消费",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Java Stream 完成一次终止操作后，可以再次用同一个 Stream 运行另一条流水线吗？",
+      "answer": "不应重复使用；Stream 被设计为单次消费，重复操作可能抛出 IllegalStateException。",
+      "explanation": "需要重新处理数据时，应从原始数据源重新创建 Stream。",
+      "example": "分别计算总数和总和时，创建两个新的 Stream。",
+      "tags": [
+        "Java",
+        "Stream",
+        "终止操作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Stream.html"
+    },
+    {
+      "id": "jcore-027",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java Stream",
+      "knowledgePoint": "map 与 flatMap",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Java Stream 的 map 和 flatMap 在结果形状上有什么区别？",
+      "answer": "map 为每个输入元素产生一个映射结果；flatMap 将每个输入映射为流，再把这些流展平成一个结果流。",
+      "explanation": "flatMap 常用于把嵌套集合转换成单层元素序列。",
+      "example": "把多个班级的学生列表用 flatMap 展开为一个学生流。",
+      "tags": [
+        "Java",
+        "Stream",
+        "map",
+        "flatMap"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/Stream.html"
+    },
+    {
+      "id": "jcore-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java Stream",
+      "knowledgePoint": "Stream 行为参数约束",
+      "questionType": "实践规则",
+      "origin": "自行整理",
+      "question": "为什么 Java Stream 的行为参数应避免干扰数据源并保持无状态？",
+      "answer": "干扰数据源或依赖可变共享状态会使流水线结果依赖执行顺序和并行调度，尤其可能造成竞态或不确定行为。",
+      "explanation": "Stream API 将非干扰性和无状态性作为行为参数的重要约束。",
+      "example": "并行流中不要让多个 map 操作共同递增同一个普通数组计数器。",
+      "tags": [
+        "Java",
+        "Stream",
+        "并行流",
+        "副作用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/stream/package-summary.html"
+    },
+    {
+      "id": "jcore-029",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Java 函数式语言特性",
+      "knowledgePoint": "函数式接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java 函数式接口的核心判定条件是什么？",
+      "answer": "它具有一个抽象方法；仍可包含默认方法、静态方法和 Object 公共方法的重声明。",
+      "explanation": "@FunctionalInterface 可让编译器检查该接口是否满足函数式接口条件。",
+      "example": "Predicate<T> 以一个抽象的 test 方法表示判断函数。",
+      "tags": [
+        "Java",
+        "函数式接口",
+        "Lambda"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-9.html#jls-9.8"
+    },
+    {
+      "id": "jcore-030",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 函数式语言特性",
+      "knowledgePoint": "Lambda 捕获变量",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Java Lambda 表达式捕获的局部变量需要满足什么条件？",
+      "answer": "被捕获的局部变量必须是 final 或 effectively final。",
+      "explanation": "这限制的是局部变量本身的重新赋值，不表示其引用对象一定不可变。",
+      "example": "Lambda 可读取已赋值后不再改变的局部变量。",
+      "tags": [
+        "Java",
+        "Lambda",
+        "effectively final"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.27.2"
+    },
+    {
+      "id": "jcore-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 类型系统",
+      "knowledgePoint": "记录类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java record 类会围绕哪些组件自动提供常见成员？",
+      "answer": "编译器根据记录组件生成对应访问器、规范构造器以及 equals、hashCode 和 toString 等成员，除非声明显式实现。",
+      "explanation": "记录类隐式为 final，但组件引用指向的对象仍可能可变，因此不保证深度不可变。",
+      "example": "record Point(int x, int y) 会提供 x()、y() 和值式相等实现。",
+      "tags": [
+        "Java",
+        "record",
+        "记录类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.10"
+    },
+    {
+      "id": "jcore-032",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 类型系统",
+      "knowledgePoint": "密封类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java sealed 类或接口的主要作用是什么？",
+      "answer": "它限制哪些类型可以直接继承或实现该类型，使允许的子类型集合显式受控。",
+      "explanation": "允许的直接子类型需按语言规则声明为 final、sealed 或 non-sealed。",
+      "example": "支付结果接口可只允许成功、失败和待处理三种直接实现。",
+      "tags": [
+        "Java",
+        "sealed",
+        "类型层次"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html#jls-8.1.1.2"
+    }
+  ]
+}

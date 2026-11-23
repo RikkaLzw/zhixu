@@ -1,0 +1,292 @@
+{
+  "source": {
+    "id": "stix-taxii",
+    "title": "OASIS STIX 2.1 与 TAXII 2.1 标准",
+    "url": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html",
+    "type": "官方文档与标准",
+    "note": "根据所列资料自行编写并用简体中文整理，示例为自编。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "cti-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "情报交换",
+      "knowledgePoint": "STIX与TAXII",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "STIX 与 TAXII 在威胁情报交换中的作用有什么区别？",
+      "answer": "STIX 定义情报的结构化表示，TAXII 定义通过 HTTPS 交换情报的应用层协议和接口。",
+      "explanation": "TAXII 为 STIX 设计，但标准不限制它只能交换 STIX。",
+      "example": "用 STIX 表示恶意软件对象，通过 TAXII 集合获取。",
+      "tags": [
+        "STIX与TAXII",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html"
+    },
+    {
+      "id": "cti-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "STIX对象",
+      "knowledgePoint": "对象类别",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "STIX 的 SDO、SCO 和 SRO 分别表示哪类对象？",
+      "answer": "SDO 表示情报领域概念，SCO 表示可观察的网络对象，SRO 表示对象之间的关系或目击。",
+      "explanation": "同一情报记录可以组合多种对象类型。",
+      "example": "恶意软件是 SDO，文件是 SCO，Relationship 是 SRO。",
+      "tags": [
+        "对象类别",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#overview"
+    },
+    {
+      "id": "cti-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "STIX对象",
+      "knowledgePoint": "Indicator",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 Indicator 对象主要表达什么？",
+      "answer": "它包含可用于检测可疑或恶意网络活动的模式及相关上下文。",
+      "explanation": "Indicator 是情报判断，匹配结果仍应结合证据核实。",
+      "example": "用模式描述需要关注的可疑域名。",
+      "tags": [
+        "Indicator",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#indicator"
+    },
+    {
+      "id": "cti-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "STIX对象",
+      "knowledgePoint": "Observed Data",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 Observed Data 对象主要表达什么？",
+      "answer": "它描述观察到的文件、网络连接等网络安全相关原始信息。",
+      "explanation": "一次观测本身不等于该对象已经被证明恶意。",
+      "example": "记录某时段观察到的一个 IP 地址。",
+      "tags": [
+        "Observed Data",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#observed-data"
+    },
+    {
+      "id": "cti-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "STIX对象",
+      "knowledgePoint": "Sighting目击",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 Sighting 对象主要表达什么？",
+      "answer": "它表达某个情报对象被观察到的判断或记录。",
+      "explanation": "Sighting 可以关联支持该判断的 Observed Data；观测数据本身不自动证明该判断。",
+      "example": "看到文件哈希是观测，认为它对应某恶意软件是一次目击判断。",
+      "tags": [
+        "Sighting目击",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#sighting"
+    },
+    {
+      "id": "cti-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "指标规则",
+      "knowledgePoint": "模式语言",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 Indicator 的 pattern_type 表示什么？",
+      "answer": "它标识 pattern 字段使用的模式语言，类型必须与模式内容一致。",
+      "explanation": "Indicator 可使用 STIX Patterning 或其他适用语言。",
+      "example": "YARA 规则应使用与其内容匹配的 pattern_type。",
+      "tags": [
+        "模式语言",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#indicator"
+    },
+    {
+      "id": "cti-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "指标规则",
+      "knowledgePoint": "指标有效期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 Indicator 的 valid_from 和 valid_until 描述什么？",
+      "answer": "它们描述指标被认为有效的起始时间和可选的结束时间。",
+      "explanation": "未填写 valid_until 不表示标准给出了确定的结束时间。",
+      "example": "短期基础设施指标可带一个明确的有效时间窗。",
+      "tags": [
+        "指标有效期",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#indicator"
+    },
+    {
+      "id": "cti-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "关系建模",
+      "knowledgePoint": "关系方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX Relationship 的 source_ref 和 target_ref 分别指向什么？",
+      "answer": "它们分别引用关系的来源对象和目标对象。",
+      "explanation": "关系有方向，交换两端可能改变含义。",
+      "example": "Indicator 指向 Malware 的 indicates 关系不等同于反向描述。",
+      "tags": [
+        "关系方向",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#relationship"
+    },
+    {
+      "id": "cti-009",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "关系建模",
+      "knowledgePoint": "关系类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX Relationship 的 relationship_type 有什么作用？",
+      "answer": "它说明两个对象之间的关系类型。",
+      "explanation": "标准定义了常用类型，也允许符合规范的自定义类型。",
+      "example": "用 indicates 表示指标可检测相关恶意软件的证据。",
+      "tags": [
+        "关系类型",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#relationship"
+    },
+    {
+      "id": "cti-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "关系建模",
+      "knowledgePoint": "内嵌引用与关系对象",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "STIX 的内嵌引用与独立 Relationship 对象有什么区别？",
+      "answer": "内嵌引用是对象属性中的直接 ID 引用；独立关系对象可以携带关系类型及其他关系属性。",
+      "explanation": "需要描述关系自身的时间或置信度时，独立关系对象更有表达空间。",
+      "example": "将创建者作为引用，与描述两对象关联的关系对象分开。",
+      "tags": [
+        "内嵌引用与关系对象",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#overview"
+    },
+    {
+      "id": "cti-011",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "来源与版本",
+      "knowledgePoint": "STIX外部引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 中 external_references 的作用是什么？",
+      "answer": "它为对象提供外部资料的引用信息，帮助追溯来源或外部标识。",
+      "explanation": "引用存在不代表外部资料一定可访问或内容一定可信。",
+      "example": "为漏洞情报附上公开公告的链接和标识。",
+      "tags": [
+        "STIX外部引用",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#common-properties"
+    },
+    {
+      "id": "cti-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "来源与版本",
+      "knowledgePoint": "STIX对象版本",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "在 STIX 2.1 的可版本化对象中，id 与 modified 分别如何用于识别版本？",
+      "answer": "同一对象的多个版本使用相同 id，并通过 modified 时间区分版本。",
+      "explanation": "SCO 不采用这一对象版本机制；接收更新时不能只按 id 去重。",
+      "example": "保留同一指标的旧版与更新版以供追溯。",
+      "tags": [
+        "STIX对象版本",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html#versioning"
+    },
+    {
+      "id": "cti-013",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "情报交换",
+      "knowledgePoint": "TAXII集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TAXII 2.1 的 Collection 是什么？",
+      "answer": "它是 TAXII 服务器提供的情报对象逻辑集合接口，客户端可按权限请求或提交对象。",
+      "explanation": "集合交互采用请求—响应方式。",
+      "example": "情报平台定期从授权集合获取新增对象。",
+      "tags": [
+        "TAXII集合",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html"
+    },
+    {
+      "id": "cti-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报交换",
+      "knowledgePoint": "TAXII通道版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TAXII 2.1 是否规定了可直接实现的 Channel 服务？",
+      "answer": "没有；2.1 标准保留了相关概念和关键字，但没有规范 Channel 服务。",
+      "explanation": "实现时应依据实际版本和具体服务能力。",
+      "example": "不能只凭 TAXII 2.1 的名称假设已支持推送通道。",
+      "tags": [
+        "TAXII通道版本",
+        "威胁情报",
+        "STIX"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/taxii/v2.1/taxii-v2.1.html"
+    }
+  ]
+}

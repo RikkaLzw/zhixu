@@ -1,0 +1,306 @@
+{
+  "source": {
+    "id": "java26-g1-gc-practice",
+    "title": "Oracle Java 26：G1 垃圾收集器调优",
+    "url": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html",
+    "type": "官方调优手册",
+    "note": "依据 Oracle Java 26 Garbage Collection Tuning Guide 自行整理；涉及 G1 和 HotSpot 参数的题目限定于该版本，示例为自编；在线资料于 2026-11-23 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "j26g1-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "G1初始调优",
+      "questionType": "实践原则",
+      "origin": "自行整理",
+      "question": "Oracle Java 26 文档建议从哪些简单设置开始调优 G1？",
+      "answer": "先使用 G1 默认设置；有明确需求时再调整暂停时间目标，并设置所需的最大堆大小。",
+      "explanation": "文档建议先观察默认策略，避免直接沿用其他收集器的旧参数。",
+      "example": "先用默认收集器运行并检查 GC 日志，再根据测量结果决定是否调整 -Xmx 或暂停目标。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "垃圾回收",
+        "调优"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "G1默认性能目标",
+      "questionType": "概念与权衡",
+      "origin": "自行整理",
+      "question": "G1 的默认策略主要在吞吐量和延迟之间追求什么平衡？",
+      "answer": "它不以最高吞吐量或最低延迟为单一目标，而是尝试以较高吞吐量提供较短且相对均匀的暂停。",
+      "explanation": "增量回收和暂停控制本身也会消耗应用与收集器资源。",
+      "example": "不同服务若更重视吞吐量或尾延迟，可能需要基于实测调整目标。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "吞吐量",
+        "暂停时间"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "G1暂停时间目标",
+      "questionType": "参数语义",
+      "origin": "自行整理",
+      "question": "Java 26 G1 的 -XX:MaxGCPauseMillis 应理解为硬实时暂停上限吗？",
+      "answer": "不应；它是 G1 调整行为时使用的暂停时间目标，实际暂停仍取决于工作负载和待处理的存活对象等因素。",
+      "explanation": "文档讨论的是达到目标的可能性与调优权衡，并未把它定义为硬实时保证。",
+      "example": "突增的存活对象可能让一次年轻代回收超过配置目标。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "MaxGCPauseMillis",
+        "暂停目标"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "混合回收集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "G1 的混合回收（mixed GC）会把哪些代的区域纳入本次回收？",
+      "answer": "它的 collection set 包含年轻代区域和选定的老年代区域，用于回收部分老年代空间。",
+      "explanation": "它与只收集年轻代区域的 young-only collection 不同。",
+      "example": "一次 mixed collection 可以在处理年轻代区域的同时回收若干老年代候选区域。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "mixed collection",
+        "老年代"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "年轻代回收暂停成本",
+      "questionType": "性能解释",
+      "origin": "自行整理",
+      "question": "为什么年轻代中需要复制的存活对象数量会影响 G1 回收暂停？",
+      "answer": "暂停期需要疏散并复制 collection set 中的存活对象；需要处理的对象越多，相关阶段通常越耗时。",
+      "explanation": "暂停时间不只由年轻代容量决定，也与其中的存活对象及复制工作有关。",
+      "example": "应用突然产生更多跨越回收周期仍存活的对象，可能导致暂停时间上升。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "年轻代",
+        "对象疏散"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "固定年轻代大小的影响",
+      "questionType": "参数权衡",
+      "origin": "自行整理",
+      "question": "依赖 G1 暂停目标自动调节时，为什么通常不应随意用 -Xmn 固定年轻代大小？",
+      "answer": "固定年轻代大小会限制 G1 调节该区域以满足暂停目标的能力，甚至实际上禁用相关控制。",
+      "explanation": "Java 26 文档也提醒，使用 -XX:NewRatio 等选项限制年轻代可能产生类似影响。",
+      "example": "设置固定 -Xmn 后，G1 不能再按暂停目标扩大或缩小年轻代。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "Xmn",
+        "年轻代"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "并发标记与空间回收",
+      "questionType": "工作阶段",
+      "origin": "自行整理",
+      "question": "G1 为什么需要及时完成并发标记阶段？",
+      "answer": "并发标记帮助判断老年代对象的存活情况，为后续空间回收阶段提供依据；若完成过晚，老年代分配压力可能先造成回收失败。",
+      "explanation": "并发标记与暂停期的对象疏散是不同阶段。",
+      "example": "老年代分配持续很快时，标记周期可能来不及在空间不足前完成。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "并发标记",
+        "空间回收"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "IHOP自适应阈值",
+      "questionType": "参数语义",
+      "origin": "自行整理",
+      "question": "Java 26 G1 的自适应 IHOP 阈值依据什么信息预测并发标记的启动时机？",
+      "answer": "它根据先前应用行为估计堆占用启动阈值；若分配行为发生变化，历史预测可能不再准确。",
+      "explanation": "IHOP 是 Initiating Heap Occupancy Percent，即启动堆占用百分比。",
+      "example": "应用突然提高老年代分配速率时，原有阈值可能使并发标记启动过晚。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "IHOP",
+        "堆占用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "G1中Full GC的性能",
+      "questionType": "日志诊断",
+      "origin": "自行整理",
+      "question": "为什么频繁出现 G1 Full GC 通常需要调查，而不应视为普通的短暂停顿？",
+      "answer": "Java 26 文档指出 Full GC 往往耗时较长，常与老年代空间压力、疏散失败或回收跟不上分配有关。",
+      "explanation": "应结合具体 GC 日志和分配行为定位原因，不能只凭一次 Full GC 推断单一根因。",
+      "example": "持续的老年代分配可能使并发标记无法及时开始空间回收。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "Full GC",
+        "排障"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "Humongous对象碎片",
+      "questionType": "故障机理",
+      "origin": "自行整理",
+      "question": "G1 中大型 humongous 对象为什么可能在堆还有空闲空间时引发 Full GC？",
+      "answer": "分配它们可能需要一组连续区域；可用空间若被碎片化，就可能找不到足够连续的区域。",
+      "explanation": "总空闲量足够并不意味着存在满足连续分配要求的区域。",
+      "example": "日志显示堆仍有空闲区域，但连续区域不足以容纳大型对象。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "humongous对象",
+        "碎片"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "G1区域大小权衡",
+      "questionType": "调优权衡",
+      "origin": "自行整理",
+      "question": "增大 G1 region size 对 humongous 对象和暂停工作量可能分别有什么影响？",
+      "answer": "它可能减少被视为 humongous 的对象数量和碎片损失，但每个区域也可能包含更多待疏散的存活对象。",
+      "explanation": "因此不能只根据 humongous 区域数量决定区域大小，还要观察暂停阶段成本。",
+      "example": "调大区域后大型对象分配更容易，但单个待回收区域的存活对象可能更多。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "region size",
+        "调优"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-012",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "启用详细GC日志",
+      "questionType": "命令实践",
+      "origin": "自行整理",
+      "question": "Oracle Java 26 文档建议用什么 unified logging 选项开始检查 G1 活动？",
+      "answer": "可以从 -Xlog:gc*=debug 开始，再根据需要缩小日志范围。",
+      "explanation": "日志可显示回收类型以及暂停阶段的时间分布。",
+      "example": "用日志判断暂停主要耗在对象疏散、引用处理还是其他阶段。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "GC日志",
+        "Xlog"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-013",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "识别G1 Full GC日志",
+      "questionType": "日志诊断",
+      "origin": "自行整理",
+      "question": "在 Oracle Java 26 G1 日志中，哪个短语可帮助识别堆压缩式 Full GC 暂停？",
+      "answer": "查找 `Pause Full (G1 Compaction Pause)`。",
+      "explanation": "仍需结合相邻日志判断触发原因，例如老年代占用过高或分配疏散失败。",
+      "example": "搜索日志中的 `Pause Full` 并检查该暂停前的 Allocation Failure 信息。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "Full GC",
+        "GC日志"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    },
+    {
+      "id": "j26g1-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Java 26 G1 垃圾收集",
+      "knowledgePoint": "G1调优与应用分配行为",
+      "questionType": "实践原则",
+      "origin": "自行整理",
+      "question": "调 G1 参数前为什么也要检查应用的对象分配模式？",
+      "answer": "减少不必要的长生命周期或大型对象分配，有时比调整虚拟机参数更有效。",
+      "explanation": "收集器调优无法消除应用本身持续产生不利分配模式的成本。",
+      "example": "避免反复创建可复用的大型临时缓冲区，可能降低 humongous 分配压力。",
+      "tags": [
+        "Java 26",
+        "G1",
+        "对象分配",
+        "性能诊断"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/26/gctuning/garbage-first-garbage-collector-tuning.html"
+    }
+  ]
+}

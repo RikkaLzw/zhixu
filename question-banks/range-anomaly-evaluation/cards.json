@@ -1,0 +1,295 @@
+{
+  "source": {
+    "id": "range-anomaly-evaluation",
+    "title": "时间序列区间异常评估与安全告警排序",
+    "url": "https://arxiv.org/abs/1803.03639",
+    "type": "研究论文",
+    "note": "逐题依据区间评价论文整理；部分卡由腾讯云安全面经误报漏报主题启发。旧卡来源通过别名合并。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "rangeeval-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "区间异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间序列中的区间异常指什么？",
+      "answer": "它指持续一段连续时间点的异常，而非只有一个异常点。",
+      "explanation": "同一异常事件可覆盖多个连续观测点。",
+      "example": "一次持续数分钟的异常网络通信。",
+      "tags": [
+        "区间异常",
+        "异常检测",
+        "事件级评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "rangeeval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "逐点与事件权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么逐点召回率可能掩盖检测器漏掉了多个短异常事件？",
+      "answer": "长事件包含更多异常点，若主要检出长事件，逐点统计仍可能较高。",
+      "explanation": "同时报告按事件或区间计算的指标可以补充这一视角。",
+      "example": "检出一场长时间攻击但漏掉多场短攻击。",
+      "tags": [
+        "逐点与事件权重",
+        "异常检测",
+        "事件级评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析二面（个人自述，合集收录）；误报漏报评估主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "rangeeval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "命中与覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "区间异常评估中的事件命中与区间覆盖有什么区别？",
+      "answer": "事件命中关注是否检测到该异常区间；覆盖还关注区间中有多少部分被检测到。",
+      "explanation": "只命中一个点不一定意味着完整覆盖整个事件。",
+      "example": "检测到攻击开始的一条记录，但后续活动未被识别。",
+      "tags": [
+        "命中与覆盖",
+        "异常检测",
+        "事件级评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析二面（个人自述，合集收录）；误报漏报评估主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "rangeeval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "区间召回权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tatbul 等人的区间召回公式中，参数 α 控制什么？",
+      "answer": "它控制事件存在奖励与区间重叠奖励的相对权重。",
+      "explanation": "α 越大，单纯捕获异常是否存在的奖励越受重视。",
+      "example": "偏重发现事件还是偏重覆盖事件持续时间。",
+      "tags": [
+        "区间召回权重",
+        "异常检测",
+        "事件级评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "rangeeval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "区间部分重叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "预测异常区间只与真实异常区间部分重叠时，为什么不能简单把整段预测都当成正确？",
+      "answer": "重叠部分对应正确覆盖，预测中未与真实区间重叠的部分可能是误报。",
+      "explanation": "同一个预测区间可能同时包含正确和错误部分；原论文的区间精确率侧不单独奖励少量重叠的存在。",
+      "example": "告警持续十分钟，但真实异常只覆盖其中三分钟。",
+      "tags": [
+        "区间部分重叠",
+        "异常检测",
+        "事件级评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析二面（个人自述，合集收录）；误报漏报评估主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "rangeeval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "区间位置偏好",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在区间异常评估中使用前端位置偏好有什么作用？",
+      "answer": "它可以给异常区间前部的正确检测更高权重，以体现及时发现的价值。",
+      "explanation": "是否偏好早发现应由具体任务决定，不能默认所有场景都一样。",
+      "example": "对需要尽早遏制的持续攻击提高早期检测权重。",
+      "tags": [
+        "区间位置偏好",
+        "异常检测",
+        "事件级评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "rangeeval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "区间重叠数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "区间评价中的重叠数量惩罚可以表达哪类需求？",
+      "answer": "它可降低单个真实区间被切成多个预测区间，或单个预测区间跨越多个真实区间时的得分。",
+      "explanation": "是否惩罚及惩罚强度由指标配置决定，并非所有区间指标都这样做。",
+      "example": "同一次攻击被切成多段告警，形成额外处理负担。",
+      "tags": [
+        "区间重叠数量",
+        "异常检测",
+        "事件级评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "rangeeval-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "区间精确率与召回率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tatbul 等人的区间精确率与区间召回率分别对哪一类区间求平均？",
+      "answer": "区间精确率按预测区间求平均；区间召回率按真实异常区间求平均。",
+      "explanation": "两者分别从预测质量和真实异常覆盖角度衡量结果。",
+      "example": "分别检查告警段的质量和实际攻击段的发现情况。",
+      "tags": [
+        "区间精确率与召回率",
+        "异常检测",
+        "事件级评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "rangeeval-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "区间指标可比性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较两个区间异常检测结果时，为什么要报告位置偏好、重叠和数量惩罚配置？",
+      "answer": "不同配置重视的检测时机、覆盖和分段方式不同，分数可能不能直接比较。",
+      "explanation": "应同时说明标注区间和评估范围。",
+      "example": "用相同前端偏好及数量惩罚比较两个检测器。",
+      "tags": [
+        "区间指标可比性",
+        "异常检测",
+        "事件级评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "rangeeval-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全检测评估",
+      "knowledgePoint": "区间边界依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么区间异常指标需要说明真实事件的起止边界如何标注？",
+      "answer": "边界决定预测与真实事件的重叠程度，也会影响按事件计算的得分。",
+      "explanation": "边界不确定时应记录标注依据或做敏感性分析。",
+      "example": "比较同一告警与不同事件结束时间标注的重叠。",
+      "tags": [
+        "区间边界依赖",
+        "异常检测",
+        "事件级评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1803.03639",
+      "referenceTitle": "Precision and Recall for Time Series 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "rangelegacy-001",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "告警评估",
+      "knowledgePoint": "排序效果与处置能力",
+      "questionType": "实践与诊断",
+      "origin": "自行整理",
+      "question": "如何评估告警排序是否有实际价值？",
+      "answer": "检查高优先级告警中的真实威胁比例、遗漏情况，以及分析人员在有限时间内能处理的告警量。",
+      "explanation": "可在明确处理预算时检查前 K 条结果质量，并结合真实事件覆盖。",
+      "example": "在分析人员每天可处理的告警数量内比较排序结果。",
+      "tags": [
+        "告警排序",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://ir-measur.es/en/latest/measures.html",
+      "referenceTitle": "ir-measures：截断排名指标",
+      "referenceType": "技术文档",
+      "supportingReferences": [
+        {
+          "id": "nist-ir-resource-ref",
+          "title": "NIST SP 800-61r3：事件优先级与响应资源",
+          "url": "https://doi.org/10.6028/NIST.SP.800-61r3",
+          "type": "官方技术标准",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

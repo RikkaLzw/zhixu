@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "dpo-preference-objective",
+    "title": "DPO 原论文：偏好目标与梯度",
+    "url": "https://arxiv.org/pdf/2305.18290v3",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "dpopaper-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DPO 偏好优化细节",
+      "knowledgePoint": "偏好概率模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPO 原论文用哪种成对偏好模型解释两个回答的偏好概率？",
+      "answer": "使用 Bradley–Terry 模型，以两个回答的奖励差经过 sigmoid 表达偏好概率。",
+      "explanation": "论文也讨论了更一般的排序模型。",
+      "example": "同一提示下，较大正奖励差对应更高的偏好概率。",
+      "tags": [
+        "DPO 偏好优化细节",
+        "偏好概率模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.18290v3"
+    },
+    {
+      "id": "dpopaper-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DPO 偏好优化细节",
+      "knowledgePoint": "相对对数概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 DPO 目标比较 chosen 与 rejected 的哪两项？",
+      "answer": "比较当前策略相对参考策略的对数概率之差，再将差值用于偏好损失。",
+      "explanation": "它不是只比较当前模型给两个回答的原始概率。",
+      "example": "参考模型对两个回答的概率都会影响目标值。",
+      "tags": [
+        "DPO 偏好优化细节",
+        "相对对数概率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.18290v3"
+    },
+    {
+      "id": "dpopaper-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DPO 偏好优化细节",
+      "knowledgePoint": "相同模型起点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对同一偏好对，若当前策略与参考策略完全相同，原始 DPO 的单对损失是多少？",
+      "answer": "对数概率差为 0，负 log sigmoid 损失为 log 2。",
+      "explanation": "这里假定两种策略对该偏好对的概率均可计算。",
+      "example": "初始化时复制参考模型，可得到约 0.693 的单对损失。",
+      "tags": [
+        "DPO 偏好优化细节",
+        "相同模型起点"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.18290v3"
+    },
+    {
+      "id": "dpopaper-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DPO 偏好优化细节",
+      "knowledgePoint": "动态样本权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPO 原论文的梯度为何会更关注隐式奖励把偏好顺序排错的样本？",
+      "answer": "梯度中的权重随 rejected 相对 chosen 的隐式奖励升高而增大。",
+      "explanation": "参数共享时，单次更新不保证每个回答的概率都按理想方向变化。",
+      "example": "模型给 rejected 更高隐式奖励时，该对样本的权重更大。",
+      "tags": [
+        "DPO 偏好优化细节",
+        "动态样本权重"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.18290v3"
+    },
+    {
+      "id": "dpopaper-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DPO 偏好优化细节",
+      "knowledgePoint": "配分函数抵消",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DPO 推导中，为什么无需计算只依赖提示的配分函数来比较同一偏好对？",
+      "answer": "成对奖励差中同一提示对应的配分函数项相互抵消。",
+      "explanation": "前提是两个回答对应相同的提示。",
+      "example": "chosen 和 rejected 共用 x 时，关于 x 的公共项消失。",
+      "tags": [
+        "DPO 偏好优化细节",
+        "配分函数抵消"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.18290v3"
+    }
+  ]
+}

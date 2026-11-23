@@ -1,16 +1,23 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { IconButton, Surface } from '../components/ui';
+import { cardLevel, studyLevels } from '../levels';
 import { colors } from '../theme';
+import { StudyCard, StudyLevel } from '../types';
 
-export function SettingsScreen({ dailyLimit, onLimit, onClose }: {
+export function SettingsScreen({ dailyLimit, cards, enabledLevels, onLimit, onLevels, onClose }: {
   dailyLimit: number;
+  cards: StudyCard[];
+  enabledLevels: StudyLevel[];
   onLimit: (limit: number) => void;
+  onLevels: (levels: StudyLevel[]) => void;
   onClose: () => void;
 }) {
   const [draft, setDraft] = useState(String(dailyLimit));
   const [error, setError] = useState(false);
+  const levelCounts: Record<StudyLevel, number> = { 入门: 0, 进阶: 0, 实践: 0 };
+  for (const card of cards) levelCounts[cardLevel(card)] += 1;
 
   const commit = () => {
     if (draft === '') {
@@ -51,6 +58,29 @@ export function SettingsScreen({ dailyLimit, onLimit, onClose }: {
         <Text style={styles.eyebrow}>自定义学习节奏</Text>
         <Text style={styles.title}>找到你的节奏</Text>
         <Text style={styles.subtitle}>把每天的学习量调整到舒服、可持续的程度。</Text>
+        <Surface style={styles.settingCard}>
+          <Text style={styles.settingTitle}>启用学习阶段</Text>
+          <Text style={styles.levelHint}>可自由组合；关闭的阶段暂不加入新题和到期复习，进度会保留。卡片阶段可以编辑。</Text>
+          {studyLevels.map((level) => (
+            <View key={level.id} style={styles.levelRow}>
+              <View style={styles.settingText}>
+                <Text style={styles.levelName}>{level.label}</Text>
+                <Text style={styles.settingSub}>{level.description} · {levelCounts[level.id]} 张</Text>
+              </View>
+              <Switch
+                accessibilityLabel={`启用${level.label}阶段`}
+                value={enabledLevels.includes(level.id)}
+                onValueChange={(enabled) => onLevels(enabled
+                  ? [...enabledLevels, level.id]
+                  : enabledLevels.filter((id) => id !== level.id))}
+                trackColor={{ false: '#CFD9D1', true: colors.brand }}
+                thumbColor="#FFFFFF"
+              />
+            </View>
+          ))}
+          <Text style={styles.levelHint}>数量包含研究拓展，研究拓展可在题库中单独选择。</Text>
+          {enabledLevels.length === 0 && <Text style={styles.levelHint}>当前没有开启任何阶段。</Text>}
+        </Surface>
         <Surface style={styles.settingCard}>
           <View style={styles.settingHeader}>
             <View style={styles.settingIcon}><Ionicons name="sunny-outline" size={21} color={colors.brand} /></View>
@@ -118,6 +148,9 @@ const styles = StyleSheet.create({
   settingText: { flex: 1 },
   settingTitle: { color: colors.ink, fontSize: 14, fontWeight: '800' },
   settingSub: { color: colors.muted, fontSize: 11, marginTop: 5 },
+  levelHint: { color: colors.secondary, fontSize: 11, lineHeight: 19, marginTop: 8 },
+  levelRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingTop: 15 },
+  levelName: { color: colors.ink, fontSize: 13, fontWeight: '700' },
   stepper: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 24, paddingHorizontal: 7 },
   step: { height: 42, width: 42, borderRadius: 14, backgroundColor: colors.brandLight, alignItems: 'center', justifyContent: 'center' },
   stepDisabled: { opacity: 0.35 },

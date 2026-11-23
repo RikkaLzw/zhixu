@@ -1,0 +1,316 @@
+{
+  "source": {
+    "id": "pytest-testing-fundamentals",
+    "title": "pytest 8.3 文档：自动化测试基础",
+    "url": "https://docs.pytest.org/en/8.3.x/how-to/fixtures.html",
+    "type": "官方文档",
+    "note": "依据逐题列出的官方文档自行整理；示例为自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pytestbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "fixture用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest fixture 在测试中通常用于什么？",
+      "answer": "它提供可复用的测试准备、依赖或资源，并可在测试后执行清理。",
+      "explanation": "测试可以通过参数名请求 fixture 提供的值。",
+      "example": "为测试提供临时数据库连接。",
+      "tags": [
+        "Python 自动化测试",
+        "fixture用途"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/fixtures.html"
+    },
+    {
+      "id": "pytestbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "fixture依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest 的 fixture 可以请求另一个 fixture 吗？",
+      "answer": "可以；fixture 函数可通过参数名请求其他 fixture。",
+      "explanation": "pytest 根据依赖关系安排准备与清理。",
+      "example": "需要用户对象的 fixture 请求数据库 fixture。",
+      "tags": [
+        "Python 自动化测试",
+        "fixture依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/fixtures.html"
+    },
+    {
+      "id": "pytestbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "默认作用域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest fixture 的默认 scope 是什么？",
+      "answer": "默认是 function，通常在每个测试函数结束后清理。",
+      "explanation": "也可设置 class、module、package 或 session 等作用域。",
+      "example": "两个测试默认分别获得各自的 fixture 实例。",
+      "tags": [
+        "Python 自动化测试",
+        "默认作用域"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/fixtures.html"
+    },
+    {
+      "id": "pytestbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "同一测试缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一个 pytest 测试多次请求同一 fixture 时，通常会重复创建它吗？",
+      "answer": "不会；同一测试内的请求通常复用该 fixture 的缓存结果。",
+      "explanation": "参数化 fixture 在其作用域内仍可能被多次调用。",
+      "example": "测试与另一个 fixture 都请求同一资源。",
+      "tags": [
+        "Python 自动化测试",
+        "同一测试缓存"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/fixtures.html"
+    },
+    {
+      "id": "pytestbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "自动fixture",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest fixture 设置 autouse=True 后有什么效果？",
+      "answer": "在其可见范围内，适用的测试会自动请求该 fixture，无需逐个显式声明。",
+      "explanation": "作用范围仍受 fixture 的可见性和 scope 约束。",
+      "example": "每个测试前自动准备某项公共环境。",
+      "tags": [
+        "Python 自动化测试",
+        "自动fixture"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/fixtures.html"
+    },
+    {
+      "id": "pytestbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "yield清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest 的 yield fixture 中，yield 后面的代码通常用于什么？",
+      "answer": "用于测试结束后的清理；多个成功准备的 fixture 通常按准备的逆序清理。",
+      "explanation": "如果该 fixture 在 yield 前抛异常，它的 yield 后代码不会执行，但已成功准备的其他 fixture 仍会清理。",
+      "example": "yield 一个连接后再关闭该连接。",
+      "tags": [
+        "Python 自动化测试",
+        "yield清理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/fixtures.html"
+    },
+    {
+      "id": "pytestbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "测试参数化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest.mark.parametrize 的常见用途是什么？",
+      "answer": "为同一个测试定义多组参数，使 pytest 分别执行对应测试实例。",
+      "explanation": "每组参数都可独立报告测试结果。",
+      "example": "对多组输入和期望输出执行同一断言。",
+      "tags": [
+        "Python 自动化测试",
+        "测试参数化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/parametrize.html"
+    },
+    {
+      "id": "pytestbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "参数组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest 中对不同参数叠加多个 parametrize 装饰器通常产生什么测试组合？",
+      "answer": "通常产生这些参数值的笛卡尔积组合。",
+      "explanation": "应控制组合数量，避免无意义的测试膨胀。",
+      "example": "两个参数分别有 2 和 3 个值时产生 6 个组合。",
+      "tags": [
+        "Python 自动化测试",
+        "参数组合"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/parametrize.html"
+    },
+    {
+      "id": "pytestbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "可变测试参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest 参数化传入的列表或字典会自动为每次测试复制吗？",
+      "answer": "不会；参数值按原样传递，修改可变对象可能影响后续测试。",
+      "explanation": "需要隔离时应自行构造或复制对象。",
+      "example": "多个参数组共享同一列表时可能发生状态泄漏。",
+      "tags": [
+        "Python 自动化测试",
+        "可变测试参数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/parametrize.html"
+    },
+    {
+      "id": "pytestbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "异常断言",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest.raises(ExpectedError) 用于断言什么？",
+      "answer": "断言代码抛出指定异常类型或其子类；未抛出时测试失败。",
+      "explanation": "若必须是精确类型，可进一步检查捕获到的异常类型。",
+      "example": "检查除零时抛出 ZeroDivisionError。",
+      "tags": [
+        "Python 自动化测试",
+        "异常断言"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/assert.html"
+    },
+    {
+      "id": "pytestbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "异常消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest.raises(..., match=pattern) 如何匹配异常消息？",
+      "answer": "它使用正则表达式搜索异常的字符串表示，还会匹配异常附注。",
+      "explanation": "例如只给出子串模式也可能匹配；需要字面匹配时应处理正则特殊字符。",
+      "example": "检查 ValueError 的消息包含指定内容。",
+      "tags": [
+        "Python 自动化测试",
+        "异常消息"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/assert.html"
+    },
+    {
+      "id": "pytestbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "临时路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest 的 tmp_path fixture 给测试提供什么？",
+      "answer": "为单个测试调用提供唯一的临时目录路径，类型为 pathlib.Path。",
+      "explanation": "临时目录的保留和清理由 pytest 管理。",
+      "example": "在独立临时目录里写入测试文件。",
+      "tags": [
+        "Python 自动化测试",
+        "临时路径"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/tmp_path.html"
+    },
+    {
+      "id": "pytestbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "捕获输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest 的 capsys.readouterr() 可用于什么？",
+      "answer": "读取截至调用时捕获的标准输出和标准错误，并返回含 out、err 的结果。",
+      "explanation": "读取后捕获继续，可再次读取后续输出。",
+      "example": "断言命令行程序打印了预期提示。",
+      "tags": [
+        "Python 自动化测试",
+        "捕获输出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/capture-stdout-stderr.html"
+    },
+    {
+      "id": "pytestbase-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "临时替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest 的 monkeypatch fixture 可以用来做什么？",
+      "answer": "临时修改属性、环境变量或字典项等，并在请求它的测试或 fixture 结束后撤销修改。",
+      "explanation": "应在被测代码使用相关对象之前应用补丁。",
+      "example": "在测试中用固定值替代网络请求函数。",
+      "tags": [
+        "Python 自动化测试",
+        "临时替换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/monkeypatch.html"
+    },
+    {
+      "id": "pytestbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "局部撤销补丁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest 的 monkeypatch.context() 有什么作用？",
+      "answer": "创建较小作用范围的补丁上下文，退出上下文时撤销该范围内的修改。",
+      "explanation": "适合需要在测试结束前恢复的临时修改。",
+      "example": "只在一段代码运行期间替换某函数。",
+      "tags": [
+        "Python 自动化测试",
+        "局部撤销补丁"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/monkeypatch.html"
+    },
+    {
+      "id": "pytestbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 自动化测试",
+      "knowledgePoint": "跳过与预期失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pytest 的 skip 与 xfail 标记在测试意图上有什么区别？",
+      "answer": "skip 表示不运行不适用的测试；xfail 表示测试已知或预期会失败。",
+      "explanation": "xfail 的严格模式等配置会影响意外通过时的结果。",
+      "example": "缺少平台依赖时跳过；已知缺陷尚未修复时标记 xfail。",
+      "tags": [
+        "Python 自动化测试",
+        "跳过与预期失败"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytest.org/en/8.3.x/how-to/skipping.html"
+    }
+  ]
+}

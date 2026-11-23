@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "rope-rotation-foundations",
+    "title": "RoFormer 原论文 v5：旋转位置编码",
+    "url": "https://arxiv.org/abs/2104.09864v5",
+    "type": "论文、官方文档与系统手册",
+    "note": "依据逐题所列固定版本论文或官方资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "ropebase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RoPE 旋转位置编码",
+      "knowledgePoint": "二维旋转",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二维 RoPE 以角度 θ 旋转向量 (x,y) 后的结果是什么？",
+      "answer": "结果为 (x cosθ−y sinθ, x sinθ+y cosθ)。",
+      "explanation": "在原始构造中，旋转角还由 token 位置和频率决定。",
+      "example": "旋转 90° 时 (1,0) 变为 (0,1)。",
+      "tags": [
+        "RoPE 旋转位置编码",
+        "二维旋转"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2104.09864v5"
+    },
+    {
+      "id": "ropebase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoPE 旋转位置编码",
+      "knowledgePoint": "维度分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoFormer 原论文如何把偶数维向量推广到多维 RoPE？",
+      "answer": "把 d 维空间划分成 d/2 个二维子空间，分别应用旋转。",
+      "explanation": "各子空间使用各自的频率参数。",
+      "example": "64 维向量形成 32 组二维旋转。",
+      "tags": [
+        "RoPE 旋转位置编码",
+        "维度分组"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2104.09864v5"
+    },
+    {
+      "id": "ropebase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoPE 旋转位置编码",
+      "knowledgePoint": "范数保持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "不考虑数值舍入，RoPE 的正交旋转会改变向量的 L2 范数吗？",
+      "answer": "不会；正交旋转保持向量的 L2 范数。",
+      "explanation": "保持原范数不意味着把向量归一化为单位长度。",
+      "example": "长度为 2 的向量旋转后长度仍为 2。",
+      "tags": [
+        "RoPE 旋转位置编码",
+        "范数保持"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2104.09864v5"
+    },
+    {
+      "id": "ropebase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoPE 旋转位置编码",
+      "knowledgePoint": "旋转乘积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoPE 中查询位于 m、键位于 n 时，R(m)ᵀR(n) 可以化成什么？",
+      "answer": "化成表示相对位移的旋转 R(n−m)。",
+      "explanation": "点积也受查询和键内容影响；固定向量时共同平移两个位置不改变点积，但不保证整个模型平移不变。",
+      "example": "m=3、n=5 时得到位移为 2 的旋转。",
+      "tags": [
+        "RoPE 旋转位置编码",
+        "旋转乘积"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2104.09864v5"
+    },
+    {
+      "id": "ropebase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoPE 旋转位置编码",
+      "knowledgePoint": "旋转频率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoFormer 原始 RoPE 为什么为不同二维子空间设置不同频率？",
+      "answer": "不同频率使各子空间以不同角速度编码位置。",
+      "explanation": "具体频率公式和缩放方案可能因模型实现而不同。",
+      "example": "一个子空间随位置转得快，另一个较慢。",
+      "tags": [
+        "RoPE 旋转位置编码",
+        "旋转频率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2104.09864v5"
+    }
+  ]
+}

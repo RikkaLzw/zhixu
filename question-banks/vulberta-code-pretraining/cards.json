@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "vulberta-code-pretraining",
+    "title": "VulBERTa 原论文：代码分词与漏洞检测",
+    "url": "https://arxiv.org/pdf/2205.12424v1",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "vulberta-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulBERTa 代码漏洞检测",
+      "knowledgePoint": "解析器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulBERTa 原论文在代码分词流水线中使用什么解析器？",
+      "answer": "使用 Clang 解析 C/C++ 源代码，形成代码 token 序列。",
+      "explanation": "论文先移除函数代码中的注释，再处理解析结果。",
+      "example": "解析后的 token 随后进入分词与编码步骤。",
+      "tags": [
+        "VulBERTa 代码漏洞检测",
+        "解析器"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.12424v1"
+    },
+    {
+      "id": "vulberta-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulBERTa 代码漏洞检测",
+      "knowledgePoint": "预定义代码 token",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulBERTa 的自定义 BPE 分词为何预定义 C/C++ 关键词和部分 API 名称？",
+      "answer": "使这些代码 token 保留为预定义词项，不再按普通子词拆分。",
+      "explanation": "其他标识符和字面量仍可交给 BPE 处理。",
+      "example": "标准关键词可作为完整 token 纳入词表。",
+      "tags": [
+        "VulBERTa 代码漏洞检测",
+        "预定义代码 token"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.12424v1"
+    },
+    {
+      "id": "vulberta-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulBERTa 代码漏洞检测",
+      "knowledgePoint": "预训练任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulBERTa 用什么模型结构和任务学习通用代码表示？",
+      "answer": "基于 RoBERTa，使用掩码语言建模对代码进行预训练。",
+      "explanation": "随后可将预训练结果用于漏洞检测任务。",
+      "example": "随机掩码部分代码 token，再预测被遮盖的内容。",
+      "tags": [
+        "VulBERTa 代码漏洞检测",
+        "预训练任务"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.12424v1"
+    },
+    {
+      "id": "vulberta-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulBERTa 代码漏洞检测",
+      "knowledgePoint": "两条检测路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulBERTa-MLP 与 VulBERTa-CNN 在使用预训练模型方面有什么区别？",
+      "answer": "MLP 路径微调整个预训练架构；CNN 路径提取预训练嵌入权重并用于 TextCNN。",
+      "explanation": "两者不是都把完整 RoBERTa 编码器接在分类头之前。",
+      "example": "CNN 路径以预训练嵌入初始化其文本卷积模型。",
+      "tags": [
+        "VulBERTa 代码漏洞检测",
+        "两条检测路径"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.12424v1"
+    }
+  ]
+}

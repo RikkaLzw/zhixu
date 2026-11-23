@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "hash-table-collision-practice",
+    "title": "Princeton Algorithms：哈希表与线性探测",
+    "url": "https://algs4.cs.princeton.edu/34hash/",
+    "type": "官方文档或教材",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以注明版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "hashprobe-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "哈希表冲突处理",
+      "knowledgePoint": "负载因子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "链地址哈希表的负载因子 α = N/M 表示什么，能否大于 1？",
+      "answer": "N 是键值对数、M 是桶数；N/M 表示平均每桶的条目数，可以大于 1。",
+      "explanation": "平均值不保证每个桶的实际长度相同。",
+      "example": "20 个键、10 个桶的负载因子为 2。",
+      "tags": [
+        "哈希表",
+        "负载因子"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/34hash/"
+    },
+    {
+      "id": "hashprobe-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "哈希表冲突处理",
+      "knowledgePoint": "线性探测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性探测哈希表在目标槽被其他键占用时，通常如何继续查找？",
+      "answer": "按顺序检查后续槽位，必要时绕回表头，直到找到目标或可判定不存在的位置。",
+      "explanation": "线性探测属于开放寻址的一种。",
+      "example": "槽 4 被占用时可继续检查槽 5。",
+      "tags": [
+        "哈希表",
+        "线性探测"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/34hash/"
+    },
+    {
+      "id": "hashprobe-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "哈希表冲突处理",
+      "knowledgePoint": "查找终止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "没有墓碑且保持至少一个空槽的线性探测哈希表，查找遇到从未使用的空槽时通常能否停止？",
+      "answer": "能；目标键若存在，应位于探测序列中该空槽之前。",
+      "explanation": "正确删除时必须维护该终止规则。",
+      "example": "探测到空槽后无需继续搜索后面的槽。",
+      "tags": [
+        "哈希表",
+        "查找终止"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/34hash/"
+    },
+    {
+      "id": "hashprobe-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "哈希表冲突处理",
+      "knowledgePoint": "删除断链",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性探测哈希表直接把一个已占用槽清空，为什么可能使后续键查找失败？",
+      "answer": "查找可能在这个空槽提前停止，漏掉之后因冲突而放置的键；可通过重排或墓碑避免。",
+      "explanation": "墓碑表示原位置曾被占用，不应按普通空槽终止查找。",
+      "example": "哈希到同一槽的第二个键仍须可被找到。",
+      "tags": [
+        "哈希表",
+        "删除断链"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/34hash/LinearProbingHashST.java.html"
+    },
+    {
+      "id": "hashprobe-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "哈希表冲突处理",
+      "knowledgePoint": "重新散列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "哈希表扩容后为什么通常需要重新分配已有键的桶或槽位？",
+      "answer": "桶或槽位数量改变后，原来的位置计算结果可能改变，已有键需要按新容量重新放置。",
+      "explanation": "重新散列耗时，通常按容量阈值批量触发。",
+      "example": "用取模定位桶时，模数变化可能改变位置。",
+      "tags": [
+        "哈希表",
+        "重新散列"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/34hash/"
+    },
+    {
+      "id": "hashprobe-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "哈希表冲突处理",
+      "knowledgePoint": "聚集效应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性探测中的聚集现象为什么可能拖慢操作？",
+      "answer": "连续占用的槽会使新冲突和查询需要检查更长的探测序列。",
+      "explanation": "负载较高时连续占用区域可能增长。",
+      "example": "连续槽都被占用会增加下一次探测长度。",
+      "tags": [
+        "哈希表",
+        "聚集效应"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/34hash/"
+    }
+  ]
+}

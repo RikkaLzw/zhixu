@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "pytorch-adamw-optimizer",
+    "title": "PyTorch 2.7 文档：AdamW 优化器",
+    "url": "https://docs.pytorch.org/docs/2.7/generated/torch.optim.AdamW.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "adamw-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch AdamW 优化器",
+      "knowledgePoint": "矩估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch AdamW 的 betas 参数控制什么？",
+      "answer": "分别控制梯度与梯度平方的移动平均系数。",
+      "explanation": "两项统计量分别用于估计一阶和二阶矩。",
+      "example": "默认 beta 通常写作 (0.9, 0.999)。",
+      "tags": [
+        "PyTorch AdamW 优化器",
+        "矩估计"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.optim.AdamW.html"
+    },
+    {
+      "id": "adamw-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch AdamW 优化器",
+      "knowledgePoint": "数值稳定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch AdamW 的 eps 参数主要有什么作用？",
+      "answer": "在分母中加入小量以改善数值稳定性。",
+      "explanation": "具体取值仍是优化器超参数。",
+      "example": "二阶矩估计很小时减少分母过小的问题。",
+      "tags": [
+        "PyTorch AdamW 优化器",
+        "数值稳定"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.optim.AdamW.html"
+    },
+    {
+      "id": "adamw-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch AdamW 优化器",
+      "knowledgePoint": "最大化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch AdamW 设置 maximize=True 时改变什么优化方向？",
+      "answer": "按目标函数最大化方向更新参数。",
+      "explanation": "权重衰减仍是单独配置的优化器行为。",
+      "example": "最大化奖励目标时可明确指定方向。",
+      "tags": [
+        "PyTorch AdamW 优化器",
+        "最大化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.optim.AdamW.html"
+    },
+    {
+      "id": "adamw-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch AdamW 优化器",
+      "knowledgePoint": "AMSGrad",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch AdamW 的 amsgrad=True 用于启用什么？",
+      "answer": "启用 AMSGrad 变体，在更新时使用历史二阶矩估计的最大值。",
+      "explanation": "默认不启用 AMSGrad。",
+      "example": "比较两种优化器配置时记录该选项。",
+      "tags": [
+        "PyTorch AdamW 优化器",
+        "AMSGrad"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.optim.AdamW.html"
+    },
+    {
+      "id": "adamw-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch AdamW 优化器",
+      "knowledgePoint": "状态组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 优化器 state_dict 通常包含哪两类信息？",
+      "answer": "包含每参数的优化状态 state 和参数组配置 param_groups。",
+      "explanation": "它不直接保存模型参数张量本身。",
+      "example": "恢复 AdamW 的动量估计需保存优化器状态。",
+      "tags": [
+        "PyTorch AdamW 优化器",
+        "状态组成"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.optim.AdamW.html"
+    },
+    {
+      "id": "adamw-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch AdamW 优化器",
+      "knowledgePoint": "状态加载顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 加载优化器 state_dict 时，为什么改变参数组内参数顺序需要格外小心？",
+      "answer": "加载时按参数组中的顺序将保存的参数 ID 与当前参数配对，不做额外身份验证。",
+      "explanation": "顺序改变可能让状态对应到错误参数。",
+      "example": "重构模型后应核对优化器参数组。",
+      "tags": [
+        "PyTorch AdamW 优化器",
+        "状态加载顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.optim.AdamW.html"
+    }
+  ]
+}

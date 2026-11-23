@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "suricata-flow-state-rules",
+    "title": "Suricata 8.0.1：flowbits 与 flowint 规则状态",
+    "url": "https://docs.suricata.io/en/suricata-8.0.1/rules/flow-keywords.html",
+    "type": "论文、固定版本文档与源码",
+    "note": "根据逐题引用的资料自行整理；示例为自编，具体版本见题干。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "suriflow-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Suricata 流状态关联",
+      "knowledgePoint": "set与isset",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata flowbits 的 set 与 isset 分别做什么？",
+      "answer": "set 在当前流上设置命名标志；isset 检查该标志是否已设置。",
+      "explanation": "检查标志只是规则条件之一，其他条件也需要匹配。",
+      "example": "第一条规则设置 seen_login，第二条检查它。",
+      "tags": [
+        "Suricata 流状态关联",
+        "set与isset"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/flow-keywords.html#flowbits"
+    },
+    {
+      "id": "suriflow-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 流状态关联",
+      "knowledgePoint": "unset与isnotset",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata flowbits 的 unset 与 isnotset 有什么区别？",
+      "answer": "unset 清除命名标志；isnotset 检查该标志当前未设置。",
+      "explanation": "一个是状态动作，一个是匹配条件。",
+      "example": "退出事件清除标志，未登录规则检查标志不存在。",
+      "tags": [
+        "Suricata 流状态关联",
+        "unset与isnotset"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/flow-keywords.html#flowbits"
+    },
+    {
+      "id": "suriflow-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 流状态关联",
+      "knowledgePoint": "toggle动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata flowbits:toggle 对当前标志做什么？",
+      "answer": "它把已设置的标志清除，或把未设置的标志设为已设置。",
+      "explanation": "该动作作用于当前流的指定标志。",
+      "example": "匹配到切换事件时翻转状态。",
+      "tags": [
+        "Suricata 流状态关联",
+        "toggle动作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/flow-keywords.html#flowbits"
+    },
+    {
+      "id": "suriflow-005",
+      "category": "detection",
+      "level": "实践",
+      "subtopic": "Suricata 流状态关联",
+      "knowledgePoint": "状态规则不告警",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "Suricata 规则中 flowbits:noalert 的常见用途是什么？",
+      "answer": "让规则执行状态标记等匹配动作，但不为这条规则生成告警。",
+      "explanation": "其他使用该标志的规则仍可独立生成告警。",
+      "example": "前置匹配只设置状态，由后续规则告警。",
+      "tags": [
+        "Suricata 流状态关联",
+        "状态规则不告警"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/flow-keywords.html#flowbits"
+    },
+    {
+      "id": "suriflow-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 流状态关联",
+      "knowledgePoint": "标志名称大小写",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata 8.0.1 的 flowbit 名称区分大小写吗？",
+      "answer": "区分；不同大小写的名称应视为不同标识。",
+      "explanation": "跨规则引用时需要保持名称一致。",
+      "example": "LoginSeen 与 loginseen 不是同一名称。",
+      "tags": [
+        "Suricata 流状态关联",
+        "标志名称大小写"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/flow-keywords.html#flowbits"
+    },
+    {
+      "id": "suriflow-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 流状态关联",
+      "knowledgePoint": "标志或条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata flowbits:isset,user1|user2 中的竖线表示什么？",
+      "answer": "它表示对这些 flowbit 名称进行或判断。",
+      "explanation": "条件满足还需要规则的其他匹配条件成立。",
+      "example": "任一用户标志存在时满足该 flowbits 条件。",
+      "tags": [
+        "Suricata 流状态关联",
+        "标志或条件"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/flow-keywords.html#flowbits"
+    },
+    {
+      "id": "suriflow-008",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Suricata 流状态关联",
+      "knowledgePoint": "流变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Suricata flowint 与 flowbits 的主要能力区别是什么？",
+      "answer": "flowint 可在流中保存和比较或更新整数；flowbits 主要表示命名标志状态。",
+      "explanation": "flowint 可用于单个流内的计数。",
+      "example": "记录某流中的登录失败次数。",
+      "tags": [
+        "Suricata 流状态关联",
+        "流变量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/flow-keywords.html#flowint"
+    },
+    {
+      "id": "suriflow-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Suricata 流状态关联",
+      "knowledgePoint": "状态覆盖范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 Suricata flowbits 或 flowint 跟踪状态时，能否直接得到跨多个独立连接的统计？",
+      "answer": "不能直接得到；这些状态按流维护，跨流聚合需要其他机制。",
+      "explanation": "同一源主机的新连接通常属于不同流。",
+      "example": "跨多个 TCP 连接的登录次数需额外关联。",
+      "tags": [
+        "Suricata 流状态关联",
+        "状态覆盖范围"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.suricata.io/en/suricata-8.0.1/rules/flow-keywords.html#flowint"
+    }
+  ]
+}

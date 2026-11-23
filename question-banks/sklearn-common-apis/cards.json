@@ -1,0 +1,558 @@
+{
+  "source": {
+    "id": "sklearn-common-apis",
+    "title": "scikit-learn 常用训练与评估接口",
+    "url": "https://scikit-learn.org/1.7/getting_started.html",
+    "type": "官方技术文档",
+    "note": "按 scikit-learn 1.7 官方教程和 API 文档逐题整理；示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skapi-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "输入与估计器",
+      "knowledgePoint": "特征矩阵形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的常见二维特征矩阵 X 中，行和列通常分别表示什么？",
+      "answer": "每行表示一个样本，每列表示一个特征。",
+      "explanation": "目标 y 通常按样本顺序与 X 的行对齐。",
+      "example": "100 个样本、5 个特征的矩阵形状通常是 (100, 5)。",
+      "tags": [
+        "特征矩阵形状",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/getting_started.html",
+      "referenceTitle": "scikit-learn 1.7：Getting started"
+    },
+    {
+      "id": "skapi-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "输入与估计器",
+      "knowledgePoint": "拟合与预测",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "scikit-learn 预测器的 fit 与 predict 分别做什么？",
+      "answer": "fit 从训练数据学习模型参数；predict 使用已拟合模型对输入产生预测。",
+      "explanation": "监督学习的 fit 通常接收 X 和 y。",
+      "example": "先在训练集上 fit，再对测试集 predict。",
+      "tags": [
+        "拟合与预测",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/getting_started.html",
+      "referenceTitle": "scikit-learn 1.7：Getting started"
+    },
+    {
+      "id": "skapi-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "预处理接口",
+      "knowledgePoint": "转换器拟合与转换",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "scikit-learn 数据转换器的 fit 与 transform 分别做什么？",
+      "answer": "fit 从数据学习转换所需的统计量或规则；transform 用已学习的规则转换数据。",
+      "explanation": "有些转换器还提供 fit_transform 便于在训练数据上完成这两个步骤。",
+      "example": "StandardScaler 先学习均值和尺度，再转换数据。",
+      "tags": [
+        "转换器拟合与转换",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/getting_started.html",
+      "referenceTitle": "scikit-learn 1.7：Transformers"
+    },
+    {
+      "id": "skapi-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据切分",
+      "knowledgePoint": "成对数据切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "train_test_split 同时接收 X 和 y 时，如何保持特征与标签对应？",
+      "answer": "它对输入数组使用相同的样本切分，使对应行和标签继续对齐。",
+      "explanation": "传入的数组需要具有相同的样本数。",
+      "example": "一次调用得到 X_train、X_test、y_train、y_test。",
+      "tags": [
+        "成对数据切分",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.train_test_split.html",
+      "referenceTitle": "scikit-learn 1.7：train_test_split"
+    },
+    {
+      "id": "skapi-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据切分",
+      "knowledgePoint": "测试集大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "train_test_split 的 test_size 使用浮点数与整数时各表示什么？",
+      "answer": "浮点数表示测试集比例；整数表示测试样本的绝对数量。",
+      "explanation": "具体值需要满足样本数与切分约束。",
+      "example": "test_size=0.2 表示约 20% 样本用于测试。",
+      "tags": [
+        "测试集大小",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.train_test_split.html",
+      "referenceTitle": "scikit-learn 1.7：train_test_split"
+    },
+    {
+      "id": "skapi-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据切分",
+      "knowledgePoint": "分层切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "train_test_split 设置 stratify=y 的主要作用是什么？",
+      "answer": "按 y 的类别进行分层抽样，使训练集和测试集尽量保留相近的类别比例。",
+      "explanation": "这不自动解决按时间或实体分组切分的问题，样本过少也可能无法分层。",
+      "example": "类别不平衡的分类任务按标签分层。",
+      "tags": [
+        "分层切分",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.train_test_split.html",
+      "referenceTitle": "scikit-learn 1.7：train_test_split"
+    },
+    {
+      "id": "skapi-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据切分",
+      "knowledgePoint": "禁用打乱与分层",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 train_test_split 设置 shuffle=False 时还能指定 stratify 吗？",
+      "answer": "不能；此时 stratify 必须为 None。",
+      "explanation": "时间序列评估还需要确认输入顺序和切分边界。",
+      "example": "按已有时间顺序切分时不启用 stratify。",
+      "tags": [
+        "禁用打乱与分层",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.train_test_split.html",
+      "referenceTitle": "scikit-learn 1.7：train_test_split"
+    },
+    {
+      "id": "skapi-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据切分",
+      "knowledgePoint": "切分随机状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "train_test_split 的 random_state 设为固定整数有什么作用？",
+      "answer": "在其他输入和设置相同时，它使重复调用的随机切分可复现。",
+      "explanation": "改变数据顺序、样本或相关版本仍应重新核验结果。",
+      "example": "使用固定随机状态重现实验的数据划分。",
+      "tags": [
+        "切分随机状态",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.train_test_split.html",
+      "referenceTitle": "scikit-learn 1.7：train_test_split"
+    },
+    {
+      "id": "skapi-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "预处理接口",
+      "knowledgePoint": "训练测试数据缩放",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "用 StandardScaler 处理训练集和测试集时，常见的正确调用顺序是什么？",
+      "answer": "在训练集上 fit 或 fit_transform，再用同一转换器的 transform 处理测试集。",
+      "explanation": "对测试集重新拟合会使用测试集统计量，改变评估条件。",
+      "example": "训练集学习均值和尺度，测试集复用这些参数。",
+      "tags": [
+        "训练测试数据缩放",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.StandardScaler.html",
+      "referenceTitle": "scikit-learn 1.7：StandardScaler"
+    },
+    {
+      "id": "skapi-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "预处理接口",
+      "knowledgePoint": "标准化零方差",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "StandardScaler 遇到训练时方差为零的特征，scale_ 如何处理？",
+      "answer": "该特征的缩放因子设为 1，因为无法通过缩放使其具有单位方差。",
+      "explanation": "如果启用了中心化，仍可能先减去该特征的均值。",
+      "example": "训练集某列全为相同值时检查 scale_。",
+      "tags": [
+        "标准化零方差",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.StandardScaler.html",
+      "referenceTitle": "scikit-learn 1.7：StandardScaler"
+    },
+    {
+      "id": "skapi-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "预处理接口",
+      "knowledgePoint": "标准化与NaN",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 StandardScaler 会自动填补 NaN 吗？",
+      "answer": "不会；拟合时忽略 NaN，转换时保留 NaN。",
+      "explanation": "后续估计器是否接受缺失值需要另行检查。",
+      "example": "先选择适当的缺失值处理，再连接需要完整输入的模型。",
+      "tags": [
+        "标准化与NaN",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.StandardScaler.html",
+      "referenceTitle": "scikit-learn 1.7：StandardScaler"
+    },
+    {
+      "id": "skapi-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "预测接口",
+      "knowledgePoint": "预测标签与概率",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "支持概率输出的 scikit-learn 分类器中，predict 和 predict_proba 通常分别返回什么？",
+      "answer": "predict 返回预测类别；predict_proba 返回每个样本对各类别的概率估计。",
+      "explanation": "并非所有分类器都提供 predict_proba，概率也需要按任务验证校准。",
+      "example": "逻辑回归分别输出类别和各类概率。",
+      "tags": [
+        "预测标签与概率",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.linear_model.LogisticRegression.html",
+      "referenceTitle": "scikit-learn 1.7：LogisticRegression"
+    },
+    {
+      "id": "skapi-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "预测接口",
+      "knowledgePoint": "概率列顺序",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "scikit-learn LogisticRegression 的 predict_proba 输出列如何对应类别？",
+      "answer": "列顺序与拟合后模型的 classes_ 一致。",
+      "explanation": "不要假设第二列在所有标签编码下都代表所需目标类。",
+      "example": "查找 classes_ 中目标类的位置，再取相应概率列。",
+      "tags": [
+        "概率列顺序",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.linear_model.LogisticRegression.html",
+      "referenceTitle": "scikit-learn 1.7：LogisticRegression"
+    },
+    {
+      "id": "skapi-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估接口",
+      "knowledgePoint": "分类器默认score",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 LogisticRegression.score(X, y) 返回什么？",
+      "answer": "它返回给定数据和标签上的分类准确率。",
+      "explanation": "其他估计器的 score 含义可能不同，不能统一当作 F1 或 AUC。",
+      "example": "需要召回率时另用相应指标函数。",
+      "tags": [
+        "分类器默认score",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.linear_model.LogisticRegression.html",
+      "referenceTitle": "scikit-learn 1.7：LogisticRegression"
+    },
+    {
+      "id": "skapi-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估接口",
+      "knowledgePoint": "准确率计数与比例",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "accuracy_score 的 normalize=True 与 False 分别返回什么？",
+      "answer": "True 返回正确预测的比例；False 返回正确预测的数量。",
+      "explanation": "带样本权重时计数按权重解释。",
+      "example": "比较 80% 的准确率与 80 个正确预测。",
+      "tags": [
+        "准确率计数与比例",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.accuracy_score.html",
+      "referenceTitle": "scikit-learn 1.7：accuracy_score"
+    },
+    {
+      "id": "skapi-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型评估接口",
+      "knowledgePoint": "分类报告支持数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "classification_report 中某类别的 support 表示什么？",
+      "answer": "未设置样本权重时，它表示真实标签中该类别的样本数。",
+      "explanation": "报告中的 precision、recall 和 F1 应结合各类 support 解读。",
+      "example": "少数类 support 很小时，单次结果可能波动较大。",
+      "tags": [
+        "分类报告支持数",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.classification_report.html",
+      "referenceTitle": "scikit-learn 1.7：classification_report"
+    },
+    {
+      "id": "skapi-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流水线接口",
+      "knowledgePoint": "流水线预测顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "带预处理和分类器的 scikit-learn Pipeline 调用 predict 时如何处理输入？",
+      "answer": "它依次用前面的转换步骤处理输入，再把结果交给最终预测器。",
+      "explanation": "中间步骤需要实现适用的 transform，最终估计器需要提供 predict。",
+      "example": "原始特征经过已拟合标准化后送入分类器。",
+      "tags": [
+        "流水线预测顺序",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html",
+      "referenceTitle": "scikit-learn 1.7：Pipeline"
+    },
+    {
+      "id": "skapi-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流水线接口",
+      "knowledgePoint": "流水线嵌套参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如何在 scikit-learn Pipeline 中指定某个步骤的估计器参数？",
+      "answer": "使用“步骤名__参数名”的双下划线形式。",
+      "explanation": "同一形式可用于 set_params 或参数搜索。",
+      "example": "设置名为 clf 的分类器参数 clf__C。",
+      "tags": [
+        "流水线嵌套参数",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html",
+      "referenceTitle": "scikit-learn 1.7：Pipeline"
+    },
+    {
+      "id": "skapi-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流水线接口",
+      "knowledgePoint": "列变换默认遗漏列",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 ColumnTransformer 默认如何处理未指定的输入列？",
+      "answer": "默认 remainder=\"drop\"，未指定列会被丢弃。",
+      "explanation": "可显式设置 remainder=\"passthrough\" 保留拟合时的其余列。",
+      "example": "对数值列和类别列分别配置变换后检查是否遗漏特征。",
+      "tags": [
+        "列变换默认遗漏列",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html",
+      "referenceTitle": "scikit-learn 1.7：ColumnTransformer"
+    },
+    {
+      "id": "skapi-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型选择接口",
+      "knowledgePoint": "网格搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GridSearchCV 使用参数网格做什么？",
+      "answer": "它枚举给定的参数组合，并通过交叉验证比较各组合的得分。",
+      "explanation": "搜索应只使用训练数据；独立测试集留作最终评估。",
+      "example": "比较多个正则强度和核参数的组合。",
+      "tags": [
+        "网格搜索",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GridSearchCV.html",
+      "referenceTitle": "scikit-learn 1.7：GridSearchCV"
+    },
+    {
+      "id": "skapi-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型选择接口",
+      "knowledgePoint": "网格搜索结果",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "单指标且使用默认 refit 的 GridSearchCV 中，best_params_ 与 best_score_ 分别表示什么？",
+      "answer": "前者是选中的参数组合；后者是该组合的平均交叉验证得分。",
+      "explanation": "两者不能代替在独立测试集上的最终评估。",
+      "example": "读取搜索得到的最优参数和验证分数。",
+      "tags": [
+        "网格搜索结果",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GridSearchCV.html",
+      "referenceTitle": "scikit-learn 1.7：GridSearchCV"
+    },
+    {
+      "id": "skapi-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型选择接口",
+      "knowledgePoint": "网格搜索重新拟合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单指标 GridSearchCV 默认 refit=True 时，选定参数后会做什么？",
+      "answer": "它用选定参数在传入 fit 的全部数据上重新拟合估计器。",
+      "explanation": "重新拟合使用的是搜索输入数据，不应包含独立测试集。",
+      "example": "在训练集交叉验证选参后，用完整训练集拟合最佳模型。",
+      "tags": [
+        "网格搜索重新拟合",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GridSearchCV.html",
+      "referenceTitle": "scikit-learn 1.7：GridSearchCV"
+    },
+    {
+      "id": "skapi-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估接口",
+      "knowledgePoint": "交叉验证多指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 cross_validate 相比 cross_val_score 可以额外返回哪些结果？",
+      "answer": "它可同时返回多个评分指标，以及各折的拟合和评分时间。",
+      "explanation": "需要训练折得分时应显式设置 return_train_score=True。",
+      "example": "同时观察每折准确率和 F1。",
+      "tags": [
+        "交叉验证多指标",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.cross_validate.html",
+      "referenceTitle": "scikit-learn 1.7：cross_validate"
+    },
+    {
+      "id": "skapi-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估接口",
+      "knowledgePoint": "交叉验证预测与分数",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "cross_val_predict 与 cross_val_score 的主要输出有什么区别？",
+      "answer": "前者返回每个样本的折外预测；后者返回各验证折的评分。",
+      "explanation": "将折外预测合并计算指标不一定等于各折分数的简单平均。",
+      "example": "用折外预测分析错误样本，用各折分数观察波动。",
+      "tags": [
+        "交叉验证预测与分数",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.cross_val_predict.html",
+      "referenceTitle": "scikit-learn 1.7：cross_val_predict"
+    },
+    {
+      "id": "skapi-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型选择接口",
+      "knowledgePoint": "克隆估计器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 clone 通常怎样复制一个估计器？",
+      "answer": "它创建参数相同但尚未拟合的新估计器，不复制已学习的数据状态。",
+      "explanation": "自定义估计器可通过相应接口改变克隆行为。",
+      "example": "交叉验证为不同折创建独立的未拟合模型。",
+      "tags": [
+        "克隆估计器",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.base.clone.html",
+      "referenceTitle": "scikit-learn 1.7：clone"
+    },
+    {
+      "id": "skapi-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估接口",
+      "knowledgePoint": "AUC输入分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二分类 roc_auc_score 应使用预测类别标签还是连续评分？",
+      "answer": "通常使用正类概率估计或决策函数分数，以评价不同阈值下的排序能力。",
+      "explanation": "若只传 0/1 类别，曲线和 AUC 的信息会非常有限。",
+      "example": "传入目标类概率列或 decision_function 输出。",
+      "tags": [
+        "AUC输入分数",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.roc_auc_score.html",
+      "referenceTitle": "scikit-learn 1.7：roc_auc_score"
+    }
+  ]
+}

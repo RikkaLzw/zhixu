@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "scipy-wilcoxon-paired-test",
+    "title": "SciPy 1.15.3：Wilcoxon 配对符号秩检验",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wilcoxon.html",
+    "type": "教材、官方文档与原论文",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "wilcpair-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Wilcoxon 配对检验",
+      "knowledgePoint": "配对数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Wilcoxon 符号秩检验主要处理哪类数据关系？",
+      "answer": "处理同一对象两次测量或其他有自然配对关系的差值。",
+      "explanation": "它不是把两组独立观测当作随意配对的数据。",
+      "example": "比较同一批样本处理前后的得分。",
+      "tags": [
+        "Wilcoxon 配对检验",
+        "配对数据"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wilcoxon.html"
+    },
+    {
+      "id": "wilcpair-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Wilcoxon 配对检验",
+      "knowledgePoint": "原假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy wilcoxon 对配对差值分布检验的原假设是什么？",
+      "answer": "差值分布关于零对称。",
+      "explanation": "不能把结果脱离配对差值分布的假设简单解释成所有情形下的均值检验。",
+      "example": "以每对 x−y 为差值进行检验。",
+      "tags": [
+        "Wilcoxon 配对检验",
+        "原假设"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wilcoxon.html"
+    },
+    {
+      "id": "wilcpair-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Wilcoxon 配对检验",
+      "knowledgePoint": "符号秩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Wilcoxon 符号秩检验怎样结合配对差值的大小和方向？",
+      "answer": "对差值绝对值排序赋秩，并根据差值正负分别汇总秩。",
+      "explanation": "对零差值的处理取决于选用的约定。",
+      "example": "差值 -2 和 +3 按绝对值排序，但符号不同。",
+      "tags": [
+        "Wilcoxon 配对检验",
+        "符号秩"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wilcoxon.html"
+    },
+    {
+      "id": "wilcpair-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Wilcoxon 配对检验",
+      "knowledgePoint": "检验统计量",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 wilcoxon 在双侧和单侧检验中分别返回哪种秩和统计量？",
+      "answer": "双侧返回正、负差值秩和中较小的一个；单侧返回正差值秩和。",
+      "explanation": "p 值的尾部方向另由 alternative 指定。",
+      "example": "同一差值样本的双侧统计量可能小于单侧统计量。",
+      "tags": [
+        "Wilcoxon 配对检验",
+        "检验统计量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wilcoxon.html"
+    },
+    {
+      "id": "wilcpair-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Wilcoxon 配对检验",
+      "knowledgePoint": "零差值处理",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "SciPy wilcoxon 的 wilcox、pratt 和 zsplit 如何处理零差值？",
+      "answer": "wilcox 丢弃零差值；pratt 让零参与排序后丢弃其秩；zsplit 把零的秩在正负两侧平分。",
+      "explanation": "不同约定可能改变统计量及 p 值。",
+      "example": "出现完全相等的配对观测时需明确零处理方式。",
+      "tags": [
+        "Wilcoxon 配对检验",
+        "零差值处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wilcoxon.html"
+    },
+    {
+      "id": "wilcpair-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Wilcoxon 配对检验",
+      "knowledgePoint": "并列与精确法",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 wilcoxon 指定 method=\"exact\"，存在并列绝对差值或零差值时仍一定得到精确 p 值吗？",
+      "answer": "不一定；并列或零差值会改变零假设下统计量分布。",
+      "explanation": "名称中的 exact 不消除这些数据条件的影响。",
+      "example": "大量相同差值时应检查方法和文档。",
+      "tags": [
+        "Wilcoxon 配对检验",
+        "并列与精确法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wilcoxon.html"
+    },
+    {
+      "id": "wilcpair-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Wilcoxon 配对检验",
+      "knowledgePoint": "浮点差值",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "向 SciPy wilcoxon 分别传入浮点 x 和 y 时，为什么文档建议注意差值舍入？",
+      "answer": "浮点减法可能把理论相等的差值算成略有不同，影响并列秩。",
+      "explanation": "可根据测量精度先计算并适当舍入差值，再传入检验。",
+      "example": "多次测量的差值可能只因浮点误差而被分到不同秩。",
+      "tags": [
+        "Wilcoxon 配对检验",
+        "浮点差值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wilcoxon.html"
+    },
+    {
+      "id": "wilcpair-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Wilcoxon 配对检验",
+      "knowledgePoint": "连续性修正",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "SciPy wilcoxon 的 correction=True 在什么情况下影响统计检验？",
+      "answer": "使用正态近似时，对秩统计量应用连续性修正。",
+      "explanation": "它不会把近似检验变为精确检验。",
+      "example": "method=\"asymptotic\" 时可按分析方案决定是否启用修正。",
+      "tags": [
+        "Wilcoxon 配对检验",
+        "连续性修正"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wilcoxon.html"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import { ActivityIndicator, AppState, BackHandler, Pressable, StyleSheet, Text, 
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { ActionButton } from './src/components/ui';
 import { StudyScope } from './src/lib/scheduler';
+import { enabledStudyLevels } from './src/levels';
 import { EditorScreen } from './src/screens/EditorScreen';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { LibraryScreen } from './src/screens/LibraryScreen';
@@ -12,7 +13,7 @@ import { SettingsScreen } from './src/screens/SettingsScreen';
 import { StatsScreen } from './src/screens/StatsScreen';
 import { StudyScreen } from './src/screens/StudyScreen';
 import { colors } from './src/theme';
-import { CategoryId, StudyCard, TopicId } from './src/types';
+import { CategoryId, StudyCard, StudyLevel, TopicId } from './src/types';
 import { useStudyData } from './src/useStudyData';
 
 type Tab = 'home' | 'library' | 'stats';
@@ -32,6 +33,8 @@ function StudyApp() {
   const [topic, setTopic] = useState<TopicId | undefined>();
   const [sourceId, setSourceId] = useState<string | undefined>();
   const [query, setQuery] = useState('');
+  const [libraryStudySet, setLibraryStudySet] = useState<NonNullable<StudyScope['studySet']>>('regular');
+  const [libraryLevel, setLibraryLevel] = useState<StudyLevel | undefined>();
   const [studyScope, setStudyScope] = useState<StudyScope>({});
   const [editing, setEditing] = useState<StudyCard | undefined>();
   const [now, setNow] = useState(Date.now());
@@ -89,20 +92,25 @@ function StudyApp() {
   } else if (overlay === 'editor') {
     content = <EditorScreen card={editing} initialCategory={category} initialTopic={topic} onSave={store.saveCard} onClose={() => setOverlay(null)} />;
   } else if (overlay === 'settings') {
-    content = <SettingsScreen dailyLimit={data.settings.dailyNewLimit} onLimit={store.setDailyLimit} onClose={() => setOverlay(null)} />;
+    content = <SettingsScreen dailyLimit={data.settings.dailyNewLimit} cards={data.cards} enabledLevels={enabledStudyLevels(data.settings)}
+      onLimit={store.setDailyLimit} onLevels={store.setEnabledLevels} onClose={() => setOverlay(null)} />;
   } else if (tab === 'home') {
     content = <HomeScreen data={data} now={now} onStudy={() => startStudy()} onSettings={() => setOverlay('settings')} onCategory={(selected) => {
       setCategory(selected);
       setTopic(undefined);
       setSourceId(undefined);
       setQuery('');
+      setLibraryStudySet('regular');
+      setLibraryLevel(undefined);
       setTab('library');
     }} />;
   } else if (tab === 'library') {
     content = <LibraryScreen data={data} now={now} category={category} onCategory={(selected) => {
       setCategory(selected);
       setTopic(undefined);
-    }} topic={topic} onTopic={setTopic} sourceId={sourceId} onSource={setSourceId} query={query} onQuery={setQuery} onAdd={() => {
+    }} topic={topic} onTopic={setTopic} sourceId={sourceId} onSource={setSourceId} query={query} onQuery={setQuery}
+      studySet={libraryStudySet} onStudySet={setLibraryStudySet} level={libraryLevel} onLevel={setLibraryLevel}
+      onSettings={() => setOverlay('settings')} onAdd={() => {
       setEditing(undefined);
       setOverlay('editor');
     }} onEdit={(card) => {

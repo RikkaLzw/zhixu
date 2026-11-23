@@ -1,0 +1,603 @@
+{
+  "source": {
+    "id": "shortest-path-algorithms-foundations",
+    "title": "CP-Algorithms 与 Princeton Algorithms 4.4：最短路径算法",
+    "url": "https://cp-algorithms.com/graph/dijkstra.html",
+    "type": "算法教材与公开课程材料",
+    "note": "依据 Dijkstra、Bellman-Ford、Floyd-Warshall 和 Princeton 有向无环图最短路材料逐题整理；各算法的边权和图结构前提在卡片中注明。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "spath-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Dijkstra 初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单源 Dijkstra 算法开始时通常怎样初始化距离估计？",
+      "answer": "起点距离设为 0，其余节点设为无穷大或不可达标记。",
+      "explanation": "只有从起点可达的节点才会通过松弛逐渐获得有限距离。",
+      "example": "以 s 为起点时设 dist[s]=0，其他 dist[v]=∞。",
+      "tags": [
+        "Dijkstra",
+        "距离初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "spath-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "优先队列 Dijkstra",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用优先队列实现 Dijkstra 时，队列中的条目通常按什么键排序？",
+      "answer": "按当前已知的起点到该节点的距离估计从小到大排序。",
+      "explanation": "每次取出最小估计值的候选节点，并尝试改进其出边终点的距离。",
+      "example": "队列中距离 4 的节点会先于距离 9 的节点处理。",
+      "tags": [
+        "Dijkstra",
+        "优先队列"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "spath-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Dijkstra 过期队列项",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "用二叉堆实现 Dijkstra 且不支持 decrease-key 时，为什么取出节点后常要检查队列项是否过期？",
+      "answer": "同一节点距离改善时可插入新条目，旧条目仍留在堆中；过期条目的距离不再等于该节点的当前距离。",
+      "explanation": "跳过过期项可避免重复扫描邻接边，但不影响算法正确性。",
+      "example": "节点 v 的距离从 12 降到 7 后，堆中的 (12,v) 可在弹出时直接忽略。",
+      "tags": [
+        "Dijkstra",
+        "二叉堆",
+        "过期条目"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "spath-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Dijkstra 节点定型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在边权非负的 Dijkstra 中，节点何时可视为距离已定型？",
+      "answer": "当它以当前最小的有效距离从优先队列中取出时，其距离可视为最终最短距离。",
+      "explanation": "前提是所有相关边权非负；存在负权边时该贪心定型论证不成立。",
+      "example": "取出目标 t 的有效条目后，可确认其距离不会再被其他未处理节点改小。",
+      "tags": [
+        "Dijkstra",
+        "节点定型",
+        "非负边权"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "spath-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Dijkstra 提前终止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "只求一个目标节点的 Dijkstra 距离时，何时可以安全提前停止？",
+      "answer": "目标节点以当前有效的最小距离从优先队列中取出并定型时可以停止。",
+      "explanation": "在目标首次被发现时停止并不安全，因为之后可能找到更短路径。",
+      "example": "t 被加入队列时距离为 20，稍后降到 11；应等到距离 11 的有效条目弹出。",
+      "tags": [
+        "Dijkstra",
+        "提前终止",
+        "单目标最短路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "spath-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "加权路径恢复",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "Dijkstra 找到最短距离后，如何恢复一条对应路径？",
+      "answer": "每次成功松弛时记录终点的前驱节点，再从目标沿前驱回溯到起点并反转序列。",
+      "explanation": "若存在多条等长最短路，单个前驱数组通常只保存其中一条。",
+      "example": "记录 prev[v]=u 表示当前最短路径到 v 的最后一条边来自 u。",
+      "tags": [
+        "Dijkstra",
+        "路径恢复",
+        "前驱"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "spath-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "堆 Dijkstra 复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "邻接表配二叉堆实现 Dijkstra 的常见时间复杂度上界是什么？",
+      "answer": "常见实现为 O((V+E) log V)，其中 V 是顶点数，E 是边数。",
+      "explanation": "具体界限依堆实现、图表示和是否使用 decrease-key 而略有差异。",
+      "example": "稀疏图通常适合邻接表和堆，避免反复扫描所有顶点对。",
+      "tags": [
+        "Dijkstra",
+        "时间复杂度",
+        "二叉堆"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "spath-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "稠密图 Dijkstra",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "稠密图上用数组扫描未定型顶点实现 Dijkstra，为什么可能比二叉堆更合适？",
+      "answer": "数组扫描每轮 O(V)，总计约 O(V²+E)；当 E 接近 V² 时，堆操作未必带来实际优势。",
+      "explanation": "适用性取决于图密度、数据布局和实现常数。",
+      "example": "顶点很多且边接近完全图时，可比较数组版本和堆版本的实际成本。",
+      "tags": [
+        "Dijkstra",
+        "稠密图",
+        "复杂度"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "spath-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "多源 Dijkstra",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "怎样用一次 Dijkstra 求每个节点到最近一组源点的距离？",
+      "answer": "把所有源点的距离初始化为 0 并同时放入优先队列，其余节点初始化为无穷大。",
+      "explanation": "该方法等价于增加一个连向所有源点的零权虚拟超级源点。",
+      "example": "要计算城市到最近仓库的距离，可把所有仓库同时作为起点。",
+      "tags": [
+        "Dijkstra",
+        "多源最短路"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/44sp/"
+    },
+    {
+      "id": "spath-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "零权边",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dijkstra 的边权非负条件是否允许出现零权边？",
+      "answer": "允许；非负条件包括权重为零的边。",
+      "explanation": "零权边不会破坏每次取出最小有效距离时的定型性质。",
+      "example": "表示两个状态间无额外代价的转换时，可以使用权重为 0 的边。",
+      "tags": [
+        "Dijkstra",
+        "零权边"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "spath-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Bellman-Ford 松弛轮数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bellman-Ford 为什么对所有边进行至多 V−1 轮松弛？",
+      "answer": "没有相关负环的最短简单路径最多包含 V−1 条边，每轮松弛可扩展一条边的路径范围。",
+      "explanation": "若某顶点在第 V 轮仍可被改善且从源点可达，则存在可达负权环。",
+      "example": "图有 6 个顶点时，最多进行 5 轮完整松弛即可覆盖任意简单路径。",
+      "tags": [
+        "Bellman-Ford",
+        "边松弛",
+        "复杂度"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/bellman_ford.html"
+    },
+    {
+      "id": "spath-012",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Bellman-Ford 提前停止",
+      "questionType": "优化与诊断",
+      "origin": "自行整理",
+      "question": "Bellman-Ford 某一轮完整扫描没有更新任何距离时，可以做什么优化？",
+      "answer": "可以提前结束，因为后续轮次也不会再产生更短距离。",
+      "explanation": "实现必须确认这一轮扫描了相关边，并正确处理不可达起点。",
+      "example": "链路较少的图可能在少于 V−1 轮后就完成收敛。",
+      "tags": [
+        "Bellman-Ford",
+        "提前停止"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/bellman_ford.html"
+    },
+    {
+      "id": "spath-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Bellman-Ford 负权边",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Bellman-Ford 相比 Dijkstra 在边权方面有什么适用优势？",
+      "answer": "在没有从源点可达负权环的情况下，Bellman-Ford 可以处理负权边。",
+      "explanation": "负权环会让环上及其可达后继节点的路径代价可无限降低，因此不存在有限最短距离。",
+      "example": "有一个负权边但没有负权环的图仍可用 Bellman-Ford 求有限最短路。",
+      "tags": [
+        "Bellman-Ford",
+        "负权边"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/bellman_ford.html"
+    },
+    {
+      "id": "spath-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "可达负环检测",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "Bellman-Ford 如何检测从指定源点可达的负权环？",
+      "answer": "完成 V−1 轮松弛后再扫描边；若仍能改善一个从源点可达的节点，就存在可达负权环。",
+      "explanation": "不可达区域中的负环不会影响该源点的最短距离。",
+      "example": "若边 u→v 仍可改善且 dist[u] 有限，说明可达路径可通过负环继续降低。",
+      "tags": [
+        "Bellman-Ford",
+        "负权环检测"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/bellman_ford.html"
+    },
+    {
+      "id": "spath-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "不可达负权环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "指定源点不可达区域中的负权环会让该源点到可达节点的距离无定义吗？",
+      "answer": "不会；只有从该源点可达的负权环才会影响相应单源最短路。",
+      "explanation": "做负环检测时应确认候选环从源点可达，避免把无穷大标记参与普通加法。",
+      "example": "源点位于分离的连通分量时，另一分量的负环不改变源点所在分量的距离。",
+      "tags": [
+        "Bellman-Ford",
+        "可达性",
+        "负权环"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/bellman_ford.html"
+    },
+    {
+      "id": "spath-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "无穷距离溢出",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "Bellman-Ford 中为什么不能对不可达标记直接加边权？",
+      "answer": "若标记是有限的大整数，直接相加可能溢出并被误当成更短的有效距离。",
+      "explanation": "应先判断起点距离是否有限，并选择足够宽的数值类型或明确的无穷值表示。",
+      "example": "仅当 dist[u] != INF 时才计算 dist[u] + w。",
+      "tags": [
+        "Bellman-Ford",
+        "整数溢出",
+        "不可达"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/bellman_ford.html"
+    },
+    {
+      "id": "spath-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "DAG 最短路与负权",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "为什么 DAG 最短路径可在存在负权边时仍用拓扑序计算？",
+      "answer": "DAG 没有有向环，按拓扑序处理时每个顶点的所有前驱已先处理，不需要依赖边权非负的贪心定型。",
+      "explanation": "负权环不可能存在于 DAG 中。",
+      "example": "对拓扑序中的每个节点扫描出边并松弛，即可处理带负权边的有向无环图。",
+      "tags": [
+        "DAG",
+        "最短路径",
+        "拓扑序"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/44sp/"
+    },
+    {
+      "id": "spath-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "DAG 最短路复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用拓扑排序和边松弛求 DAG 单源最短路的时间复杂度通常是多少？",
+      "answer": "使用邻接表时为 O(V+E)。",
+      "explanation": "拓扑排序与每条边至多一次的松弛都可在线性规模内完成。",
+      "example": "任务依赖图若有 100 个顶点、300 条边，算法工作量与 400 的量级成正比。",
+      "tags": [
+        "DAG",
+        "最短路径",
+        "时间复杂度"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/44sp/"
+    },
+    {
+      "id": "spath-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "DAG 最长路",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 DAG 中求最长路径时，拓扑序动态规划与最短路径有什么关系？",
+      "answer": "可以沿拓扑序把最小化松弛改为最大化更新，使用相同的无环依赖顺序。",
+      "explanation": "这适用于 DAG；一般含环图的最长简单路径问题则不能直接使用该线性算法。",
+      "example": "项目依赖 DAG 中可计算一条关键路径的最大累计工期。",
+      "tags": [
+        "DAG",
+        "最长路径",
+        "动态规划"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/44sp/"
+    },
+    {
+      "id": "spath-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Floyd-Warshall 用途",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Floyd-Warshall 算法主要计算哪类最短路径结果？",
+      "answer": "它计算图中所有顶点对之间的最短距离。",
+      "explanation": "它适合顶点规模适中且需要大量点对查询的场景，稠密图上也常用。",
+      "example": "一次计算后可查询任意城市对之间的最短距离。",
+      "tags": [
+        "Floyd-Warshall",
+        "全源最短路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html"
+    },
+    {
+      "id": "spath-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Floyd-Warshall 状态转移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Floyd-Warshall 的第 k 轮状态转移比较哪两种路径？",
+      "answer": "比较当前 i 到 j 的距离与经由 k 的距离 dist[i][k]+dist[k][j]，取较小值。",
+      "explanation": "该轮把前 k 个顶点作为可用中间节点集合。",
+      "example": "若 i→k 为 3、k→j 为 4，而直接已知 i→j 为 10，则更新为 7。",
+      "tags": [
+        "Floyd-Warshall",
+        "动态规划",
+        "中间顶点"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html"
+    },
+    {
+      "id": "spath-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Floyd-Warshall 循环顺序",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "原地实现 Floyd-Warshall 时，为什么通常把中间顶点 k 放在最外层循环？",
+      "answer": "这样每轮都在前一轮允许的中间顶点集合基础上递推，符合算法的动态规划定义。",
+      "explanation": "错误循环顺序可能不再保证每个子问题按依赖顺序计算。",
+      "example": "标准写法依次枚举 k，再枚举所有 i、j 并尝试经 k 更新。",
+      "tags": [
+        "Floyd-Warshall",
+        "循环顺序",
+        "动态规划"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html"
+    },
+    {
+      "id": "spath-023",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Floyd-Warshall 初始化",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "Floyd-Warshall 的距离矩阵通常怎样初始化对角线和已有边？",
+      "answer": "dist[i][i] 设为 0，已有边设为相应最小边权，其余点对设为无穷大。",
+      "explanation": "若存在平行边，应保留较小的直接边权。",
+      "example": "自环权重为 5 时，零长度的 i 到自身路径仍使 dist[i][i]=0。",
+      "tags": [
+        "Floyd-Warshall",
+        "初始化",
+        "距离矩阵"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html"
+    },
+    {
+      "id": "spath-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Floyd-Warshall 负权环",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "Floyd-Warshall 完成后，怎样从距离矩阵识别负权环？",
+      "answer": "若存在顶点 i 使 dist[i][i] < 0，则图中存在负权环。",
+      "explanation": "检测到负环后，与该环相连且可受其影响的点对不存在有限最短距离。",
+      "example": "若 d[v][v] 最终变成 -2，说明从 v 出发回到 v 的某个环权重为负。",
+      "tags": [
+        "Floyd-Warshall",
+        "负权环检测"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html"
+    },
+    {
+      "id": "spath-025",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Floyd-Warshall 路径恢复",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "Floyd-Warshall 如何在距离之外恢复点对路径？",
+      "answer": "除距离矩阵外，还可维护下一跳或前驱矩阵，并在每次改进时同步更新路径信息。",
+      "explanation": "路径矩阵的更新约定必须与初始化和递推方式一致。",
+      "example": "若 i 到 j 的更短路经 k，则把 i 到 j 的下一跳更新为 i 到 k 的下一跳。",
+      "tags": [
+        "Floyd-Warshall",
+        "路径恢复",
+        "下一跳矩阵"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html"
+    },
+    {
+      "id": "spath-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Floyd-Warshall 复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Floyd-Warshall 的常见时间和空间复杂度分别是多少？",
+      "answer": "时间复杂度为 O(V³)，使用距离矩阵时空间复杂度为 O(V²)。",
+      "explanation": "额外维护路径矩阵会增加常数倍的矩阵空间。",
+      "example": "顶点数翻倍时，三重循环的主要工作量约增至八倍。",
+      "tags": [
+        "Floyd-Warshall",
+        "时间复杂度",
+        "空间复杂度"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html"
+    },
+    {
+      "id": "spath-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Johnson 算法",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Johnson 算法适合什么样的全源最短路径问题？",
+      "answer": "它适合稀疏图中允许负权边但不存在负权环的全源最短路径计算。",
+      "explanation": "算法先计算顶点势能并重标边权，再对各源点运行 Dijkstra。",
+      "example": "当稀疏图顶点较多而 Floyd-Warshall 的 O(V³) 过高时，可考虑 Johnson。",
+      "tags": [
+        "Johnson",
+        "全源最短路",
+        "稀疏图"
+      ],
+      "evidence": "source",
+      "reference": "https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.weighted.johnson.html"
+    },
+    {
+      "id": "spath-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "Johnson 重赋权",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Johnson 算法如何在保留最短路径关系的同时消除负权边？",
+      "answer": "用势能 h 重赋权为 w'(u,v)=w(u,v)+h(u)-h(v)，使边权非负；任意同起终点路径的相对优劣保持不变。",
+      "explanation": "重赋权依赖先求得的可行势能；若存在负权环则无法建立所需势能。",
+      "example": "重赋权后运行 Dijkstra，再用势能换算回原图距离。",
+      "tags": [
+        "Johnson",
+        "重赋权",
+        "势能"
+      ],
+      "evidence": "source",
+      "reference": "https://networkx.org/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.weighted.johnson.html"
+    },
+    {
+      "id": "spath-029",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "最短路算法选择",
+      "questionType": "场景选型",
+      "origin": "自行整理",
+      "question": "只需单源、边权非负且图较稀疏时，常优先考虑哪种最短路算法？",
+      "answer": "常优先考虑邻接表配优先队列的 Dijkstra。",
+      "explanation": "若允许负权边、图是 DAG 或需要所有点对结果，应根据结构和查询范围选择其他算法。",
+      "example": "非负道路网络上的单源导航查询通常可用 Dijkstra。",
+      "tags": [
+        "Dijkstra",
+        "算法选型",
+        "稀疏图"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/44sp/"
+    },
+    {
+      "id": "spath-030",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "加权最短路径算法",
+      "knowledgePoint": "最短路数值范围",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "实现最短路径算法时，除了检查 INF 加法外，还应如何选择距离数值类型？",
+      "answer": "应估算最大路径长度和中间计算范围，使用足够宽的整数或合适数值类型，并检查加法溢出。",
+      "explanation": "正确算法也可能因整数溢出、浮点误差或哨兵值选择不当而产生错误结果。",
+      "example": "边权与顶点数量较大时，32 位整数可能装不下最长的候选路径和。",
+      "tags": [
+        "最短路径",
+        "数值范围",
+        "溢出"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/44sp/"
+    }
+  ]
+}

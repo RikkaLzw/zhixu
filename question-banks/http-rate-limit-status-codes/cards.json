@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "http-rate-limit-status-codes",
+    "title": "RFC 6585：常见 HTTP 错误状态",
+    "url": "https://www.rfc-editor.org/rfc/rfc6585.html",
+    "type": "教材、标准与官方文档",
+    "note": "依据逐题引用的教材、标准或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "httplimit-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 限流与条件状态码",
+      "knowledgePoint": "前提条件缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 428 Precondition Required 表示服务器要求客户端补充什么？",
+      "answer": "服务器要求请求带上条件，例如使用 If-Match 发起条件更新。",
+      "explanation": "这一机制可帮助避免基于旧状态覆盖其他修改。",
+      "example": "客户端先取得实体标签再提交条件更新。",
+      "tags": [
+        "HTTP 限流与条件状态码",
+        "前提条件缺失"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6585.html#section-3"
+    },
+    {
+      "id": "httplimit-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 限流与条件状态码",
+      "knowledgePoint": "限流响应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 429 Too Many Requests 通常表示什么？",
+      "answer": "用户在一定时间内发送了过多请求，触发服务端限流。",
+      "explanation": "服务器可在 Retry-After 中提示下次请求前应等待多久。",
+      "example": "超过接口调用频率限制后收到 429。",
+      "tags": [
+        "HTTP 限流与条件状态码",
+        "限流响应"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6585.html#section-4"
+    },
+    {
+      "id": "httplimit-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 限流与条件状态码",
+      "knowledgePoint": "请求头过大",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 431 Request Header Fields Too Large 指内容体过大吗？",
+      "answer": "不是；它表示请求头字段整体或某个字段过大，服务端拒绝处理。",
+      "explanation": "可在缩小请求头后重新提交。",
+      "example": "Cookie 请求头过大导致服务器返回 431。",
+      "tags": [
+        "HTTP 限流与条件状态码",
+        "请求头过大"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6585.html#section-5"
+    },
+    {
+      "id": "httplimit-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 限流与条件状态码",
+      "knowledgePoint": "网络认证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 511 Network Authentication Required 提示客户端需要完成什么？",
+      "answer": "需要先完成网络接入认证；该状态面向拦截代理等网络接入场景。",
+      "explanation": "它与目标资源自身返回的认证挑战不同。",
+      "example": "访问公共网络时先通过网络登录门户。",
+      "tags": [
+        "HTTP 限流与条件状态码",
+        "网络认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6585.html#section-6"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "clusterfuzzlite-ci-fuzzing",
+    "title": "ClusterFuzzLite 固定版本：CI 模糊测试",
+    "url": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/running_clusterfuzzlite.md",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的官方文档或论文自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "cflite-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "CI 模糊测试",
+      "knowledgePoint": "代码变更模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterFuzzLite 的 code-change 模式主要面向什么场景？",
+      "answer": "针对代码审查、拉取请求或提交中的变更运行较短的模糊测试。",
+      "explanation": "运行时间和使用的目标取决于配置。",
+      "example": "在合并前对修改运行模糊测试。",
+      "tags": [
+        "CI 模糊测试",
+        "代码变更模式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/running_clusterfuzzlite.md"
+    },
+    {
+      "id": "cflite-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "CI 模糊测试",
+      "knowledgePoint": "批量模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterFuzzLite 的 batch 模式与 code-change 模式在运行方式上有什么主要区别？",
+      "answer": "batch 通常运行更长时间，发现崩溃后仍继续其他目标；code-change 在发现一次崩溃后退出。",
+      "explanation": "具体运行时长可以配置。",
+      "example": "定时运行较长的批量任务。",
+      "tags": [
+        "CI 模糊测试",
+        "批量模式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/running_clusterfuzzlite.md"
+    },
+    {
+      "id": "cflite-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CI 模糊测试",
+      "knowledgePoint": "语料复用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterFuzzLite 的 batch 模式生成的语料可如何复用？",
+      "answer": "保存的语料可供后续 batch、code-change 和覆盖率报告使用。",
+      "explanation": "覆盖率模式使用该语料生成报告，展示代码触达情况；具体保存方式取决于 CI 系统。",
+      "example": "每日积累的语料用于后续代码变更测试。",
+      "tags": [
+        "CI 模糊测试",
+        "语料复用"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/running_clusterfuzzlite.md"
+    },
+    {
+      "id": "cflite-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CI 模糊测试",
+      "knowledgePoint": "语料裁剪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterFuzzLite 的 prune 模式主要做什么？",
+      "answer": "通过移除不增加覆盖的测试输入来精简语料。",
+      "explanation": "裁剪以工具采用的覆盖反馈为依据，不等于证明输入没有其他价值。",
+      "example": "减少长期批量运行积累的冗余样本。",
+      "tags": [
+        "CI 模糊测试",
+        "语料裁剪"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/running_clusterfuzzlite.md"
+    },
+    {
+      "id": "cflite-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CI 模糊测试",
+      "knowledgePoint": "受影响目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterFuzzLite 如何利用覆盖率报告决定 code-change 要运行哪些模糊目标？",
+      "answer": "如果能从覆盖信息确定受变更影响的目标，就只运行这些目标；否则运行所有目标。",
+      "explanation": "筛选准确性依赖已有覆盖信息。",
+      "example": "只对已覆盖修改代码的目标执行快速测试。",
+      "tags": [
+        "CI 模糊测试",
+        "受影响目标"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/running_clusterfuzzlite.md"
+    },
+    {
+      "id": "cflite-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CI 模糊测试",
+      "knowledgePoint": "历史构建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterFuzzLite 的 continuous builds 任务为何保存旧构建？",
+      "answer": "供 code-change 检查崩溃原因是否由当前变更引入。",
+      "explanation": "没有该任务时，文档说明 code-change 会报告所有崩溃。",
+      "example": "用旧构建比较崩溃是否已经存在。",
+      "tags": [
+        "CI 模糊测试",
+        "历史构建"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/running_clusterfuzzlite.md"
+    },
+    {
+      "id": "cflite-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CI 模糊测试",
+      "knowledgePoint": "并行语料",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterFuzzLite 启用 parallel-fuzzing 时，不同进程如何共享发现的输入？",
+      "answer": "多个模糊进程使用共享语料目录，一个进程的新输入可供其他进程使用。",
+      "explanation": "可用进程数受 CI 环境的 CPU 资源限制。",
+      "example": "在多核 CI 运行多个模糊进程。",
+      "tags": [
+        "CI 模糊测试",
+        "并行语料"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/running_clusterfuzzlite.md"
+    },
+    {
+      "id": "cflite-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CI 模糊测试",
+      "knowledgePoint": "试运行模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterFuzzLite 的 dry-run=true 如何影响崩溃报告？",
+      "answer": "它不会因发现崩溃而将任务报告为失败，需要人工检查日志。",
+      "explanation": "文档将其定位为测试 ClusterFuzzLite 配置的选项。",
+      "example": "检查 CI 接入流程时临时启用 dry-run。",
+      "tags": [
+        "CI 模糊测试",
+        "试运行模式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/running_clusterfuzzlite.md"
+    },
+    {
+      "id": "cflite-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CI 模糊测试",
+      "knowledgePoint": "构建入口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterFuzzLite 的 build.sh 在构建集成中负责什么？",
+      "answer": "它在构建容器中编译项目和模糊目标，并把目标二进制输出到指定目录。",
+      "explanation": "应使用工具链提供的编译器与插桩选项。",
+      "example": "把 fuzz target 构建到容器的 OUT 目录。",
+      "tags": [
+        "CI 模糊测试",
+        "构建入口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/clusterfuzzlite/blob/52ecc61cb587ee99c26825a112a21abf19c7448c/docs/build_integration.md"
+    }
+  ]
+}

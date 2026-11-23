@@ -1,7 +1,10 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { getCategory } from '../src/categories';
+import { knowledgeAreaLabel } from '../src/knowledgeAreas';
 import { createInitialData } from '../src/data/seed';
+import { isResearchCard } from '../src/data/researchCards';
+import { cardLevel, studyLevelLabel } from '../src/levels';
 import { topicLabel } from '../src/topics';
 
 const directory = join(__dirname, '..', 'question-banks', 'normalized');
@@ -29,6 +32,7 @@ function field(value: string): string {
 
 const rows = cards.map((card) => {
   const answer = [escapeHtml(card.answer)];
+  if (card.origin) answer.push(`<b>整理方式：</b>${escapeHtml(card.origin)}`);
   if (card.explanation) answer.push(`<b>深入理解：</b>${[card.explanation, ...(card.otherExplanations ?? [])].map(escapeHtml).join('<br>')}`);
   if (card.example) answer.push(`<b>应用示例：</b>${[card.example, ...(card.otherExamples ?? [])].map(escapeHtml).join('<br>')}`);
   if (card.alternateQuestions?.length) answer.push(`<b>相关问法：</b>${card.alternateQuestions.map(escapeHtml).join('<br>')}`);
@@ -41,8 +45,13 @@ const rows = cards.map((card) => {
   }
   const tags = [
     'AI4SEC',
+    `编号::${cleanTag(card.id)}`,
     `方向::${cleanTag(getCategory(card.category).label)}`,
+    `知识范围::${cleanTag(knowledgeAreaLabel(card.knowledgeArea))}`,
     `主题::${cleanTag(topicLabel(card.topic))}`,
+    `阶段::${cleanTag(studyLevelLabel(cardLevel(card)))}`,
+    ...(card.subtopic ? [`子主题::${cleanTag(card.subtopic)}`] : []),
+    ...(isResearchCard(card) ? ['研究拓展'] : []),
     ...(card.tags ?? []).map(cleanTag),
   ].join(' ');
   return [field(escapeHtml(card.question)), field(answer.join('<br><br>')), field(tags)].join('\t');
@@ -50,4 +59,6 @@ const rows = cards.map((card) => {
 
 const header = ['#separator:Tab', '#html:true', '#columns:问题\t答案\t标签', '#tags column:3'];
 writeFileSync(join(directory, 'anki-import.tsv'), `${[...header, ...rows].join('\n')}\n`, 'utf8');
-console.log(`已导出 ${cards.length} 张卡片到 question-banks/normalized。`);
+const regularRows = rows.filter((_, index) => !isResearchCard(cards[index]));
+writeFileSync(join(directory, 'anki-regular.tsv'), `${[...header, ...regularRows].join('\n')}\n`, 'utf8');
+console.log(`已导出 ${cards.length} 张完整卡片，其中 ${regularRows.length} 张常规学习卡片。`);

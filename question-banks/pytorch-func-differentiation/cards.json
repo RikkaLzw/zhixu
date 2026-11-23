@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "pytorch-func-differentiation",
+    "title": "PyTorch 2.7：Jacobian 与函数变换",
+    "url": "https://pytorch.org/docs/2.7/generated/torch.func.jacrev.html",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "torchfunc-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 函数微分",
+      "knowledgePoint": "雅可比模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 jacrev 与 jacfwd 计算 Jacobian 时分别使用什么自动微分模式？",
+      "answer": "jacrev 使用反向模式；jacfwd 使用前向模式。",
+      "explanation": "两者在适用的可微函数上计算同一 Jacobian，但性能和算子覆盖可能不同。",
+      "example": "可按输入输出维度和算子支持情况选择。",
+      "tags": [
+        "PyTorch 函数微分",
+        "雅可比模式"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.func.jacrev.html",
+      "supportingReferences": [
+        {
+          "id": "pytorch-27-jacfwd",
+          "title": "PyTorch 2.7：torch.func.jacfwd",
+          "url": "https://pytorch.org/docs/2.7/generated/torch.func.jacfwd.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "torchfunc-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 函数微分",
+      "knowledgePoint": "微分参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.func.jacrev 的 argnums 参数用于什么？",
+      "answer": "它选择对函数的哪个位置参数求 Jacobian，也可指定多个参数。",
+      "explanation": "默认对第 0 个位置参数求导。",
+      "example": "对函数 f(x,y) 的 y 求导可设 argnums=1。",
+      "tags": [
+        "PyTorch 函数微分",
+        "微分参数"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.func.jacrev.html"
+    },
+    {
+      "id": "torchfunc-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 函数微分",
+      "knowledgePoint": "辅助输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.func.jacrev 设置 has_aux=True 时如何处理函数的辅助输出？",
+      "answer": "函数返回主要输出和辅助数据；变换对主要输出求 Jacobian，并返回辅助数据。",
+      "explanation": "辅助数据不作为求导目标。",
+      "example": "返回预测值和用于记录的中间信息。",
+      "tags": [
+        "PyTorch 函数微分",
+        "辅助输出"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.func.jacrev.html"
+    },
+    {
+      "id": "torchfunc-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 函数微分",
+      "knowledgePoint": "分块求雅可比",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.func.jacrev 设置 chunk_size=1 会怎样计算 Jacobian？",
+      "answer": "它按行逐个计算，相当于逐行循环。",
+      "explanation": "这可避开某些 vmap 限制，但速度和内存表现依具体函数而定。",
+      "example": "遇到向量化限制时可尝试逐行计算。",
+      "tags": [
+        "PyTorch 函数微分",
+        "分块求雅可比"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.func.jacrev.html"
+    },
+    {
+      "id": "torchfunc-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 函数微分",
+      "knowledgePoint": "前向乘积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.func.jvp 对输入点和切向量返回什么？",
+      "answer": "它返回函数在输入点的输出，以及 Jacobian 与切向量的乘积 Jv。",
+      "explanation": "Jv 描述沿给定输入方向的一阶输出变化。",
+      "example": "二维输入方向向量可得到对应的输出方向变化。",
+      "tags": [
+        "PyTorch 函数微分",
+        "前向乘积"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.func.jvp.html"
+    },
+    {
+      "id": "torchfunc-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 函数微分",
+      "knowledgePoint": "反向乘积接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.func.vjp 返回的 vjp_fn 接收什么并计算什么？",
+      "answer": "它接收输出空间的向量，返回该向量与 Jacobian 相乘得到的输入方向结果。",
+      "explanation": "返回结果按原始输入组织；不必显式构造完整 Jacobian。",
+      "example": "多输出函数可传入与输出形状匹配的权重。",
+      "tags": [
+        "PyTorch 函数微分",
+        "反向乘积接口"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.func.vjp.html"
+    },
+    {
+      "id": "torchfunc-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 函数微分",
+      "knowledgePoint": "向量化维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.vmap 的 in_dims=(0,None) 对两个参数分别怎样处理？",
+      "answer": "它沿第一个参数的第 0 维映射，并在各次映射中共享第二个参数。",
+      "explanation": "映射维度的大小需要与其他被映射输入兼容。",
+      "example": "对一批输入加上同一个偏移量。",
+      "tags": [
+        "PyTorch 函数微分",
+        "向量化维度"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.vmap.html"
+    },
+    {
+      "id": "torchfunc-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 函数微分",
+      "knowledgePoint": "随机操作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 vmap 默认遇到 PyTorch 随机操作会怎样？",
+      "answer": "默认 randomness=\"error\"，在映射函数内调用 PyTorch 随机操作会报错。",
+      "explanation": "可根据需求选择 same 或 different；该设置不控制 Python 或 NumPy 的随机数。",
+      "example": "映射函数内调用 torch.rand 时需显式决定随机性。",
+      "tags": [
+        "PyTorch 函数微分",
+        "随机操作"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.vmap.html"
+    },
+    {
+      "id": "torchfunc-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 函数微分",
+      "knowledgePoint": "Hessian组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 torch.func.hessian 默认采用哪种自动微分组合？",
+      "answer": "它使用前向覆盖反向的 jacfwd(jacrev(func))。",
+      "explanation": "若某算子缺少前向模式支持，可考虑 jacrev(jacrev(func))。",
+      "example": "对标量函数的二维输入计算 2×2 Hessian。",
+      "tags": [
+        "PyTorch 函数微分",
+        "Hessian组合"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.func.hessian.html"
+    }
+  ]
+}

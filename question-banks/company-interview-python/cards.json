@@ -1,0 +1,86 @@
+{
+  "source": {
+    "id": "company-interview-python",
+    "title": "快手公开面经：Python 数据处理",
+    "url": "https://www.nowcoder.com/discuss/651317",
+    "type": "公开面经合集",
+    "note": "公司、岗位、轮次及经历为分享者自述；有些资料由合集转载。逐题记录面经来源和独立技术依据，标注主题启发的题目并非原帖逐题提出。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "companypractice-py-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 面经",
+      "knowledgePoint": "浅拷贝与深拷贝",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 的浅拷贝和深拷贝对嵌套可变对象有什么区别？",
+      "answer": "浅拷贝创建外层对象，通常仍引用其中的原有子对象；深拷贝递归复制子对象，并通过记忆表处理已复制的对象。",
+      "explanation": "不同对象可自定义拷贝行为；不可变对象可能直接复用。",
+      "example": "复制包含子列表的列表后，修改子列表可观察两种方式的区别。",
+      "tags": [
+        "浅拷贝与深拷贝",
+        "Python 面经",
+        "公开面经",
+        "快手",
+        "地平线"
+      ],
+      "evidence": "application",
+      "referenceId": "company-kuaishou",
+      "reference": "https://www.nowcoder.com/discuss/651317",
+      "referenceTitle": "快手安全实习一面（个人自述，合集收录）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "python-copy-interview",
+          "title": "Python：浅拷贝和深拷贝",
+          "url": "https://docs.python.org/3/library/copy.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "company-horizon",
+          "title": "地平线机器人智能驾驶算法实习一面（2019届，作者自述）",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "companypractice-py-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 面经",
+      "knowledgePoint": "IPv4地址排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么对 IPv4 地址字符串直接按字典序排序，可能得到错误的数值顺序？",
+      "answer": "字典序逐字符比较，例如“10.192.2.4”可能排在“10.50.2.3”之前；应先解析为 IPv4 地址或四个数值段再排序。",
+      "explanation": "先校验地址合法性；此例只讨论 IPv4，不把 IPv4 和 IPv6 强行混排。",
+      "example": "用 ipaddress.IPv4Address 解析并排序 10.50.2.3 与 10.192.2.4。",
+      "tags": [
+        "IPv4地址排序",
+        "Python 面经",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "referenceId": "company-kuaishou",
+      "reference": "https://www.nowcoder.com/discuss/651317",
+      "referenceTitle": "快手安全实习一面（个人自述，合集收录）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "python-ip-interview",
+          "title": "Python：ipaddress 模块",
+          "url": "https://docs.python.org/3/library/ipaddress.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

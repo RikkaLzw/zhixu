@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "squad-v2-evaluation",
+    "title": "SQuAD 2.0：无答案与官方评分脚本",
+    "url": "https://github.com/rajpurkar/SQuAD-explorer/blob/09eac9971f46889fa057ff2c870bf71092ba9d55/evaluate-v2.0.py",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的固定版本或在线官方资料自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "squad2-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQuAD 问答评测",
+      "knowledgePoint": "无答案任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQuAD 2.0 相比只有可回答问题的抽取式问答，多要求模型判断什么？",
+      "answer": "判断段落中是否存在问题的答案，并在不可回答时选择不作答。",
+      "explanation": "能否拒答和答案片段是否正确都影响评测。",
+      "example": "段落没有所问信息时返回空答案。",
+      "tags": [
+        "SQuAD 问答评测",
+        "无答案任务"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1806.03822v1"
+    },
+    {
+      "id": "squad2-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQuAD 问答评测",
+      "knowledgePoint": "标准化规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQuAD 2.0 官方脚本怎样规范化英语答案文本？",
+      "answer": "转为小写并移除 ASCII 标点、英语冠词 a/an/the 和多余空白。",
+      "explanation": "这是该脚本的英语规则，不能直接视为适用于所有语言的通用分词。",
+      "example": "\"The Cat!\" 和 \"cat\" 在该规则下相同。",
+      "tags": [
+        "SQuAD 问答评测",
+        "标准化规则"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rajpurkar/SQuAD-explorer/blob/09eac9971f46889fa057ff2c870bf71092ba9d55/evaluate-v2.0.py"
+    },
+    {
+      "id": "squad2-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQuAD 问答评测",
+      "knowledgePoint": "精确匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQuAD 2.0 官方脚本的 exact match 怎样计算？",
+      "answer": "比较规范化后的预测文本和参考答案，完全相同记 1，否则记 0。",
+      "explanation": "该指标不直接评估答案语义等价。",
+      "example": "规范化后有额外词的答案不算精确匹配。",
+      "tags": [
+        "SQuAD 问答评测",
+        "精确匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rajpurkar/SQuAD-explorer/blob/09eac9971f46889fa057ff2c870bf71092ba9d55/evaluate-v2.0.py"
+    },
+    {
+      "id": "squad2-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQuAD 问答评测",
+      "knowledgePoint": "词级F1",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQuAD 2.0 官方脚本的 token F1 怎样处理重复词？",
+      "answer": "按词计数取预测与参考的交集，再计算精确率、召回率和 F1。",
+      "explanation": "每个词的重合数不超过双方出现次数的较小值。",
+      "example": "预测多次重复的词不能无限提高重合数。",
+      "tags": [
+        "SQuAD 问答评测",
+        "词级F1"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rajpurkar/SQuAD-explorer/blob/09eac9971f46889fa057ff2c870bf71092ba9d55/evaluate-v2.0.py"
+    },
+    {
+      "id": "squad2-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQuAD 问答评测",
+      "knowledgePoint": "多参考答案",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQuAD 2.0 官方脚本如何处理同一题的多个有效参考答案？",
+      "answer": "分别与每个参考答案比较，对每项指标取最高分。",
+      "explanation": "精确匹配和 F1 分别取各自最高值。",
+      "example": "预测与任一有效参考答案完全一致即可得满分。",
+      "tags": [
+        "SQuAD 问答评测",
+        "多参考答案"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rajpurkar/SQuAD-explorer/blob/09eac9971f46889fa057ff2c870bf71092ba9d55/evaluate-v2.0.py"
+    },
+    {
+      "id": "squad2-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQuAD 问答评测",
+      "knowledgePoint": "空答案评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQuAD 2.0 官方脚本在参考和预测都为空时，token F1 是多少？",
+      "answer": "为 1；如果只有一侧为空，则为 0。",
+      "explanation": "此规则用于处理无答案情况。",
+      "example": "不可回答题预测空字符串得到正确的空答案分数。",
+      "tags": [
+        "SQuAD 问答评测",
+        "空答案评分"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rajpurkar/SQuAD-explorer/blob/09eac9971f46889fa057ff2c870bf71092ba9d55/evaluate-v2.0.py"
+    },
+    {
+      "id": "squad2-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQuAD 问答评测",
+      "knowledgePoint": "拒答阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQuAD 2.0 官方脚本何时按无答案预测处理某题？",
+      "answer": "当提供的无答案概率严格大于配置阈值时，按无答案处理。",
+      "explanation": "概率恰好等于阈值时不触发该覆盖。",
+      "example": "阈值为 0.5 时，0.6 的无答案概率触发拒答。",
+      "tags": [
+        "SQuAD 问答评测",
+        "拒答阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rajpurkar/SQuAD-explorer/blob/09eac9971f46889fa057ff2c870bf71092ba9d55/evaluate-v2.0.py"
+    },
+    {
+      "id": "squad2-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQuAD 问答评测",
+      "knowledgePoint": "缺失预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQuAD 2.0 官方脚本发现某题缺少预测时如何处理原始分数？",
+      "answer": "脚本打印缺失提示并跳过该题的原始分数计算。",
+      "explanation": "应检查预测是否覆盖全部题目，避免把不完整结果当作完整评测。",
+      "example": "比较评分前核对问题 ID 集合。",
+      "tags": [
+        "SQuAD 问答评测",
+        "缺失预测"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rajpurkar/SQuAD-explorer/blob/09eac9971f46889fa057ff2c870bf71092ba9d55/evaluate-v2.0.py"
+    }
+  ]
+}

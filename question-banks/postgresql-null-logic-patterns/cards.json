@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "postgresql-null-logic-patterns",
+    "title": "PostgreSQL 17 文档：三值逻辑与匹配",
+    "url": "https://www.postgresql.org/docs/17/functions-comparison.html",
+    "type": "官方文档与系统手册",
+    "note": "按逐题引用的文档自行整理；示例为自编，具体适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgnlogic-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 空值与模式匹配",
+      "knowledgePoint": "闭区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 x BETWEEN a AND b 是否包含上下边界？",
+      "answer": "包含；它等价于 x >= a AND x <= b。",
+      "explanation": "普通比较遇到 NULL 时可能产生未知结果。",
+      "example": "值 10 属于 BETWEEN 10 AND 20。",
+      "tags": [
+        "SQL 空值与模式匹配",
+        "闭区间"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-comparison.html"
+    },
+    {
+      "id": "pgnlogic-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 空值与模式匹配",
+      "knowledgePoint": "未知取反",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的三值逻辑中，NOT NULL 的结果是什么？",
+      "answer": "结果仍为 NULL，表示未知。",
+      "explanation": "不能把未知简单视为假后再取反。",
+      "example": "WHERE NOT NULL 不会选中该行。",
+      "tags": [
+        "SQL 空值与模式匹配",
+        "未知取反"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-logical.html"
+    },
+    {
+      "id": "pgnlogic-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 空值与模式匹配",
+      "knowledgePoint": "与假值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的三值逻辑中，FALSE AND NULL 与 TRUE OR NULL 分别是什么？",
+      "answer": "前者为 FALSE，后者为 TRUE。",
+      "explanation": "这两个结果不依赖未知值是 TRUE 还是 FALSE。",
+      "example": "FALSE AND NULL 不会产生 NULL。",
+      "tags": [
+        "SQL 空值与模式匹配",
+        "与假值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-logical.html"
+    },
+    {
+      "id": "pgnlogic-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 空值与模式匹配",
+      "knowledgePoint": "布尔测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 中 NULL IS TRUE 的结果是什么？",
+      "answer": "结果为 FALSE。",
+      "explanation": "IS TRUE 测试结果是否为真；它本身不会返回未知。",
+      "example": "对可能为空的布尔表达式可显式使用 IS TRUE。",
+      "tags": [
+        "SQL 空值与模式匹配",
+        "布尔测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-comparison.html"
+    },
+    {
+      "id": "pgnlogic-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 空值与模式匹配",
+      "knowledgePoint": "空串与空值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中空字符串与 NULL 表示相同的值吗？",
+      "answer": "不相同；空字符串是长度为零的字符串，NULL 表示缺失或未知值。",
+      "explanation": "判断 NULL 应使用 IS NULL 等谓词。",
+      "example": "空字符串 IS NULL 的结果为 FALSE。",
+      "tags": [
+        "SQL 空值与模式匹配",
+        "空串与空值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-comparison.html"
+    },
+    {
+      "id": "pgnlogic-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 空值与模式匹配",
+      "knowledgePoint": "LIKE 整体匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 LIKE 模式默认与字符串的哪部分匹配？",
+      "answer": "模式必须匹配整个字符串；要查找任意位置的子串，通常在两侧加 %。",
+      "explanation": "LIKE 与正则表达式的匹配规则不同。",
+      "example": "LIKE '%cat%' 可匹配包含 cat 的文本。",
+      "tags": [
+        "SQL 空值与模式匹配",
+        "LIKE 整体匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-matching.html"
+    },
+    {
+      "id": "pgnlogic-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 空值与模式匹配",
+      "knowledgePoint": "NULLIF",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 NULLIF(a,b) 在两个参数相等时返回什么？",
+      "answer": "返回 NULL；不相等时返回第一个参数。",
+      "explanation": "参数会按所用比较操作符进行必要的类型转换。",
+      "example": "NULLIF(0,0) 返回 NULL。",
+      "tags": [
+        "SQL 空值与模式匹配",
+        "NULLIF"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-conditional.html"
+    }
+  ]
+}

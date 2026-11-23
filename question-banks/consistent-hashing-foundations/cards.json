@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "consistent-hashing-foundations",
+    "title": "Dynamo 论文：一致性哈希与虚拟节点",
+    "url": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，具体条件见各卡。在线文档以 2026-11-21 查看内容为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "chashcs-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "一致性哈希目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分布式存储为什么会使用一致性哈希分配数据？",
+      "answer": "让节点集合发生变化时，尽量只重新分配部分键，减小数据迁移或缓存失效的范围。",
+      "explanation": "实际负载均衡和迁移成本还取决于哈希分布、节点配置及数据量。",
+      "example": "增加缓存节点后只调整受影响的键。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "一致性哈希目的"
+      ],
+      "evidence": "source",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    },
+    {
+      "id": "chashcs-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "哈希环路由",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Dynamo 论文描述的哈希环中，键怎样找到负责节点？",
+      "answer": "将键哈希到环上，从该位置沿顺时针找到第一个节点。",
+      "explanation": "哈希空间首尾相接；超过最大位置时回到环的起点。",
+      "example": "键落在两个节点之间，由顺时针方向的下一个节点负责。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "哈希环路由"
+      ],
+      "evidence": "source",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    },
+    {
+      "id": "chashcs-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "环上回绕",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "哈希环上节点 A、B、C 的位置分别为 20、50、90，键的位置为 95；顺时针找第一个节点时由谁负责？",
+      "answer": "A。",
+      "explanation": "位置 95 之后没有节点，沿环回绕到位置 20。",
+      "example": "顺时针从 95 经过环的末尾，再到 A。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "环上回绕"
+      ],
+      "evidence": "application",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    },
+    {
+      "id": "chashcs-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "新增节点的影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单副本顺时针哈希环新增一个节点时，哪些键的归属可能改变？",
+      "answer": "原先由新增节点顺时针后继负责、且落在新增节点前驱与新增节点之间的键。",
+      "explanation": "假设已有节点位置不变且不考虑哈希碰撞及复制。",
+      "example": "在 A 与 B 之间加入 D，D 接管原由 B 管理的部分区间。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "新增节点的影响"
+      ],
+      "evidence": "application",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    },
+    {
+      "id": "chashcs-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "移除节点的影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单副本顺时针哈希环移除一个节点时，它负责的区间通常转给谁？",
+      "answer": "该节点顺时针方向的下一个存活节点。",
+      "explanation": "其他节点位置不变时，其他原有区间的首选归属不变。",
+      "example": "移除 B 后，B 原负责的区间转给 C。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "移除节点的影响"
+      ],
+      "evidence": "application",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    },
+    {
+      "id": "chashcs-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "虚拟节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dynamo 论文中的虚拟节点是什么意思？",
+      "answer": "一个物理节点可以负责哈希环上的多个位置或分区。",
+      "explanation": "多个虚拟节点通过映射表关联到实际物理机器。",
+      "example": "机器 A 对应环上的多个 token。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "虚拟节点"
+      ],
+      "evidence": "source",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    },
+    {
+      "id": "chashcs-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "虚拟节点作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一致性哈希为什么常使用多个虚拟节点？",
+      "answer": "多个环位置有助于分散各物理节点承担的区间，也可按机器能力调整分配。",
+      "explanation": "均衡是统计意义上的目标；键和请求热度偏斜仍可能产生热点。",
+      "example": "故障节点的多个区间可分散给不同机器。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "虚拟节点作用"
+      ],
+      "evidence": "source",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    },
+    {
+      "id": "chashcs-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "虚拟节点与副本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在带虚拟节点的哈希环上，为什么不能只取相邻 N 个环位置就认为已有 N 台独立物理副本？",
+      "answer": "相邻虚拟节点可能属于同一台物理机器。",
+      "explanation": "Dynamo 的副本列表会跳过重复的物理节点，以选择不同的机器。",
+      "example": "相邻两个 token 都属于服务器 A 时，它们不是两个独立机器副本。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "虚拟节点与副本"
+      ],
+      "evidence": "source",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    },
+    {
+      "id": "chashcs-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "哈希与数据一致性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一致性哈希本身能否保证数据已复制或副本内容一致？",
+      "answer": "不能；它主要决定键的分配，复制、同步和冲突处理需要其他机制。",
+      "explanation": "Dynamo 分别使用复制、版本与同步机制处理这些问题。",
+      "example": "计算出新节点后仍需实际迁移或重建数据。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "哈希与数据一致性"
+      ],
+      "evidence": "application",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    },
+    {
+      "id": "chashcs-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "一致性哈希与分布式分片",
+      "knowledgePoint": "热键限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "仅靠一致性哈希能否保证单个热门键的访问负载均匀分布到所有节点？",
+      "answer": "不能；单个键通常映射到特定负责节点，其高访问量仍可能形成热点。",
+      "explanation": "可结合副本、缓存或请求分摊等机制，具体取决于读写语义。",
+      "example": "某爆款商品远比其他键更频繁地被访问。",
+      "tags": [
+        "一致性哈希与分布式分片",
+        "热键限制"
+      ],
+      "evidence": "application",
+      "reference": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+    }
+  ]
+}

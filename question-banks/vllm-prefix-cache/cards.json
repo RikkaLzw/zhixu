@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "vllm-prefix-cache",
+    "title": "vLLM 0.9.2：自动前缀缓存",
+    "url": "https://docs.vllm.ai/en/v0.9.2/design/v1/prefix_caching.html",
+    "type": "论文、协议规范与开源实现",
+    "note": "依据逐题引用的论文、规范或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "vllmapc-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "vLLM 前缀缓存",
+      "knowledgePoint": "自动前缀缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "vLLM 0.9.2 的自动前缀缓存（APC）复用的是什么？",
+      "answer": "它复用已处理请求中与新请求共享前缀对应的 KV 缓存，减少重复的提示词计算。",
+      "explanation": "缓存命中仍取决于前缀和其他缓存键条件。",
+      "example": "多次询问同一长文档时复用文档前缀。",
+      "tags": [
+        "vLLM 前缀缓存",
+        "自动前缀缓存"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.vllm.ai/en/v0.9.2/features/automatic_prefix_caching.html"
+    },
+    {
+      "id": "vllmapc-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "vLLM 前缀缓存",
+      "knowledgePoint": "启用接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 vLLM 0.9.2 文档，如何在引擎中启用自动前缀缓存？",
+      "answer": "设置 enable_prefix_caching=True。",
+      "explanation": "具体入口和默认配置应按所用版本核对。",
+      "example": "创建引擎时显式传入该选项。",
+      "tags": [
+        "vLLM 前缀缓存",
+        "启用接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.vllm.ai/en/v0.9.2/features/automatic_prefix_caching.html"
+    },
+    {
+      "id": "vllmapc-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "vLLM 前缀缓存",
+      "knowledgePoint": "收益阶段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "vLLM 自动前缀缓存主要减少 prefill 还是新 token 的 decode 计算？",
+      "answer": "它主要减少共享提示词的 prefill 计算，不直接减少生成新 token 的 decode 计算。",
+      "explanation": "长输出占主要耗时或没有共享前缀时，收益可能有限。",
+      "example": "重复长提示词、生成短回答的场景通常更有机会受益。",
+      "tags": [
+        "vLLM 前缀缓存",
+        "收益阶段"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.vllm.ai/en/v0.9.2/features/automatic_prefix_caching.html"
+    },
+    {
+      "id": "vllmapc-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "vLLM 前缀缓存",
+      "knowledgePoint": "完整块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "vLLM 0.9.2 的 V1 前缀缓存会缓存尚未填满的 KV 块吗？",
+      "answer": "不会；只有完整块会被纳入前缀缓存。",
+      "explanation": "未填满的尾块仍可用于当前请求，但不能以完整前缀块复用。",
+      "example": "块大小为 4 时，只有前 10 个 token 相同的两个请求最多可复用前 8 个 token 的完整块。",
+      "tags": [
+        "vLLM 前缀缓存",
+        "完整块"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/vllm-project/vllm/blob/v0.9.2/vllm/v1/core/kv_cache_utils.py"
+    },
+    {
+      "id": "vllmapc-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "vLLM 前缀缓存",
+      "knowledgePoint": "前缀哈希",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "vLLM V1 为何在 KV 块哈希中纳入父块哈希，而不只看当前块 token？",
+      "answer": "同一块的 KV 表示受此前上下文影响；父块哈希使缓存键包含前缀历史。",
+      "explanation": "不同上下文即使后续 token 相同，也不能只因当前块相同就安全复用。",
+      "example": "两段不同开头后出现相同文字，不能直接共用那一块 KV。",
+      "tags": [
+        "vLLM 前缀缓存",
+        "前缀哈希"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/vllm-project/vllm/blob/v0.9.2/vllm/v1/core/kv_cache_utils.py"
+    },
+    {
+      "id": "vllmapc-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "vLLM 前缀缓存",
+      "knowledgePoint": "适配器区分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "vLLM 0.9.2 的 V1 前缀缓存键为什么纳入 LoRA 标识？",
+      "answer": "不同 LoRA 适配器可能使相同 token 的计算结果不同，因此需区分对应缓存。",
+      "explanation": "固定版本实现把 LoRA ID 放入附加键。",
+      "example": "同一提示词使用不同 LoRA 时不应混用其 KV 块。",
+      "tags": [
+        "vLLM 前缀缓存",
+        "适配器区分"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/vllm-project/vllm/blob/v0.9.2/vllm/v1/core/kv_cache_utils.py"
+    },
+    {
+      "id": "vllmapc-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "vLLM 前缀缓存",
+      "knowledgePoint": "多模态键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "vLLM 的多模态前缀缓存为什么不能只比较图像占位 token？",
+      "answer": "相同占位 token 可能对应不同图像；实现需把多模态输入的哈希等信息纳入缓存键。",
+      "explanation": "图像内容会影响计算出的 KV 表示。",
+      "example": "两个不同图片可能使用相同形式的占位符。",
+      "tags": [
+        "vLLM 前缀缓存",
+        "多模态键"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.vllm.ai/en/v0.9.2/design/v1/prefix_caching.html"
+    },
+    {
+      "id": "vllmapc-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "vLLM 前缀缓存",
+      "knowledgePoint": "租户盐值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "vLLM 0.9.2 的 V1 前缀缓存如何用 cache_salt 缩小缓存共享范围？",
+      "answer": "它把请求提供的盐值纳入首块哈希，后续块通过父哈希继承这一差异。",
+      "explanation": "只有采用相同盐值等兼容条件的请求才有机会共享缓存；这不是完整的租户安全方案。",
+      "example": "不同信任组配置不同盐值。",
+      "tags": [
+        "vLLM 前缀缓存",
+        "租户盐值"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/vllm-project/vllm/blob/v0.9.2/vllm/v1/core/kv_cache_utils.py"
+    },
+    {
+      "id": "vllmapc-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "vLLM 前缀缓存",
+      "knowledgePoint": "缓存驱逐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "请求结束后，vLLM V1 中已缓存但没有引用的 KV 块一定会永久保留吗？",
+      "answer": "不会；它可以进入可用队列，在后续需要空间时被驱逐。",
+      "explanation": "因此相同前缀的后续请求不保证必然命中。",
+      "example": "高并发流量可能替换掉较早的缓存块。",
+      "tags": [
+        "vLLM 前缀缓存",
+        "缓存驱逐"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.vllm.ai/en/v0.9.2/design/v1/prefix_caching.html"
+    }
+  ]
+}

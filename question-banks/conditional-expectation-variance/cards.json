@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "conditional-expectation-variance",
+    "title": "ProbabilityCourse：条件期望与全方差",
+    "url": "https://www.probabilitycourse.com/chapter5/5_1_5_conditional_expectation.php",
+    "type": "教材、官方文档与论文",
+    "note": "依据逐题引用的文档、教材或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "condexp-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "条件期望与方差",
+      "knowledgePoint": "条件期望随机变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E[X|Y] 为什么通常本身是随机变量？",
+      "answer": "它是 Y 的函数，Y 取不同值时相应条件期望可能不同。",
+      "explanation": "固定 Y=y 后，E[X|Y=y] 是对应条件下的数值。",
+      "example": "若 X=2Y，则 E[X|Y]=2Y。",
+      "tags": [
+        "条件期望与方差",
+        "条件期望随机变量"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_1_5_conditional_expectation.php"
+    },
+    {
+      "id": "condexp-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "条件期望与方差",
+      "knowledgePoint": "条件期望线性",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "期望存在时，E[aX+bZ|Y] 如何利用条件期望表示？",
+      "answer": "等于 aE[X|Y]+bE[Z|Y]。",
+      "explanation": "线性性质不要求 X 和 Z 独立。",
+      "example": "若 a=2、b=1，可分别计算 X 与 Z 的条件期望再组合。",
+      "tags": [
+        "条件期望与方差",
+        "条件期望线性"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_1_5_conditional_expectation.php"
+    },
+    {
+      "id": "condexp-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "条件期望与方差",
+      "knowledgePoint": "已知量移出",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "在相关期望存在时，E[g(Y)X|Y] 可以怎样化简？",
+      "answer": "等于 g(Y)E[X|Y]。",
+      "explanation": "给定 Y 后，g(Y) 对条件期望来说已知。",
+      "example": "E[YX|Y]=Y·E[X|Y]。",
+      "tags": [
+        "条件期望与方差",
+        "已知量移出"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_1_5_conditional_expectation.php"
+    },
+    {
+      "id": "condexp-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "条件期望与方差",
+      "knowledgePoint": "独立条件期望",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "若 X 与 Y 独立且 E[X] 存在，E[X|Y] 等于什么？",
+      "answer": "几乎处处等于 E[X]。",
+      "explanation": "独立意味着知道 Y 不改变 X 的条件分布。",
+      "example": "独立抛硬币次数与另一次独立试验结果无关。",
+      "tags": [
+        "条件期望与方差",
+        "独立条件期望"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_1_5_conditional_expectation.php"
+    },
+    {
+      "id": "condexp-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "条件期望与方差",
+      "knowledgePoint": "全期望",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "期望存在时，全期望公式如何表达 E[X] 与 E[X|Y] 的关系？",
+      "answer": "E[X]=E[E[X|Y]]。",
+      "explanation": "先求每个条件下的期望，再按 Y 的分布取平均。",
+      "example": "先计算各用户组的平均值，再按组比例加权求总体均值。",
+      "tags": [
+        "条件期望与方差",
+        "全期望"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_1_5_conditional_expectation.php"
+    },
+    {
+      "id": "condexp-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "条件期望与方差",
+      "knowledgePoint": "条件方差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "条件方差 Var(X|Y) 描述什么？",
+      "answer": "它描述在给定 Y 的条件下，X 围绕其条件期望的波动。",
+      "explanation": "Var(X|Y) 本身也可以随着 Y 的取值而变化。",
+      "example": "不同设备类型对应的流量波动可能不同。",
+      "tags": [
+        "条件期望与方差",
+        "条件方差"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_1_5_conditional_expectation.php"
+    },
+    {
+      "id": "condexp-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "条件期望与方差",
+      "knowledgePoint": "全方差",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "X 有有限二阶矩时，全方差公式怎样分解 Var(X)？",
+      "answer": "Var(X)=E[Var(X|Y)]+Var(E[X|Y])。",
+      "explanation": "前项是平均组内波动，后项是条件均值之间的波动。",
+      "example": "总体差异可分成组内差异和组均值差异。",
+      "tags": [
+        "条件期望与方差",
+        "全方差"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_1_5_conditional_expectation.php"
+    },
+    {
+      "id": "condexp-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "条件期望与方差",
+      "knowledgePoint": "条件方差边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "给定信息 Y 后，是否对每个 y 都有 Var(X|Y=y)≤Var(X)？",
+      "answer": "不保证；全方差公式保证的是条件方差的平均值不超过总体方差。",
+      "explanation": "某个少见条件下的方差可以大于总体方差。",
+      "example": "高波动群体占比较小时，该群体方差可能高于总体方差。",
+      "tags": [
+        "条件期望与方差",
+        "条件方差边界"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_1_5_conditional_expectation.php"
+    }
+  ]
+}

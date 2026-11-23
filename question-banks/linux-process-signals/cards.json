@@ -1,0 +1,410 @@
+{
+  "source": {
+    "id": "linux-process-signals",
+    "title": "Linux 与 Bash 手册：进程、信号与作业",
+    "url": "https://man7.org/linux/man-pages/man7/signal.7.html",
+    "type": "官方技术文档",
+    "note": "依据逐题引用的 Linux 和 Bash 手册自行整理；示例为自编，终端及 shell 条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "procsg-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "默认终止信号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 kill 命令未指定信号时，默认发送什么信号？",
+      "answer": "默认发送 SIGTERM。",
+      "explanation": "目标进程可以捕获或忽略该信号。",
+      "example": "kill PID 默认请求目标进程终止。",
+      "tags": [
+        "默认终止信号",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/kill.1.html"
+    },
+    {
+      "id": "procsg-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "零号信号检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 kill(pid, 0) 会向目标发送信号吗？",
+      "answer": "不会；它检查指定进程或进程组是否存在以及发送信号的权限。",
+      "explanation": "检查可能因权限失败；即使成功，目标状态也可能随即变化。",
+      "example": "探测自己管理的子进程时仍需处理竞争。",
+      "tags": [
+        "零号信号检查",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/kill.2.html"
+    },
+    {
+      "id": "procsg-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "进程组发送",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 kill 系统调用中，pid 小于 -1 时信号发送给谁？",
+      "answer": "发送给进程组 ID 等于 pid 绝对值的进程组中的进程。",
+      "explanation": "发送受到权限检查约束。",
+      "example": "kill(-pgid, SIGTERM) 可请求该进程组终止。",
+      "tags": [
+        "进程组发送",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/kill.2.html"
+    },
+    {
+      "id": "procsg-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "终端中断与暂停",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "终端启用信号处理且按键保持默认设置时，Ctrl+C 和 Ctrl+Z 通常向前台进程组发送什么信号？",
+      "answer": "Ctrl+C 发送 SIGINT；Ctrl+Z 发送 SIGTSTP。",
+      "explanation": "终端控制字符可配置；进程也可以处理这些信号。",
+      "example": "前台程序可被 Ctrl+Z 暂停后继续。",
+      "tags": [
+        "终端中断与暂停",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/termios.3.html"
+    },
+    {
+      "id": "procsg-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "暂停与继续",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 SIGSTOP 和 SIGCONT 默认分别对进程做什么？",
+      "answer": "SIGSTOP 停止进程；SIGCONT 继续已停止的进程。",
+      "explanation": "SIGSTOP 不能被捕获、阻塞或忽略。",
+      "example": "调试时暂停自有子进程再恢复。",
+      "tags": [
+        "暂停与继续",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/signal.7.html"
+    },
+    {
+      "id": "procsg-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "管道断开",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中向没有读端的管道写数据时，默认会发生什么？",
+      "answer": "写入进程收到 SIGPIPE，默认动作是终止；若该信号被忽略，write 会以 EPIPE 失败。",
+      "explanation": "应关闭不再使用的管道描述符，才能正确观察读端是否仍存在。",
+      "example": "生产者写入前，管道的消费者已经退出。",
+      "tags": [
+        "管道断开",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    },
+    {
+      "id": "procsg-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "子进程回收",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "父进程如何获取已终止子进程的状态并回收其僵尸记录？",
+      "answer": "调用 wait 或适用的 waitpid，读取终止状态并回收子进程。",
+      "explanation": "调用时还应处理错误及其他子进程状态。",
+      "example": "父进程等待并回收自己启动的任务。",
+      "tags": [
+        "子进程回收",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/waitpid.2.html"
+    },
+    {
+      "id": "procsg-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "非阻塞等待",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 waitpid 使用 WNOHANG 且有符合条件的子进程，但没有状态变化可获取时返回什么？",
+      "answer": "返回 0，不等待子进程状态变化。",
+      "explanation": "发生错误时返回 -1，应检查错误原因。",
+      "example": "轮询子进程状态时区分 0 与错误。",
+      "tags": [
+        "非阻塞等待",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/waitpid.2.html"
+    },
+    {
+      "id": "procsg-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "等待状态解码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux waitpid 得到的状态如何区分子进程正常退出和被信号终止？",
+      "answer": "分别用 WIFEXITED 和 WIFSIGNALED 检查，再用对应宏读取退出码或终止信号。",
+      "explanation": "原始状态值不应直接当作普通退出码使用。",
+      "example": "正常退出可再用 WEXITSTATUS 取退出码。",
+      "tags": [
+        "等待状态解码",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/waitpid.2.html"
+    },
+    {
+      "id": "procsg-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "孤儿进程收养",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中父进程先退出后，仍在运行的子进程通常由谁收养？",
+      "answer": "由最近存活的祖先子收养者接管；若没有合适的子收养者，则由相关 PID 命名空间的 init 进程接管。",
+      "explanation": "收养者以后可以等待并回收这些子进程。",
+      "example": "服务管理器可配置为接管后代进程。",
+      "tags": [
+        "孤儿进程收养",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/PR_SET_CHILD_SUBREAPER.2const.html"
+    },
+    {
+      "id": "procsg-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "子进程信号合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "收到 SIGCHLD 后，为什么服务程序常循环使用 waitpid 回收子进程？",
+      "answer": "SIGCHLD 是标准信号，多个子进程的状态变化可能合并通知；一次通知不保证只对应一个子进程。",
+      "explanation": "循环回收时需要正确处理无可回收子进程和错误。",
+      "example": "多个工作进程接近同时结束。",
+      "tags": [
+        "子进程信号合并",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/signal.7.html",
+      "supportingReferences": [
+        {
+          "id": "linux-waitpid-man",
+          "title": "Linux waitpid 手册",
+          "url": "https://man7.org/linux/man-pages/man2/waitpid.2.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "procsg-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "阻塞与忽略信号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中阻塞信号和忽略信号有什么基本区别？",
+      "answer": "阻塞时信号可保持待处理，解除阻塞后再送达；忽略是信号送达时不执行处理动作。",
+      "explanation": "不能捕获、忽略或阻塞 SIGKILL 和 SIGSTOP。",
+      "example": "临时屏蔽可处理的信号以保护短操作。",
+      "tags": [
+        "阻塞与忽略信号",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/signal.7.html"
+    },
+    {
+      "id": "procsg-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "标准信号与排队",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中同一种标准信号在被阻塞期间反复产生，是否保证稍后逐次送达？",
+      "answer": "不保证；同一种待处理标准信号可能合并为一次，实时信号则支持排队。",
+      "explanation": "实时信号队列也受系统资源限制。",
+      "example": "多次 SIGUSR1 不应被当作可靠计数器。",
+      "tags": [
+        "标准信号与排队",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/signal.7.html"
+    },
+    {
+      "id": "procsg-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "信号处置继承",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 进程执行 execve 后，已捕获和已忽略的信号处置通常如何变化？",
+      "answer": "已捕获信号的处置重置为默认；已忽略信号的处置保持忽略。",
+      "explanation": "这是成功执行新程序映像时的规则。",
+      "example": "新程序不会自动沿用旧程序注册的处理函数。",
+      "tags": [
+        "信号处置继承",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/signal.7.html"
+    },
+    {
+      "id": "procsg-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "进程运行状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux ps 输出中的 R 状态是否一定表示进程此刻正在某个 CPU 上执行？",
+      "answer": "不一定；R 表示正在运行或处于可运行状态。",
+      "explanation": "可运行的进程也可能正在等待调度。",
+      "example": "观察短时快照不能替代长期 CPU 使用率。",
+      "tags": [
+        "进程运行状态",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/ps.1.html"
+    },
+    {
+      "id": "procsg-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "作业与进程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "交互式 Bash 的 jobs 与 ps 查看范围有什么常见区别？",
+      "answer": "jobs 列出当前 shell 已知的作业；ps 按选项展示系统进程快照。",
+      "explanation": "一个 shell 作业可以包含一个管道中的多个进程。",
+      "example": "查看本 shell 暂停的任务可先用 jobs。",
+      "tags": [
+        "作业与进程",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "procsg-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "前后台作业",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 fg 和 bg 分别如何处理可恢复的作业？",
+      "answer": "fg 将作业放到前台并在需要时继续；bg 让停止的作业在后台继续。",
+      "explanation": "作业控制和可用作业取决于当前 shell 环境。",
+      "example": "用 bg 恢复刚被暂停的任务。",
+      "tags": [
+        "前后台作业",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "procsg-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "忽略挂断与后台运行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU nohup 命令本身会自动把程序放到 shell 后台吗？",
+      "answer": "不会；nohup 使命令忽略挂断信号，后台运行需另用 shell 的 & 等机制。",
+      "explanation": "忽略 SIGHUP 不保证程序不会因其他原因退出。",
+      "example": "nohup command & 结合了两种不同作用。",
+      "tags": [
+        "忽略挂断与后台运行",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/nohup.1.html",
+      "supportingReferences": [
+        {
+          "id": "bash-job-control-man",
+          "title": "Bash 作业控制手册",
+          "url": "https://man7.org/linux/man-pages/man1/bash.1.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "procsg-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "后台终端读取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用作业控制的交互终端上，后台进程组尝试从控制终端读取时通常会收到什么信号？",
+      "answer": "通常收到 SIGTTIN，默认动作是停止进程组。",
+      "explanation": "忽略或阻塞该信号等特殊情况会影响结果。",
+      "example": "后台交互式程序可能等待被放回前台。",
+      "tags": [
+        "后台终端读取",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "procsg-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程、信号与作业",
+      "knowledgePoint": "退出码范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 子进程以 _exit(status) 正常退出时，父进程通常可从等待状态获得 status 的哪一部分？",
+      "answer": "通过 WEXITSTATUS 可取得低 8 位。",
+      "explanation": "应先用 WIFEXITED 确认子进程正常退出。",
+      "example": "退出值 259 的低 8 位为 3。",
+      "tags": [
+        "退出码范围",
+        "Linux 进程与信号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/_exit.2.html"
+    }
+  ]
+}

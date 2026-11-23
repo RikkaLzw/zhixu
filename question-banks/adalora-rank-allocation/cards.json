@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "adalora-rank-allocation",
+    "title": "AdaLoRA 原论文 v1：自适应秩分配",
+    "url": "https://arxiv.org/abs/2303.10512v1",
+    "type": "协议标准、官方文档与论文",
+    "note": "依据逐题标注的规范、固定版本文档或论文自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "adalora-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AdaLoRA 自适应秩",
+      "knowledgePoint": "动态秩分配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AdaLoRA 原论文希望怎样分配参数高效微调的秩预算？",
+      "answer": "根据重要性在不同权重更新之间动态分配秩，让较重要的更新保留更多预算。",
+      "explanation": "这是对固定均匀秩设置的一种扩展。",
+      "example": "不同层最终使用不同的有效秩。",
+      "tags": [
+        "AdaLoRA 自适应秩",
+        "动态秩分配"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.10512v1"
+    },
+    {
+      "id": "adalora-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AdaLoRA 自适应秩",
+      "knowledgePoint": "更新参数化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AdaLoRA 原论文如何对权重增量进行类似 SVD 的参数化？",
+      "answer": "用两个矩阵与中间对角矩阵相乘表示增量，即 Δ=PΛQ。",
+      "explanation": "它直接训练参数并用正交正则化近似 SVD 结构，不必每一步对完整增量做 SVD。",
+      "example": "通过对角元素控制低秩分量。",
+      "tags": [
+        "AdaLoRA 自适应秩",
+        "更新参数化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.10512v1"
+    },
+    {
+      "id": "adalora-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AdaLoRA 自适应秩",
+      "knowledgePoint": "初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AdaLoRA 原论文怎样初始化中间对角参数，使初始权重增量为零？",
+      "answer": "将对角参数 Λ 初始化为零，左右矩阵随机初始化。",
+      "explanation": "初始增量为零并不意味着所有适配参数都初始化为零。",
+      "example": "训练开始时 Δ=P·0·Q=0。",
+      "tags": [
+        "AdaLoRA 自适应秩",
+        "初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.10512v1"
+    },
+    {
+      "id": "adalora-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AdaLoRA 自适应秩",
+      "knowledgePoint": "正交约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AdaLoRA 为什么对 P 和 Q 添加正交正则项？",
+      "answer": "它鼓励两侧向量接近正交，以维持近似奇异向量的结构。",
+      "explanation": "正则化是软约束，不保证训练中始终严格正交。",
+      "example": "减少低秩分量之间的依赖。",
+      "tags": [
+        "AdaLoRA 自适应秩",
+        "正交约束"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.10512v1"
+    },
+    {
+      "id": "adalora-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AdaLoRA 自适应秩",
+      "knowledgePoint": "秩剪枝",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AdaLoRA 怎样减少不重要低秩分量的有效秩，同时保留恢复机会？",
+      "answer": "将低重要性三元组的对角值置零，但保留两侧向量参数。",
+      "explanation": "后续更新和分配可能重新激活此前被遮盖的分量。",
+      "example": "低重要性对角项在当前分配轮次被屏蔽。",
+      "tags": [
+        "AdaLoRA 自适应秩",
+        "秩剪枝"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.10512v1"
+    },
+    {
+      "id": "adalora-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AdaLoRA 自适应秩",
+      "knowledgePoint": "重要性估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AdaLoRA 原论文的敏感度指标怎样结合参数和梯度？",
+      "answer": "它使用参数值与损失梯度乘积的绝对值衡量该参数的敏感度。",
+      "explanation": "论文还使用平滑和不确定性信息评估三元组的重要性。",
+      "example": "绝对乘积较大的参数可能对损失更敏感。",
+      "tags": [
+        "AdaLoRA 自适应秩",
+        "重要性估计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.10512v1"
+    },
+    {
+      "id": "adalora-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AdaLoRA 自适应秩",
+      "knowledgePoint": "预算定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AdaLoRA 原论文的全局秩预算 b(t) 表示什么？",
+      "answer": "它表示所有增量矩阵保留秩的总和，即保留的对角值数量。",
+      "explanation": "不同矩阵的维度可能不同，秩总和不应直接等同于精确参数字节数。",
+      "example": "在多层之间重新分配有限的秩。",
+      "tags": [
+        "AdaLoRA 自适应秩",
+        "预算定义"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.10512v1"
+    },
+    {
+      "id": "adalora-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AdaLoRA 自适应秩",
+      "knowledgePoint": "预算调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AdaLoRA 原论文的秩预算大致经历哪些阶段？",
+      "answer": "先以较高预算预热，再逐步降低到目标预算，最后固定分配继续微调。",
+      "explanation": "论文使用三次曲线控制中间阶段的预算下降。",
+      "example": "先探索适配分量再集中训练。",
+      "tags": [
+        "AdaLoRA 自适应秩",
+        "预算调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.10512v1"
+    }
+  ]
+}

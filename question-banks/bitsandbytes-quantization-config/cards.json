@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "bitsandbytes-quantization-config",
+    "title": "Transformers 4.51.3 文档：bitsandbytes 量化配置",
+    "url": "https://huggingface.co/docs/transformers/v4.51.3/en/quantization/bitsandbytes",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "bnbcfg-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "bitsandbytes 量化配置",
+      "knowledgePoint": "量化加载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 BitsAndBytesConfig(load_in_4bit=True) 用于配置什么？",
+      "answer": "在加载模型时启用 bitsandbytes 的 4 位线性层量化。",
+      "explanation": "不是所有模型组件都必然以 4 位存储。",
+      "example": "将该配置传给 from_pretrained 的 quantization_config 参数。",
+      "tags": [
+        "bitsandbytes 量化配置",
+        "量化加载"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/quantization/bitsandbytes"
+    },
+    {
+      "id": "bnbcfg-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "bitsandbytes 量化配置",
+      "knowledgePoint": "互斥模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 BitsAndBytesConfig 能否同时设置 load_in_4bit=True 和 load_in_8bit=True？",
+      "answer": "不能；同时开启会抛出 ValueError。",
+      "explanation": "两个选项代表互斥的量化加载模式。",
+      "example": "配置时选择 4 位或 8 位之一。",
+      "tags": [
+        "bitsandbytes 量化配置",
+        "互斥模式"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/utils/quantization_config.py"
+    },
+    {
+      "id": "bnbcfg-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "bitsandbytes 量化配置",
+      "knowledgePoint": "量化数据类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 bnb_4bit_quant_type 控制什么？",
+      "answer": "控制 4 位线性层使用的量化数据类型，例如 fp4 或 nf4。",
+      "explanation": "源码中的默认值为 fp4。",
+      "example": "QLoRA 配置可显式指定 bnb_4bit_quant_type=\"nf4\"。",
+      "tags": [
+        "bitsandbytes 量化配置",
+        "量化数据类型"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/utils/quantization_config.py"
+    },
+    {
+      "id": "bnbcfg-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "bitsandbytes 量化配置",
+      "knowledgePoint": "计算数据类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 bnb_4bit_compute_dtype 与 4 位权重存储有什么区别？",
+      "answer": "该参数指定计算使用的数据类型，计算类型可以与量化权重的存储形式不同。",
+      "explanation": "未指定时源码默认使用 float32。",
+      "example": "可显式指定 bfloat16 作为计算类型。",
+      "tags": [
+        "bitsandbytes 量化配置",
+        "计算数据类型"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/utils/quantization_config.py"
+    },
+    {
+      "id": "bnbcfg-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "bitsandbytes 量化配置",
+      "knowledgePoint": "CPU 卸载精度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 文档中的 8 位模型 CPU 卸载示例，卸载到 CPU 的权重使用什么精度？",
+      "answer": "使用 float32 保存，而不是转换为 8 位。",
+      "explanation": "因此 CPU 内存占用需要单独考虑。",
+      "example": "将模型的一部分卸载到 CPU 不等于该部分仍按 8 位存储。",
+      "tags": [
+        "bitsandbytes 量化配置",
+        "CPU 卸载精度"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/quantization/bitsandbytes"
+    },
+    {
+      "id": "bnbcfg-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "bitsandbytes 量化配置",
+      "knowledgePoint": "反量化损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "把 bitsandbytes 量化模型反量化回较高精度，能保证恢复量化前的精确权重吗？",
+      "answer": "不能；反量化后仍可能存在量化造成的精度损失。",
+      "explanation": "反量化还需要足够内存。",
+      "example": "从低位表示恢复浮点格式不能找回已丢失的信息。",
+      "tags": [
+        "bitsandbytes 量化配置",
+        "反量化损失"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/quantization/bitsandbytes"
+    }
+  ]
+}

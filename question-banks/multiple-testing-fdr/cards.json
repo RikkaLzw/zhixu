@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "multiple-testing-fdr",
+    "title": "SciPy 1.15.3：多重检验与假发现率",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.false_discovery_control.html",
+    "type": "论文与官方技术文档",
+    "note": "根据所引论文或固定版本官方文档自行整理；例子为自编，使用条件见各卡。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "fdrstudy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多重检验与假发现率",
+      "knowledgePoint": "假发现率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多重检验中的假发现率（FDR）衡量什么？",
+      "answer": "它是被拒绝的原假设中实际为真的比例的期望。",
+      "explanation": "没有拒绝任何假设时，该次比例按 0 计。",
+      "example": "多轮实验中平均考察错误发现占发现结果的比例。",
+      "tags": [
+        "多重检验与假发现率",
+        "假发现率"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.false_discovery_control.html"
+    },
+    {
+      "id": "fdrstudy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多重检验与假发现率",
+      "knowledgePoint": "族错误率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多重检验中的族错误率（FWER）是什么？",
+      "answer": "它是一组检验中至少错误拒绝一个真实原假设的概率。",
+      "explanation": "这里的“一组”需要根据研究目的事先确定。",
+      "example": "同时检查多个安全模型指标时，将它们视为同一个检验族。",
+      "tags": [
+        "多重检验与假发现率",
+        "族错误率"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.false_discovery_control.html"
+    },
+    {
+      "id": "fdrstudy-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多重检验与假发现率",
+      "knowledgePoint": "FDR与单次结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "控制 FDR 在 5% 是否保证每次实验的错误发现比例都不超过 5%？",
+      "answer": "不保证；FDR 控制的是重复实验下该比例的期望。",
+      "explanation": "单次实验仍可能产生较高的错误发现比例。",
+      "example": "某次实验的少量发现可能全部是假阳性。",
+      "tags": [
+        "多重检验与假发现率",
+        "FDR与单次结果"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.false_discovery_control.html"
+    },
+    {
+      "id": "fdrstudy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多重检验与假发现率",
+      "knowledgePoint": "BH适用条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Benjamini–Hochberg 方法在什么常见依赖条件下具有 FDR 控制保证？",
+      "answer": "当有效 p 值相互独立，或满足特定正依赖条件时。",
+      "explanation": "保证依赖检验的 p 值有效及预先设定的假设集合。",
+      "example": "同一批数据上的多个相关检验需核查依赖条件。",
+      "tags": [
+        "多重检验与假发现率",
+        "BH适用条件"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.false_discovery_control.html"
+    },
+    {
+      "id": "fdrstudy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多重检验与假发现率",
+      "knowledgePoint": "BY适用条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Benjamini–Yekutieli 调整与 BH 相比有什么主要特点？",
+      "answer": "BY 更保守，但对有效 p 值的任意依赖结构仍有 FDR 控制保证。",
+      "explanation": "更保守通常意味着拒绝的假设可能更少。",
+      "example": "同一批指标相关结构未知时考虑 BY。",
+      "tags": [
+        "多重检验与假发现率",
+        "BY适用条件"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.false_discovery_control.html"
+    },
+    {
+      "id": "fdrstudy-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "多重检验与假发现率",
+      "knowledgePoint": "BH调整算例",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 BH 调整对 p 值 [0.01, 0.02, 0.20] 返回什么？",
+      "answer": "[0.03, 0.03, 0.20]。",
+      "explanation": "使用 scipy.stats.false_discovery_control；顺序对应输入顺序。",
+      "example": "按调整后 p 值与选定水平比较。",
+      "tags": [
+        "多重检验与假发现率",
+        "BH调整算例"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.false_discovery_control.html"
+    },
+    {
+      "id": "fdrstudy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多重检验与假发现率",
+      "knowledgePoint": "BH步进规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BH 步进法中，找到最大的 k 使排序后 p(k)≤kq/m 后，如何判定拒绝集合？",
+      "answer": "拒绝排序中第 1 至第 k 个假设。",
+      "explanation": "m 是本次检验族中假设总数，q 为目标 FDR 水平。",
+      "example": "最大的合格排名为 2 时拒绝前两项。",
+      "tags": [
+        "多重检验与假发现率",
+        "BH步进规则"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scipy/scipy/blob/v1.15.3/scipy/stats/_morestats.py"
+    },
+    {
+      "id": "fdrstudy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多重检验与假发现率",
+      "knowledgePoint": "无效P值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多重检验校正能否修复由数据泄漏或错误检验前提产生的无效 p 值？",
+      "answer": "不能；校正方法本身仍依赖各检验产生有效的 p 值。",
+      "explanation": "应先检查样本独立性、检验假设及数据划分。",
+      "example": "测试集参与模型选择后，先处理选择偏差再解释检验结果。",
+      "tags": [
+        "多重检验与假发现率",
+        "无效P值"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.false_discovery_control.html"
+    },
+    {
+      "id": "fdrstudy-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多重检验与假发现率",
+      "knowledgePoint": "SciPy轴参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 false_discovery_control 设置 axis=None 时如何组织待调整的 p 值？",
+      "answer": "先将输入展平，再把所有值作为一个检验族进行调整。",
+      "explanation": "默认 axis=0 则沿对应轴分别调整各切片。",
+      "example": "二维数组所有元素一起调整。",
+      "tags": [
+        "多重检验与假发现率",
+        "SciPy轴参数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.false_discovery_control.html"
+    }
+  ]
+}

@@ -1,0 +1,524 @@
+{
+  "source": {
+    "id": "semi-supervised-security",
+    "title": "半监督学习、伪标签与腾讯云安全公开面经",
+    "url": "https://scikit-learn.org/1.9/modules/semi_supervised.html",
+    "type": "官方技术文档",
+    "note": "公司和经历为个人复盘；原帖讨论无标签流量、聚类打标和再训练，本组题为主题启发并另据文档及研究论文核验。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "semisec-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "半监督分类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "半监督分类的训练数据通常由哪两部分组成？",
+      "answer": "它结合一部分有标签样本和一部分无标签样本来训练分类模型。",
+      "explanation": "无标签数据是否有帮助取决于方法和数据分布假设。",
+      "example": "少量人工确认的告警与大量未确认事件一起用于训练。",
+      "tags": [
+        "半监督分类",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/semi_supervised.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "未标注占位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 半监督分类器在目标标签 y 中用什么标识未标注样本？",
+      "answer": "使用整数 -1。",
+      "explanation": "真实类别不应与该占位值冲突；混合字符串标签时需注意数组类型。",
+      "example": "将尚未核验的连接记录标签标记为 -1。",
+      "tags": [
+        "未标注占位",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/semi_supervised.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "自训练伪标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "半监督自训练怎样利用无标签样本？",
+      "answer": "模型预测无标签样本的类别，将选中的预测作为伪标签加入训练，再迭代训练。",
+      "explanation": "伪标签是模型推断而非人工确认的真值。",
+      "example": "对高置信流量记录生成候选标签后继续训练。",
+      "tags": [
+        "自训练伪标签",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/semi_supervised.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "自训练概率接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 的 SelfTrainingClassifier 对基础分类器有什么接口要求？",
+      "answer": "基础分类器需要实现 fit 和 predict_proba。",
+      "explanation": "自训练使用预测概率选择要加入训练的伪标签。",
+      "example": "把支持概率预测的逻辑回归作为基础分类器。",
+      "tags": [
+        "自训练概率接口",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.semi_supervised.SelfTrainingClassifier.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "伪标签筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 自训练中的 threshold 与 k_best 伪标签筛选有什么区别？",
+      "answer": "threshold 选择预测概率高于阈值的样本；k_best 按预测概率选择最多 k 个样本。",
+      "explanation": "阈值方式可能在某轮不选择任何新样本。",
+      "example": "比较仅加入概率超过阈值的样本与每轮加入最可信的十个样本。",
+      "tags": [
+        "伪标签筛选",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.semi_supervised.SelfTrainingClassifier.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "自训练概率校准",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么基于概率阈值选择伪标签时要关注分类器的概率校准？",
+      "answer": "过度自信或低估置信度会使同一概率阈值不能可靠反映预测正确的频率。",
+      "explanation": "校准也不能保证单条伪标签正确。",
+      "example": "复核模型认为概率很高的一批安全事件。",
+      "tags": [
+        "自训练概率校准",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.semi_supervised.SelfTrainingClassifier.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "伪标签确认偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "错误伪标签反复用于训练可能造成什么确认偏差？",
+      "answer": "模型可能进一步强化自己的错误预测，使后续训练更难纠正这些错误。",
+      "explanation": "这是一种风险，并不表示所有伪标签都会产生错误。",
+      "example": "错误标记的正常流量被多轮训练持续强化。",
+      "tags": [
+        "伪标签确认偏差",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1908.02983",
+      "referenceTitle": "伪标签与确认偏差研究论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "自训练标注轮次",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 的 SelfTrainingClassifier 中 labeled_iter_ 的 0 和 -1 分别表示什么？",
+      "answer": "0 表示样本原本已有标签；-1 表示自训练过程中始终未获得标签。",
+      "explanation": "正整数表示获得伪标签的迭代轮次。",
+      "example": "检查哪些告警在自训练后仍未被赋予标签。",
+      "tags": [
+        "自训练标注轮次",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.semi_supervised.SelfTrainingClassifier.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "自训练停止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 SelfTrainingClassifier 会在什么情况下停止迭代？",
+      "answer": "达到最大迭代数、所有无标签样本都被赋值，或某一轮没有新增伪标签时停止。",
+      "explanation": "termination_condition_ 可用于检查停止原因。",
+      "example": "阈值过高使一轮没有样本被选中。",
+      "tags": [
+        "自训练停止",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.semi_supervised.SelfTrainingClassifier.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "图标签传播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图标签传播方法如何利用有标签和无标签样本？",
+      "answer": "它依据样本相似性构建图，并让已知标签信息沿图结构影响其他样本的预测。",
+      "explanation": "图的构造和样本表示会影响传播结果。",
+      "example": "把相似网络行为记录连接成图后传播已知类别。",
+      "tags": [
+        "图标签传播",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/semi_supervised.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "图传播假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么图标签传播依赖样本相似性与类别结构相符的假设？",
+      "answer": "如果相近样本实际上属于不同类别，沿相似边传播标签可能把错误类别传给邻居。",
+      "explanation": "相似性来自所用特征和核函数，不保证反映真实安全语义。",
+      "example": "共享基础设施的正常和恶意流量可能被连得很近。",
+      "tags": [
+        "图传播假设",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/semi_supervised.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "标签钳制方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 LabelPropagation 与 LabelSpreading 如何处理原有标签？",
+      "answer": "LabelPropagation 使用硬钳制保留原标签；LabelSpreading 使用软钳制，允许标签分布受到邻居信息影响。",
+      "explanation": "两者还使用不同的图矩阵处理方式。",
+      "example": "比较固定人工标签与允许一定程度平滑的图传播。",
+      "tags": [
+        "标签钳制方式",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/semi_supervised.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "软钳制系数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 的 LabelSpreading 中，alpha 增大意味着什么？",
+      "answer": "更新时相对更多地采用邻居传播的信息，较少保留初始标签信息。",
+      "explanation": "alpha 是软钳制权重，需结合标签质量和图结构选择。",
+      "example": "比较较强与较弱的邻居影响。",
+      "tags": [
+        "软钳制系数",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.semi_supervised.LabelSpreading.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "传播图规模",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 标签传播的 RBF 核图与 kNN 核图在内存表示上通常有什么区别？",
+      "answer": "RBF 核通常生成稠密相似矩阵；kNN 核通常生成稀疏图，可能更省内存。",
+      "explanation": "实际计算成本仍取决于样本数和配置。",
+      "example": "大量日志记录使用近邻图减少存储。",
+      "tags": [
+        "传播图规模",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/semi_supervised.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "传播训练标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 LabelSpreading 中 transduction_ 记录什么？",
+      "answer": "它记录拟合时为输入样本分配的标签。",
+      "explanation": "它不是独立测试集的真实标签，评估仍需单独可信标注。",
+      "example": "查看训练集中原本无标签样本的传播结果。",
+      "tags": [
+        "传播训练标签",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.semi_supervised.LabelSpreading.html",
+      "referenceTitle": "scikit-learn 1.9.1：半监督学习文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "semisec-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "半监督学习",
+      "knowledgePoint": "聚类编号与真实类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "无监督聚类得到的簇编号能直接当作恶意或正常的真实标签吗？",
+      "answer": "不能；簇编号只表示算法的分组结果，需要结合独立证据或人工标注确定其安全含义。",
+      "explanation": "同一簇可能混合不同真实类别。",
+      "example": "先抽查簇内流量，再决定能否用于后续训练。",
+      "tags": [
+        "聚类编号与真实类别",
+        "半监督学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/clustering.html#k-means",
+      "referenceTitle": "scikit-learn 1.9.1：K-means 聚类文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析一面（个人自述，合集收录）；未标注数据与再训练主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

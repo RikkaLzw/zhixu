@@ -1,0 +1,40 @@
+{
+  "version": 118,
+  "note": "去除 HNSW 搜索参数重复考点前的快照，用于保留学习记录与个人修改。",
+  "cards": [
+    {
+      "id": "faissdeep-002",
+      "category": "foundations",
+      "question": "Faiss HNSW 的 efConstruction 与 efSearch 分别控制哪个阶段的探索？",
+      "answer": "efConstruction 控制添加向量、构建图时的探索深度；efSearch 控制查询时的探索深度。",
+      "createdAt": 0,
+      "topic": "rag-basics",
+      "knowledgeArea": "07",
+      "subtopic": "向量索引",
+      "knowledgePoint": "HNSW构建与搜索",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "HNSW构建与搜索",
+        "向量索引",
+        "检索"
+      ],
+      "explanation": "两者分别影响构建和查询的成本与质量。",
+      "example": "构建后调整 efSearch，测试查询速度与召回的权衡。",
+      "sources": [
+        {
+          "id": "faiss-index-maintenance",
+          "title": "Faiss 索引参数、训练与更新",
+          "url": "https://github.com/facebookresearch/faiss/wiki/Faiss-indexes",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "faissdeep-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

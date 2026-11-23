@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "git-worktree-practice",
+    "title": "Git 2.46 文档：多工作树",
+    "url": "https://git-scm.com/docs/git-worktree/2.46.0",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "gitwt-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 多工作树",
+      "knowledgePoint": "工作树用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git worktree 适合解决什么开发场景？",
+      "answer": "让同一仓库关联多个工作目录，从而同时检出不同分支或提交。",
+      "explanation": "各工作树可以独立保存未提交工作。",
+      "example": "保留功能分支的修改，同时在另一目录修复问题。",
+      "tags": [
+        "Git 多工作树",
+        "工作树用途"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-worktree/2.46.0"
+    },
+    {
+      "id": "gitwt-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 多工作树",
+      "knowledgePoint": "共享隔离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 的多个关联工作树共享哪些信息，又有哪些独立状态？",
+      "answer": "它们共享仓库对象和大部分引用，但各自有 HEAD、索引和工作目录等状态。",
+      "explanation": "因此切换一个工作树的 HEAD 不会直接切换另一个。",
+      "example": "两个工作目录可分别暂存不同修改。",
+      "tags": [
+        "Git 多工作树",
+        "共享隔离"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-worktree/2.46.0"
+    },
+    {
+      "id": "gitwt-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 多工作树",
+      "knowledgePoint": "分支占用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "默认情况下能否在两个 Git 工作树中同时检出同一个分支？",
+      "answer": "通常不能；git worktree add 会拒绝已在其他工作树检出的分支。",
+      "explanation": "--force 可覆盖这一保护，应理解并发操作的影响。",
+      "example": "另建修复分支供第二个工作树使用。",
+      "tags": [
+        "Git 多工作树",
+        "分支占用"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-worktree/2.46.0"
+    },
+    {
+      "id": "gitwt-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 多工作树",
+      "knowledgePoint": "分离工作树",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git worktree add --detach 路径 的常见用途是什么？",
+      "answer": "建立处于分离 HEAD 状态的关联工作树，用于在某个提交上检查或试验。",
+      "explanation": "未显式指定提交时通常使用当前 HEAD。",
+      "example": "在独立目录检查当前版本的构建。",
+      "tags": [
+        "Git 多工作树",
+        "分离工作树"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-worktree/2.46.0"
+    },
+    {
+      "id": "gitwt-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 多工作树",
+      "knowledgePoint": "列出工作树",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git worktree list 可以显示哪些关键信息？",
+      "answer": "列出工作树路径、检出提交和分支或分离 HEAD 等状态。",
+      "explanation": "还可能标出被锁定或可清理的工作树。",
+      "example": "检查哪个目录正在使用某分支。",
+      "tags": [
+        "Git 多工作树",
+        "列出工作树"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-worktree/2.46.0"
+    },
+    {
+      "id": "gitwt-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 多工作树",
+      "knowledgePoint": "删除与清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git worktree remove 和 git worktree prune 的主要区别是什么？",
+      "answer": "remove 删除关联工作树；prune 清理已失效工作树的管理记录。",
+      "explanation": "默认 remove 要求工作树干净；主工作树不能通过该命令删除。",
+      "example": "手动删除目录后可清理遗留管理信息。",
+      "tags": [
+        "Git 多工作树",
+        "删除与清理"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-worktree/2.46.0"
+    },
+    {
+      "id": "gitwt-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 多工作树",
+      "knowledgePoint": "锁定工作树",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git worktree lock 的作用是什么？",
+      "answer": "锁定关联工作树，防止其管理记录被自动清理，并阻止常规移动或删除。",
+      "explanation": "适用于可能暂时不可用的移动设备或网络目录。",
+      "example": "临时卸载工作树所在的外部磁盘前锁定。",
+      "tags": [
+        "Git 多工作树",
+        "锁定工作树"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-worktree/2.46.0"
+    }
+  ]
+}

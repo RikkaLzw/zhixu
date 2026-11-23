@@ -1,0 +1,354 @@
+{
+  "source": {
+    "id": "diamond-intrusion-analysis",
+    "title": "入侵分析钻石模型：事件、活动线程与关联",
+    "url": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf",
+    "type": "研究论文",
+    "note": "逐题依据所列论文自行整理；例子为自编，性能结论不默认推广到其他实验。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "diamond-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "钻石模型基础",
+      "knowledgePoint": "钻石模型顶点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "入侵分析的钻石模型包含哪四个核心特征？",
+      "answer": "对手、能力、基础设施和受害者。",
+      "explanation": "模型用这些特征及其关系组织一次入侵事件的信息。",
+      "example": "记录攻击方、工具、通信设施与目标。",
+      "tags": [
+        "钻石模型顶点",
+        "钻石模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "钻石模型基础",
+      "knowledgePoint": "事件粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型中的一个事件通常表示什么？",
+      "answer": "表示入侵活动中有时间边界的一个步骤。",
+      "explanation": "多个事件可以进一步组成活动线程。",
+      "example": "一次恶意邮件投递可作为一个事件。",
+      "tags": [
+        "事件粒度",
+        "钻石模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "钻石模型基础",
+      "knowledgePoint": "未知核心特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型要求分析人员在建立事件时已经知道全部四个核心特征吗？",
+      "answer": "不要求；未知特征可以先保留，随后根据新证据补充。",
+      "explanation": "未知不应被填成未经证实的归因。",
+      "example": "初次发现可疑连接时对手身份仍未知。",
+      "tags": [
+        "未知核心特征",
+        "钻石模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "钻石模型基础",
+      "knowledgePoint": "能力特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型的 capability 主要描述什么？",
+      "answer": "它描述对手在事件中使用的工具和技术等能力。",
+      "explanation": "能力可以按分析需要描述得较粗或较细。",
+      "example": "记录事件中使用的恶意程序或攻击方法。",
+      "tags": [
+        "能力特征",
+        "钻石模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型基础",
+      "knowledgePoint": "基础设施特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型的 infrastructure 主要描述什么？",
+      "answer": "它描述对手用于传递能力、控制或影响受害者的物理或逻辑通信设施。",
+      "explanation": "设施可能由对手或中间方控制。",
+      "example": "记录用于通信的域名或服务器。",
+      "tags": [
+        "基础设施特征",
+        "钻石模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型基础",
+      "knowledgePoint": "基础设施类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型中的 Type 1 与 Type 2 基础设施按谁控制如何区分？",
+      "answer": "Type 1 由对手直接拥有、控制或能够物理接近；Type 2 由知情或不知情的中间方控制。",
+      "explanation": "这些是论文的角色划分，不代表仅凭 IP 就能确定归属。",
+      "example": "被攻陷的中转主机可作为 Type 2。",
+      "tags": [
+        "基础设施类型",
+        "钻石模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型基础",
+      "knowledgePoint": "受害者人物与资产",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型中的 victim persona 与 victim asset 分别关注什么？",
+      "answer": "前者关注被针对的人或组织，后者关注可被攻击的系统、账号等资产。",
+      "explanation": "同一组织可能对应多个受害资产。",
+      "example": "人物角色与其邮箱账号分别记录。",
+      "tags": [
+        "受害者人物与资产",
+        "钻石模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型基础",
+      "knowledgePoint": "攻击操作者与受益者",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型如何区分 adversary operator 和 adversary customer？",
+      "answer": "operator 实施入侵活动；customer 是从活动中获益的实体。",
+      "explanation": "二者可以是同一方，也可以不同。",
+      "example": "执行者与委托方可能不同。",
+      "tags": [
+        "攻击操作者与受益者",
+        "钻石模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型基础",
+      "knowledgePoint": "实体角色变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一主机在不同事件里可以分别是受害资产和攻击基础设施吗？",
+      "answer": "可以；某主机先被攻陷，之后可能被利用为其他事件的基础设施。",
+      "explanation": "角色取决于具体事件和证据。",
+      "example": "被攻陷服务器后来被用作中转节点。",
+      "tags": [
+        "实体角色变化",
+        "钻石模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型元数据",
+      "knowledgePoint": "特征置信度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型是否为每个特征的 confidence 强制规定统一的数值解释？",
+      "answer": "没有；论文有意将置信度的具体含义留给实现者定义。",
+      "explanation": "使用不同来源的置信度前需要说明口径。",
+      "example": "记录一条归因判断所用的置信度规则。",
+      "tags": [
+        "特征置信度",
+        "钻石模型元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型元数据",
+      "knowledgePoint": "时间范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型的事件时间戳可以怎样记录？",
+      "answer": "可记录具体日期时间，也可表示事件的开始与结束时间范围。",
+      "explanation": "时间不确定时应保留可支持的范围。",
+      "example": "只知道事件发生在某个小时内。",
+      "tags": [
+        "时间范围",
+        "钻石模型元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型元数据",
+      "knowledgePoint": "事件结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型的 result 元特征可以区分什么？",
+      "answer": "可以记录事件成功、失败或结果未知等情况。",
+      "explanation": "具体结果分类可按分析需求扩展。",
+      "example": "区分登录尝试成功、失败与尚未确认。",
+      "tags": [
+        "事件结果",
+        "钻石模型元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型元数据",
+      "knowledgePoint": "事件方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型的 direction 元特征用于描述什么？",
+      "answer": "它记录事件中对手、基础设施和受害者之间的活动方向。",
+      "explanation": "方向可帮助选择监测与缓解位置。",
+      "example": "区分受害主机向外连接与外部连接进入。",
+      "tags": [
+        "事件方向",
+        "钻石模型元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型元数据",
+      "knowledgePoint": "活动方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型的 methodology 元特征有什么作用？",
+      "answer": "它描述事件的活动类别，便于比较行为模式。",
+      "explanation": "一个事件可以有多个适用的方法描述。",
+      "example": "将事件描述为定向钓鱼邮件。",
+      "tags": [
+        "活动方法",
+        "钻石模型元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-015",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型分析",
+      "knowledgePoint": "分析跳转",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型中的分析跳转（pivoting）指什么？",
+      "answer": "利用已知数据元素结合其他数据源，寻找相关元素并检验分析假设。",
+      "explanation": "跳转发现关联线索，不保证每一步都成功或证明归因。",
+      "example": "从恶意文件中发现域名，再查询相关日志。",
+      "tags": [
+        "分析跳转",
+        "钻石模型分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-016",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型分析",
+      "knowledgePoint": "线程与活动组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型的活动线程与活动组在关联依据上有什么区别？",
+      "answer": "活动线程按阶段和因果关系连接事件；活动组按相似特征或行为关联事件和线程。",
+      "explanation": "相似性分组不自动证明相同对手或因果关系。",
+      "example": "同一工具的多个事件可先按特征分组。",
+      "tags": [
+        "线程与活动组",
+        "钻石模型分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-017",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型分析",
+      "knowledgePoint": "线程假设边",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "钻石模型活动线程为什么要区分有证据支持的关系和假设关系？",
+      "answer": "这样可以明确哪些连接已被观察或支持，哪些仍需进一步验证。",
+      "explanation": "因果连接也可以记录分析置信度。",
+      "example": "用不同标记区分日志证据与待验证路径。",
+      "tags": [
+        "线程假设边",
+        "钻石模型分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    },
+    {
+      "id": "diamond-018",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "钻石模型分析",
+      "knowledgePoint": "活动组更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么钻石模型的活动组需要随新情报重新定义或更新？",
+      "answer": "新证据和对手行为变化可能改变事件之间的相似性与分组依据。",
+      "explanation": "分组应服务于明确的分析问题。",
+      "example": "新增关联证据后重新审查事件簇。",
+      "tags": [
+        "活动组更新",
+        "钻石模型分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.activeresponse.org/wp-content/uploads/2013/07/diamond.pdf"
+    }
+  ]
+}

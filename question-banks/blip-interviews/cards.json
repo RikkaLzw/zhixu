@@ -1,0 +1,363 @@
+{
+  "source": {
+    "id": "blip-interviews",
+    "title": "BLIP / BLIP-2 原论文与百度、快手公开面经",
+    "url": "https://arxiv.org/abs/2301.12597",
+    "type": "研究论文",
+    "note": "作者公开复盘为个人自述；原帖提及两种模型的区别与 BLIP 损失，细节题标注主题启发。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "blipstudy-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "BLIP与BLIP2",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BLIP 和 BLIP-2 在核心预训练思路上有什么区别？",
+      "answer": "BLIP 引入生成描述并过滤噪声的图文数据构造方法；BLIP-2 用可训练的 Q-Former 连接冻结的图像编码器和大语言模型。",
+      "explanation": "两者均研究视觉语言预训练，比较的是原论文中的主要设计。",
+      "example": "分别对照 CapFilt 数据处理和 Q-Former 模态桥接。",
+      "tags": [
+        "BLIP与BLIP2",
+        "多模态",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2301.12597",
+      "referenceTitle": "BLIP-2 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；原帖提及 BLIP 与 BLIP-2 区别",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "blip-first-paper",
+          "title": "BLIP：CapFilt 与视觉语言预训练原论文",
+          "url": "https://arxiv.org/abs/2201.12086",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "blipstudy-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "BLIP预训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 BLIP 联合使用哪三类预训练目标？",
+      "answer": "图文对比学习、图文匹配和以图像为条件的语言建模。",
+      "explanation": "前两者用于图文理解，语言建模目标训练模型生成描述。",
+      "example": "同一图文对用于图文对齐、匹配和文本生成训练。",
+      "tags": [
+        "BLIP预训练目标",
+        "多模态",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.12086",
+      "referenceTitle": "BLIP 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；BLIP／BLIP-2 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型实习一面（作者自述）；原帖提及 BLIP 损失函数",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "blipstudy-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "图文对比与匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BLIP 的图文对比学习与图文匹配目标分别关注什么？",
+      "answer": "对比学习对齐单模态图像和文本表示；图文匹配利用跨模态表示判断一对图文是否匹配。",
+      "explanation": "二者使用不同的模型路径和训练信号。",
+      "example": "先用相似度召回候选，再用图文匹配模型区分候选。",
+      "tags": [
+        "图文对比与匹配",
+        "多模态",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.12086",
+      "referenceTitle": "BLIP 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；BLIP／BLIP-2 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型实习一面（作者自述）；图文模型主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "blipstudy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "CapFilt数据构造",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BLIP 的 CapFilt 中描述生成器和过滤器分别做什么？",
+      "answer": "描述生成器为网页图像生成文本；过滤器筛除原始或生成文本中与图像不匹配的配对。",
+      "explanation": "生成和过滤都可能出错，不能把筛选结果当作绝对真值。",
+      "example": "为图片生成一条描述后检查它是否与图像匹配。",
+      "tags": [
+        "CapFilt数据构造",
+        "多模态",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2201.12086",
+      "referenceTitle": "BLIP 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；BLIP／BLIP-2 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型实习一面（作者自述）；图文模型主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "blipstudy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "QFormer查询视觉",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 BLIP-2 的 Q-Former 如何从冻结图像编码器读取视觉信息？",
+      "answer": "可学习的查询向量通过交叉注意力访问图像编码器输出，再形成视觉表示。",
+      "explanation": "查询及 Q-Former 是训练的桥接部分，图像编码器在该预训练方案中冻结。",
+      "example": "用一组查询从图像特征中提取与文本有关的信息。",
+      "tags": [
+        "QFormer查询视觉",
+        "多模态",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2301.12597",
+      "referenceTitle": "BLIP-2 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；BLIP／BLIP-2 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型实习一面（作者自述）；图文模型主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "blipstudy-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "QFormer输出长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在原始 BLIP-2 的 Q-Former 中，固定数量的查询对输出视觉表示的长度有什么影响？",
+      "answer": "输出是固定数量的查询表示，不随图像编码器输出的视觉 token 数量直接增长。",
+      "explanation": "固定查询数形成信息瓶颈；不同实现可以配置不同查询数量。",
+      "example": "模型使用固定数量的视觉查询处理不同分辨率的图像。",
+      "tags": [
+        "QFormer输出长度",
+        "多模态",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2301.12597",
+      "referenceTitle": "BLIP-2 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；BLIP／BLIP-2 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型实习一面（作者自述）；图文模型主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "blipstudy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "BLIP2两阶段预训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 BLIP-2 的两个预训练阶段分别学习什么？",
+      "answer": "第一阶段利用冻结图像编码器学习图文表示；第二阶段连接冻结大语言模型，学习以视觉信息为条件生成文本。",
+      "explanation": "第二阶段继续使用图像编码器与 Q-Former。",
+      "example": "先对齐图像和文本表示，再训练图像条件文本生成。",
+      "tags": [
+        "BLIP2两阶段预训练",
+        "多模态",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2301.12597",
+      "referenceTitle": "BLIP-2 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；BLIP／BLIP-2 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型实习一面（作者自述）；图文模型主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "blipstudy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "QFormer对比掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BLIP-2 第一阶段的图文对比目标为什么禁止查询与文本直接互相注意？",
+      "answer": "这样可以分别得到图像侧和文本侧表示，避免表示在比较前直接读取另一侧的信息。",
+      "explanation": "图文匹配目标则使用允许跨模态交互的掩码。",
+      "example": "分别编码图像查询和文本后计算相似度。",
+      "tags": [
+        "QFormer对比掩码",
+        "多模态",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2301.12597",
+      "referenceTitle": "BLIP-2 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；BLIP／BLIP-2 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型实习一面（作者自述）；图文模型主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "blipstudy-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图文模型",
+      "knowledgePoint": "BLIP2视觉提示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 BLIP-2 如何将 Q-Former 的输出接入冻结语言模型？",
+      "answer": "先用线性层将查询输出映射到语言模型的输入嵌入维度，再作为视觉提示加入输入。",
+      "explanation": "论文中这些向量用于以视觉信息为语言生成提供条件。",
+      "example": "把投影后的视觉表示接在文本嵌入之前。",
+      "tags": [
+        "BLIP2视觉提示",
+        "多模态",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2301.12597",
+      "referenceTitle": "BLIP-2 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度大模型实习一面（作者自述）；BLIP／BLIP-2 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型实习一面（作者自述）；图文模型主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

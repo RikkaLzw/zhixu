@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "cmake-build-foundations",
+    "title": "CMake 3.31 文档：配置与构建基础",
+    "url": "https://cmake.org/cmake/help/v3.31/manual/cmake.1.html",
+    "type": "官方文档或教材",
+    "note": "依据 CMake 3.31 官方文档自行整理；示例以显式源码目录和构建目录为前提。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "cmakebase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "源码与构建目录",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CMake 3.31 的 cmake -S src -B build 分别指定什么？",
+      "answer": "-S 指定源码目录，-B 指定构建目录；该命令配置项目并生成构建系统。",
+      "explanation": "构建目录不存在时 CMake 可以创建它。",
+      "example": "将源码放在 src，构建输出放在独立的 build 目录。",
+      "tags": [
+        "CMake 配置与构建",
+        "源码与构建目录"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/manual/cmake.1.html"
+    },
+    {
+      "id": "cmakebase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "执行构建",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CMake 3.31 的 cmake --build build 主要做什么？",
+      "answer": "它在已有构建目录中调用适当的原生构建工具来构建项目。",
+      "explanation": "该调用抽象了不同构建工具的命令行。",
+      "example": "配置完成后运行 cmake --build build。",
+      "tags": [
+        "CMake 配置与构建",
+        "执行构建"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/manual/cmake.1.html"
+    },
+    {
+      "id": "cmakebase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "生成器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CMake 的 generator 在配置项目时主要决定什么？",
+      "answer": "它决定生成哪种本地构建系统，例如 Unix Makefiles 或 Ninja。",
+      "explanation": "之后使用相应构建工具执行具体编译与链接。",
+      "example": "用 -G 选择一个已安装的生成器。",
+      "tags": [
+        "CMake 配置与构建",
+        "生成器"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/manual/cmake.1.html"
+    },
+    {
+      "id": "cmakebase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "可执行目标",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CMake 的 add_executable(app main.cpp) 定义了什么？",
+      "answer": "它定义名为 app 的可执行目标，并将 main.cpp 加入该目标的源文件。",
+      "explanation": "目标定义会供生成的构建系统使用。",
+      "example": "项目可通过这个目标构建应用程序。",
+      "tags": [
+        "CMake 配置与构建",
+        "可执行目标"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/command/add_executable.html"
+    },
+    {
+      "id": "cmakebase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "目标依赖",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CMake 的 target_link_libraries(app PRIVATE lib) 表达什么？",
+      "answer": "它为 app 添加 lib 链接依赖，PRIVATE 表明该项作为 app 自身的依赖使用。",
+      "explanation": "目标和依赖的构建关系由生成器和链接类型共同决定。",
+      "example": "可执行目标 app 链接项目中的 lib 目标。",
+      "tags": [
+        "CMake 配置与构建",
+        "目标依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/command/target_link_libraries.html"
+    },
+    {
+      "id": "cmakebase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "包含目录作用域",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "CMake 的 target_include_directories 中 PRIVATE、PUBLIC、INTERFACE 如何分配包含目录？",
+      "answer": "PRIVATE 用于目标自身；PUBLIC 用于目标自身和依赖它的目标；INTERFACE 只提供给依赖它的目标。",
+      "explanation": "这些关键字控制目标使用要求的传播。",
+      "example": "库公开的头文件目录可设为 PUBLIC。",
+      "tags": [
+        "CMake 配置与构建",
+        "包含目录作用域"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/command/target_include_directories.html"
+    },
+    {
+      "id": "cmakebase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "单配置构建类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CMake 的 CMAKE_BUILD_TYPE 主要为哪类生成器选择构建类型？",
+      "answer": "它为单配置生成器指定构建类型，例如 Debug 或 Release。",
+      "explanation": "多配置生成器使用不同的配置选择机制。",
+      "example": "Unix Makefiles 项目可在配置时指定 CMAKE_BUILD_TYPE=Debug。",
+      "tags": [
+        "CMake 配置与构建",
+        "单配置构建类型"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/variable/CMAKE_BUILD_TYPE.html"
+    },
+    {
+      "id": "cmakebase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "多配置选择",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "使用 CMake 多配置构建工具时，cmake --build build --config Release 的作用是什么？",
+      "answer": "它选择要构建的 Release 配置。",
+      "explanation": "该选项用于多配置工具的构建配置选择。",
+      "example": "同一构建目录可按需选择 Debug 或 Release。",
+      "tags": [
+        "CMake 配置与构建",
+        "多配置选择"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/manual/cmake.1.html"
+    },
+    {
+      "id": "cmakebase-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "指定构建目标",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CMake 的 cmake --build build --target app 与默认构建有什么区别？",
+      "answer": "它请求构建 app 目标，而不是默认目标；构建工具仍会处理该目标需要的依赖。",
+      "explanation": "具体可用目标由项目及生成器决定。",
+      "example": "仅构建项目中的 app 可执行目标。",
+      "tags": [
+        "CMake 配置与构建",
+        "指定构建目标"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/manual/cmake.1.html"
+    },
+    {
+      "id": "cmakebase-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "清理目标",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CMake 的 cmake --build build --target clean 通常用于什么？",
+      "answer": "它请求构建工具执行 clean 目标，清理该构建系统生成的构建产物。",
+      "explanation": "clean 的具体清理范围由生成器和构建工具决定。",
+      "example": "需要重新构建时可先执行 clean 目标。",
+      "tags": [
+        "CMake 配置与构建",
+        "清理目标"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/manual/cmake.1.html"
+    },
+    {
+      "id": "cmakebase-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "注册和运行测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CMake 项目注册 add_test 测试后，通常使用什么工具运行这些测试？",
+      "answer": "启用测试后可使用 CTest 运行已注册的测试；普通构建本身不等于运行全部测试。",
+      "explanation": "项目需在适当位置启用测试并注册测试命令。",
+      "example": "在构建目录执行 ctest 查看测试结果。",
+      "tags": [
+        "CMake 配置与构建",
+        "注册和运行测试"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/guide/tutorial/Installing%20and%20Testing.html"
+    },
+    {
+      "id": "cmakebase-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CMake 配置与构建",
+      "knowledgePoint": "执行安装规则",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CMake 的 cmake --install build 主要执行什么？",
+      "answer": "它执行构建目录中生成的安装规则，将配置的目标或文件安装到相应位置。",
+      "explanation": "需要先配置包含 install 规则的项目，并通常先完成构建。",
+      "example": "把已构建程序安装到指定前缀。",
+      "tags": [
+        "CMake 配置与构建",
+        "执行安装规则"
+      ],
+      "evidence": "source",
+      "reference": "https://cmake.org/cmake/help/v3.31/manual/cmake.1.html"
+    }
+  ]
+}

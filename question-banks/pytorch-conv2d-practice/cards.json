@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "pytorch-conv2d-practice",
+    "title": "PyTorch 2.7：Conv2d 接口",
+    "url": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html",
+    "type": "教材、官方文档与论文",
+    "note": "依据逐题引用的文档、教材或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptconv-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 二维卷积接口",
+      "knowledgePoint": "输入布局",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 Conv2d 接收带批次的二维图像时，输入张量通常是什么形状？",
+      "answer": "形状为 (N, C_in, H, W)，依次表示批次、输入通道、高和宽。",
+      "explanation": "它也支持不带批次维的 (C_in, H, W) 输入。",
+      "example": "RGB 图像批次可用 (N, 3, H, W)。",
+      "tags": [
+        "PyTorch 二维卷积接口",
+        "输入布局"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html"
+    },
+    {
+      "id": "ptconv-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维卷积接口",
+      "knowledgePoint": "权重形状",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 Conv2d 权重张量形状如何由通道、分组和核大小确定？",
+      "answer": "形状为 (out_channels, in_channels/groups, kernel_h, kernel_w)。",
+      "explanation": "分组卷积中每个输出通道只连接对应组的输入通道。",
+      "example": "输入 4 通道、输出 8 通道、groups=2、核 3×3 时，权重形状为 (8,2,3,3)。",
+      "tags": [
+        "PyTorch 二维卷积接口",
+        "权重形状"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html"
+    },
+    {
+      "id": "ptconv-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维卷积接口",
+      "knowledgePoint": "分组约束",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch Conv2d 的 in_channels 和 out_channels 对 groups 有什么整除要求？",
+      "answer": "输入通道数和输出通道数都必须能被 groups 整除。",
+      "explanation": "每组分别处理一部分输入并产生一部分输出通道。",
+      "example": "in_channels=3、groups=2 不满足要求。",
+      "tags": [
+        "PyTorch 二维卷积接口",
+        "分组约束"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html"
+    },
+    {
+      "id": "ptconv-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维卷积接口",
+      "knowledgePoint": "深度卷积条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch Conv2d 在什么分组条件下属于 depthwise convolution？",
+      "answer": "groups 等于输入通道数，且输出通道数是输入通道数的正整数倍。",
+      "explanation": "这个倍数是 depthwise multiplier。",
+      "example": "输入 4 通道、输出 8 通道、groups=4 的倍数为 2。",
+      "tags": [
+        "PyTorch 二维卷积接口",
+        "深度卷积条件"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html"
+    },
+    {
+      "id": "ptconv-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维卷积接口",
+      "knowledgePoint": "扩张率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Conv2d 的 dilation 控制什么？",
+      "answer": "它控制卷积核采样位置之间的间隔。",
+      "explanation": "核大小不变时，较大扩张率会扩大有效感受范围。",
+      "example": "3 个采样位置、dilation=2 时覆盖长度为 5。",
+      "tags": [
+        "PyTorch 二维卷积接口",
+        "扩张率"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html"
+    },
+    {
+      "id": "ptconv-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维卷积接口",
+      "knowledgePoint": "同尺寸填充限制",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 Conv2d 使用 padding=\"same\" 时，对 stride 有什么限制？",
+      "answer": "只支持 stride 为 1。",
+      "explanation": "该模式填充输入以保持空间输出尺寸与输入相同。",
+      "example": "stride=2 时不能直接使用这一 same 模式。",
+      "tags": [
+        "PyTorch 二维卷积接口",
+        "同尺寸填充限制"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html"
+    },
+    {
+      "id": "ptconv-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 二维卷积接口",
+      "knowledgePoint": "有效填充",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch Conv2d 的 padding=\"valid\" 表示什么？",
+      "answer": "表示不添加填充。",
+      "explanation": "输出空间尺寸仍由输入、核、步幅和扩张率共同决定。",
+      "example": "3×3 核在无填充下会缩小足够大的输入。",
+      "tags": [
+        "PyTorch 二维卷积接口",
+        "有效填充"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html"
+    },
+    {
+      "id": "ptconv-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "PyTorch 二维卷积接口",
+      "knowledgePoint": "输出尺寸示例",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "输入高宽均为 10，Conv2d 的核为 3、stride=2、padding=0、dilation=1 时，输出高宽是多少？",
+      "answer": "高宽均为 4。",
+      "explanation": "按 ⌊(输入+2×填充−扩张率×(核−1)−1)/步幅+1⌋ 计算。",
+      "example": "(10−3)/2+1 向下取整得到 4。",
+      "tags": [
+        "PyTorch 二维卷积接口",
+        "输出尺寸示例"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html"
+    },
+    {
+      "id": "ptconv-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 二维卷积接口",
+      "knowledgePoint": "默认边界填充",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 Conv2d 的 padding_mode 默认是什么？",
+      "answer": "默认是 zeros，即用零填充。",
+      "explanation": "还支持 reflect、replicate 和 circular 等模式。",
+      "example": "边界复制填充可显式选择 replicate。",
+      "tags": [
+        "PyTorch 二维卷积接口",
+        "默认边界填充"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.Conv2d.html"
+    }
+  ]
+}

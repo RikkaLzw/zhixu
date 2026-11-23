@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "agent-reliability",
+    "title": "Agent 工具调用的超时、重试与容错",
+    "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+    "type": "教材、论文与官方技术文档",
+    "note": "根据逐题引用的资料自行整理；面经引用为合集转载的个人复盘，公司和经历未经企业确认。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "reliable-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "远程调用",
+      "knowledgePoint": "调用超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Agent 的远程工具调用需要设置超时？",
+      "answer": "超时可限制等待时间，避免连接、线程等资源被长期占用。",
+      "explanation": "阈值应考虑下游延迟及任务时限，过短也可能使正常请求失败。",
+      "example": "外部检索接口迟迟不返回时终止等待。",
+      "tags": [
+        "调用超时",
+        "远程调用"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+    },
+    {
+      "id": "reliable-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "远程调用",
+      "knowledgePoint": "超时与副作用",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "外部写操作超时是否意味着操作没有执行？",
+      "answer": "不一定；服务端可能已经完成操作，只是响应丢失或未及时到达。",
+      "explanation": "应结合服务端状态查询和可靠的幂等机制处理未知结果。",
+      "example": "创建工单超时后先查询工单状态。",
+      "tags": [
+        "超时与副作用",
+        "远程调用"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+    },
+    {
+      "id": "reliable-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "重试策略",
+      "knowledgePoint": "过载与重试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么对过载服务立即反复重试可能使问题更严重？",
+      "answer": "重试会增加下游请求量，可能进一步加重过载并延迟恢复。",
+      "explanation": "应限制重试次数，并结合退避、超时和服务状态控制负载。",
+      "example": "模型接口拥塞时避免多个节点同时无限重试。",
+      "tags": [
+        "过载与重试",
+        "重试策略"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+    },
+    {
+      "id": "reliable-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "重试策略",
+      "knowledgePoint": "指数退避",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "指数退避如何安排连续重试的等待时间？",
+      "answer": "重试间隔随尝试次数按指数方式增长，通常还设置最大间隔。",
+      "explanation": "退避只能减少请求频率，不能保证故障一定恢复。",
+      "example": "接口短暂失败后逐次延长两次尝试之间的等待。",
+      "tags": [
+        "指数退避",
+        "重试策略"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+    },
+    {
+      "id": "reliable-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "重试策略",
+      "knowledgePoint": "重试抖动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么退避重试常加入随机抖动？",
+      "answer": "它把不同客户端的重试时间分散开，降低再次同时冲击下游的风险。",
+      "explanation": "抖动与退避和重试次数限制配合使用。",
+      "example": "多个 Agent 收到限流后在不同时间重试。",
+      "tags": [
+        "重试抖动",
+        "重试策略"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+    },
+    {
+      "id": "reliable-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "重试策略",
+      "knowledgePoint": "多层重试放大",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么要协调调用链中各层的重试次数？",
+      "answer": "各层独立重试会使下游请求次数相乘，放大负载。",
+      "explanation": "应考虑在合适的层重试并统一总时间和次数预算。",
+      "example": "三层各尝试三次时，最深层最多可能收到 27 次调用。",
+      "tags": [
+        "多层重试放大",
+        "重试策略"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+    },
+    {
+      "id": "reliable-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "重试策略",
+      "knowledgePoint": "稳定幂等键",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "重试外部写操作时，为什么同一业务操作应复用稳定的幂等键？",
+      "answer": "服务端若支持幂等键，可用同一键识别同一操作的重复请求。",
+      "explanation": "键需在重试或恢复前稳定可得；服务商的去重范围和期限仍需核对。",
+      "example": "同一工单创建请求在重试时使用原来的操作键。",
+      "tags": [
+        "稳定幂等键",
+        "重试策略"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/fault-tolerance"
+    },
+    {
+      "id": "reliable-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP限流",
+      "knowledgePoint": "HTTP 429",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 429 及其可选的 Retry-After 响应头分别表示什么？",
+      "answer": "429 表示客户端在一段时间内发送了过多请求；Retry-After 可提示等待多久再请求。",
+      "explanation": "服务端可以不返回该头，客户端仍需遵守自身重试预算。",
+      "example": "收到 429 且含 Retry-After 时按提示等待。",
+      "tags": [
+        "HTTP 429",
+        "HTTP限流"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6585.html#section-4"
+    },
+    {
+      "id": "reliable-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph容错",
+      "knowledgePoint": "重试次数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "LangGraph 的 RetryPolicy.max_attempts 是否包括首次执行？",
+      "answer": "包括；例如设为 3，最多执行首次尝试及两次重试。",
+      "explanation": "异常是否触发重试还取决于 retry_on 等策略。",
+      "example": "节点第一次失败后最多再尝试两次。",
+      "tags": [
+        "重试次数",
+        "LangGraph容错"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/fault-tolerance"
+    },
+    {
+      "id": "reliable-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph容错",
+      "knowledgePoint": "节点超时适用范围",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "LangGraph 1.2 及以上版本的节点超时适用于同步节点吗？",
+      "answer": "节点超时只适用于异步节点；为同步节点设置超时会在编译时被拒绝。",
+      "explanation": "阻塞式 I/O 可在异步节点中按框架文档使用 asyncio.to_thread 包装。",
+      "example": "给异步调用节点设置时间上限。",
+      "tags": [
+        "节点超时适用范围",
+        "LangGraph容错"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/fault-tolerance"
+    },
+    {
+      "id": "reliable-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph容错",
+      "knowledgePoint": "运行超时与空闲超时",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "LangGraph 1.2 及以上版本的 run_timeout 与 idle_timeout 有什么区别？",
+      "answer": "run_timeout 限制单次尝试的总时长；idle_timeout 限制没有可观察进展的连续时长。",
+      "explanation": "两者可以同时设置，先触发的限制会终止该次尝试。",
+      "example": "任务持续有进展仍可能达到总运行时限。",
+      "tags": [
+        "运行超时与空闲超时",
+        "LangGraph容错"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/fault-tolerance"
+    },
+    {
+      "id": "reliable-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangGraph容错",
+      "knowledgePoint": "重试与错误处理",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "LangGraph 1.2 及以上版本中，节点错误处理器何时运行？",
+      "answer": "节点失败后先由重试策略决定是否重试；重试耗尽后才运行错误处理器。",
+      "explanation": "具体异常是否可重试取决于配置；处理器可以执行恢复逻辑。",
+      "example": "接口多次失败后进入备用处理节点。",
+      "tags": [
+        "重试与错误处理",
+        "LangGraph容错"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/fault-tolerance"
+    }
+  ]
+}

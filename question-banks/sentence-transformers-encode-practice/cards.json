@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "sentence-transformers-encode-practice",
+    "title": "Sentence Transformers 5.1.2 源码：文本编码接口",
+    "url": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/SentenceTransformer.py",
+    "type": "论文、官方文档与源码",
+    "note": "根据逐题标注的论文、版本化文档或源码自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "stencode-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Sentence Transformers 编码实践",
+      "knowledgePoint": "输入输出形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers 5.1.2 的 encode 接收单个字符串和非空字符串列表时，默认输出形状有什么区别？",
+      "answer": "单个字符串返回一维向量；字符串列表返回按输入排列的二维向量数组。",
+      "explanation": "输出维度取决于模型及截断配置。",
+      "example": "一个字符串得到形状 (d,)，两个字符串得到 (2,d)。",
+      "tags": [
+        "Sentence Transformers 编码实践",
+        "输入输出形状"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/SentenceTransformer.py"
+    },
+    {
+      "id": "stencode-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Sentence Transformers 编码实践",
+      "knowledgePoint": "归一化输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers encode 的 normalize_embeddings=True 有什么作用？",
+      "answer": "它对返回的句向量做 L2 归一化。",
+      "explanation": "非零归一化向量之间的点积等于余弦相似度。",
+      "example": "先归一化文档向量再用点积检索。",
+      "tags": [
+        "Sentence Transformers 编码实践",
+        "归一化输出"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/SentenceTransformer.py"
+    },
+    {
+      "id": "stencode-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sentence Transformers 编码实践",
+      "knowledgePoint": "提示优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers encode 同时提供 prompt 和 prompt_name 时使用哪个？",
+      "answer": "使用显式 prompt，忽略 prompt_name。",
+      "explanation": "同时提供时会发出警告；若只指定不存在的 prompt_name，则抛出 ValueError。",
+      "example": "显式指定检索提示覆盖命名提示。",
+      "tags": [
+        "Sentence Transformers 编码实践",
+        "提示优先级"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/SentenceTransformer.py"
+    },
+    {
+      "id": "stencode-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sentence Transformers 编码实践",
+      "knowledgePoint": "张量输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers encode 同时设置 convert_to_tensor=True 和 convert_to_numpy=True 时，句向量返回什么？",
+      "answer": "返回合并后的 PyTorch 张量；convert_to_tensor 优先。",
+      "explanation": "此处指默认的 sentence_embedding 输出。",
+      "example": "把一批句向量直接作为张量使用。",
+      "tags": [
+        "Sentence Transformers 编码实践",
+        "张量输出"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/SentenceTransformer.py"
+    },
+    {
+      "id": "stencode-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sentence Transformers 编码实践",
+      "knowledgePoint": "向量截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers encode 的 truncate_dim 主要做什么？",
+      "answer": "它截取句向量的前若干维，减小输出向量维度。",
+      "explanation": "较短向量的质量取决于模型训练方式，不能假定任意模型截断后都保持效果。",
+      "example": "将 512 维向量截为前 256 维。",
+      "tags": [
+        "Sentence Transformers 编码实践",
+        "向量截断"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/SentenceTransformer.py"
+    },
+    {
+      "id": "stencode-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sentence Transformers 编码实践",
+      "knowledgePoint": "输出量化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers encode 的 precision=\"int8\" 量化的是什么？",
+      "answer": "它将输出嵌入量化为 int8 表示，不等于把模型权重量化为 int8。",
+      "explanation": "量化可能改变存储、计算和检索效果，需要重新评估。",
+      "example": "保存较紧凑的检索向量。",
+      "tags": [
+        "Sentence Transformers 编码实践",
+        "输出量化"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/SentenceTransformer.py"
+    },
+    {
+      "id": "stencode-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sentence Transformers 编码实践",
+      "knowledgePoint": "评估模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers 5.1.2 的 encode 是否适合直接用来计算训练梯度？",
+      "answer": "通常不适合；实现会切换到 eval 模式并在 no_grad 上下文中执行前向计算。",
+      "explanation": "训练自定义目标应使用支持梯度的训练流程。",
+      "example": "需要更新编码器时不应依赖 encode 返回的结果反向传播。",
+      "tags": [
+        "Sentence Transformers 编码实践",
+        "评估模式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/SentenceTransformer.py"
+    },
+    {
+      "id": "stencode-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sentence Transformers 编码实践",
+      "knowledgePoint": "Token输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "支持 token 输出的 Sentence Transformers 模型设置 output_value=\"token_embeddings\" 时返回什么？",
+      "answer": "返回每个输入对应的 token 级向量，而不是聚合后的句向量。",
+      "explanation": "实现会按 attention mask 去除末尾填充 token。",
+      "example": "查看一个句子的逐 token 表示。",
+      "tags": [
+        "Sentence Transformers 编码实践",
+        "Token输出"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/UKPLab/sentence-transformers/blob/v5.1.2/sentence_transformers/SentenceTransformer.py"
+    }
+  ]
+}

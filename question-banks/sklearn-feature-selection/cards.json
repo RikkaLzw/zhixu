@@ -1,0 +1,819 @@
+{
+  "source": {
+    "id": "sklearn-feature-selection",
+    "title": "scikit-learn 特征选择与重要性",
+    "url": "https://scikit-learn.org/1.7/modules/feature_selection.html",
+    "type": "官方技术文档",
+    "note": "依据 scikit-learn 1.7 文档逐题整理；代表性选择器与置换重要性使用 scikit-learn 1.7.2 和合成数据验证。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skselect-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "特征选择",
+      "knowledgePoint": "选择与提取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "特征选择与特征提取在输出特征上有什么主要区别？",
+      "answer": "特征选择保留部分原始特征；特征提取通常把原始特征变换成新的表示。",
+      "explanation": "两者可配合使用，实际处理流程可能改变特征名称或含义。",
+      "example": "选择原有的两列，或用 PCA 将多列变成主成分。",
+      "tags": [
+        "选择与提取",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/feature_selection.html",
+      "referenceTitle": "scikit-learn 1.7：特征选择指南",
+      "supportingReferences": [
+        {
+          "id": "sklearn-pca-17",
+          "title": "scikit-learn 1.7：PCA",
+          "url": "https://scikit-learn.org/1.7/modules/decomposition.html#pca",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "skselect-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "特征选择",
+      "knowledgePoint": "全数据选特征泄漏",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能先用全部样本的标签选择特征，再对筛选结果做交叉验证？",
+      "answer": "验证折的标签已经影响特征选择，会使交叉验证结果产生信息泄漏。",
+      "explanation": "应在每个训练折内重新拟合选择器；可把选择器放进 Pipeline。",
+      "example": "每折只用本折训练样本的标签选择特征。",
+      "tags": [
+        "全数据选特征泄漏",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/common_pitfalls.html#data-leakage-during-pre-processing",
+      "referenceTitle": "scikit-learn 1.7：数据泄漏与预处理"
+    },
+    {
+      "id": "skselect-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "方差筛选",
+      "knowledgePoint": "无监督方差筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VarianceThreshold 筛选特征时是否使用目标标签 y？",
+      "answer": "不使用；它根据训练特征自身的方差筛选列。",
+      "explanation": "它的 fit 接收 y 只是为兼容通用接口。",
+      "example": "先移除训练数据中恒定不变的列。",
+      "tags": [
+        "无监督方差筛选",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.VarianceThreshold.html",
+      "referenceTitle": "scikit-learn 1.7：VarianceThreshold"
+    },
+    {
+      "id": "skselect-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "方差筛选",
+      "knowledgePoint": "零方差特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VarianceThreshold 使用默认阈值时，通常移除什么特征？",
+      "answer": "移除训练集中方差为零的特征，即所有样本取值相同的列。",
+      "explanation": "它不会因为特征与标签无关而自动删除高方差列。",
+      "example": "训练集中每条记录的标记列均为 1。",
+      "tags": [
+        "零方差特征",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.VarianceThreshold.html",
+      "referenceTitle": "scikit-learn 1.7：VarianceThreshold"
+    },
+    {
+      "id": "skselect-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "方差筛选",
+      "knowledgePoint": "方差阈值边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 scikit-learn 1.7 中，VarianceThreshold 的特征方差恰好等于阈值时会保留吗？",
+      "answer": "不会；它保留方差严格大于阈值的特征。",
+      "explanation": "如果没有特征超过阈值，拟合会报错。",
+      "example": "方差为 0.25 且阈值为 0.25 的列被移除。",
+      "tags": [
+        "方差阈值边界",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.VarianceThreshold.html",
+      "referenceTitle": "scikit-learn 1.7：VarianceThreshold"
+    },
+    {
+      "id": "skselect-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "方差筛选",
+      "knowledgePoint": "方差与单位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么比较连续特征的方差时要考虑特征量纲？",
+      "answer": "数值缩放会改变方差，因此不同单位下相同阈值的筛选结果可能不同。",
+      "explanation": "应结合业务单位和预处理顺序解释阈值。",
+      "example": "将秒换算成毫秒后，同一列数值的方差发生变化。",
+      "tags": [
+        "方差与单位",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.VarianceThreshold.html",
+      "referenceTitle": "scikit-learn 1.7：VarianceThreshold"
+    },
+    {
+      "id": "skselect-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "方差筛选",
+      "knowledgePoint": "低方差不等于无用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "低方差特征一定对分类没有价值吗？",
+      "answer": "不一定；少见取值也可能与目标类别强相关。",
+      "explanation": "仅按方差筛选不考察特征与标签的关系。",
+      "example": "少见但可靠的攻击标志可能在多数样本中都为零。",
+      "tags": [
+        "低方差不等于无用",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.VarianceThreshold.html",
+      "referenceTitle": "scikit-learn 1.7：VarianceThreshold"
+    },
+    {
+      "id": "skselect-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "方差筛选",
+      "knowledgePoint": "空特征集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VarianceThreshold 拟合时没有任何特征超过阈值会怎样？",
+      "answer": "它会抛出 ValueError。",
+      "explanation": "这可能是阈值过高或训练数据所有列恒定造成的。",
+      "example": "对全常量数据使用默认阈值。",
+      "tags": [
+        "空特征集合",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.VarianceThreshold.html",
+      "referenceTitle": "scikit-learn 1.7：VarianceThreshold"
+    },
+    {
+      "id": "skselect-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "选择器接口",
+      "knowledgePoint": "获取筛选结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 特征选择器的 get_support 默认与 indices=True 分别返回什么？",
+      "answer": "默认返回布尔掩码；设置 indices=True 返回选中特征的整数索引。",
+      "explanation": "掩码和索引对应选择器拟合时的输入列顺序。",
+      "example": "用掩码筛出保留列对应的特征名称。",
+      "tags": [
+        "获取筛选结果",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SelectKBest.html",
+      "referenceTitle": "scikit-learn 1.7：SelectKBest"
+    },
+    {
+      "id": "skselect-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "选择器接口",
+      "knowledgePoint": "选择逆变换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 scikit-learn 特征选择器调用 inverse_transform，能恢复被删除列的原始值吗？",
+      "answer": "不能；它在被删除列的位置插入零以恢复列数。",
+      "explanation": "被删除的信息已不在转换结果中。",
+      "example": "筛选前为三列，逆变换会将缺失列补零。",
+      "tags": [
+        "选择逆变换",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SelectKBest.html",
+      "referenceTitle": "scikit-learn 1.7：SelectKBest"
+    },
+    {
+      "id": "skselect-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "最高评分特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SelectKBest 的主要作用是什么？",
+      "answer": "它依据评分函数为各特征打分，保留得分最高的 k 个特征。",
+      "explanation": "评分函数应与目标任务及数据类型相匹配。",
+      "example": "分类任务中使用 f_classif 选择排名靠前的列。",
+      "tags": [
+        "最高评分特征",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SelectKBest.html",
+      "referenceTitle": "scikit-learn 1.7：SelectKBest"
+    },
+    {
+      "id": "skselect-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "不限制特征数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SelectKBest 设置 k=\"all\" 时会怎样处理特征选择？",
+      "answer": "它保留所有输入特征。",
+      "explanation": "评分函数仍会参与拟合；此选项可用于参数搜索时比较不筛选的情况。",
+      "example": "网格搜索同时比较 k=10 与 k=\"all\"。",
+      "tags": [
+        "不限制特征数",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SelectKBest.html",
+      "referenceTitle": "scikit-learn 1.7：SelectKBest"
+    },
+    {
+      "id": "skselect-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "k超过列数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 SelectKBest 中，k 大于输入特征列数时会怎样？",
+      "answer": "它会发出警告并返回所有特征。",
+      "explanation": "这种行为是该版本接口的具体约定。",
+      "example": "输入只有三列，设 k=10 时保留三列。",
+      "tags": [
+        "k超过列数",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SelectKBest.html",
+      "referenceTitle": "scikit-learn 1.7：SelectKBest"
+    },
+    {
+      "id": "skselect-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "分类与回归评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "f_classif 与 f_regression 分别面向哪类目标变量？",
+      "answer": "f_classif 用于分类目标；f_regression 用于连续回归目标。",
+      "explanation": "不要只根据函数名称相近就把回归评分函数用于分类问题。",
+      "example": "类别标签选 f_classif，连续价格选 f_regression。",
+      "tags": [
+        "分类与回归评分",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.f_classif.html",
+      "referenceTitle": "scikit-learn 1.7：f_classif"
+    },
+    {
+      "id": "skselect-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "F分数与方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "f_regression 的 F 统计量能直接说明特征与目标是正相关还是负相关吗？",
+      "answer": "不能；F 统计量基于相关系数的平方，不保留正负方向。",
+      "explanation": "需要方向时可另外检查回归系数或相关系数。",
+      "example": "相同强度的正相关和负相关可得到相同 F 分数。",
+      "tags": [
+        "F分数与方向",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.f_regression.html",
+      "referenceTitle": "scikit-learn 1.7：f_regression"
+    },
+    {
+      "id": "skselect-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "卡方输入条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 chi2 特征评分适合什么样的特征输入？",
+      "answer": "它适合非负的整数特征，如布尔值或词频计数；连续特征通常先分箱。",
+      "explanation": "负值会被该实现拒绝；是否满足统计检验前提仍需结合数据判断。",
+      "example": "统计每份文档中词语出现次数并与类别比较。",
+      "tags": [
+        "卡方输入条件",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.chi2.html",
+      "referenceTitle": "scikit-learn 1.7：chi2"
+    },
+    {
+      "id": "skselect-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "互信息评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "mutual_info_classif 估计的特征与离散目标的互信息能否反映非线性依赖？",
+      "answer": "可以；互信息可反映多种统计依赖，但有限样本中的估计有误差。",
+      "explanation": "估计质量取决于样本量、特征类型和参数设置。",
+      "example": "检测单个数值特征与类别的非线性关系。",
+      "tags": [
+        "互信息评分",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.mutual_info_classif.html",
+      "referenceTitle": "scikit-learn 1.7：mutual_info_classif"
+    },
+    {
+      "id": "skselect-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "互信息离散特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "mutual_info_classif 的 discrete_features=\"auto\" 在稠密和稀疏输入上有什么默认区别？",
+      "answer": "稠密输入默认把特征视为连续；稀疏输入默认把特征视为离散。",
+      "explanation": "输入存储方式不一定真实反映特征类型，必要时应显式配置。",
+      "example": "稠密数组中的整数类别列可显式标记为离散。",
+      "tags": [
+        "互信息离散特征",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.mutual_info_classif.html",
+      "referenceTitle": "scikit-learn 1.7：mutual_info_classif"
+    },
+    {
+      "id": "skselect-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "仅分数函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SelectKBest 的评分函数只返回分数而不返回 p 值时，pvalues_ 是什么？",
+      "answer": "pvalues_ 为 None。",
+      "explanation": "例如互信息评分通常只返回每列的分数。",
+      "example": "选择 mutual_info_classif 后检查 scores_ 与 pvalues_。",
+      "tags": [
+        "仅分数函数",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SelectKBest.html",
+      "referenceTitle": "scikit-learn 1.7：SelectKBest"
+    },
+    {
+      "id": "skselect-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "单变量筛选",
+      "knowledgePoint": "特征交互遗漏",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么只根据单个特征与目标的关系筛选，可能漏掉有用特征组合？",
+      "answer": "有些信息只在多个特征组合后出现，单独评估每列可能看不到它。",
+      "explanation": "是否遗漏取决于数据分布及评分方式。",
+      "example": "均匀分布的两个二进制输入与各自的异或标签单独都不相关。",
+      "tags": [
+        "特征交互遗漏",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/feature_selection.html",
+      "referenceTitle": "scikit-learn 1.7：特征选择指南"
+    },
+    {
+      "id": "skselect-021",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "递归与模型筛选",
+      "knowledgePoint": "递归特征消除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFE 如何逐步筛选特征？",
+      "answer": "它反复训练估计器，按特征重要性删除较弱特征，直到达到目标数量。",
+      "explanation": "重要性可以来自模型系数、特征重要性属性或指定提取器。",
+      "example": "用线性分类器逐轮删除较弱列。",
+      "tags": [
+        "递归特征消除",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.RFE.html",
+      "referenceTitle": "scikit-learn 1.7：RFE"
+    },
+    {
+      "id": "skselect-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "递归与模型筛选",
+      "knowledgePoint": "RFE结果字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFE 拟合后的 support_ 与 ranking_ 分别表示什么？",
+      "answer": "support_ 是选中特征的布尔掩码；ranking_ 是特征排名，选中特征的排名为 1。",
+      "explanation": "未选中特征的排名表示递归消除过程中得到的相对次序。",
+      "example": "通过 support_ 找出最终保留的输入列。",
+      "tags": [
+        "RFE结果字段",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.RFE.html",
+      "referenceTitle": "scikit-learn 1.7：RFE"
+    },
+    {
+      "id": "skselect-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "递归与模型筛选",
+      "knowledgePoint": "RFE每轮步长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFE 的 step 参数主要控制什么？",
+      "answer": "它控制每轮递归消除的特征数量或比例。",
+      "explanation": "较大步长通常减少拟合轮次，但可能略过更细的选择过程。",
+      "example": "step=2 时每轮通常删除两列。",
+      "tags": [
+        "RFE每轮步长",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.RFE.html",
+      "referenceTitle": "scikit-learn 1.7：RFE"
+    },
+    {
+      "id": "skselect-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "递归与模型筛选",
+      "knowledgePoint": "交叉验证选特征数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFECV 相比 RFE 怎样选择保留的特征数量？",
+      "answer": "它在交叉验证中比较不同特征数量的评分，再选择得分最好的数量。",
+      "explanation": "交叉验证的划分方式和评分指标应符合实际任务。",
+      "example": "使用分组交叉验证比较候选特征数。",
+      "tags": [
+        "交叉验证选特征数",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.RFECV.html",
+      "referenceTitle": "scikit-learn 1.7：RFECV"
+    },
+    {
+      "id": "skselect-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "递归与模型筛选",
+      "knowledgePoint": "按模型重要性筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SelectFromModel 如何根据模型重要性选择特征？",
+      "answer": "它提取模型的系数或特征重要性，按设定阈值保留达到要求的特征。",
+      "explanation": "也可配置自定义重要性提取方式。",
+      "example": "按线性模型系数大小筛选列。",
+      "tags": [
+        "按模型重要性筛选",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SelectFromModel.html",
+      "referenceTitle": "scikit-learn 1.7：SelectFromModel"
+    },
+    {
+      "id": "skselect-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "递归与模型筛选",
+      "knowledgePoint": "预训练模型选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SelectFromModel 的 prefit=True 对传入的估计器有什么要求？",
+      "answer": "传入的估计器需要已经拟合。",
+      "explanation": "prefit=False 时，选择器在 fit 中拟合估计器。",
+      "example": "先训练模型，再根据其特征权重创建选择器。",
+      "tags": [
+        "预训练模型选择",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SelectFromModel.html",
+      "referenceTitle": "scikit-learn 1.7：SelectFromModel"
+    },
+    {
+      "id": "skselect-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "递归与模型筛选",
+      "knowledgePoint": "最多特征数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SelectFromModel 的 max_features 是否保证恰好选出指定数量的特征？",
+      "answer": "不保证；它设置选择数量的上限，阈值还可能过滤掉更多特征。",
+      "explanation": "如果只想按数量限制，文档建议设置 threshold=-np.inf。",
+      "example": "max_features=5 且只有两列过阈值时，最终只保留两列。",
+      "tags": [
+        "最多特征数量",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SelectFromModel.html",
+      "referenceTitle": "scikit-learn 1.7：SelectFromModel"
+    },
+    {
+      "id": "skselect-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "递归与模型筛选",
+      "knowledgePoint": "顺序特征选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SequentialFeatureSelector 的前向与后向选择分别怎样开始？",
+      "answer": "前向从空集合逐步添加，后向从完整特征集逐步删除，按交叉验证分数贪心选择。",
+      "explanation": "贪心搜索不保证找到所有子集中的全局最优组合。",
+      "example": "从空集合开始，逐步加入能改善验证评分的特征。",
+      "tags": [
+        "顺序特征选择",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html",
+      "referenceTitle": "scikit-learn 1.7：SequentialFeatureSelector"
+    },
+    {
+      "id": "skselect-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "递归与模型筛选",
+      "knowledgePoint": "顺序选择模型要求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SequentialFeatureSelector 是否要求估计器提供 coef_ 或 feature_importances_？",
+      "answer": "不要求；它通过交叉验证评分比较候选特征子集。",
+      "explanation": "因此可用于支持拟合和评分但不暴露特征重要性的估计器。",
+      "example": "用 K 近邻模型进行顺序特征选择。",
+      "tags": [
+        "顺序选择模型要求",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_selection.SequentialFeatureSelector.html",
+      "referenceTitle": "scikit-learn 1.7：SequentialFeatureSelector"
+    },
+    {
+      "id": "skselect-030",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型解释",
+      "knowledgePoint": "置换重要性计算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "置换特征重要性怎样衡量模型对某一特征的依赖？",
+      "answer": "比较原数据评分与随机打乱该特征后评分，通常以原评分减去打乱后评分表示。",
+      "explanation": "它针对指定模型、数据集和评分指标。",
+      "example": "打乱请求次数列后，分类评分下降较多。",
+      "tags": [
+        "置换重要性计算",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/permutation_importance.html",
+      "referenceTitle": "scikit-learn 1.7：置换特征重要性指南"
+    },
+    {
+      "id": "skselect-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型解释",
+      "knowledgePoint": "置换是否重训",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 permutation_importance 打乱某列时会重新训练模型吗？",
+      "answer": "不会；它使用已拟合的模型，对打乱后的数据重新计算评分。",
+      "explanation": "改变特征子集后重训属于另一类实验。",
+      "example": "固定分类器，打乱验证集一列再预测。",
+      "tags": [
+        "置换是否重训",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.inspection.permutation_importance.html",
+      "referenceTitle": "scikit-learn 1.7：permutation_importance"
+    },
+    {
+      "id": "skselect-032",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型解释",
+      "knowledgePoint": "负置换重要性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "平均置换重要性为负数时，在所用评分口径下说明什么？",
+      "answer": "多次打乱该列后的评分平均值高于原始数据评分。",
+      "explanation": "这可能来自抽样波动或模型与特征的具体关系，不能单凭负值断言原因。",
+      "example": "某列打乱后验证集准确率略微上升。",
+      "tags": [
+        "负置换重要性",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.inspection.permutation_importance.html",
+      "referenceTitle": "scikit-learn 1.7：permutation_importance"
+    },
+    {
+      "id": "skselect-033",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型解释",
+      "knowledgePoint": "置换重复波动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "permutation_importance 返回的 importances_std 衡量什么？",
+      "answer": "它是同一特征在多次随机置换所得重要性之间的标准差。",
+      "explanation": "它不自动等于模型泛化误差或总体置信区间。",
+      "example": "重复打乱十次，查看估计值的波动。",
+      "tags": [
+        "置换重复波动",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.inspection.permutation_importance.html",
+      "referenceTitle": "scikit-learn 1.7：permutation_importance"
+    },
+    {
+      "id": "skselect-034",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型解释",
+      "knowledgePoint": "相关特征的替代",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个特征高度相关时，单列置换重要性为什么可能偏低？",
+      "answer": "打乱其中一列后，模型仍可能利用另一列提供的相似信息。",
+      "explanation": "单列分数低不证明这组相关信息整体没有作用。",
+      "example": "两个高度相关的请求计数可以相互替代。",
+      "tags": [
+        "相关特征的替代",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/permutation_importance.html",
+      "referenceTitle": "scikit-learn 1.7：置换特征重要性指南"
+    },
+    {
+      "id": "skselect-035",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型解释",
+      "knowledgePoint": "模型质量与重要性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模型本身在留出集上表现很差时，低置换重要性能证明特征没有预测价值吗？",
+      "answer": "不能；它只说明该已训练模型在所用数据和评分下没有明显依赖该特征。",
+      "explanation": "应先检查模型是否学到了有效规律，并与其他方法比较。",
+      "example": "欠拟合模型可能忽略实际上有用的输入列。",
+      "tags": [
+        "模型质量与重要性",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/permutation_importance.html",
+      "referenceTitle": "scikit-learn 1.7：置换特征重要性指南"
+    },
+    {
+      "id": "skselect-036",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型解释",
+      "knowledgePoint": "树模型重要性偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "树模型基于不纯度下降的特征重要性可能偏向哪类特征？",
+      "answer": "它可能偏向可取值多、可产生更多候选切分的高基数特征。",
+      "explanation": "还应在留出数据上结合其他解释方法评估。",
+      "example": "高基数编号列可能获得较高的不纯度重要性。",
+      "tags": [
+        "树模型重要性偏差",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/permutation_importance.html",
+      "referenceTitle": "scikit-learn 1.7：置换特征重要性指南"
+    },
+    {
+      "id": "skselect-037",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型解释",
+      "knowledgePoint": "评分指标与重要性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "置换重要性为什么可能随 scoring 指标改变？",
+      "answer": "不同指标关注的预测行为不同，因此打乱特征造成的评分变化也可能不同。",
+      "explanation": "比较重要性时应说明模型、数据和评分口径。",
+      "example": "同一特征对召回率和精确率的影响可能不同。",
+      "tags": [
+        "评分指标与重要性",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/permutation_importance.html",
+      "referenceTitle": "scikit-learn 1.7：置换特征重要性指南"
+    },
+    {
+      "id": "skselect-038",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型解释",
+      "knowledgePoint": "重要性与因果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "某个特征的置换重要性高，能直接证明它导致了目标结果吗？",
+      "answer": "不能；它说明特定模型在所用数据和指标下依赖该特征，不直接建立因果关系。",
+      "explanation": "混杂因素和数据采集机制都可能影响解释。",
+      "example": "某告警来源字段重要，不表示来源字段本身造成攻击。",
+      "tags": [
+        "重要性与因果",
+        "机器学习",
+        "scikit-learn"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/permutation_importance.html",
+      "referenceTitle": "scikit-learn 1.7：置换特征重要性指南"
+    }
+  ]
+}

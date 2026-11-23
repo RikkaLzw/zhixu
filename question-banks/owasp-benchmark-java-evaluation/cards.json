@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "owasp-benchmark-java-evaluation",
+    "title": "OWASP BenchmarkJava：漏洞检测评测",
+    "url": "https://github.com/OWASP-Benchmark/BenchmarkJava/blob/10dfcc54ad02dcfcb358b0ba4a0fef8c919a6d17/README.md",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "owbench-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "OWASP 漏洞检测基准",
+      "knowledgePoint": "评测目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OWASP BenchmarkJava 主要用于评估什么工具？",
+      "answer": "用于评估应用安全测试工具的漏洞检测能力，包括静态、动态和交互式测试工具。",
+      "explanation": "它提供可运行的 Java Web 应用测试用例。",
+      "example": "比较工具对同一测试套件的发现情况。",
+      "tags": [
+        "OWASP 漏洞检测基准",
+        "评测目的"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/OWASP-Benchmark/BenchmarkJava/blob/10dfcc54ad02dcfcb358b0ba4a0fef8c919a6d17/README.md"
+    },
+    {
+      "id": "owbench-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "OWASP 漏洞检测基准",
+      "knowledgePoint": "真实标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BenchmarkJava 的 expectedresults-1.2.csv 中 real vulnerability 列用来区分什么？",
+      "answer": "区分对应测试用例是否包含该基准所标注的真实漏洞。",
+      "explanation": "true 与 false 是针对基准目标的标签；同一行还提供类别和 CWE 编号。",
+      "example": "工具报告与基准标签比较可判断检测结果。",
+      "tags": [
+        "OWASP 漏洞检测基准",
+        "真实标签"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/OWASP-Benchmark/BenchmarkJava/blob/10dfcc54ad02dcfcb358b0ba4a0fef8c919a6d17/expectedresults-1.2.csv"
+    },
+    {
+      "id": "owbench-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "OWASP 漏洞检测基准",
+      "knowledgePoint": "测试标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BenchmarkJava 预期结果文件中的 test name 为什么对工具评分重要？",
+      "answer": "它把每条预期标签关联到具体测试用例，便于和工具发现进行匹配。",
+      "explanation": "匹配错误会影响统计结果。",
+      "example": "按 BenchmarkTest 编号关联扫描结果。",
+      "tags": [
+        "OWASP 漏洞检测基准",
+        "测试标识"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/OWASP-Benchmark/BenchmarkJava/blob/10dfcc54ad02dcfcb358b0ba4a0fef8c919a6d17/expectedresults-1.2.csv"
+    },
+    {
+      "id": "owbench-005",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "OWASP 漏洞检测基准",
+      "knowledgePoint": "评分方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OWASP BenchmarkUtils 的 scorecard 生成器如何利用 expected results？",
+      "answer": "将工具扫描结果与所选测试套件的预期结果文件比较，再生成评分报告。",
+      "explanation": "不同工具的结果格式需要相应解析支持。",
+      "example": "对多个扫描结果使用同一基准预期文件。",
+      "tags": [
+        "OWASP 漏洞检测基准",
+        "评分方法"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/OWASP-Benchmark/BenchmarkUtils/blob/a52d37eeb79e29524999955931fe001229c4e72e/README.md"
+    },
+    {
+      "id": "owbench-006",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "OWASP 漏洞检测基准",
+      "knowledgePoint": "版本匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么给 BenchmarkJava 扫描结果评分时要选与测试套件版本匹配的预期文件？",
+      "answer": "测试用例及其标签可能随版本变化，使用错误版本会导致匹配和统计失真。",
+      "explanation": "配置中应明确 expectedresults 文件版本。",
+      "example": "使用 1.2 测试套件时选择相应的 1.2 预期结果文件。",
+      "tags": [
+        "OWASP 漏洞检测基准",
+        "版本匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/OWASP-Benchmark/BenchmarkUtils/blob/a52d37eeb79e29524999955931fe001229c4e72e/README.md"
+    },
+    {
+      "id": "owbench-007",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "OWASP 漏洞检测基准",
+      "knowledgePoint": "爬虫用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BenchmarkUtils 的 crawler 在交互式应用安全测试中有什么用途？",
+      "answer": "它调用测试套件的 HTTP 端点，以触发受监测应用的执行。",
+      "explanation": "是否完整覆盖每条内部路径仍需结合工具与运行结果判断。",
+      "example": "在 IAST 代理运行时遍历基准应用端点。",
+      "tags": [
+        "OWASP 漏洞检测基准",
+        "爬虫用途"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/OWASP-Benchmark/BenchmarkUtils/blob/a52d37eeb79e29524999955931fe001229c4e72e/README.md"
+    }
+  ]
+}

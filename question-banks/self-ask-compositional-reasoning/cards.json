@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "self-ask-compositional-reasoning",
+    "title": "Self-Ask 原论文 v2：组合推理与追问",
+    "url": "https://arxiv.org/abs/2210.03350v2",
+    "type": "原论文或官方文档与源码",
+    "note": "依据逐题引用的固定版本、原论文或官方文档自行整理；示例为自编，具体版本及适用条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "selfask-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Self-Ask 组合推理",
+      "knowledgePoint": "追问分解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-Ask 提示方法怎样处理需要组合多步事实的问题？",
+      "answer": "模型先显式提出并回答后续子问题，再利用中间答案回答原问题。",
+      "explanation": "子问题和最终答案使用清晰的提示标记。",
+      "example": "先问事件发生年份，再问该年份对应的人物。",
+      "tags": [
+        "Self-Ask 组合推理",
+        "追问分解"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2210.03350v2"
+    },
+    {
+      "id": "selfask-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Self-Ask 组合推理",
+      "knowledgePoint": "追问数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-Ask 是否要求每个问题都执行固定数量的追问？",
+      "answer": "不要求；模型可决定继续追问、停止追问，或直接作答。",
+      "explanation": "具体行为受提示示例和模型输出影响。",
+      "example": "简单问题可能无需后续子问题。",
+      "tags": [
+        "Self-Ask 组合推理",
+        "追问数量"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2210.03350v2"
+    },
+    {
+      "id": "selfask-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-Ask 组合推理",
+      "knowledgePoint": "搜索替代",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-Ask 原论文接入搜索引擎时，用什么标记确定追问结束并暂停模型作答？",
+      "answer": "模型输出 Intermediate answer: 标记后暂停，将完整的追问送到搜索引擎。",
+      "explanation": "外部返回的答案被插入提示，模型再继续生成。",
+      "example": "搜索事件发生年份后再生成下一问。",
+      "tags": [
+        "Self-Ask 组合推理",
+        "搜索替代"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2210.03350v2"
+    },
+    {
+      "id": "selfask-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-Ask 组合推理",
+      "knowledgePoint": "组合能力缺口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-Ask 论文中的 compositionality gap 指哪类问题所占的比例？",
+      "answer": "模型能正确回答各个单步子问题，却未能正确回答组合问题的情况所占比例。",
+      "explanation": "论文在其构造的数据与具体提示、模型设置下测量该现象。",
+      "example": "两个单跳事实都答对，但组合后的多跳问题答错。",
+      "tags": [
+        "Self-Ask 组合推理",
+        "组合能力缺口"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2210.03350v2"
+    },
+    {
+      "id": "selfask-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-Ask 组合推理",
+      "knowledgePoint": "Bamboogle 构造",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-Ask 原论文的 Bamboogle 数据集主要用于考查什么？",
+      "answer": "它由人工构造的双跳问题组成，用于考查问题分解和多步组合。",
+      "explanation": "论文数据集只有 125 个问题，结果应结合样本规模理解。",
+      "example": "把两个围绕同一主题的事实组合成问题。",
+      "tags": [
+        "Self-Ask 组合推理",
+        "Bamboogle 构造"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2210.03350v2"
+    }
+  ]
+}

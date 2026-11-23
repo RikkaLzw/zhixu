@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "transformer-xl-recurrence",
+    "title": "Transformer-XL 原论文：片段记忆与位置",
+    "url": "https://arxiv.org/pdf/1901.02860v2",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题引用的教材、论文或固定版本文档自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "txlbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "长上下文与片段记忆",
+      "knowledgePoint": "片段记忆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformer-XL 原论文如何让当前片段使用前一片段的上下文？",
+      "answer": "缓存先前片段的隐藏状态，并把它们作为当前片段注意力的扩展上下文。",
+      "explanation": "记忆长度受到配置与资源限制。",
+      "example": "当前片段可访问保留下来的历史隐藏状态。",
+      "tags": [
+        "长上下文与片段记忆",
+        "片段记忆"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1901.02860v2"
+    },
+    {
+      "id": "txlbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "长上下文与片段记忆",
+      "knowledgePoint": "梯度截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformer-XL 训练时对缓存的前一片段隐藏状态使用 stop-gradient 有什么作用？",
+      "answer": "当前片段的反向传播不穿过该缓存继续更新前一片段的计算图。",
+      "explanation": "前向仍可使用缓存提供的历史信息。",
+      "example": "缓存状态作为固定输入参与当前片段计算。",
+      "tags": [
+        "长上下文与片段记忆",
+        "梯度截断"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1901.02860v2"
+    },
+    {
+      "id": "txlbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "长上下文与片段记忆",
+      "knowledgePoint": "查询与记忆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformer-XL 原论文在计算当前片段注意力时，缓存的历史状态主要参与构造哪些向量？",
+      "answer": "缓存状态与当前状态一起参与构造键和值；查询来自当前片段。",
+      "explanation": "这是论文的片段级状态复用方式。",
+      "example": "历史片段可被当前查询关注。",
+      "tags": [
+        "长上下文与片段记忆",
+        "查询与记忆"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1901.02860v2"
+    },
+    {
+      "id": "txlbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "长上下文与片段记忆",
+      "knowledgePoint": "重用与 KV 缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformer-XL 论文缓存的隐藏状态与常见自回归 KV Cache 缓存的对象有何区别？",
+      "answer": "前者缓存跨片段隐藏状态；常见 KV Cache 直接保存已经投影的键和值。",
+      "explanation": "二者都可减少重复处理历史上下文，但保存对象及计算流程不同。",
+      "example": "读取缓存隐藏状态后再参与键和值计算。",
+      "tags": [
+        "长上下文与片段记忆",
+        "重用与 KV 缓存"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1901.02860v2"
+    },
+    {
+      "id": "txlbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "长上下文与片段记忆",
+      "knowledgePoint": "相对位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformer-XL 为什么结合相对位置编码复用跨片段状态？",
+      "answer": "简单重置绝对位置可能让不同片段的位置混淆；相对距离可区分查询与历史位置的时序关系。",
+      "explanation": "论文使用特定的相对位置得分形式。",
+      "example": "不同片段的第一个 token 不应被当作同一时间位置。",
+      "tags": [
+        "长上下文与片段记忆",
+        "相对位置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1901.02860v2"
+    },
+    {
+      "id": "txlbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "长上下文与片段记忆",
+      "knowledgePoint": "记忆长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformer-XL 论文中的记忆长度 M 主要限制什么？",
+      "answer": "限制为当前片段保留并提供的历史隐藏状态数量。",
+      "explanation": "增加 M 可能增加资源消耗；实际有效上下文仍需评估。",
+      "example": "只保留最近若干位置的历史状态。",
+      "tags": [
+        "长上下文与片段记忆",
+        "记忆长度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1901.02860v2"
+    }
+  ]
+}

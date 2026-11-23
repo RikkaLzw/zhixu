@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "malnet-function-call-graphs",
+    "title": "MalNet 原论文 v3：恶意软件函数调用图",
+    "url": "https://arxiv.org/abs/2011.07682v3",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题列出的资料自行整理；代码行为以题中版本为准。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "malnet-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MalNet 图数据集",
+      "knowledgePoint": "图结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalNet 论文的函数调用图中，节点和边分别表示什么？",
+      "answer": "节点表示函数，有向边表示函数之间的调用关系。",
+      "explanation": "这是程序结构表示，不等同于实际运行轨迹。",
+      "example": "函数 A 调用函数 B 可形成 A 指向 B 的边。",
+      "tags": [
+        "恶意软件",
+        "图结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2011.07682v3"
+    },
+    {
+      "id": "malnet-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MalNet 图数据集",
+      "knowledgePoint": "静态提取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalNet 论文怎样从 Android 应用构造函数调用图？",
+      "answer": "对来自 AndroZoo 的 APK，使用 Androguard 静态分析 DEX 并提取函数调用图。",
+      "explanation": "静态提取的调用关系不代表每条调用都在运行时发生。",
+      "example": "从 APK 的 DEX 提取图供图分类模型使用。",
+      "tags": [
+        "恶意软件",
+        "静态提取"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2011.07682v3"
+    },
+    {
+      "id": "malnet-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MalNet 图数据集",
+      "knowledgePoint": "图保留结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalNet 在处理函数调用图时是否保留边方向和孤立节点？",
+      "answer": "保留；论文也保留不连通的组成部分。",
+      "explanation": "不能默认每个图都是连通无向图。",
+      "example": "没有关联边的函数节点仍可存在于图中。",
+      "tags": [
+        "恶意软件",
+        "图保留结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2011.07682v3"
+    },
+    {
+      "id": "malnet-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MalNet 图数据集",
+      "knowledgePoint": "去标识化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalNet 发布的图为何不能直接用来读取原始函数名？",
+      "answer": "论文将节点重新编号并移除关联属性，公开结构不再提供原始节点名称。",
+      "explanation": "只使用图结构时不能假定具有函数名等语义特征。",
+      "example": "公开图中的节点标识是数字编号。",
+      "tags": [
+        "恶意软件",
+        "去标识化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2011.07682v3"
+    },
+    {
+      "id": "malnet-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MalNet 图数据集",
+      "knowledgePoint": "良性类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalNet 图数据集是否所有样本都属于恶意软件？",
+      "answer": "不是；论文的类别统计中包含 Benign 良性类别。",
+      "explanation": "评估时要明确类别和标签口径。",
+      "example": "良性图可作为分类任务的一个类别。",
+      "tags": [
+        "恶意软件",
+        "良性类别"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2011.07682v3"
+    },
+    {
+      "id": "malnet-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MalNet 图数据集",
+      "knowledgePoint": "标签来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalNet 的类型和家族标签依据什么生成？",
+      "answer": "使用 Euphony 统一来自 VirusTotal 多个厂商报告的标签，形成类型和家族层级。",
+      "explanation": "厂商命名不一致使自动标签仍存在不确定性。",
+      "example": "用类型及其下属家族组织图分类标签。",
+      "tags": [
+        "恶意软件",
+        "标签来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2011.07682v3"
+    },
+    {
+      "id": "malnet-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MalNet 图数据集",
+      "knowledgePoint": "小型子集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalNet-Tiny 相比完整 MalNet 做了什么规模限制？",
+      "answer": "它包含五个均衡类型共 5000 张图，每图最多 5000 个节点。",
+      "explanation": "该子集用于较快地试验方法，不代表完整数据的原始类别分布。",
+      "example": "先在 Tiny 上验证图模型的数据读取。",
+      "tags": [
+        "恶意软件",
+        "小型子集"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2011.07682v3"
+    },
+    {
+      "id": "malnet-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "MalNet 图数据集",
+      "knowledgePoint": "切分与时间外推",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalNet 论文使用分层 70／10／20 切分后，能否仅据此认定模型具有时间外泛化能力？",
+      "answer": "不能；分层切分保持类别分布，不等同于按时间构造未来测试集。",
+      "explanation": "时间外效果需要基于采集时间和去重策略另行评估。",
+      "example": "另设较晚时间样本作为测试集。",
+      "tags": [
+        "恶意软件",
+        "切分与时间外推"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2011.07682v3"
+    }
+  ]
+}

@@ -1,0 +1,335 @@
+{
+  "source": {
+    "id": "os-concurrency-fundamentals",
+    "title": "OSTEP：并发、同步与死锁",
+    "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf",
+    "type": "教材",
+    "note": "依据逐题引用的教材或官方文档自行整理，示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "oscon-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "竞态条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "并发程序中的竞态条件通常指什么？",
+      "answer": "程序结果依赖多个执行单元访问共享状态的时序，而某些时序会产生错误。",
+      "explanation": "并发交错即使在单核上也可能发生。",
+      "example": "两个线程同时更新计数器导致丢失更新。",
+      "tags": [
+        "竞态条件",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf"
+    },
+    {
+      "id": "oscon-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "临界区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "并发程序中的临界区通常是什么？",
+      "answer": "它是访问共享资源、需要按同步规则限制并发执行的一段代码。",
+      "explanation": "临界区应覆盖需要共同维护的不变量。",
+      "example": "多个线程更新同一个账户余额。",
+      "tags": [
+        "临界区",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf"
+    },
+    {
+      "id": "oscon-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "互斥锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "互斥锁为受保护的临界区提供什么基本保证？",
+      "answer": "遵守同一锁协议的线程中，同一时刻最多一个线程持有该锁并进入临界区。",
+      "explanation": "所有相关访问都必须遵循相同保护规则。",
+      "example": "更新共享计数前获取互斥锁。",
+      "tags": [
+        "互斥锁",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf"
+    },
+    {
+      "id": "oscon-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "锁粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "粗粒度锁与细粒度锁有什么常见权衡？",
+      "answer": "粗粒度锁设计较简单但可能限制并发；细粒度锁可提高并发，但协调和维护更复杂。",
+      "explanation": "实际性能取决于竞争和锁开销。",
+      "example": "整个表一把锁与分桶加锁。",
+      "tags": [
+        "锁粒度",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf"
+    },
+    {
+      "id": "oscon-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "自旋与阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "等待锁时，自旋和阻塞有什么区别？",
+      "answer": "自旋持续检查锁并占用处理器时间；阻塞让线程等待，由系统在适当时唤醒。",
+      "explanation": "两者的适用性取决于等待时长和调度成本。",
+      "example": "短临界区可能采用自旋等待。",
+      "tags": [
+        "自旋与阻塞",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf"
+    },
+    {
+      "id": "oscon-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "原子读改写",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么用普通的“先检查锁标志，再设置标志”不一定能实现互斥？",
+      "answer": "两个线程可能在任何一个设置标志之前都观察到锁空闲，因此同时进入。",
+      "explanation": "实现锁需要合适的原子操作和内存顺序。",
+      "example": "两个线程交错执行检查和写入。",
+      "tags": [
+        "原子读改写",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf"
+    },
+    {
+      "id": "oscon-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "测试并设置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "test-and-set 原子操作的核心作用是什么？",
+      "answer": "它以不可分割的操作读取旧值并设置新值，可用于实现简单自旋锁。",
+      "explanation": "实际同步还须考虑内存顺序等架构规则。",
+      "example": "把锁标志设为占用，同时检查原值是否空闲。",
+      "tags": [
+        "测试并设置",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf"
+    },
+    {
+      "id": "oscon-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "比较并交换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较并交换 CAS 通常做什么？",
+      "answer": "它原子地比较目标值与预期值，仅相等时写入新值，并报告或返回比较结果。",
+      "explanation": "失败后调用方可根据实际算法重试。",
+      "example": "只有计数值仍为旧值时才更新。",
+      "tags": [
+        "比较并交换",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf"
+    },
+    {
+      "id": "oscon-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "死锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "并发中的死锁通常指什么？",
+      "answer": "多个执行单元彼此等待对方持有的资源，导致相关执行无法继续。",
+      "explanation": "死锁可能涉及锁或其他有限资源。",
+      "example": "两个线程分别持有一把锁并等待另一把锁。",
+      "tags": [
+        "死锁",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-bugs.pdf"
+    },
+    {
+      "id": "oscon-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "死锁必要条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典死锁分析中的四个必要条件是什么？",
+      "answer": "互斥、持有并等待、不可抢占和循环等待。",
+      "explanation": "破坏其中一个条件即可排除符合该模型的死锁。",
+      "example": "统一加锁顺序可破坏循环等待。",
+      "tags": [
+        "死锁必要条件",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-bugs.pdf"
+    },
+    {
+      "id": "oscon-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "锁顺序防死锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多个线程需要获取多把锁时，统一的全局获取顺序为什么有助于防止死锁？",
+      "answer": "所有线程按相同顺序取锁可排除由这些锁形成的循环等待。",
+      "explanation": "需要相关代码一致遵循约定。",
+      "example": "总是先获取 A 再获取 B。",
+      "tags": [
+        "锁顺序防死锁",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-bugs.pdf"
+    },
+    {
+      "id": "oscon-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "饥饿与死锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线程饥饿与死锁有什么区别？",
+      "answer": "饥饿指某线程长期得不到所需资源而无法进展；死锁指相关执行单元形成相互等待且无法继续。",
+      "explanation": "系统中其他线程可能仍在运行。",
+      "example": "不公平调度使一个线程一直取不到锁。",
+      "tags": [
+        "饥饿与死锁",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf"
+    },
+    {
+      "id": "oscon-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "活锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "活锁与死锁在执行状态上有什么常见区别？",
+      "answer": "活锁中参与者持续改变状态或重试，但没有取得所需进展；死锁中相关参与者相互等待。",
+      "explanation": "退避等措施可降低某些重试型活锁。",
+      "example": "两个线程反复释放锁并同时重试。",
+      "tags": [
+        "活锁",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-bugs.pdf"
+    },
+    {
+      "id": "oscon-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "条件等待原子性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "POSIX 条件变量等待时，关联互斥锁会怎样处理？",
+      "answer": "等待操作原子地释放互斥锁并进入等待；返回前重新获取该锁。",
+      "explanation": "检查条件与修改共享状态应遵循相同的锁协议。",
+      "example": "消费者持锁检查队列为空后等待。",
+      "tags": [
+        "条件等待原子性",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf"
+    },
+    {
+      "id": "oscon-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "条件变量谓词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么条件变量被唤醒后通常要在循环中重新检查条件？",
+      "answer": "唤醒不保证共享条件在重新取得锁时仍然成立，也可能发生虚假唤醒。",
+      "explanation": "检查和等待应围绕实际共享状态进行。",
+      "example": "多个消费者被唤醒但队列只有一个任务。",
+      "tags": [
+        "条件变量谓词",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf"
+    },
+    {
+      "id": "oscon-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "条件变量记忆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "条件变量发送 signal 时没有等待者，是否会自动保存一个未来可消费的通知？",
+      "answer": "一般不会；应通过受锁保护的共享状态记录条件，再在需要时等待或通知。",
+      "explanation": "信号本身不是持久状态。",
+      "example": "先把 done 设为真，再通知等待线程。",
+      "tags": [
+        "条件变量记忆",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-cv.pdf"
+    },
+    {
+      "id": "oscon-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统并发",
+      "knowledgePoint": "信号量与互斥锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "计数信号量与互斥锁的常见用途有什么不同？",
+      "answer": "信号量可表示多个可用许可或用于通知；互斥锁主要保护临界区并有锁所有权语义。",
+      "explanation": "具体接口的所有权和释放要求应以其规范为准。",
+      "example": "连接池用许可计数，共享结构用互斥锁保护。",
+      "tags": [
+        "信号量与互斥锁",
+        "操作系统并发"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-sema.pdf"
+    }
+  ]
+}

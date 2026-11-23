@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "pyod-feature-bagging-anomaly",
+    "title": "PyOD 2.0.5：特征袋装异常检测",
+    "url": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/feature_bagging.py",
+    "type": "固定版本文档、源码或论文",
+    "note": "依据逐题所列资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "pybag-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "特征袋装异常检测",
+      "knowledgePoint": "集成方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD FeatureBagging 如何构造多个基异常检测器？",
+      "answer": "为不同基检测器抽取特征子集，在对应子空间分别拟合，再组合它们的异常分数。",
+      "explanation": "特征子空间可带来检测器多样性。",
+      "example": "在网络流量的不同特征子集上训练检测器。",
+      "tags": [
+        "特征袋装异常检测",
+        "集成方式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/feature_bagging.py"
+    },
+    {
+      "id": "pybag-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "特征袋装异常检测",
+      "knowledgePoint": "默认基模型",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 FeatureBagging 未指定 base_estimator 时使用什么检测器？",
+      "answer": "默认使用 PyOD 的 LOF 检测器。",
+      "explanation": "也可传入满足接口要求的其他基检测器。",
+      "example": "用 KNN 替换默认 LOF。",
+      "tags": [
+        "特征袋装异常检测",
+        "默认基模型"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/feature_bagging.py"
+    },
+    {
+      "id": "pybag-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "特征袋装异常检测",
+      "knowledgePoint": "原始样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 FeatureBagging 会为每个基检测器随机抽取部分训练行吗？",
+      "answer": "不会；该实现对每个检测器使用全部输入行，变化的是特征列。",
+      "explanation": "抽样是否放回由 bootstrap_features 控制的是特征列。",
+      "example": "每个基模型都看到所有训练记录的部分字段。",
+      "tags": [
+        "特征袋装异常检测",
+        "原始样本"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/feature_bagging.py"
+    },
+    {
+      "id": "pybag-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "特征袋装异常检测",
+      "knowledgePoint": "特征数范围",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 FeatureBagging 设置 max_features=1.0，是否每个基检测器都使用全部特征？",
+      "answer": "不一定；它在特征总数的一半向下取整到最大特征数之间随机选择子集大小。",
+      "explanation": "这里 max_features=1.0 表示上限为全部特征。",
+      "example": "六列输入时每个基检测器可能使用三至六列。",
+      "tags": [
+        "特征袋装异常检测",
+        "特征数范围"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/feature_bagging.py"
+    },
+    {
+      "id": "pybag-005",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "特征袋装异常检测",
+      "knowledgePoint": "放回抽样",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyOD FeatureBagging 的 bootstrap_features=True 控制什么？",
+      "answer": "抽取特征列时允许放回，因此同一个特征可能被重复抽到。",
+      "explanation": "False 时按该实现不放回抽取特征。",
+      "example": "某个基检测器的输入可能包含同一列两次。",
+      "tags": [
+        "特征袋装异常检测",
+        "放回抽样"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/feature_bagging.py"
+    },
+    {
+      "id": "pybag-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "特征袋装异常检测",
+      "knowledgePoint": "分数组合",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PyOD FeatureBagging 的 combination=\"average\" 与 \"max\" 怎样合并基检测器的分数？",
+      "answer": "分别对同一样本的各基检测器分数取平均或取最大值。",
+      "explanation": "比较分数前需考虑不同子空间的分数尺度。",
+      "example": "用最大值突出任一子空间的高异常分数。",
+      "tags": [
+        "特征袋装异常检测",
+        "分数组合"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/feature_bagging.py"
+    },
+    {
+      "id": "pybag-007",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "特征袋装异常检测",
+      "knowledgePoint": "子空间索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD FeatureBagging 拟合后的 estimators_features_ 保存什么？",
+      "answer": "保存各个基检测器所用的原始特征列索引。",
+      "explanation": "预测时用相应索引选择输入列。",
+      "example": "排查某个基检测器使用了哪些网络流字段。",
+      "tags": [
+        "特征袋装异常检测",
+        "子空间索引"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/feature_bagging.py"
+    },
+    {
+      "id": "pybag-008",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "特征袋装异常检测",
+      "knowledgePoint": "预测输入列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 FeatureBagging 预测输入特征列数与训练时不一致会怎样？",
+      "answer": "decision_function 会抛出 ValueError。",
+      "explanation": "列数一致也不代表列顺序或语义一定正确。",
+      "example": "训练用六列，推理却只传五列。",
+      "tags": [
+        "特征袋装异常检测",
+        "预测输入列"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/feature_bagging.py"
+    }
+  ]
+}

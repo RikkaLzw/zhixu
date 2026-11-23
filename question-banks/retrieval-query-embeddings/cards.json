@@ -1,0 +1,235 @@
+{
+  "source": {
+    "id": "retrieval-query-embeddings",
+    "title": "HyDE、ColBERT、RAG-Fusion：查询与表示",
+    "url": "https://arxiv.org/abs/2004.12832",
+    "type": "研究论文",
+    "note": "逐题依据论文整理；快手公开面经中的 RAG embedding 为部分卡片的主题启发。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "retrievalmethods-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索查询与多向量表示",
+      "knowledgePoint": "多查询检索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多查询检索为什么为同一个问题生成不同表述再分别检索？",
+      "answer": "不同表述可能匹配到不同的相关资料，汇总候选有机会扩大覆盖。",
+      "explanation": "扩大查询数量也会增加调用和检索开销，效果需要评估。",
+      "example": "分别检索漏洞别名和产品名称的不同问法。",
+      "tags": [
+        "多查询检索",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.03367",
+      "referenceTitle": "RAG-Fusion 论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "retrievalmethods-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索查询与多向量表示",
+      "knowledgePoint": "查询偏离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多查询检索中，生成的扩展查询偏离原问题会带来什么风险？",
+      "answer": "它可能召回与用户意图无关的材料，使排序或生成偏离原问题。",
+      "explanation": "应检查扩展查询与原问题的关系，并通过实际检索效果评估。",
+      "example": "把具体产品的问题扩展成泛泛的行业问题。",
+      "tags": [
+        "查询偏离",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.03367",
+      "referenceTitle": "RAG-Fusion 论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "retrievalmethods-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索查询与多向量表示",
+      "knowledgePoint": "HyDE流程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HyDE 怎样利用生成的假设文档检索真实资料？",
+      "answer": "先根据查询生成假设文档，再编码该文档并用其向量检索语料中的相似真实文档。",
+      "explanation": "这种做法将查询转换成文档风格的表示，具体效果依赖生成和编码模型。",
+      "example": "生成一段假设性的漏洞说明后检索真实公告。",
+      "tags": [
+        "HyDE流程",
+        "检索",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2212.10496",
+      "referenceTitle": "HyDE 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；RAG embedding 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "retrievalmethods-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索查询与多向量表示",
+      "knowledgePoint": "HyDE证据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HyDE 生成的假设文档能直接作为事实证据吗？",
+      "answer": "不能；它由模型生成，可能包含错误细节，应以检索到的真实资料核对。",
+      "explanation": "假设文档主要承担检索中间表示的角色。",
+      "example": "用实际厂商公告而非假设段落核实漏洞版本。",
+      "tags": [
+        "HyDE证据",
+        "检索",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2212.10496",
+      "referenceTitle": "HyDE 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；RAG embedding 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "retrievalmethods-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索查询与多向量表示",
+      "knowledgePoint": "后期交互",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERT 的后期交互如何处理查询与文档？",
+      "answer": "先分别编码查询和文档，再根据两组 token 表示计算细粒度匹配分数。",
+      "explanation": "文档编码可预先计算并保存；查询时再编码查询并计算匹配。",
+      "example": "查询与候选文档分别编码后再计算相关性。",
+      "tags": [
+        "后期交互",
+        "检索",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2004.12832",
+      "referenceTitle": "ColBERT 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；RAG embedding 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "retrievalmethods-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索查询与多向量表示",
+      "knowledgePoint": "MaxSim",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERT 的 MaxSim 如何聚合查询和文档 token 的匹配？",
+      "answer": "对每个查询 token 取它与各文档 token 的最大相似度，再将这些最大值求和。",
+      "explanation": "最大相似度在每个查询 token 上分别计算，不要求一对一匹配。",
+      "example": "一个查询词由文档中最相似的 token 提供匹配贡献。",
+      "tags": [
+        "MaxSim",
+        "检索",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2004.12832",
+      "referenceTitle": "ColBERT 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；RAG embedding 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "retrievalmethods-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索查询与多向量表示",
+      "knowledgePoint": "多向量表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERT 的文档表示与常见单向量文档检索有何不同？",
+      "answer": "ColBERT 保留多个上下文化的 token 向量；单向量方法通常将文档压缩为一个向量。",
+      "explanation": "多向量保留更细粒度的匹配信息，也会影响索引存储和计算成本。",
+      "example": "对比整段一个向量与每个 token 一个向量。",
+      "tags": [
+        "多向量表示",
+        "检索",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2004.12832",
+      "referenceTitle": "ColBERT 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；RAG embedding 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "retrievalmethods-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索查询与多向量表示",
+      "knowledgePoint": "检索与重排",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColBERT 只能对其他检索器给出的候选进行重排吗？",
+      "answer": "不是；原论文既展示了候选重排，也展示了借助向量索引从文档集合直接检索。",
+      "explanation": "具体部署方式取决于索引和资源配置。",
+      "example": "用 ColBERT 重排关键词结果，或直接查询其向量索引。",
+      "tags": [
+        "检索与重排",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2004.12832",
+      "referenceTitle": "ColBERT 原论文",
+      "referenceType": "研究论文"
+    }
+  ]
+}

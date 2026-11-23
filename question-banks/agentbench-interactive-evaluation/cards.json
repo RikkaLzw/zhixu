@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "agentbench-interactive-evaluation",
+    "title": "AgentBench 原论文 v3：交互式智能体评测",
+    "url": "https://arxiv.org/abs/2308.03688v3",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题所列论文或固定版本资料自行整理，示例为自编。在线文档按 2026-11-21 查看内容。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "agentbench-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AgentBench 交互评测",
+      "knowledgePoint": "评测对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBench 原论文主要评估大模型的哪种能力？",
+      "answer": "评估模型作为智能体在交互环境中推理、决策和行动的能力。",
+      "explanation": "任务通常需要多轮行动并利用环境反馈。",
+      "example": "模型在终端中执行命令并依据输出继续操作。",
+      "tags": [
+        "AgentBench 交互评测",
+        "评测对象"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.03688v3"
+    },
+    {
+      "id": "agentbench-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AgentBench 交互评测",
+      "knowledgePoint": "格式与动作错误",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBench 的 Invalid Format 与 Invalid Action 有什么区别？",
+      "answer": "前者违反输出格式要求；后者格式合规但所选动作无效。",
+      "explanation": "分类有助于区分解析问题与行动选择问题。",
+      "example": "输出无法解析，或输出可解析但动作不在允许集合中。",
+      "tags": [
+        "AgentBench 交互评测",
+        "格式与动作错误"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.03688v3"
+    },
+    {
+      "id": "agentbench-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AgentBench 交互评测",
+      "knowledgePoint": "轮次限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBench 的 Task Limit Exceeded 表示什么？",
+      "answer": "智能体在达到预设交互轮次上限或反复生成后仍未解决任务。",
+      "explanation": "终止原因不等于该方法在所有环境中都失败。",
+      "example": "多轮操作始终未完成目标。",
+      "tags": [
+        "AgentBench 交互评测",
+        "轮次限制"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.03688v3"
+    },
+    {
+      "id": "agentbench-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AgentBench 交互评测",
+      "knowledgePoint": "数据库选择任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBench 原论文的数据库选择类任务如何检查最终答案？",
+      "answer": "将智能体的文本答案与标准答案比较，并忽略顺序。",
+      "explanation": "论文对单个数值还接受等价数值表示。",
+      "example": "查询结果的记录顺序不同但内容相同。",
+      "tags": [
+        "AgentBench 交互评测",
+        "数据库选择任务"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.03688v3"
+    },
+    {
+      "id": "agentbench-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AgentBench 交互评测",
+      "knowledgePoint": "数据库修改任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBench 原论文如何检查插入或更新数据库任务的结果？",
+      "answer": "比较智能体操作后的表哈希与正确操作后的表哈希。",
+      "explanation": "该方式检查环境状态，不仅检查模型口头声称。",
+      "example": "更新表后核对最终表状态。",
+      "tags": [
+        "AgentBench 交互评测",
+        "数据库修改任务"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.03688v3"
+    },
+    {
+      "id": "agentbench-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AgentBench 交互评测",
+      "knowledgePoint": "知识图谱指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentBench 原论文的知识图谱问答环境采用什么主要指标？",
+      "answer": "使用答案 F1 衡量问答结果。",
+      "explanation": "不同环境使用不同指标，不宜把所有环境分数当作同一含义。",
+      "example": "比较返回实体集合与参考答案。",
+      "tags": [
+        "AgentBench 交互评测",
+        "知识图谱指标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.03688v3"
+    }
+  ]
+}

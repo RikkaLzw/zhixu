@@ -1,0 +1,532 @@
+{
+  "source": {
+    "id": "aws-cloud-networking-identity",
+    "title": "AWS VPC、IAM、Elastic Load Balancing 与 EC2 Auto Scaling 文档",
+    "url": "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html",
+    "type": "官方云服务文档",
+    "note": "依据 AWS 官方文档自行整理；VPC、IAM、负载均衡和自动伸缩的行为明确限定为 AWS 服务语义。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "cloudaws-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "VPC 网络隔离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS VPC 为云网络资源提供什么基本抽象？",
+      "answer": "VPC 是在 AWS 区域内逻辑隔离的虚拟网络，可在其中配置地址范围、子网、路由和网络控制。",
+      "explanation": "VPC 提供网络边界和配置空间，但不等同于独立的物理网络设备。",
+      "example": "把测试环境和生产环境放入不同 VPC，可分别管理其地址段和路由。",
+      "tags": [
+        "AWS",
+        "VPC",
+        "网络隔离"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html"
+    },
+    {
+      "id": "cloudaws-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "子网与可用区范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS VPC 中的子网在地址范围和可用区范围上有什么约束？",
+      "answer": "子网 CIDR 必须包含在 VPC 的地址范围内，并且一个子网只属于一个可用区。",
+      "explanation": "同一 VPC 可在不同可用区创建多个子网；子网本身不会跨可用区。",
+      "example": "在两个可用区分别创建一个子网，再将应用实例分散部署。",
+      "tags": [
+        "AWS",
+        "VPC",
+        "subnet",
+        "Availability Zone"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html"
+    },
+    {
+      "id": "cloudaws-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "路由表最长前缀匹配",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "AWS 路由表中有多个都能匹配目标地址的路由时，通常选择哪一条？",
+      "answer": "选择目标前缀最长、也就是最具体匹配的路由。",
+      "explanation": "多个路由目标可以并存，最长前缀匹配用于决定数据包采用的路由目标。",
+      "example": "同时存在 `10.0.0.0/16` 和 `10.0.1.0/24` 时，发往 `10.0.1.7` 的流量匹配 `/24`。",
+      "tags": [
+        "AWS",
+        "route table",
+        "CIDR"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html"
+    },
+    {
+      "id": "cloudaws-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "公网子网条件",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "在 AWS 中，子网路由表有到 Internet Gateway 的路由，就足以让其中没有公网地址的 EC2 实例直接访问互联网吗？",
+      "answer": "不够；路由表需要指向 Internet Gateway，实例还需要可用于公网通信的 IPv4 地址或其他适用的公网地址配置。",
+      "explanation": "“公有子网”描述路由配置，不会自动为子网内每个实例分配公网地址。",
+      "example": "给子网添加 `0.0.0.0/0` 到 IGW 后，仍需检查 EC2 是否有公网 IPv4 或 Elastic IP。",
+      "tags": [
+        "AWS",
+        "public subnet",
+        "Internet Gateway"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html"
+    },
+    {
+      "id": "cloudaws-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "私有子网出站 NAT",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS 私有子网中的 IPv4 实例如何在没有公网地址时发起互联网出站连接？",
+      "answer": "可将出站流量路由到位于公有子网的 NAT Gateway，再由 NAT Gateway 经 Internet Gateway 访问互联网。",
+      "explanation": "NAT Gateway 允许私有子网中的实例发起连接并接收相应响应流量，不提供来自互联网的主动入站连接。",
+      "example": "私有子网的应用实例经 NAT Gateway 下载软件更新。",
+      "tags": [
+        "AWS",
+        "NAT Gateway",
+        "private subnet"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html"
+    },
+    {
+      "id": "cloudaws-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "Internet Gateway 作用",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "AWS Internet Gateway 与 NAT Gateway 在 VPC 网络中的用途有什么主要区别？",
+      "answer": "Internet Gateway 为 VPC 与互联网之间提供路由目标；NAT Gateway 主要让私有子网中的资源发起出站连接并进行地址转换。",
+      "explanation": "仅创建网关并不会自动建立流量路径，还要配置路由和适当的地址及安全规则。",
+      "example": "公有子网的默认路由指向 IGW，私有子网的默认出站路由指向 NAT Gateway。",
+      "tags": [
+        "AWS",
+        "Internet Gateway",
+        "NAT Gateway"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Internet_Gateway.html",
+      "supportingReferences": [
+        {
+          "id": "aws-nat-gateway-guide",
+          "title": "Amazon VPC User Guide: NAT gateways",
+          "url": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-nat-gateway.html",
+          "type": "官方 AWS 用户指南",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "cloudaws-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "安全组状态性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS Security Group 的 stateful 特性对响应流量有什么影响？",
+      "answer": "已允许的入站连接所对应的响应流量会自动获准返回，不需要再为该响应单独添加反向规则。",
+      "explanation": "安全组按连接状态跟踪流量；这与无状态网络 ACL 的规则评估不同。",
+      "example": "允许客户端从 TCP 443 入站访问服务后，响应流量不需再添加单独的出站临时端口规则。",
+      "tags": [
+        "AWS",
+        "Security Group",
+        "stateful"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html"
+    },
+    {
+      "id": "cloudaws-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "网络 ACL 无状态性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS Network ACL 的 stateless 特性意味着配置入站规则时还要考虑什么？",
+      "answer": "返回流量也要由适用的出站规则单独允许；ACL 不会像安全组那样自动放行已建立连接的响应。",
+      "explanation": "无状态过滤器分别评估入站和出站方向，因此临时端口等返回流量范围也可能需要配置。",
+      "example": "允许入站 TCP 443 后，还需确认出站规则允许客户端接收响应所需的返回端口流量。",
+      "tags": [
+        "AWS",
+        "Network ACL",
+        "stateless"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html"
+    },
+    {
+      "id": "cloudaws-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "安全组与网络 ACL",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "AWS 安全组与网络 ACL 在关联对象和规则方向上的常见区别是什么？",
+      "answer": "安全组关联网络接口等资源并具有状态性；网络 ACL 关联子网、分别评估入站和出站流量且无状态。",
+      "explanation": "两者可以组合使用，不能把一个的状态规则行为套用到另一个。",
+      "example": "实例安全组允许服务端口，子网 ACL 再按子网边界筛选允许和拒绝的流量。",
+      "tags": [
+        "AWS",
+        "Security Group",
+        "Network ACL"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html",
+      "supportingReferences": [
+        {
+          "id": "aws-network-acl-guide",
+          "title": "Amazon VPC User Guide: Network ACLs",
+          "url": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html",
+          "type": "官方 AWS 用户指南",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "cloudaws-010",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "网络 ACL 规则顺序",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "AWS 网络 ACL 中有多条规则匹配同一流量时，如何确定采用哪条规则？",
+      "answer": "按规则编号从小到大评估，并采用第一条匹配规则的允许或拒绝动作。",
+      "explanation": "后续规则不会覆盖已经命中的较小编号规则；列表末尾还有默认拒绝行为。",
+      "example": "编号 100 的拒绝规则先于编号 110 的允许规则匹配时，流量会被拒绝。",
+      "tags": [
+        "AWS",
+        "Network ACL",
+        "规则顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html"
+    },
+    {
+      "id": "cloudaws-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "VPC Peering 非传递性",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "VPC A 与 B、VPC B 与 C 分别建立 AWS Peering 后，A 中资源能否自动经 B 访问 C？",
+      "answer": "不能；VPC Peering 不提供传递路由，A 与 C 需要直接建立 peering 或采用其他受支持的网络连接架构。",
+      "explanation": "建立一条 peering 不会把对端 VPC 变成可转发其他 peering 流量的路由器。",
+      "example": "A-B 和 B-C 两条 peering 不会自动形成 A 到 C 的转发路径。",
+      "tags": [
+        "AWS",
+        "VPC Peering",
+        "路由"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html"
+    },
+    {
+      "id": "cloudaws-012",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "Peering 地址重叠限制",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "尝试建立 AWS VPC Peering 时，两侧 VPC 的 IPv4 CIDR 地址范围能否重叠？",
+      "answer": "不能；VPC Peering 要求待连接 VPC 的地址范围不重叠。",
+      "explanation": "地址重叠会使路由目标无法明确区分，建立连接前应规划不冲突的 CIDR。",
+      "example": "两个 VPC 都使用 `10.0.0.0/16` 时，不能直接用 peering 连接它们。",
+      "tags": [
+        "AWS",
+        "VPC Peering",
+        "CIDR"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/peering/vpc-peering-basics.html"
+    },
+    {
+      "id": "cloudaws-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "VPC Endpoint 私有访问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS VPC Endpoint 主要解决什么网络访问问题？",
+      "answer": "它可让 VPC 中的资源通过 AWS 网络访问受支持的 AWS 服务或 Endpoint Service，而不必把流量路由到公共互联网。",
+      "explanation": "具体连接方式取决于 endpoint 类型和目标服务，不能把 endpoint 当成通用互联网出口。",
+      "example": "应用通过 VPC Endpoint 访问 AWS 服务时，可避免为该访问配置公共 NAT 路径。",
+      "tags": [
+        "AWS",
+        "VPC Endpoint",
+        "PrivateLink"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints.html"
+    },
+    {
+      "id": "cloudaws-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "Gateway Endpoint",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "AWS Gateway Endpoint 通过什么方式把受支持服务的流量导入 VPC Endpoint？",
+      "answer": "它在指定路由表中添加到受支持服务前缀列表的路由。",
+      "explanation": "Gateway Endpoint 适用于特定 AWS 服务，例如 S3 和 DynamoDB；它不是创建网络接口的通用接口型 endpoint。",
+      "example": "把 S3 Gateway Endpoint 关联到私有子网使用的路由表。",
+      "tags": [
+        "AWS",
+        "Gateway Endpoint",
+        "路由表"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints.html"
+    },
+    {
+      "id": "cloudaws-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "Interface Endpoint",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "AWS Interface Endpoint 在 VPC 中通过什么资源提供私有服务连接？",
+      "answer": "它在选定子网中创建由 AWS PrivateLink 支持的弹性网络接口。",
+      "explanation": "接口型 endpoint 与通过路由表配置的 Gateway Endpoint 使用不同的接入机制。",
+      "example": "在应用所在子网创建接口型 endpoint，使私有地址可用于访问相应服务。",
+      "tags": [
+        "AWS",
+        "Interface Endpoint",
+        "ENI"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/vpc/latest/privatelink/vpc-endpoints.html"
+    },
+    {
+      "id": "cloudaws-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "IAM Role 临时身份",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "AWS IAM Role 与长期访问密钥形式的 IAM User 在凭证使用上有什么常见区别？",
+      "answer": "Role 通常由可信主体临时担任并取得短期凭证；IAM User 可关联长期凭证。",
+      "explanation": "给工作负载授予角色通常可减少在应用中保存长期访问密钥的需要。",
+      "example": "EC2 实例关联 IAM Role 后，通过实例凭证机制取得临时凭证访问获准服务。",
+      "tags": [
+        "AWS",
+        "IAM Role",
+        "临时凭证"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html"
+    },
+    {
+      "id": "cloudaws-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "信任策略与权限策略",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "AWS IAM Role 的信任策略和权限策略分别回答什么问题？",
+      "answer": "信任策略决定哪些主体可以担任该角色；权限策略决定角色担任后可以执行哪些操作。",
+      "explanation": "能否 AssumeRole 与 AssumeRole 后能做什么是两个独立授权环节。",
+      "example": "跨账号角色需允许对方主体担任角色，角色权限策略再限制其可访问的资源。",
+      "tags": [
+        "AWS",
+        "IAM",
+        "Trust Policy"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html"
+    },
+    {
+      "id": "cloudaws-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "IAM 显式拒绝",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS IAM 权限评估中，某策略允许操作但另一条适用策略显式拒绝时，最终结果通常是什么？",
+      "answer": "显式拒绝优先，操作被拒绝。",
+      "explanation": "通常还要求存在适用的显式允许；没有明确允许时默认拒绝。",
+      "example": "身份策略允许读取对象，但资源策略显式拒绝该主体时，请求仍会被拒绝。",
+      "tags": [
+        "AWS",
+        "IAM",
+        "显式拒绝"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html"
+    },
+    {
+      "id": "cloudaws-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "权限边界",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "AWS IAM Permissions Boundary 会自动向用户或角色授予边界内的全部权限吗？",
+      "answer": "不会；它限制身份基于身份策略可获得的最大权限集合，本身不授予权限。",
+      "explanation": "实际权限还需由其他适用策略允许，并受显式拒绝等规则影响。",
+      "example": "边界允许 S3 访问但没有任何身份策略授予 S3 操作时，主体不会因此自动得到 S3 权限。",
+      "tags": [
+        "AWS",
+        "IAM",
+        "Permissions Boundary"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html"
+    },
+    {
+      "id": "cloudaws-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "STS AssumeRole 临时凭证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS STS 的 AssumeRole 通常返回什么凭证？",
+      "answer": "返回包含访问密钥 ID、秘密访问密钥和会话令牌的临时安全凭证，并带有过期时间。",
+      "explanation": "使用者需在凭证过期前续取或重新取得凭证，不能把临时凭证当作永久密钥。",
+      "example": "CI 工作流先 AssumeRole，再用返回的临时凭证上传构建产物。",
+      "tags": [
+        "AWS STS",
+        "AssumeRole",
+        "临时凭证"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html"
+    },
+    {
+      "id": "cloudaws-021",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "Application Load Balancer 层次",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "AWS Application Load Balancer 主要在 HTTP 网络栈的哪一层处理应用流量？",
+      "answer": "主要在应用层处理 HTTP/HTTPS 请求，并可基于请求内容执行路由。",
+      "explanation": "它与主要按网络和传输层信息转发流量的 Network Load Balancer 定位不同。",
+      "example": "ALB 可以按 HTTP Host 或 URL 路径把请求路由到不同目标组。",
+      "tags": [
+        "AWS",
+        "ALB",
+        "Layer 7"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html"
+    },
+    {
+      "id": "cloudaws-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "Network Load Balancer 层次",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "AWS Network Load Balancer 与 Application Load Balancer 在协议层次上的主要差异是什么？",
+      "answer": "NLB 主要按传输层连接信息处理 TCP、UDP 或 TLS 流量；ALB 主要理解 HTTP/HTTPS 请求并提供应用层路由。",
+      "explanation": "选择时应依据协议、路由需求和目标类型，而不是只比较产品名称。",
+      "example": "需要按 HTTP 路径分流时通常考虑 ALB；需要按 TCP 连接转发时可考虑 NLB。",
+      "tags": [
+        "AWS",
+        "NLB",
+        "ALB",
+        "Layer 4"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html"
+    },
+    {
+      "id": "cloudaws-023",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "ALB 基于请求路由",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "AWS ALB 如何把同一监听器收到的 HTTP 请求分发到不同目标组？",
+      "answer": "可配置基于 Host、路径、HTTP 标头等请求属性匹配的监听器规则。",
+      "explanation": "监听器规则决定转发动作；具体目标是否健康还会影响目标选择。",
+      "example": "将 `/api/*` 路径转发到 API 目标组，将其他路径转发到 Web 目标组。",
+      "tags": [
+        "AWS",
+        "ALB",
+        "路由规则"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html"
+    },
+    {
+      "id": "cloudaws-024",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "目标组健康检查",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "AWS 负载均衡器的目标组健康检查会怎样影响流量分配？",
+      "answer": "负载均衡器依据健康检查结果识别目标健康状态，通常只向健康目标转发新请求。",
+      "explanation": "健康检查路径、端口、协议和成功条件应与应用实际就绪状态相符。",
+      "example": "服务启动后 `/health` 才返回成功，可将它配置为应用目标组的健康检查路径。",
+      "tags": [
+        "AWS",
+        "target group",
+        "health check"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/target-group-health-checks.html"
+    },
+    {
+      "id": "cloudaws-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "AWS 云网络与身份基础",
+      "knowledgePoint": "Auto Scaling 容量边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWS EC2 Auto Scaling Group 中的 min、max 与 desired capacity 分别约束什么？",
+      "answer": "min 和 max 定义容量下界与上界，desired capacity 表示组当前目标维持的实例数。",
+      "explanation": "伸缩策略可以调整期望容量，但不能使组越过配置的最小和最大容量边界。",
+      "example": "设置 min=2、desired=3、max=8 后，组的目标容量应在 2 到 8 之间。",
+      "tags": [
+        "AWS",
+        "EC2 Auto Scaling",
+        "容量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-capacity-limits.html"
+    }
+  ]
+}

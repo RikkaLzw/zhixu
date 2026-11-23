@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "extended-isolation-forest",
+    "title": "Extended Isolation Forest 原论文 v3：随机超平面",
+    "url": "https://arxiv.org/pdf/1811.02141v3",
+    "type": "官方技术文档、固定版本源码或研究论文",
+    "note": "依照逐题所列资料自行整理，示例自编；涉及实现的行为以指定版本为准。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "eif-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "扩展孤立森林",
+      "knowledgePoint": "扩展切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Extended Isolation Forest 主要怎样扩展分裂方式？",
+      "answer": "使用随机方向的超平面划分数据，而不只使用轴平行切分。",
+      "explanation": "该变化旨在减轻由固定坐标轴方向引入的偏差。",
+      "example": "二维中分裂线可以具有非零斜率。",
+      "tags": [
+        "扩展孤立森林",
+        "扩展切分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.02141v3"
+    },
+    {
+      "id": "eif-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "扩展孤立森林",
+      "knowledgePoint": "分数伪影",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EIF 论文指出标准 Isolation Forest 的轴平行切分可能造成什么现象？",
+      "answer": "在某些数据的异常分数图中产生沿坐标轴方向的条带或矩形伪影。",
+      "explanation": "伪影是否显著取决于数据分布与模型设置。",
+      "example": "旋转对称数据的分数图可能呈现轴方向结构。",
+      "tags": [
+        "扩展孤立森林",
+        "分数伪影"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.02141v3"
+    },
+    {
+      "id": "eif-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "扩展孤立森林",
+      "knowledgePoint": "超平面判定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EIF 论文怎样用法向量和截距点判断样本进入哪一子节点？",
+      "answer": "依据 (x−p)·n 的符号，将样本分到超平面两侧。",
+      "explanation": "n 为法向量，p 为超平面上的截距点。",
+      "example": "点积不大于零时可分到左侧。",
+      "tags": [
+        "扩展孤立森林",
+        "超平面判定"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.02141v3"
+    },
+    {
+      "id": "eif-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "扩展孤立森林",
+      "knowledgePoint": "扩展等级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EIF 的扩展等级为 0 时与标准 Isolation Forest 有什么关系？",
+      "answer": "其切分退化为轴平行方式：每次选择一个特征及其阈值，与标准 Isolation Forest 对应。",
+      "explanation": "更高等级允许更多维度参与随机方向。",
+      "example": "二维数据的等级 0 仍是水平或竖直切分。",
+      "tags": [
+        "扩展孤立森林",
+        "扩展等级"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.02141v3"
+    },
+    {
+      "id": "eif-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "扩展孤立森林",
+      "knowledgePoint": "满扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N 维数据的 EIF 完全扩展情况对应什么等级？",
+      "answer": "对应扩展等级 N−1，切分法向量可在所有维度上取方向。",
+      "explanation": "具体实现对等级的索引应按版本核对。",
+      "example": "三维数据的完全扩展等级为 2。",
+      "tags": [
+        "扩展孤立森林",
+        "满扩展"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.02141v3"
+    }
+  ]
+}

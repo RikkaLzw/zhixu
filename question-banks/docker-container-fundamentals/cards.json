@@ -1,0 +1,373 @@
+{
+  "source": {
+    "id": "docker-container-fundamentals",
+    "title": "Docker 官方文档：容器、镜像与持久化",
+    "url": "https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理；示例自编，适用环境与前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "dockbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "镜像与容器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 镜像与容器的基本关系是什么？",
+      "answer": "镜像提供启动所需的文件和配置；容器是基于镜像创建的隔离运行实例。",
+      "explanation": "同一镜像可用于创建多个容器。",
+      "example": "从同一镜像启动两个独立的应用容器。",
+      "tags": [
+        "容器与 Docker 基础",
+        "镜像与容器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/"
+    },
+    {
+      "id": "dockbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "容器与虚拟机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 容器与虚拟机在内核方面有什么基本区别？",
+      "answer": "同一 Linux 宿主机上的容器通常共享宿主机内核；虚拟机通常运行各自的客户操作系统内核。",
+      "explanation": "Docker Desktop 在部分平台上通过 Linux 虚拟机运行 Linux 容器。",
+      "example": "多个 Linux 容器共享同一个 Linux 内核。",
+      "tags": [
+        "容器与 Docker 基础",
+        "容器与虚拟机"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/"
+    },
+    {
+      "id": "dockbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "镜像层",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 镜像层和容器可写层有什么区别？",
+      "answer": "镜像层通常只读；容器启动时在其上增加容器自己的可写层。",
+      "explanation": "不同容器可共享相同的只读镜像层。",
+      "example": "修改容器内文件不会直接改写原始镜像层。",
+      "tags": [
+        "容器与 Docker 基础",
+        "镜像层"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/get-started/docker-concepts/building-images/using-the-build-cache/"
+    },
+    {
+      "id": "dockbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "容器删除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "仅写入 Docker 容器可写层的数据在删除容器后会怎样？",
+      "answer": "容器的可写层随容器删除，其中的数据也随之消失。",
+      "explanation": "需要保留的数据应放在合适的卷或绑定挂载中。",
+      "example": "数据库文件只放在可写层时，删除容器会丢失。",
+      "tags": [
+        "容器与 Docker 基础",
+        "容器删除"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/get-started/docker-concepts/building-images/using-the-build-cache/"
+    },
+    {
+      "id": "dockbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "卷持久化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker volume 与容器的生命周期有什么常见区别？",
+      "answer": "卷独立于单个容器的生命周期，删除容器不会默认删除其卷。",
+      "explanation": "显式删除卷等操作会改变这一结果。",
+      "example": "重建容器时重新挂载命名卷。",
+      "tags": [
+        "容器与 Docker 基础",
+        "卷持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/engine/storage/volumes/"
+    },
+    {
+      "id": "dockbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "绑定挂载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker bind mount 与 volume 在存储位置管理方面有什么区别？",
+      "answer": "bind mount 指定宿主机上的文件或目录；volume 通常由 Docker 管理存储位置。",
+      "explanation": "绑定挂载依赖宿主机路径及其环境。",
+      "example": "开发时把宿主机源码目录挂到容器内。",
+      "tags": [
+        "容器与 Docker 基础",
+        "绑定挂载"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/engine/storage/bind-mounts/"
+    },
+    {
+      "id": "dockbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "挂载遮盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 把绑定挂载放在容器已有文件的目录上时，会看到哪部分内容？",
+      "answer": "挂载点显示宿主机挂载的内容，容器原有目录内容被暂时遮盖。",
+      "explanation": "原有镜像内容并非因此被删除。",
+      "example": "把空目录挂到应用目录会让原有文件不可见。",
+      "tags": [
+        "容器与 Docker 基础",
+        "挂载遮盖"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/engine/storage/bind-mounts/"
+    },
+    {
+      "id": "dockbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "空卷初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 新建空卷挂载到镜像中已有文件的目录时，默认可能发生什么？",
+      "answer": "默认会把目标目录中已有内容复制到空卷。",
+      "explanation": "可以使用 volume-nocopy 禁止此初始化复制。",
+      "example": "首次挂载空卷后可看到镜像自带的初始文件。",
+      "tags": [
+        "容器与 Docker 基础",
+        "空卷初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/engine/storage/volumes/"
+    },
+    {
+      "id": "dockbase-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "只读挂载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 对挂载指定只读选项的直接作用是什么？",
+      "answer": "容器不能通过该只读挂载修改挂载内容。",
+      "explanation": "宿主机上的其他访问方式仍可能修改底层文件。",
+      "example": "只读挂载配置文件供应用读取。",
+      "tags": [
+        "容器与 Docker 基础",
+        "只读挂载"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/engine/storage/bind-mounts/"
+    },
+    {
+      "id": "dockbase-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "构建上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker build 的构建上下文指什么？",
+      "answer": "它是构建器可访问的一组源文件，供 COPY 等构建操作使用。",
+      "explanation": "上下文可以来自本地目录、Git 仓库等来源。",
+      "example": "docker build . 以当前目录作为本地上下文。",
+      "tags": [
+        "容器与 Docker 基础",
+        "构建上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/build/concepts/context/"
+    },
+    {
+      "id": "dockbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "忽略上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 构建中的 .dockerignore 主要用于什么？",
+      "answer": "它排除不需要发送给构建器的上下文文件。",
+      "explanation": "它可减少构建上下文，也可避免把不需要的文件提供给构建过程。",
+      "example": "排除本地构建产物和版本控制目录。",
+      "tags": [
+        "容器与 Docker 基础",
+        "忽略上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/build/concepts/context/"
+    },
+    {
+      "id": "dockbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "构建缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么把依赖清单复制和安装步骤放在频繁变化的应用源码复制之前，常能加快 Docker 重建？",
+      "answer": "源码变化时，未受影响的依赖安装步骤有机会复用缓存。",
+      "explanation": "缓存复用仍取决于相关指令、输入及构建配置。",
+      "example": "先复制 package-lock.json 并安装，再复制应用代码。",
+      "tags": [
+        "容器与 Docker 基础",
+        "构建缓存"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/get-started/docker-concepts/building-images/using-the-build-cache/"
+    },
+    {
+      "id": "dockbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "容器列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 的 docker ps 与 docker ps -a 显示范围有什么区别？",
+      "answer": "默认 docker ps 显示运行中的容器；加 -a 还显示已停止等其他容器。",
+      "explanation": "这是容器列表，不是镜像列表。",
+      "example": "排查启动后退出的容器可使用 docker ps -a。",
+      "tags": [
+        "容器与 Docker 基础",
+        "容器列表"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/cli/docker/container/ls/"
+    },
+    {
+      "id": "dockbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "停止容器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 默认执行 docker stop 时通常怎样结束容器？",
+      "answer": "先向主进程发送终止信号；在宽限期结束后仍未退出时发送强制终止信号。",
+      "explanation": "默认终止信号为 SIGTERM，信号和等待时间可配置。",
+      "example": "应用可在收到终止信号后进行清理。",
+      "tags": [
+        "容器与 Docker 基础",
+        "停止容器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/cli/docker/container/stop/"
+    },
+    {
+      "id": "dockbase-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "自动清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "docker run --rm 对退出后的容器有什么作用？",
+      "answer": "容器退出时自动删除该容器。",
+      "explanation": "不要把需要保留的数据只放在该容器的可写层。",
+      "example": "运行一次性任务后清理容器记录。",
+      "tags": [
+        "容器与 Docker 基础",
+        "自动清理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/cli/docker/container/run/"
+    },
+    {
+      "id": "dockbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "端口发布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 的 -p 宿主端口:容器端口 主要做什么？",
+      "answer": "将宿主机端口发布并转发到容器指定端口。",
+      "explanation": "监听地址、协议和网络配置会影响实际访问方式。",
+      "example": "-p 8080:80 将宿主机 8080 端口映射到容器 80 端口。",
+      "tags": [
+        "容器与 Docker 基础",
+        "端口发布"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/cli/docker/container/run/"
+    },
+    {
+      "id": "dockbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "EXPOSE 含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dockerfile 的 EXPOSE 指令会自动向宿主机发布端口吗？",
+      "answer": "不会；它声明容器预期监听的端口，发布仍需相应运行配置。",
+      "explanation": "例如可使用 docker run 的 -p 指定端口映射。",
+      "example": "EXPOSE 80 本身不等于 -p 8080:80。",
+      "tags": [
+        "容器与 Docker 基础",
+        "EXPOSE 含义"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/dockerfile/"
+    },
+    {
+      "id": "dockbase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "镜像标签与摘要",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 镜像引用中的 tag 和 digest 在稳定性上有什么区别？",
+      "answer": "tag 是可重新指向其他镜像的名称；digest 基于内容，可用来标识特定内容。",
+      "explanation": "只写可变标签可能在不同时间拉到不同镜像。",
+      "example": "部署时使用摘要固定某个镜像版本。",
+      "tags": [
+        "容器与 Docker 基础",
+        "镜像标签与摘要"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/"
+    },
+    {
+      "id": "dockbase-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器与 Docker 基础",
+      "knowledgePoint": "用户自建网络",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Docker 用户自建网络上的容器如何按名称相互发现？",
+      "answer": "同一自建网络内的容器可通过内置 DNS 按名称解析彼此。",
+      "explanation": "实际互通还受网络和应用监听配置影响。",
+      "example": "应用容器通过数据库容器名称连接数据库。",
+      "tags": [
+        "容器与 Docker 基础",
+        "用户自建网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/engine/network/"
+    }
+  ]
+}

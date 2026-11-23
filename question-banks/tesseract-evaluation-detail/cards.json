@@ -1,0 +1,336 @@
+{
+  "source": {
+    "id": "tesseract-evaluation-detail",
+    "title": "TESSERACT：时间、类别比例与模型评估",
+    "url": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+    "type": "研究论文",
+    "note": "依据 USENIX Security 2019 论文整理，部分卡片为明确标注的评估应用；不把单一场景的恶意比例视作通用常数。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "tessdetail-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "空间偏差的含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TESSERACT 论文中的“空间偏差”主要与什么实验设置有关？",
+      "answer": "它指与训练和测试中恶意样本比例有关的实验偏差；测试比例不符合目标场景时尤其可能误导评估。",
+      "explanation": "论文这里的 spatial 指类别分布，并非地理位置。",
+      "example": "测试集恶意样本占九成，但目标环境中恶意样本很少。",
+      "tags": [
+        "空间偏差的含义",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§3.3"
+    },
+    {
+      "id": "tessdetail-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "恶意样本基准比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TESSERACT 的 Android 实验采用约 10% 的恶意样本比例，其他安全场景也应直接套用吗？",
+      "answer": "不应直接套用；应结合目标场景和可靠数据估计该场景的比例。",
+      "explanation": "论文的 10% 是针对其 Android 场景的估计，其他来源和时间可能不同。",
+      "example": "软件下载流量与网络连接流量的恶意比例可能不同。",
+      "tags": [
+        "恶意样本基准比例",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§2.2"
+    },
+    {
+      "id": "tessdetail-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "严格训练时间约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TESSERACT 的 C1 约束中，最晚训练样本的时间与最早测试样本的时间应满足什么关系？",
+      "answer": "最晚训练时间必须严格早于最早测试时间。",
+      "explanation": "只检查两个集合没有重复文件，不能保证满足时间先后。",
+      "example": "同一时间戳的样本应妥善处理，避免跨越要求严格先后的边界。",
+      "tags": [
+        "严格训练时间约束",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§4.1, C1"
+    },
+    {
+      "id": "tessdetail-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "随机交叉验证与未来信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "随机 k 折交叉验证用于预测未来恶意软件时，为什么可能高估效果？",
+      "answer": "训练折可能包含测试样本出现之后的数据，使模型提前获得未来信息。",
+      "explanation": "相似家族样本跨折也会影响泛化评估；随机分折不能直接代表用过去数据识别未来样本。",
+      "example": "某一折用 2016 年相似样本训练，却评估 2015 年样本。",
+      "tags": [
+        "随机交叉验证与未来信息",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§3.2"
+    },
+    {
+      "id": "tessdetail-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "训练比例与测试比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TESSERACT 为什么允许调整训练集类别比例，却要求测试比例反映目标环境？",
+      "answer": "训练比例可作为模型设计或调优选择；测试比例需要代表期望部署的数据分布。",
+      "explanation": "调优应使用训练期划出的验证集，不能靠最终测试集挑选比例。",
+      "example": "训练时提高恶意样本占比，测试仍按目标场景估计比例组织。",
+      "tags": [
+        "训练比例与测试比例",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§4.1, C3"
+    },
+    {
+      "id": "tessdetail-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "整体比例与各时间窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "测试集整体恶意样本比例符合目标估计，是否能证明每个测试窗口的比例都相同？",
+      "answer": "不能；各窗口比例可能波动，整体比例会掩盖局部差异。",
+      "explanation": "检查各窗口类别数量和比例有助于解释指标变化。",
+      "example": "两个等大小窗口分别为 2% 和 18%，整体为 10%。",
+      "tags": [
+        "整体比例与各时间窗口",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§2.2, 4.1"
+    },
+    {
+      "id": "tessdetail-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "训练比例调优的验证集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TESSERACT 调整训练类别比例时，验证数据在时间上怎样安排？",
+      "answer": "从原训练期划出较晚的验证集，使拟合用数据早于验证数据。",
+      "explanation": "最终测试期不参与选择训练比例。",
+      "example": "用较早月份拟合候选模型，用训练期末几个月比较配置。",
+      "tags": [
+        "训练比例调优的验证集",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§4.3"
+    },
+    {
+      "id": "tessdetail-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "重训与阈值调整",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调整类别比例重新训练，与只改变固定模型的决策阈值有何区别？",
+      "answer": "重训会重新拟合模型，可能改变决策边界和样本排序；只改阈值保留原有分数。",
+      "explanation": "具体变化取决于算法和数据，不保证重训一定改善结果。",
+      "example": "对不同类别采样比例分别训练后，再各自选择工作点。",
+      "tags": [
+        "重训与阈值调整",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§4.3"
+    },
+    {
+      "id": "tessdetail-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "调优目标与错误约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TESSERACT 论文优化恶意类召回率和精确率时，分别限制哪种错误率？",
+      "answer": "优化召回率时限制假正例率；优化精确率时限制假负例率。",
+      "explanation": "这是论文的具体调优设定，并非所有任务都必须使用相同约束。",
+      "example": "提高召回率时，同时限制正常文件被误报的比例。",
+      "tags": [
+        "调优目标与错误约束",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§4.3"
+    },
+    {
+      "id": "tessdetail-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "评估窗口粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "选择安全模型时间评估的窗口粒度时，短窗口与长窗口有什么取舍？",
+      "answer": "短窗口更容易显示快速变化，但每个窗口的样本可能较少；长窗口更稳定，却可能掩盖短期变化。",
+      "explanation": "样本是否足够还取决于类别数量、相关性和所需精度。",
+      "example": "比较逐日与逐月的检测效果曲线。",
+      "tags": [
+        "评估窗口粒度",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§4.1, 6"
+    },
+    {
+      "id": "tessdetail-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "空正类窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一个测试窗口内没有任何真实恶意样本时，恶意类召回率的数学定义能否直接计算？",
+      "answer": "不能；召回率的分母是该窗口真实恶意样本数，分母为零时数学上未定义。",
+      "explanation": "软件可能按配置返回约定值或警告，应报告样本数量与处理方式。",
+      "example": "该月没有已确认恶意文件，不应把约定的零值直接解释为检测全部漏报。",
+      "tags": [
+        "空正类窗口",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.recall_score.html",
+      "referenceTitle": "scikit-learn 1.7：recall_score",
+      "supportingReferences": [
+        {
+          "id": "tesseract-evaluation-paper",
+          "title": "TESSERACT 论文：§4.1",
+          "url": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+          "type": "研究论文",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "tessdetail-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "AUT与局部低谷",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个模型的 AUT 相近，能否说明它们在每个测试窗口表现都相近？",
+      "answer": "不能；汇总值相近时，不同窗口的表现和最低点仍可能不同。",
+      "explanation": "比较 AUT 时应同时查看逐窗口曲线及各窗口样本量。",
+      "example": "一个模型长期平稳，另一个模型某几个月明显下降但其余月份较高。",
+      "tags": [
+        "AUT与局部低谷",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§4.2"
+    },
+    {
+      "id": "tessdetail-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "测试标签与事后评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TESSERACT 假设测试对象的标签在部署时未知，为什么事后仍可计算测试指标？",
+      "answer": "预测时不能使用测试标签；标签在事后获得后可用于评估已记录的预测。",
+      "explanation": "模型选择和调优不能使用最终测试标签，否则会污染独立评估。",
+      "example": "先冻结模型并记录预测，再使用后续确认结果计算指标。",
+      "tags": [
+        "测试标签与事后评估",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§4.1"
+    },
+    {
+      "id": "tessdetail-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "全量更新的代价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TESSERACT 论文为什么把每月对全部新样本标注并重训视为理想化对照？",
+      "answer": "这种方法需要持续为所有新样本获取标签并更新模型，标注和计算成本可能很高。",
+      "explanation": "即使使用外部扫描服务，也需要考虑查询成本及标签可用性。",
+      "example": "样本量大时，人工标注所有新文件可能超出团队容量。",
+      "tags": [
+        "全量更新的代价",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§5.1"
+    },
+    {
+      "id": "tessdetail-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型时间评估",
+      "knowledgePoint": "标注可用时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模拟周期性模型更新时，为什么要考虑标签何时可用？",
+      "answer": "只有在更新时已获得的标签才能用于该次训练；忽略等待时间会使模拟更新过于理想化。",
+      "explanation": "标注数量、等待时间和后续独立评估应一起说明。",
+      "example": "本月提交人工复核的文件，在下月获得结论后才加入训练。",
+      "tags": [
+        "标注可用时间",
+        "TESSERACT",
+        "时间评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec19-pendlebury.pdf",
+      "referenceTitle": "TESSERACT 论文：§5.1–5.2"
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "python-exception-groups",
+    "title": "Python 3.12：异常组与 except*",
+    "url": "https://docs.python.org/3.12/library/exceptions.html#exception-groups",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的官方文档或论文自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pygroup-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "异常组用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 ExceptionGroup 用于表达什么？",
+      "answer": "它把多个异常包装为一个可抛出的异常对象。",
+      "explanation": "异常组可以嵌套，适合报告多个并发任务等场景中的错误。",
+      "example": "同时报告两个任务各自发生的错误。",
+      "tags": [
+        "Python 异常组",
+        "异常组用途"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/exceptions.html#exception-groups"
+    },
+    {
+      "id": "pygroup-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "捕获方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通 except 和 except* 处理异常组的方式有什么区别？",
+      "answer": "except 按整个异常对象匹配；except* 可按组内异常类型拆分并处理匹配部分。",
+      "explanation": "同一个 try 语句不能混用两种子句。",
+      "example": "分别处理组内的 ValueError 和 OSError。",
+      "tags": [
+        "Python 异常组",
+        "捕获方式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/reference/compound_stmts.html#except-star"
+    },
+    {
+      "id": "pygroup-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "异常类型范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ExceptionGroup 与 BaseExceptionGroup 能包含的异常有什么区别？",
+      "answer": "ExceptionGroup 只能包含 Exception 子类实例；BaseExceptionGroup 可以包含 BaseException 子类实例。",
+      "explanation": "ExceptionGroup 本身也是 Exception 的子类。",
+      "example": "KeyboardInterrupt 不能放进普通 ExceptionGroup。",
+      "tags": [
+        "Python 异常组",
+        "异常类型范围"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/exceptions.html#exception-groups"
+    },
+    {
+      "id": "pygroup-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "自动选择组类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 BaseExceptionGroup 构造器在所有成员都是 Exception 实例时通常返回什么？",
+      "answer": "它返回 ExceptionGroup 实例。",
+      "explanation": "如果成员包含非 Exception 的 BaseException 子类，则需要 BaseExceptionGroup。",
+      "example": "只包含 ValueError 的 BaseExceptionGroup 构造结果为 ExceptionGroup。",
+      "tags": [
+        "Python 异常组",
+        "自动选择组类型"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/exceptions.html#exception-groups"
+    },
+    {
+      "id": "pygroup-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "多个子句执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一异常组可以让多个 except* 子句执行吗？",
+      "answer": "可以；不同子句可以分别处理匹配的不同部分，每个子句最多执行一次。",
+      "explanation": "每个组内异常最多由第一个匹配它的 except* 子句处理。",
+      "example": "一个子句处理 TypeError，另一个处理 OSError。",
+      "tags": [
+        "Python 异常组",
+        "多个子句执行"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/reference/compound_stmts.html#except-star"
+    },
+    {
+      "id": "pygroup-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "未匹配异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "异常组中没有被任何 except* 子句处理的部分会怎样？",
+      "answer": "它们会在子句处理结束后重新抛出。",
+      "explanation": "处理器内新抛出的异常也会参与后续传播。",
+      "example": "只处理 ValueError 后，组内未处理的 OSError 继续传播。",
+      "tags": [
+        "Python 异常组",
+        "未匹配异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/reference/compound_stmts.html#except-star"
+    },
+    {
+      "id": "pygroup-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "子组筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "异常组的 subgroup(ValueError) 返回什么？",
+      "answer": "返回匹配 ValueError 的异常子组；没有匹配时返回 None。",
+      "explanation": "结果保留必要的嵌套结构，空的嵌套组被省略。",
+      "example": "从嵌套异常组中筛选输入错误。",
+      "tags": [
+        "Python 异常组",
+        "子组筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/exceptions.html#exception-groups"
+    },
+    {
+      "id": "pygroup-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "子组拆分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "异常组的 split(condition) 返回什么？",
+      "answer": "返回匹配部分和其余不匹配部分组成的一对结果。",
+      "explanation": "其中任一部分为空时可以是 None。",
+      "example": "把网络错误与其他错误分开处理。",
+      "tags": [
+        "Python 异常组",
+        "子组拆分"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/exceptions.html#exception-groups"
+    },
+    {
+      "id": "pygroup-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "普通异常包装",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "非异常组的普通异常被 except* 匹配时，绑定的对象是什么？",
+      "answer": "它被包装为一个异常组后交给该 except* 子句。",
+      "explanation": "因此处理器收到的仍是组对象。",
+      "example": "单个 OSError 被 except* OSError 捕获。",
+      "tags": [
+        "Python 异常组",
+        "普通异常包装"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/reference/compound_stmts.html#except-star"
+    },
+    {
+      "id": "pygroup-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "语法组合限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 能否在同一个 try 语句中同时使用 except 和 except* 子句？",
+      "answer": "不能；同一个 try 中不能混用这两种子句。",
+      "explanation": "需要分层处理时可以使用嵌套 try。",
+      "example": "外层处理整个异常组，内层按类型处理子组。",
+      "tags": [
+        "Python 异常组",
+        "语法组合限制"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/reference/compound_stmts.html#except-star"
+    },
+    {
+      "id": "pygroup-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "控制流限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 except* 子句中可以使用 return、break 或 continue 吗？",
+      "answer": "不能；这些语句不能出现在 except* 子句中。",
+      "explanation": "异常组的不同部分可能分别由多个子句处理。",
+      "example": "需要返回时先保存结果，在子句外返回。",
+      "tags": [
+        "Python 异常组",
+        "控制流限制"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/reference/compound_stmts.html#except-star"
+    },
+    {
+      "id": "pygroup-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异常组",
+      "knowledgePoint": "成员访问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "异常组的 exceptions 属性保存什么？",
+      "answer": "它保存该组直接包含的异常对象组成的只读元组。",
+      "explanation": "如果成员本身是异常组，属性不会自动把所有层级展平。",
+      "example": "检查一层嵌套异常组中的直接成员。",
+      "tags": [
+        "Python 异常组",
+        "成员访问"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/exceptions.html#exception-groups"
+    }
+  ]
+}

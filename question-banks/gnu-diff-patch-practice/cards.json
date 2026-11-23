@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "gnu-diff-patch-practice",
+    "title": "GNU diff 与 patch 手册：文件差异",
+    "url": "https://man7.org/linux/man-pages/man1/diff.1.html",
+    "type": "Linux 与 GNU 官方手册",
+    "note": "逐题依据手册自行整理，示例自编；命令和实现行为以题中所述环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "diffpatch-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "diff 与 patch 命令",
+      "knowledgePoint": "比较文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU diff 的主要用途是什么？",
+      "answer": "比较文件或目录的内容并报告差异。",
+      "explanation": "不指定输出格式时，显示格式与具体选项有关。",
+      "example": "diff old.txt new.txt 查看两份文本的区别。",
+      "tags": [
+        "diff 与 patch 命令",
+        "比较文件"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/diff.1.html"
+    },
+    {
+      "id": "diffpatch-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "diff 与 patch 命令",
+      "knowledgePoint": "退出状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU diff 的退出状态 0、1 和 2 通常分别表示什么？",
+      "answer": "0 表示相同，1 表示有差异，2 表示发生错误。",
+      "explanation": "在脚本中应区分正常发现差异和实际执行错误。",
+      "example": "对不同文件运行 diff 通常得到状态 1。",
+      "tags": [
+        "diff 与 patch 命令",
+        "退出状态"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/diff.1.html"
+    },
+    {
+      "id": "diffpatch-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "diff 与 patch 命令",
+      "knowledgePoint": "统一格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU diff -u 默认以什么形式输出差异？",
+      "answer": "输出统一格式（unified diff），并默认带有三行上下文。",
+      "explanation": "上下文有助于理解并定位变更块。",
+      "example": "diff -u old new 可生成适合 patch 读取的文本。",
+      "tags": [
+        "diff 与 patch 命令",
+        "统一格式"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/diff.1.html"
+    },
+    {
+      "id": "diffpatch-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "diff 与 patch 命令",
+      "knowledgePoint": "递归比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU diff -r 比较两个目录时有什么作用？",
+      "answer": "递归比较发现的子目录。",
+      "explanation": "输出仍受其他比较选项影响。",
+      "example": "diff -r old_dir new_dir 检查目录树差异。",
+      "tags": [
+        "diff 与 patch 命令",
+        "递归比较"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/diff.1.html"
+    },
+    {
+      "id": "diffpatch-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "diff 与 patch 命令",
+      "knowledgePoint": "应用补丁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU patch 的常见用途是什么？",
+      "answer": "读取差异文件并将变更应用到对应文件。",
+      "explanation": "补丁可能因上下文或目标版本不匹配而无法完整应用。",
+      "example": "从 diff -u 输出创建并应用补丁。",
+      "tags": [
+        "diff 与 patch 命令",
+        "应用补丁"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/patch.1.html"
+    },
+    {
+      "id": "diffpatch-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "diff 与 patch 命令",
+      "knowledgePoint": "试运行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU patch --dry-run 有什么作用？",
+      "answer": "报告应用补丁的结果，但不实际修改文件。",
+      "explanation": "试运行成功也应结合实际目标文件与后续操作检查结果。",
+      "example": "应用前先测试补丁是否能匹配。",
+      "tags": [
+        "diff 与 patch 命令",
+        "试运行"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/patch.1.html"
+    },
+    {
+      "id": "diffpatch-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "diff 与 patch 命令",
+      "knowledgePoint": "剥离路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU patch -p1 如何处理补丁中的文件路径？",
+      "answer": "剥离路径开头一段目录前缀，用剩余路径查找目标文件。",
+      "explanation": "前缀段数应与补丁生成方式和当前目录对应。",
+      "example": "a/src/app.py 经 -p1 处理后为 src/app.py。",
+      "tags": [
+        "diff 与 patch 命令",
+        "剥离路径"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/patch.1.html"
+    },
+    {
+      "id": "diffpatch-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "diff 与 patch 命令",
+      "knowledgePoint": "失败块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU patch 无法应用某个变更块时，通常如何保留它？",
+      "answer": "通常将该变更块写入目标文件名加 .rej 的拒绝文件。",
+      "explanation": "应检查退出状态和拒绝内容，补丁可能只部分应用。",
+      "example": "修复目标文件后可人工处理 .rej 中的内容。",
+      "tags": [
+        "diff 与 patch 命令",
+        "失败块"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/patch.1.html"
+    },
+    {
+      "id": "diffpatch-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "diff 与 patch 命令",
+      "knowledgePoint": "反向补丁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU patch -R 的作用是什么？",
+      "answer": "尝试按相反方向应用补丁，即交换每个变更块的新旧内容。",
+      "explanation": "反向应用同样要求目标内容和上下文匹配。",
+      "example": "撤回先前应用的文本变更。",
+      "tags": [
+        "diff 与 patch 命令",
+        "反向补丁"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/patch.1.html"
+    }
+  ]
+}

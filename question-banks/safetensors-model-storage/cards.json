@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "safetensors-model-storage",
+    "title": "Safetensors 0.6.2 源码：张量存储",
+    "url": "https://github.com/huggingface/safetensors/blob/v0.6.2/README.md",
+    "type": "官方文档、固定版本源码或论文",
+    "note": "依据 Safetensors v0.6.2 的格式说明与 PyTorch 接口源码自行整理；示例自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "safeio-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Safetensors 张量存储",
+      "knowledgePoint": "张量格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Safetensors 主要保存什么内容？",
+      "answer": "它保存按名称组织的张量及可选字符串元数据，不用于保存任意 Python 对象。",
+      "explanation": "加载张量格式不需要通过 pickle 重建任意 Python 对象。",
+      "example": "保存模型的权重张量。",
+      "tags": [
+        "Safetensors 张量存储",
+        "张量格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/safetensors/blob/v0.6.2/README.md"
+    },
+    {
+      "id": "safeio-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Safetensors 张量存储",
+      "knowledgePoint": "安全边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Safetensors 避免 pickle 式对象反序列化，能否单独证明模型权重可信？",
+      "answer": "不能；文件格式不验证模型来源、权重用途或模型行为。",
+      "explanation": "仍需根据应用需要核验来源和完整性。",
+      "example": "同样格式的权重也可能来自未知来源。",
+      "tags": [
+        "Safetensors 张量存储",
+        "安全边界"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/safetensors/blob/v0.6.2/README.md"
+    },
+    {
+      "id": "safeio-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Safetensors 张量存储",
+      "knowledgePoint": "保存与载入",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Safetensors 0.6.2 的 safetensors.torch.save_file 与 load_file 分别做什么？",
+      "answer": "save_file 将名称到张量的字典写入文件；load_file 从文件返回张量字典。",
+      "explanation": "load_file 可指定目标设备。",
+      "example": "保存并载入一个由两组权重组成的字典。",
+      "tags": [
+        "Safetensors 张量存储",
+        "保存与载入"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/safetensors/blob/v0.6.2/bindings/python/py_src/safetensors/torch.py"
+    },
+    {
+      "id": "safeio-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Safetensors 张量存储",
+      "knowledgePoint": "按名称读取",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Safetensors 的 safe_open 有什么按需读取能力？",
+      "answer": "它允许先查看张量名称，再按名称读取所需张量或切片。",
+      "explanation": "实际数据传输和内存开销仍与设备及访问方式有关。",
+      "example": "只读取检查点中某一层的权重。",
+      "tags": [
+        "Safetensors 张量存储",
+        "按名称读取"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/safetensors/blob/v0.6.2/README.md"
+    },
+    {
+      "id": "safeio-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Safetensors 张量存储",
+      "knowledgePoint": "连续张量",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Safetensors 0.6.2 的 save_file 接收到非连续 PyTorch 张量时应如何处理？",
+      "answer": "save_file 要求保存的张量为稠密且连续的张量；可先用 contiguous() 构造连续表示。",
+      "explanation": "视图的底层存储关系不应被误当作文件中的共享结构。",
+      "example": "转置矩阵后先使其连续再保存。",
+      "tags": [
+        "Safetensors 张量存储",
+        "连续张量"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/safetensors/blob/v0.6.2/bindings/python/py_src/safetensors/torch.py"
+    },
+    {
+      "id": "safeio-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Safetensors 张量存储",
+      "knowledgePoint": "共享权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Safetensors 0.6.2 的 save_model 为什么专门处理共享张量？",
+      "answer": "它避免在文件中重复保存共享存储的多个名称，并配合模型结构加载权重。",
+      "explanation": "被省略名称的元数据不足以独立重建任意共享结构。",
+      "example": "保存输入与输出层共享参数的模型。",
+      "tags": [
+        "Safetensors 张量存储",
+        "共享权重"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/safetensors/blob/v0.6.2/bindings/python/py_src/safetensors/torch.py"
+    },
+    {
+      "id": "safeio-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Safetensors 张量存储",
+      "knowledgePoint": "元数据格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Safetensors 文件头中的 __metadata__ 可以保存任意嵌套 JSON 对象吗？",
+      "answer": "不可以；该字段是字符串键到字符串值的映射。",
+      "explanation": "复杂元数据需另行编码或存放。",
+      "example": "保存 {\"format\": \"pt\"} 这样的简单说明。",
+      "tags": [
+        "Safetensors 张量存储",
+        "元数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/safetensors/blob/v0.6.2/README.md"
+    },
+    {
+      "id": "safeio-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Safetensors 张量存储",
+      "knowledgePoint": "数据偏移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Safetensors 文件头中的 data_offsets 相对于文件的哪个位置计数？",
+      "answer": "它们相对于张量数据缓冲区的起点计数，结束偏移采用半开区间。",
+      "explanation": "张量字节长度等于结束偏移减起始偏移。",
+      "example": "偏移 [0,24] 表示缓冲区中的 24 个字节。",
+      "tags": [
+        "Safetensors 张量存储",
+        "数据偏移"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/safetensors/blob/v0.6.2/README.md"
+    }
+  ]
+}

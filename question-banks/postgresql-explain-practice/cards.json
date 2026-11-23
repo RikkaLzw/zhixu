@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "postgresql-explain-practice",
+    "title": "PostgreSQL 17 官方文档：理解查询执行计划",
+    "url": "https://www.postgresql.org/docs/17/using-explain.html",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；具体实现和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgplan-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PostgreSQL 查询执行计划",
+      "knowledgePoint": "计划结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 EXPLAIN 执行计划通常怎样组织操作？",
+      "answer": "它以计划节点树组织扫描、连接、排序和聚合等操作，上层节点消费下层节点的结果。",
+      "explanation": "具体节点和树形结构由优化器选择。",
+      "example": "排序节点可以接收下层扫描节点输出的行。",
+      "tags": [
+        "PostgreSQL 查询执行计划",
+        "计划结构"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    },
+    {
+      "id": "pgplan-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PostgreSQL 查询执行计划",
+      "knowledgePoint": "代价单位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL EXPLAIN 的 cost 估计值是毫秒吗？",
+      "answer": "不是；它使用由规划器代价参数定义的相对单位，不能直接当作毫秒。",
+      "explanation": "EXPLAIN ANALYZE 中的 actual time 才以毫秒显示。",
+      "example": "cost=10 不等于运行 10 毫秒。",
+      "tags": [
+        "PostgreSQL 查询执行计划",
+        "代价单位"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    },
+    {
+      "id": "pgplan-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PostgreSQL 查询执行计划",
+      "knowledgePoint": "启动和总代价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL EXPLAIN 的 cost=a..b 中两个估计值分别表示什么？",
+      "answer": "a 是开始输出前的启动代价；b 是假设节点执行完毕的总代价。",
+      "explanation": "父节点可能提前停止读取子节点。",
+      "example": "排序可能要先处理输入才能输出第一行。",
+      "tags": [
+        "PostgreSQL 查询执行计划",
+        "启动和总代价"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    },
+    {
+      "id": "pgplan-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 查询执行计划",
+      "knowledgePoint": "估计输出行数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL EXPLAIN 的 rows 估计是扫描行数还是输出行数？",
+      "answer": "它估计该节点执行完毕时输出的行数，不一定等于扫描或检查的行数。",
+      "explanation": "过滤条件可能使输出数远少于扫描数。",
+      "example": "顺序扫描 1000 行并过滤后可能只输出 10 行。",
+      "tags": [
+        "PostgreSQL 查询执行计划",
+        "估计输出行数"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    },
+    {
+      "id": "pgplan-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 查询执行计划",
+      "knowledgePoint": "父子成本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 执行计划中，父节点的估计成本是否已经包含子节点成本？",
+      "answer": "是，父节点估计成本包含其子节点成本。",
+      "explanation": "不能简单把树上每个节点的成本相加作为全计划成本。",
+      "example": "排序节点的成本包含其输入扫描成本。",
+      "tags": [
+        "PostgreSQL 查询执行计划",
+        "父子成本"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    },
+    {
+      "id": "pgplan-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 查询执行计划",
+      "knowledgePoint": "索引与过滤条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的索引扫描节点中，Index Cond 和 Filter 通常分别起什么作用？",
+      "answer": "Index Cond 用于索引访问；Filter 是取得候选行后由节点进一步检查的条件。",
+      "explanation": "过滤条件能减少输出行数，但未必减少该次索引访问产生的候选。",
+      "example": "一个条件选索引范围，另一个条件过滤取得的行。",
+      "tags": [
+        "PostgreSQL 查询执行计划",
+        "索引与过滤条件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    },
+    {
+      "id": "pgplan-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 查询执行计划",
+      "knowledgePoint": "位图扫描",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 Bitmap Index Scan 和 Bitmap Heap Scan 怎样配合？",
+      "answer": "前者从索引找出候选行位置，后者按位置访问表中的行并按需要复查。",
+      "explanation": "位图方式可按物理位置组织表页访问。",
+      "example": "查询条件较有选择性但要访问多行时可能选择位图扫描。",
+      "tags": [
+        "PostgreSQL 查询执行计划",
+        "位图扫描"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    },
+    {
+      "id": "pgplan-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 查询执行计划",
+      "knowledgePoint": "重复执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL EXPLAIN ANALYZE 的节点 loops 大于 1 时，actual time 和 rows 如何解释？",
+      "answer": "loops 是节点执行次数；显示的 actual time 与实际 rows 是每次执行的平均值。",
+      "explanation": "将平均值乘以 loops 可估算总量，但显示值可能存在舍入。",
+      "example": "嵌套循环的内层索引扫描可能执行多次。",
+      "tags": [
+        "PostgreSQL 查询执行计划",
+        "重复执行"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    },
+    {
+      "id": "pgplan-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 查询执行计划",
+      "knowledgePoint": "排序诊断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL EXPLAIN ANALYZE 的 Sort Method 和 Memory 或 Disk 信息有什么用途？",
+      "answer": "它们显示采用的排序方式及所用内存或磁盘空间，有助于判断是否发生磁盘排序。",
+      "explanation": "具体输出取决于执行计划和排序过程。",
+      "example": "大量数据排序后可查看是否使用磁盘。",
+      "tags": [
+        "PostgreSQL 查询执行计划",
+        "排序诊断"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    }
+  ]
+}

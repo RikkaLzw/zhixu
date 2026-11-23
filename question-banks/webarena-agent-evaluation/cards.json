@@ -1,0 +1,232 @@
+{
+  "source": {
+    "id": "webarena-agent-evaluation",
+    "title": "WebArena 网页智能体评测：原论文与方法",
+    "url": "https://arxiv.org/html/2307.13854v1",
+    "type": "研究论文",
+    "note": "根据指定版本论文逐题整理；实践推论标为 application，原研究结论保留环境及实验前提。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "webarena-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "自托管环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebArena 为什么使用可自托管的网站环境？",
+      "answer": "独立环境不依赖实时网站，有助于复现任务并减少外部网站变化对评估的影响。",
+      "explanation": "可复现仍取决于具体环境版本和配置。",
+      "example": "不同模型在相同版本的网站环境中完成任务。",
+      "tags": [
+        "自托管环境",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2307.13854v1#S2",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S2"
+    },
+    {
+      "id": "webarena-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "页面观察形式",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "WebArena 的截图和无障碍树分别以什么形式提供页面信息？",
+      "answer": "截图提供页面像素；无障碍树提供元素角色、文本及相关属性等结构化信息。",
+      "explanation": "论文还支持以 HTML DOM 形式观察页面。",
+      "example": "截图显示按钮外观，无障碍树表示按钮角色和名称。",
+      "tags": [
+        "页面观察形式",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2307.13854v1#S2.SS2",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S2.SS2"
+    },
+    {
+      "id": "webarena-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "视口截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebArena 只向智能体提供当前视口内容时，会带来什么观察限制？",
+      "answer": "屏幕外的页面内容可能暂时不在观察中，智能体需要进一步浏览才能看到。",
+      "explanation": "观察不完整时不能直接断言页面没有相关内容。",
+      "example": "向下滚动后才看到列表后续项目。",
+      "tags": [
+        "视口截断",
+        "Agent"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2307.13854v1#S2.SS2",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S2.SS2"
+    },
+    {
+      "id": "webarena-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "页面元素定位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebArena 的页面操作可用哪两类方式指定目标元素？",
+      "answer": "可以使用屏幕坐标，也可以使用从页面结构生成的元素 ID。",
+      "explanation": "选择方式应与当前提供的观察表示和动作接口匹配。",
+      "example": "根据截图坐标点击，或用无障碍树中的 ID 点击。",
+      "tags": [
+        "页面元素定位",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2307.13854v1#S2.SS3",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S2.SS3"
+    },
+    {
+      "id": "webarena-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "结果与动作路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 WebArena 侧重检查任务功能结果，而不是只要求动作序列与参考序列完全相同？",
+      "answer": "同一网页任务可能有多条有效操作路径，功能结果能检查是否达成任务目标。",
+      "explanation": "结果评估和轨迹分析可以互补。",
+      "example": "通过搜索或导航进入同一个目标页面。",
+      "tags": [
+        "结果与动作路径",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2307.13854v1#S1",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S1"
+    },
+    {
+      "id": "webarena-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "信息与操作评估",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "WebArena 如何分别评估信息查询任务和修改网站状态的任务？",
+      "answer": "信息查询主要比较回答与参考答案；网站操作任务通过程序检查页面、数据库等状态是否符合目标。",
+      "explanation": "具体检查取决于任务类型。",
+      "example": "查客户姓名时核对回答，发帖时检查帖子内容。",
+      "tags": [
+        "信息与操作评估",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2307.13854v1#S3.SS3",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S3.SS3"
+    },
+    {
+      "id": "webarena-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "状态定位与检查",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "WebArena 的网站操作评估中，locator 和匹配条件分别做什么？",
+      "answer": "locator 找到与任务相关的页面或数据；匹配条件检查取回内容是否满足预期。",
+      "explanation": "定位可通过数据库查询、网站 API 或页面元素选择完成。",
+      "example": "先找到最新帖子，再检查其内容。",
+      "tags": [
+        "状态定位与检查",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2307.13854v1#S3.SS3",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S3.SS3"
+    },
+    {
+      "id": "webarena-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "包含匹配局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebArena 的 must_include 检查通过，能否单独证明回答完全正确？",
+      "answer": "不能；它只确认指定内容被包含，回答仍可能带有错误或无关内容。",
+      "explanation": "关键词命中不能代替对全部陈述的核验。",
+      "example": "回答包含正确邮箱，但同时写入了错误电话号码。",
+      "tags": [
+        "包含匹配局限",
+        "Agent"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2307.13854v1#S3.SS3",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S3.SS3"
+    },
+    {
+      "id": "webarena-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "不可完成任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebArena 的任务若因信息缺失或权限限制确实无法完成，预期智能体如何回应？",
+      "answer": "应给出等价于无法完成的回应，而不是编造结果。",
+      "explanation": "论文将这类实例标为 N/A。",
+      "example": "网站没有请求的联系人号码时明确说明无法获得。",
+      "tags": [
+        "不可完成任务",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2307.13854v1#S3.SS3",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S3.SS3"
+    },
+    {
+      "id": "webarena-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "过早判断不可完成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 WebArena 智能体不能仅凭一次未找到就判定任务不可完成？",
+      "answer": "相关信息可能位于其他页面或筛选项中，过早停止可能错过可行路径。",
+      "explanation": "论文将错误判定不可完成列为一种失败模式。",
+      "example": "搜索项目无结果后，还需检查用户搜索选项。",
+      "tags": [
+        "过早判断不可完成",
+        "Agent"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2307.13854v1#S5.SS2",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S5.SS2"
+    },
+    {
+      "id": "webarena-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebArena 网页智能体评测",
+      "knowledgePoint": "检查执行中状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebArena 为什么有些导航任务要检查执行过程中的状态？",
+      "answer": "目标可能要求访问满足条件的页面，相关证据可以出现在执行轨迹中的页面状态。",
+      "explanation": "状态检查的具体位置由任务的评估程序定义。",
+      "example": "检查轨迹是否到达指定筛选页面。",
+      "tags": [
+        "检查执行中状态",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2307.13854v1#S3.SS3",
+      "referenceTitle": "WebArena 网页智能体评测 原论文：S3.SS3"
+    }
+  ]
+}

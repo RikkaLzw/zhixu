@@ -1,0 +1,476 @@
+{
+  "source": {
+    "id": "elf-dynamic-linking-foundations",
+    "title": "Linux ELF ABI、GNU ld 与动态链接手册",
+    "url": "https://man7.org/linux/man-pages/man8/ld.so.8.html",
+    "type": "系统手册、ABI 规范与官方技术文档",
+    "note": "依据 Linux ld.so(8)、ldconfig(8)、dlopen(3)、dlsym(3)、ELF ABI 和 GNU ld 文档逐题整理；环境变量及动态加载行为以 Linux/glibc 文档为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "elfdl-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "PT_INTERP程序解释器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux ELF 可执行文件中的 PT_INTERP 程序头通常指定什么？",
+      "answer": "它指定内核启动该程序时要调用的动态链接器路径。",
+      "explanation": "动态链接器随后参与映射依赖的共享对象和完成动态链接。",
+      "example": "readelf -l 可检查 ELF 程序头中的解释器路径。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "PT_INTERP",
+        "程序解释器"
+      ],
+      "evidence": "source",
+      "reference": "https://refspecs.linuxfoundation.org/elf/gabi4+/ch5.dynamic.html"
+    },
+    {
+      "id": "elfdl-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "DT_NEEDED依赖名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ELF 动态段中的 DT_NEEDED 条目通常记录什么？",
+      "answer": "它记录动态链接器需要装载的共享对象名称。",
+      "explanation": "名称常来自共享对象的 DT_SONAME；若依赖字符串包含斜杠，加载器会按路径处理。",
+      "example": "readelf -d 可查看可执行文件声明的直接共享库依赖。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "DT_NEEDED",
+        "共享库依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://refspecs.linuxfoundation.org/elf/gabi4+/ch5.dynamic.html"
+    },
+    {
+      "id": "elfdl-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "装载与重定位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 动态链接器通常在把控制权交给程序前完成哪些工作？",
+      "answer": "它映射程序和共享对象需要的段，并处理所需的动态重定位。",
+      "explanation": "具体重定位时机还可能受延迟绑定等机制影响。",
+      "example": "共享对象映射到进程地址空间后，加载器修正需要运行时地址的引用。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "装载",
+        "重定位"
+      ],
+      "evidence": "source",
+      "reference": "https://refspecs.linuxfoundation.org/elf/gabi4+/ch5.dynamic.html"
+    },
+    {
+      "id": "elfdl-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "依赖字符串路径",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "Linux 动态链接器处理包含斜杠的 DT_NEEDED 名称时会怎样查找？",
+      "answer": "它把该名称当作相对或绝对路径使用，而不会按普通库名依次搜索目录。",
+      "explanation": "不包含斜杠的依赖名称才按动态链接器的目录搜索规则查找。",
+      "example": "依赖字符串为 ./libhelper.so 时按该相对路径定位文件。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "DT_NEEDED",
+        "库路径"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ld.so.8.html"
+    },
+    {
+      "id": "elfdl-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "共享库搜索顺序",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "在 Linux 动态链接器的默认规则中，不含斜杠的库名通常按什么顺序搜索目录？",
+      "answer": "先用没有被 RUNPATH 取代的 DT_RPATH，再看 LD_LIBRARY_PATH、DT_RUNPATH、ld.so.cache，最后看默认目录。",
+      "explanation": "这描述 Linux 手册中的常见顺序；安全执行模式、硬件能力目录和动态链接器选项会影响具体行为。",
+      "example": "排查找错库时，应先检查 ELF 动态段和实际运行环境的搜索路径。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "共享库搜索顺序",
+        "RPATH",
+        "RUNPATH"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ld.so.8.html"
+    },
+    {
+      "id": "elfdl-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "RUNPATH传递范围",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Linux ELF 的 DT_RUNPATH 与 DT_RPATH 在依赖传递上有什么重要区别？",
+      "answer": "DT_RUNPATH 只用于查找对象的直接依赖；DT_RPATH 在没有 DT_RUNPATH 时还可用于依赖树中的子级查找。",
+      "explanation": "因此主程序的 RUNPATH 不一定能帮助某个共享库找到它自己的依赖。",
+      "example": "libA 依赖 libB 时，libA 可能需要自己的 RUNPATH 才能找到 libB。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "DT_RUNPATH",
+        "DT_RPATH",
+        "传递依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ld.so.8.html"
+    },
+    {
+      "id": "elfdl-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "安全执行模式路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 动态链接器处于 secure-execution mode 时，会按普通方式采纳 LD_LIBRARY_PATH 吗？",
+      "answer": "不会；该环境变量在安全执行模式下会被忽略。",
+      "explanation": "动态链接器会限制一组可能影响装载行为的环境变量。",
+      "example": "排查特权程序的依赖时，不能假设普通用户设置的 LD_LIBRARY_PATH 生效。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "secure-execution",
+        "LD_LIBRARY_PATH"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ld.so.8.html"
+    },
+    {
+      "id": "elfdl-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "ORIGIN动态令牌",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 动态链接器路径中的 $ORIGIN 通常展开为什么？",
+      "answer": "它展开为包含当前程序或共享对象的目录路径。",
+      "explanation": "该令牌可用于构造相对安装位置的库搜索路径；使用时需按 shell 和链接器规则正确转义。",
+      "example": "应用可把自身目录下的 lib 子目录加入运行时搜索路径。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "$ORIGIN",
+        "相对库路径"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ld.so.8.html"
+    },
+    {
+      "id": "elfdl-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "rpath与rpath-link",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "GNU ld 的 -rpath 与 -rpath-link 在路径用途上有什么区别？",
+      "answer": "-rpath 把目录写入 ELF 运行时搜索路径；-rpath-link 只帮助链接器在构建时查找共享库依赖。",
+      "explanation": "-rpath-link 不会把相应目录作为运行时路径写入输出文件。",
+      "example": "链接阶段临时用 -rpath-link 找到依赖库，程序运行时仍需另有可用搜索路径。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "GNU ld",
+        "-rpath",
+        "-rpath-link"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs/ld/Options.html"
+    },
+    {
+      "id": "elfdl-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "共享库SONAME",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ELF 共享对象的 DT_SONAME 主要用于什么？",
+      "answer": "它为共享对象声明运行时库名称，链接到该对象的程序通常按这个名称记录依赖。",
+      "explanation": "SONAME 将运行时兼容名称与某个具体文件版本名区分开。",
+      "example": "libfoo.so.1 可作为 SONAME，具体实现文件则带有更细的版本号。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "DT_SONAME",
+        "共享库版本"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs/ld/Options.html"
+    },
+    {
+      "id": "elfdl-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "ldconfig缓存",
+      "questionType": "常用工具",
+      "origin": "自行整理",
+      "question": "Linux 的 ldconfig 主要维护哪些动态库装载信息？",
+      "answer": "它创建共享库所需的符号链接并更新动态链接器使用的缓存。",
+      "explanation": "动态链接器可通过缓存查找已配置目录中的候选库。",
+      "example": "安装新的系统共享库后，管理员可按发行版管理方式更新缓存。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "ldconfig",
+        "ld.so.cache"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ldconfig.8.html"
+    },
+    {
+      "id": "elfdl-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "过程链接表延迟绑定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ELF 动态链接中的延迟绑定通常把某些函数符号解析推迟到什么时候？",
+      "answer": "通常推迟到程序第一次调用该函数时。",
+      "explanation": "这样可避免为从未调用的函数提前完成部分解析工作。",
+      "example": "程序未调用某个可选库函数时，相关 PLT 项可能尚未完成最终绑定。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "PLT",
+        "延迟绑定"
+      ],
+      "evidence": "source",
+      "reference": "https://refspecs.linuxfoundation.org/elf/gabi4+/ch5.dynamic.html"
+    },
+    {
+      "id": "elfdl-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "立即绑定环境变量",
+      "questionType": "常用配置",
+      "origin": "自行整理",
+      "question": "在 Linux/glibc 中设置非空 LD_BIND_NOW 通常会改变什么？",
+      "answer": "动态链接器会在程序启动时解析所有符号，而不是等到函数首次调用时再解析。",
+      "explanation": "提前解析可能让缺失符号更早暴露，也会增加启动阶段工作。",
+      "example": "调试动态符号问题时，可让未解析符号在启动时就报错。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "LD_BIND_NOW",
+        "立即绑定"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ld.so.8.html"
+    },
+    {
+      "id": "elfdl-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "dlopen句柄",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 程序调用 dlopen 成功后会获得什么？",
+      "answer": "会获得一个表示已加载共享对象的句柄，可传给 dlsym 查询其中的符号。",
+      "explanation": "dlopen 可在程序运行期间装载对象；失败时返回 NULL。",
+      "example": "插件管理器按配置路径加载一个共享对象，再查找约定的初始化函数。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "dlopen",
+        "共享对象句柄"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/dlopen.3.html"
+    },
+    {
+      "id": "elfdl-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "dlopen绑定时机",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Linux dlopen 的 RTLD_LAZY 与 RTLD_NOW 在符号解析时机上有什么区别？",
+      "answer": "RTLD_LAZY 可把函数引用的解析延迟到首次使用；RTLD_NOW 要求在 dlopen 返回前解析未定义符号。",
+      "explanation": "数据引用不适用与函数调用相同的延迟规则。",
+      "example": "插件加载时使用 RTLD_NOW，可在启用插件阶段更早发现缺失的函数符号。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "RTLD_LAZY",
+        "RTLD_NOW"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/dlopen.3.html"
+    },
+    {
+      "id": "elfdl-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "dlopen符号可见范围",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Linux dlopen 的 RTLD_GLOBAL 与 RTLD_LOCAL 如何影响后续对象的符号解析？",
+      "answer": "RTLD_GLOBAL 使对象定义的符号可用于后续装载对象的解析；RTLD_LOCAL 不把这些符号加入该全局可见范围。",
+      "explanation": "RTLD_LOCAL 是默认行为。",
+      "example": "只有当后续插件需要引用前一个插件的符号时，才评估是否使用 RTLD_GLOBAL。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "RTLD_GLOBAL",
+        "RTLD_LOCAL"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/dlopen.3.html"
+    },
+    {
+      "id": "elfdl-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "dlclose引用计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中一次 dlclose 成功后，共享对象一定会立刻从进程中卸载吗？",
+      "answer": "不一定；动态链接器按成功打开次数维护引用计数，只有相应引用都关闭且没有其他阻止卸载条件时才可能卸载。",
+      "explanation": "RTLD_NODELETE 等选项会影响对象是否卸载。",
+      "example": "同一对象被 dlopen 两次时，通常需要对相应句柄各调用一次 dlclose。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "dlclose",
+        "引用计数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/dlopen.3.html"
+    },
+    {
+      "id": "elfdl-018",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "dlsym空指针错误检查",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "为什么 dlsym 返回 NULL 时，调用方还应检查 dlerror？",
+      "answer": "因为符号值本身在特殊情况下也可能为 NULL；应先清除旧错误，再调用 dlsym 并检查新的 dlerror。",
+      "explanation": "只根据返回指针是否为 NULL 不能总是区分解析失败与符号值为空。",
+      "example": "clear dlerror 后调用 dlsym，再读取 dlerror 判断是否发生查找错误。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "dlsym",
+        "dlerror"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/dlsym.3.html"
+    },
+    {
+      "id": "elfdl-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "RTLD_NEXT符号查找",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux dlsym 的 RTLD_NEXT 句柄通常用于什么场景？",
+      "answer": "它从当前对象之后的默认查找顺序继续查找符号，常用于包装函数后调用下一个实现。",
+      "explanation": "其行为依赖动态链接器的符号查找顺序。",
+      "example": "某共享库包装 open 函数后，通过 RTLD_NEXT 找到后续的 open 实现。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "RTLD_NEXT",
+        "符号查找"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/dlsym.3.html"
+    },
+    {
+      "id": "elfdl-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "LD_PRELOAD装载顺序",
+      "questionType": "常用配置",
+      "origin": "自行整理",
+      "question": "Linux/glibc 的 LD_PRELOAD 通常会怎样影响动态装载？",
+      "answer": "它指定的共享对象会在其他共享对象之前装载，可参与符号查找和符号覆盖。",
+      "explanation": "该变量在安全执行模式下会被忽略或受到限制。",
+      "example": "兼容层可预加载包装函数的共享库，以便在同一进程中拦截特定符号。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "LD_PRELOAD",
+        "符号覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ld.so.8.html"
+    },
+    {
+      "id": "elfdl-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "as-needed依赖记录",
+      "questionType": "常用链接选项",
+      "origin": "自行整理",
+      "question": "GNU ld 启用 --as-needed 后，动态库何时会被写入输出文件的 DT_NEEDED？",
+      "answer": "通常只有当该库在命令行出现时满足了当时的未解析非弱符号引用，才会生成对应 DT_NEEDED 条目。",
+      "explanation": "该选项会使命令行顺序影响依赖记录。",
+      "example": "把提供符号的共享库放在引用它的对象之后，可避免因处理顺序而丢掉依赖。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "GNU ld",
+        "--as-needed"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs/ld/Options.html"
+    },
+    {
+      "id": "elfdl-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "whole-archive成员提取",
+      "questionType": "常用链接选项",
+      "origin": "自行整理",
+      "question": "GNU ld 的 --whole-archive 对后续静态归档中的目标文件有什么影响？",
+      "answer": "它要求把后续归档中的每个目标文件都加入链接，而不是只按未解析符号按需提取成员。",
+      "explanation": "需要用 --no-whole-archive 限定其作用范围，避免影响后续不相关归档。",
+      "example": "把静态归档整体并入共享库时，可在该归档前后配对开关。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "GNU ld",
+        "--whole-archive"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs/ld/Options.html"
+    },
+    {
+      "id": "elfdl-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 动态链接与加载",
+      "knowledgePoint": "归档循环依赖分组",
+      "questionType": "常用链接选项",
+      "origin": "自行整理",
+      "question": "GNU ld 的 --start-group 和 --end-group 用于什么链接场景？",
+      "answer": "它会反复搜索分组中的静态归档，直到不再产生新的未解析符号，适用于归档间的循环引用。",
+      "explanation": "重复扫描会增加链接开销，只应在确有循环依赖时使用。",
+      "example": "libA 需要 libB 的符号且 libB 又需要 libA 的符号时，可将两者放入同一组。",
+      "tags": [
+        "ELF 动态链接与加载",
+        "GNU ld",
+        "--start-group",
+        "循环依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs/ld/Options.html"
+    }
+  ]
+}

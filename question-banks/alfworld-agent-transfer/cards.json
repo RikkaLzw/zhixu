@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "alfworld-agent-transfer",
+    "title": "ALFWorld 原论文 v2：文本与具身环境",
+    "url": "https://arxiv.org/pdf/2010.03768v2",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "alfworld-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALFWorld 智能体环境",
+      "knowledgePoint": "环境组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALFWorld 如何把文本交互与具身任务环境联系起来？",
+      "answer": "为同一底层任务构造对应的文本世界和视觉具身世界，使任务与交互在两种视图间对齐。",
+      "explanation": "两种环境的观察形式和动作粒度不同。",
+      "example": "先在文本环境学习，再尝试具身任务。",
+      "tags": [
+        "ALFWorld 智能体环境",
+        "环境组成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03768v2"
+    },
+    {
+      "id": "alfworld-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALFWorld 智能体环境",
+      "knowledgePoint": "具身观察",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALFWorld 的具身环境与文本环境在观察和动作上有何区别？",
+      "answer": "具身环境提供视觉观察并执行低层物理动作；文本环境提供文字观察和较高层动作。",
+      "explanation": "相同目标在两种环境中具有对应关系。",
+      "example": "文本 goto 动作可能对应多个低层移动动作。",
+      "tags": [
+        "ALFWorld 智能体环境",
+        "具身观察"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03768v2"
+    },
+    {
+      "id": "alfworld-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALFWorld 智能体环境",
+      "knowledgePoint": "共享状态描述",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALFWorld 使用什么语言描述场景和交互规则，以构建对应文本游戏？",
+      "answer": "使用 PDDL 描述场景及动作动态，并构建相应文本环境。",
+      "explanation": "状态抽象与真实视觉细节并不完全相同。",
+      "example": "用对象和动作条件描述放置任务。",
+      "tags": [
+        "ALFWorld 智能体环境",
+        "共享状态描述"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03768v2"
+    },
+    {
+      "id": "alfworld-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALFWorld 智能体环境",
+      "knowledgePoint": "BUTLER 组件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALFWorld 论文中的 BUTLER 由哪三类组件组成？",
+      "answer": "由文本决策组件 Brain、视觉状态估计组件 Vision 和低层控制组件 Body 组成。",
+      "explanation": "各组件分别负责决策、观察转换和动作执行。",
+      "example": "文本动作经控制器转换为具身动作。",
+      "tags": [
+        "ALFWorld 智能体环境",
+        "BUTLER 组件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03768v2"
+    },
+    {
+      "id": "alfworld-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALFWorld 智能体环境",
+      "knowledgePoint": "视觉状态估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BUTLER 的 Vision 组件在具身交互中负责什么？",
+      "answer": "把当前视觉帧转换为文本观察，供文本决策组件使用。",
+      "explanation": "论文实现使用预训练的目标检测器辅助构造观察。",
+      "example": "从画面提取可见物体并形成文字描述。",
+      "tags": [
+        "ALFWorld 智能体环境",
+        "视觉状态估计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03768v2"
+    },
+    {
+      "id": "alfworld-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALFWorld 智能体环境",
+      "knowledgePoint": "高低层动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BUTLER 的 Body 组件如何处理文本智能体给出的高层动作？",
+      "answer": "将高层文本动作转换成一个或多个具身环境中的低层动作。",
+      "explanation": "动作执行结果会影响后续观察。",
+      "example": "将移动到目标位置转换为一系列导航动作。",
+      "tags": [
+        "ALFWorld 智能体环境",
+        "高低层动作"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03768v2"
+    },
+    {
+      "id": "alfworld-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALFWorld 智能体环境",
+      "knowledgePoint": "泛化划分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALFWorld 论文的 seen 与 unseen 验证场景主要有什么区别？",
+      "answer": "seen 使用训练中见过的房间但改变实例配置；unseen 使用训练时未见过的房间和布局。",
+      "explanation": "这两种划分用于考察不同程度的环境泛化。",
+      "example": "未见房间可能有不同容器和场景布局。",
+      "tags": [
+        "ALFWorld 智能体环境",
+        "泛化划分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03768v2"
+    }
+  ]
+}

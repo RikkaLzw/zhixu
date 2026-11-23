@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "yara-condition-operators",
+    "title": "YARA 4.4 文档：条件与字节表达式",
+    "url": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本与环境为准。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "yaracond-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 条件表达式",
+      "knowledgePoint": "有符号无符号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 的 int16 与 uint16 读取整数时有什么区别？",
+      "answer": "int16 按有符号整数解释两个字节；uint16 按无符号整数解释。",
+      "explanation": "参数表示扫描文件的偏移或进程内存的虚拟地址。",
+      "example": "同样的两个字节可对应不同的有符号和无符号值。",
+      "tags": [
+        "YARA 条件表达式",
+        "有符号无符号"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yaracond-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 条件表达式",
+      "knowledgePoint": "字节序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 的 uint16 与 uint16be 对多字节整数采用什么字节序？",
+      "answer": "uint16 按小端序读取；uint16be 按大端序读取。",
+      "explanation": "读取位置由参数指定。",
+      "example": "文件开头字节 4D 5A 可被 uint16(0) 解释为 0x5A4D。",
+      "tags": [
+        "YARA 条件表达式",
+        "字节序"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yaracond-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 条件表达式",
+      "knowledgePoint": "排除字节",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 十六进制字符串中的 ~00 表示什么？",
+      "answer": "该位置匹配除 00 以外的任意单字节。",
+      "explanation": "按位否定语法自 YARA 4.3.0 起支持。",
+      "example": "{ F4 ~00 62 } 要求中间字节非零。",
+      "tags": [
+        "YARA 条件表达式",
+        "排除字节"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yaracond-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 条件表达式",
+      "knowledgePoint": "至少匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 条件 2 of ($a*) 如何计算匹配数？",
+      "answer": "要求名称以 $a 开头的字符串定义中，至少两个不同定义各自匹配。",
+      "explanation": "它关注不同字符串定义的数量，而不是单个字符串出现的次数。",
+      "example": "$a1 出现多次但 $a2 未出现时仍不足两个定义。",
+      "tags": [
+        "YARA 条件表达式",
+        "至少匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yaracond-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 条件表达式",
+      "knowledgePoint": "零匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 规则希望明确表示一组字符串都未匹配时，推荐写什么？",
+      "answer": "写 none of，而不要依赖历史上含义有歧义的 0 of。",
+      "explanation": "YARA 4.3.0 修改了 0 of 的行为，none 更清晰。",
+      "example": "none of them 表示该规则中没有字符串匹配。",
+      "tags": [
+        "YARA 条件表达式",
+        "零匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yaracond-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 条件表达式",
+      "knowledgePoint": "逐项条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 的 for any of ($a,$b) : ( $ at 0 ) 表示什么？",
+      "answer": "$a 或 $b 中至少有一个在偏移 0 处匹配。",
+      "explanation": "循环体中的 $ 代表正在检查的字符串。",
+      "example": "文件开头出现任意一个指定标识即可满足条件。",
+      "tags": [
+        "YARA 条件表达式",
+        "逐项条件"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yaracond-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 条件表达式",
+      "knowledgePoint": "字符串大小写",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 的 contains 与 icontains 在文本比较上有什么区别？",
+      "answer": "contains 区分大小写；icontains 不区分大小写。",
+      "explanation": "这些操作可用于规则中的字符串表达式。",
+      "example": "\"AbC\" icontains \"bc\" 为真。",
+      "tags": [
+        "YARA 条件表达式",
+        "字符串大小写"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    }
+  ]
+}

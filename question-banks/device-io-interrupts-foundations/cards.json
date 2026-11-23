@@ -1,0 +1,112 @@
+{
+  "source": {
+    "id": "device-io-interrupts-foundations",
+    "title": "OSTEP I/O Devices 与 Linux 内核设备 I/O、DMA、IRQ 文档",
+    "url": "https://docs.kernel.org/driver-api/device-io.html",
+    "type": "操作系统教材与内核官方文档",
+    "note": "依据 OSTEP I/O 章节及 Linux 内核设备访问、DMA 与中断文档逐题整理；DMA 地址、缓存一致性和寄存器访问均按具体设备与架构语境描述。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "devio-001", "category": "foundations", "level": "入门", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "轮询与中断", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "设备轮询与中断通知在 CPU 等待方式上有什么区别？", "answer": "轮询由 CPU 主动反复检查设备状态；中断由设备或控制器在事件发生时通知 CPU。", "explanation": "轮询实现简单但可能浪费检查周期；中断可减少无效检查，但有处理和调度开销。", "example": "等待低频键盘输入可用中断，持续处理高速数据流时轮询有时更合适。", "tags": ["设备 I/O", "轮询", "中断"], "evidence": "source", "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-devices.pdf"
+    },
+    {
+      "id": "devio-002", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "中断与异常", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "在常见处理器语境中，异步中断与同步异常通常有什么区别？", "answer": "异步中断由外部事件引起，发生时间与当前指令通常无直接因果关系；同步异常由当前指令执行触发。", "explanation": "不同 ISA 对 exception、fault、trap 等术语的划分不完全相同，应结合具体架构手册。", "example": "网卡接收事件可产生中断；除零指令可产生同步异常。", "tags": ["处理器", "中断", "异常"], "evidence": "source", "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-devices.pdf"
+    },
+    {
+      "id": "devio-003", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "中断控制器", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "中断控制器在多个设备请求中通常承担什么职责？", "answer": "它接收和路由中断请求，并可根据架构能力提供屏蔽、优先级或处理器目标等管理功能。", "explanation": "不同平台的中断控制器实现和功能各不相同。", "example": "控制器可把网卡中断路由到指定 CPU 核心。", "tags": ["中断控制器", "IRQ 路由"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/irq/index.html"
+    },
+    {
+      "id": "devio-004", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "中断向量", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "中断向量或中断描述符表的作用是什么？", "answer": "它提供中断或异常编号到相应处理入口的映射，使处理器能转入合适的处理程序。", "explanation": "具体表结构和编号语义由处理器架构定义。", "example": "处理器根据异常向量找到缺页处理入口。", "tags": ["中断向量", "异常处理"], "evidence": "source", "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-devices.pdf"
+    },
+    {
+      "id": "devio-005", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "中断处理程序与延后工作", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "为什么操作系统的中断处理路径通常会把部分工作延后执行？", "answer": "尽快完成必要的确认和状态保存后延后较重工作，可以缩短关闭或阻塞中断处理的时间。", "explanation": "Linux 根据工作类型使用线程化中断、软中断、工作队列等机制；可睡眠与执行上下文限制不同。", "example": "中断处理程序记录收到数据后，把耗时解析交给后续线程处理。", "tags": ["中断处理", "延后工作", "Linux"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/irq/index.html"
+    },
+    {
+      "id": "devio-006", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "中断屏蔽", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "临界处理中暂时屏蔽某类中断，通常需要注意什么？", "answer": "屏蔽范围应尽量短，并确认设备状态或中断仍会在之后被处理，避免丢失事件或造成长时间延迟。", "explanation": "屏蔽某个设备中断与关闭整个 CPU 的所有中断不是同一操作。", "example": "驱动更新共享状态时只屏蔽该设备的中断，完成后立即恢复。", "tags": ["中断屏蔽", "临界区"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/irq/index.html"
+    },
+    {
+      "id": "devio-007", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "边沿与电平触发", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "边沿触发和电平触发中断在线路状态语义上有什么区别？", "answer": "边沿触发关注信号从一种状态转换到另一种状态；电平触发在信号保持有效电平时持续表示请求。", "explanation": "驱动和中断控制器必须按设备规定确认或清除请求，避免漏中断或重复触发。", "example": "若电平触发设备的状态位没有清除，处理器返回后可能再次收到同一请求。", "tags": ["IRQ", "边沿触发", "电平触发"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/irq/index.html"
+    },
+    {
+      "id": "devio-008", "category": "foundations", "level": "入门", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "DMA", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "DMA 相较于 CPU 逐字节搬运 I/O 数据有什么主要作用？", "answer": "DMA 控制器或设备可在配置后直接在设备与内存间传输数据，减少 CPU 参与每个数据单元搬运的工作。", "explanation": "CPU 仍需准备缓冲区和描述符、启动传输，并处理完成或错误通知。", "example": "网卡可把接收帧 DMA 到内存中的接收缓冲区。", "tags": ["DMA", "设备 I/O"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    },
+    {
+      "id": "devio-009", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "DMA 地址", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "Linux DMA API 返回的 DMA 地址是否总能直接当作 CPU 物理地址使用？", "answer": "不能；DMA 地址是设备用于访问缓冲区的地址，可能经过 IOMMU 或总线映射，与 CPU 物理地址不相同。", "explanation": "驱动应使用 DMA API 管理映射，不能自行假设地址空间一致。", "example": "在启用 IOMMU 的系统中，设备可见的 DMA 地址映射到指定宿主物理页。", "tags": ["DMA 地址", "IOMMU", "Linux 驱动"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    },
+    {
+      "id": "devio-010", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "一致性与流式 DMA", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "一致性 DMA 映射与流式 DMA 映射通常有什么使用区别？", "answer": "一致性映射适合设备与 CPU 长期共享可见的内存；流式映射常用于一次或有限期传输，并可能需要显式同步所有权。", "explanation": "实际缓存维护行为由体系结构和 DMA API 实现决定。", "example": "长期存在的描述符环可用一致性映射，单次网络缓冲区可用流式映射。", "tags": ["DMA", "一致性映射", "流式映射"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    },
+    {
+      "id": "devio-011", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "DMA 映射接口", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "Linux 驱动为什么不能把普通 CPU 指针直接交给设备作为 DMA 地址？", "answer": "CPU 虚拟地址未必是设备可访问的地址，也未必已建立必要的总线或 IOMMU 映射。", "explanation": "驱动应通过 DMA API 获得设备地址，并检查映射失败。", "example": "驱动使用 dma_map_single 映射缓冲区，再把返回的 dma_addr_t 写入设备描述符。", "tags": ["Linux DMA API", "DMA 映射"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    },
+    {
+      "id": "devio-012", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "DMA 缓冲区所有权同步", "questionType": "故障分析", "origin": "自行整理",
+      "question": "流式 DMA 缓冲区在 CPU 与设备交替访问时，为什么可能需要显式同步？", "answer": "同步用于按平台 DMA API 规则转移缓冲区访问所有权并处理缓存可见性，避免双方看到过期数据或同时修改。", "explanation": "是否需要显式同步取决于映射类型、方向和架构一致性属性。", "example": "设备写完接收缓冲区后，驱动在 CPU 读取之前调用相应 DMA 同步操作。", "tags": ["DMA", "缓存可见性", "同步"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    },
+    {
+      "id": "devio-013", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "Scatter-Gather DMA", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "Scatter-gather DMA 如何减少不连续数据的复制？", "answer": "驱动把多个内存片段组织为散布收集列表，让设备按描述符依次读取或写入这些片段。", "explanation": "硬件和 DMA API 对列表长度、对齐和段边界可能有限制。", "example": "一个网络数据包由头部和若干页片段组成时，可用多个 DMA 段描述。", "tags": ["DMA", "scatter-gather", "描述符"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/dma-api.html"
+    },
+    {
+      "id": "devio-014", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "DMA 映射失败", "questionType": "故障分析", "origin": "自行整理",
+      "question": "驱动调用 DMA 映射接口后，为什么必须检查映射是否成功？", "answer": "平台可能因地址范围、资源或映射限制而无法建立设备可用的 DMA 地址。", "explanation": "失败时驱动不能把未初始化或错误地址交给设备，应按接口契约释放资源并报告错误。", "example": "设备只支持较窄 DMA 掩码却收到范围外缓冲区时，映射可能失败。", "tags": ["DMA API", "错误处理", "DMA 掩码"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    },
+    {
+      "id": "devio-015", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "DMA 缓存一致性", "questionType": "故障分析", "origin": "自行整理",
+      "question": "非硬件缓存一致的系统上，CPU 缓存可能怎样影响设备 DMA？", "answer": "CPU 缓存中可能保留与内存或设备数据不同步的副本，因此需要 DMA API 规定的缓存维护和同步操作。", "explanation": "不能仅凭 x86 常见平台的表现推断所有架构都自动保持一致。", "example": "设备已写回内存的新数据，若 CPU 仍读到旧缓存行，就会得到过期结果。", "tags": ["DMA", "缓存一致性", "体系结构"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/dma-api-howto.html"
+    },
+    {
+      "id": "devio-016", "category": "foundations", "level": "入门", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "MMIO", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "内存映射 I/O（MMIO）把设备寄存器映射到什么地址空间？", "answer": "它把设备寄存器映射到处理器可访问的地址空间，使软件用受规定的读写访问与设备交互。", "explanation": "访问 MMIO 地址具有设备副作用，不能当作普通 RAM 任意缓存、合并或重排。", "example": "驱动写设备控制寄存器以启动 DMA 传输。", "tags": ["MMIO", "设备寄存器"], "evidence": "source", "reference": "https://docs.kernel.org/driver-api/device-io.html"
+    },
+    {
+      "id": "devio-017", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "MMIO 与端口 I/O", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "Memory-mapped I/O 与独立端口 I/O 在访问模型上有什么区别？", "answer": "MMIO 使用内存地址空间映射设备寄存器；端口 I/O 使用单独的 I/O 地址空间和专用访问指令。", "explanation": "不同处理器架构支持的设备访问模型不同，驱动应使用平台提供的接口。", "example": "Linux 某些平台使用 readl/writel 访问 MMIO，x86 也提供 in/out 端口访问。", "tags": ["MMIO", "端口 I/O", "设备寄存器"], "evidence": "source", "reference": "https://docs.kernel.org/driver-api/device-io.html"
+    },
+    {
+      "id": "devio-018", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "ioremap", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "Linux 驱动中的 ioremap 类接口通常用于什么？", "answer": "把设备物理资源映射到内核可访问的 I/O 地址空间，并建立适当的访问属性。", "explanation": "驱动不应把设备物理地址直接当普通内核指针解引用。", "example": "驱动先取得 PCI BAR 资源，再映射后访问设备寄存器。", "tags": ["Linux 驱动", "ioremap", "MMIO"], "evidence": "source", "reference": "https://docs.kernel.org/driver-api/device-io.html"
+    },
+    {
+      "id": "devio-019", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "MMIO 访问器", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "Linux 的 readl/writel 之类 MMIO 访问器有什么作用？", "answer": "它们以架构适配的方式访问 I/O 内存寄存器，并表达内核所需的访问语义。", "explanation": "应使用对应的 I/O accessor，而不是普通指针读写或仅加 volatile。", "example": "驱动通过 writel 写入设备命令寄存器，再用 readl 读取状态。", "tags": ["Linux 驱动", "readl", "writel", "MMIO"], "evidence": "source", "reference": "https://docs.kernel.org/driver-api/device-io.html"
+    },
+    {
+      "id": "devio-020", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "I/O 内存排序", "questionType": "故障分析", "origin": "自行整理",
+      "question": "CPU 普通内存写入与 MMIO 设备通知之间为什么可能需要内存屏障？", "answer": "处理器或总线可能重排可观察顺序；屏障可按体系结构和访问 API 的保证，确保设备看到数据与通知的预期次序。", "explanation": "具体需要何种屏障取决于 CPU、设备协议和 Linux accessor 的排序保证。", "example": "驱动先填好 DMA 描述符，再通知设备取描述符时需满足设备要求的写入顺序。", "tags": ["I/O 内存排序", "内存屏障", "DMA 描述符"], "evidence": "source", "reference": "https://docs.kernel.org/driver-api/device-io.html"
+    },
+    {
+      "id": "devio-021", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "MSI 中断", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "PCI MSI 如何向处理器通知设备中断？", "answer": "设备通过向配置的特殊地址执行一次内存写事务来发送中断消息，而不是依赖传统共享中断线电平。", "explanation": "平台和设备仍需配置 MSI 能力及中断路由。", "example": "网卡用一个 MSI 消息通知 CPU 有接收队列事件待处理。", "tags": ["PCI", "MSI", "中断"], "evidence": "source", "reference": "https://docs.kernel.org/PCI/msi-howto.html"
+    },
+    {
+      "id": "devio-022", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "MSI-X", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "PCI MSI-X 相较基本 MSI 提供了什么常见扩展能力？", "answer": "MSI-X 支持更多可配置消息向量，并允许各向量具有独立的消息地址和数据。", "explanation": "可用向量数受设备和平台能力限制；驱动仍需合理映射队列与 CPU。", "example": "多队列网卡可为不同队列或队列组配置不同中断向量。", "tags": ["PCI", "MSI-X", "中断向量"], "evidence": "source", "reference": "https://docs.kernel.org/PCI/msi-howto.html"
+    },
+    {
+      "id": "devio-023", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "中断亲和性", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "为设备中断设置 CPU affinity 会影响什么？", "answer": "它影响中断处理被路由或允许运行的 CPU 集合，可用于局部性和负载分布调整。", "explanation": "亲和性不保证 CPU 独占，也不一定适合所有负载；应结合队列与 NUMA 布局评估。", "example": "把某个网卡队列的中断放到靠近其内存节点的 CPU 上处理。", "tags": ["IRQ affinity", "CPU 局部性", "Linux"], "evidence": "source", "reference": "https://docs.kernel.org/core-api/irq/index.html"
+    },
+    {
+      "id": "devio-024", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "PCI Bus Master", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "PCI 设备的 Bus Master 能力与 DMA 有什么关系？", "answer": "Bus Master 设备可以发起总线事务并访问获准的内存区域，DMA 传输通常依赖此能力。", "explanation": "启用总线主控能力不会自动保证地址合法；平台映射和隔离仍然重要。", "example": "网卡作为 bus master 读取发送描述符并从主存取出数据。", "tags": ["PCI", "Bus Master", "DMA"], "evidence": "source", "reference": "https://docs.kernel.org/driver-api/pci/pci.html"
+    },
+    {
+      "id": "devio-025", "category": "foundations", "level": "进阶", "subtopic": "设备 I/O、中断与 DMA", "knowledgePoint": "设备中断确认", "questionType": "故障分析", "origin": "自行整理",
+      "question": "中断处理程序为什么通常要读取或确认设备状态，而不只清除 CPU 侧中断标记？", "answer": "设备可能仍保持请求条件；若未处理或确认设备状态，请求可能再次触发或持续保持有效。", "explanation": "具体确认顺序和寄存器副作用由设备规范规定，错误读写可能丢失事件。", "example": "驱动读取中断状态寄存器，处理已完成队列后再清除相应设备事件位。", "tags": ["设备中断", "状态寄存器", "IRQ 确认"], "evidence": "source", "reference": "https://docs.kernel.org/driver-api/device-io.html"
+    }
+  ]
+}

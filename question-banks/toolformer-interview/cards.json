@@ -1,0 +1,172 @@
+{
+  "source": {
+    "id": "toolformer-interview",
+    "title": "Toolformer 原论文与字节公开面经",
+    "url": "https://arxiv.org/abs/2302.04761",
+    "type": "研究论文",
+    "note": "字节公开复盘提及 function calling；Toolformer 题目是主题启发，并非声称原帖逐题提问。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "toolformer-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体工具使用",
+      "knowledgePoint": "工具使用训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Toolformer 原论文怎样构造工具使用训练数据？",
+      "answer": "模型生成候选 API 调用并实际执行，再按结果对后续文本预测的帮助筛选，最后用保留的调用增强语料微调模型。",
+      "explanation": "论文只用少量人工示例引导候选生成，不需要逐条人工标注调用。",
+      "example": "对文本生成计算器调用候选并保留有帮助的调用。",
+      "tags": [
+        "工具使用训练",
+        "Agent",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2302.04761",
+      "referenceTitle": "Toolformer 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型实习一面（作者自述）；function calling 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "toolformer-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体工具使用",
+      "knowledgePoint": "工具调用筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Toolformer 原论文筛选 API 调用时，如何判断工具结果是否有帮助？",
+      "answer": "比较有调用结果与无调用或只有调用输入时的后续 token 预测损失；结果带来的损失下降达到阈值才保留。",
+      "explanation": "比较无结果的调用可避免只因调用文本本身有帮助而错误归因于工具输出。",
+      "example": "计算器结果让接下来的数值更容易预测。",
+      "tags": [
+        "工具调用筛选",
+        "Agent",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2302.04761",
+      "referenceTitle": "Toolformer 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型实习一面（作者自述）；function calling 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "toolformer-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体工具使用",
+      "knowledgePoint": "工具生成与执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Toolformer 原论文的推理流程中，模型生成 API 调用后如何获得真实工具结果？",
+      "answer": "解码在调用处暂停，由外部程序执行对应 API，将返回结果插入上下文后继续生成。",
+      "explanation": "模型生成调用文本本身不等于工具已执行。",
+      "example": "生成计算表达式后交给计算器执行，再读取返回值。",
+      "tags": [
+        "工具生成与执行",
+        "Agent",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2302.04761",
+      "referenceTitle": "Toolformer 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型实习一面（作者自述）；function calling 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "toolformer-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体工具使用",
+      "knowledgePoint": "损失筛选边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Toolformer 使用的后续预测损失下降，能否单独保证工具调用在语义上有用？",
+      "answer": "不能；原论文展示了降低预测损失但与当前文本语义无关的工具结果。",
+      "explanation": "损失筛选是自动信号，仍可能保留噪声调用。",
+      "example": "搜索结果恰好包含重复词，但与当前任务无关。",
+      "tags": [
+        "损失筛选边界",
+        "Agent",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2302.04761",
+      "referenceTitle": "Toolformer 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型实习一面（作者自述）；function calling 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "toolformer-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体工具使用",
+      "knowledgePoint": "多步调用实验限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Toolformer 原论文的部分评测为什么难以完成需要连续调用两个工具的任务？",
+      "answer": "论文的评测设置限制每个输入最多调用一次 API，而训练数据中的候选调用也是独立采样的。",
+      "explanation": "这是该论文实验的限制，不代表所有工具调用模型都无法进行多步调用。",
+      "example": "先查询日期再利用日期查询事实需要两次调用。",
+      "tags": [
+        "多步调用实验限制",
+        "Agent",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2302.04761",
+      "referenceTitle": "Toolformer 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型实习一面（作者自述）；function calling 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "source": {
+    "id": "company-baidu",
+    "title": "百度 Agent 岗公开面经（作者自述）",
+    "url": "https://www.nowcoder.com/feed/main/detail/0266edb5c1864353a22807cd44219244",
+    "type": "公开面经（个人自述）",
+    "note": "考点依据个人公开复盘整理；公司、岗位及经历为作者自述，答案另依据所列技术资料核验。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "baidu-interview-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "人工审核",
+      "knowledgePoint": "审批与文件版本",
+      "questionType": "比较与选型",
+      "question": "为什么代码补丁的人工审批应与待审文件或变更版本绑定？",
+      "answer": "文件或补丁变化后，旧审批可能不再对应实际要应用的内容，应重新核对并按规则重新审批。",
+      "explanation": "可用版本标识或内容摘要检查待执行内容与获批内容是否一致。",
+      "example": "等待审批时文件被修改，旧补丁需重新核验。",
+      "tags": [
+        "审批与文件版本",
+        "Agent",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://www.nowcoder.com/feed/main/detail/0266edb5c1864353a22807cd44219244",
+      "referenceTitle": "百度 Agent 岗公开面经（作者自述）",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "github-reviews-ref",
+          "title": "GitHub：受保护分支的审批",
+          "url": "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#require-pull-request-reviews-before-merging",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

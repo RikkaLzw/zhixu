@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "rrf-ranking-fusion",
+    "title": "Elasticsearch 8.17：倒数排名融合",
+    "url": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/rrf.html",
+    "type": "教材、论文与官方技术文档",
+    "note": "逐题根据所列教材、论文或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "rrfstudy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多路检索排序融合",
+      "knowledgePoint": "融合公式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RRF 如何计算文档在多个排名列表中的融合分数？",
+      "answer": "对文档所在每个列表累加 1/(k+排名)，排名从 1 开始。",
+      "explanation": "k 是排名常数；未出现在某列表中的文档对该列表贡献为零。",
+      "example": "在两份列表分别排名第 1、2 的文档得到两项倒数之和。",
+      "tags": [
+        "多路检索排序融合",
+        "融合公式"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/rrf.html"
+    },
+    {
+      "id": "rrfstudy-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多路检索排序融合",
+      "knowledgePoint": "分数尺度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 RRF 可以合并原始分数尺度不同的检索结果？",
+      "answer": "它使用列表中的排名计算贡献，不直接相加各检索器的原始分数。",
+      "explanation": "这也意味着原始分数之间的差距信息不会直接保留。",
+      "example": "融合 BM25 分数与向量相似度排序。",
+      "tags": [
+        "多路检索排序融合",
+        "分数尺度"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/rrf.html"
+    },
+    {
+      "id": "rrfstudy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多路检索排序融合",
+      "knowledgePoint": "未入候选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "文档未进入任何输入列表的 RRF 融合窗口时，融合阶段能否仅靠排名把它找回？",
+      "answer": "不能；它没有进入候选集合，融合需要先由某个检索器召回。",
+      "explanation": "应检查各路检索覆盖和窗口设置。",
+      "example": "相关文档在所有子检索列表中都被截断。",
+      "tags": [
+        "多路检索排序融合",
+        "未入候选"
+      ],
+      "evidence": "application",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/rrf.html"
+    },
+    {
+      "id": "rrfstudy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多路检索排序融合",
+      "knowledgePoint": "融合窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 8.17 的 RRF rank_window_size 主要控制什么？",
+      "answer": "控制每个子检索器参与融合的候选窗口大小。",
+      "explanation": "窗口过小可能丢失可用于融合的低排名候选。",
+      "example": "每路先取前 100 项再进行融合。",
+      "tags": [
+        "多路检索排序融合",
+        "融合窗口"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/rrf.html"
+    },
+    {
+      "id": "rrfstudy-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多路检索排序融合",
+      "knowledgePoint": "窗口与分页",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 8.17 的 RRF 分页为什么需要保持 rank_window_size 一致？",
+      "answer": "改变融合窗口可能改变候选集合和最终顺序，进而影响跨页结果的一致性。",
+      "explanation": "底层索引变化等其他因素也会影响分页稳定性。",
+      "example": "翻到下一页时不要随意改变融合窗口。",
+      "tags": [
+        "多路检索排序融合",
+        "窗口与分页"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/rrf.html"
+    },
+    {
+      "id": "rrfstudy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多路检索排序融合",
+      "knowledgePoint": "排名权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 8.17 文档示例中，RRF 默认怎样对待各个子检索器的排名贡献？",
+      "answer": "使用相同权重合并各子检索器的排名贡献。",
+      "explanation": "不同产品或配置的融合方式可能支持其他权重策略。",
+      "example": "词法与稀疏向量两路排名都参与求和。",
+      "tags": [
+        "多路检索排序融合",
+        "排名权重"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/rrf.html"
+    }
+  ]
+}

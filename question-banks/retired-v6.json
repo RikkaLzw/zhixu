@@ -1,0 +1,64 @@
+{
+  "version": 6,
+  "note": "迁移用的旧版内置卡快照；仅在用户未修改内容时替换，并保留学习记录。",
+  "cards": [
+    {
+      "id": "ember-007",
+      "category": "vulnerabilities",
+      "question": "为什么未知标签的恶意软件样本不能当作良性样本？",
+      "answer": "未知表示缺乏可靠标签，不等于已确认安全。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "knowledgeArea": "12",
+      "level": "进阶",
+      "tags": [
+        "未知标签",
+        "数据质量"
+      ],
+      "explanation": "错误地把未知样本并入良性类会污染训练和评估。",
+      "example": "按数据集标签定义把未标注样本单独保留。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "isof-008",
+      "category": "detection",
+      "question": "Isolation Forest 的 predict 返回值如何理解？",
+      "answer": "官方接口使用 1 表示内部样本，-1 表示异常样本。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "knowledgeArea": "03",
+      "level": "进阶",
+      "tags": [
+        "predict",
+        "接口"
+      ],
+      "explanation": "二值结果由模型阈值决定，保留分数更方便调整告警量。",
+      "example": "先存储 decision_function，再根据运营阈值生成告警。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "isof-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

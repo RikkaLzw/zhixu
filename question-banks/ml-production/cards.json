@@ -1,0 +1,193 @@
+{
+  "source": {
+    "id": "ml-production",
+    "title": "Google Machine Learning Crash Course：生产监控",
+    "url": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring",
+    "type": "官方文档与标准",
+    "note": "根据所列资料自行编写并用简体中文整理，示例为自编。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "production-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据质量",
+      "knowledgePoint": "输入数据schema",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在线模型的数据 schema 可用于检查什么？",
+      "answer": "它定义输入数据应满足的结构和取值规则，用于发现缺失字段、异常取值或格式变化。",
+      "explanation": "schema 检查不能替代全部分布和业务质量检查。",
+      "example": "发现原本应为整数的端口字段出现字符串。",
+      "tags": [
+        "输入数据schema",
+        "AI4SEC落地",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "production-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "特征工程",
+      "knowledgePoint": "训练服务偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么是训练与服务偏差（training-serving skew）？",
+      "answer": "模型训练时使用的输入或特征与线上预测时实际获得的不一致。",
+      "explanation": "差异可能来自数据格式、特征计算或数据分布。",
+      "example": "训练和线上对同一原始字段使用了不同归一化规则。",
+      "tags": [
+        "训练服务偏差",
+        "AI4SEC落地",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "production-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "特征工程",
+      "knowledgePoint": "原始数据与特征校验",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "为什么原始输入通过校验后仍要检查转换后的特征？",
+      "answer": "特征计算步骤本身可能产生错误，因此原始数据正确不保证模型输入正确。",
+      "explanation": "应分别检查输入与特征工程输出的约束。",
+      "example": "原始计数有效，但归一化代码除以零产生无穷值。",
+      "tags": [
+        "原始数据与特征校验",
+        "AI4SEC落地",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "production-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型监控",
+      "knowledgePoint": "服务延迟分位数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么在线检测系统需要监控响应时间的分位数？",
+      "answer": "分位数能显示较慢请求的延迟情况，避免平均值掩盖尾部延迟。",
+      "explanation": "监控指标应与业务时限和吞吐量结合。",
+      "example": "同时跟踪平均响应时间与 P95 延迟。",
+      "tags": [
+        "服务延迟分位数",
+        "AI4SEC落地",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "production-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "模型版本归因",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么监控记录应关联模型、代码和数据版本？",
+      "answer": "版本信息有助于定位效果或性能变化与哪次变更有关。",
+      "explanation": "版本关联是排查线索，仍需进一步验证因果关系。",
+      "example": "发布新特征处理代码后比较前后缺失率。",
+      "tags": [
+        "模型版本归因",
+        "AI4SEC落地",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "production-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "延迟标签",
+      "questionType": "安全场景",
+      "origin": "自行整理",
+      "question": "线上样本没有即时真实标签时，可以怎样补充模型效果评估？",
+      "answer": "可以抽样由人工标注，或结合后续反馈形成评估标签。",
+      "explanation": "标注延迟和抽样偏差需要在解释结果时说明。",
+      "example": "抽取一批新告警交给分析人员确认，再计算精确率。",
+      "tags": [
+        "延迟标签",
+        "AI4SEC落地",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "production-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实验复现",
+      "knowledgePoint": "稳定哈希划分",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "为什么用稳定哈希划分实验数据时要使用稳定的实体键？",
+      "answer": "同一实体可以持续落在同一数据子集，减少重复实验时集合变化。",
+      "explanation": "仍需选择适合任务的划分单位，并防止时间或分组泄漏。",
+      "example": "按固定主机标识而不是逐条随机记录划分。",
+      "tags": [
+        "稳定哈希划分",
+        "AI4SEC落地",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "production-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "部署验证",
+      "knowledgePoint": "分批发布模型",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "为什么可以先把新模型用于一小部分线上请求？",
+      "answer": "分批发布允许先观察真实流量下的质量和性能，再决定是否扩大范围。",
+      "explanation": "需要定义对照、监控指标和回退条件。",
+      "example": "先对少量告警做新模型评分并监测结果。",
+      "tags": [
+        "分批发布模型",
+        "AI4SEC落地",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "production-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "模型质量漂移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Evidently 的用法中，模型漂移表示什么？",
+      "answer": "它表示模型质量随时间下降，但本身不说明具体原因。",
+      "explanation": "不同资料对漂移的术语可能不同；输入分布变化本身不等于质量下降。",
+      "example": "持续核验安全告警后发现模型召回率下降，再调查原因。",
+      "tags": [
+        "模型质量漂移",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://www.evidentlyai.com/ml-in-production/concept-drift",
+      "referenceTitle": "Evidently：Concept Drift 与 Model Drift",
+      "referenceType": "技术文档"
+    }
+  ]
+}

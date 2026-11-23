@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "elastic-ecs-event-analysis",
+    "title": "Elastic Common Schema 8.17：事件字段",
+    "url": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "ecsfield-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ECS 事件字段",
+      "knowledgePoint": "事件类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECS 8.17 的 event.category 和 event.type 在事件分类上是什么关系？",
+      "answer": "category 表示较大的类别；type 表示与类别配合使用的更细子类别。",
+      "explanation": "两个字段都可以包含多个值。",
+      "example": "process 类别可进一步标注某种进程事件类型。",
+      "tags": [
+        "ECS 事件字段",
+        "事件类别"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html"
+    },
+    {
+      "id": "ecsfield-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ECS 事件字段",
+      "knowledgePoint": "事件种类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECS 的 event.kind 用于表达什么？",
+      "answer": "表达事件承载信息的高层种类，例如告警或指标。",
+      "explanation": "它不是具体行为名称。",
+      "example": "同一平台可区分 alert 与 metric 类型的事件。",
+      "tags": [
+        "ECS 事件字段",
+        "事件种类"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html"
+    },
+    {
+      "id": "ecsfield-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ECS 事件字段",
+      "knowledgePoint": "具体动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECS 的 event.action 通常描述什么？",
+      "answer": "描述事件捕获的具体动作，通常比 event.category 更具体。",
+      "explanation": "该值通常由实现者定义。",
+      "example": "可记录 process-started 之类的动作。",
+      "tags": [
+        "ECS 事件字段",
+        "具体动作"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html"
+    },
+    {
+      "id": "ecsfield-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ECS 事件字段",
+      "knowledgePoint": "结果视角",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECS 的 event.outcome 中成功或失败是从谁的视角判断的？",
+      "answer": "从产生该事件的实体的视角判断。",
+      "explanation": "同一事务的不同事件可能因视角不同而有不同结果。",
+      "example": "客户端与服务端对同一请求可记录不同的结果。",
+      "tags": [
+        "ECS 事件字段",
+        "结果视角"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html"
+    },
+    {
+      "id": "ecsfield-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ECS 事件字段",
+      "knowledgePoint": "非必有结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECS 事件一定都需要填写 event.outcome 吗？",
+      "answer": "不一定；指标或没有合理成功失败语义的事件通常不填写。",
+      "explanation": "缺失该字段不应直接解释为失败。",
+      "example": "周期性指标事件通常没有操作成败。",
+      "tags": [
+        "ECS 事件字段",
+        "非必有结果"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html"
+    },
+    {
+      "id": "ecsfield-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ECS 事件字段",
+      "knowledgePoint": "采集入库时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECS 的 event.ingested 与 @timestamp 分别记录什么？",
+      "answer": "event.ingested 是事件到达中央数据存储的时间；@timestamp 通常是事件发生时间。",
+      "explanation": "采集延迟和时钟偏差会影响两者差值。",
+      "example": "排查晚到日志时比较两种时间。",
+      "tags": [
+        "ECS 事件字段",
+        "采集入库时间"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html"
+    },
+    {
+      "id": "ecsfield-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ECS 事件字段",
+      "knowledgePoint": "持续时间单位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECS 8.17 的 event.duration 使用什么时间单位？",
+      "answer": "使用纳秒。",
+      "explanation": "若已知起止时间，该值应为结束时间减开始时间。",
+      "example": "一秒对应 10 亿纳秒。",
+      "tags": [
+        "ECS 事件字段",
+        "持续时间单位"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html"
+    },
+    {
+      "id": "ecsfield-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ECS 事件字段",
+      "knowledgePoint": "原始事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECS 8.17 的 event.original 默认能否直接作为已索引字段搜索？",
+      "answer": "默认不索引且禁用 doc_values；可从 _source 取回，若要搜索需调整映射。",
+      "explanation": "保留原文有助于回查与重新处理。",
+      "example": "查看解析前的原始日志。",
+      "tags": [
+        "ECS 事件字段",
+        "原始事件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html"
+    },
+    {
+      "id": "ecsfield-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ECS 事件字段",
+      "knowledgePoint": "数据集名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ECS 的 event.dataset 如何帮助区分同一来源的不同日志？",
+      "answer": "它标识数据集，可区分同一事件来源发布的不同日志类型。",
+      "explanation": "文档建议但不强制采用模块名加点再加数据集名称。",
+      "example": "apache.access 与其他日志数据集可分开筛选。",
+      "tags": [
+        "ECS 事件字段",
+        "数据集名称"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/ecs/8.17/ecs-event.html"
+    }
+  ]
+}

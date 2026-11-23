@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "ctu13-botnet-dataset",
+    "title": "CTU-13：僵尸网络流量数据与公开边界",
+    "url": "https://www.stratosphereips.org/datasets-ctu13",
+    "type": "教材与官方文档",
+    "note": "依据逐题所列资料自行整理中文问答；例子为自编。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "ctu13-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "僵尸网络数据",
+      "knowledgePoint": "场景组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CTU-13 僵尸网络数据集的 13 个场景是什么？",
+      "answer": "它们是 2011 年采集的 13 次流量捕获，场景中运行不同僵尸网络样本并混合正常及背景流量。",
+      "explanation": "不同场景中的恶意样本与行为可能不同。",
+      "example": "按场景分别检查样本和流量组成。",
+      "tags": [
+        "场景组成",
+        "僵尸网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-ctu13"
+    },
+    {
+      "id": "ctu13-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "僵尸网络数据",
+      "knowledgePoint": "公开流量范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CTU-13 公开 PCAP 与带标签的双向 NetFlow 文件在流量范围上有何区别？",
+      "answer": "公开 PCAP 只包含僵尸网络捕获流量；双向 NetFlow 包含全部流量及标签。",
+      "explanation": "完整 PCAP 因隐私原因未公开。",
+      "example": "需要正常与背景流量时，应查看带标签的流文件。",
+      "tags": [
+        "公开流量范围",
+        "僵尸网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-ctu13"
+    },
+    {
+      "id": "ctu13-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "僵尸网络数据",
+      "knowledgePoint": "双向流标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CTU-13 官方为什么建议使用后来的双向 NetFlow 分析结果，而非早期单向流结果？",
+      "answer": "双向流提供更多信息与更细的标签，也有助于区分客户端和服务器。",
+      "explanation": "这是一项针对该数据集发布版本的建议。",
+      "example": "使用详细双向流标签目录中的文件。",
+      "tags": [
+        "双向流标签",
+        "僵尸网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-ctu13"
+    },
+    {
+      "id": "ctu13-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "僵尸网络数据",
+      "knowledgePoint": "背景标签解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CTU-13 的 Background 标签能否直接等同于经确认的 Normal 标签？",
+      "answer": "不能直接等同；数据集把背景流量与正常流量列为不同类别，合并前需要说明标签处理假设。",
+      "explanation": "类别名称相似或不是 Botnet，并不自动证明逐条流量已确认良性。",
+      "example": "建模时先保留 Background 和 Normal 的原始区别。",
+      "tags": [
+        "背景标签解释",
+        "僵尸网络数据"
+      ],
+      "evidence": "application",
+      "reference": "https://www.stratosphereips.org/datasets-ctu13"
+    },
+    {
+      "id": "ctu13-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "僵尸网络数据",
+      "knowledgePoint": "跨场景评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "评估 CTU-13 检测方法时，为什么值得报告不同场景上的结果？",
+      "answer": "场景中的恶意样本和行为不同，分别报告有助于观察方法在不同场景中的表现。",
+      "explanation": "单一场景的分数不能证明在其他场景上的效果。",
+      "example": "分别统计每个场景的检测指标。",
+      "tags": [
+        "跨场景评估",
+        "僵尸网络数据"
+      ],
+      "evidence": "application",
+      "reference": "https://www.stratosphereips.org/datasets-ctu13"
+    }
+  ]
+}

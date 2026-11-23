@@ -1,0 +1,335 @@
+{
+  "source": {
+    "id": "weak-supervision-labeling",
+    "title": "Snorkel 弱监督原论文与 0.9.9 源码",
+    "url": "https://arxiv.org/abs/1711.10160",
+    "type": "教材、研究论文与官方源码",
+    "note": "按逐题引用资料自行整理；安全场景示例为自编。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "weaklabel-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "标签函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "弱监督中的标签函数（labeling function）通常做什么？",
+      "answer": "它对一个样本输出启发式标签，或在无法判断时弃权。",
+      "explanation": "规则、外部知识和已有模型都可成为弱监督来源。",
+      "example": "用可疑域名规则为一条记录提供候选标签。",
+      "tags": [
+        "标签函数",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1711.10160"
+    },
+    {
+      "id": "weaklabel-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "弃权与类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的标签矩阵中，-1 通常表示什么？",
+      "answer": "表示标签函数对该样本弃权；类别标签使用 0 到类别数减 1。",
+      "explanation": "弃权不是普通的负类标签。",
+      "example": "规则不适用时返回 -1。",
+      "tags": [
+        "弃权与类别",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/model/label_model.py"
+    },
+    {
+      "id": "weaklabel-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "标签矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 标签矩阵的行和列分别代表什么？",
+      "answer": "行对应数据样本，列对应标签函数，单元格保存该函数对该样本的输出。",
+      "explanation": "不同标签函数可以同时对一个样本投票。",
+      "example": "100 条日志由 5 个规则处理，得到 100×5 矩阵。",
+      "tags": [
+        "标签矩阵",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/apply/pandas.py"
+    },
+    {
+      "id": "weaklabel-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "标签覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 label_coverage 衡量什么？",
+      "answer": "衡量至少被一个标签函数标注的样本占全部样本的比例。",
+      "explanation": "未覆盖样本的所有函数都弃权。",
+      "example": "检查规则组合覆盖了多少条告警。",
+      "tags": [
+        "标签覆盖",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/analysis.py"
+    },
+    {
+      "id": "weaklabel-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "标签重叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 label_overlap 衡量什么？",
+      "answer": "衡量至少有两个标签函数给出非弃权标签的样本比例。",
+      "explanation": "重叠不要求标签一致。",
+      "example": "一条记录同时命中两个规则。",
+      "tags": [
+        "标签重叠",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/analysis.py"
+    },
+    {
+      "id": "weaklabel-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "标签冲突",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 label_conflict 衡量什么？",
+      "answer": "衡量有至少两个非弃权标签互不相同的样本比例。",
+      "explanation": "冲突是重叠的一种情况，不能直接说明哪个来源正确。",
+      "example": "两个规则分别给同一条流量标为正常和恶意。",
+      "tags": [
+        "标签冲突",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/analysis.py"
+    },
+    {
+      "id": "weaklabel-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "覆盖和准确度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标签函数覆盖率高能否证明它的标签准确？",
+      "answer": "不能；覆盖率只表示它对多少样本给出标签，准确性还需可信参考标签或其他验证。",
+      "explanation": "高覆盖的启发式也可能产生系统性误标。",
+      "example": "一个广泛匹配的安全规则可能同时有很多误报。",
+      "tags": [
+        "覆盖和准确度",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/analysis.py"
+    },
+    {
+      "id": "weaklabel-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "单个标签函数覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 lf_coverages 返回数组中的每个值表示什么？",
+      "answer": "表示对应标签函数给出非弃权标签的样本数占全部样本数的比例。",
+      "explanation": "各函数的覆盖样本可以重叠。",
+      "example": "两个规则都标注同一条记录时会重叠。",
+      "tags": [
+        "单个标签函数覆盖",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/analysis.py"
+    },
+    {
+      "id": "weaklabel-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "LF重叠归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 lf_overlaps(normalize_by_coverage=True) 用什么作为单个标签函数的分母？",
+      "answer": "使用该函数自身覆盖的样本数量，计算其输出中与其他函数重叠的比例。",
+      "explanation": "默认值 False 使用全部样本数量作分母。",
+      "example": "检查规则触发的记录中有多少还触发其他规则。",
+      "tags": [
+        "LF重叠归一化",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/analysis.py"
+    },
+    {
+      "id": "weaklabel-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "经验准确率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 lf_empirical_accuracies 如何处理标签函数的弃权？",
+      "answer": "用给定参考标签计算函数在非弃权样本上的经验准确率，弃权样本不计入该函数分母。",
+      "explanation": "参考标签的质量及其样本范围会影响解释。",
+      "example": "用人工复核集比较各规则的命中质量。",
+      "tags": [
+        "经验准确率",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/analysis.py"
+    },
+    {
+      "id": "weaklabel-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "标签模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 的 LabelModel 主要如何组合多个标签函数？",
+      "answer": "它估计各函数给定真实类别时的输出概率，并据此加权组合函数输出。",
+      "explanation": "生成的是模型估计的标签分布，质量依赖假设和数据。",
+      "example": "组合多个弱规则产生训练用概率标签。",
+      "tags": [
+        "标签模型",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/model/label_model.py"
+    },
+    {
+      "id": "weaklabel-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "条件独立假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 LabelModel 对标签函数之间的关系使用什么简化假设？",
+      "answer": "它假设给定真实类别后，各标签函数条件独立。",
+      "explanation": "多个函数复用同一规则或情报源时，这个假设可能不成立。",
+      "example": "两个规则都从同一份黑名单生成标签。",
+      "tags": [
+        "条件独立假设",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/model/label_model.py"
+    },
+    {
+      "id": "weaklabel-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "标签模型先验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 LabelModel.fit 未提供 class_balance 和 Y_dev 时，类别先验如何设置？",
+      "answer": "它默认假设各类别比例相同。",
+      "explanation": "类别明显不平衡时应核对先验是否合适。",
+      "example": "真实异常事件稀少时不能盲目把均匀先验当作事实。",
+      "tags": [
+        "标签模型先验",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/model/label_model.py"
+    },
+    {
+      "id": "weaklabel-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "最少标签函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 LabelModel 要求标签矩阵至少包含多少个标签函数？",
+      "answer": "至少三个；列数不足时会抛出 ValueError。",
+      "explanation": "三个函数也不保证估计结果可靠。",
+      "example": "拟合前检查 L_train 的列数。",
+      "tags": [
+        "最少标签函数",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/model/label_model.py"
+    },
+    {
+      "id": "weaklabel-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "全弃权概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 LabelModel 对所有标签函数都弃权的样本，predict_proba 返回什么？",
+      "answer": "在模型有效且先验非零时，返回所设的类别先验分布。",
+      "explanation": "全弃权时没有来自这些函数的区分性投票。",
+      "example": "均匀二分类先验下返回约 [0.5, 0.5]。",
+      "tags": [
+        "全弃权概率",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/model/label_model.py"
+    },
+    {
+      "id": "weaklabel-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "平局处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Snorkel 0.9.9 的 LabelModel.predict 默认如何处理概率完全相同的类别？",
+      "answer": "默认 tie_break_policy=\"abstain\"，返回 -1。",
+      "explanation": "也可以显式选择其他平局处理策略。",
+      "example": "两个类别概率相等时不强行选择类别。",
+      "tags": [
+        "平局处理",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/snorkel-team/snorkel/blob/v0.9.9/snorkel/labeling/model/label_model.py"
+    },
+    {
+      "id": "weaklabel-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "弱监督与标签函数",
+      "knowledgePoint": "弱标签验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "弱标签模型输出高置信度标签，能否代替独立人工标注的测试集？",
+      "answer": "不能；弱标签和规则可能共享系统偏差，仍应使用独立可信标签评估。",
+      "explanation": "高置信度并不保证标签真实或无偏。",
+      "example": "用未参与规则设计的复核样本评估检测器。",
+      "tags": [
+        "弱标签验证",
+        "弱监督与标签函数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1711.10160"
+    }
+  ]
+}

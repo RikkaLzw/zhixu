@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "sklearn-hashing-vectorizer",
+    "title": "scikit-learn 1.7 文档：哈希文本向量化",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.HashingVectorizer.html",
+    "type": "官方技术文档、固定版本源码或研究论文",
+    "note": "依照逐题所列资料自行整理，示例自编；涉及实现的行为以指定版本为准。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skhash-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HashingVectorizer 文本特征",
+      "knowledgePoint": "哈希映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 HashingVectorizer 如何把文本词项映射到特征列？",
+      "answer": "通过哈希函数将词项映射到固定维度的特征索引。",
+      "explanation": "输出通常是稀疏矩阵。",
+      "example": "不同文档可转换成列数相同的向量。",
+      "tags": [
+        "HashingVectorizer 文本特征",
+        "哈希映射"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.HashingVectorizer.html"
+    },
+    {
+      "id": "skhash-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HashingVectorizer 文本特征",
+      "knowledgePoint": "无状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HashingVectorizer 为什么可用于分批或流式处理？",
+      "answer": "它不需要根据训练文档学习词表，配置相同时各批次可独立变换。",
+      "explanation": "fit 仍可用于校验参数；预处理配置需要保持一致。",
+      "example": "按批处理大量文本而不先构造全量词表。",
+      "tags": [
+        "HashingVectorizer 文本特征",
+        "无状态"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.HashingVectorizer.html"
+    },
+    {
+      "id": "skhash-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HashingVectorizer 文本特征",
+      "knowledgePoint": "碰撞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HashingVectorizer 的哈希碰撞是什么意思？",
+      "answer": "不同词项可能映射到同一个特征列，使它们的贡献混合。",
+      "explanation": "哈希特征维度较小时碰撞风险通常更高。",
+      "example": "两个不同 token 可能共享同一个索引。",
+      "tags": [
+        "HashingVectorizer 文本特征",
+        "碰撞"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.HashingVectorizer.html"
+    },
+    {
+      "id": "skhash-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HashingVectorizer 文本特征",
+      "knowledgePoint": "特征数取舍",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HashingVectorizer 的 n_features 增大通常有什么取舍？",
+      "answer": "可降低碰撞风险，但会增大下游线性模型的系数维度。",
+      "explanation": "单个哈希结果及碰撞情况仍依具体数据而定。",
+      "example": "增加哈希桶数会改变特征矩阵列数。",
+      "tags": [
+        "HashingVectorizer 文本特征",
+        "特征数取舍"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.HashingVectorizer.html"
+    },
+    {
+      "id": "skhash-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HashingVectorizer 文本特征",
+      "knowledgePoint": "无法逆映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 HashingVectorizer 不能像 CountVectorizer 一样直接按列恢复词项名称？",
+      "answer": "它不保存词项到索引的词表，而且不同词项可能碰撞到同一列。",
+      "explanation": "因此按模型权重解释原始词项更困难。",
+      "example": "仅知道某个哈希列编号不能唯一确定原词。",
+      "tags": [
+        "HashingVectorizer 文本特征",
+        "无法逆映射"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.HashingVectorizer.html"
+    },
+    {
+      "id": "skhash-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HashingVectorizer 文本特征",
+      "knowledgePoint": "IDF 状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HashingVectorizer 自身是否自动学习逆文档频率（IDF）权重？",
+      "answer": "不会；学习 IDF 需要文档频率等状态，而该向量化器保持无状态。",
+      "explanation": "如需要 TF-IDF 还应单独选择并拟合相应变换。",
+      "example": "不能把默认 HashingVectorizer 输出直接称为 TF-IDF。",
+      "tags": [
+        "HashingVectorizer 文本特征",
+        "IDF 状态"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.HashingVectorizer.html"
+    },
+    {
+      "id": "skhash-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HashingVectorizer 文本特征",
+      "knowledgePoint": "哈希符号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HashingVectorizer 的 alternate_sign=True 主要有什么作用？",
+      "answer": "为哈希后的特征引入正负符号，以近似保持原始空间中的内积。",
+      "explanation": "输出可能含负值，需要检查下游模型能否接受。",
+      "example": "使用只接受非负特征的模型时应核对这一设置。",
+      "tags": [
+        "HashingVectorizer 文本特征",
+        "哈希符号"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.HashingVectorizer.html"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "pytorch-interpolate-practice",
+    "title": "PyTorch 2.7 文档：interpolate 缩放接口",
+    "url": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.interpolate.html",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptinterp-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 插值接口",
+      "knowledgePoint": "输出尺寸",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 interpolate 中 size 和 scale_factor 分别描述什么？",
+      "answer": "size 指定输出空间尺寸；scale_factor 指定空间维度的缩放倍数。",
+      "explanation": "应结合输入维度与目标尺寸选择参数。",
+      "example": "对二维图像可指定 size=(128,128)。",
+      "tags": [
+        "PyTorch 插值接口",
+        "输出尺寸"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.interpolate.html"
+    },
+    {
+      "id": "ptinterp-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 插值接口",
+      "knowledgePoint": "角点对齐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的双线性插值设置 align_corners=True 会怎样对齐角点？",
+      "answer": "对齐输入与输出角像素的中心，从而保留角点像素值。",
+      "explanation": "该选项适用于 linear、bilinear、bicubic 和 trilinear 等模式。",
+      "example": "对图像插值时，可用角点值理解两种对齐方式的区别。",
+      "tags": [
+        "PyTorch 插值接口",
+        "角点对齐"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.interpolate.html"
+    },
+    {
+      "id": "ptinterp-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 插值接口",
+      "knowledgePoint": "最近邻版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 nearest-exact 与传统 nearest 插值有什么关系？",
+      "answer": "nearest-exact 匹配 PIL 和 scikit-image 的最近邻算法，并修正 nearest 的已知差异。",
+      "explanation": "nearest 保留旧行为以兼容历史结果。",
+      "example": "复现旧预处理结果时需确认使用的具体模式。",
+      "tags": [
+        "PyTorch 插值接口",
+        "最近邻版本"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.interpolate.html"
+    },
+    {
+      "id": "ptinterp-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 插值接口",
+      "knowledgePoint": "双三次超调",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 bicubic 图像插值输出可能超出原像素值范围吗？",
+      "answer": "可能；双三次插值可能产生负值或超过原上界的值。",
+      "explanation": "显示图像前可按任务需要裁剪；不要假定自动限制在范围内。",
+      "example": "对 0～255 图像，可按显示需求裁剪到该范围。",
+      "tags": [
+        "PyTorch 插值接口",
+        "双三次超调"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.interpolate.html"
+    },
+    {
+      "id": "ptinterp-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 插值接口",
+      "knowledgePoint": "抗锯齿支持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 interpolate 文档中，antialias 支持哪些插值模式？",
+      "answer": "支持 bilinear 和 bicubic。",
+      "explanation": "文档描述 antialias=True 且 align_corners=False 的下采样结果可与 Pillow 对应。",
+      "example": "缩小二维图像时可选择双线性并开启 antialias。",
+      "tags": [
+        "PyTorch 插值接口",
+        "抗锯齿支持"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.interpolate.html"
+    }
+  ]
+}

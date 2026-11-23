@@ -1,0 +1,118 @@
+{
+  "source": {
+    "id": "company-security-web-fundamentals",
+    "title": "海康威视、顺丰公开面经：Web 安全基础",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#",
+    "type": "公开面经合集",
+    "note": "公司、岗位及经历为分享者自述；主题启发的题目为延伸练习，答案另据 OWASP 核验。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "webinterview-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Web 漏洞机制",
+      "knowledgePoint": "XSS核心机制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "跨站脚本（XSS）的核心问题是什么？",
+      "answer": "不可信内容被浏览器当作可执行脚本或代码解析，从而在受影响站点的上下文中运行。",
+      "explanation": "漏洞可能发生在服务端输出或浏览器端处理数据的过程中。",
+      "example": "页面把未经适当处理的用户内容插入可执行上下文。",
+      "tags": [
+        "XSS核心机制",
+        "Web安全",
+        "公开面经",
+        "海康威视"
+      ],
+      "evidence": "application",
+      "referenceId": "company-hikvision",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x70-%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86",
+      "referenceTitle": "海康威视公开面经（合集收录，岗位未注明；经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "owasp-xss-mechanism",
+          "title": "OWASP：Cross Site Scripting",
+          "url": "https://owasp.org/www-community/attacks/xss/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "webinterview-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Web 漏洞机制",
+      "knowledgePoint": "XSS与黑名单",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么仅靠黑名单过滤不能可靠防止 XSS？",
+      "answer": "危险内容可能有多种编码和语法形式，黑名单难以穷尽；应使用与输出上下文匹配的安全处理。",
+      "explanation": "接受富文本时还需要合适的 HTML 清理策略。",
+      "example": "仅删除少数字符无法覆盖不同浏览器解析形式。",
+      "tags": [
+        "XSS与黑名单",
+        "Web安全",
+        "公开面经",
+        "海康威视"
+      ],
+      "evidence": "application",
+      "referenceId": "company-hikvision",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x70-%E6%B5%B7%E5%BA%B7%E5%A8%81%E8%A7%86",
+      "referenceTitle": "海康威视公开面经（合集收录，岗位未注明；经历为分享者自述）；输入过滤主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "owasp-validation-denylist",
+          "title": "OWASP：Input Validation",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html#allowlist-vs-denylist",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "webinterview-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Web 漏洞机制",
+      "knowledgePoint": "XSS与CSRF",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XSS 和 CSRF 在主要攻击机制上有什么区别？",
+      "answer": "XSS 利用浏览器在受影响站点上下文中执行攻击者脚本；CSRF 诱使用户浏览器向目标站点发出非预期请求。",
+      "explanation": "常见 CSRF 利用浏览器自动附带凭据；具体场景和防护方式有所不同。",
+      "example": "一个使页面执行脚本，另一个诱使已登录用户发起状态变更请求。",
+      "tags": [
+        "XSS与CSRF",
+        "Web安全",
+        "公开面经",
+        "顺丰"
+      ],
+      "evidence": "application",
+      "referenceId": "company-sf",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x71-%E9%A1%BA%E4%B8%B0%E7%A7%91%E6%8A%80",
+      "referenceTitle": "顺丰科技技术一面（合集收录，岗位未注明；经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "owasp-xss-mechanism",
+          "title": "OWASP：Cross Site Scripting",
+          "url": "https://owasp.org/www-community/attacks/xss/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "owasp-csrf-mechanism",
+          "title": "OWASP：Cross Site Request Forgery",
+          "url": "https://owasp.org/www-community/attacks/csrf",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

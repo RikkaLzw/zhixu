@@ -1,0 +1,525 @@
+{
+  "source": {
+    "id": "python-asyncio-practice",
+    "title": "Python 3.13：异步任务、同步与队列",
+    "url": "https://docs.python.org/3.13/library/asyncio-task.html",
+    "type": "官方文档与固定版本源码",
+    "note": "依据逐题所列官方文档、源码或论文自行整理中文问答；例子为自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyasync-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "事件循环入口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一线程已有运行中的事件循环时，能否再次调用 asyncio.run()？",
+      "answer": "不能；asyncio.run() 会引发 RuntimeError，应在已有异步环境中使用相应的 await 等机制。",
+      "explanation": "asyncio.run 管理自己的事件循环，适合作为普通程序的异步入口。",
+      "example": "在已运行事件循环的交互环境中直接 await 协程。",
+      "tags": [
+        "事件循环入口",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-runner.html"
+    },
+    {
+      "id": "pyasync-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "任务并发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 中直接 await 一个协程与先用 asyncio.create_task 调度它有什么区别？",
+      "answer": "直接 await 会等待该协程完成；create_task 将协程调度为独立任务，调用方随后可以执行其他工作再等待它。",
+      "explanation": "是否真正并发推进仍取决于任务是否让出事件循环。",
+      "example": "先调度网络请求任务，再处理另一段异步工作。",
+      "tags": [
+        "任务并发",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "后台任务引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么使用 asyncio.create_task 启动后台任务时应保留任务的强引用？",
+      "answer": "事件循环只保存任务的弱引用；没有其他强引用的任务可能在完成前被垃圾回收。",
+      "explanation": "可将后台任务放入集合，并在任务结束时从集合移除。",
+      "example": "把创建的任务加入 background_tasks 集合。",
+      "tags": [
+        "后台任务引用",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "任务上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 asyncio.create_task 未指定 context 时，新任务使用什么上下文变量上下文？",
+      "answer": "默认使用创建任务时当前 contextvars 上下文的副本。",
+      "explanation": "之后父任务修改上下文变量，不会直接改写已创建任务的上下文副本。",
+      "example": "创建任务前设置请求 ID，任务继承创建时的值。",
+      "tags": [
+        "任务上下文",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "主动让出执行权",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "await asyncio.sleep(0) 的常见用途是什么？",
+      "answer": "它挂起当前任务并给事件循环机会运行其他任务。",
+      "explanation": "这不是把 CPU 密集计算自动移到其他线程。",
+      "example": "长循环在适当位置让出执行权以便其他协程推进。",
+      "tags": [
+        "主动让出执行权",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "聚合顺序与完成顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.gather 与 asyncio.as_completed 在取得成功结果的顺序上有何区别？",
+      "answer": "gather 的结果列表按输入可等待对象的顺序排列；as_completed 按完成顺序提供可获取结果的对象。",
+      "explanation": "任务先完成不代表它在 gather 返回列表中排得更靠前。",
+      "example": "较慢任务先传入 gather，其结果仍在列表前面。",
+      "tags": [
+        "聚合顺序与完成顺序",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "聚合异常返回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.gather(..., return_exceptions=True) 如何处理子任务异常？",
+      "answer": "它把异常作为结果列表中的对应项返回，而不是因该异常立即向等待者抛出。",
+      "explanation": "调用方仍需检查结果中的异常对象。",
+      "example": "两个请求中一个失败时，对应位置可能是异常实例。",
+      "tags": [
+        "聚合异常返回",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "任务组异常汇总",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 TaskGroup 等待任务结束后，普通非取消异常通常怎样向外报告？",
+      "answer": "它们通常被组合成 ExceptionGroup 或 BaseExceptionGroup 后抛出。",
+      "explanation": "KeyboardInterrupt 和 SystemExit 有特殊处理，不按普通异常组合。",
+      "example": "用 except* 处理任务组产生的相应异常类型。",
+      "tags": [
+        "任务组异常汇总",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "取消异常继承",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 中 except Exception 会自动捕获 asyncio.CancelledError 吗？",
+      "answer": "不会；asyncio.CancelledError 直接继承 BaseException。",
+      "explanation": "取消处理通常应在清理资源后继续传播。",
+      "example": "普通 except Exception 块不会默认吞掉任务取消。",
+      "tags": [
+        "取消异常继承",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "取消异常传播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么异步协程通常不应在清理后直接吞掉 CancelledError？",
+      "answer": "TaskGroup 和 asyncio.timeout 等机制内部依赖取消，吞掉取消可能使它们的行为异常。",
+      "explanation": "确需抑制取消时还应理解任务取消状态的处理。",
+      "example": "使用 finally 关闭资源后继续传播取消。",
+      "tags": [
+        "取消异常传播",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "取消屏蔽",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "等待 asyncio.shield(task) 的外层协程被取消时，受保护任务与外层等待分别怎样？",
+      "answer": "外层 await 仍会抛出 CancelledError；该外层取消不会自动取消受保护任务。",
+      "explanation": "任务若被其他方式取消，shield 不会阻止这种取消。",
+      "example": "外层被取消后，持有引用的写入任务仍可能继续。",
+      "tags": [
+        "取消屏蔽",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "wait_for 超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 asyncio.wait_for 的实际等待时间可能超过设置的超时？",
+      "answer": "超时后它会请求取消被等待对象，并等待取消过程完成；清理可能额外耗时。",
+      "explanation": "使用 shield 可以避免 wait_for 的超时取消受保护任务。",
+      "example": "子任务在取消时执行异步清理，返回因而延后。",
+      "tags": [
+        "wait_for 超时",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "超时上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.timeout 到期后，TimeoutError 通常应在哪里捕获？",
+      "answer": "在 async with 超时上下文的外部捕获；上下文管理器会把内部取消转换成 TimeoutError。",
+      "explanation": "内部执行期间使用的是任务取消机制。",
+      "example": "用 try 包住整个 async with asyncio.timeout(...)。",
+      "tags": [
+        "超时上下文",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "等待超时差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.wait 的 timeout 到期后，未完成任务会自动取消吗？",
+      "answer": "不会；它返回已完成和未完成的两个集合，调用方可决定如何处理 pending 任务。",
+      "explanation": "它与通常会请求取消等待对象的 wait_for 不同。",
+      "example": "超时后显式取消不再需要的 pending 任务。",
+      "tags": [
+        "等待超时差异",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "wait 参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 asyncio.wait 可以直接接收未调度的协程对象吗？",
+      "answer": "不可以；应先将协程调度为 Task，再传入任务或 Future。",
+      "explanation": "不能把 asyncio.wait 与可自动调度协程的 gather 混为一谈。",
+      "example": "先用 create_task 创建任务，再传给 wait。",
+      "tags": [
+        "wait 参数",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "完成迭代接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 as_completed 异步迭代与普通迭代返回的对象有什么区别？",
+      "answer": "对原先传入的 Task 或 Future，异步迭代会产出这些已完成对象；普通迭代产出新的协程，用于获取下一个完成结果。",
+      "explanation": "异步迭代便于将已完成任务与原任务对应起来。",
+      "example": "async for 中通过对象身份区分先完成的连接任务。",
+      "tags": [
+        "完成迭代接口",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "线程执行阻塞函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.to_thread 的主要用途是什么，受 GIL 的 CPython 中有何限制？",
+      "answer": "它把同步函数放到线程中运行，避免阻塞事件循环；通常更适合 I/O 密集工作，纯 Python CPU 密集工作不一定获得多核加速。",
+      "explanation": "会释放 GIL 的扩展或无 GIL 实现可能不同。",
+      "example": "将阻塞文件操作交给 to_thread。",
+      "tags": [
+        "线程执行阻塞函数",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html"
+    },
+    {
+      "id": "pyasync-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "跨线程调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "从其他线程向运行中的事件循环提交协程，应使用什么接口？",
+      "answer": "使用 asyncio.run_coroutine_threadsafe(coro, loop)，它返回可在提交线程访问结果的 concurrent.futures.Future。",
+      "explanation": "跨线程提交普通回调可使用 loop.call_soon_threadsafe。",
+      "example": "工作线程向主线程事件循环提交协程。",
+      "tags": [
+        "跨线程调度",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-dev.html"
+    },
+    {
+      "id": "pyasync-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "有限队列背压",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.Queue 设置正数 maxsize 后，队列满时 await put 会怎样？",
+      "answer": "它会等待，直到有空位可加入新项；默认 maxsize=0 表示不限制队列大小。",
+      "explanation": "限制队列容量可以让生产者在消费者跟不上时等待。",
+      "example": "队列满时生产协程暂停，消费一项后继续。",
+      "tags": [
+        "有限队列背压",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-queue.html"
+    },
+    {
+      "id": "pyasync-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "队列工作完成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.Queue 的 join 为什么不能只依靠消费者调用 get 来结束等待？",
+      "answer": "join 等待未完成项计数归零；消费者处理完每项后还需调用 task_done。",
+      "explanation": "仅取出元素不会把相应工作标记为完成。",
+      "example": "消费者处理完一条记录后调用 task_done。",
+      "tags": [
+        "队列工作完成",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-queue.html"
+    },
+    {
+      "id": "pyasync-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "非阻塞队列读取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.Queue 为空时调用 get_nowait 会怎样？",
+      "answer": "它会立即抛出 asyncio.QueueEmpty，不会像 await get 那样等待新项。",
+      "explanation": "调用方需要处理空队列情况。",
+      "example": "优先尝试读取，没有元素则执行其他逻辑。",
+      "tags": [
+        "非阻塞队列读取",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-queue.html"
+    },
+    {
+      "id": "pyasync-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "队列关闭方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 中 asyncio.Queue.shutdown 的默认模式与 immediate=True 有什么区别？",
+      "answer": "默认模式停止新增但允许取出已有项；immediate=True 会清空队列，并可能在未处理完工作时解除 join 等待。",
+      "explanation": "立即关闭会破坏通常的“join 返回代表工作均已处理”假设。",
+      "example": "停止服务时按需要选择正常排空或立即终止。",
+      "tags": [
+        "队列关闭方式",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-queue.html"
+    },
+    {
+      "id": "pyasync-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "协程信号量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.Semaphore 如何限制一组协程对资源的并发访问？",
+      "answer": "每次获取消耗一个许可，许可耗尽时后续获取等待，释放时归还许可。",
+      "explanation": "用 async with 可在退出时释放许可。",
+      "example": "最多允许 5 个协程同时访问某服务。",
+      "tags": [
+        "协程信号量",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-sync.html"
+    },
+    {
+      "id": "pyasync-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "有界信号量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.BoundedSemaphore 与 Semaphore 在过量释放时有什么区别？",
+      "answer": "BoundedSemaphore 在释放使计数超过初始值时抛出 ValueError；普通 Semaphore 允许过量释放。",
+      "explanation": "有界版本有助于发现许可计数不平衡。",
+      "example": "初始值为 1，未获取就额外释放时有界版本报错。",
+      "tags": [
+        "有界信号量",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-sync.html"
+    },
+    {
+      "id": "pyasync-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "异步事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio.Event 的 set 与 clear 分别如何影响等待任务？",
+      "answer": "set 设置标志并唤醒当前等待者；clear 清除标志，使后续 wait 在再次 set 前等待。",
+      "explanation": "标志保持设置状态，直到显式清除。",
+      "example": "初始化完成后 set，后续任务可直接通过 wait。",
+      "tags": [
+        "异步事件",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-sync.html"
+    },
+    {
+      "id": "pyasync-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "条件等待",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 asyncio.Condition.wait 返回后仍应检查共享状态？",
+      "answer": "等待可能无实际通知地返回；应在持锁条件下重新检查谓词，必要时继续等待。",
+      "explanation": "wait 会先释放锁，醒来后重新获取锁。",
+      "example": "使用 wait_for(predicate) 反复检查队列状态。",
+      "tags": [
+        "条件等待",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-sync.html"
+    },
+    {
+      "id": "pyasync-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 异步编程",
+      "knowledgePoint": "协程同步与线程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "asyncio 的 Lock 和 Queue 能直接作为跨线程同步工具吗？",
+      "answer": "不能；这些 asyncio 对象不是线程安全的，应使用适当的线程同步或线程安全调度接口。",
+      "explanation": "协程间使用与跨线程使用是不同的并发场景。",
+      "example": "从另一线程用 call_soon_threadsafe 调度回调。",
+      "tags": [
+        "协程同步与线程",
+        "Python 异步编程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-sync.html"
+    }
+  ]
+}

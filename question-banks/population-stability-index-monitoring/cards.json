@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "population-stability-index-monitoring",
+    "title": "MathWorks 文档：群体稳定性指数",
+    "url": "https://www.mathworks.com/help/risk/risk.validation.populationstabilityindex.html",
+    "type": "官方统计文档",
+    "note": "逐题依据所列资料自行整理；例子为自编，版本与适用条件见题目。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "psidrift-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PSI 分布监测",
+      "knowledgePoint": "比较对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "群体稳定性指数 PSI 通常比较哪两类分布信息？",
+      "answer": "比较参考样本和当前样本在对应分组中的频率分布。",
+      "explanation": "可用于观察模型输入或评分分布的变化。",
+      "example": "比较历史和本月告警分数在各区间的占比。",
+      "tags": [
+        "PSI 分布监测",
+        "比较对象"
+      ],
+      "evidence": "source",
+      "reference": "https://www.mathworks.com/help/risk/risk.validation.populationstabilityindex.html"
+    },
+    {
+      "id": "psidrift-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PSI 分布监测",
+      "knowledgePoint": "零值",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "相同分组且所有组占比均为正时，两个分布完全相同的 PSI 是多少？",
+      "answer": "为 0。",
+      "explanation": "每组占比差和对数比都为 0。",
+      "example": "两个窗口各组占比分别都是 50% 和 50%。",
+      "tags": [
+        "PSI 分布监测",
+        "零值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.mathworks.com/help/risk/risk.validation.populationstabilityindex.html"
+    },
+    {
+      "id": "psidrift-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PSI 分布监测",
+      "knowledgePoint": "对称性",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "对占比均为正且分组一致的两个分布，交换参考分布和当前分布会改变标准 PSI 值吗？",
+      "answer": "不会；占比差和对数比同时变号，乘积不变。",
+      "explanation": "这个结论针对常用 PSI 公式及相同分组。",
+      "example": "比较 A 到 B 与 B 到 A 的相同分箱结果。",
+      "tags": [
+        "PSI 分布监测",
+        "对称性"
+      ],
+      "evidence": "source",
+      "reference": "https://www.mathworks.com/help/risk/risk.validation.populationstabilityindex.html"
+    },
+    {
+      "id": "psidrift-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PSI 分布监测",
+      "knowledgePoint": "分组边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较两个窗口的 PSI 时，为什么要使用可对应的分组边界？",
+      "answer": "因为每一项比较必须表示同一个区间或类别在两个窗口中的占比。",
+      "explanation": "若每个窗口各自重新分箱，位置相同的组可能代表不同范围。",
+      "example": "先按参考窗口定义分数区间，再统计两个窗口。",
+      "tags": [
+        "PSI 分布监测",
+        "分组边界"
+      ],
+      "evidence": "application",
+      "reference": "https://www.mathworks.com/help/risk/risk.validation.populationstabilityindex.html"
+    },
+    {
+      "id": "psidrift-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PSI 分布监测",
+      "knowledgePoint": "零频率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 PSI 公式中某组在一个窗口占比为 0 时，计算需要注意什么？",
+      "answer": "对数比可能无定义或趋于无穷，需要明确零频处理方式。",
+      "explanation": "平滑或合并分组会改变结果，应在报告中记录具体做法。",
+      "example": "当前窗口出现参考窗口没有的类别。",
+      "tags": [
+        "PSI 分布监测",
+        "零频率"
+      ],
+      "evidence": "application",
+      "reference": "https://www.mathworks.com/help/risk/risk.validation.populationstabilityindex.html"
+    },
+    {
+      "id": "psidrift-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PSI 分布监测",
+      "knowledgePoint": "组内变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个窗口在每个分箱中的占比相同，能否断定箱内原始数值分布也相同？",
+      "answer": "不能；PSI 基于分组占比，可能看不到同一箱内的变化。",
+      "explanation": "分箱方式会影响检测到的差异。",
+      "example": "两个样本都在同一区间，但分别集中于区间两端。",
+      "tags": [
+        "PSI 分布监测",
+        "组内变化"
+      ],
+      "evidence": "application",
+      "reference": "https://www.mathworks.com/help/risk/risk.validation.populationstabilityindex.html"
+    },
+    {
+      "id": "psidrift-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PSI 分布监测",
+      "knowledgePoint": "阈值适用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PSI 超过经验阈值是否自动等同于统计显著性检验结果？",
+      "answer": "不等同；PSI 是分布差异指标，经验阈值本身不提供 p 值或显著性控制。",
+      "explanation": "阈值解释依赖分箱、样本量和应用场景，不能替代统计检验。",
+      "example": "监控报告应把 PSI 信号和统计推断结论分开表述。",
+      "tags": [
+        "PSI 分布监测",
+        "阈值适用"
+      ],
+      "evidence": "application",
+      "reference": "https://www.mathworks.com/help/risk/risk.validation.populationstabilityindex.html"
+    }
+  ]
+}

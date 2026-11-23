@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "debian-apt-dpkg-practice",
+    "title": "Ubuntu 26.04 手册：APT 与 dpkg 软件包管理",
+    "url": "https://manpages.ubuntu.com/manpages/resolute/en/man8/apt-get.8.html",
+    "type": "官方文档或教材",
+    "note": "Ubuntu APT 3.2 与 dpkg 1.23；基于软件包管理手册自行整理，示例自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "aptpkg-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "索引与升级",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Ubuntu 26.04 的 apt-get update 与 apt-get upgrade 分别做什么？",
+      "answer": "update 从配置的软件源同步包索引；upgrade 尝试升级已安装的包。",
+      "explanation": "更新索引本身不等于安装新版软件。",
+      "example": "先更新索引再决定是否升级。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "索引与升级"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man8/apt-get.8.html"
+    },
+    {
+      "id": "aptpkg-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "升级与依赖",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Ubuntu APT 3.2 的 apt-get upgrade 与 dist-upgrade 对包变动有什么区别？",
+      "answer": "默认 upgrade 不删除已安装的包，也不安装新包；dist-upgrade 可调整依赖，必要时可能移除包。",
+      "explanation": "这里比较不带额外修改选项的 apt-get 子命令。",
+      "example": "依赖变化使普通 upgrade 保留旧版本时，dist-upgrade 可能采取不同方案。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "升级与依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man8/apt-get.8.html"
+    },
+    {
+      "id": "aptpkg-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "模拟执行",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Ubuntu 的 apt-get -s install 包名会实际安装软件包吗？",
+      "answer": "不会；-s 模拟操作并输出基于当前状态的处理计划，不实际改变系统。",
+      "explanation": "模拟时没有通常的锁定，状态变化或权限限制可能影响结果。",
+      "example": "先用 apt-get -s install bash 观察处理计划。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "模拟执行"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man8/apt-get.8.html"
+    },
+    {
+      "id": "aptpkg-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "删除与清除",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Ubuntu 的 apt-get remove 与 apt-get purge 对软件包配置文件的处理有什么区别？",
+      "answer": "remove 删除包但通常保留包管理器记录的配置文件；purge 还清除这些配置文件。",
+      "explanation": "这不保证清除程序自行写入的所有用户数据。",
+      "example": "使用 purge 清除已卸载包留下的包配置。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "删除与清除"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man8/apt-get.8.html"
+    },
+    {
+      "id": "aptpkg-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "自动依赖清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ubuntu 的 apt-get autoremove 主要针对什么软件包？",
+      "answer": "它针对为满足依赖而自动安装、如今不再需要的包。",
+      "explanation": "是否可以清理由包管理器根据依赖和安装标记判断。",
+      "example": "卸载应用后，可先模拟查看哪些依赖被列入清理计划。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "自动依赖清理"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man8/apt-get.8.html"
+    },
+    {
+      "id": "aptpkg-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "候选版本查询",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Ubuntu 的 apt-cache policy 包名常用于查看什么？",
+      "answer": "它显示该包的已安装版本、候选版本及版本来源和优先级等信息。",
+      "explanation": "这些信息有助于排查为何某个版本被选中。",
+      "example": "用 apt-cache policy bash 查看版本选择。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "候选版本查询"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man8/apt-cache.8.html"
+    },
+    {
+      "id": "aptpkg-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "按名称搜索",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Ubuntu 的 apt-cache search 关键词默认从哪里查找匹配项？",
+      "answer": "它在可用包列表的名称和描述中搜索给定正则表达式。",
+      "explanation": "搜索使用本地的包元数据，可能因索引过旧而不完整。",
+      "example": "apt-cache search python 可列出匹配的软件包。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "按名称搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man8/apt-cache.8.html"
+    },
+    {
+      "id": "aptpkg-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "文件归属查询",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Ubuntu 的 dpkg -S 路径片段常用于查询什么？",
+      "answer": "它从 dpkg 数据库中查询与该路径模式匹配的包文件归属。",
+      "explanation": "运行时生成的文件不一定出现在包数据库中。",
+      "example": "dpkg -S /usr/bin/ps 可查对应的软件包。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "文件归属查询"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/dpkg.1.html"
+    },
+    {
+      "id": "aptpkg-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "软件包文件清单",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Ubuntu 的 dpkg -L 包名常用于查看什么？",
+      "answer": "它列出该软件包在 dpkg 数据库中登记的文件。",
+      "explanation": "文件清单与进程运行时打开的文件清单不是一回事。",
+      "example": "dpkg -L procps 显示包登记的文件。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "软件包文件清单"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/dpkg.1.html"
+    },
+    {
+      "id": "aptpkg-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "本地包安装",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ubuntu 的 dpkg -i 本地包.deb 会自动从软件仓库下载缺失依赖吗？",
+      "answer": "不会；dpkg 处理指定的包文件，缺失依赖时包可能无法完成配置。",
+      "explanation": "APT 等上层工具可在软件源可用时帮助解析和获取依赖。",
+      "example": "安装本地包前先检查其依赖。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "本地包安装"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/dpkg.1.html"
+    },
+    {
+      "id": "aptpkg-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "APT 与 dpkg 软件包管理",
+      "knowledgePoint": "指定包版本",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Ubuntu 的 apt-get install 包名=版本号中等号后的内容有什么作用？",
+      "answer": "它请求安装该软件包的指定版本。",
+      "explanation": "该版本需能从配置的软件源等可用来源获得，并满足依赖条件。",
+      "example": "用包名=版本号选择要安装的版本。",
+      "tags": [
+        "APT 与 dpkg 软件包管理",
+        "指定包版本"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man8/apt-get.8.html"
+    }
+  ]
+}

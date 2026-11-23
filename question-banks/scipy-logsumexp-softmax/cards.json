@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "scipy-logsumexp-softmax",
+    "title": "SciPy 1.15.3 文档：稳定的指数与归一化",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.special.logsumexp.html",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "splog-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LogSumExp 数值计算",
+      "knowledgePoint": "计算目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scipy.special.logsumexp(a) 计算什么？",
+      "answer": "计算 log(sum(exp(a)))，并采用更稳定的方式避免直接指数求和的数值问题。",
+      "explanation": "默认汇总所有输入元素；轴选择可改变归约范围。",
+      "example": "对很大的对数分数求对数和。",
+      "tags": [
+        "LogSumExp 数值计算",
+        "计算目标"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.special.logsumexp.html"
+    },
+    {
+      "id": "splog-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LogSumExp 数值计算",
+      "knowledgePoint": "归约轴",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 logsumexp 指定 axis=1、keepdims=True 时，对结果形状有什么影响？",
+      "answer": "沿第 1 轴归约，并保留长度为 1 的该维度。",
+      "explanation": "保留维度便于结果与原数组广播。",
+      "example": "形状 (3, 4) 的输入得到形状 (3, 1)。",
+      "tags": [
+        "LogSumExp 数值计算",
+        "归约轴"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.special.logsumexp.html"
+    },
+    {
+      "id": "splog-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LogSumExp 数值计算",
+      "knowledgePoint": "加权指数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy logsumexp 的 b 参数如何影响被求和的项？",
+      "answer": "计算加权指数和，即 sum(b * exp(a)) 的对数。",
+      "explanation": "b 必须能与 a 广播；它可以取负值以表示减法。",
+      "example": "给某些项赋零权重以忽略它们。",
+      "tags": [
+        "LogSumExp 数值计算",
+        "加权指数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.special.logsumexp.html"
+    },
+    {
+      "id": "splog-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LogSumExp 数值计算",
+      "knowledgePoint": "符号返回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 的 logsumexp 对实数加权和使用 return_sign=True 时，负数和零分别如何表示？",
+      "answer": "负数返回绝对值的对数及负号；和为零返回负无穷及符号 0。",
+      "explanation": "默认 return_sign=False 时，负结果返回 NaN。",
+      "example": "以对数形式计算两个正数之差并保留符号。",
+      "tags": [
+        "LogSumExp 数值计算",
+        "符号返回"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.special.logsumexp.html"
+    },
+    {
+      "id": "splog-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LogSumExp 数值计算",
+      "knowledgePoint": "softmax轴",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 softmax 默认会对二维数组逐行归一化吗？",
+      "answer": "不会；默认 axis=None，对所有元素一起归一化。",
+      "explanation": "按行归一化应显式指定 axis=1。",
+      "example": "每个样本占一行时按类别维求 softmax。",
+      "tags": [
+        "LogSumExp 数值计算",
+        "softmax轴"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.special.softmax.html"
+    },
+    {
+      "id": "splog-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LogSumExp 数值计算",
+      "knowledgePoint": "对数softmax",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 scipy.special.log_softmax 在极端输入下通常比先 softmax 再取对数更稳定？",
+      "answer": "它直接稳定计算对数概率，可避免 softmax 中很小的概率先下溢为零。",
+      "explanation": "输出仍由指定的归一化轴决定。",
+      "example": "处理分数 [1000, 1] 时保留有限的低类别对数概率。",
+      "tags": [
+        "LogSumExp 数值计算",
+        "对数softmax"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.special.log_softmax.html"
+    }
+  ]
+}

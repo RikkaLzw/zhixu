@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "garbage-collection-foundations",
+    "title": "Java 21 与 Python 3.14 文档：垃圾回收基础",
+    "url": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html",
+    "type": "教材、标准与官方文档",
+    "note": "依据逐题引用的教材、标准或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "gcb-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "垃圾回收基础",
+      "knowledgePoint": "自动内存管理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "垃圾回收器在自动内存管理中主要做什么？",
+      "answer": "识别应用不再使用的受管理内存，并回收供后续分配复用。",
+      "explanation": "不同运行时和收集器采用的策略可能不同。",
+      "example": "回收不再可达的对象所占堆空间。",
+      "tags": [
+        "垃圾回收基础",
+        "自动内存管理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html"
+    },
+    {
+      "id": "gcb-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "垃圾回收基础",
+      "knowledgePoint": "引用计数循环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么仅靠引用计数可能无法回收互相引用但外部已不可达的对象？",
+      "answer": "循环中的对象彼此仍有引用，计数不一定归零。",
+      "explanation": "CPython 还使用循环检测机制处理不可达的引用环。",
+      "example": "两个对象互相引用后丢失外部引用。",
+      "tags": [
+        "垃圾回收基础",
+        "引用计数循环"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/faq/design.html#how-does-python-manage-memory"
+    },
+    {
+      "id": "gcb-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "垃圾回收基础",
+      "knowledgePoint": "强可达",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java 的强可达对象是什么意思？",
+      "answer": "线程无需经过引用对象即可到达该对象。",
+      "explanation": "强可达与弱可达有不同的回收处理。",
+      "example": "仍被可运行线程使用的普通对象。",
+      "tags": [
+        "垃圾回收基础",
+        "强可达"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ref/package-summary.html#reachability"
+    },
+    {
+      "id": "gcb-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "垃圾回收基础",
+      "knowledgePoint": "弱引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Java 的 WeakReference 对被引用对象的回收有什么影响？",
+      "answer": "弱引用本身不会阻止其引用对象被垃圾回收。",
+      "explanation": "是否清除和回收还取决于其他可达路径及运行时处理。",
+      "example": "对象仅剩弱引用后可成为回收候选。",
+      "tags": [
+        "垃圾回收基础",
+        "弱引用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ref/WeakReference.html"
+    },
+    {
+      "id": "gcb-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "垃圾回收基础",
+      "knowledgePoint": "回收时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调用 Java 的 System.gc() 是否保证指定对象立即被回收？",
+      "answer": "不保证；它只是建议虚拟机尽力回收，规范不保证回收数量或完成时间。",
+      "explanation": "程序不能依赖该调用立即释放资源。",
+      "example": "调用后仍需正确关闭文件或网络连接。",
+      "tags": [
+        "垃圾回收基础",
+        "回收时间"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/System.html#gc()"
+    },
+    {
+      "id": "gcb-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "垃圾回收基础",
+      "knowledgePoint": "内存泄漏",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有垃圾回收的程序为什么仍可能出现内存泄漏？",
+      "answer": "如果程序长期保留不再需要对象的强引用，回收器可能仍把它们视为可达。",
+      "explanation": "缓存和集合的生命周期应结合使用情况管理。",
+      "example": "全局集合持续保存不再使用的对象。",
+      "tags": [
+        "垃圾回收基础",
+        "内存泄漏"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ref/package-summary.html#reachability"
+    },
+    {
+      "id": "gcb-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "垃圾回收基础",
+      "knowledgePoint": "分代收集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分代垃圾回收为什么会把工作集中在部分堆区域？",
+      "answer": "它利用对象年龄等信息，优先检查较可能包含可回收对象的区域。",
+      "explanation": "具体分代、晋升和收集行为取决于收集器。",
+      "example": "某些收集器频繁处理年轻对象较多的区域。",
+      "tags": [
+        "垃圾回收基础",
+        "分代收集"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html"
+    },
+    {
+      "id": "gcb-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "垃圾回收基础",
+      "knowledgePoint": "整理压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "垃圾回收中的对象压缩（compaction）常用于改善什么？",
+      "answer": "移动存活对象以形成更大的连续空闲区域。",
+      "explanation": "是否移动对象及何时执行取决于具体收集器。",
+      "example": "把分散存活对象整理后形成连续空闲空间。",
+      "tags": [
+        "垃圾回收基础",
+        "整理压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html"
+    }
+  ]
+}

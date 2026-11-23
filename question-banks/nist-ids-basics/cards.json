@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "nist-ids-basics",
+    "title": "NIST SP 800-94 入侵检测术语与方法",
+    "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf",
+    "type": "技术文档",
+    "note": "根据逐题标注的文档自行整理；示例为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "idsreview-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "入侵检测基础",
+      "knowledgePoint": "异常不等于恶意",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "异常流量一定是恶意流量吗？",
+      "answer": "不一定；新业务、配置变化和正常的集中访问也可能偏离历史行为。",
+      "explanation": "异常检测比较行为与常态，正常变化也可能造成显著偏差。",
+      "example": "业务切换造成流量突增，需要结合变更记录调查。",
+      "tags": [
+        "异常不等于恶意",
+        "入侵检测基础"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+    },
+    {
+      "id": "idsreview-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "入侵检测基础",
+      "knowledgePoint": "误报定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全告警中的误报是什么？",
+      "answer": "误报是正常行为被系统判为目标威胁。误报过多会消耗分析人员时间并造成告警疲劳。",
+      "explanation": "NIST 将正常活动被错误识别为恶意活动称为 false positive。",
+      "example": "合法管理员操作触发了攻击告警。",
+      "tags": [
+        "误报定义",
+        "入侵检测基础"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+    },
+    {
+      "id": "idsreview-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "入侵检测基础",
+      "knowledgePoint": "漏报定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全告警中的漏报是什么？",
+      "answer": "漏报是真实威胁未被系统识别。应分析漏报所属攻击类型、数据缺失和检测盲区。",
+      "explanation": "NIST 将未能识别恶意活动称为 false negative。",
+      "example": "攻击发生但检测系统没有发出对应告警。",
+      "tags": [
+        "漏报定义",
+        "入侵检测基础"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+    },
+    {
+      "id": "idsreview-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "入侵检测基础",
+      "knowledgePoint": "签名与异常检测",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NIST SP 800-94 中签名检测与异常检测的主要依据有什么区别？",
+      "answer": "签名检测比较已定义的威胁模式；异常检测比较观测行为与正常活动画像。",
+      "explanation": "两种方法各有盲区，可以结合使用。",
+      "example": "已知恶意字符串匹配与异常连接频率分别采用不同依据。",
+      "tags": [
+        "签名与异常检测",
+        "入侵检测基础"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+    },
+    {
+      "id": "idsreview-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "入侵检测基础",
+      "knowledgePoint": "静态与动态画像",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NIST SP 800-94 中静态异常画像与动态异常画像的更新方式有什么区别？",
+      "answer": "静态画像通常需显式重新生成；动态画像会根据后续观察进行调整。",
+      "explanation": "动态更新仍需防止恶意行为污染基线。",
+      "example": "业务迁移后重新生成静态正常行为画像。",
+      "tags": [
+        "静态与动态画像",
+        "入侵检测基础"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+    }
+  ]
+}

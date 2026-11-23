@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "python-hashlib-hmac",
+    "title": "Python 3.14 文档：摘要与 HMAC",
+    "url": "https://docs.python.org/3.14/library/hashlib.html",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyhash-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 摘要与 HMAC",
+      "knowledgePoint": "字节输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python hashlib.sha256 接收文本字符串时应先做什么？",
+      "answer": "先按明确的字符编码将字符串编码为字节，再输入哈希函数。",
+      "explanation": "相同文字使用不同编码可能得到不同字节及摘要。",
+      "example": "hashlib.sha256(text.encode(\"utf-8\"))。",
+      "tags": [
+        "Python 摘要与 HMAC",
+        "字节输入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/hashlib.html"
+    },
+    {
+      "id": "pyhash-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 摘要与 HMAC",
+      "knowledgePoint": "增量计算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python hash 对象多次 update 的效果与一次输入拼接数据有什么关系？",
+      "answer": "多次 update 的结果等价于对各次字节按顺序拼接后的数据计算摘要。",
+      "explanation": "这便于分块处理大文件。",
+      "example": "依次更新文件的多个字节块。",
+      "tags": [
+        "Python 摘要与 HMAC",
+        "增量计算"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/hashlib.html"
+    },
+    {
+      "id": "pyhash-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 摘要与 HMAC",
+      "knowledgePoint": "结果形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 哈希对象的 digest() 与 hexdigest() 返回值有什么区别？",
+      "answer": "digest() 返回原始字节；hexdigest() 返回对应的十六进制字符串。",
+      "explanation": "SHA-256 的原始摘要为 32 字节，十六进制文本通常为 64 个字符。",
+      "example": "在文本日志中保存十六进制摘要。",
+      "tags": [
+        "Python 摘要与 HMAC",
+        "结果形式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/hashlib.html"
+    },
+    {
+      "id": "pyhash-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 摘要与 HMAC",
+      "knowledgePoint": "复制状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 哈希对象的 copy() 有什么常见用途？",
+      "answer": "复制当前摘要状态，便于从共同前缀继续计算不同后缀。",
+      "explanation": "修改其中一个副本不影响另一个副本。",
+      "example": "同一文件头配合不同内容分别计算摘要。",
+      "tags": [
+        "Python 摘要与 HMAC",
+        "复制状态"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/hashlib.html"
+    },
+    {
+      "id": "pyhash-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 摘要与 HMAC",
+      "knowledgePoint": "文件摘要",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 hashlib.file_digest 对文件对象有什么要求和使用注意？",
+      "answer": "文件对象需以二进制模式打开且可读取；调用后应把其状态视为未知并由调用者关闭。",
+      "explanation": "函数可能直接使用底层文件描述符进行读取。",
+      "example": "在 with 块中对大文件计算 SHA-256。",
+      "tags": [
+        "Python 摘要与 HMAC",
+        "文件摘要"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/hashlib.html"
+    },
+    {
+      "id": "pyhash-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 摘要与 HMAC",
+      "knowledgePoint": "变长输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python hashlib 的 shake_128 和 shake_256 与普通固定长度摘要接口有什么不同？",
+      "answer": "它们提供可变长度摘要，调用 digest 或 hexdigest 时需要指定输出字节数。",
+      "explanation": "输出长度与算法名称中的安全强度概念不同。",
+      "example": "shake_128(data).digest(16) 输出 16 字节。",
+      "tags": [
+        "Python 摘要与 HMAC",
+        "变长输出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/hashlib.html"
+    },
+    {
+      "id": "pyhash-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 摘要与 HMAC",
+      "knowledgePoint": "算法集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python hashlib 的 algorithms_guaranteed 与 algorithms_available 有什么区别？",
+      "answer": "前者是实现保证提供的算法集合；后者是当前环境可用算法名称的集合。",
+      "explanation": "具体受构建环境和安全策略影响。",
+      "example": "检查当前环境支持哪些摘要名称。",
+      "tags": [
+        "Python 摘要与 HMAC",
+        "算法集合"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/hashlib.html"
+    },
+    {
+      "id": "pyhash-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 摘要与 HMAC",
+      "knowledgePoint": "带密钥认证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python hmac 与直接计算消息哈希在目的上有什么关键区别？",
+      "answer": "HMAC 使用共享密钥对消息计算认证码；普通哈希没有秘密密钥，单独使用不能认证来源。",
+      "explanation": "接收方应安全持有相同密钥并验证认证码。",
+      "example": "用 HMAC 验证来自可信发送方的消息。",
+      "tags": [
+        "Python 摘要与 HMAC",
+        "带密钥认证"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/hmac.html"
+    },
+    {
+      "id": "pyhash-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 摘要与 HMAC",
+      "knowledgePoint": "常量时间比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 验证 HMAC 时，为什么常使用 hmac.compare_digest？",
+      "answer": "它避免内容相关的短路比较行为，有助于降低时序分析风险。",
+      "explanation": "两侧类型需兼容，长度等信息仍可能影响比较。",
+      "example": "比较接收的认证码与本地计算值。",
+      "tags": [
+        "Python 摘要与 HMAC",
+        "常量时间比较"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/hmac.html"
+    }
+  ]
+}

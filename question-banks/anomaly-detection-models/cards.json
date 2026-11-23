@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "anomaly-detection-models",
+    "title": "scikit-learn 异常检测方法与分数",
+    "url": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+    "type": "官方技术文档",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "anomaly-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "One-Class SVM边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "One-Class SVM 用于新颖性检测时，主要从训练样本学习什么？",
+      "answer": "它学习描述训练数据所在区域的边界，再检查新样本是否落在该区域之外。",
+      "explanation": "训练样本应能代表希望建模的正常行为；异常不等于恶意。",
+      "example": "用历史正常主机特征训练，再检查新观测。",
+      "tags": [
+        "One-Class SVM边界",
+        "异常检测模型"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/outlier_detection.html"
+    },
+    {
+      "id": "anomaly-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "椭圆包络假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 EllipticEnvelope 常基于什么正常数据假设？",
+      "answer": "它适用于近似高斯分布的正常数据，并利用稳健的中心和协方差估计描述数据范围。",
+      "explanation": "如果正常数据形状与假设差异很大，需另行评估该方法。",
+      "example": "比较多个主机特征的稳健马氏距离。",
+      "tags": [
+        "椭圆包络假设",
+        "异常检测模型"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/outlier_detection.html"
+    },
+    {
+      "id": "anomaly-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "LOF密集异常群",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么局部异常因子（LOF）可能漏掉一个内部密集的异常群？",
+      "answer": "当异常点的近邻主要也是同群点且局部密度相近时，它们可能不显得局部稀疏。",
+      "explanation": "结果取决于邻域大小、距离和数据分布。",
+      "example": "一批异常主机聚成密集群，且近邻都来自同一群。",
+      "tags": [
+        "LOF密集异常群",
+        "异常检测模型"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/outlier_detection.html"
+    },
+    {
+      "id": "anomaly-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常分数",
+      "knowledgePoint": "Isolation Forest分数方向",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 IsolationForest.score_samples() 中，较低的值通常表示什么？",
+      "answer": "较低的值表示样本更异常。",
+      "explanation": "接口分数方向与原论文的异常分数方向相反；使用前要核对约定。",
+      "example": "若评估工具要求异常程度越高分数越大，可先取分数的相反数。",
+      "tags": [
+        "Isolation Forest分数方向",
+        "异常分数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html"
+    },
+    {
+      "id": "anomaly-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "检测设计",
+      "knowledgePoint": "单域名与行为窗口",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "为什么基于 DNS 行为窗口的检测不一定能在首次查询时立即给出同样的统计特征？",
+      "answer": "行为窗口需要积累一定范围内的查询和响应；首次查询时，后续事件尚不可用。",
+      "explanation": "检测时只能使用当前已经观察到的信息，延迟和效果需结合任务权衡。",
+      "example": "查询频率特征可能要等多个查询到达后才能更稳定。",
+      "tags": [
+        "单域名与行为窗口",
+        "检测设计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1611.00791"
+    }
+  ]
+}

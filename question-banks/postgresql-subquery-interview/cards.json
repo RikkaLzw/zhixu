@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "postgresql-subquery-interview",
+    "title": "PostgreSQL 17 文档：SQL 子查询语义",
+    "url": "https://www.postgresql.org/docs/17/functions-subquery.html",
+    "type": "标准、教材与技术手册",
+    "note": "依据逐题引用的标准、文档或手册自行整理；示例为自编。在线资料以 2026-11-22 查看内容为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgsubq-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 子查询与存在性判断",
+      "knowledgePoint": "相关子查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 中相关子查询与外层查询有什么关系？",
+      "answer": "子查询引用外层查询的列或表达式，其结果与外层当前行的值相关。",
+      "explanation": "数据库优化器可能改写执行计划，不必假定实际按文本逐行执行。",
+      "example": "查询每个部门中薪资高于该部门平均值的员工。",
+      "tags": [
+        "SQL 子查询与存在性判断",
+        "相关子查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-expressions.html#SQL-SYNTAX-SCALAR-SUBQUERIES"
+    },
+    {
+      "id": "pgsubq-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 子查询与存在性判断",
+      "knowledgePoint": "标量子查询行数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 标量子查询返回零行或多于一行时分别怎样？",
+      "answer": "零行时表达式结果为 NULL；多于一行时报错。",
+      "explanation": "标量子查询还必须只返回一列。",
+      "example": "没有匹配的单列子查询返回 NULL；有多行匹配则不能直接作为标量值。",
+      "tags": [
+        "SQL 子查询与存在性判断",
+        "标量子查询行数"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-expressions.html#SQL-SYNTAX-SCALAR-SUBQUERIES"
+    },
+    {
+      "id": "pgsubq-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 子查询与存在性判断",
+      "knowledgePoint": "EXISTS与重复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用相关 EXISTS 筛选外表时，内表有多行匹配会让同一外表行重复返回多次吗？",
+      "answer": "不会；EXISTS 对每个外表行只判断子查询是否有结果，不会因为匹配行数增加而复制它。",
+      "explanation": "外表原有重复行仍可能分别返回。",
+      "example": "一个用户有多张订单，用 EXISTS 筛选用户不会按订单数复制该行。",
+      "tags": [
+        "SQL 子查询与存在性判断",
+        "EXISTS与重复"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-subquery.html#FUNCTIONS-SUBQUERY-EXISTS"
+    },
+    {
+      "id": "pgsubq-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 子查询与存在性判断",
+      "knowledgePoint": "NOTEXISTS空值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "子查询条件为 t.id = u.id 时，如果外表的 u.id 为 NULL，NOT EXISTS 可能为真吗？",
+      "answer": "可能；普通等号与 NULL 比较为未知，不能形成匹配行，因此 NOT EXISTS 可为真。",
+      "explanation": "若业务要求排除外表 NULL，应显式添加条件或使用合适的空值比较。",
+      "example": "外表 NULL 的 id 不会与内表 NULL 通过普通等号匹配。",
+      "tags": [
+        "SQL 子查询与存在性判断",
+        "NOTEXISTS空值"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/functions-subquery.html#FUNCTIONS-SUBQUERY-EXISTS"
+    },
+    {
+      "id": "pgsubq-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 子查询与存在性判断",
+      "knowledgePoint": "ANYALL空集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中比较值 op ANY (空子查询) 与 op ALL (空子查询) 分别是什么？",
+      "answer": "ANY 为 FALSE，ALL 为 TRUE。",
+      "explanation": "这里讨论返回单列且为空的子查询。",
+      "example": "5 > ANY (空集) 为假，5 > ALL (空集) 为真。",
+      "tags": [
+        "SQL 子查询与存在性判断",
+        "ANYALL空集"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-subquery.html#FUNCTIONS-SUBQUERY-ANY-SOME"
+    },
+    {
+      "id": "pgsubq-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 子查询与存在性判断",
+      "knowledgePoint": "量词比较与空值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 ANY 或 ALL 逐行比较中出现 NULL 时，结果一定为 NULL 吗？",
+      "answer": "不一定；ANY 遇到 TRUE 为 TRUE，ALL 遇到 FALSE 为 FALSE；否则存在未知结果时为 NULL。",
+      "explanation": "这里的 NULL 比较结果按 SQL 三值逻辑视为未知。",
+      "example": "5 与 {1, NULL} 逐项比较，ANY 为 TRUE；与 {8, NULL} 比较，ALL 为 FALSE。",
+      "tags": [
+        "SQL 子查询与存在性判断",
+        "量词比较与空值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-subquery.html#FUNCTIONS-SUBQUERY-ANY-SOME"
+    },
+    {
+      "id": "pgsubq-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 子查询与存在性判断",
+      "knowledgePoint": "IN与ANY",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 x IN (单列子查询) 与哪种 ANY 比较等价？",
+      "answer": "它等价于 x = ANY (同一子查询)。",
+      "explanation": "比较中遇到 NULL 时仍遵循 SQL 三值逻辑。",
+      "example": "x IN (SELECT id FROM t) 等价于 x = ANY (SELECT id FROM t)。",
+      "tags": [
+        "SQL 子查询与存在性判断",
+        "IN与ANY"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-subquery.html#FUNCTIONS-SUBQUERY-ANY-SOME"
+    }
+  ]
+}

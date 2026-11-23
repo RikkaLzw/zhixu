@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "deep-init-normalization",
+    "title": "动手学深度学习与 PyTorch：初始化和归一化",
+    "url": "https://zh.d2l.ai/chapter_multilayer-perceptrons/numerical-stability-and-init.html",
+    "type": "教材与技术文档",
+    "note": "逐题根据所列教材或技术文档自行整理；例子用于说明适用条件。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "deepbase-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "初始化与归一化",
+      "knowledgePoint": "初始化对称性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么同一隐藏层的神经元通常不能把所有权重初始化为完全相同的值？",
+      "answer": "在对称结构和更新条件下，它们可能得到相同输出和梯度，难以学习不同特征。",
+      "explanation": "随机初始化可打破这种对称性；具体初始化仍需匹配网络结构。",
+      "example": "两个权重相同的隐藏单元持续执行相同更新。",
+      "tags": [
+        "初始化对称性",
+        "初始化与归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/numerical-stability-and-init.html"
+    },
+    {
+      "id": "deepbase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "初始化与归一化",
+      "knowledgePoint": "Xavier初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Xavier 初始化为什么考虑输入与输出连接数？",
+      "answer": "它依据层的输入和输出规模设置权重尺度，以帮助控制前向和反向信号的方差。",
+      "explanation": "其推导依赖一定假设，不能保证所有网络都稳定。",
+      "example": "为线性或近似线性的层选择合适的初始化尺度。",
+      "tags": [
+        "Xavier初始化",
+        "初始化与归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/numerical-stability-and-init.html"
+    },
+    {
+      "id": "deepbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "初始化与归一化",
+      "knowledgePoint": "Kaiming初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kaiming 初始化通常针对哪类激活函数设计？",
+      "answer": "它常用于 ReLU 或带负斜率的 Leaky ReLU 等整流激活网络。",
+      "explanation": "具体实现可选择针对前向或反向传播的 fan 模式。",
+      "example": "为 ReLU 后接的权重矩阵配置相应初始化。",
+      "tags": [
+        "Kaiming初始化",
+        "初始化与归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/nn.init.html"
+    },
+    {
+      "id": "deepbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "初始化与归一化",
+      "knowledgePoint": "BN可学习变换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "批量归一化中的可学习缩放和偏移参数有什么用途？",
+      "answer": "它们对归一化结果进行可学习的缩放和平移。",
+      "explanation": "这些参数与模型其他参数一起训练。",
+      "example": "某一通道通过 γ 和 β 调整归一化后的值。",
+      "tags": [
+        "BN可学习变换",
+        "初始化与归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-modern/batch-norm.html"
+    },
+    {
+      "id": "deepbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "初始化与归一化",
+      "knowledgePoint": "BN批次依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "训练模式下，批量归一化为什么可能使一个样本的输出受到同批其他样本影响？",
+      "answer": "它使用当前小批次计算的统计量进行归一化，统计量会随同批输入改变。",
+      "explanation": "具体统计维度由层和输入形状决定。",
+      "example": "改变同批其他样本后，某样本的训练模式输出可能变化。",
+      "tags": [
+        "BN批次依赖",
+        "初始化与归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-modern/batch-norm.html"
+    },
+    {
+      "id": "deepbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "初始化与归一化",
+      "knowledgePoint": "LayerNorm统计范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch LayerNorm 按什么范围计算均值和方差？",
+      "answer": "它对每个输入样本的最后若干维计算统计量，这些维度由 normalized_shape 指定。",
+      "explanation": "这不同于按小批次汇总统计量的 BatchNorm。",
+      "example": "对每个 token 的特征维进行 LayerNorm。",
+      "tags": [
+        "LayerNorm统计范围",
+        "初始化与归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.LayerNorm.html"
+    },
+    {
+      "id": "deepbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "初始化与归一化",
+      "knowledgePoint": "归一化稳定项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "归一化计算中在方差项加入很小的 ε 主要是为了什么？",
+      "answer": "它有助于避免分母过小或为零造成数值不稳定。",
+      "explanation": "ε 的具体取值依实现和配置而异。",
+      "example": "一组输入近乎恒定时，标准差可能非常小。",
+      "tags": [
+        "归一化稳定项",
+        "初始化与归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.LayerNorm.html"
+    }
+  ]
+}

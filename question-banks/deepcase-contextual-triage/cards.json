@@ -1,0 +1,468 @@
+{
+  "source": {
+    "id": "deepcase-contextual-triage",
+    "title": "DeepCASE 原论文：安全事件上下文与告警研判",
+    "url": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf",
+    "type": "研究论文与技术文档",
+    "note": "按逐题引用的课程、论文或固定版本知识库自行整理中文问答，例子为自编。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "deepcase-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "DeepCASE上下文",
+      "knowledgePoint": "事件序列上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 论文如何为一个安全事件构造上下文？",
+      "answer": "它使用同一设备上该事件之前发生的若干安全事件，并限制其时间范围。",
+      "explanation": "上下文基于已有检测事件，而非完整的所有系统活动。",
+      "example": "用同一设备最近的事件辅助判断当前告警。",
+      "tags": [
+        "事件序列上下文",
+        "DeepCASE上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "DeepCASE上下文",
+      "knowledgePoint": "时间与数量上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 论文实验中的上下文同时受哪两类边界约束？",
+      "answer": "既限制最多使用多少个先前事件，也限制这些事件距离目标事件的最大时间。",
+      "explanation": "论文实验使用至多 10 个事件、时间差不超过一天。",
+      "example": "很旧的事件即使在前 10 个内也可能被排除。",
+      "tags": [
+        "时间与数量上限",
+        "DeepCASE上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "DeepCASE上下文",
+      "knowledgePoint": "同机序列混杂",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么同一设备上相邻的安全事件不一定来自同一攻击？",
+      "answer": "设备可能同时运行多个正常程序或处理不同交互，相邻事件可能彼此无关。",
+      "explanation": "时间相近仅提供关联线索，不能直接证明因果。",
+      "example": "浏览器更新与其他进程的网络告警恰好相邻。",
+      "tags": [
+        "同机序列混杂",
+        "DeepCASE上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "DeepCASE上下文",
+      "knowledgePoint": "事件归属",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 构造同设备上下文时，为什么需要识别事件所属的设备？",
+      "answer": "系统按设备分组事件；归属错误会把不同设备的事件错误拼接，或拆开同一设备的上下文。",
+      "explanation": "论文讨论利用主机代理或结合 DHCP 日志等方式识别设备。",
+      "example": "动态地址变化时结合租约记录确认设备。",
+      "tags": [
+        "事件归属",
+        "DeepCASE上下文"
+      ],
+      "evidence": "application",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-005",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "DeepCASE上下文",
+      "knowledgePoint": "序列不够长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 论文的编码器在上下文不足固定长度时如何处理输入？",
+      "answer": "在较短序列左侧填充，使输入符合设定长度。",
+      "explanation": "论文中的长度是实验配置，不是所有版本必须使用的常数。",
+      "example": "只有 3 个前序事件时填充其余位置。",
+      "tags": [
+        "序列不够长",
+        "DeepCASE上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE模型",
+      "knowledgePoint": "模型学习目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 的 Context Builder 为什么以已观察的当前事件作为训练目标？",
+      "answer": "它通过根据前序事件预测该事件，学习上下文各事件与目标事件的相关性。",
+      "explanation": "系统分析时事件已发生，重点是理解上下文而非预测未来告警。",
+      "example": "从之前的事件学习当前告警的注意力权重。",
+      "tags": [
+        "模型学习目标",
+        "DeepCASE模型"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE模型",
+      "knowledgePoint": "无风险标签训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 的上下文模型为何可以不依赖恶意或良性风险标签训练？",
+      "answer": "已发生的目标事件本身提供预测目标；模型从事件与前序上下文的关系中学习。",
+      "explanation": "后续对聚类赋予风险类别仍需要分析人员介入。",
+      "example": "用已记录的事件序列训练事件预测，再由分析员标注簇。",
+      "tags": [
+        "无风险标签训练",
+        "DeepCASE模型"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE模型",
+      "knowledgePoint": "序列编码器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 论文中的 Context Builder 使用什么结构编码事件上下文？",
+      "answer": "它使用带门控循环单元（GRU）的编码器，将上下文序列编码为向量。",
+      "explanation": "论文采用单层 GRU；这不是对所有安全序列模型的要求。",
+      "example": "将多个先前事件汇总为上下文表示。",
+      "tags": [
+        "序列编码器",
+        "DeepCASE模型"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE模型",
+      "knowledgePoint": "上下文注意力",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 的注意力向量对每个上下文事件提供什么信息？",
+      "answer": "它为上下文中的各个事件分配权重，以描述该事件对当前事件预测的相关程度。",
+      "explanation": "权重对应模型中的相关性，不能单独证明真实因果关系。",
+      "example": "查看近期哪个事件对目标告警预测权重较高。",
+      "tags": [
+        "上下文注意力",
+        "DeepCASE模型"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE模型",
+      "knowledgePoint": "相同事件权重汇总",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 将上下文表示按事件类型汇总时，重复出现的同一事件类型如何处理？",
+      "answer": "把该类型各次出现对应的注意力权重相加。",
+      "explanation": "这得到每类事件的总权重，便于比较不同上下文。",
+      "example": "同类事件权重为 0.2 和 0.3 时，总权重为 0.5。",
+      "tags": [
+        "相同事件权重汇总",
+        "DeepCASE模型"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE模型",
+      "knowledgePoint": "注意力查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 的 attention query 对已发生事件主要尝试解决什么问题？",
+      "answer": "在固定事件解码器参数时调整注意力分布，以提高已观察目标事件的预测概率。",
+      "explanation": "它不等同于重新训练整个模型或预测一个尚未发生的事件。",
+      "example": "模型未给实际告警足够概率时重新优化上下文注意力。",
+      "tags": [
+        "注意力查询",
+        "DeepCASE模型"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE模型",
+      "knowledgePoint": "置信度不足处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 在注意力查询后仍无法达到目标事件的置信度阈值时如何处理？",
+      "answer": "将该事件序列交给安全分析人员，使用现有工具继续调查。",
+      "explanation": "低置信度不代表事件一定恶意或良性。",
+      "example": "模型无法解释的新序列进入人工复核。",
+      "tags": [
+        "置信度不足处理",
+        "DeepCASE模型"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE聚类与研判",
+      "knowledgePoint": "上下文相似性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 论文用什么距离比较按事件类型汇总的注意力向量？",
+      "answer": "它使用 L1 距离，即各维度对应值的绝对差之和。",
+      "explanation": "论文在此表示上选择该距离；不同系统也可使用其他距离。",
+      "example": "对两个向量逐维求绝对差后相加。",
+      "tags": [
+        "上下文相似性",
+        "DeepCASE聚类与研判"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE聚类与研判",
+      "knowledgePoint": "事件上下文聚类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 论文的 Interpreter 用哪种方法将相似上下文分组？",
+      "answer": "它使用 DBSCAN 对注意力加权的上下文表示进行聚类。",
+      "explanation": "聚类依据相似性，本身不等于已经确定风险标签。",
+      "example": "将上下文相近的事件序列交给分析人员成组查看。",
+      "tags": [
+        "事件上下文聚类",
+        "DeepCASE聚类与研判"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-015",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE聚类与研判",
+      "knowledgePoint": "稀疏序列回退",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 中没有足够相似序列形成聚类的事件如何处理？",
+      "answer": "交由分析人员检查，而不是自动当作已知良性类别。",
+      "explanation": "少见可能是新行为，也可能是正常的低频活动。",
+      "example": "第一次出现的新事件组合需要人工查看。",
+      "tags": [
+        "稀疏序列回退",
+        "DeepCASE聚类与研判"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-016",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE聚类与研判",
+      "knowledgePoint": "聚类样本人工标注",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 为什么让分析人员从每个聚类抽样检查事件序列？",
+      "answer": "抽样有助于判断同一聚类内的序列是否可以采用相同的风险处理。",
+      "explanation": "抽样仍可能遗漏簇中少数不同风险的样本。",
+      "example": "从大型事件簇中抽取多个序列进行复核。",
+      "tags": [
+        "聚类样本人工标注",
+        "DeepCASE聚类与研判"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-017",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE聚类与研判",
+      "knowledgePoint": "混合风险聚类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 中同一个簇的抽样结果存在不同风险类别时，论文建议如何处理？",
+      "answer": "将该簇视为有歧义，交由人工完整检查。",
+      "explanation": "相似的上下文不能保证所有事件具有相同风险。",
+      "example": "同簇样本同时被标为良性和恶意。",
+      "tags": [
+        "混合风险聚类",
+        "DeepCASE聚类与研判"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-018",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE聚类与研判",
+      "knowledgePoint": "已知聚类的处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 半自动模式如何处理匹配已标注良性或恶意簇的事件序列？",
+      "answer": "匹配已知良性簇时可以过滤；匹配已知恶意簇时通知分析人员处理。",
+      "explanation": "处理依赖先前人工标签和相似性判断；基本流程不自动执行所有处置动作。",
+      "example": "已确认的正常事件组合被过滤，已知恶意组合升级调查。",
+      "tags": [
+        "已知聚类的处理",
+        "DeepCASE聚类与研判"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-020",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE适用边界",
+      "knowledgePoint": "跨主机关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 原论文的同机上下文为什么不能完整覆盖跨主机攻击链？",
+      "answer": "它主要把同一设备的先前事件作为上下文，未直接建模不同设备之间的关联。",
+      "explanation": "多主机横向移动需要补充跨设备的遥测与关联方式。",
+      "example": "登录行为跨越多个不同主机。",
+      "tags": [
+        "跨主机关联",
+        "DeepCASE适用边界"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-021",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE适用边界",
+      "knowledgePoint": "长周期与繁忙上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 DeepCASE 的有限上下文可能遗漏相隔较久的相关事件？",
+      "answer": "时间和事件数的限制可能把较早事件排除；大量无关事件也可能挤占上下文。",
+      "explanation": "这是上下文窗口带来的观察边界。",
+      "example": "攻击步骤间隔超过设定时间。",
+      "tags": [
+        "长周期与繁忙上下文",
+        "DeepCASE适用边界"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-022",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE适用边界",
+      "knowledgePoint": "检测器变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么底层安全检测器发生变化后要重新评估 DeepCASE 类上下文模型？",
+      "answer": "模型使用检测器产生的事件类型和序列，检测器变化可能改变输入分布与可匹配的事件簇。",
+      "explanation": "新环境中的适用性不能仅由旧环境结果保证。",
+      "example": "替换检测规则后观察新事件序列的人工复核率。",
+      "tags": [
+        "检测器变化",
+        "DeepCASE适用边界"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-023",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE评估",
+      "knowledgePoint": "时间先后评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 论文为什么先用较早的企业事件做人工模式，再用后续事件评估半自动模式？",
+      "answer": "这样模拟先积累人工判断、再用于之后事件的应用顺序。",
+      "explanation": "时间先后本身不消除所有跨组织或标签偏差。",
+      "example": "使用首月事件建立簇，后续月份评估匹配。",
+      "tags": [
+        "时间先后评估",
+        "DeepCASE评估"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-024",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE评估",
+      "knowledgePoint": "HDFS评估范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 论文为什么没有在 HDFS 数据集上报告风险分类准确率？",
+      "answer": "论文指出该数据缺少安全事件风险等级元数据，因此用它评估工作量减少而非风险分类准确率。",
+      "explanation": "这是论文采用的评估口径，不是所有 HDFS 数据集研究的通用限制。",
+      "example": "用 HDFS 数据比较序列分组的工作量。",
+      "tags": [
+        "HDFS评估范围",
+        "DeepCASE评估"
+      ],
+      "evidence": "source",
+      "reference": "https://vm-thijs.ewi.utwente.nl/static/homepage/papers/deepcase.pdf"
+    },
+    {
+      "id": "deepcase-025",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "DeepCASE评估",
+      "knowledgePoint": "私有数据可复现性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepCASE 作者的代码仓库对 Lastline 数据集公开性说明了什么？",
+      "answer": "由于保密协议，作者不能公开该数据集。",
+      "explanation": "代码公开不等同于所有论文数据都能独立获取。",
+      "example": "复现前先检查实验数据是否可用。",
+      "tags": [
+        "私有数据可复现性",
+        "DeepCASE评估"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Thijsvanede/DeepCASE/tree/7d19eaa798da257b83567aeaed78d88bd3574370"
+    }
+  ]
+}

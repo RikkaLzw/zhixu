@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "bitwise-interview-fundamentals",
+    "title": "Python 3.14 文档：整数位运算",
+    "url": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types",
+    "type": "官方文档或手册",
+    "note": "依据注明版本的文档或手册自行整理，示例自编；命令及语言行为应以所用实现为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "bitops-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "整数位运算",
+      "knowledgePoint": "掩码检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对非负整数 x，如何用掩码 mask 判断指定的一组位是否至少有一位为 1？",
+      "answer": "检查 x & mask 是否非零。",
+      "explanation": "要判断掩码中的所有位均为 1，可比较 (x & mask) == mask。",
+      "example": "x=0b1010、mask=0b1100 时结果为真。",
+      "tags": [
+        "整数位运算",
+        "掩码检测"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types"
+    },
+    {
+      "id": "bitops-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "整数位运算",
+      "knowledgePoint": "掩码修改",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对整数 x 和位掩码 mask，怎样分别设置、清除或翻转掩码指定的位？",
+      "answer": "分别使用 x | mask、x & ~mask、x ^ mask。",
+      "explanation": "掩码为 0 的位不被相应操作改变。",
+      "example": "用掩码启用、移除或切换一组标志。",
+      "tags": [
+        "整数位运算",
+        "掩码修改"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types"
+    },
+    {
+      "id": "bitops-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "整数位运算",
+      "knowledgePoint": "异或性质",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "整数位运算中，x ^ x 与 x ^ 0 的结果分别是什么？",
+      "answer": "分别为 0 和 x。",
+      "explanation": "异或还满足交换律和结合律，可用于某些单次出现元素问题。",
+      "example": "一组数中成对重复的值可通过异或相互抵消。",
+      "tags": [
+        "整数位运算",
+        "异或性质"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types"
+    },
+    {
+      "id": "bitops-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "整数位运算",
+      "knowledgePoint": "判断二次幂",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于正整数 x，如何用位运算判断它是否为 2 的幂？",
+      "answer": "判断 x & (x - 1) 是否为 0；同时必须要求 x > 0。",
+      "explanation": "正的二次幂在二进制表示中恰有一个 1。",
+      "example": "8 是二次幂，而 0 不符合正数前提。",
+      "tags": [
+        "整数位运算",
+        "判断二次幂"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types"
+    },
+    {
+      "id": "bitops-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "整数位运算",
+      "knowledgePoint": "清除最低位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于正整数 x，x & (x - 1) 对最低位的 1 有什么作用？",
+      "answer": "清除二进制表示中最低位的 1，其他更高位保持不变。",
+      "explanation": "重复该操作可逐个清除置位。",
+      "example": "0b10100 经操作变成 0b10000。",
+      "tags": [
+        "整数位运算",
+        "清除最低位"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types"
+    },
+    {
+      "id": "bitops-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "整数位运算",
+      "knowledgePoint": "提取最低位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于正整数 x，x & -x 得到什么？",
+      "answer": "得到只保留 x 最低有效 1 位的值。",
+      "explanation": "这一技巧常用于按位遍历或树状数组等算法。",
+      "example": "0b10100 的结果是 0b00100。",
+      "tags": [
+        "整数位运算",
+        "提取最低位"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types"
+    },
+    {
+      "id": "bitops-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "整数位运算",
+      "knowledgePoint": "统计置位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 int.bit_count() 对负整数统计什么？",
+      "answer": "统计该整数绝对值的二进制表示中 1 的个数。",
+      "explanation": "它不按固定宽度统计负数补码中的 1。",
+      "example": "(-7).bit_count() 的结果为 3。",
+      "tags": [
+        "整数位运算",
+        "统计置位"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types"
+    },
+    {
+      "id": "bitops-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "整数位运算",
+      "knowledgePoint": "负数取反",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 整数的按位取反 ~x 与 x 有什么数值关系？",
+      "answer": "~x 等于 -(x + 1)。",
+      "explanation": "Python 的位运算按具有无限符号位的二进制补码语义定义。",
+      "example": "~7 的结果是 -8。",
+      "tags": [
+        "整数位运算",
+        "负数取反"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types"
+    },
+    {
+      "id": "bitops-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "整数位运算",
+      "knowledgePoint": "右移负数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 整数 x 右移非负 n 位与整除有什么关系？",
+      "answer": "x >> n 等价于 x // (2 ** n)。",
+      "explanation": "Python 的整除向负无穷方向取整；右移负数时要注意这一点。",
+      "example": "-7 >> 1 得到 -4。",
+      "tags": [
+        "整数位运算",
+        "右移负数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/stdtypes.html#bitwise-operations-on-integer-types"
+    }
+  ]
+}

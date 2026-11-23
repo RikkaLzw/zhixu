@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "longformer-attention-foundations",
+    "title": "Longformer 原论文：局部与全局注意力",
+    "url": "https://arxiv.org/pdf/2004.05150v2",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "longformer-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Longformer 长文本注意力",
+      "knowledgePoint": "局部滑窗",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Longformer 的滑动窗口注意力限制了每个 token 直接关注哪些位置？",
+      "answer": "主要关注自身附近固定窗口内的 token。",
+      "explanation": "堆叠多层后，信息可以跨越比单层窗口更大的距离。",
+      "example": "窗口外的两个词可经中间位置逐层传递信息。",
+      "tags": [
+        "Longformer 长文本注意力",
+        "局部滑窗"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.05150v2"
+    },
+    {
+      "id": "longformer-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Longformer 长文本注意力",
+      "knowledgePoint": "全局连接方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Longformer 原论文中的全局注意力连接是单向还是双向？",
+      "answer": "双向：全局 token 关注所有位置，所有位置也关注该全局 token。",
+      "explanation": "全局位置通常依据下游任务预先指定。",
+      "example": "分类时可给 [CLS] 配置全局注意力。",
+      "tags": [
+        "Longformer 长文本注意力",
+        "全局连接方向"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.05150v2"
+    },
+    {
+      "id": "longformer-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Longformer 长文本注意力",
+      "knowledgePoint": "复杂度条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "序列长为 n、局部窗口宽度为 w、全局 token 数为 g 时，Longformer 的注意力连接数如何增长？",
+      "answer": "通常为 O(nw+ng)；固定 w 和 g 时随 n 线性增长。",
+      "explanation": "若全局 token 数随 n 增长，不能无条件称其为线性复杂度。",
+      "example": "固定窗口与少量全局位置可降低长序列注意力连接数量。",
+      "tags": [
+        "Longformer 长文本注意力",
+        "复杂度条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.05150v2"
+    },
+    {
+      "id": "longformer-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Longformer 长文本注意力",
+      "knowledgePoint": "任务选择全局位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Longformer 原论文为分类和问答任务分别举了哪些全局注意力位置的例子？",
+      "answer": "分类使用 [CLS]；问答可让问题中的 token 使用全局注意力。",
+      "explanation": "全局位置的选择是任务相关的设计。",
+      "example": "问题 token 可直接与文档中较远位置交互。",
+      "tags": [
+        "Longformer 长文本注意力",
+        "任务选择全局位置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.05150v2"
+    },
+    {
+      "id": "longformer-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Longformer 长文本注意力",
+      "knowledgePoint": "独立投影",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Longformer 原论文如何处理局部注意力和全局注意力的 Q、K、V 投影？",
+      "answer": "分别使用两套投影参数来计算局部与全局注意力。",
+      "explanation": "论文将全局投影初始化为与局部投影相同的值。",
+      "example": "局部连接与全局连接不要求共用同一组投影。",
+      "tags": [
+        "Longformer 长文本注意力",
+        "独立投影"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.05150v2"
+    },
+    {
+      "id": "longformer-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Longformer 长文本注意力",
+      "knowledgePoint": "掩码预训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Longformer 论文用于长文档下游任务的编码器怎样利用现有 RoBERTa 权重？",
+      "answer": "从 RoBERTa 检查点出发，继续以掩码语言建模目标预训练。",
+      "explanation": "这一路径与论文的自回归字符级语言模型实验不同。",
+      "example": "预训练后可对长文档分类任务微调。",
+      "tags": [
+        "Longformer 长文本注意力",
+        "掩码预训练"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2004.05150v2"
+    }
+  ]
+}

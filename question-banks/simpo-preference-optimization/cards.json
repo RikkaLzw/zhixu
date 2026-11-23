@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "simpo-preference-optimization",
+    "title": "SimPO 原论文 v1：无参考模型偏好优化",
+    "url": "https://arxiv.org/abs/2405.14734v1",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题标注的文档或论文自行整理；示例为自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "simpopref-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SimPO 偏好优化",
+      "knowledgePoint": "隐式奖励",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SimPO 原论文如何用策略模型为一个回答定义隐式奖励？",
+      "answer": "用回答的平均 token 对数概率乘以缩放系数 β。",
+      "explanation": "即将回答整体对数概率按回答长度归一化；β 控制奖励及其差值的尺度。",
+      "example": "比较同一提示下两个回答的平均对数概率。",
+      "tags": [
+        "SimPO 偏好优化",
+        "隐式奖励"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.14734v1"
+    },
+    {
+      "id": "simpopref-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SimPO 偏好优化",
+      "knowledgePoint": "参考模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SimPO 与标准 DPO 的训练目标在参考模型使用上有什么区别？",
+      "answer": "SimPO 的目标不需要参考模型；标准 DPO 在目标中比较策略模型与参考模型的概率。",
+      "explanation": "两者通常都使用同一提示下的偏好回答对；SimPO 省去参考模型相关计算和存储。",
+      "example": "训练时无需同时对参考策略做前向计算。",
+      "tags": [
+        "SimPO 偏好优化",
+        "参考模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.14734v1"
+    },
+    {
+      "id": "simpopref-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SimPO 偏好优化",
+      "knowledgePoint": "长度归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SimPO 为什么按回答长度归一化对数概率？",
+      "answer": "论文希望使用平均对数概率构造奖励，以减轻直接使用总和带来的长度偏差。",
+      "explanation": "这不保证生成长度或质量一定符合预期。",
+      "example": "长度不同的两个回答分别按各自 token 数求平均。",
+      "tags": [
+        "SimPO 偏好优化",
+        "长度归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.14734v1"
+    },
+    {
+      "id": "simpopref-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SimPO 偏好优化",
+      "knowledgePoint": "目标间隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SimPO 目标中的 γ 项对偏好回答与非偏好回答的奖励差有什么作用？",
+      "answer": "它在偏好目标中引入目标间隔，鼓励偏好回答的奖励更高。",
+      "explanation": "它是优化目标中的软要求，不能保证每个样本最终都达到该间隔。",
+      "example": "在 sigmoid 输入中从奖励差减去 γ。",
+      "tags": [
+        "SimPO 偏好优化",
+        "目标间隔"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.14734v1"
+    },
+    {
+      "id": "simpopref-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SimPO 偏好优化",
+      "knowledgePoint": "相对偏好",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SimPO 的成对目标减小是否保证偏好回答和非偏好回答各自的概率都按期望方向变化？",
+      "answer": "不保证；目标直接约束的是两者的相对奖励差，而不是分别约束每个概率的绝对变化。",
+      "explanation": "训练效果还会受模型共享参数和其他样本影响。",
+      "example": "奖励差变大时，两个回答的概率仍可能同时下降。",
+      "tags": [
+        "SimPO 偏好优化",
+        "相对偏好"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.14734v1"
+    }
+  ]
+}

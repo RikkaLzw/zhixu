@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "attack-navigator-layer-format",
+    "title": "ATT&CK Navigator 5.1：图层格式 4.5",
+    "url": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md",
+    "type": "教材、官方文档与论文",
+    "note": "依据逐题引用的文档、教材或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "attacklayer-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "ATT&CK Navigator 图层",
+      "knowledgePoint": "图层用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK Navigator 图层主要用来表达什么？",
+      "answer": "它为 ATT&CK 技术矩阵保存一组自定义标注和显示设置。",
+      "explanation": "标注可以表示覆盖、频率或分析备注，含义由创建者定义。",
+      "example": "团队可以用图层标记已经分析过的技术。",
+      "tags": [
+        "ATT&CK Navigator 图层",
+        "图层用途"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md"
+    },
+    {
+      "id": "attacklayer-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "ATT&CK Navigator 图层",
+      "knowledgePoint": "领域字段",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Navigator 图层格式 4.5 的 domain 字段用于区分什么？",
+      "answer": "区分图层所属 ATT&CK 技术领域，如 enterprise-attack、mobile-attack 或 ics-attack。",
+      "explanation": "不同领域具有不同技术和平台集合。",
+      "example": "移动设备分析图层可使用 mobile-attack。",
+      "tags": [
+        "ATT&CK Navigator 图层",
+        "领域字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md"
+    },
+    {
+      "id": "attacklayer-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK Navigator 图层",
+      "knowledgePoint": "版本字段",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Navigator 图层的 versions.attack 与 versions.layer 分别标识什么？",
+      "answer": "前者标识 ATT&CK 知识库版本，后者标识图层文件格式版本。",
+      "explanation": "两种版本解决不同兼容性问题。",
+      "example": "图层格式 4.5 可以关联指定的 ATT&CK 版本。",
+      "tags": [
+        "ATT&CK Navigator 图层",
+        "版本字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md"
+    },
+    {
+      "id": "attacklayer-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "ATT&CK Navigator 图层",
+      "knowledgePoint": "子技术编号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Navigator 图层中的子技术 techniqueID 与父技术编号是什么关系？",
+      "answer": "子技术编号由父技术编号、点和子技术后缀组成。",
+      "explanation": "技术和子技术都存放在 techniques 数组中。",
+      "example": "T1110.001 的父技术编号为 T1110。",
+      "tags": [
+        "ATT&CK Navigator 图层",
+        "子技术编号"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md"
+    },
+    {
+      "id": "attacklayer-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK Navigator 图层",
+      "knowledgePoint": "战术字段",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Navigator 图层技术条目不填写 tactic 时，标注会出现在哪里？",
+      "answer": "会出现在该技术所属的每个战术下。",
+      "explanation": "指定 tactic 可将标注限定到相应战术位置。",
+      "example": "同一技术横跨多个战术时可分别标注。",
+      "tags": [
+        "ATT&CK Navigator 图层",
+        "战术字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md"
+    },
+    {
+      "id": "attacklayer-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK Navigator 图层",
+      "knowledgePoint": "未评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Navigator 图层中技术条目省略 score 与 score=0 有什么区别？",
+      "answer": "省略表示未评分；0 是一个明确的数值评分。",
+      "explanation": "未评分项不会因分数获得渐变颜色。",
+      "example": "未评估和评估为零覆盖应使用不同表示。",
+      "tags": [
+        "ATT&CK Navigator 图层",
+        "未评分"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md"
+    },
+    {
+      "id": "attacklayer-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK Navigator 图层",
+      "knowledgePoint": "显式颜色",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Navigator 技术条目同时设置 color 和 score 时，显示颜色如何确定？",
+      "answer": "显式 color 覆盖根据 score 渐变计算的颜色。",
+      "explanation": "因此不能仅凭单元格颜色反推出评分。",
+      "example": "即使 score=0，显式设置的颜色也会用于显示。",
+      "tags": [
+        "ATT&CK Navigator 图层",
+        "显式颜色"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md"
+    },
+    {
+      "id": "attacklayer-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK Navigator 图层",
+      "knowledgePoint": "平台过滤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Navigator 图层的 filters.platforms 主要控制什么？",
+      "answer": "控制图层中显示与所选平台相匹配的技术。",
+      "explanation": "过滤显示不等于证明未显示技术不存在或不适用。",
+      "example": "选择 Linux 可聚焦标注为该平台的技术。",
+      "tags": [
+        "ATT&CK Navigator 图层",
+        "平台过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md"
+    },
+    {
+      "id": "attacklayer-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK Navigator 图层",
+      "knowledgePoint": "聚合未评分项",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Navigator 图层 layout 的 countUnscored 影响什么？",
+      "answer": "它控制聚合技术及子技术分数时是否计入未评分项。",
+      "explanation": "默认值为 false；聚合函数也会影响展示结果。",
+      "example": "计算父技术平均分时需明确未评分子技术的处理方式。",
+      "tags": [
+        "ATT&CK Navigator 图层",
+        "聚合未评分项"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/mitre-attack/attack-navigator/blob/v5.1.0/layers/spec/v4.5/layerformat.md"
+    }
+  ]
+}

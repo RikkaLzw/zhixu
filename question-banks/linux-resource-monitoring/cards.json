@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "linux-resource-monitoring",
+    "title": "procps-ng 4.0.4：Linux 资源监控",
+    "url": "https://man7.org/linux/man-pages/man1/free.1.html",
+    "type": "教材、协议标准与系统手册",
+    "note": "依据逐题引用的教材、标准或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "linuxres-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "负载时间窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 uptime 输出中三个 load average 分别对应什么时间尺度？",
+      "answer": "它们分别反映最近约 1、5、15 分钟的系统平均负载。",
+      "explanation": "这些数值有平滑效果，不能直接当作瞬时队列长度。",
+      "example": "比较三个数值可以观察负载变化趋势。",
+      "tags": [
+        "Linux 资源监控",
+        "负载时间窗口"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/uptime.1.html"
+    },
+    {
+      "id": "linuxres-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "负载含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 load average 只统计正在使用 CPU 的任务吗？",
+      "answer": "不是；它还包含等待运行以及处于不可中断睡眠状态的任务。",
+      "explanation": "不可中断等待常与 I/O 等操作有关。",
+      "example": "磁盘 I/O 受阻也可能使负载上升。",
+      "tags": [
+        "Linux 资源监控",
+        "负载含义"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/uptime.1.html"
+    },
+    {
+      "id": "linuxres-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "内存 available",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 4.0.4 的 free 中，free 和 available 对内存的含义有什么区别？",
+      "answer": "free 是当前未使用的内存；available 是不发生交换时可供新应用使用的内存估计。",
+      "explanation": "available 会考虑部分可回收的缓存等内存；free 较低不一定代表内存不足。",
+      "example": "free 较低时，available 仍可能较充足。",
+      "tags": [
+        "Linux 资源监控",
+        "内存 available"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/free.1.html"
+    },
+    {
+      "id": "linuxres-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "swap 占用与活动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 已使用一部分 swap，是否说明此刻一定正在发生大量换入换出？",
+      "answer": "不一定；swap 的已用量是存量，还应查看换入换出速率和时间变化。",
+      "explanation": "曾经换出的页面可能仍留在 swap 中。",
+      "example": "vmstat 的 si、so 可帮助观察当前区间的交换活动。",
+      "tags": [
+        "Linux 资源监控",
+        "swap 占用与活动"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/vmstat.8.html"
+    },
+    {
+      "id": "linuxres-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "vmstat 采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 4.0.4 的 vmstat 1 3 默认第一行与后续行的统计区间有什么区别？",
+      "answer": "第一行的速率类数据通常是自开机以来的平均；后续行反映对应采样间隔。",
+      "explanation": "进程和内存字段在各行均是即时值；-y 可跳过第一份报告。",
+      "example": "观察一秒内变化时可关注后续采样行。",
+      "tags": [
+        "Linux 资源监控",
+        "vmstat 采样"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/vmstat.8.html"
+    },
+    {
+      "id": "linuxres-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "运行与阻塞队列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 的 vmstat 中 r 和 b 分别反映什么？",
+      "answer": "r 是可运行的任务数；b 是等待 I/O 完成而阻塞的任务数。",
+      "explanation": "r 包括正在运行和等待获得运行时间的任务。",
+      "example": "r 和 b 的变化可辅助判断不同瓶颈。",
+      "tags": [
+        "Linux 资源监控",
+        "运行与阻塞队列"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/vmstat.8.html"
+    },
+    {
+      "id": "linuxres-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "换入换出速率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 的 vmstat 中 si 和 so 分别表示什么？",
+      "answer": "si 表示单位时间从磁盘换入内存的量；so 表示单位时间换出到磁盘的量。",
+      "explanation": "它们是速率，不是当前 swap 总使用量。",
+      "example": "持续较高的 si 和 so 可作为进一步排查线索。",
+      "tags": [
+        "Linux 资源监控",
+        "换入换出速率"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/vmstat.8.html"
+    },
+    {
+      "id": "linuxres-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "块设备传输",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 4.0.4 的 vmstat 中 bi 与 bo 分别表示什么？",
+      "answer": "它们分别表示从块设备读入和写到块设备的数据速率，单位为 KiB/s。",
+      "explanation": "这两个字段不因 vmstat 的 -S 单位选项改变。",
+      "example": "结合区间数据观察读写活动。",
+      "tags": [
+        "Linux 资源监控",
+        "块设备传输"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/vmstat.8.html"
+    },
+    {
+      "id": "linuxres-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "用户与系统 CPU",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 的 vmstat 中 us 和 sy 分别表示哪类 CPU 时间比例？",
+      "answer": "us 是执行非内核代码的时间比例，sy 是执行内核代码的时间比例。",
+      "explanation": "us 包含低优先级用户进程的 CPU 时间。",
+      "example": "系统调用密集时 sy 可能上升。",
+      "tags": [
+        "Linux 资源监控",
+        "用户与系统 CPU"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/vmstat.8.html"
+    },
+    {
+      "id": "linuxres-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "上下文切换速率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 的 vmstat 中 cs 字段主要统计什么？",
+      "answer": "它表示每秒上下文切换次数。",
+      "explanation": "次数较多并不能单独证明性能问题，需结合负载和工作性质判断。",
+      "example": "频繁同步和唤醒可能增加切换次数。",
+      "tags": [
+        "Linux 资源监控",
+        "上下文切换速率"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/vmstat.8.html"
+    },
+    {
+      "id": "linuxres-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 资源监控",
+      "knowledgePoint": "人类可读内存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 的 free -h 与默认 free 输出在单位显示上有什么区别？",
+      "answer": "free -h 会自动缩放数值并显示便于阅读的单位；默认输出使用 KiB。",
+      "explanation": "自动缩放后不同行或列可能显示不同单位。",
+      "example": "可以用 free -h 快速查看内存容量。",
+      "tags": [
+        "Linux 资源监控",
+        "人类可读内存"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/free.1.html"
+    }
+  ]
+}

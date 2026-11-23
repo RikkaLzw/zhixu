@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "opencti-knowledge-ingestion",
+    "title": "OpenCTI 官方文档：情报图谱与导入导出",
+    "url": "https://docs.opencti.io/latest/usage/data-model/",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "octi-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OpenCTI 情报图谱",
+      "knowledgePoint": "图谱结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenCTI 的知识图谱中，节点与边分别表示什么？",
+      "answer": "节点表示带属性的实体；边表示实体之间带属性的关系。",
+      "explanation": "关系也需要结合来源和时间等上下文解释。",
+      "example": "威胁组织与恶意软件之间可建立使用关系。",
+      "tags": [
+        "OpenCTI 情报图谱",
+        "图谱结构"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.opencti.io/latest/usage/data-model/"
+    },
+    {
+      "id": "octi-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OpenCTI 情报图谱",
+      "knowledgePoint": "模型基础",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenCTI 的数据模型以哪个标准为基础？",
+      "answer": "以 STIX 2.1 为基础，并增加部分平台扩展类型。",
+      "explanation": "扩展不等同于 STIX 2.1 原生对象类型。",
+      "example": "OpenCTI 可增加用于表示频道或事件的类型。",
+      "tags": [
+        "OpenCTI 情报图谱",
+        "模型基础"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.opencti.io/latest/usage/data-model/"
+    },
+    {
+      "id": "octi-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OpenCTI 情报图谱",
+      "knowledgePoint": "TAXII 导入方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenCTI 文档中的 TAXII Feed 与 TAXII Push 有什么区别？",
+      "answer": "Feed 从 TAXII 服务获取情报；Push 让数据推送到 OpenCTI 暴露的 TAXII 集合。",
+      "explanation": "两者使用的端点与权限需按部署配置。",
+      "example": "外部源可被定期拉取，或主动推送到指定集合。",
+      "tags": [
+        "OpenCTI 情报图谱",
+        "TAXII 导入方式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.opencti.io/latest/usage/import/getting-started/"
+    },
+    {
+      "id": "octi-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OpenCTI 情报图谱",
+      "knowledgePoint": "RSS 导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenCTI 的 RSS Feed 导入通常把条目作为哪类内容？",
+      "answer": "作为报告形式的条目导入。",
+      "explanation": "是否自动抽取其他对象取决于额外配置与处理流程。",
+      "example": "把订阅源文章作为报告保留。",
+      "tags": [
+        "OpenCTI 情报图谱",
+        "RSS 导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.opencti.io/latest/usage/import/getting-started/"
+    },
+    {
+      "id": "octi-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OpenCTI 情报图谱",
+      "knowledgePoint": "导入可见延迟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 OpenCTI 自动导入已从来源取到数据后，平台中仍可能暂时看不到结果？",
+      "answer": "数据需进入队列并由工作进程处理，工作负载可能带来延迟。",
+      "explanation": "应检查采集、队列及处理状态。",
+      "example": "取到某页情报后，后台工作器随后处理。",
+      "tags": [
+        "OpenCTI 情报图谱",
+        "导入可见延迟"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.opencti.io/latest/usage/import/getting-started/"
+    },
+    {
+      "id": "octi-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OpenCTI 情报图谱",
+      "knowledgePoint": "导出关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenCTI 文档中的 simple 与 full 导出在关联数据上有什么区别？",
+      "answer": "simple 导出指定实体的内容；full 还包含与该实体直接关联的第一层邻居实体。",
+      "explanation": "实际导出还受标记和权限设置影响。",
+      "example": "导出报告时可选择是否包含直接关联的对象。",
+      "tags": [
+        "OpenCTI 情报图谱",
+        "导出关联"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.opencti.io/latest/usage/export/"
+    },
+    {
+      "id": "octi-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OpenCTI 情报图谱",
+      "knowledgePoint": "导出标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenCTI 导出时，内容的最大标记与导出文件标记分别控制什么？",
+      "answer": "前者限制可包含的数据标记范围；后者限制平台中对生成文件的访问。",
+      "explanation": "具体结果仍受用户权限与标记配置约束。",
+      "example": "内容按最高 TLP 筛选，生成文件另设访问标记。",
+      "tags": [
+        "OpenCTI 情报图谱",
+        "导出标记"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.opencti.io/latest/usage/export/"
+    }
+  ]
+}

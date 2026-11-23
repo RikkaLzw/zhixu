@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "wav2vec2-pretraining-detail",
+    "title": "wav2vec 2.0 原论文 v3：语音自监督预训练",
+    "url": "https://arxiv.org/abs/2006.11477v3",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的官方文档或论文自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "w2vpre-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "wav2vec 2.0 预训练",
+      "knowledgePoint": "卷积编码器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 的卷积特征编码器把什么输入转换成什么表示？",
+      "answer": "它把原始音频波形转换成按时间排列的潜在语音表示。",
+      "explanation": "卷积编码器的总步幅影响输出时间步数量。",
+      "example": "从波形得到一串潜在向量。",
+      "tags": [
+        "wav2vec 2.0 预训练",
+        "卷积编码器"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2006.11477v3"
+    },
+    {
+      "id": "w2vpre-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "wav2vec 2.0 预训练",
+      "knowledgePoint": "上下文网络",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 的上下文网络使用什么结构来整合语音序列信息？",
+      "answer": "使用 Transformer 对特征编码器的输出构建上下文化表示。",
+      "explanation": "论文使用卷积位置模块提供位置信息。",
+      "example": "为每个时间步生成可结合其他时间步信息的表示。",
+      "tags": [
+        "wav2vec 2.0 预训练",
+        "上下文网络"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2006.11477v3"
+    },
+    {
+      "id": "w2vpre-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "wav2vec 2.0 预训练",
+      "knowledgePoint": "量化目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 为什么在预训练时使用量化模块？",
+      "answer": "它把潜在语音特征离散化，为对比学习提供目标表示。",
+      "explanation": "上下文网络的输入仍使用连续潜在表示。",
+      "example": "从码本中选择离散目标表示。",
+      "tags": [
+        "wav2vec 2.0 预训练",
+        "量化目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2006.11477v3"
+    },
+    {
+      "id": "w2vpre-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "wav2vec 2.0 预训练",
+      "knowledgePoint": "遮盖位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 遮盖上下文网络的输入时，量化模块的输入也使用同一遮盖吗？",
+      "answer": "不使用；论文遮盖送入上下文网络的潜在表示，而量化模块接收未遮盖的潜在表示。",
+      "explanation": "两条路径分别构造上下文表示与对比学习目标。",
+      "example": "被遮盖时间步仍可产生对应的量化目标。",
+      "tags": [
+        "wav2vec 2.0 预训练",
+        "遮盖位置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2006.11477v3"
+    },
+    {
+      "id": "w2vpre-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "wav2vec 2.0 预训练",
+      "knowledgePoint": "负样本来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 原论文的对比任务从哪里采样干扰目标？",
+      "answer": "从同一条语音的其他被遮盖时间步均匀采样。",
+      "explanation": "这是原论文设定，其他实现或实验可以改变采样策略。",
+      "example": "对一个遮盖位置比较正确量化目标与同语音干扰项。",
+      "tags": [
+        "wav2vec 2.0 预训练",
+        "负样本来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2006.11477v3"
+    },
+    {
+      "id": "w2vpre-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "wav2vec 2.0 预训练",
+      "knowledgePoint": "对比相似度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 的对比损失使用什么相似度比较上下文表示和量化目标？",
+      "answer": "使用余弦相似度，并通过温度参数缩放。",
+      "explanation": "目标是让正确目标相对干扰项获得较高相似度。",
+      "example": "计算一个遮盖位置的候选目标得分。",
+      "tags": [
+        "wav2vec 2.0 预训练",
+        "对比相似度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2006.11477v3"
+    },
+    {
+      "id": "w2vpre-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "wav2vec 2.0 预训练",
+      "knowledgePoint": "码本多样性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 的 diversity loss 希望改善什么？",
+      "answer": "它鼓励量化模块更均衡地使用码本条目。",
+      "explanation": "这是软目标，不保证每个条目都被完全均匀使用。",
+      "example": "避免训练时只反复选择少量码字。",
+      "tags": [
+        "wav2vec 2.0 预训练",
+        "码本多样性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2006.11477v3"
+    },
+    {
+      "id": "w2vpre-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "wav2vec 2.0 预训练",
+      "knowledgePoint": "多组码本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 原论文如何组合多个码本得到量化表示？",
+      "answer": "每组选择一个码本向量，拼接后再通过线性变换。",
+      "explanation": "论文训练时使用 Gumbel softmax 与直通估计处理选择。",
+      "example": "从多个组各选一个码字后构造量化目标。",
+      "tags": [
+        "wav2vec 2.0 预训练",
+        "多组码本"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2006.11477v3"
+    }
+  ]
+}

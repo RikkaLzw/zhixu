@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "swe-agent-interface",
+    "title": "SWE-agent 原论文 v3：智能体计算机接口",
+    "url": "https://arxiv.org/abs/2405.15793v3",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题所列论文或固定版本资料自行整理，示例为自编。在线文档按 2026-11-21 查看内容。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "sweaci-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件工程智能体接口",
+      "knowledgePoint": "接口组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-agent 论文中的 Agent-Computer Interface 包含什么？",
+      "answer": "包含智能体可用的操作命令以及计算机返回反馈的形式。",
+      "explanation": "接口还管理如何向模型呈现历史和状态。",
+      "example": "提供文件查看、编辑与搜索及其结果。",
+      "tags": [
+        "软件工程智能体接口",
+        "接口组成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.15793v3"
+    },
+    {
+      "id": "sweaci-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程智能体接口",
+      "knowledgePoint": "动作设计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 SWE-agent 的接口倾向提供简洁且易理解的操作？",
+      "answer": "减少模型理解大量参数和拼接多步操作时出现错误的机会。",
+      "explanation": "接口设计仍需在目标任务上通过实验验证。",
+      "example": "提供专门的文件搜索命令。",
+      "tags": [
+        "软件工程智能体接口",
+        "动作设计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.15793v3"
+    },
+    {
+      "id": "sweaci-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程智能体接口",
+      "knowledgePoint": "反馈信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "软件工程 Agent 的工具反馈为什么既要有信息量又要简洁？",
+      "answer": "模型需要知道操作结果，但冗长或无关信息会占用上下文并可能造成干扰。",
+      "explanation": "应保留与下一步决策有关的状态与错误。",
+      "example": "编辑后显示更新的相关代码区域。",
+      "tags": [
+        "软件工程智能体接口",
+        "反馈信息"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.15793v3"
+    },
+    {
+      "id": "sweaci-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程智能体接口",
+      "knowledgePoint": "文件窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-agent 原论文的文件查看器为什么显示文件的局部窗口？",
+      "answer": "限制单次反馈长度，同时允许通过滚动或跳转查看其他位置。",
+      "explanation": "只看到局部内容时仍要留意窗口外的依赖。",
+      "example": "查看当前行附近的代码并按需跳转。",
+      "tags": [
+        "软件工程智能体接口",
+        "文件窗口"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.15793v3"
+    },
+    {
+      "id": "sweaci-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程智能体接口",
+      "knowledgePoint": "编辑保护",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-agent 论文中集成的编辑检查发现指定代码错误时会怎样处理该编辑？",
+      "answer": "丢弃无效编辑，并向智能体反馈错误以便重试。",
+      "explanation": "该检查不能证明代码语义或测试结果正确。",
+      "example": "语法错误被报告后重新提交修改。",
+      "tags": [
+        "软件工程智能体接口",
+        "编辑保护"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.15793v3"
+    },
+    {
+      "id": "sweaci-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程智能体接口",
+      "knowledgePoint": "结果过多",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-agent 论文的搜索结果过多时，接口如何引导智能体？",
+      "answer": "不返回过量结果，并提示使用更具体的查询。",
+      "explanation": "这是论文中搜索接口的设计，阈值依实现而定。",
+      "example": "缩小搜索词或目录范围后重试。",
+      "tags": [
+        "软件工程智能体接口",
+        "结果过多"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.15793v3"
+    },
+    {
+      "id": "sweaci-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程智能体接口",
+      "knowledgePoint": "历史压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-agent 原论文如何缩减较早的环境观察记录？",
+      "answer": "将较早的观察压缩成简短记录，保留更近期的详细反馈。",
+      "explanation": "压缩可能丢失细节，需要重新查看时可再次调用工具。",
+      "example": "旧文件输出折叠，最近几次结果保留。",
+      "tags": [
+        "软件工程智能体接口",
+        "历史压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2405.15793v3"
+    }
+  ]
+}

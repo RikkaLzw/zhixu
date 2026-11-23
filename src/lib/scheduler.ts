@@ -1,7 +1,10 @@
-import { CardProgress, CategoryId, Rating, StudyCard, StudyData, TopicId } from '../types';
+import { CardProgress, CategoryId, Rating, StudyCard, StudyData, StudyLevel, TopicId } from '../types';
 import { getCategory } from '../categories';
 import { topicLabel } from '../topics';
+import { knowledgeAreaLabel } from '../knowledgeAreas';
 import { normalizeTag } from '../tags';
+import { isResearchCard } from '../data/researchCards';
+import { cardLevel, enabledStudyLevels, studyLevelLabel } from '../levels';
 
 const minute = 60_000;
 const day = 24 * 60 * minute;
@@ -76,18 +79,28 @@ export interface StudyScope {
   topic?: TopicId;
   sourceId?: string;
   query?: string;
+  studySet?: 'regular' | 'research' | 'all';
+  level?: StudyLevel;
 }
+
+export const publicInterviewScope = '__public_interviews__';
 
 export function matchesScope(card: StudyCard, scope: StudyScope = {}): boolean {
   const query = scope.query?.trim().toLocaleLowerCase();
+  if (scope.studySet === 'regular' && isResearchCard(card)) return false;
+  if (scope.studySet === 'research' && !isResearchCard(card)) return false;
+  if (scope.level && cardLevel(card) !== scope.level) return false;
   if (scope.category && card.category !== scope.category) return false;
   if (scope.topic && card.topic !== scope.topic) return false;
   if (scope.sourceId === 'custom' && card.sources?.length) return false;
-  if (scope.sourceId && scope.sourceId !== 'custom' &&
+  if (scope.sourceId === publicInterviewScope &&
+      !card.sources?.some((source) => source.type.includes('公开面经'))) return false;
+  if (scope.sourceId && scope.sourceId !== 'custom' && scope.sourceId !== publicInterviewScope &&
       !card.sources?.some((source) => source.id === scope.sourceId)) return false;
   if (!query) return true;
   const searchable = [
-    card.question, card.answer, card.explanation, card.example, card.level, getCategory(card.category).label, topicLabel(card.topic),
+    card.question, card.answer, card.explanation, card.example, card.level, studyLevelLabel(cardLevel(card)), getCategory(card.category).label, topicLabel(card.topic),
+    knowledgeAreaLabel(card.knowledgeArea), card.subtopic, card.knowledgePoint, card.questionType,
     ...(card.alternateQuestions ?? []), ...(card.otherExplanations ?? []), ...(card.otherExamples ?? []),
     ...(card.tags ?? []), ...(card.sources ?? []).flatMap((source) => [source.id, source.title]),
   ].filter(Boolean).join('\n').toLocaleLowerCase();
@@ -96,7 +109,11 @@ export function matchesScope(card: StudyCard, scope: StudyScope = {}): boolean {
 }
 
 export function getStudyQueue(data: StudyData, now: number, category?: CategoryId, scope: StudyScope = {}): StudyCard[] {
-  const relevant = data.cards.filter((card) => matchesScope(card, { ...scope, category: category ?? scope.category }));
+  // An explicit source can be studied in full; the library also passes its selected study set.
+  const studySet = scope.studySet ?? (scope.sourceId ? 'all' : 'regular');
+  const enabledLevels = new Set(enabledStudyLevels(data.settings));
+  const relevant = data.cards.filter((card) => enabledLevels.has(cardLevel(card)) &&
+    matchesScope(card, { ...scope, studySet, category: category ?? scope.category }));
   const due = relevant
     .filter((card) => data.progress[card.id] && data.progress[card.id].dueAt <= now)
     .sort((first, second) => data.progress[first.id].dueAt - data.progress[second.id].dueAt);
@@ -106,8 +123,10 @@ export function getStudyQueue(data: StudyData, now: number, category?: CategoryI
 }
 
 export function getNextDue(data: StudyData, now: number, category?: CategoryId, scope: StudyScope = {}): number | null {
+  const studySet = scope.studySet ?? (scope.sourceId ? 'all' : 'regular');
+  const enabledLevels = new Set(enabledStudyLevels(data.settings));
   const times = data.cards
-    .filter((card) => matchesScope(card, { ...scope, category: category ?? scope.category }))
+    .filter((card) => enabledLevels.has(cardLevel(card)) && matchesScope(card, { ...scope, studySet, category: category ?? scope.category }))
     .map((card) => data.progress[card.id]?.dueAt)
     .filter((dueAt): dueAt is number => typeof dueAt === 'number' && dueAt > now);
   return times.length ? Math.min(...times) : null;

@@ -1,0 +1,212 @@
+{
+  "source": {
+    "id": "structured-data-formats",
+    "title": "JSON Lines、CSV 与 Parquet 数据格式",
+    "url": "https://jsonlines.org/",
+    "type": "公开格式说明与官方文档",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "formats-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "JSON Lines记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "JSON Lines 的每一行必须满足什么条件？",
+      "answer": "每行必须是一个有效的 JSON 值；空行不是有效记录。",
+      "explanation": "值可以是对象、数组、字符串或 null，不限于对象。",
+      "example": "单独一行 null 有效，空白行无效。",
+      "tags": [
+        "JSON Lines记录",
+        "数据格式",
+        "JSONL"
+      ],
+      "evidence": "source",
+      "reference": "https://jsonlines.org/"
+    },
+    {
+      "id": "formats-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "JSON Lines编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "JSON Lines 对文本编码和字节顺序标记有什么要求？",
+      "answer": "使用 UTF-8 编码，且不得包含 Unicode 字节顺序标记（BOM）。",
+      "explanation": "读取日志前应检查编码，而不是只凭文件扩展名判断。",
+      "example": "以 UTF-8 写入不带 BOM 的日志文件。",
+      "tags": [
+        "JSON Lines编码",
+        "数据格式",
+        "JSONL"
+      ],
+      "evidence": "source",
+      "reference": "https://jsonlines.org/"
+    },
+    {
+      "id": "formats-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "JSON Lines结尾换行",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "JSON Lines 最后一条记录后必须有换行符吗？",
+      "answer": "不强制，但格式说明强烈建议添加，以便直接拼接文件。",
+      "explanation": "没有结尾换行时直接拼接可能把两条记录连到同一行。",
+      "example": "拼接两个日志文件前检查第一份文件末尾。",
+      "tags": [
+        "JSON Lines结尾换行",
+        "数据格式",
+        "JSONL"
+      ],
+      "evidence": "source",
+      "reference": "https://jsonlines.org/"
+    },
+    {
+      "id": "formats-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "CSV引号与分隔符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能简单按逗号切分所有 CSV 行？",
+      "answer": "被引号包围的字段内也可能含有逗号或换行，需要按 CSV 方言和引号规则解析。",
+      "explanation": "分隔符、引号和转义规则可能因数据源而异。",
+      "example": "把包含逗号的完整告警描述解析为一个字段。",
+      "tags": [
+        "CSV引号与分隔符",
+        "数据格式",
+        "CSV"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/csv.html"
+    },
+    {
+      "id": "formats-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "CSV文件换行处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 使用 csv 模块读写文件时，为什么官方示例用 newline=\"\" 打开文件？",
+      "answer": "这样换行处理由 csv 模块负责，可正确处理带引号字段中的换行并避免某些平台写出额外回车。",
+      "explanation": "仍应按数据来源指定合适的文本编码。",
+      "example": "打开告警 CSV 文件时设置 newline=\"\"。",
+      "tags": [
+        "CSV文件换行处理",
+        "数据格式",
+        "CSV"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/csv.html"
+    },
+    {
+      "id": "formats-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "CSV读取字段类型",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 csv.reader 默认会自动把数字字段转成数值吗？",
+      "answer": "不会；默认返回字符串列表，QUOTE_NONNUMERIC 等选项是例外。",
+      "explanation": "需要数值计算时应根据 schema 显式转换和校验。",
+      "example": "把端口字段从字符串转换为整数。",
+      "tags": [
+        "CSV读取字段类型",
+        "数据格式",
+        "CSV"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/csv.html"
+    },
+    {
+      "id": "formats-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "Parquet行组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Parquet 的 row group 表示什么？",
+      "answer": "它按行对数据做逻辑上的水平分组，并为数据集的每一列包含一个 column chunk。",
+      "explanation": "行组是逻辑分组，规范不保证它作为一个连续的物理结构。",
+      "example": "将大表分成多个行组供读取器处理。",
+      "tags": [
+        "Parquet行组",
+        "数据格式",
+        "Parquet"
+      ],
+      "evidence": "source",
+      "reference": "https://parquet.apache.org/docs/concepts/"
+    },
+    {
+      "id": "formats-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "Parquet页",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Parquet 的 page 与 column chunk 有什么关系？",
+      "answer": "一个 column chunk 由一个或多个 page 组成；page 是编码和压缩的概念单位。",
+      "explanation": "不同类型的 page 可能在同一个 column chunk 中交错。",
+      "example": "读取某列的 chunk 时再处理其内部的 page。",
+      "tags": [
+        "Parquet页",
+        "数据格式",
+        "Parquet"
+      ],
+      "evidence": "source",
+      "reference": "https://parquet.apache.org/docs/concepts/"
+    },
+    {
+      "id": "formats-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "Parquet列选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Parquet 读取器通常可以只读取查询需要的列？",
+      "answer": "文件元数据记录各 column chunk 的位置，读取器可据此查找并读取目标列的数据。",
+      "explanation": "实际读取量仍取决于实现、列布局和过滤方式。",
+      "example": "分析端口分布时只读取端口及相关时间列。",
+      "tags": [
+        "Parquet列选择",
+        "数据格式",
+        "Parquet"
+      ],
+      "evidence": "source",
+      "reference": "https://parquet.apache.org/docs/file-format/"
+    },
+    {
+      "id": "formats-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据格式",
+      "knowledgePoint": "Parquet元数据位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Parquet 文件格式为什么将文件元数据写在数据之后？",
+      "answer": "规范说明这样允许单次顺序写入；读取器先查元数据，再定位所需列块。",
+      "explanation": "文件尾还记录元数据长度与魔数。",
+      "example": "查看文件尾部信息以定位列块。",
+      "tags": [
+        "Parquet元数据位置",
+        "数据格式",
+        "Parquet"
+      ],
+      "evidence": "source",
+      "reference": "https://parquet.apache.org/docs/file-format/"
+    }
+  ]
+}

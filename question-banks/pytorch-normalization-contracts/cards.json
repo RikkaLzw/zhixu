@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "pytorch-normalization-contracts",
+    "title": "PyTorch 2.7：批、组与实例归一化",
+    "url": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.BatchNorm2d.html",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的论文或固定版本官方文档自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptnorm-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "BatchNorm 统计维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 BatchNorm2d 对形状为 (N,C,H,W) 的输入，按什么范围计算训练统计量？",
+      "answer": "每个通道分别在 N、H 和 W 维度上计算统计量。",
+      "explanation": "不同通道拥有不同统计量。",
+      "example": "一个通道内会汇总批次和空间位置。",
+      "tags": [
+        "深度学习归一化",
+        "BatchNorm 统计维度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.BatchNorm2d.html"
+    },
+    {
+      "id": "ptnorm-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "运行均值更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 BatchNorm 的 momentum=0.1 时，运行均值怎样更新？",
+      "answer": "新运行均值 = 0.9 × 旧运行均值 + 0.1 × 当前批均值。",
+      "explanation": "这里的 momentum 不是优化器动量。",
+      "example": "旧均值 2、当前均值 4 时更新为 2.2。",
+      "tags": [
+        "深度学习归一化",
+        "运行均值更新"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.BatchNorm2d.html"
+    },
+    {
+      "id": "ptnorm-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "累计平均",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 BatchNorm 将 momentum 设为 None 时，运行统计量采用什么平均方式？",
+      "answer": "采用累计移动平均，也就是对各批次统计量做简单平均。",
+      "explanation": "不同批次大小不同时，它不等同于把所有样本逐项等权计算。",
+      "example": "连续三个批次的均值按批次平均。",
+      "tags": [
+        "深度学习归一化",
+        "累计平均"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.BatchNorm2d.html"
+    },
+    {
+      "id": "ptnorm-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "不跟踪统计量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 BatchNorm 的 track_running_stats=False 时，eval 模式使用什么统计量？",
+      "answer": "仍使用当前输入批次的统计量，不使用运行均值和运行方差。",
+      "explanation": "输出仍可能依赖同批样本。",
+      "example": "只调用 eval 不能让这种配置使用固定训练统计量。",
+      "tags": [
+        "深度学习归一化",
+        "不跟踪统计量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.BatchNorm2d.html"
+    },
+    {
+      "id": "ptnorm-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "方差估计器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 BatchNorm2d 训练前向使用的方差估计与写入运行方差时的估计有何区别？",
+      "answer": "前向归一化使用有偏方差估计；更新运行方差时使用无偏估计。",
+      "explanation": "两者都基于当前批次，估计口径不同。",
+      "example": "与手算结果核对时应使用对应的估计方式。",
+      "tags": [
+        "深度学习归一化",
+        "方差估计器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.BatchNorm2d.html"
+    },
+    {
+      "id": "ptnorm-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "分组数约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 GroupNorm 为什么要求 num_channels 能被 num_groups 整除？",
+      "answer": "它将通道均分到各组，每组需要相同数量的通道。",
+      "explanation": "num_channels 必须与输入通道数匹配。",
+      "example": "6 个通道可分为 3 组，每组 2 个。",
+      "tags": [
+        "深度学习归一化",
+        "分组数约束"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.GroupNorm.html"
+    },
+    {
+      "id": "ptnorm-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "分组统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 GroupNorm 在不同样本之间共享当前批次均值吗？",
+      "answer": "不共享；它分别为每个样本的每组通道计算统计量。",
+      "explanation": "每组统计覆盖该组通道及其空间位置。",
+      "example": "改变另一张图像不会改变当前图像的组统计量。",
+      "tags": [
+        "深度学习归一化",
+        "分组统计"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.GroupNorm.html"
+    },
+    {
+      "id": "ptnorm-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "分组评估模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 GroupNorm 在训练和评估模式下分别使用什么统计量？",
+      "answer": "两种模式都使用当前输入计算的分组统计量。",
+      "explanation": "它不依赖 BatchNorm 那样的运行均值和方差。",
+      "example": "单张图像评估时仍依据该图像的组统计量。",
+      "tags": [
+        "深度学习归一化",
+        "分组评估模式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.GroupNorm.html"
+    },
+    {
+      "id": "ptnorm-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "单通道组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 (N,C,H,W) 输入且禁用仿射参数时，GroupNorm 将组数设为 C 和设为 1 分别接近哪种归一化？",
+      "answer": "组数为 C 时，其统计范围与 InstanceNorm2d 相同；组数为 1 时，与归一化形状为 (C,H,W) 的 LayerNorm 相同。",
+      "explanation": "比较输出还需使用相同 eps 和输入统计设置；启用仿射参数时参数粒度可能不同。",
+      "example": "C 组分别归一化每个通道；1 组联合归一化所有通道和空间位置。",
+      "tags": [
+        "深度学习归一化",
+        "单通道组"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.GroupNorm.html"
+    },
+    {
+      "id": "ptnorm-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "实例统计默认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 InstanceNorm2d 默认在评估时使用什么统计量？",
+      "answer": "默认仍使用当前输入的实例统计量。",
+      "explanation": "设置 track_running_stats=True 后，评估时改用运行统计量。",
+      "example": "两张图像的同一通道分别计算均值。",
+      "tags": [
+        "深度学习归一化",
+        "实例统计默认"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.InstanceNorm2d.html"
+    },
+    {
+      "id": "ptnorm-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "深度学习归一化",
+      "knowledgePoint": "仿射参数粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 LayerNorm 与 BatchNorm2d 在仿射参数粒度上有什么常见区别？",
+      "answer": "LayerNorm 默认在 normalized_shape 中逐元素设置参数；BatchNorm2d 默认每个通道一组参数。",
+      "explanation": "参数形状取决于各层配置。",
+      "example": "归一化形状为 (C,H,W) 时，LayerNorm 的权重形状也是 (C,H,W)。",
+      "tags": [
+        "深度学习归一化",
+        "仿射参数粒度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.LayerNorm.html"
+    }
+  ]
+}

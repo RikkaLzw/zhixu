@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "linked-list-interview-practice",
+    "title": "链表算法：Open Data Structures 与 Floyd 判环",
+    "url": "https://opendatastructures.org/ods-python/3_1_SLList_Singly_Linked_Li.html",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；计算和场景示例为自编，具体前提见题目。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "listalgo-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "链表常见算法",
+      "knowledgePoint": "原地反转链表",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "原地反转单链表时，为什么在改写当前节点的 next 之前要先保存原来的 next？",
+      "answer": "否则会丢失原链表中后续节点的入口，无法继续沿原方向遍历。",
+      "explanation": "依次保存下一节点、反转当前指针，再移动前驱和当前指针。",
+      "example": "1→2→3 处理节点 2 前，先保存指向 3 的引用。",
+      "tags": [
+        "原地反转链表",
+        "链表常见算法"
+      ],
+      "evidence": "application",
+      "reference": "https://opendatastructures.org/ods-python/3_1_SLList_Singly_Linked_Li.html"
+    },
+    {
+      "id": "listalgo-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "链表常见算法",
+      "knowledgePoint": "哑节点删除头节点",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "删除单链表中满足条件的节点时，为什么常在头节点之前放置哑节点？",
+      "answer": "哑节点让原头节点也有前驱，可以用统一的前驱改链逻辑处理头节点和中间节点。",
+      "explanation": "删除完成后从哑节点的 next 取得新头；仍须处理连续匹配节点。",
+      "example": "删除 1→1→2 中值为 1 的节点，得到 2。",
+      "tags": [
+        "哑节点删除头节点",
+        "链表常见算法"
+      ],
+      "evidence": "application",
+      "reference": "https://opendatastructures.org/ods-python/3_1_SLList_Singly_Linked_Li.html"
+    },
+    {
+      "id": "listalgo-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "链表常见算法",
+      "knowledgePoint": "快慢指针无环终止",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "用每次走一步和两步的快慢指针判断单链表是否有环，如何避免无环链表中访问空指针？",
+      "answer": "每轮让快指针走两步前，先确认快指针及其 next 均非空。",
+      "explanation": "空链表、单节点和奇偶长度链表都应考虑。",
+      "example": "无环链表 1→2→3→空会在快指针无法继续时结束。",
+      "tags": [
+        "快慢指针无环终止",
+        "链表常见算法"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/others/tortoise_and_hare.html"
+    },
+    {
+      "id": "listalgo-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "链表常见算法",
+      "knowledgePoint": "判环相遇点与入口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Floyd 判环中快慢指针第一次相遇的位置，一定是环入口吗？",
+      "answer": "不一定；首次相遇点可能位于环内的其他位置。",
+      "explanation": "首次相遇只证明存在环，确定入口还需后续步骤。",
+      "example": "带非环前缀的链表中，首次相遇的位置可以不同于入口。",
+      "tags": [
+        "判环相遇点与入口",
+        "链表常见算法"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/others/tortoise_and_hare.html"
+    },
+    {
+      "id": "listalgo-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "链表常见算法",
+      "knowledgePoint": "Floyd寻找环入口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Floyd 判环的快慢指针相遇后，如何定位环入口？",
+      "answer": "将一个指针移回头节点，另一个留在相遇点；两者每次都走一步，再次相遇处为环入口。",
+      "explanation": "该结论依赖常用的快指针每轮两步、慢指针每轮一步的初始化和移动方式。",
+      "example": "没有环时不会进入这一步；入口也可能恰好是头节点。",
+      "tags": [
+        "Floyd寻找环入口",
+        "链表常见算法"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/others/tortoise_and_hare.html"
+    },
+    {
+      "id": "listalgo-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "链表常见算法",
+      "knowledgePoint": "环长度计算",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "已知单链表中一个位于环内的节点，如何用常数额外空间求环长？",
+      "answer": "从该节点沿 next 行走一圈，统计回到该节点所需的步数。",
+      "explanation": "比较的是节点身份，而非节点中保存的值。",
+      "example": "环 A→B→C→A 的长度为 3。",
+      "tags": [
+        "环长度计算",
+        "链表常见算法"
+      ],
+      "evidence": "application",
+      "reference": "https://cp-algorithms.com/others/tortoise_and_hare.html"
+    },
+    {
+      "id": "listalgo-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "链表常见算法",
+      "knowledgePoint": "链表相交定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两条单链表节点的值相同，是否就表示这两条链表相交？",
+      "answer": "不一定；链表相交指它们共享同一个节点对象，而不是节点值相等。",
+      "explanation": "在面试题中应确认相交按节点身份判定，并确认链表是否无环。",
+      "example": "两个独立节点都存储数字 7，仍不构成相交。",
+      "tags": [
+        "链表相交定义",
+        "链表常见算法"
+      ],
+      "evidence": "application",
+      "reference": "https://opendatastructures.org/ods-python/3_1_SLList_Singly_Linked_Li.html"
+    },
+    {
+      "id": "listalgo-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "链表常见算法",
+      "knowledgePoint": "无环链表相交",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两条无环单链表可能共享尾部，怎样用常数额外空间寻找第一个公共节点？",
+      "answer": "先计算两条链表长度，让较长链表的指针先走长度差，再同步前进直到指针相同或都为空。",
+      "explanation": "若两条链表不相交，最终两指针会同时到达空；时间为 O(m+n)。",
+      "example": "长度分别为 5 和 3 时，先让长链表指针走两步。",
+      "tags": [
+        "无环链表相交",
+        "链表常见算法"
+      ],
+      "evidence": "application",
+      "reference": "https://opendatastructures.org/ods-python/3_1_SLList_Singly_Linked_Li.html"
+    },
+    {
+      "id": "listalgo-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "链表常见算法",
+      "knowledgePoint": "快慢指针找中点",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "对无环单链表，慢指针每次一步、快指针每次两步，二者都从头开始，快指针无法再走两步时慢指针停在哪里？",
+      "answer": "奇数长度时停在中间节点；偶数长度时按这一循环条件停在靠后的中间节点。",
+      "explanation": "循环条件为 fast 非空且 fast.next 非空，并在循环内先分别前进一步和两步。",
+      "example": "1→2→3→4 的慢指针最终停在节点 3。",
+      "tags": [
+        "快慢指针找中点",
+        "链表常见算法"
+      ],
+      "evidence": "application",
+      "reference": "https://cp-algorithms.com/others/tortoise_and_hare.html"
+    }
+  ]
+}

@@ -1,0 +1,474 @@
+{
+  "source": {
+    "id": "magma-fuzz-evaluation",
+    "title": "Magma 与 FuzzBench：模糊测试基准和评估",
+    "url": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf",
+    "type": "论文与官方技术文档",
+    "note": "依据 Magma 与 Evaluating Fuzz Testing 论文、Magma FAQ 和固定版本 FuzzBench 文档整理；未运行真实 fuzzer 或漏洞基准。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "magmaeval-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "漏洞前向移植",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 所说的漏洞前向移植（forward-porting）是什么意思？",
+      "answer": "将旧版本中的已知缺陷重新引入较新的代码版本，供基准评估使用。",
+      "explanation": "这与把新版本的修复补丁移植回旧版本不同。",
+      "example": "在新版本库中重现历史漏洞的代码条件。",
+      "tags": [
+        "漏洞前向移植",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=11",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "缺陷记录插桩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 中的 canary 插桩主要记录什么？",
+      "answer": "它在缺陷相关位置记录代码是否被触达，以及预设触发条件是否满足。",
+      "explanation": "这些记录为分析 fuzzer 的探索提供缺陷级信息。",
+      "example": "记录一次输入是否到达某个已知错误位置。",
+      "tags": [
+        "缺陷记录插桩",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=8",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "触达与触发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 如何区分缺陷被触达（reached）与被触发（triggered）？",
+      "answer": "触达表示执行到相关缺陷位置；触发还要求缺陷的触发条件满足。",
+      "explanation": "执行到存在问题的代码不代表输入已经满足导致故障的条件。",
+      "example": "到达解析函数但长度条件尚未越界。",
+      "tags": [
+        "触达与触发",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=10",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-005",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "触发与检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 记录缺陷已触发，是否意味着 fuzzer 已检测到它？",
+      "answer": "不一定；触发条件成立后，故障可能没有表现为 fuzzer 可观察的崩溃或其他告警。",
+      "explanation": "检测能力还依赖所用的 sanitizer、超时检查或其他预言机。",
+      "example": "某个语义错误未产生内存错误或崩溃。",
+      "tags": [
+        "触发与检测",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=10",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "触发条件近似",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Magma 的触发条件也需要结合原始漏洞和修复上下文核验？",
+      "answer": "触发条件依据修复代码近似构造，满足该条件不一定复现原始崩溃表现。",
+      "explanation": "移植后的代码和开发者修复条件可能与实际崩溃条件并不完全相同。",
+      "example": "某个输入满足修复前的检查条件，但新版本后续执行没有崩溃。",
+      "tags": [
+        "触发条件近似",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/magma/docs/faq.html",
+      "referenceTitle": "Magma 官方 FAQ"
+    },
+    {
+      "id": "magmaeval-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "崩溃回放与已知缺陷",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 论文如何把 fuzzer 保存的崩溃输入关联到已知缺陷？",
+      "answer": "论文通过回放崩溃输入并检查基准 canary，判断触发了哪些已插桩的缺陷。",
+      "explanation": "回放结果仍受目标版本、配置和 canary 所描述条件的影响。",
+      "example": "重放保存的输入并查看对应缺陷编号。",
+      "tags": [
+        "崩溃回放与已知缺陷",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=11",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "理想故障检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 的 fatal canary 模式在触发条件成立时会怎样？",
+      "answer": "它使目标进程立即终止，触发输入可作为崩溃样本供后续处理。",
+      "explanation": "论文将这种行为视作理想化的故障检测。",
+      "example": "本来不会立刻崩溃的触发输入也被保存。",
+      "tags": [
+        "理想故障检测",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=8",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "理想检测模式的限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Magma 的 fatal canary 模式不能单独衡量 fuzzer 自身的故障检测能力？",
+      "answer": "该模式由基准插桩主动制造崩溃，可能掩盖 fuzzer 原本无法发现故障的情况。",
+      "explanation": "可另外使用原有检测器或 sanitizer 回放触发输入。",
+      "example": "不能把 canary 强制崩溃等同于 ASan 自己发现问题。",
+      "tags": [
+        "理想检测模式的限制",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=8",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "异常状态污染",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 为什么在一次执行的首个缺陷被触发后停止记录后续 canary？",
+      "answer": "缺陷可能使程序进入不可靠状态，此后的缺陷记录可能受到前一故障影响。",
+      "explanation": "目标进程可以继续执行，但后续记录不再作为可靠的独立证据。",
+      "example": "一次内存破坏可能改变后续计算结果。",
+      "tags": [
+        "异常状态污染",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=12",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "预言机分支泄漏",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么基准预言机直接使用新分支检查触发条件可能影响覆盖引导 fuzzer？",
+      "answer": "fuzzer 可能把预言机分支当作覆盖目标，从而获得与原程序无关的提示。",
+      "explanation": "基准插桩不仅会观察执行，还可能改变被测工具看到的反馈。",
+      "example": "输入被引导去满足插入的检查分支。",
+      "tags": [
+        "预言机分支泄漏",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=13",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "未收录缺陷",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 目标发生崩溃但没有命中任何已插桩缺陷，能否据此排除真实程序缺陷？",
+      "answer": "不能；真实目标中仍可能有尚未被基准标注的其他缺陷。",
+      "explanation": "应对崩溃单独复现和归因，而不是只依据已知缺陷列表。",
+      "example": "回放发现没有已知 canary 命中，仍需检查堆栈。",
+      "tags": [
+        "未收录缺陷",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=11",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "缺陷可触发性证明",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 中一个漏洞触发样例（PoV）主要证明什么？",
+      "answer": "它表明该输入在对应目标和配置下能够满足该缺陷的触发条件。",
+      "explanation": "没有 PoV 时不能仅凭多次测试未触发就断言该缺陷不可触发。",
+      "example": "保留触发样例和目标版本。",
+      "tags": [
+        "缺陷可触发性证明",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=14",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-014",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "触发样本保存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 的监视器记录到触发条件成立，是否一定有对应输入保存在 fuzzer 的崩溃目录？",
+      "answer": "不一定；若未出现 fuzzer 认定的崩溃，该输入可能没有作为崩溃样本保存。",
+      "explanation": "监视器统计与 fuzzer 保存崩溃文件是不同机制。",
+      "example": "查看触发计数时还要确认是否保存了复现输入。",
+      "tags": [
+        "触发样本保存",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/magma/docs/faq.html",
+      "referenceTitle": "Magma 官方 FAQ"
+    },
+    {
+      "id": "magmaeval-015",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "监控计数粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 监视日志中某个缺陷的触达或触发计数，能否直接当作不同缺陷的数量？",
+      "answer": "不能；它统计该缺陷被触达或触发的次数，并不是不同根因的数量。",
+      "explanation": "同一个缺陷可能被多个输入反复触发。",
+      "example": "一个缺陷的触发计数为 100，不表示发现了 100 个缺陷。",
+      "tags": [
+        "监控计数粒度",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/magma/docs/faq.html",
+      "referenceTitle": "Magma 官方 FAQ"
+    },
+    {
+      "id": "magmaeval-016",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "采样时间精度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 监视器按固定间隔轮询时，记录时间对首次触发时间有什么限制？",
+      "answer": "记录时间受轮询间隔限制，通常只能近似定位首次触发发生的时间。",
+      "explanation": "读取间隔越长，时间分辨率越粗。",
+      "example": "每 5 秒采样不能精确区分两次采样之间的触发时刻。",
+      "tags": [
+        "采样时间精度",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://hexhive.epfl.ch/magma/docs/faq.html",
+      "referenceTitle": "Magma 官方 FAQ"
+    },
+    {
+      "id": "magmaeval-017",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "驱动影响可达性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较 Magma 上的 fuzzer 时，为什么要记录所用目标驱动程序？",
+      "answer": "同一库的不同驱动可能调用不同功能，从而影响可达代码和缺陷。",
+      "explanation": "不同驱动之间的结果不能只归因于 fuzzer 算法。",
+      "example": "图像库的解码驱动和转换驱动覆盖不同功能。",
+      "tags": [
+        "驱动影响可达性",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=8",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-018",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "崩溃签名的局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用栈哈希给崩溃去重时，为什么可能高估或低估真实缺陷数？",
+      "answer": "同一缺陷可能产生不同栈；不同缺陷也可能得到相同或相似栈。",
+      "explanation": "栈哈希是启发式线索，确认根因仍需进一步分析。",
+      "example": "不同调用路径触发同一个底层错误。",
+      "tags": [
+        "崩溃签名的局限",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1808.09700v2",
+      "referenceTitle": "Evaluating Fuzz Testing (2018)"
+    },
+    {
+      "id": "magmaeval-019",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "缺陷存活函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Magma 时间分析中的缺陷存活概率表示什么？",
+      "answer": "它表示到给定时间为止，缺陷仍未达到所研究状态（如触发）的概率。",
+      "explanation": "必须说明统计的是首次触达、触发还是检测。",
+      "example": "比较两种 fuzzer 在一小时内尚未触发某缺陷的概率。",
+      "tags": [
+        "缺陷存活函数",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=15",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-020",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "限时试验删失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "限时模糊测试结束时仍未触发某缺陷，为什么属于右删失观察？",
+      "answer": "只知道截至试验结束仍未触发，实际首次触发时间未知，甚至可能永不触发。",
+      "explanation": "未触发不是一次发生在超时时刻的触发。",
+      "example": "运行 24 小时后仍未触发，记录为超过 24 小时。",
+      "tags": [
+        "限时试验删失",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=15",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-021",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "发现时间中位数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如果缺陷在观察期内的估计存活概率始终高于 0.5，能否从该曲线得到观察期内的中位触发时间？",
+      "answer": "不能；曲线尚未降到 0.5，观察期内没有足够信息确定该中位时间。",
+      "explanation": "不应把试验截止时间当成中位触发时间。",
+      "example": "多数试验截止时仍未触发该缺陷。",
+      "tags": [
+        "发现时间中位数",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=15",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-022",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "只看成功试验的偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "计算缺陷触发时间时，只平均成功触发的试验会遗漏什么？",
+      "answer": "它排除了限时内未触发的试验，无法反映完整试验的发现能力。",
+      "explanation": "应同时报告未触发次数或采用能处理删失的时间分析。",
+      "example": "仅有少数运行很快触发，但多数运行未触发。",
+      "tags": [
+        "只看成功试验的偏差",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://hexhive.epfl.ch/publications/files/21SIGMETRICS.pdf#page=15",
+      "referenceTitle": "Magma: A Ground-Truth Fuzzing Benchmark (2020)"
+    },
+    {
+      "id": "magmaeval-023",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞基准与时间评估",
+      "knowledgePoint": "汇总排名构成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzBench 默认报告的跨基准平均排名依据什么构成？",
+      "answer": "先按各基准上各 fuzzer 的覆盖率中位数排名，再汇总这些排名。",
+      "explanation": "这是所引固定版本默认报告的定义，不能把平均排名当作平均覆盖边数。",
+      "example": "分别在多个程序上排名后计算平均名次。",
+      "tags": [
+        "汇总排名构成",
+        "模糊测试",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/fuzzbench/blob/3234e151d70f6093272a9b4155e68ee57faf986c/docs/reference/report.md",
+      "referenceTitle": "FuzzBench 固定版本报告文档"
+    }
+  ]
+}

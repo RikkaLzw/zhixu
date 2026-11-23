@@ -1,0 +1,60 @@
+{
+  "source": {
+    "id": "linux-waitpid-selection",
+    "title": "Linux man-pages：waitpid(2)",
+    "url": "https://man7.org/linux/man-pages/man2/waitpid.2.html",
+    "type": "Linux 系统调用手册",
+    "note": "依据 Linux man-pages 的 wait/waitpid 接口说明逐题整理；选项语义按文档描述表述。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "waitpid-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 子进程等待",
+      "knowledgePoint": "pid 选择规则",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Linux waitpid(pid, ...) 中 pid 为 -1、0 和小于 -1 时，分别选择哪些子进程？",
+      "answer": "-1 表示任意子进程；0 表示调用进程同一进程组中的子进程；小于 -1 表示进程组 ID 等于其绝对值的子进程。",
+      "explanation": "pid 大于零时则选择 PID 等于该值的子进程。",
+      "example": "waitpid(-1, ...) 可等待任意一个符合条件的子进程状态变化。",
+      "tags": ["Linux", "waitpid", "子进程"],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/waitpid.2.html"
+    },
+    {
+      "id": "waitpid-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 子进程等待",
+      "knowledgePoint": "停止状态等待",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux waitpid 的 WUNTRACED 选项会额外报告什么子进程状态？",
+      "answer": "报告已经停止、但尚未报告过停止状态的子进程。",
+      "explanation": "停止状态不同于终止状态；调用方可用 WIFSTOPPED 检查返回状态。",
+      "example": "父进程可在启用作业控制时获知子进程被停止。",
+      "tags": ["Linux", "waitpid", "WUNTRACED"],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/waitpid.2.html"
+    },
+    {
+      "id": "waitpid-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 子进程等待",
+      "knowledgePoint": "继续状态等待",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux waitpid 的 WCONTINUED 选项会报告什么事件？",
+      "answer": "报告因收到 SIGCONT 而继续运行的子进程。",
+      "explanation": "它用于获知子进程从停止状态恢复运行。",
+      "example": "父进程可据此更新受作业控制的子进程状态。",
+      "tags": ["Linux", "waitpid", "WCONTINUED"],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/waitpid.2.html"
+    }
+  ]
+}

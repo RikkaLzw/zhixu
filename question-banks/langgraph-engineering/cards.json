@@ -1,0 +1,152 @@
+{
+  "source": {
+    "id": "langgraph-engineering",
+    "title": "LangGraph：状态图与持久执行",
+    "url": "https://docs.langchain.com/oss/python/langgraph/overview",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "graphagent-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "状态与执行",
+      "knowledgePoint": "状态图",
+      "questionType": "概念与原理",
+      "question": "LangGraph 的状态图使用哪些基本构件组织工作流？",
+      "answer": "它用共享状态、节点和边描述工作流的执行与状态变化。",
+      "explanation": "图中可以组合确定性步骤和模型驱动步骤。",
+      "example": "先执行输入校验节点，再执行模型分析节点。",
+      "tags": [
+        "状态图",
+        "Agent",
+        "工作流"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/overview",
+      "origin": "自行整理"
+    },
+    {
+      "id": "graphagent-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "状态与执行",
+      "knowledgePoint": "图节点",
+      "questionType": "概念与原理",
+      "question": "LangGraph 状态图中的节点通常表示什么？",
+      "answer": "节点表示工作流中的一个执行步骤，能够接收状态并产生状态更新。",
+      "explanation": "节点可以实现普通代码逻辑，也可以调用模型或工具。",
+      "example": "日志解析节点返回解析后的字段。",
+      "tags": [
+        "图节点",
+        "Agent",
+        "工作流"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/graph-api",
+      "origin": "自行整理"
+    },
+    {
+      "id": "graphagent-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "状态与执行",
+      "knowledgePoint": "图边",
+      "questionType": "概念与原理",
+      "question": "LangGraph 状态图中的边主要控制什么？",
+      "answer": "边定义节点之间的执行流，决定完成一个步骤后转向哪里。",
+      "explanation": "条件边可以根据状态选择后续路径。",
+      "example": "校验失败转到错误处理节点，成功转到分析节点。",
+      "tags": [
+        "图边",
+        "Agent",
+        "工作流"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/graph-api",
+      "origin": "自行整理"
+    },
+    {
+      "id": "graphagent-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "持久执行",
+      "knowledgePoint": "检查点",
+      "questionType": "概念与原理",
+      "question": "状态检查点在长时间运行的工作流中有什么用途？",
+      "answer": "它保存执行过程中的状态，使任务在中断或暂停后能够恢复。",
+      "explanation": "恢复仍需要配套的持久化存储和正确的线程标识。",
+      "example": "人工审批暂停后从已保存的状态继续执行。",
+      "tags": [
+        "检查点",
+        "Agent",
+        "工作流"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/overview",
+      "origin": "自行整理"
+    },
+    {
+      "id": "graphagent-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "持久执行",
+      "knowledgePoint": "重放与副作用",
+      "questionType": "设计与权衡",
+      "question": "为什么可恢复工作流中的外部写操作要考虑幂等？",
+      "answer": "恢复执行可能重新运行部分步骤；非幂等写操作可能因此产生重复副作用。",
+      "explanation": "可用幂等键或其他去重机制保护外部操作。",
+      "example": "重复提交同一订单时用固定请求标识避免重复创建。",
+      "tags": [
+        "重放与副作用",
+        "Agent",
+        "工作流"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/functional-api",
+      "origin": "自行整理"
+    },
+    {
+      "id": "graphagent-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "人机协作",
+      "knowledgePoint": "人工中断",
+      "questionType": "概念与原理",
+      "question": "LangGraph 的 human-in-the-loop 能支持什么交互？",
+      "answer": "工作流可以暂停，让人检查或编辑状态，然后继续执行。",
+      "explanation": "具体暂停位置和后续行为由工作流设计决定。",
+      "example": "在执行重要操作前暂停并等待人工复核。",
+      "tags": [
+        "人工中断",
+        "Agent",
+        "工作流"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/overview",
+      "origin": "自行整理"
+    },
+    {
+      "id": "graphagent-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "运行观测",
+      "knowledgePoint": "流式状态",
+      "questionType": "概念与原理",
+      "question": "状态化 Agent 工作流中的流式输出可以传递什么？",
+      "answer": "它可以逐步输出 token、状态更新或其他执行事件。",
+      "explanation": "具体可用事件取决于运行时和所选流模式。",
+      "example": "界面先展示生成中的文本，再显示节点完成状态。",
+      "tags": [
+        "流式状态",
+        "Agent",
+        "工作流"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/overview",
+      "origin": "自行整理"
+    }
+  ]
+}

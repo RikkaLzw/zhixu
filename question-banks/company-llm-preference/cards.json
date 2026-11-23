@@ -1,0 +1,147 @@
+{
+  "source": {
+    "id": "company-llm-preference",
+    "title": "大厂公开面经合集：大模型训练与推理",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900324%E3%80%91%E5%AD%97%E8%8A%82%E4%B8%80%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "合集转载的个人复盘，公司、岗位和经历未经企业确认；答案另依据逐题引用的论文或技术文档核验。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "llmint-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型训练与推理",
+      "knowledgePoint": "SFT与DPO",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "监督微调与原始 DPO 使用的训练信号有什么区别？",
+      "answer": "监督微调学习给定的目标回答；DPO 使用同一提示下的偏好回答与非偏好回答进行优化。",
+      "explanation": "原始 DPO 的偏好对可由人类或其他来源标注。",
+      "example": "对同一问题给两个回答标注偏好。",
+      "tags": [
+        "SFT与DPO",
+        "模型训练与推理",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900324%E3%80%91%E5%AD%97%E8%8A%82%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "字节公开面经（合集转载，经历为分享者自述）",
+      "supportingReferences": [
+        {
+          "id": "llm-paper-ref",
+          "title": "相关论文：Direct Preference Optimization",
+          "url": "https://arxiv.org/abs/2305.18290",
+          "type": "研究论文",
+          "evidence": "source"
+        },
+        {
+          "id": "sft-reference",
+          "title": "TRL：Supervised Fine-Tuning",
+          "url": "https://huggingface.co/docs/trl/main/en/sft_trainer",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "llmint-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型训练与推理",
+      "knowledgePoint": "DPO参考模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 DPO 目标中的参考模型起什么作用？",
+      "answer": "它提供比较概率的基准，使偏好优化体现相对于参考策略的偏离约束。",
+      "explanation": "这是目标设计中的正则化思路，不是保证输出始终正确的硬约束。",
+      "example": "比较当前策略和参考策略对偏好回答的相对概率。",
+      "tags": [
+        "DPO参考模型",
+        "模型训练与推理",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900317%E3%80%91%E7%99%BE%E5%BA%A6%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "百度公开面经（合集转载，经历为分享者自述）",
+      "supportingReferences": [
+        {
+          "id": "llm-paper-ref",
+          "title": "相关论文：Direct Preference Optimization",
+          "url": "https://arxiv.org/abs/2305.18290",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "llmint-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型训练与推理",
+      "knowledgePoint": "DPO与PPO式RLHF",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "原始 DPO 与常见 PPO 式 RLHF 在奖励模型训练上有什么区别？",
+      "answer": "DPO 直接利用偏好对优化策略；常见 PPO 式 RLHF 先训练显式奖励模型，再用强化学习优化策略。",
+      "explanation": "这是两种具体训练流程的比较，并非说 PPO 本身必须使用独立奖励模型。",
+      "example": "同一偏好数据可用于不同的对齐训练流程。",
+      "tags": [
+        "DPO与PPO式RLHF",
+        "模型训练与推理",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "referenceId": "company-alibaba",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900321%E3%80%91%E9%98%BF%E9%87%8C%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "阿里公开面经（合集转载，经历为分享者自述）",
+      "supportingReferences": [
+        {
+          "id": "llm-paper-ref",
+          "title": "相关论文：Direct Preference Optimization",
+          "url": "https://arxiv.org/abs/2305.18290",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "llmint-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型训练与推理",
+      "knowledgePoint": "投机解码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "投机解码如何减少大模型逐 token 串行生成的次数？",
+      "answer": "较小的草稿模型先提出多个候选 token，目标模型再并行验证候选并接受合适部分。",
+      "explanation": "原始算法使用特定接受与修正步骤以保持目标模型分布；速度取决于接受率和额外开销。",
+      "example": "草稿连续提出几个 token，目标模型一次检查它们。",
+      "tags": [
+        "投机解码",
+        "模型训练与推理",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "referenceId": "company-tencent",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "腾讯公开面经（合集转载，经历为分享者自述）",
+      "supportingReferences": [
+        {
+          "id": "llm-paper-ref",
+          "title": "相关论文：Speculative Decoding",
+          "url": "https://arxiv.org/abs/2211.17192",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

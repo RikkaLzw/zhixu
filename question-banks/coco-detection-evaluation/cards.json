@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "coco-detection-evaluation",
+    "title": "COCO Python API：目标检测评估",
+    "url": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/cocoeval.py",
+    "type": "论文、协议规范与开源实现",
+    "note": "依据逐题引用的论文、规范或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "cocoeval-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "COCO 目标检测评估",
+      "knowledgePoint": "评估流程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCO Python API 的 evaluate、accumulate 和 summarize 通常按什么顺序调用？",
+      "answer": "先逐图评估 evaluate，再汇总 accumulate，最后用 summarize 输出摘要指标。",
+      "explanation": "摘要依赖前面的评估与汇总结果。",
+      "example": "加载标注和检测结果后依次执行三步。",
+      "tags": [
+        "COCO 目标检测评估",
+        "评估流程"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/cocoeval.py"
+    },
+    {
+      "id": "cocoeval-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "COCO 目标检测评估",
+      "knowledgePoint": "置信度顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCOeval 在固定图像和类别内，通常按什么顺序尝试匹配检测框？",
+      "answer": "按检测分数从高到低匹配。",
+      "explanation": "分数排序影响精确率—召回率曲线。",
+      "example": "高分误检排在正确检测前面可能降低 AP。",
+      "tags": [
+        "COCO 目标检测评估",
+        "置信度顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/cocoeval.py"
+    },
+    {
+      "id": "cocoeval-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "COCO 目标检测评估",
+      "knowledgePoint": "普通标注匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCOeval 的同一 IoU 阈值下，一个普通非 crowd 标注能与多个检测框同时匹配吗？",
+      "answer": "不能；匹配过的普通标注不会再被后续检测框匹配。",
+      "explanation": "crowd 标注具有不同的匹配规则；多余的普通检测可能成为假阳性。",
+      "example": "同一真实目标的重复检测中，后面的框可能成为误检。",
+      "tags": [
+        "COCO 目标检测评估",
+        "普通标注匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/cocoeval.py"
+    },
+    {
+      "id": "cocoeval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "COCO 目标检测评估",
+      "knowledgePoint": "召回采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCOeval 默认检测参数使用多少个召回阈值来采样精确率曲线？",
+      "answer": "使用从 0 到 1、间隔 0.01 的 101 个召回阈值。",
+      "explanation": "实现还在采样前构造单调精确率包络。",
+      "example": "以 0.00、0.01 等召回水平取对应精确率。",
+      "tags": [
+        "COCO 目标检测评估",
+        "召回采样"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/cocoeval.py"
+    },
+    {
+      "id": "cocoeval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "COCO 目标检测评估",
+      "knowledgePoint": "检测数量上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCOeval 默认 bbox 评估的 maxDets=[1,10,100] 如何限制检测结果？",
+      "answer": "在每张图、每个评估类别内按分数排序，并分别考虑最多 1、10 或 100 个检测。",
+      "explanation": "类别无关模式下，类别会先合并。",
+      "example": "默认 AP 汇总通常使用 maxDets=100。",
+      "tags": [
+        "COCO 目标检测评估",
+        "检测数量上限"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/cocoeval.py"
+    },
+    {
+      "id": "cocoeval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "COCO 目标检测评估",
+      "knowledgePoint": "类别开关",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCOeval 的 useCats=0 在检测评估中有什么作用？",
+      "answer": "它忽略类别标签，将类别合并评估，常用于候选区域评估。",
+      "explanation": "默认 useCats=1 会按类别分别评估。",
+      "example": "评估候选框定位能力时可以关闭类别区分。",
+      "tags": [
+        "COCO 目标检测评估",
+        "类别开关"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/cocoeval.py"
+    },
+    {
+      "id": "cocoeval-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "COCO 目标检测评估",
+      "knowledgePoint": "crowd重叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCO API 对 iscrowd 标注计算重叠时，分母与普通 IoU 有什么不同？",
+      "answer": "crowd 情况下使用交集面积除以检测区域面积；普通 IoU 使用交集除以并集。",
+      "explanation": "这允许检测框匹配 crowd 区域中的一个子区域。",
+      "example": "完全落在 crowd 区域内的小检测框可获得 1 的该重叠值。",
+      "tags": [
+        "COCO 目标检测评估",
+        "crowd重叠"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/mask.py"
+    },
+    {
+      "id": "cocoeval-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "COCO 目标检测评估",
+      "knowledgePoint": "缺失标注类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCOeval 中某类别在评估范围内没有非忽略真实标注时，其 precision 项通常如何处理？",
+      "answer": "对应项保持为 -1，摘要平均时会排除这些无效项，而不是把它们当作 0。",
+      "explanation": "这与存在真实目标但未检出得到的 0 不同。",
+      "example": "测试集中没有某类别的标注时，不应简单把该类别 AP 记为零。",
+      "tags": [
+        "COCO 目标检测评估",
+        "缺失标注类别"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/cocoeval.py"
+    },
+    {
+      "id": "cocoeval-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "COCO 目标检测评估",
+      "knowledgePoint": "尺寸分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "COCOeval 为什么分别报告 small、medium 和 large 的检测指标？",
+      "answer": "它按真实标注面积范围分别评估，以观察不同尺寸目标的检测表现。",
+      "explanation": "默认面积范围和检测数量上限属于实现参数，比较结果时应保持一致。",
+      "example": "小目标 AP 可以暴露总体 AP 掩盖的问题。",
+      "tags": [
+        "COCO 目标检测评估",
+        "尺寸分组"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/cocodataset/cocoapi/blob/8c9bcc3cf640524c4c20a9c40e89cb6a2f2fa0e9/PythonAPI/pycocotools/cocoeval.py"
+    }
+  ]
+}

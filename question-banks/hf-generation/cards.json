@@ -1,0 +1,245 @@
+{
+  "source": {
+    "id": "hf-generation",
+    "title": "Hugging Face：语言模型架构与生成策略",
+    "url": "https://huggingface.co/docs/transformers/en/generation_strategies",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "generate-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练目标",
+      "knowledgePoint": "自回归预训练",
+      "questionType": "概念与原理",
+      "question": "常见 decoder-only 语言模型的预训练目标是什么？",
+      "answer": "根据前面的 token 预测下一个 token。",
+      "explanation": "模型在大量文本上学习这种条件预测任务。",
+      "example": "根据前文预测句子的下一个 token。",
+      "tags": [
+        "自回归预训练",
+        "大模型",
+        "生成"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter1/6",
+      "origin": "自行整理"
+    },
+    {
+      "id": "generate-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练目标",
+      "knowledgePoint": "指令微调",
+      "questionType": "比较与选型",
+      "question": "指令微调与通用预训练的主要目的有什么区别？",
+      "answer": "通用预训练学习语言及广泛模式；指令微调进一步让模型学习按指令给出合适响应。",
+      "explanation": "指令微调依赖任务示例或指令—回答数据。",
+      "example": "用问答示例调整预训练模型的回答方式。",
+      "tags": [
+        "指令微调",
+        "大模型",
+        "生成"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter1/6",
+      "origin": "自行整理"
+    },
+    {
+      "id": "generate-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成策略",
+      "knowledgePoint": "贪心解码",
+      "questionType": "概念与原理",
+      "question": "语言模型的贪心解码每一步如何选 token？",
+      "answer": "每一步选择当前概率最高的候选 token。",
+      "explanation": "局部最优选择不保证整个生成序列的联合概率最高。",
+      "example": "当前分布中 A 的概率最大时选择 A。",
+      "tags": [
+        "贪心解码",
+        "大模型",
+        "生成"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/en/generation_strategies",
+      "origin": "自行整理"
+    },
+    {
+      "id": "generate-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成策略",
+      "knowledgePoint": "随机采样",
+      "questionType": "概念与原理",
+      "question": "语言模型的随机采样怎样选择下一个 token？",
+      "answer": "它根据当前候选 token 的概率分布随机抽取下一个 token。",
+      "explanation": "过滤条件会影响候选集合；使用采样时，相同输入的多次输出可能不同。",
+      "example": "同一提示词多次采样得到不同措辞。",
+      "tags": [
+        "随机采样",
+        "大模型",
+        "生成"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/en/generation_strategies",
+      "origin": "自行整理"
+    },
+    {
+      "id": "generate-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成策略",
+      "knowledgePoint": "束搜索",
+      "questionType": "概念与原理",
+      "question": "束搜索在生成时保留什么？",
+      "answer": "它在每一步保留多个候选序列，并继续扩展和筛选这些候选。",
+      "explanation": "候选数量与评分、停止规则会影响速度和最终结果。",
+      "example": "保留若干翻译候选后继续生成下一词。",
+      "tags": [
+        "束搜索",
+        "大模型",
+        "生成"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/en/generation_strategies",
+      "origin": "自行整理"
+    },
+    {
+      "id": "generate-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成参数",
+      "knowledgePoint": "温度",
+      "questionType": "概念与原理",
+      "question": "采样温度改变了什么？",
+      "answer": "温度改变 logits 转成概率时分布的平坦程度；较低温度通常使高概率候选更集中。",
+      "explanation": "它用于采样，具体允许的取值依赖实现。",
+      "example": "在其他设置相同的情况下，降低正的 temperature 使采样更集中。",
+      "tags": [
+        "温度",
+        "大模型",
+        "生成",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/en/main_classes/text_generation",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900228%E3%80%91%E8%85%BE%E8%AE%AFIEG.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "generate-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成参数",
+      "knowledgePoint": "top-k 采样",
+      "questionType": "概念与原理",
+      "question": "top-k 采样如何限制候选 token？",
+      "answer": "每一步只保留概率最高的 K 个 token，再在保留集合中采样。",
+      "explanation": "当 K 或其他过滤条件改变时，候选集合也会变化。",
+      "example": "top-k 为 10 时最多从前 10 个候选中采样。",
+      "tags": [
+        "top-k 采样",
+        "大模型",
+        "生成",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/en/main_classes/text_generation",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900228%E3%80%91%E8%85%BE%E8%AE%AFIEG.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "generate-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成参数",
+      "knowledgePoint": "top-p 采样",
+      "questionType": "概念与原理",
+      "question": "top-p 采样如何确定候选 token 集合？",
+      "answer": "按概率从高到低选择累计概率达到阈值所需的最小候选集合，再从中采样。",
+      "explanation": "候选数量随当前概率分布变化。",
+      "example": "分布很集中时达到同一阈值可能只需少量 token。",
+      "tags": [
+        "top-p 采样",
+        "大模型",
+        "生成",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/en/main_classes/text_generation",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900228%E3%80%91%E8%85%BE%E8%AE%AFIEG.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "generate-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成参数",
+      "knowledgePoint": "生成长度上限",
+      "questionType": "代码与配置",
+      "question": "Transformers 的 max_new_tokens 限制什么？",
+      "answer": "它限制新生成的 token 数，不把输入提示词的 token 数算进该上限。",
+      "explanation": "实际生成也可能因结束符等停止条件提前结束。",
+      "example": "设置上限 100 不表示一定生成 100 个 token。",
+      "tags": [
+        "生成长度上限",
+        "大模型",
+        "生成"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/en/main_classes/text_generation",
+      "origin": "自行整理"
+    },
+    {
+      "id": "generate-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "推理优化",
+      "knowledgePoint": "KV Cache",
+      "questionType": "概念与原理",
+      "question": "自回归生成中的 KV Cache 主要用于什么？",
+      "answer": "缓存先前 token 的注意力键和值，减少后续解码步骤中对它们的重复计算。",
+      "explanation": "缓存会占用额外显存，大小与序列长度等因素有关。",
+      "example": "长回答生成时复用前文计算得到的键和值。",
+      "tags": [
+        "KV Cache",
+        "大模型",
+        "生成"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/en/main_classes/text_generation",
+      "origin": "自行整理"
+    }
+  ]
+}

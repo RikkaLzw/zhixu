@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "electra-pretraining-foundations",
+    "title": "ELECTRA 原论文 v1：替换词检测",
+    "url": "https://arxiv.org/pdf/2003.10555v1",
+    "type": "原论文、官方文档与固定版本源码",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编，具体条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "electra-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "ELECTRA 预训练",
+      "knowledgePoint": "学习信号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ELECTRA 原论文的判别器与普通掩码语言模型在训练位置上有什么区别？",
+      "answer": "判别器对输入的每个 token 位置判断是否为原词；普通掩码语言模型主要预测被选中的位置。",
+      "explanation": "更密集的判别信号是论文关注的效率来源之一。",
+      "example": "未被替换的位置也参与判别训练。",
+      "tags": [
+        "ELECTRA 预训练",
+        "学习信号"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2003.10555v1"
+    },
+    {
+      "id": "electra-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELECTRA 预训练",
+      "knowledgePoint": "与GAN区别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 ELECTRA 的标准训练虽然有生成器和判别器，却不是普通 GAN 式对抗训练？",
+      "answer": "生成器按掩码语言模型目标训练，而不是通过判别器损失对抗优化。",
+      "explanation": "离散 token 采样使直接反向传播穿过采样步骤变得困难。",
+      "example": "生成器学习恢复原词，不直接优化骗过判别器的奖励。",
+      "tags": [
+        "ELECTRA 预训练",
+        "与GAN区别"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2003.10555v1"
+    },
+    {
+      "id": "electra-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELECTRA 预训练",
+      "knowledgePoint": "离散采样梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ELECTRA 标准训练中，判别器损失会穿过离散 token 采样反向传播到生成器的采样分布吗？",
+      "answer": "不会直接穿过离散采样步骤；但生成器与判别器共享的参数仍可分别收到相关损失的梯度。",
+      "explanation": "应区分通过采样路径回传和共享参数更新。",
+      "example": "共享嵌入可以受两项训练目标影响。",
+      "tags": [
+        "ELECTRA 预训练",
+        "离散采样梯度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2003.10555v1"
+    },
+    {
+      "id": "electra-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELECTRA 预训练",
+      "knowledgePoint": "生成器大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ELECTRA 为什么通常使用比判别器小的生成器？",
+      "answer": "较小生成器可以降低预训练的额外计算开销，论文实验中也取得了较好的效果。",
+      "explanation": "最佳大小依模型与训练条件而定，并非越小越好。",
+      "example": "用较小的掩码语言模型生成替换词。",
+      "tags": [
+        "ELECTRA 预训练",
+        "生成器大小"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2003.10555v1"
+    },
+    {
+      "id": "electra-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELECTRA 预训练",
+      "knowledgePoint": "共享嵌入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ELECTRA 原论文的生成器较小时，仍可与判别器共享哪些参数？",
+      "answer": "可共享 token 和位置嵌入，并通过投影适配较小生成器的隐藏维度。",
+      "explanation": "隐藏维度不同并不要求两个网络的全部 Transformer 层共享。",
+      "example": "共享嵌入后，生成器内部仍有自己的较小隐藏层。",
+      "tags": [
+        "ELECTRA 预训练",
+        "共享嵌入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2003.10555v1"
+    }
+  ]
+}

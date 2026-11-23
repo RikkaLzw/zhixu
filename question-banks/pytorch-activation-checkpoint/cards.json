@@ -1,0 +1,306 @@
+{
+  "source": {
+    "id": "pytorch-activation-checkpoint",
+    "title": "PyTorch 2.7：激活检查点与重计算",
+    "url": "https://docs.pytorch.org/docs/2.7/checkpoint.html",
+    "type": "教材、论文与官方文档",
+    "note": "逐题依据所列资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptcheck-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "计算换内存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "激活检查点如何用计算换取训练内存？",
+      "answer": "前向时不保留部分反向所需中间激活，在反向时重新计算这些激活。",
+      "explanation": "重计算会增加部分计算工作。",
+      "example": "对深层网络的一段计算使用 checkpoint。",
+      "tags": [
+        "计算换内存",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "激活与训练快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "激活检查点和保存训练检查点有什么不同用途？",
+      "answer": "前者减少反向传播所需的激活内存；后者保存模型或优化器等状态以便恢复训练。",
+      "explanation": "两者名称相似，但作用和生命周期不同。",
+      "example": "重计算一段网络与把权重写入文件是不同操作。",
+      "tags": [
+        "激活与训练快照",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html",
+      "supportingReferences": [
+        {
+          "id": "pytorch-save-checkpoint",
+          "title": "PyTorch：保存和恢复训练检查点",
+          "url": "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html#saving-loading-a-general-checkpoint-for-inference-and-or-resuming-training",
+          "type": "官方教程",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "ptcheck-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "重入前向图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 reentrant 与 non-reentrant 激活检查点在前向记录计算图上有何区别？",
+      "answer": "reentrant 前向在 no_grad 下运行；non-reentrant 会记录前向自动微分图。",
+      "explanation": "这会影响支持的反向传播方式。",
+      "example": "需要在检查点区域内使用自动微分时考虑 non-reentrant。",
+      "tags": [
+        "重入前向图",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "提前停止重算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的两种检查点实现默认如何停止反向时的重计算？",
+      "answer": "non-reentrant 在所需中间值重算完后可提前停止；reentrant 会重算整个函数。",
+      "explanation": "non-reentrant 的提前停止行为可以配置。",
+      "example": "函数后部不再需要时，non-reentrant 可能不重算该部分。",
+      "tags": [
+        "提前停止重算",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "自动微分接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 中，哪个检查点变体支持使用 torch.autograd.grad？",
+      "answer": "使用 use_reentrant=False 的 non-reentrant 变体支持；reentrant 的反向接口有更严格限制。",
+      "explanation": "应显式指定 use_reentrant。",
+      "example": "对检查点输出调用 autograd.grad 时使用 non-reentrant。",
+      "tags": [
+        "自动微分接口",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "输入梯度要求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 reentrant 检查点对需要梯度的输入和输出有什么要求？",
+      "answer": "至少一个输入和一个输出须设置 requires_grad=True，否则检查点部分不会产生梯度。",
+      "explanation": "non-reentrant 变体没有这一要求。",
+      "example": "输入被完全冻结时需检查适配器参数能否获得梯度。",
+      "tags": [
+        "输入梯度要求",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "嵌套输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 reentrant 检查点如何处理列表或字典中需要梯度的张量？",
+      "answer": "它不把嵌套结构中的张量识别为参与自动微分的输入；non-reentrant 支持这类结构。",
+      "explanation": "封装参数结构会影响 reentrant 检查点的行为。",
+      "example": "仅把可训练张量放在列表中时，使用 non-reentrant。",
+      "tags": [
+        "嵌套输入",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "断开图的张量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 reentrant 检查点能否在区域内无条件支持 detach 后的张量？",
+      "answer": "不能；区域内存在脱离计算图的张量时，反向传播可能报错。",
+      "explanation": "文档建议在检查点函数外进行必要的 detach，或考虑 non-reentrant。",
+      "example": "在检查点外先分离不需要梯度的输出。",
+      "tags": [
+        "断开图的张量",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "随机状态保存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 激活检查点默认为什么保存并恢复随机数状态？",
+      "answer": "重计算时可再现前向中使用的随机操作，例如 Dropout 的随机结果。",
+      "explanation": "保存与恢复随机状态本身可能有额外开销。",
+      "example": "前向和反向重算时使用一致的 Dropout 掩码。",
+      "tags": [
+        "随机状态保存",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "编译模式随机状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 文档中，torch.compile 下 preserve_rng_state=False 是否一定关闭检查点的随机状态保存？",
+      "answer": "不一定；文档指出在 torch.compile 下该标志不起作用，随机状态仍会被保存。",
+      "explanation": "这是依赖版本与执行模式的行为。",
+      "example": "编译模型时不要假设该开关能取消状态保存。",
+      "tags": [
+        "编译模式随机状态",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "跨设备随机性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "检查点函数在内部把张量移到此前未涉及的新设备时，为什么要谨慎处理随机操作？",
+      "answer": "检查点无法预先获知新设备的随机状态，因此与非检查点执行的确定性结果不能保证一致。",
+      "explanation": "默认状态保存也只覆盖 CPU 和推断出的单一非 CPU 设备类型。",
+      "example": "在函数内临时迁移到新设备并使用随机运算。",
+      "tags": [
+        "跨设备随机性",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "重算一致性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么检查点函数不应在前向与反向重算之间依赖变化的全局状态？",
+      "answer": "两次执行行为若不同，可能报错或产生静默错误的梯度。",
+      "explanation": "与随机状态无关的外部可变状态同样需要控制。",
+      "example": "前向后修改函数读取的全局系数。",
+      "tags": [
+        "重算一致性",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "确定性检查范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 non-reentrant 检查点的 determinism_check=\"default\" 会检查重算数值完全相等吗？",
+      "answer": "不会；默认检查重算张量的形状、dtype 和设备是否与保存时一致。",
+      "explanation": "相同元数据不能保证张量值和梯度正确。",
+      "example": "全局系数变化但张量形状未变时，默认检查未必发现。",
+      "tags": [
+        "确定性检查范围",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "顺序模块分段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 checkpoint_sequential 对最后一个分段如何处理？",
+      "answer": "它对除最后一段外的分段使用激活检查点；最后一段正常执行。",
+      "explanation": "各检查点分段的输入会被保存以便重算。",
+      "example": "四段顺序网络的前三段进行检查点处理。",
+      "tags": [
+        "顺序模块分段",
+        "激活检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    },
+    {
+      "id": "ptcheck-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活检查点",
+      "knowledgePoint": "重算副作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么检查点函数中的写文件或修改外部计数器等副作用需要特别小心？",
+      "answer": "函数在反向阶段可能被再次执行，副作用可能重复或产生与前向不同的状态。",
+      "explanation": "non-reentrant 的提前停止也可能让重算过程不执行到所有语句。",
+      "example": "函数中累计调用次数时不能假设只执行一次。",
+      "tags": [
+        "重算副作用",
+        "激活检查点"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.pytorch.org/docs/2.7/checkpoint.html"
+    }
+  ]
+}

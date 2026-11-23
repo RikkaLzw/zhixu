@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "hf-text-generation-pipeline",
+    "title": "Transformers 4.51.3：文本生成 Pipeline",
+    "url": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/pipelines/text_generation.py",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "hfpipegen-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformers 文本生成接口",
+      "knowledgePoint": "管线任务",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 中 pipeline(\"text-generation\") 用于哪类任务？",
+      "answer": "它构建文本生成管线，用模型续写文本或处理支持的聊天消息。",
+      "explanation": "具体可用输入与输出取决于模型和管线配置。",
+      "example": "可以对字符串提示调用生成管线。",
+      "tags": [
+        "Transformers 文本生成接口",
+        "管线任务"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/pipelines/text_generation.py"
+    },
+    {
+      "id": "hfpipegen-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 文本生成接口",
+      "knowledgePoint": "省略提示输出",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "对普通字符串提示调用 text-generation 管线时，return_full_text=False 返回哪部分文本？",
+      "answer": "返回新生成的文本，不把输入提示拼接到返回文本中。",
+      "explanation": "默认完整文本模式会把输入提示和生成文本组合。",
+      "example": "只需展示模型新回复时，可设置该参数。",
+      "tags": [
+        "Transformers 文本生成接口",
+        "省略提示输出"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/pipelines/text_generation.py"
+    },
+    {
+      "id": "hfpipegen-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 文本生成接口",
+      "knowledgePoint": "文本与token输出互斥",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的文本生成管线能同时设置 return_full_text 与 return_tensors 吗？",
+      "answer": "不能；这两个参数同时指定会触发互斥参数错误。",
+      "explanation": "前者控制文本形式，后者要求返回生成 token 编号。",
+      "example": "需读取 token 编号时，不要同时传 return_full_text。",
+      "tags": [
+        "Transformers 文本生成接口",
+        "文本与token输出互斥"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/pipelines/text_generation.py"
+    },
+    {
+      "id": "hfpipegen-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 文本生成接口",
+      "knowledgePoint": "聊天模板",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的文本生成管线接收 role/content 消息列表时怎样准备输入？",
+      "answer": "管线使用分词器的聊天模板格式化消息，再交给模型生成。",
+      "explanation": "模板和特殊标记应与所使用的模型匹配。",
+      "example": "消息包含 user 和 assistant 角色时，可按模型模板序列化。",
+      "tags": [
+        "Transformers 文本生成接口",
+        "聊天模板"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/pipelines/text_generation.py"
+    },
+    {
+      "id": "hfpipegen-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 文本生成接口",
+      "knowledgePoint": "聊天续写默认选择",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的文本生成管线默认如何根据聊天末条消息的角色决定生成方式？",
+      "answer": "末条为 assistant 时默认续写该消息；其他角色时默认开始一条新的 assistant 消息。",
+      "explanation": "可通过 continue_final_message 显式调整；代码相应配置聊天模板的生成提示。",
+      "example": "assistant 末条可用于预填回答，user 末条通常触发新的助手回答。",
+      "tags": [
+        "Transformers 文本生成接口",
+        "聊天续写默认选择"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/pipelines/text_generation.py"
+    },
+    {
+      "id": "hfpipegen-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 文本生成接口",
+      "knowledgePoint": "长输入hole策略",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 handle_long_generation=\"hole\" 如何为生成腾出空间？",
+      "answer": "当输入和预期新 token 超出模型长度时，从输入左侧截断以保留生成空间。",
+      "explanation": "这种策略可能丢失提示开头的重要内容。",
+      "example": "长对话尾部可被保留，但早期约束可能被截掉。",
+      "tags": [
+        "Transformers 文本生成接口",
+        "长输入hole策略"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/pipelines/text_generation.py"
+    },
+    {
+      "id": "hfpipegen-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Transformers 文本生成接口",
+      "knowledgePoint": "hole容量不足",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 使用 hole 策略时，期望新 token 数已占满或超过模型最大长度会怎样？",
+      "answer": "管线无法为输入保留空间，会抛出错误。",
+      "explanation": "该策略不是无限扩展模型上下文长度的方法。",
+      "example": "请求的新 token 数超过模型容量时，需要减少生成长度或更换模型。",
+      "tags": [
+        "Transformers 文本生成接口",
+        "hole容量不足"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/pipelines/text_generation.py"
+    },
+    {
+      "id": "hfpipegen-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 文本生成接口",
+      "knowledgePoint": "推理批次条件",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "Transformers pipeline 批处理的吞吐提升是否对所有输入都保证成立？",
+      "answer": "不保证；效果取决于硬件、输入长度及填充情况，批次过大也可能耗尽显存。",
+      "explanation": "应结合真实长度分布与设备进行测量。",
+      "example": "混入特别长的文本可能增加同批其他文本的填充成本。",
+      "tags": [
+        "Transformers 文本生成接口",
+        "推理批次条件"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/pipelines"
+    }
+  ]
+}

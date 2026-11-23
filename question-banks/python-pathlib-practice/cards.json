@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "python-pathlib-practice",
+    "title": "Python 3.14：pathlib 路径处理",
+    "url": "https://docs.python.org/3.14/library/pathlib.html",
+    "type": "官方文档与源码",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pypath-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python pathlib 路径处理",
+      "knowledgePoint": "路径对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 创建 Path(\"report.txt\") 时会自动创建这个文件吗？",
+      "answer": "不会；它只是构造路径对象。",
+      "explanation": "调用写入或创建目录等方法时才可能改变文件系统。",
+      "example": "Path(\"report.txt\") 可以表示尚不存在的文件。",
+      "tags": [
+        "Python pathlib 路径处理",
+        "路径对象"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/pathlib.html"
+    },
+    {
+      "id": "pypath-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python pathlib 路径处理",
+      "knowledgePoint": "纯路径与实际路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 PurePath 与 Path 在文件系统访问上有什么区别？",
+      "answer": "PurePath 提供路径运算；Path 还提供访问文件系统的方法。",
+      "explanation": "纯路径操作可用于不直接访问文件系统的路径处理。",
+      "example": "PurePath 可计算文件名，Path 可读取文件内容。",
+      "tags": [
+        "Python pathlib 路径处理",
+        "纯路径与实际路径"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/pathlib.html"
+    },
+    {
+      "id": "pypath-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python pathlib 路径处理",
+      "knowledgePoint": "名称与扩展名",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "Python Path(\"report.tar.gz\") 的 name、stem 和 suffix 分别是什么？",
+      "answer": "分别为 report.tar.gz、report.tar 和 .gz。",
+      "explanation": "suffix 只给最后一个后缀；suffixes 可列出多个后缀。",
+      "example": "Path(\"report.tar.gz\").suffixes 为 [\".tar\", \".gz\"]。",
+      "tags": [
+        "Python pathlib 路径处理",
+        "名称与扩展名"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.python.org/3.14/library/pathlib.html"
+    },
+    {
+      "id": "pypath-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python pathlib 路径处理",
+      "knowledgePoint": "父路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python Path 对象的 parent 属性做什么？",
+      "answer": "按路径语义返回直接父路径对象。",
+      "explanation": "读取 parent 不会验证父目录是否存在。",
+      "example": "Path(\"a/b.txt\").parent 为 Path(\"a\")。",
+      "tags": [
+        "Python pathlib 路径处理",
+        "父路径"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/pathlib.html"
+    },
+    {
+      "id": "pypath-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python pathlib 路径处理",
+      "knowledgePoint": "递归建目录",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python Path.mkdir(parents=True, exist_ok=True) 中两个参数分别有什么作用？",
+      "answer": "parents=True 允许创建缺失的父目录；exist_ok=True 允许目标目录已存在。",
+      "explanation": "目标已存在但不是目录时仍可能报错。",
+      "example": "创建多级输出目录时常用该组合。",
+      "tags": [
+        "Python pathlib 路径处理",
+        "递归建目录"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/pathlib.html"
+    },
+    {
+      "id": "pypath-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python pathlib 路径处理",
+      "knowledgePoint": "写入覆盖",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Python Path.write_text(\"new\", encoding=\"utf-8\") 写入已有普通文件时默认追加还是覆盖？",
+      "answer": "覆盖已有内容。",
+      "explanation": "需要追加时可用 Path.open 的追加模式。",
+      "example": "先有 old，调用后文件内容为 new。",
+      "tags": [
+        "Python pathlib 路径处理",
+        "写入覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/pathlib.html"
+    },
+    {
+      "id": "pypath-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python pathlib 路径处理",
+      "knowledgePoint": "读取编码",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python 用 Path.read_text 读取 UTF-8 文本时，如何明确指定编码？",
+      "answer": "传入 encoding=\"utf-8\"。",
+      "explanation": "显式编码可避免依赖当前环境默认编码。",
+      "example": "Path(\"data.txt\").read_text(encoding=\"utf-8\")。",
+      "tags": [
+        "Python pathlib 路径处理",
+        "读取编码"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/pathlib.html"
+    },
+    {
+      "id": "pypath-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python pathlib 路径处理",
+      "knowledgePoint": "递归查找",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python Path.glob(\"*.txt\") 与 Path.rglob(\"*.txt\") 的常见区别是什么？",
+      "answer": "前者匹配当前目录下名字以 .txt 结尾的路径；后者还会递归匹配子目录中的相应路径。",
+      "explanation": "实际结果取决于文件系统内容及符号链接等选项。",
+      "example": "查找项目各子目录中的 .txt 文件可用 rglob。",
+      "tags": [
+        "Python pathlib 路径处理",
+        "递归查找"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/pathlib.html"
+    },
+    {
+      "id": "pypath-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python pathlib 路径处理",
+      "knowledgePoint": "结果排序",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Python Path.glob 返回的路径是否保证特定顺序？",
+      "answer": "不保证；需要稳定顺序时应自行排序。",
+      "explanation": "不同文件系统和目录状态可能给出不同顺序。",
+      "example": "使用 sorted(path.glob(\"*.txt\"))。",
+      "tags": [
+        "Python pathlib 路径处理",
+        "结果排序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/pathlib.html"
+    }
+  ]
+}

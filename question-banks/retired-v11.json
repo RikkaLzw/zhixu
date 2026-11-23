@@ -1,0 +1,35 @@
+{
+  "version": 11,
+  "note": "迁移用第十一版旧主卡快照；仅合并未编辑且目标可用的卡片，归档原卡并保留记录。",
+  "cards": [
+    {
+      "id": "zeek-006",
+      "category": "detection",
+      "question": "为什么 Zeek 中的连接持续时间需要结合检测时机使用？",
+      "answer": "完整持续时间通常要在连接结束或记录产生时才能确定。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "knowledgeArea": "10",
+      "level": "进阶",
+      "tags": [
+        "持续时间",
+        "时间泄漏"
+      ],
+      "explanation": "如果系统要求连接进行中告警，应使用当前已经观察到的时长。",
+      "example": "训练实时模型时，仅取截止到预测时刻的连接统计。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/index.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

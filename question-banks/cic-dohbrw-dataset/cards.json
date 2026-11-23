@@ -1,0 +1,138 @@
+{
+  "source": {
+    "id": "cic-dohbrw-dataset",
+    "title": "CIRA-CIC-DoHBrw-2020 加密 DNS 数据",
+    "url": "https://www.unb.ca/cic/datasets/dohbrw-2020.html",
+    "type": "官方数据集说明",
+    "note": "根据数据集官方采集和特征说明整理；模型评估建议为应用推论。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "dohdata-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "加密 DNS 流量数据",
+      "knowledgePoint": "DoH两层任务",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "CIRA-CIC-DoHBrw-2020 的两层检测分别区分什么？",
+      "answer": "第一层区分 DoH 与非 DoH 流量；第二层区分良性与恶意 DoH 流量。",
+      "explanation": "两层分类目标不同。",
+      "example": "先识别 DoH，再评估该 DoH 流量的类别。",
+      "tags": [
+        "DoH两层任务",
+        "DNS",
+        "安全数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/dohbrw-2020.html",
+      "referenceTitle": "CIRA-CIC-DoHBrw-2020 数据集说明"
+    },
+    {
+      "id": "dohdata-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "加密 DNS 流量数据",
+      "knowledgePoint": "恶意样本范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CIRA-CIC-DoHBrw-2020 的恶意 DoH 样本能代表所有恶意 DoH 行为吗？",
+      "answer": "不能；该数据集生成的恶意样本使用 DNS 隧道工具，未覆盖所有恶意 DoH 形式。",
+      "explanation": "高测试分数不能证明对未覆盖行为同样有效。",
+      "example": "其他非隧道恶意 DoH 用法需要单独评估。",
+      "tags": [
+        "恶意样本范围",
+        "DNS",
+        "安全数据"
+      ],
+      "evidence": "application",
+      "reference": "https://www.unb.ca/cic/datasets/dohbrw-2020.html",
+      "referenceTitle": "CIRA-CIC-DoHBrw-2020 数据集说明"
+    },
+    {
+      "id": "dohdata-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "加密 DNS 流量数据",
+      "knowledgePoint": "采集来源捷径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么用 CIRA-CIC-DoHBrw-2020 原始流量建模时要检查来源 IP 与标签的关系？",
+      "answer": "数据集采集使用不同客户端地址生成不同类别流量，模型可能记住采集身份而不是行为。",
+      "explanation": "检查预测时可用性，并验证移除或按来源分组后的结果。",
+      "example": "删除实验客户端地址后重新评估分类效果。",
+      "tags": [
+        "采集来源捷径",
+        "DNS",
+        "安全数据"
+      ],
+      "evidence": "application",
+      "reference": "https://www.unb.ca/cic/datasets/dohbrw-2020.html",
+      "referenceTitle": "CIRA-CIC-DoHBrw-2020 数据集说明"
+    },
+    {
+      "id": "dohdata-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "加密 DNS 流量数据",
+      "knowledgePoint": "数据包组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CIRA-CIC-DoHBrw-2020 中的 packet clump 是什么？",
+      "answer": "它把同一流中同方向连续出现的一组数据包视为一个聚合单元。",
+      "explanation": "聚合用于概括可能分散在多个数据包中的应用流量。",
+      "example": "连续发送的多个包被汇总为一组。",
+      "tags": [
+        "数据包组",
+        "DNS",
+        "安全数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/dohbrw-2020.html",
+      "referenceTitle": "CIRA-CIC-DoHBrw-2020 数据集说明"
+    },
+    {
+      "id": "dohdata-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "加密 DNS 流量数据",
+      "knowledgePoint": "数据包组超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CIRA-CIC-DoHBrw-2020 为什么对 packet clump 设置超时阈值？",
+      "answer": "避免把时间间隔过大的两个包合并到同一个数据包组。",
+      "explanation": "具体阈值会影响序列表示和可复现性。",
+      "example": "发送间隔超过阈值时开始新的组。",
+      "tags": [
+        "数据包组超时",
+        "DNS",
+        "安全数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/dohbrw-2020.html",
+      "referenceTitle": "CIRA-CIC-DoHBrw-2020 数据集说明"
+    },
+    {
+      "id": "dohdata-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "加密 DNS 流量数据",
+      "knowledgePoint": "加密流量统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "观察加密的 DoH 流量时，哪些非内容特征仍可用于该数据集的建模？",
+      "answer": "数据包长度、发送和接收字节数及时间间隔等统计特征仍可提取。",
+      "explanation": "这些特征不等于直接读取被加密的 DNS 查询内容。",
+      "example": "根据流量时序和包长构造分类输入。",
+      "tags": [
+        "加密流量统计",
+        "DNS",
+        "安全数据"
+      ],
+      "evidence": "application",
+      "reference": "https://www.unb.ca/cic/datasets/dohbrw-2020.html",
+      "referenceTitle": "CIRA-CIC-DoHBrw-2020 数据集说明"
+    }
+  ]
+}

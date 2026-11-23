@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "redis-persistence-practice",
+    "title": "Redis 官方文档：RDB 与 AOF 持久化",
+    "url": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/",
+    "type": "官方文档与手册",
+    "note": "依据逐题链接自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "redispersist-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 持久化实践",
+      "knowledgePoint": "后台快照",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Redis 的 BGSAVE 生成 RDB 快照时，子进程和父进程各承担什么？",
+      "answer": "Redis fork 子进程写入临时快照，父进程继续处理请求。",
+      "explanation": "完成后新快照替换旧文件；写时复制及 fork 仍可能带来资源开销。",
+      "example": "大数据集执行后台快照时，应关注延迟和内存使用。",
+      "tags": [
+        "Redis 持久化实践",
+        "后台快照"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/"
+    },
+    {
+      "id": "redispersist-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 持久化实践",
+      "knowledgePoint": "AOF 同步策略",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Redis 的 appendfsync always、everysec 和 no 在同步时机上有什么区别？",
+      "answer": "分别在写入批次后同步、通常每秒同步、以及不主动调用 fsync 而交由操作系统刷新。",
+      "explanation": "同步频率影响延迟和故障时可能丢失的数据量。",
+      "example": "everysec 是文档描述的常用默认策略。",
+      "tags": [
+        "Redis 持久化实践",
+        "AOF 同步策略"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/"
+    },
+    {
+      "id": "redispersist-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 持久化实践",
+      "knowledgePoint": "AOF 重写",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Redis 的 AOF 重写主要解决什么问题？",
+      "answer": "生成能够重建当前数据集的较紧凑表示，减少冗余历史写操作。",
+      "explanation": "重写期间服务可继续处理写入。",
+      "example": "同一键多次更新后，重写无需保留每次旧值更新。",
+      "tags": [
+        "Redis 持久化实践",
+        "AOF 重写"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/"
+    },
+    {
+      "id": "redispersist-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Redis 持久化实践",
+      "knowledgePoint": "多部分 AOF",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "从 Redis 7.0 开始，多部分 AOF 如何组织持久化文件？",
+      "answer": "最多包含一个基础文件和多个增量文件，并由 manifest 跟踪。",
+      "explanation": "基础文件表示重写时的数据；增量文件记录后续更改。",
+      "example": "备份 AOF 时应考虑 manifest 和相关文件的完整性。",
+      "tags": [
+        "Redis 持久化实践",
+        "多部分 AOF"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/"
+    },
+    {
+      "id": "redispersist-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 持久化实践",
+      "knowledgePoint": "恢复优先级",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Redis 7.2 同时启用 AOF 与 RDB 时，正常重启使用哪种数据重建？",
+      "answer": "使用 AOF 重建数据集。",
+      "explanation": "AOF 通常比快照包含更近期的写入；实际可恢复性仍取决于文件状态和同步策略。",
+      "example": "应同时启用时，需要单独维护和验证备份。",
+      "tags": [
+        "Redis 持久化实践",
+        "恢复优先级"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/"
+    },
+    {
+      "id": "redispersist-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 持久化实践",
+      "knowledgePoint": "快照丢失窗口",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "只使用周期性 RDB 快照时，意外断电为什么可能丢失近期写入？",
+      "answer": "上一次成功快照之后的写入可能尚未保存在 RDB 文件中。",
+      "explanation": "快照间隔及系统故障时间会影响损失范围。",
+      "example": "每隔一段时间快照，故障可能使最近一次快照后的变化丢失。",
+      "tags": [
+        "Redis 持久化实践",
+        "快照丢失窗口"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/"
+    }
+  ]
+}

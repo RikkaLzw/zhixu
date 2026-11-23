@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "chatafl-protocol-fuzzing",
+    "title": "ChatAFL 原论文：大模型辅助协议模糊测试",
+    "url": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "chatafl-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ChatAFL 协议模糊测试",
+      "knowledgePoint": "协议状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对有状态网络协议进行模糊测试时，为什么需要关注消息顺序？",
+      "answer": "协议实现可能需要先完成握手或其他前置消息，后续消息才能到达特定状态。",
+      "explanation": "单条消息的内容与其在序列中的位置都可能影响处理。",
+      "example": "服务可能要求先建立会话，再发送后续请求。",
+      "tags": [
+        "ChatAFL 协议模糊测试",
+        "协议状态"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf"
+    },
+    {
+      "id": "chatafl-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ChatAFL 协议模糊测试",
+      "knowledgePoint": "语法获取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ChatAFL 怎样利用大模型为协议变异准备结构信息？",
+      "answer": "向模型询问各类协议消息的机器可读语法，并保存供后续变异使用。",
+      "explanation": "生成语法可能不完整或有误，不能自动视为权威规范。",
+      "example": "可根据消息类型保存相应字段结构。",
+      "tags": [
+        "ChatAFL 协议模糊测试",
+        "语法获取"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf"
+    },
+    {
+      "id": "chatafl-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ChatAFL 协议模糊测试",
+      "knowledgePoint": "可变区域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ChatAFL 的语法引导变异如何区分消息中的关键字与值？",
+      "answer": "用语法匹配字段，将值区域标记为可变，并保留语法中的固定关键字。",
+      "explanation": "这样有助于保留更多消息结构。",
+      "example": "对请求头的值做变异时，可保留请求类型关键字。",
+      "tags": [
+        "ChatAFL 协议模糊测试",
+        "可变区域"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf"
+    },
+    {
+      "id": "chatafl-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ChatAFL 协议模糊测试",
+      "knowledgePoint": "语法未匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ChatAFL 进行语法引导变异时，如果找不到匹配的消息语法会怎样？",
+      "answer": "将该消息的所有区域视为可变。",
+      "explanation": "匹配失败不意味着停止对该消息的测试。",
+      "example": "未知类型的消息仍可进入变异。",
+      "tags": [
+        "ChatAFL 协议模糊测试",
+        "语法未匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf"
+    },
+    {
+      "id": "chatafl-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ChatAFL 协议模糊测试",
+      "knowledgePoint": "无结构变异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ChatAFL 是否完全放弃传统的不考虑语法结构的变异？",
+      "answer": "没有；论文保留无结构变异，以继续探索可能的边界情况。",
+      "explanation": "语法引导与无结构变异按策略共同使用。",
+      "example": "即使已提取语法，也可能尝试破坏结构的输入。",
+      "tags": [
+        "ChatAFL 协议模糊测试",
+        "无结构变异"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf"
+    },
+    {
+      "id": "chatafl-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ChatAFL 协议模糊测试",
+      "knowledgePoint": "种子丰富",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ChatAFL 怎样利用缺失的消息类型丰富初始种子？",
+      "answer": "识别初始序列中缺少的消息类型，再请求模型将这些类型插入已有序列。",
+      "explanation": "论文利用已有种子提供上下文，并限制单次添加的类型数量。",
+      "example": "在已有协议交互序列中插入一种未覆盖的请求。",
+      "tags": [
+        "ChatAFL 协议模糊测试",
+        "种子丰富"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf"
+    },
+    {
+      "id": "chatafl-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ChatAFL 协议模糊测试",
+      "knowledgePoint": "停滞处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ChatAFL 在覆盖率进入停滞期时怎样利用模型？",
+      "answer": "提供客户端请求与服务器响应的历史，请模型生成可能触发新状态转换的下一条请求。",
+      "explanation": "生成结果仍需发送给实际服务，并根据执行反馈判断效果。",
+      "example": "在已建立会话的历史后生成下一个候选请求。",
+      "tags": [
+        "ChatAFL 协议模糊测试",
+        "停滞处理"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf"
+    },
+    {
+      "id": "chatafl-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ChatAFL 协议模糊测试",
+      "knowledgePoint": "停滞计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ChatAFL 原论文的停滞计数在出现新覆盖或触发崩溃时如何变化？",
+      "answer": "重置为零；未发现有趣结果时增加。",
+      "explanation": "超过配置的阈值后，工具尝试模型辅助的停滞处理。",
+      "example": "连续多次无新增覆盖会逐渐接近停滞阈值。",
+      "tags": [
+        "ChatAFL 协议模糊测试",
+        "停滞计数"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf"
+    }
+  ]
+}

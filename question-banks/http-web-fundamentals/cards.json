@@ -1,0 +1,392 @@
+{
+  "source": {
+    "id": "http-web-fundamentals",
+    "title": "HTTP 语义与缓存：RFC 9110、9111",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9",
+    "type": "互联网标准",
+    "note": "依据逐题引用的教材或官方文档自行整理，示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "httpbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "安全方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 方法语义中的“安全”是什么意思？",
+      "answer": "客户端请求的语义基本是只读，不要求对源服务器状态进行改变。",
+      "explanation": "服务器仍可能记录访问日志等附带行为。",
+      "example": "GET 通常用于读取资源。",
+      "tags": [
+        "安全方法",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.1"
+    },
+    {
+      "id": "httpbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "幂等方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 方法语义中的“幂等”是什么意思？",
+      "answer": "多次相同请求对服务器的预期效果与一次请求相同。",
+      "explanation": "每次响应和访问日志可以不同。",
+      "example": "重复 DELETE 已删除的资源。",
+      "tags": [
+        "幂等方法",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2"
+    },
+    {
+      "id": "httpbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "安全与幂等",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 中安全方法和幂等方法的关系是什么？",
+      "answer": "标准定义的安全方法也是幂等的；幂等方法不一定安全。",
+      "explanation": "PUT 和 DELETE 是幂等但不属于安全方法。",
+      "example": "用 PUT 更新指定资源可以改变状态。",
+      "tags": [
+        "安全与幂等",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2"
+    },
+    {
+      "id": "httpbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "GET与HEAD",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 的 HEAD 与 GET 在响应内容上有什么区别？",
+      "answer": "HEAD 的语义与 GET 相近，但服务器不能在 HEAD 响应中发送内容。",
+      "explanation": "HEAD 可获取所选表示的元数据，部分头字段可能省略。",
+      "example": "检查资源是否更新而不传输正文。",
+      "tags": [
+        "GET与HEAD",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.3.2"
+    },
+    {
+      "id": "httpbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "GET请求体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP GET 请求体是否有通用定义的语义？",
+      "answer": "没有通用定义的语义；除非与源服务器有明确约定，否则客户端不应生成 GET 请求内容。",
+      "explanation": "中间组件也可能不支持这种约定。",
+      "example": "用查询参数或约定的其他方法传递输入。",
+      "tags": [
+        "GET请求体",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.3.1"
+    },
+    {
+      "id": "httpbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "POST与PUT",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 的 POST 与 PUT 在处理请求内容的语义上有什么主要区别？",
+      "answer": "POST 让目标资源按自身语义处理内容；PUT 请求以内容创建或替换目标资源的状态。",
+      "explanation": "POST 不保证幂等，PUT 的标准语义是幂等的。",
+      "example": "POST 到集合创建条目，PUT 到指定条目地址。",
+      "tags": [
+        "POST与PUT",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.3.4"
+    },
+    {
+      "id": "httpbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "无状态协议",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 被称为无状态协议通常是什么意思？",
+      "answer": "每个请求的语义可独立理解，服务器不必依赖同一连接上的先前请求来理解它。",
+      "explanation": "应用可以通过 Cookie 或其他机制维护会话状态。",
+      "example": "每次请求携带所需的认证信息。",
+      "tags": [
+        "无状态协议",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-3.3"
+    },
+    {
+      "id": "httpbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "201与Location",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 201 Created 通常表示什么，Location 可以提供什么？",
+      "answer": "201 表示请求已创建一个或多个资源；Location 可标识主要新建资源。",
+      "explanation": "如果没有 Location，规范还规定可由目标 URI 标识。",
+      "example": "创建条目后返回新条目的地址。",
+      "tags": [
+        "201与Location",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.3.2"
+    },
+    {
+      "id": "httpbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "204无内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 204 No Content 的响应有什么特点？",
+      "answer": "服务器已成功完成请求，响应中没有内容。",
+      "explanation": "响应头仍可能包含关于目标资源的元数据。",
+      "example": "成功更新资源后不返回正文。",
+      "tags": [
+        "204无内容",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.3.5"
+    },
+    {
+      "id": "httpbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "304条件请求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 304 Not Modified 通常在什么情况下返回？",
+      "answer": "对 GET 或 HEAD 的条件请求中，所选表示未修改且条件判定无需传送内容时返回。",
+      "explanation": "客户端或缓存可使用已有表示并更新相关元数据。",
+      "example": "使用 If-None-Match 验证缓存。",
+      "tags": [
+        "304条件请求",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.4.5"
+    },
+    {
+      "id": "httpbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "401与403",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 401 和 403 的规范语义有什么区别？",
+      "answer": "401 表示请求缺少有效认证凭据；403 表示服务器理解请求但拒绝执行，原因不一定是认证。",
+      "explanation": "401 响应必须包含适用的 WWW-Authenticate 质询。",
+      "example": "认证失败和访问被禁止使用不同响应。",
+      "tags": [
+        "401与403",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.2"
+    },
+    {
+      "id": "httpbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "404语义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "收到 HTTP 404 能否断定目标资源从未存在？",
+      "answer": "不能；服务器可能没有找到当前表示，也可能不愿透露资源存在。",
+      "explanation": "404 本身不说明缺失是暂时还是永久。",
+      "example": "服务器可以用 404 隐藏被禁止的资源。",
+      "tags": [
+        "404语义",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.5"
+    },
+    {
+      "id": "httpbase-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "405与Allow",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 405 Method Not Allowed 表示什么？",
+      "answer": "服务器认识该方法，但目标资源不支持它；响应必须带 Allow 列出当前支持的方法。",
+      "explanation": "资源允许的方法可能随时间变化。",
+      "example": "资源只支持读取，不允许 POST。",
+      "tags": [
+        "405与Allow",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.5.6"
+    },
+    {
+      "id": "httpbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "307重定向方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 307 自动重定向时，客户端可以把原请求方法改成 GET 吗？",
+      "answer": "不可以；自动跟随 307 时必须保持原请求方法。",
+      "explanation": "307 表示临时重定向。",
+      "example": "POST 请求重定向后仍使用 POST。",
+      "tags": [
+        "307重定向方法",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.4.8"
+    },
+    {
+      "id": "httpbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "502与504",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 502 和 504 分别说明网关遇到什么问题？",
+      "answer": "502 表示作为网关或代理时收到上游无效响应；504 表示未及时收到所需上游响应。",
+      "explanation": "具体故障原因仍需结合日志排查。",
+      "example": "代理收到错误格式响应或等待上游超时。",
+      "tags": [
+        "502与504",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-15.6"
+    },
+    {
+      "id": "httpbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "ETag条件验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 的 ETag 与 If-None-Match 如何配合验证缓存？",
+      "answer": "客户端发送已有表示的 ETag；对 GET 或 HEAD，匹配时服务器可返回 304。",
+      "explanation": "ETag 是表示的验证器，不必等同于文件哈希。",
+      "example": "下载资源后带原 ETag 查询更新。",
+      "tags": [
+        "ETag条件验证",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.2"
+    },
+    {
+      "id": "httpbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "缓存no-cache",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "响应 Cache-Control: no-cache 是否等于禁止缓存存储响应？",
+      "answer": "不等于；不带字段参数的 no-cache 允许存储，但复用前必须成功验证。",
+      "explanation": "它与 no-store 的要求不同。",
+      "example": "浏览器缓存内容后每次复用前验证。",
+      "tags": [
+        "缓存no-cache",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.4"
+    },
+    {
+      "id": "httpbase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "缓存no-store",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "响应 Cache-Control: no-store 对缓存有什么要求？",
+      "answer": "缓存不得存储该直接请求或响应的任何部分，也不得用该响应满足其他请求。",
+      "explanation": "它不能保证不受不遵守规范的缓存或其他记录方式影响。",
+      "example": "对敏感响应设置 no-store。",
+      "tags": [
+        "缓存no-store",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.5"
+    },
+    {
+      "id": "httpbase-019",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "缓存private",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "响应 Cache-Control: private 的主要作用是什么？",
+      "answer": "不带字段参数时，共享缓存不得存储该响应；私有缓存仍可按其他规则存储。",
+      "explanation": "共享与私有缓存的使用对象不同。",
+      "example": "代理共享缓存不保存用户专属页面。",
+      "tags": [
+        "缓存private",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.7"
+    },
+    {
+      "id": "httpbase-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 与 Web 基础",
+      "knowledgePoint": "缓存max-age",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "响应 Cache-Control: max-age=N 中的 N 通常表示什么？",
+      "answer": "它指定响应的新鲜度寿命为 N 秒。",
+      "explanation": "缓存还需要计算响应年龄才能判断是否新鲜。",
+      "example": "max-age=60 表示新鲜度寿命为 60 秒。",
+      "tags": [
+        "缓存max-age",
+        "HTTP 与 Web 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.1"
+    }
+  ]
+}

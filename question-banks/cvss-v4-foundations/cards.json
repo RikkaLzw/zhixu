@@ -1,0 +1,278 @@
+{
+  "source": {
+    "id": "cvss-v4-foundations",
+    "title": "FIRST CVSS v4.0：漏洞严重性指标",
+    "url": "https://www.first.org/cvss/v4.0/specification-document",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材、标准或固定版本文档自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "cvss4-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "版本变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 相比 v3.1，对 Temporal 指标组和补充信息有哪些结构变化？",
+      "answer": "v4.0 使用 Threat 指标组，并新增 Supplemental 指标组提供补充上下文。",
+      "explanation": "v4.0 还调整了多个基础指标，不能机械沿用旧向量。",
+      "example": "将 v3.1 的评估迁移到 v4.0 时重新检查指标。",
+      "tags": [
+        "版本变化",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/user-guide"
+    },
+    {
+      "id": "cvss4-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "攻击复杂度区别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 中 Attack Complexity 与 Attack Requirements 关注的条件有什么区别？",
+      "answer": "前者关注绕过安全增强机制或获取目标特定秘密；后者关注使攻击成为可能的部署或执行条件。",
+      "explanation": "应按规范中的具体条件判断，而不是凭攻击步骤多少直接给值。",
+      "example": "区分绕过目标防护和依赖竞态。",
+      "tags": [
+        "攻击复杂度区别",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "用户交互细分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 的 User Interaction 如何区分用户参与程度？",
+      "answer": "它使用 None、Passive 和 Active 区分不需参与、有限被动参与及特定主动操作。",
+      "explanation": "Passive 并不表示目标用户完全没有参与。",
+      "example": "页面渲染恶意内容与用户主动导入文件的交互不同。",
+      "tags": [
+        "用户交互细分",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "受影响系统区分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 为什么分别记录 Vulnerable System 和 Subsequent System 的影响？",
+      "answer": "它区分对存在漏洞的系统本身及其之外后续系统的保密性、完整性和可用性影响。",
+      "explanation": "不能仅凭组件名称不同就推断具体影响，应按规范界定系统。",
+      "example": "漏洞组件被攻破后进一步影响另一个系统。",
+      "tags": [
+        "受影响系统区分",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "补充指标与分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 的 Supplemental 指标会直接改变最终 CVSS 数值吗？",
+      "answer": "不会；它们提供额外背景，由使用者结合本地风险分析决定如何使用。",
+      "explanation": "Threat 和 Environmental 指标则可以影响数值评分。",
+      "example": "根据恢复难度安排修复顺序，但 Supplemental 不直接改变分数。",
+      "tags": [
+        "补充指标与分数",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "评分标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 的 CVSS-B、CVSS-BT、CVSS-BE 和 CVSS-BTE 标记分别表明什么？",
+      "answer": "分别表示评估了 Base；Base 与 Threat；Base 与 Environmental；以及三组都评估。",
+      "explanation": "标记描述显式评估的指标组，未定义指标仍有默认计算值。",
+      "example": "报告中使用 CVSS-BT 标识包含威胁评估的分数。",
+      "tags": [
+        "评分标记",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "利用成熟度默认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 的 Exploit Maturity 为 Not Defined 是否表示没有发现利用？",
+      "answer": "不是；它表示未定义该指标，评分中按 Attacked 的默认效果处理。",
+      "explanation": "未评估与确认没有公开利用信息是不同状态。",
+      "example": "没有威胁情报时不要把 E:X 解读为 E:U。",
+      "tags": [
+        "利用成熟度默认",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "利用成熟度取值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 的 Exploit Maturity 指标有哪些明确的非默认取值？",
+      "answer": "包括 Attacked、Proof-of-Concept 和 Unreported。",
+      "explanation": "选择取决于可获得的威胁情报及规范条件。",
+      "example": "公开概念验证与已知遭攻击对应不同取值。",
+      "tags": [
+        "利用成熟度取值",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "环境修正指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 的 Modified Base 指标取 Not Defined 时，评分使用什么？",
+      "answer": "使用对应的原始 Base 指标值。",
+      "explanation": "定义修正值后，计算时使用修正值反映特定环境。",
+      "example": "未设置 MPR 时沿用 PR。",
+      "tags": [
+        "环境修正指标",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "安全性影响位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 的环境指标中，Safety 特殊值可用于哪些受影响项？",
+      "answer": "可用于修正后的 Subsequent System Integrity 和 Availability 指标。",
+      "explanation": "这与不改变数值分数的 Supplemental Safety 指标不同。",
+      "example": "按环境评估可预见的人身安全影响。",
+      "tags": [
+        "安全性影响位置",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "补充自动化指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 的 Supplemental Automatable 为 Yes 表示什么？",
+      "answer": "攻击者能可靠地自动化侦察、武器化、投递和利用四个步骤。",
+      "explanation": "只自动化其中一步不足以满足该定义。",
+      "example": "可自动传播的漏洞是规范给出的典型情形。",
+      "tags": [
+        "补充自动化指标",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "补充恢复指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 的 Supplemental Recovery 描述什么？",
+      "answer": "描述受攻击后服务恢复的情况，包括自动恢复、用户干预恢复或用户无法恢复。",
+      "explanation": "它是补充上下文，不直接改变 CVSS 数值。",
+      "example": "区分自动恢复服务与必须人工恢复服务。",
+      "tags": [
+        "补充恢复指标",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "向量必需项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 向量字符串是否可以省略 Base 指标？",
+      "answer": "不可以；所有 Base 指标都必须出现，其他指标组可以省略并按 Not Defined 处理。",
+      "explanation": "向量还必须遵守规范规定的指标顺序且不能重复指标。",
+      "example": "机器读取器检查向量中的 Base 字段是否完整。",
+      "tags": [
+        "向量必需项",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    },
+    {
+      "id": "cvss4-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CVSS v4.0 漏洞评分",
+      "knowledgePoint": "等级区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v4.0 中数值分数如何映射到常用严重性等级？",
+      "answer": "0.0 为 None；0.1–3.9 为 Low；4.0–6.9 为 Medium；7.0–8.9 为 High；9.0–10.0 为 Critical。",
+      "explanation": "这些定性等级的使用是可选的。",
+      "example": "8.5 对应 High。",
+      "tags": [
+        "等级区间",
+        "CVSS v4.0 漏洞评分"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v4.0/specification-document"
+    }
+  ]
+}

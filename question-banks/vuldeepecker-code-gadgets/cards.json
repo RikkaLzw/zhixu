@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "vuldeepecker-code-gadgets",
+    "title": "VulDeePecker 原论文：代码切片与深度漏洞检测",
+    "url": "https://arxiv.org/abs/1801.01681v1",
+    "type": "论文及官方技术资料",
+    "note": "依据原论文或 NIST 官方资料整理；应用判断和示例为自行整理。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "vuldeep-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "代码小片",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 的 code gadget 是什么？",
+      "answer": "它是一组语义相关的代码行，这些行不一定在源文件中连续。",
+      "explanation": "论文以库或 API 调用为关键点构造这类代码片段。",
+      "example": "把与一次库函数调用有关的多个语句组合起来。",
+      "tags": [
+        "代码小片",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "API关键点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 原版以什么程序位置作为提取 code gadget 的关键点？",
+      "answer": "以库函数或 API 调用为关键点，并围绕其参数提取相关程序切片。",
+      "explanation": "论文指出其他类型的关键点没有被该版本覆盖。",
+      "example": "围绕一个字符串复制 API 的参数收集相关语句。",
+      "tags": [
+        "API关键点",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "前向后向切片",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 中前向切片和后向切片分别关注什么语句？",
+      "answer": "前向切片关注受目标变量影响的语句；后向切片关注可能影响目标变量的语句。",
+      "explanation": "切片方向取决于所研究的依赖关系。",
+      "example": "回溯参数值的来源，或追踪该值的后续使用。",
+      "tags": [
+        "前向后向切片",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "跨函数切片",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 的程序切片能跨越单个用户函数边界吗？",
+      "answer": "可以；相关语句可能来自多个用户定义的函数。",
+      "explanation": "实际能提取的范围取决于所用分析工具。",
+      "example": "把调用者中的输入赋值与被调用函数中的使用关联起来。",
+      "tags": [
+        "跨函数切片",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "同调用组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 如何利用同一个 API 调用的多个参数切片？",
+      "answer": "它将与该调用相关的切片组合为一个 code gadget，并去除重复语句。",
+      "explanation": "组合结果可包含来自不同函数的代码。",
+      "example": "合并目标缓冲区与输入字符串相关的语句。",
+      "tags": [
+        "同调用组合",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "符号化标识符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 对用户定义变量和函数名做符号化的目的是什么？",
+      "answer": "将用户自定义标识符映射为统一的符号形式，减少不同命名造成的表面差异。",
+      "explanation": "库函数名及语言关键字仍可提供有用信息。",
+      "example": "把自定义变量改写为 VAR1 等符号。",
+      "tags": [
+        "符号化标识符",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "记号与向量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 如何将符号化代码送入神经网络？",
+      "answer": "它先通过词法分析得到 token，用 word2vec 编码，再输入双向 LSTM 进行分类。",
+      "explanation": "该流程把代码小片转成可学习的序列表示。",
+      "example": "将运算符、关键字和标识符编码为向量序列。",
+      "tags": [
+        "记号与向量",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "固定长度截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 处理超过固定长度的代码小片时，为什么按切片方向截断？",
+      "answer": "它尽量保留作为关键点的库或 API 调用所在一端。",
+      "explanation": "截断仍可能丢失远处的依赖上下文。",
+      "example": "对后向切片保留调用附近的末尾部分。",
+      "tags": [
+        "固定长度截断",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "数据与控制依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 论文中的原版实现是否同时完整利用数据依赖和控制依赖？",
+      "answer": "没有；论文说明其实现使用数据依赖分析，控制依赖仍是后续扩展方向。",
+      "explanation": "code gadget 的概念本身并不限于数据依赖。",
+      "example": "仅有数据切片时可能缺少决定执行条件的信息。",
+      "tags": [
+        "数据与控制依赖",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "覆盖边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原版 VulDeePecker 没有找到与漏洞相关的库或 API 调用，能否据此认定程序没有漏洞？",
+      "answer": "不能；其原始设计围绕此类调用提取候选，其他关键点相关的漏洞可能不被覆盖。",
+      "explanation": "工具的候选生成范围限制了后续检测范围。",
+      "example": "数组或指针相关问题不一定经过所选调用。",
+      "tags": [
+        "覆盖边界",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "补丁行标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 如何为 NVD 补丁相关数据初步标注漏洞 code gadget？",
+      "answer": "如果片段包含补丁删除或修改的语句，论文先将其标为正例，再人工检查正例误标。",
+      "explanation": "补丁也可能修改与漏洞无关的语句。",
+      "example": "先用代码差异找候选，再核查是否涉及缺陷。",
+      "tags": [
+        "补丁行标签",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "SARD片段标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 如何处理从 SARD 混合程序提取出的代码小片标签？",
+      "answer": "若片段包含已标注的漏洞语句则标为正例，否则标为负例。",
+      "explanation": "程序级混合标签不能直接复制给程序中的每个片段。",
+      "example": "含 good 与 bad 函数的样例按片段内容区分。",
+      "tags": [
+        "SARD片段标签",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    },
+    {
+      "id": "vuldeep-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "VulDeePecker 代码切片",
+      "knowledgePoint": "冲突标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VulDeePecker 论文对同时获得正负标签的相同 code gadget 如何处理？",
+      "answer": "论文从数据中删除这类标签冲突的片段。",
+      "explanation": "冲突可能来自数据流分析不完整等原因。",
+      "example": "同一片段分别被标为有漏洞和无漏洞时不直接用于训练。",
+      "tags": [
+        "冲突标签",
+        "VulDeePecker 代码切片"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1801.01681v1"
+    }
+  ]
+}

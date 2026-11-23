@@ -1,0 +1,335 @@
+{
+  "source": {
+    "id": "compiler-build-foundations",
+    "title": "GCC 15、GNU Make 与 Linux：编译链接基础",
+    "url": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Overall-Options.html",
+    "type": "官方技术文档",
+    "note": "依据逐题引用的官方文档自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "buildbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "编译阶段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GCC 15 的常见 C 程序构建依次经过哪些主要阶段？",
+      "answer": "通常依次经过预处理、编译、汇编和链接。",
+      "explanation": "不同输入文件和选项可以从中间阶段开始或提前停止。",
+      "example": "从 C 源文件生成可执行文件。",
+      "tags": [
+        "编译阶段",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Overall-Options.html"
+    },
+    {
+      "id": "buildbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "预处理输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GCC 15 的 -E 选项会在哪个阶段停止？",
+      "answer": "它在预处理后停止，默认将预处理后的源代码输出到标准输出。",
+      "explanation": "不会继续编译、汇编或链接。",
+      "example": "查看宏展开后的源代码。",
+      "tags": [
+        "预处理输出",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Overall-Options.html"
+    },
+    {
+      "id": "buildbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "汇编输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GCC 15 的 -S 选项通常输出什么？",
+      "answer": "它在编译阶段后停止，通常为每个源文件生成汇编代码文件。",
+      "explanation": "不会继续汇编或链接。",
+      "example": "查看函数生成的汇编指令。",
+      "tags": [
+        "汇编输出",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Overall-Options.html"
+    },
+    {
+      "id": "buildbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "目标文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GCC 15 的 -c 选项会执行链接吗？",
+      "answer": "不会；它编译或汇编输入，通常生成目标文件。",
+      "explanation": "目标文件可能仍有需要链接器解析的外部符号。",
+      "example": "分别生成 main.o 和 helper.o。",
+      "tags": [
+        "目标文件",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Overall-Options.html"
+    },
+    {
+      "id": "buildbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "分离编译",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么可以把多个 C 源文件分别编译成目标文件再一起链接？",
+      "answer": "每个源文件可以独立生成目标文件，链接器再解析它们之间的外部符号并组合结果。",
+      "explanation": "改变一个源文件时通常只需重新编译受影响的部分。",
+      "example": "main.o 引用 helper.o 定义的函数。",
+      "tags": [
+        "分离编译",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Overall-Options.html"
+    },
+    {
+      "id": "buildbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "链接错误",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C 文件单独通过 gcc -c，能否证明生成完整程序时所有外部符号都能解析？",
+      "answer": "不能；对其他目标文件或库的外部引用通常要到链接时才能检查。",
+      "explanation": "未定义的外部函数可能导致后续链接失败。",
+      "example": "编译时通过但链接时报告 undefined reference。",
+      "tags": [
+        "链接错误",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Overall-Options.html"
+    },
+    {
+      "id": "buildbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "库搜索目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GCC 15 链接选项 -Ldir 与 -lname 的作用分别是什么？",
+      "answer": "-Ldir 添加库搜索目录；-lname 请求链接名为 name 的库。",
+      "explanation": "具体文件选择和搜索细节取决于平台和链接器。",
+      "example": "使用 -L./lib -lmathx 查找库。",
+      "tags": [
+        "库搜索目录",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Link-Options.html"
+    },
+    {
+      "id": "buildbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "静态库形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 GNU 工具链时，静态库通常是什么形式？",
+      "answer": "静态库通常是包含多个目标文件的归档文件，常见后缀为 .a。",
+      "explanation": "链接器按需要从归档中提取成员。",
+      "example": "把 helper.o 打包成 libhelper.a。",
+      "tags": [
+        "静态库形式",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Link-Options.html"
+    },
+    {
+      "id": "buildbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "静态库顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 GNU 链接器时，为什么常把静态库参数放在引用它的目标文件之后？",
+      "answer": "链接器按命令行顺序处理输入，先看到引用有助于从后面的归档中提取所需成员。",
+      "explanation": "循环依赖等场景可使用链接器提供的分组选项。",
+      "example": "使用 main.o -lhelper 链接 helper 库。",
+      "tags": [
+        "静态库顺序",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Link-Options.html"
+    },
+    {
+      "id": "buildbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "共享库",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GCC 的 -shared 链接选项通常用于生成什么？",
+      "answer": "在支持的平台上生成可与其他目标文件链接的共享对象。",
+      "explanation": "相关代码生成选项及平台约束还需根据目标环境设置。",
+      "example": "生成 Linux 的 libhelper.so。",
+      "tags": [
+        "共享库",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Link-Options.html"
+    },
+    {
+      "id": "buildbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "位置无关代码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么构建 Linux 共享库时常用 GCC 的 -fPIC？",
+      "answer": "它生成适合动态链接的位置无关代码，便于共享对象装载到不同虚拟地址。",
+      "explanation": "具体支持与要求取决于目标架构。",
+      "example": "gcc -fPIC -shared 生成共享库。",
+      "tags": [
+        "位置无关代码",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Code-Gen-Options.html#index-fPIC"
+    },
+    {
+      "id": "buildbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "运行时加载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 上动态链接程序启动时，动态链接器主要做什么？",
+      "answer": "它查找并装载所需共享对象，完成必要的动态链接后运行程序。",
+      "explanation": "库文件是否能被找到依赖搜索路径及配置。",
+      "example": "启动依赖 libhelper.so 的可执行文件。",
+      "tags": [
+        "运行时加载",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ld.so.8.html"
+    },
+    {
+      "id": "buildbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "库路径变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 动态链接器中的 LD_LIBRARY_PATH 通常有什么作用？",
+      "answer": "它提供运行时搜索共享库的目录列表。",
+      "explanation": "安全执行模式下该环境变量会被忽略或移除。",
+      "example": "在开发环境中临时指定测试库目录。",
+      "tags": [
+        "库路径变量",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/ld.so.8.html"
+    },
+    {
+      "id": "buildbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "符号检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU nm 常用于查看目标文件中的什么？",
+      "answer": "它列出目标文件中的符号，例如已定义和未定义的符号。",
+      "explanation": "输出格式和筛选方式受选项影响。",
+      "example": "检查目标文件是否引用外部函数。",
+      "tags": [
+        "符号检查",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs-2.45/binutils/nm.html"
+    },
+    {
+      "id": "buildbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "依赖规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU Make 的规则通常由哪三类内容构成？",
+      "answer": "目标、先决条件和用于更新目标的配方。",
+      "explanation": "目标是否需要重建取决于规则和先决条件状态等。",
+      "example": "程序目标依赖两个目标文件，再执行链接命令。",
+      "tags": [
+        "依赖规则",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/make/manual/html_node/Rule-Introduction.html"
+    },
+    {
+      "id": "buildbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "增量构建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU Make 如何利用普通先决条件判断已有目标是否需要更新？",
+      "answer": "当普通先决条件比目标新，或目标不存在时，通常需要更新目标。",
+      "explanation": "规则和其他先决条件类型会影响具体判断。",
+      "example": "源文件修改后重新生成对应目标文件。",
+      "tags": [
+        "增量构建",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/make/manual/html_node/Prerequisite-Types.html"
+    },
+    {
+      "id": "buildbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "编译与构建",
+      "knowledgePoint": "伪目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU Make 的 .PHONY 目标有什么常见用途？",
+      "answer": "声明不表示真实输出文件的目标，使其配方不因同名文件存在而被当成已完成。",
+      "explanation": "例如 clean 往往被声明为伪目标。",
+      "example": "即使有名为 clean 的文件也能执行清理规则。",
+      "tags": [
+        "伪目标",
+        "编译与构建"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html"
+    }
+  ]
+}

@@ -1,0 +1,573 @@
+{
+  "source": {
+    "id": "sft-dialogue-foundations",
+    "title": "大模型监督微调与对话数据基础",
+    "url": "https://huggingface.co/docs/trl/v0.23.0/en/sft_trainer",
+    "type": "官方技术文档与研究论文",
+    "note": "按指定版本的文档、源码及 FLAN 论文逐题整理；公开面经仅作主题启发，经历由分享者自述。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "sftdialogue-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "对话模板作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对话模板如何把角色和消息内容组织成语言模型的输入？",
+      "answer": "它按模型约定把角色、内容和消息边界格式化成 token 序列，使模型能区分不同消息。",
+      "explanation": "具体控制标记取决于模型和模板。",
+      "example": "把 user 和 assistant 的消息按模板串成模型输入。",
+      "tags": [
+        "对话模板作用",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/chat_templating",
+      "referenceTitle": "Transformers 4.51.3：对话模板"
+    },
+    {
+      "id": "sftdialogue-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "模板格式匹配",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "使用已做过对话训练的模型时，为什么要核对对话模板格式？",
+      "answer": "模型学到的角色和边界标记依赖训练格式；推理时使用不匹配的模板可能降低表现。",
+      "explanation": "模型系列不同可能使用不同的控制标记。",
+      "example": "部署前检查所选模型配套的 tokenizer 和模板。",
+      "tags": [
+        "模板格式匹配",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/chat_templating#template-selection",
+      "referenceTitle": "Transformers 4.51.3：Template selection"
+    },
+    {
+      "id": "sftdialogue-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "生成提示作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 对话模板的 add_generation_prompt 主要用于什么？",
+      "answer": "它请求模板在结尾添加开始新助手回复所需的标记。",
+      "explanation": "具体效果取决于模板；有些模板不需要此类标记。",
+      "example": "用户消息后接助手消息的起始标记，再生成回答。",
+      "tags": [
+        "生成提示作用",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/chat_templating#addgenerationprompt",
+      "referenceTitle": "Transformers 4.51.3：add_generation_prompt"
+    },
+    {
+      "id": "sftdialogue-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "续写末条消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 的 continue_final_message 适合什么生成场景？",
+      "answer": "它移除最后一条消息的结束标记，让模型继续该消息，而不是开启新消息。",
+      "explanation": "常用于在生成前预填一部分助手回答。",
+      "example": "先给助手消息写入 JSON 前缀，再让模型续写。",
+      "tags": [
+        "续写末条消息",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/chat_templating#continuefinalmessage",
+      "referenceTitle": "Transformers 4.51.3：continue_final_message"
+    },
+    {
+      "id": "sftdialogue-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "新消息与续写冲突",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 能同时开启 add_generation_prompt 和 continue_final_message 吗？",
+      "answer": "不能；一个用于开始新消息，另一个用于续写最后一条消息，同时开启会报错。",
+      "explanation": "应根据是否预填助手回答选择一种模式。",
+      "example": "继续 JSON 前缀时选择续写模式。",
+      "tags": [
+        "新消息与续写冲突",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/chat_templating#continuefinalmessage",
+      "referenceTitle": "Transformers 4.51.3：continue_final_message"
+    },
+    {
+      "id": "sftdialogue-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "训练生成提示",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "使用完整对话样本进行训练时，Transformers 4.51.3 文档为何建议 add_generation_prompt=False？",
+      "answer": "样本已包含需要学习的助手回答，额外添加一个新回复的起始提示对该训练格式没有帮助。",
+      "explanation": "实际格式应与所用模型及训练流程一致。",
+      "example": "将已有问答对渲染成训练序列时关闭生成提示。",
+      "tags": [
+        "训练生成提示",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/chat_templating#model-training",
+      "referenceTitle": "Transformers 4.51.3：Model training"
+    },
+    {
+      "id": "sftdialogue-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "特殊标记重复",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "先将对话模板渲染为文本，再单独分词时，怎样避免重复添加特殊 token？",
+      "answer": "若模板已包含所需特殊 token，后续分词应设置 add_special_tokens=False。",
+      "explanation": "模板是否完整需按模型检查；直接用 apply_chat_template 分词可避免这一常见重复。",
+      "example": "先 tokenize=False 渲染，再以 add_special_tokens=False 分词。",
+      "tags": [
+        "特殊标记重复",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/chat_templating#model-training",
+      "referenceTitle": "Transformers 4.51.3：Model training"
+    },
+    {
+      "id": "sftdialogue-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "回答终止标记",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "训练聊天模型时，为什么需要核对结束 token 与对话模板的消息结束标记？",
+      "answer": "结束 token 应与所用模板和模型的回复终止约定协调，否则可能影响模型正确结束回答。",
+      "explanation": "具体 token 与配置取决于模型；不能把一个模型的标记套用到所有模型。",
+      "example": "TRL 文档对 Qwen2.5 示例指定模板中的结束标记。",
+      "tags": [
+        "回答终止标记",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/trl/v0.23.0/en/sft_trainer",
+      "referenceTitle": "TRL 0.23：Supervised Fine-Tuning"
+    },
+    {
+      "id": "sftdialogue-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "提示补全数据格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TRL 的 prompt-completion 数据格式如何区分输入和目标？",
+      "answer": "它分别使用 prompt 字段表示提示、completion 字段表示期望的续写或回答。",
+      "explanation": "字段既可为普通文本，也可按对话格式表示消息。",
+      "example": "一条样本分别保存用户问题和目标答案。",
+      "tags": [
+        "提示补全数据格式",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/trl/v0.23.0/en/dataset_formats",
+      "referenceTitle": "TRL 0.23：Dataset formats",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经（合集转载，经历为分享者自述）；SFT 数据选择主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sftdialogue-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "默认损失范围",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "TRL 0.23 的 SFTTrainer 默认对 prompt-completion 和 language modeling 数据的哪些部分计算损失？",
+      "answer": "默认对前者只计算 completion 的损失，对后者计算整个序列的损失。",
+      "explanation": "这是 completion_only_loss 未显式设置时的默认规则；其他掩码仍可能影响有效标签。",
+      "example": "检查训练数据类型后再确认标签掩码。",
+      "tags": [
+        "默认损失范围",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/trl/v0.23.0/en/sft_trainer#trl.SFTConfig",
+      "referenceTitle": "TRL 0.23：SFTConfig",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经（合集转载，经历为分享者自述）；SFT 数据选择主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sftdialogue-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "格式化函数与损失",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "TRL 0.23 在常规数据准备中为何不允许同时使用 formatting_func 和 completion_only_loss=True？",
+      "answer": "formatting_func 会将样本格式化为语言模型文本类型，与仅对 completion 计算损失的设置冲突。",
+      "explanation": "该版本会报错；若要保留 completion 边界，应按支持的 prompt-completion 格式准备数据。",
+      "example": "检查格式化步骤是否丢失提示与回答的边界。",
+      "tags": [
+        "格式化函数与损失",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/trl/blob/v0.23.0/trl/trainer/sft_trainer.py",
+      "referenceTitle": "TRL 0.23：SFTTrainer 源码",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经（合集转载，经历为分享者自述）；SFT 数据选择主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sftdialogue-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "损失掩码与注意力掩码",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "训练语言模型时，损失掩码与注意力掩码分别控制什么？",
+      "answer": "损失掩码决定哪些目标位置计入损失；注意力掩码控制哪些输入位置可见。提示词即使不计损失，只要仍可见，就能为回答提供上下文。",
+      "explanation": "两种掩码服务于不同操作，不能互相替代。",
+      "example": "只监督助手回答时，用户问题仍作为上下文输入。",
+      "tags": [
+        "损失掩码与注意力掩码",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/huggingface/trl/blob/v0.23.0/trl/trainer/sft_trainer.py",
+      "referenceTitle": "TRL 0.23：SFTTrainer 源码",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型公开面经（合集转载，经历为分享者自述）；多轮对话数据主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900324%E3%80%91%E5%AD%97%E8%8A%82%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sftdialogue-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "助手损失掩码前提",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "TRL 0.23 使用 assistant_only_loss=True 时，对数据和对话模板有什么要求？",
+      "answer": "数据必须是对话格式，模板还需支持通过 generation 标记返回助手 token 掩码。",
+      "explanation": "仅设置参数不足以让不支持助手掩码的模板自动识别回答。",
+      "example": "检查模板中的 generation 与 endgeneration 标记。",
+      "tags": [
+        "助手损失掩码前提",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/trl/v0.23.0/en/sft_trainer",
+      "referenceTitle": "TRL 0.23：Train on assistant messages only",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型公开面经（合集转载，经历为分享者自述）；多轮对话数据主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900324%E3%80%91%E5%AD%97%E8%8A%82%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sftdialogue-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "联合助手与补全掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TRL 0.23 文本数据整理器同时应用 completion 和 assistant 掩码时，哪些位置保留为监督目标？",
+      "answer": "只有两个掩码都允许、且未因填充等原因被忽略的位置才保留为有效标签。",
+      "explanation": "两种掩码都存在时，任一掩码为零都会把对应标签设为 -100。",
+      "example": "多轮对话的 completion 中，只监督其助手部分。",
+      "tags": [
+        "联合助手与补全掩码",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/trl/blob/v0.23.0/trl/trainer/sft_trainer.py",
+      "referenceTitle": "TRL 0.23：数据整理器源码",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型公开面经（合集转载，经历为分享者自述）；多轮对话数据主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900324%E3%80%91%E5%AD%97%E8%8A%82%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sftdialogue-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "截断后的有效监督",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "只对回答计算损失时，为什么要检查截断后的样本仍有有效回答标签？",
+      "answer": "如果提示过长使回答全部被截断，样本就没有可用于回答损失的有效目标位置。",
+      "explanation": "可检查标签掩码并调整长度或样本处理策略。",
+      "example": "右侧截断后检查是否还剩未忽略的回答 token。",
+      "tags": [
+        "截断后的有效监督",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://huggingface.co/docs/trl/v0.23.0/en/sft_trainer#trl.SFTConfig",
+      "referenceTitle": "TRL 0.23：SFTConfig",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经（合集转载，经历为分享者自述）；SFT 数据选择主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sftdialogue-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "结束标记与填充编号",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 DataCollatorForLanguageModeling 在 mlm=False 且 pad_token_id 等于 eos_token_id 时，真实 EOS 标签会怎样？",
+      "answer": "该整理器按 token ID 把所有等于 pad_token_id 的标签设为 -100，因此真实 EOS 标签也会被忽略。",
+      "explanation": "这是该版本该整理器的具体行为；其他整理器可能按填充位置处理。",
+      "example": "使用 EOS 代替 pad 时检查有效终止 token 的标签。",
+      "tags": [
+        "结束标记与填充编号",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/data/data_collator.py",
+      "referenceTitle": "Transformers 4.51.3：DataCollatorForLanguageModeling 源码"
+    },
+    {
+      "id": "sftdialogue-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "样本打包目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语言模型训练中的样本打包（packing）主要解决什么效率问题？",
+      "answer": "它把多个短样本组织到较长输入块中，减少填充开销并提高有效 token 利用率。",
+      "explanation": "效果取决于样本长度、打包策略和实现。",
+      "example": "把多条短对话放进一个训练块。",
+      "tags": [
+        "样本打包目的",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/trl/v0.23.0/en/sft_trainer#packing",
+      "referenceTitle": "TRL 0.23：Packing"
+    },
+    {
+      "id": "sftdialogue-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "打包样本注意力隔离",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "把多个样本拼接并用 EOS 分隔后，是否自动保证样本之间的注意力隔离？",
+      "answer": "不保证；是否能跨样本关注取决于注意力掩码和具体实现，EOS 本身只是序列中的标记。",
+      "explanation": "需要隔离时，应核查注意力实现如何识别并限制样本边界。",
+      "example": "检查打包训练是否阻止后一条样本关注前一条。",
+      "tags": [
+        "打包样本注意力隔离",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/huggingface/trl/blob/v0.23.0/trl/trainer/sft_trainer.py",
+      "referenceTitle": "TRL 0.23：SFTTrainer 源码"
+    },
+    {
+      "id": "sftdialogue-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "分词边界核验",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "构造提示和回答的 token 掩码时，为什么要核对单独分词的提示是否为完整序列的 token 前缀？",
+      "answer": "提示与回答拼接后，边界处的空格或子词合并可能改变分词，导致按提示长度确定的掩码边界不准确。",
+      "explanation": "TRL 0.23 在两者不匹配时会发出警告。",
+      "example": "比较 prompt 单独分词结果与 prompt+completion 的开头。",
+      "tags": [
+        "分词边界核验",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/huggingface/trl/blob/v0.23.0/trl/trainer/sft_trainer.py",
+      "referenceTitle": "TRL 0.23：SFTTrainer 源码",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经（合集转载，经历为分享者自述）；SFT 数据选择主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sftdialogue-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "FLAN留出任务簇",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FLAN 原论文如何评估指令微调对未见任务类型的零样本泛化？",
+      "answer": "它按任务类型聚类，每次留出一个任务簇作评估，并在其他任务簇上进行指令微调。",
+      "explanation": "这是论文中的评估设置，不意味着预训练阶段必然未见过相关数据。",
+      "example": "评估自然语言推断时，指令微调阶段留出该任务簇。",
+      "tags": [
+        "FLAN留出任务簇",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2109.01652v5#S2.SS2",
+      "referenceTitle": "FLAN 原论文：Evaluation Splits"
+    },
+    {
+      "id": "sftdialogue-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "FLAN数据采样上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "指令微调混合多个数据集时，为什么可能限制大数据集的采样权重？",
+      "answer": "为了缓解数据集规模差异，使大型数据集不至于主导指令微调的数据分布。",
+      "explanation": "论文使用特定上限；合适的采样配比仍需针对任务评估。",
+      "example": "混合小型和大型指令数据时，限制大型数据集的采样权重。",
+      "tags": [
+        "FLAN数据采样上限",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2109.01652v5#S2.SS4",
+      "referenceTitle": "FLAN 原论文：Training Details",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经（合集转载，经历为分享者自述）；SFT 数据选择主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sftdialogue-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "指令模板多样性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FLAN 原论文怎样为同一任务数据集构造不同的指令表述？",
+      "answer": "为数据集设计多个自然语言指令模板，并在训练示例中选择模板来格式化任务。",
+      "explanation": "这样可让同一任务以不同表述出现；具体收益取决于实验设置。",
+      "example": "同一情感分类样本可使用不同的任务指令措辞。",
+      "tags": [
+        "指令模板多样性",
+        "大模型",
+        "监督微调"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2109.01652v5#S2.SS1",
+      "referenceTitle": "FLAN 原论文：Tasks and Templates"
+    }
+  ]
+}

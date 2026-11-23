@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "hnsw-graph-search",
+    "title": "HNSW 原论文 v4：分层近邻图检索",
+    "url": "https://arxiv.org/pdf/1603.09320v4",
+    "type": "论文、标准与技术文档",
+    "note": "逐题依据固定版本论文或规范自行整理，示例为自编；适用条件见卡片。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "hnswstudy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "索引结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HNSW 用什么结构组织近似最近邻索引？",
+      "answer": "使用分层的邻近图；较高层节点更稀疏，底层包含更多节点。",
+      "explanation": "图边通常连接向量空间中的邻近候选。",
+      "example": "查询向量沿图中边逐步接近相似向量。",
+      "tags": [
+        "分层近邻图检索",
+        "索引结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    },
+    {
+      "id": "hnswstudy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "随机层级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HNSW 插入向量时通常如何确定新节点的最高层？",
+      "answer": "按指数衰减的概率分布随机选择最高层级。",
+      "explanation": "较高层的元素通常更少。",
+      "example": "新元素可能只在底层，也可能出现在更高层。",
+      "tags": [
+        "分层近邻图检索",
+        "随机层级"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    },
+    {
+      "id": "hnswstudy-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "层级包含",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 HNSW 的分层图中，分配到最高层 L 的元素还出现在哪些层？",
+      "answer": "它也出现在从底层到 L 的各个较低层。",
+      "explanation": "同一元素可以在不同层有不同的连接。",
+      "example": "最高层为 2 的元素也位于第 0、1 层。",
+      "tags": [
+        "分层近邻图检索",
+        "层级包含"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    },
+    {
+      "id": "hnswstudy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "查询起点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HNSW 查询为什么先从高层入口点开始？",
+      "answer": "高层较稀疏，可先粗略导航到接近查询的位置，再逐层下降。",
+      "explanation": "最终通常在底层做更充分的候选探索。",
+      "example": "先在稀疏高层找到较近入口，再搜索低层邻居。",
+      "tags": [
+        "分层近邻图检索",
+        "查询起点"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    },
+    {
+      "id": "hnswstudy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "底层探索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HNSW 论文的底层查询为什么会保留多个候选，而不是只沿一条贪心路径前进？",
+      "answer": "保留候选可以继续探索不同邻接路径，降低过早停在局部位置的风险。",
+      "explanation": "更大的候选探索通常需要更多计算。",
+      "example": "一条路径不佳时仍可尝试另一个候选节点。",
+      "tags": [
+        "分层近邻图检索",
+        "底层探索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    },
+    {
+      "id": "hnswstudy-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "近似结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HNSW 返回近邻时，能否不经评估就假定结果与精确搜索完全一致？",
+      "answer": "不能；HNSW 是近似方法，结果受数据、图结构和搜索配置影响。",
+      "explanation": "可以用精确检索结果衡量 Recall@k。",
+      "example": "比较 HNSW 与暴力搜索的前 k 个结果。",
+      "tags": [
+        "分层近邻图检索",
+        "近似结果"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    },
+    {
+      "id": "hnswstudy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "插入步骤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HNSW 添加新向量时，通常怎样选择各层的连接位置？",
+      "answer": "先从高层向下搜索接近新向量的节点，再在其参与的层选择邻居建立连接。",
+      "explanation": "搜索和邻居选择的策略影响图结构。",
+      "example": "插入新文档向量时为它连接已有近邻。",
+      "tags": [
+        "分层近邻图检索",
+        "插入步骤"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    },
+    {
+      "id": "hnswstudy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "邻居多样性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HNSW 论文的邻居选择启发式为什么不只是简单选出距离最近的所有候选？",
+      "answer": "它还考虑候选之间的距离，保留方向或区域更有多样性的连接以改善导航。",
+      "explanation": "论文特别讨论这种做法对聚类数据的帮助。",
+      "example": "保留跨簇的连接可能帮助搜索到另一簇。",
+      "tags": [
+        "分层近邻图检索",
+        "邻居多样性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    },
+    {
+      "id": "hnswstudy-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "构建随机性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "相同向量使用 HNSW 建索引时，为什么不同构建可能得到不同的图？",
+      "answer": "元素层级随机分配，插入顺序等构建条件也可能影响连接。",
+      "explanation": "比较检索效果时应记录构建配置和随机性。",
+      "example": "用不同随机种子构造索引，图边可能不同。",
+      "tags": [
+        "分层近邻图检索",
+        "构建随机性"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    },
+    {
+      "id": "hnswstudy-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "评估口径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较两个 HNSW 配置时，为什么应同时报告召回率与查询开销？",
+      "answer": "更充分的搜索常提高召回率，也可能增加查询时间；单一指标不能反映这种权衡。",
+      "explanation": "数据、距离度量、索引规模和硬件也应一致或说明。",
+      "example": "对同一查询集比较 Recall@k 与查询延迟。",
+      "tags": [
+        "分层近邻图检索",
+        "评估口径"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/1603.09320v4"
+    }
+  ]
+}

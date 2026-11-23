@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "binary-search-trees-foundations",
+    "title": "Princeton Algorithms 第四版：二叉搜索树与平衡树",
+    "url": "https://algs4.cs.princeton.edu/32bst/",
+    "type": "官方手册与教材",
+    "note": "根据逐题标注的手册、标准或教材自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "bstbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "二叉搜索树与平衡树",
+      "knowledgePoint": "搜索树不变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于不含重复键的二叉搜索树，一个节点的左右子树满足什么关系？",
+      "answer": "左子树所有键小于该节点键，右子树所有键大于该节点键。",
+      "explanation": "约束作用于整个子树，而不只是直接子节点。",
+      "example": "根键为 8 时，其左子树每个键都小于 8。",
+      "tags": [
+        "二叉搜索树与平衡树",
+        "搜索树不变量"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/32bst/"
+    },
+    {
+      "id": "bstbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "二叉搜索树与平衡树",
+      "knowledgePoint": "中序遍历",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对不含重复键的二叉搜索树做中序遍历，键按什么顺序输出？",
+      "answer": "按键从小到大的顺序输出。",
+      "explanation": "中序遍历依次访问左子树、节点、右子树。",
+      "example": "键 2、5、9 依次输出。",
+      "tags": [
+        "二叉搜索树与平衡树",
+        "中序遍历"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/32bst/"
+    },
+    {
+      "id": "bstbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉搜索树与平衡树",
+      "knowledgePoint": "删除双子节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二叉搜索树删除有两个子节点的节点时，可用什么节点替换它来保持顺序？",
+      "answer": "可用右子树中的最小节点，即该节点的中序后继，并相应调整链接。",
+      "explanation": "这是一种常见删除方法，也可以采用对称的前驱方法。",
+      "example": "删除键 8 时用右子树最小键替换。",
+      "tags": [
+        "二叉搜索树与平衡树",
+        "删除双子节点"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/32bst/"
+    },
+    {
+      "id": "bstbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉搜索树与平衡树",
+      "knowledgePoint": "上下界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有序符号表中的 floor(key) 与 ceiling(key) 分别表示什么？",
+      "answer": "floor 是不大于 key 的最大键；ceiling 是不小于 key 的最小键。",
+      "explanation": "如果不存在符合条件的键，需要按接口约定处理。",
+      "example": "键集合 {2,5,9} 中，floor(6)=5、ceiling(6)=9。",
+      "tags": [
+        "二叉搜索树与平衡树",
+        "上下界"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/32bst/"
+    },
+    {
+      "id": "bstbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉搜索树与平衡树",
+      "knowledgePoint": "秩与子树规模",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二叉搜索树节点额外记录子树节点数，可帮助完成哪类有序查询？",
+      "answer": "可帮助按键的秩查找或统计比给定键小的键数。",
+      "explanation": "查询和修改时需要维护子树大小。",
+      "example": "按左子树节点数决定第 k 小键在哪一侧。",
+      "tags": [
+        "二叉搜索树与平衡树",
+        "秩与子树规模"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/32bst/"
+    },
+    {
+      "id": "bstbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉搜索树与平衡树",
+      "knowledgePoint": "旋转与顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二叉搜索树做合法的左旋或右旋时，中序键序会改变吗？",
+      "answer": "不会；旋转改变局部树形，但保留二叉搜索树的键顺序。",
+      "explanation": "平衡搜索树可用旋转修复局部结构。",
+      "example": "左旋前后中序输出仍为 2、5、9。",
+      "tags": [
+        "二叉搜索树与平衡树",
+        "旋转与顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/33balanced/"
+    },
+    {
+      "id": "bstbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉搜索树与平衡树",
+      "knowledgePoint": "红黑树高度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "红黑搜索树为何能支持最坏对数时间的查找和插入？",
+      "answer": "其颜色与路径约束限制树高为 O(log n)，查找和插入沿树高进行。",
+      "explanation": "旋转和颜色调整用于维护平衡约束。",
+      "example": "按升序插入键后仍维护红黑树平衡。",
+      "tags": [
+        "二叉搜索树与平衡树",
+        "红黑树高度"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/33balanced/"
+    },
+    {
+      "id": "bstbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二叉搜索树与平衡树",
+      "knowledgePoint": "左倾红链接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Princeton 的左倾红黑树如何用红色链接表示 2-3 树中的 3 节点？",
+      "answer": "把两个二叉节点用左倾红链接连接，表示它们属于同一个 3 节点。",
+      "explanation": "这是教材使用的左倾红黑树表示，不是所有红黑树都要求红链接左倾。",
+      "example": "一个 3 节点对应相连的两个二叉节点。",
+      "tags": [
+        "二叉搜索树与平衡树",
+        "左倾红链接"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/33balanced/"
+    }
+  ]
+}

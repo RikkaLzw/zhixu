@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "sklearn-randomized-search",
+    "title": "scikit-learn 1.7.2：随机参数搜索",
+    "url": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skrand-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "随机参数搜索接口",
+      "knowledgePoint": "随机搜索次数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "RandomizedSearchCV 的 n_iter 控制什么？",
+      "answer": "控制采样多少组候选参数，而不是控制交叉验证的折数。",
+      "explanation": "候选组合通常会在每个验证划分上分别拟合和评分。",
+      "example": "n_iter=10、cv=5 通常评估 10 组参数的五折结果。",
+      "tags": [
+        "随机参数搜索接口",
+        "随机搜索次数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py"
+    },
+    {
+      "id": "skrand-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "随机参数搜索接口",
+      "knowledgePoint": "离散与分布采样",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "RandomizedSearchCV 在所有参数均为列表与至少一个参数为分布时，采样有何区别？",
+      "answer": "全部为列表时从参数组合中无放回采样；存在分布时使用有放回采样。",
+      "explanation": "有放回时重复参数组合是可能的。",
+      "example": "离散候选与连续分布可以组合用于搜索。",
+      "tags": [
+        "随机参数搜索接口",
+        "离散与分布采样"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py"
+    },
+    {
+      "id": "skrand-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "随机参数搜索接口",
+      "knowledgePoint": "离散空间不足",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "当所有参数均为列表且组合总数小于 n_iter 时，RandomizedSearchCV 1.7.2 会怎样？",
+      "answer": "发出警告并只评估现有的全部组合。",
+      "explanation": "它不会为凑够 n_iter 而重复这些组合。",
+      "example": "只有 4 组离散组合时，n_iter=10 最多评估 4 组。",
+      "tags": [
+        "随机参数搜索接口",
+        "离散空间不足"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py"
+    },
+    {
+      "id": "skrand-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "随机参数搜索接口",
+      "knowledgePoint": "分布采样接口",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "RandomizedSearchCV 的参数分布对象需要提供什么采样方法？",
+      "answer": "需要提供 rvs 方法。",
+      "explanation": "可使用 scipy.stats 中支持该接口的分布。",
+      "example": "对连续超参数可传入适合其范围的分布。",
+      "tags": [
+        "随机参数搜索接口",
+        "分布采样接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py"
+    },
+    {
+      "id": "skrand-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "随机参数搜索接口",
+      "knowledgePoint": "多参数字典采样",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "RandomizedSearchCV 1.7.2 使用参数字典列表且其中至少一个参数为分布时，怎样选择一个字典？",
+      "answer": "每轮先从字典列表中均匀随机选一个，再按该字典采样各参数。",
+      "explanation": "全部参数都是列表时走无放回的参数网格路径，不能一概套用此规则。",
+      "example": "两个字典分别描述不同模型配置时，每轮先选其中一个。",
+      "tags": [
+        "随机参数搜索接口",
+        "多参数字典采样"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py"
+    },
+    {
+      "id": "skrand-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "随机参数搜索接口",
+      "knowledgePoint": "参数随机种子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定 RandomizedSearchCV 的 random_state 能否单独保证整个建模实验完全可复现？",
+      "answer": "不能；它控制参数采样相关的随机性，估计器、数据划分和环境也可能有其他随机来源。",
+      "explanation": "需要分别记录并控制实验中其他随机状态。",
+      "example": "随机森林的 random_state 也可能需要单独设置。",
+      "tags": [
+        "随机参数搜索接口",
+        "参数随机种子"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py"
+    },
+    {
+      "id": "skrand-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "随机参数搜索接口",
+      "knowledgePoint": "训练分数开关",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "RandomizedSearchCV 的 return_train_score=False 对 cv_results_ 有什么影响？",
+      "answer": "结果中不包含训练集评分。",
+      "explanation": "默认不计算训练评分；如需诊断训练与验证差距可显式启用。",
+      "example": "设为 True 后可比较各候选的训练和验证分数。",
+      "tags": [
+        "随机参数搜索接口",
+        "训练分数开关"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py"
+    },
+    {
+      "id": "skrand-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "随机参数搜索接口",
+      "knowledgePoint": "候选拟合错误",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "RandomizedSearchCV 的 error_score 是数值时，候选拟合失败通常怎样处理？",
+      "answer": "为失败拟合设置该数值评分并发出 FitFailedWarning。",
+      "explanation": "若所有候选拟合都失败，搜索仍会报错；最终 refit 出错也会抛出。",
+      "example": "可用默认 NaN 标记某些失败候选。",
+      "tags": [
+        "随机参数搜索接口",
+        "候选拟合错误"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py"
+    },
+    {
+      "id": "skrand-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "随机参数搜索接口",
+      "knowledgePoint": "调用式refit",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "RandomizedSearchCV 使用 callable 类型的 refit 选择最佳候选时，best_score_ 一定存在吗？",
+      "answer": "不一定；该模式下 best_score_ 不提供。",
+      "explanation": "函数根据 cv_results_ 返回候选索引，可结合分数以外的约束。",
+      "example": "可以依据模型复杂度和验证分数共同选择候选。",
+      "tags": [
+        "随机参数搜索接口",
+        "调用式refit"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_search.py"
+    }
+  ]
+}

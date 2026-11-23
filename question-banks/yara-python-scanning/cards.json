@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "yara-python-scanning",
+    "title": "YARA 4.4：Python 规则编译与扫描",
+    "url": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "yarapy-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "YARA Python 扫描接口",
+      "knowledgePoint": "字符串编译",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "yara-python 4.4 如何从 Python 字符串编译 YARA 规则？",
+      "answer": "调用 yara.compile(source=规则文本)，得到可用于扫描的 Rules 对象。",
+      "explanation": "source 参数接收规则源码；编译错误会引发异常。",
+      "example": "可把小型规则文本传给 source，再用返回对象扫描。",
+      "tags": [
+        "YARA Python 扫描接口",
+        "字符串编译"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html"
+    },
+    {
+      "id": "yarapy-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA Python 扫描接口",
+      "knowledgePoint": "多命名空间",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "yara.compile(sources=字典) 的字典键在 YARA 4.4 中代表什么？",
+      "answer": "字典键作为命名空间，值为对应规则源码字符串。",
+      "explanation": "命名空间可以区分不同规则集合中的同名规则。",
+      "example": "sources={\"a\": 规则一, \"b\": 规则二} 可同时编译两组规则。",
+      "tags": [
+        "YARA Python 扫描接口",
+        "多命名空间"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html"
+    },
+    {
+      "id": "yarapy-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "YARA Python 扫描接口",
+      "knowledgePoint": "字节数据扫描",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "yara-python 的 Rules.match 怎样扫描已经读入内存的字节数据？",
+      "answer": "将字节数据通过 data 参数传入 Rules.match。",
+      "explanation": "也可使用 filepath 或 pid 扫描文件或进程内存。",
+      "example": "rules.match(data=content) 返回匹配规则。",
+      "tags": [
+        "YARA Python 扫描接口",
+        "字节数据扫描"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html"
+    },
+    {
+      "id": "yarapy-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA Python 扫描接口",
+      "knowledgePoint": "外部变量",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "YARA 规则使用外部变量时，yara-python 通常如何提供它们？",
+      "answer": "通过编译时的 externals 字典定义变量，也可以在匹配时使用 externals 指定值。",
+      "explanation": "规则需要在编译时知道所引用的外部变量。",
+      "example": "定义环境类型变量后，可在扫描时按输入调整它的值。",
+      "tags": [
+        "YARA Python 扫描接口",
+        "外部变量"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html"
+    },
+    {
+      "id": "yarapy-005",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "YARA Python 扫描接口",
+      "knowledgePoint": "扫描超时",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "yara-python 的 Rules.match 设置 timeout 后，超过指定秒数未完成会怎样？",
+      "answer": "抛出 yara.TimeoutError。",
+      "explanation": "调用方应区分扫描超时与成功扫描但无规则命中。",
+      "example": "处理大文件时可记录超时并安排后续检查。",
+      "tags": [
+        "YARA Python 扫描接口",
+        "扫描超时"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html"
+    },
+    {
+      "id": "yarapy-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA Python 扫描接口",
+      "knowledgePoint": "回调筛选",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "yara-python 4.4 的 which_callbacks=CALLBACK_MATCHES 如何影响规则回调？",
+      "answer": "仅为匹配的规则调用指定的规则回调。",
+      "explanation": "默认 CALLBACK_ALL 会为匹配和不匹配的规则调用回调。",
+      "example": "只需实时处理命中规则时可以使用 CALLBACK_MATCHES。",
+      "tags": [
+        "YARA Python 扫描接口",
+        "回调筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html"
+    },
+    {
+      "id": "yarapy-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA Python 扫描接口",
+      "knowledgePoint": "回调终止",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "yara-python 规则回调返回 CALLBACK_ABORT 有什么作用？",
+      "answer": "停止继续对当前数据应用规则。",
+      "explanation": "它不表示整个文件已被全部规则完整扫描。",
+      "example": "需要提前结束扫描时可从回调返回该值。",
+      "tags": [
+        "YARA Python 扫描接口",
+        "回调终止"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html"
+    },
+    {
+      "id": "yarapy-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA Python 扫描接口",
+      "knowledgePoint": "保存已编译规则",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "yara-python 怎样保存并重新加载已编译的规则？",
+      "answer": "调用 Rules.save 保存，再通过 yara.load 加载。",
+      "explanation": "保存的是已编译规则，后续扫描时不需要重复编译原始文本。",
+      "example": "服务初始化时可加载已编译规则集。",
+      "tags": [
+        "YARA Python 扫描接口",
+        "保存已编译规则"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html"
+    },
+    {
+      "id": "yarapy-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA Python 扫描接口",
+      "knowledgePoint": "编译警告处理",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "yara.compile(error_on_warning=True) 遇到编译警告时怎样处理？",
+      "answer": "将警告视为错误并抛出异常。",
+      "explanation": "默认该选项为 False；可根据规则质量要求选择处理方式。",
+      "example": "在规则检查流水线中可要求警告阻止通过。",
+      "tags": [
+        "YARA Python 扫描接口",
+        "编译警告处理"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/yarapython.html"
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "linux-io-multiplexing",
+    "title": "Linux 手册：epoll I/O 多路复用",
+    "url": "https://man7.org/linux/man-pages/man7/epoll.7.html",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理；示例自编，适用环境与前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "epollbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "多路复用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll 主要解决什么问题？",
+      "answer": "它允许一个线程监视多个文件描述符的 I/O 就绪事件。",
+      "explanation": "就绪表示相应操作可能取得进展，不代表应用已完成读写。",
+      "example": "网络服务同时等待多个连接可读。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "多路复用"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/epoll.7.html"
+    },
+    {
+      "id": "epollbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "监视集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll 的 interest list 与 ready list 分别表示什么？",
+      "answer": "前者保存注册关注的描述符与事件；后者包含当前就绪事件的引用。",
+      "explanation": "内核根据 I/O 活动维护就绪状态。",
+      "example": "已注册的连接只有部分当前可读。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "监视集合"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/epoll.7.html"
+    },
+    {
+      "id": "epollbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "管理接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll_ctl 和 epoll_wait 分别做什么？",
+      "answer": "epoll_ctl 管理监视项；epoll_wait 等待并返回就绪事件。",
+      "explanation": "epoll 实例本身也由文件描述符引用。",
+      "example": "先注册连接的可读事件，再等待事件。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "管理接口"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/epoll.7.html"
+    },
+    {
+      "id": "epollbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "水平触发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll 的默认水平触发（LT）模式中，数据仍未读完时可能怎样通知？",
+      "answer": "只要描述符仍满足就绪条件，后续等待可以继续报告就绪。",
+      "explanation": "应用仍需处理关闭和读写错误。",
+      "example": "只读走一部分数据后再次等待，仍可能得到可读事件。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "水平触发"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/epoll.7.html"
+    },
+    {
+      "id": "epollbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "边缘触发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll 的边缘触发（ET）模式下，只读取部分已到数据后直接等待有什么风险？",
+      "answer": "剩余数据可能仍在缓冲区，但没有新的状态变化时后续等待可能阻塞。",
+      "explanation": "ET 并不承诺为每个未读字节持续重复通知。",
+      "example": "读走 1 KB 后，余下 1 KB 可能没有新的通知。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "边缘触发"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/epoll.7.html"
+    },
+    {
+      "id": "epollbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "ET 读取习惯",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll 的 ET 模式通常如何配合非阻塞读取？",
+      "answer": "收到可读事件后继续读取，直到返回 EAGAIN，再等待后续事件。",
+      "explanation": "也要处理 EOF 和其他错误；非阻塞可避免一次读操作卡住事件循环。",
+      "example": "循环读取可用数据后让出事件循环。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "ET 读取习惯"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/epoll.7.html"
+    },
+    {
+      "id": "epollbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "一次性通知",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll 的 EPOLLONESHOT 事件触发后，如何重新启用该监视项？",
+      "answer": "通过 epoll_ctl 的 EPOLL_CTL_MOD 重新设置监视项。",
+      "explanation": "触发后该项被禁用，直到应用重新启用。",
+      "example": "工作线程处理完连接后重新注册关注事件。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "一次性通知"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/epoll.7.html"
+    },
+    {
+      "id": "epollbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "错误与挂断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll 中 EPOLLERR 和 EPOLLHUP 是否必须显式加入关注掩码才能报告？",
+      "answer": "不必；这两类事件即使未请求也会被报告。",
+      "explanation": "收到挂断不一定表示缓冲区里的数据已经读完。",
+      "example": "读完残留数据后再观察连接结束。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "错误与挂断"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/epoll_ctl.2.html"
+    },
+    {
+      "id": "epollbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "等待超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll_wait 的 timeout 设为 0 和 -1 分别表示什么？",
+      "answer": "0 表示立即返回；-1 表示可无限期等待事件。",
+      "explanation": "等待也可能因信号等原因提前结束。",
+      "example": "事件循环可用 0 做一次非阻塞检查。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "等待超时"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/epoll_wait.2.html"
+    },
+    {
+      "id": "epollbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux I/O 多路复用",
+      "knowledgePoint": "描述符支持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux epoll_ctl 能否假设任意类型的文件描述符都能加入 epoll？",
+      "answer": "不能；对不支持 epoll 的目标，例如普通文件或目录，调用可能以 EPERM 失败。",
+      "explanation": "程序应检查注册操作的返回值。",
+      "example": "普通文件通常不按套接字方式注册 epoll。",
+      "tags": [
+        "Linux I/O 多路复用",
+        "描述符支持"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/epoll_ctl.2.html"
+    }
+  ]
+}

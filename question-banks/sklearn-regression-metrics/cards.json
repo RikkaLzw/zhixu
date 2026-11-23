@@ -1,0 +1,260 @@
+{
+  "source": {
+    "id": "sklearn-regression-metrics",
+    "title": "scikit-learn 1.7：回归评估常用函数",
+    "url": "https://scikit-learn.org/1.7/modules/model_evaluation.html",
+    "type": "官方文档与固定版本源码",
+    "note": "依据引用资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skreg-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "R2评分含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "回归中的 R² 分数通常以什么基线衡量平方误差？",
+      "answer": "它比较模型的残差平方和与用评估样本目标均值预测时的平方误差；标准形式为 1 减两者之比。",
+      "explanation": "目标值变化非零时可按这个公式计算。",
+      "example": "对同一测试集比较模型预测和测试集均值基线。",
+      "tags": [
+        "R2评分含义",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/model_evaluation.html#r2-score-the-coefficient-of-determination"
+    },
+    {
+      "id": "skreg-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "R2负值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "回归测试集上的 R² 可以是负数吗？",
+      "answer": "可以；当残差平方和大于同一测试集目标均值基线的平方误差时，R² 为负。",
+      "explanation": "R² 的最佳值是 1，负值并非计算错误。",
+      "example": "预测比常数均值基线更差。",
+      "tags": [
+        "R2负值",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/model_evaluation.html#r2-score-the-coefficient-of-determination"
+    },
+    {
+      "id": "skreg-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "常数目标R2",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 r2_score 对常数真实目标默认如何处理非有限结果？",
+      "answer": "默认 force_finite=True 时，完美预测替换为 1.0，不完美预测替换为 0.0。",
+      "explanation": "设置 force_finite=False 可保留原本的 NaN 或负无穷结果。",
+      "example": "所有真实值相同的测试切片。",
+      "tags": [
+        "常数目标R2",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/model_evaluation.html#r2-score-the-coefficient-of-determination"
+    },
+    {
+      "id": "skreg-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "单样本R2",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 r2_score 只收到一个样本时，能得到有意义的 R² 吗？",
+      "answer": "不能；该分数在样本数少于 2 时未定义，返回 NaN 并发出警告。",
+      "explanation": "force_finite 的常数目标替换不解决单样本情形。",
+      "example": "避免在只含一个样本的切片上解释 R²。",
+      "tags": [
+        "单样本R2",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.r2_score.html"
+    },
+    {
+      "id": "skreg-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "均方根误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RMSE 与 MSE 有什么关系，结果单位有什么特点？",
+      "answer": "RMSE 是 MSE 的平方根，单位与目标值相同。",
+      "explanation": "它仍会较重地惩罚较大的误差。",
+      "example": "预测值以秒为单位时，RMSE 也以秒为单位。",
+      "tags": [
+        "均方根误差",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/model_evaluation.html#mean-squared-error"
+    },
+    {
+      "id": "skreg-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "误差中位数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "median_absolute_error 用什么方式汇总回归误差？",
+      "answer": "它取各样本绝对误差的中位数。",
+      "explanation": "中位数对少量极端误差通常比均值更不敏感。",
+      "example": "报告典型样本的绝对预测偏差。",
+      "tags": [
+        "误差中位数",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/model_evaluation.html#median-absolute-error"
+    },
+    {
+      "id": "skreg-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "最大绝对误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 max_error 描述什么？",
+      "answer": "它返回真实值与预测值之间最大的绝对误差。",
+      "explanation": "它反映最坏单样本偏差，而不是平均水平。",
+      "example": "检查最长预测延迟偏差。",
+      "tags": [
+        "最大绝对误差",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.max_error.html"
+    },
+    {
+      "id": "skreg-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "MAPE量纲",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 mean_absolute_percentage_error 返回 0.2 时，按常见百分比应理解为多少？",
+      "answer": "表示平均相对绝对误差为 20%。",
+      "explanation": "该函数返回相对值，不直接乘以 100。",
+      "example": "平均相对误差 0.2 对应 20%。",
+      "tags": [
+        "MAPE量纲",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/model_evaluation.html#mean-absolute-percentage-error"
+    },
+    {
+      "id": "skreg-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "MAPE零目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "真实目标值接近零时，为什么 MAPE 可能非常大？",
+      "answer": "误差要除以真实值的绝对值；接近零的分母会放大相对误差。",
+      "explanation": "scikit-learn 使用很小的正数避免除零，因此结果仍可能极大。",
+      "example": "真实值为零而预测不为零。",
+      "tags": [
+        "MAPE零目标",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/model_evaluation.html#mean-absolute-percentage-error"
+    },
+    {
+      "id": "skreg-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "多输出误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 回归指标的 multioutput=\"raw_values\" 通常返回什么？",
+      "answer": "返回每个输出维度各自的指标值，而不合并成单一平均分。",
+      "explanation": "默认的 uniform_average 通常对输出维度做等权平均。",
+      "example": "分别查看两个回归目标的误差。",
+      "tags": [
+        "多输出误差",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.mean_absolute_error.html"
+    },
+    {
+      "id": "skreg-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "分位数损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "mean_pinball_loss 常用于评价哪类回归预测？",
+      "answer": "用于评价指定分位数的预测，alpha 指定目标分位水平。",
+      "explanation": "不同分位水平对高估和低估施加不同的线性惩罚。",
+      "example": "用 alpha=0.9 评估第 90 百分位预测。",
+      "tags": [
+        "分位数损失",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.mean_pinball_loss.html"
+    },
+    {
+      "id": "skreg-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "偏差与解释方差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "当所有预测都比真实值高出同一非零常数时，解释方差为什么可能仍为 1？",
+      "answer": "残差没有变化，因此残差方差为零；解释方差不惩罚这种固定的系统偏差。",
+      "explanation": "R² 通常还反映这类非零平均残差。",
+      "example": "每个预测值都比真实值高 5。",
+      "tags": [
+        "偏差与解释方差",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.explained_variance_score.html"
+    },
+    {
+      "id": "skreg-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回归评估函数",
+      "knowledgePoint": "对数平方误差适用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 的 mean_squared_log_error 对真实值和预测值有什么数值下界？",
+      "answer": "两个输入中的值都必须大于 −1；小于或等于 −1 时会引发 ValueError。",
+      "explanation": "该实现使用 log(1+y)；−1 与 0 之间的值在数值上可接受，但是否适用于任务需另行判断。",
+      "example": "−0.5 可计算；−1 会报错。",
+      "tags": [
+        "对数平方误差适用",
+        "回归评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/metrics/_regression.py#L761",
+      "referenceTitle": "scikit-learn 1.7.2 源码：mean_squared_log_error"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "scipy-mann-whitney-u",
+    "title": "SciPy 1.15.3 官方文档：Mann–Whitney U 检验",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.mannwhitneyu.html",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "mannu-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mann–Whitney U 检验",
+      "knowledgePoint": "原假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mann–Whitney U 检验通常以什么为原假设？",
+      "answer": "两个独立样本所来自的总体分布相同。",
+      "explanation": "不能不加前提地把该原假设简化成两个总体中位数相等。",
+      "example": "比较两组独立实验观测的分布。",
+      "tags": [
+        "Mann–Whitney U 检验",
+        "原假设"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.mannwhitneyu.html"
+    },
+    {
+      "id": "mannu-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mann–Whitney U 检验",
+      "knowledgePoint": "中位数解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mann–Whitney U 检验结果能无条件解释为两个总体中位数之差吗？",
+      "answer": "不能；将结果解释为位置或中位数差异需要额外的分布形状等假设。",
+      "explanation": "该检验的备择假设可用随机大小关系描述。",
+      "example": "不同形状的分布即使中位数接近也可能有分布差异。",
+      "tags": [
+        "Mann–Whitney U 检验",
+        "中位数解释"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.mannwhitneyu.html"
+    },
+    {
+      "id": "mannu-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mann–Whitney U 检验",
+      "knowledgePoint": "配对与独立",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "成对观测能直接当作独立样本使用 Mann–Whitney U 检验吗？",
+      "answer": "不宜；Mann–Whitney U 面向独立样本，配对样本可考虑 Wilcoxon 符号秩检验。",
+      "explanation": "还应检查配对检验自身的适用条件。",
+      "example": "同一批人员治疗前后的测量是配对数据。",
+      "tags": [
+        "Mann–Whitney U 检验",
+        "配对与独立"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.mannwhitneyu.html"
+    },
+    {
+      "id": "mannu-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mann–Whitney U 检验",
+      "knowledgePoint": "统计量对应样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 mannwhitneyu 返回的 statistic 对应哪个样本？",
+      "answer": "对应第一个输入样本 x 的 U 统计量。",
+      "explanation": "第二个样本的统计量可由样本数与第一个 U 算出。",
+      "example": "交换 x 和 y 后返回的 U 通常不同。",
+      "tags": [
+        "Mann–Whitney U 检验",
+        "统计量对应样本"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.mannwhitneyu.html"
+    },
+    {
+      "id": "mannu-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mann–Whitney U 检验",
+      "knowledgePoint": "两个 U 的关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个独立样本量为 n₁、n₂ 时，对应的 Mann–Whitney U₁ 与 U₂ 有什么关系？",
+      "answer": "U₁ + U₂ = n₁n₂。",
+      "explanation": "这一关系用于在两个样本对应的统计量之间换算。",
+      "example": "样本量分别为 5 和 4，U₁ 为 17 时 U₂ 为 3。",
+      "tags": [
+        "Mann–Whitney U 检验",
+        "两个 U 的关系"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.mannwhitneyu.html"
+    },
+    {
+      "id": "mannu-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mann–Whitney U 检验",
+      "knowledgePoint": "自动方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 mannwhitneyu(method=\"auto\") 何时选择 exact 方法？",
+      "answer": "当较小样本的长度不超过 8 且没有并列值时选择 exact；否则选择 asymptotic。",
+      "explanation": "这是该版本自动选择规则，不代表其他实现相同。",
+      "example": "两组均较小且无并列观测时可选择精确分布。",
+      "tags": [
+        "Mann–Whitney U 检验",
+        "自动方法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.mannwhitneyu.html"
+    },
+    {
+      "id": "mannu-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mann–Whitney U 检验",
+      "knowledgePoint": "并列值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 mannwhitneyu(method=\"exact\") 如何处理并列值的校正？",
+      "answer": "exact 方法不做并列值校正，遇到并列值也不会自动发出错误或警告。",
+      "explanation": "小样本存在并列值时，文档建议考虑置换方法。",
+      "example": "重复观测值较多时不能只因程序运行成功就忽略该限制。",
+      "tags": [
+        "Mann–Whitney U 检验",
+        "并列值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.mannwhitneyu.html"
+    },
+    {
+      "id": "mannu-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mann–Whitney U 检验",
+      "knowledgePoint": "连续性校正",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 mannwhitneyu 中 use_continuity 对哪种计算方法有影响？",
+      "answer": "只在使用 asymptotic 正态近似方法时有影响。",
+      "explanation": "该参数默认开启连续性校正。",
+      "example": "比较近似 p 值时应说明是否使用校正。",
+      "tags": [
+        "Mann–Whitney U 检验",
+        "连续性校正"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.mannwhitneyu.html"
+    }
+  ]
+}

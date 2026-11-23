@@ -1,0 +1,300 @@
+{
+  "source": {
+    "id": "company-contrastive-learning",
+    "title": "字节公开面经主题启发：对比学习",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "面经公司与经历为分享者自述；问题是主题启发并由独立技术资料核验。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "companycontrast-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "对比学习",
+      "knowledgePoint": "对比学习目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语义表示的对比学习中，正样本和负样本分别提供什么信号？",
+      "answer": "正样本提供应相近的示例，负样本提供应区分的示例；损失函数据此调整表示空间。",
+      "explanation": "相关性取决于任务，不能认为任意不同文本都不相关。",
+      "example": "查询与相关段落为正对，不相关段落为负例。",
+      "tags": [
+        "对比学习目标",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "字节大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "simcse-paper",
+          "title": "SimCSE 论文",
+          "url": "https://arxiv.org/abs/2104.08821",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companycontrast-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "对比学习",
+      "knowledgePoint": "困难负样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "检索模型训练中的困难负样本通常指什么？",
+      "answer": "它与查询表面或语义上相似，却不是该查询的相关答案，因而更难与正样本区分。",
+      "explanation": "相似度高本身不保证样本确实无关，需要核对相关性。",
+      "example": "同一产品但不同漏洞的公告可能是难负例。",
+      "tags": [
+        "困难负样本",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "字节大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentence-transformers-doc",
+          "title": "Sentence Transformers 文档",
+          "url": "https://sbert.net/docs/package_reference/sentence_transformer/losses.html",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companycontrast-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "对比学习",
+      "knowledgePoint": "假负样本",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "把查询的另一条正确答案当作对比学习负样本会有什么风险？",
+      "answer": "训练会把本应相关的内容推离查询，产生与真实相关性相矛盾的信号。",
+      "explanation": "负例挖掘需要检查重复项及多个正确答案。",
+      "example": "两个页面都能回答问题，却只把其中一个标为正例。",
+      "tags": [
+        "假负样本",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "字节大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentence-transformers-doc",
+          "title": "Sentence Transformers 文档",
+          "url": "https://sbert.net/docs/package_reference/sentence_transformer/losses.html",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companycontrast-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "对比学习",
+      "knowledgePoint": "无监督 SimCSE 正对",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "无监督 SimCSE 如何从同一句子构造正样本对？",
+      "answer": "对同一句话做两次前向编码，并使用独立采样的 dropout 掩码产生两个表示。",
+      "explanation": "两次输入文本相同，随机掩码带来表示扰动。",
+      "example": "一句告警描述在两个 dropout 掩码下各编码一次。",
+      "tags": [
+        "无监督 SimCSE 正对",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "字节大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "simcse-paper",
+          "title": "SimCSE 论文",
+          "url": "https://arxiv.org/abs/2104.08821",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companycontrast-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "对比学习",
+      "knowledgePoint": "有监督 SimCSE 样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始有监督 SimCSE 如何使用自然语言推断数据中的蕴含与矛盾句对？",
+      "answer": "它将蕴含句对作为正样本，并可将同一前提对应的矛盾句作为困难负样本。",
+      "explanation": "这是论文中的具体构造方式，其他任务的相关性定义可能不同。",
+      "example": "同一前提下分别选取蕴含和矛盾的假设句。",
+      "tags": [
+        "有监督 SimCSE 样本",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "字节大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "simcse-paper",
+          "title": "SimCSE 论文",
+          "url": "https://arxiv.org/abs/2104.08821",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companycontrast-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "对比学习",
+      "knowledgePoint": "批内负样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "常见批内负样本对比损失如何利用同一批次的其他正例？",
+      "answer": "对每个查询，把其配对的文档作为正例，并把其他查询配对的文档作为候选负例。",
+      "explanation": "前提是这些候选对当前查询确实不相关，否则会产生假负例。",
+      "example": "一个批次有多组问答时，比较当前问题与其他答案。",
+      "tags": [
+        "批内负样本",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "字节大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentence-transformers-doc",
+          "title": "Sentence Transformers 文档",
+          "url": "https://sbert.net/docs/package_reference/sentence_transformer/losses.html",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companycontrast-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "对比学习",
+      "knowledgePoint": "梯度累积与批内负例",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "普通梯度累积为什么不一定等价于用一个大批次计算批内负样本对比损失？",
+      "answer": "各微批次分别计算损失时看不到其他微批次的负样本，因此比较集合不同。",
+      "explanation": "某些专门缓存或跨设备收集方法可改变候选集合。",
+      "example": "分两次处理的问答对不会自动互为批内负例。",
+      "tags": [
+        "梯度累积与批内负例",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "字节大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentence-transformers-doc",
+          "title": "Sentence Transformers 文档",
+          "url": "https://sbert.net/docs/package_reference/sentence_transformer/losses.html",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companycontrast-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "对比学习",
+      "knowledgePoint": "三元组间隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "三元组损失中的 margin 对正负样本的距离提出什么要求？",
+      "answer": "它要求负样本相对锚点的距离至少比正样本距离大一个指定间隔。",
+      "explanation": "具体距离函数和 margin 取值取决于实现。",
+      "example": "让不相关公告比相关公告离查询更远，且至少相差设定间隔。",
+      "tags": [
+        "三元组间隔",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "字节大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentence-transformers-doc",
+          "title": "Sentence Transformers 文档",
+          "url": "https://sbert.net/docs/package_reference/sentence_transformer/losses.html",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companycontrast-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "对比学习",
+      "knowledgePoint": "双编码器与交叉编码器",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "双编码器和交叉编码器在检索时如何计算查询与文档的表示？",
+      "answer": "双编码器分别编码查询和文档后比较向量；交叉编码器把查询和文档一起输入并计算相关性。",
+      "explanation": "双编码器可预先编码文档；交叉编码器常用于重排候选。",
+      "example": "先向量召回，再逐对评估查询与候选片段。",
+      "tags": [
+        "双编码器与交叉编码器",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "字节大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentence-transformers-doc",
+          "title": "Sentence Transformers 文档",
+          "url": "https://sbert.net/examples/sentence_transformer/applications/retrieve_rerank/README.html",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "python-unittest-mock-practice",
+    "title": "Python 3.14 文档：unittest.mock 测试替身",
+    "url": "https://docs.python.org/3.14/library/unittest.mock.html",
+    "type": "Python 官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，涉及实现行为时以题目所述版本为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pymock-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "补丁位置",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "Python 使用 unittest.mock.patch 替换依赖时，通常应补丁哪个命名空间？",
+      "answer": "应补丁被测代码查找该对象的命名空间。",
+      "explanation": "如果模块使用 from a import X 并在 b 中查找 X，应考虑补丁 b.X。",
+      "example": "b.py 已执行 from a import X 时，测试 b 的代码通常补丁 b.X。",
+      "tags": [
+        "Python unittest.mock",
+        "补丁位置"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html#where-to-patch"
+    },
+    {
+      "id": "pymock-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "上下文还原",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "以 with patch(...) 使用 Python 测试补丁时，退出上下文会发生什么？",
+      "answer": "被替换的目标会恢复到进入上下文前的状态。",
+      "explanation": "补丁的作用域应覆盖被测代码对目标的实际查找。",
+      "example": "在 with 块内替换网络客户端，退出后恢复原属性。",
+      "tags": [
+        "Python unittest.mock",
+        "上下文还原"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html"
+    },
+    {
+      "id": "pymock-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "返回值",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python Mock(return_value=42) 被调用时返回什么？",
+      "answer": "返回配置的 42，调用本身也会被记录。",
+      "explanation": "默认的 return_value 通常是自动创建的子 Mock，并在后续调用中复用。",
+      "example": "m = Mock(return_value=42)，m(\"x\") 返回 42。",
+      "tags": [
+        "Python unittest.mock",
+        "返回值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html"
+    },
+    {
+      "id": "pymock-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "可迭代副作用",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python Mock 的 side_effect 设置为 [1, 2] 时，连续调用三次会怎样？",
+      "answer": "前两次依次返回 1、2；第三次因迭代器耗尽而抛出 StopIteration。",
+      "explanation": "可用此方式模拟依赖在多次调用中产生不同结果。",
+      "example": "m = Mock(side_effect=[1, 2])，第三次 m() 抛出 StopIteration。",
+      "tags": [
+        "Python unittest.mock",
+        "可迭代副作用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html"
+    },
+    {
+      "id": "pymock-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "副作用与默认值",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python Mock 的 side_effect 函数返回 unittest.mock.DEFAULT 时，调用结果如何决定？",
+      "answer": "Mock 会继续使用正常的返回值处理；例如已设置 return_value 时使用该值。",
+      "explanation": "side_effect 函数接收与 Mock 调用相同的参数，可对不同输入分支处理。",
+      "example": "side_effect 返回 DEFAULT 且 return_value 为 7 时，调用返回 7。",
+      "tags": [
+        "Python unittest.mock",
+        "副作用与默认值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html"
+    },
+    {
+      "id": "pymock-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "调用断言",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python Mock 的 assert_called_once_with 与 assert_called_with 有何区别？",
+      "answer": "前者要求 Mock 恰好调用一次且参数匹配；后者检查最近一次调用的参数，不要求总调用次数为一次。",
+      "explanation": "如果关注调用次数或交互顺序，需要显式选择对应断言。",
+      "example": "同一参数调用两次后，assert_called_with 可通过，assert_called_once_with 会失败。",
+      "tags": [
+        "Python unittest.mock",
+        "调用断言"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html"
+    },
+    {
+      "id": "pymock-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "自动规格",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python patch(..., autospec=True) 的主要作用是什么？",
+      "answer": "根据被替换对象创建带规格的 Mock，并对可检查的函数或方法签名约束调用参数。",
+      "explanation": "autospec 不能自动发现原对象初始化后才动态创建的所有属性；它也不能证明真实依赖的行为。",
+      "example": "被替换函数只接受两个位置参数时，传三个通常会抛 TypeError。",
+      "tags": [
+        "Python unittest.mock",
+        "自动规格"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html"
+    },
+    {
+      "id": "pymock-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "严格属性",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python Mock(spec_set=对象) 对不存在于该规格的属性有什么限制？",
+      "answer": "读取或设置规格中不存在的属性会抛出 AttributeError。",
+      "explanation": "spec_set 比普通 spec 更严格地限制属性赋值。",
+      "example": "给只允许 read 的规格设置不存在的 write 属性会失败。",
+      "tags": [
+        "Python unittest.mock",
+        "严格属性"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html"
+    },
+    {
+      "id": "pymock-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "重置历史",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python Mock 的 reset_mock() 默认会清除已设置的 return_value 和 side_effect 吗？",
+      "answer": "默认不会；它会重置调用历史，只有显式传入相应关键字参数时才重置这两项。",
+      "explanation": "子 Mock 的调用历史也会被重置。",
+      "example": "m.reset_mock() 后 call_count 为 0，但预设的返回值仍可使用。",
+      "tags": [
+        "Python unittest.mock",
+        "重置历史"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html"
+    },
+    {
+      "id": "pymock-010",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Python unittest.mock",
+      "knowledgePoint": "替换类",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python patch 替换一个类后，被测代码调用该类创建的模拟实例如何取得？",
+      "answer": "通常通过被补丁类 Mock 的 return_value 取得。",
+      "explanation": "测试可在这个模拟实例上配置方法返回值或检查方法调用。",
+      "example": "mock_class.return_value.send.assert_called_once() 检查模拟实例的 send 调用。",
+      "tags": [
+        "Python unittest.mock",
+        "替换类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/unittest.mock.html"
+    }
+  ]
+}

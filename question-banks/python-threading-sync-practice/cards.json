@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "python-threading-sync-practice",
+    "title": "Python 3.14 文档：线程同步与队列",
+    "url": "https://docs.python.org/3.14/library/threading.html",
+    "type": "官方文档或教材",
+    "note": "依据 Python 3.14 threading 与 queue 官方文档自行整理；区分线程队列与 asyncio 队列。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pythread-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程同步",
+      "knowledgePoint": "启动与直接调用",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python Thread 的 start() 与直接调用 run() 在执行线程上有什么区别？",
+      "answer": "start() 启动新线程并在该线程执行 run()；直接调用 run() 只是普通方法调用。",
+      "explanation": "start() 对同一个 Thread 对象只能成功调用一次。",
+      "example": "使用 start 启动后台工作。",
+      "tags": [
+        "Python 线程同步",
+        "启动与直接调用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/threading.html"
+    },
+    {
+      "id": "pythread-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程同步",
+      "knowledgePoint": "等待自身",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python Thread 为什么不允许当前线程对自身调用 join()？",
+      "answer": "等待自身结束会造成死锁，因此该调用会抛出 RuntimeError。",
+      "explanation": "对尚未启动的线程调用 join 也会报错。",
+      "example": "工作线程不应等待自己结束。",
+      "tags": [
+        "Python 线程同步",
+        "等待自身"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/threading.html"
+    },
+    {
+      "id": "pythread-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程同步",
+      "knowledgePoint": "守护线程退出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 进程只剩下守护线程时，这些线程的清理工作一定会完成吗？",
+      "answer": "不一定；解释器可退出并突然停止守护线程，资源未必得到正常释放。",
+      "explanation": "需要可靠清理时可使用非守护线程和退出信号。",
+      "example": "向工作线程发信号并等待其结束。",
+      "tags": [
+        "Python 线程同步",
+        "守护线程退出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/threading.html"
+    },
+    {
+      "id": "pythread-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程同步",
+      "knowledgePoint": "条件等待与锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python threading.Condition.wait() 在等待时如何处理关联的锁？",
+      "answer": "它释放关联锁并阻塞；被唤醒后重新获取锁，再返回。",
+      "explanation": "调用 wait 时必须先持有关联锁。",
+      "example": "消费者等待共享状态变化时让出锁。",
+      "tags": [
+        "Python 线程同步",
+        "条件等待与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/threading.html"
+    },
+    {
+      "id": "pythread-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程同步",
+      "knowledgePoint": "条件通知与锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python threading.Condition.notify() 会自动释放调用方持有的锁吗？",
+      "answer": "不会；被唤醒的等待者需等通知方释放锁后才能重新取得锁并返回。",
+      "explanation": "调用 notify 时必须持有关联锁。",
+      "example": "修改共享状态并通知后退出 with 块。",
+      "tags": [
+        "Python 线程同步",
+        "条件通知与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/threading.html"
+    },
+    {
+      "id": "pythread-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程同步",
+      "knowledgePoint": "屏障同步",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python threading.Barrier(n) 的 wait() 用于协调什么？",
+      "answer": "它让参与线程等待，直到约定数量的线程到达屏障后一起继续。",
+      "explanation": "同一屏障可用于后续同步轮次。",
+      "example": "两个工作线程都完成准备后再进入下一阶段。",
+      "tags": [
+        "Python 线程同步",
+        "屏障同步"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/threading.html"
+    },
+    {
+      "id": "pythread-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程同步",
+      "knowledgePoint": "屏障故障",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python threading.Barrier.wait() 超时时，屏障和等待线程通常怎样？",
+      "answer": "屏障进入 broken 状态，等待方会收到 BrokenBarrierError。",
+      "explanation": "屏障动作抛错等情况也可能使屏障损坏。",
+      "example": "某个参与线程未及时到达时避免其他线程无限等待。",
+      "tags": [
+        "Python 线程同步",
+        "屏障故障"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/threading.html"
+    },
+    {
+      "id": "pythread-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程同步",
+      "knowledgePoint": "队列快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多线程中 queue.Queue.empty() 返回 False 能保证随后 get() 不会阻塞吗？",
+      "answer": "不能；其他线程可能在两次调用之间取走队列项。",
+      "explanation": "empty 和 qsize 适合观察，不能单独作为并发条件的保证。",
+      "example": "需要非阻塞读取时使用 get_nowait 并处理 Empty。",
+      "tags": [
+        "Python 线程同步",
+        "队列快照"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/queue.html"
+    },
+    {
+      "id": "pythread-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程同步",
+      "knowledgePoint": "非阻塞放入",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python queue.Queue 已满时调用 put_nowait(item) 会怎样？",
+      "answer": "它立即抛出 queue.Full，不会等待空位。",
+      "explanation": "阻塞式 put 可选择等待或设置超时。",
+      "example": "有界队列满时让调用方处理背压。",
+      "tags": [
+        "Python 线程同步",
+        "非阻塞放入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/queue.html"
+    }
+  ]
+}

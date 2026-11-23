@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "dora-weight-decomposition",
+    "title": "DoRA 原论文 v2 与 PEFT 0.17：权重分解",
+    "url": "https://arxiv.org/abs/2402.09353v2",
+    "type": "原论文或官方文档与源码",
+    "note": "依据逐题引用的固定版本、原论文或官方文档自行整理；示例为自编，具体版本及适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "dorafund-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DoRA 权重分解",
+      "knowledgePoint": "幅值初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DoRA 原论文如何从预训练权重初始化幅值向量？",
+      "answer": "以预训练权重各列向量的范数初始化幅值。",
+      "explanation": "这里的列是论文中的矩阵约定，具体实现的张量方向可能不同。",
+      "example": "把每个原始权重向量的长度保存为初始幅值。",
+      "tags": [
+        "DoRA 权重分解",
+        "幅值初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.09353v2"
+    },
+    {
+      "id": "dorafund-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DoRA 权重分解",
+      "knowledgePoint": "初始等价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DoRA 的低秩更新初始为零时，为什么其初始权重可还原预训练权重？",
+      "answer": "对范数非零的权重向量，用原范数乘其归一化方向即可恢复原向量。",
+      "explanation": "这一结论依赖相应方向的范数可用于归一化。",
+      "example": "初始时幅值为原权重范数且 BA 为零。",
+      "tags": [
+        "DoRA 权重分解",
+        "初始等价"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.09353v2"
+    },
+    {
+      "id": "dorafund-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DoRA 权重分解",
+      "knowledgePoint": "方向更新归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DoRA 原论文怎样处理加入低秩更新后的方向矩阵？",
+      "answer": "先对预训练方向加低秩更新，再按对应向量范数归一化，并乘可训练幅值。",
+      "explanation": "因此最终权重不只是把低秩增量直接加到原权重。",
+      "example": "更新方向向量后重新按其长度缩放。",
+      "tags": [
+        "DoRA 权重分解",
+        "方向更新归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.09353v2"
+    },
+    {
+      "id": "dorafund-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DoRA 权重分解",
+      "knowledgePoint": "训练参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DoRA 原论文中预训练方向矩阵本身和幅值向量是否都直接训练？",
+      "answer": "预训练方向矩阵保持冻结；幅值向量及方向的低秩更新参数参与训练。",
+      "explanation": "与只训练低秩矩阵的基础 LoRA 相比，它增加了幅值参数。",
+      "example": "训练幅值 m 和低秩矩阵 A、B。",
+      "tags": [
+        "DoRA 权重分解",
+        "训练参数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.09353v2"
+    },
+    {
+      "id": "dorafund-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DoRA 权重分解",
+      "knowledgePoint": "方向梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对非零方向向量 V′，DoRA 不分离范数时，损失对 V′ 的完整梯度与 V′ 有什么关系？",
+      "answer": "该梯度与当前 V′ 正交，即梯度中沿 V′ 的分量被投影去除。",
+      "explanation": "这一性质针对方向向量 V′，不应直接等同于低秩因子 A、B 的梯度。",
+      "example": "更新更侧重改变向量方向。",
+      "tags": [
+        "DoRA 权重分解",
+        "方向梯度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.09353v2"
+    },
+    {
+      "id": "dorafund-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DoRA 权重分解",
+      "knowledgePoint": "范数分离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DoRA 论文为了降低反向传播内存，如何处理归一化范数的梯度？",
+      "answer": "把范数从计算图中分离；前向时仍根据当前权重计算范数，但不对它反传梯度。",
+      "explanation": "论文后续实验使用了这一调整。",
+      "example": "detach 范数并继续训练幅值和低秩参数。",
+      "tags": [
+        "DoRA 权重分解",
+        "范数分离"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.09353v2"
+    },
+    {
+      "id": "dorafund-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DoRA 权重分解",
+      "knowledgePoint": "分离影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "把 DoRA 的归一化范数从计算图分离后，V′ 梯度与幅值梯度有什么变化？",
+      "answer": "方向梯度不再包含对范数求导的投影项；论文给出的幅值梯度保持不变。",
+      "explanation": "这是一种改变反向计算的近似，而不是把前向范数永久固定。",
+      "example": "比较 detach 前后方向分量的梯度。",
+      "tags": [
+        "DoRA 权重分解",
+        "分离影响"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.09353v2"
+    },
+    {
+      "id": "dorafund-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DoRA 权重分解",
+      "knowledgePoint": "PEFT 线性层范数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的标准线性 DoRA 层在默认权重方向下沿哪个维度计算权重范数？",
+      "answer": "对形状为输出维度×输入维度的权重沿输入维度计算范数，每个输出通道得到一个值。",
+      "explanation": "PEFT 的存储方向与原论文使用的列向量约定可能不同。",
+      "example": "线性层权重按行计算 L2 范数。",
+      "tags": [
+        "DoRA 权重分解",
+        "PEFT 线性层范数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.0/src/peft/tuners/lora/dora.py"
+    },
+    {
+      "id": "dorafund-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DoRA 权重分解",
+      "knowledgePoint": "合并部署",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DoRA 训练后在什么条件下可以用合并权重执行常规线性前向？",
+      "answer": "当适配器已固定且实现支持合并时，可以将幅值和归一化后的方向组合为权重。",
+      "explanation": "实际结果还可能受量化和浮点精度影响。",
+      "example": "保存合并后的线性层用于推理。",
+      "tags": [
+        "DoRA 权重分解",
+        "合并部署"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2402.09353v2"
+    }
+  ]
+}

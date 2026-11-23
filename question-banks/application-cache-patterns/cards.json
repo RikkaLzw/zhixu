@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "application-cache-patterns",
+    "title": "AWS 缓存实践：缓存读写与过期",
+    "url": "https://aws.amazon.com/caching/best-practices/",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，具体条件见各卡。在线文档以 2026-11-21 查看内容为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "appcache-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "旁路缓存读取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "采用 cache-aside（按需加载）时，缓存未命中后通常怎样读取数据？",
+      "answer": "从数据库读取数据，再将结果写入缓存并返回。",
+      "explanation": "命中时通常直接返回缓存；是否缓存不存在的结果应由业务决定。",
+      "example": "查询用户资料时先查缓存，未命中再查数据库。",
+      "tags": [
+        "应用缓存策略",
+        "旁路缓存读取"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    },
+    {
+      "id": "appcache-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "写入时更新缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "应用级 write-through 策略在数据库更新时通常如何处理缓存？",
+      "answer": "在更新数据库的同时更新相应缓存，使后续读取更可能命中较新的值。",
+      "explanation": "数据库和缓存是独立系统时，部分失败或并发仍可能造成不一致。",
+      "example": "资料更新成功后将新资料写入缓存。",
+      "tags": [
+        "应用缓存策略",
+        "写入时更新缓存"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    },
+    {
+      "id": "appcache-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "缓存陈旧",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么按需加载的缓存可能返回旧数据？",
+      "answer": "数据库内容变化后，如果旧缓存未及时失效或更新，缓存仍可能保存之前的值。",
+      "explanation": "需要结合失效、更新、期限及业务允许的陈旧程度设计。",
+      "example": "后台修改价格，页面仍读到旧价格。",
+      "tags": [
+        "应用缓存策略",
+        "缓存陈旧"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    },
+    {
+      "id": "appcache-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "缓存写入竞态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "先删缓存再更新数据库时，并发读取为什么可能留下旧缓存？",
+      "answer": "读取请求可能在删除之后、数据库更新之前读到旧值并重新填充缓存。",
+      "explanation": "具体解决方案需考虑事务边界、失败重试和一致性要求。",
+      "example": "删缓存后读请求先回填旧价格，随后数据库才更新。",
+      "tags": [
+        "应用缓存策略",
+        "缓存写入竞态"
+      ],
+      "evidence": "application",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    },
+    {
+      "id": "appcache-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "TTL 权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对缓存设置较短 TTL 有什么常见权衡？",
+      "answer": "旧值保留时间通常缩短，但缓存过期和回源读取可能更频繁。",
+      "explanation": "TTL 是过期策略之一，不能单独保证每次读取都与数据库一致。",
+      "example": "热点数据由一小时缓存改为数秒缓存。",
+      "tags": [
+        "应用缓存策略",
+        "TTL 权衡"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    },
+    {
+      "id": "appcache-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "命中率计算",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "缓存有 900 次命中、100 次未命中，按请求次数计算命中率是多少？",
+      "answer": "90%。",
+      "explanation": "命中率为命中次数除以命中与未命中次数之和；需明确统计窗口。",
+      "example": "900/(900+100)=0.9。",
+      "tags": [
+        "应用缓存策略",
+        "命中率计算"
+      ],
+      "evidence": "application",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    },
+    {
+      "id": "appcache-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "缓存击穿",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "热点键到期后大量请求同时未命中并回源，可能出现什么问题？",
+      "answer": "大量相同查询并发打到数据库，形成惊群或常说的缓存击穿。",
+      "explanation": "影响取决于并发量、查询代价以及数据库余量。",
+      "example": "热门商品详情缓存刚过期就收到大量请求。",
+      "tags": [
+        "应用缓存策略",
+        "缓存击穿"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    },
+    {
+      "id": "appcache-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "合并回源",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "热点缓存未命中时，合并同一键的并发加载请求有什么作用？",
+      "answer": "让一个加载操作回源，其他请求等待或复用其结果，从而减少重复查询。",
+      "explanation": "锁或合并机制需要处理超时、失败和释放，且跨进程需要相应协调。",
+      "example": "同一商品的并发未命中由一个加载任务读取数据库。",
+      "tags": [
+        "应用缓存策略",
+        "合并回源"
+      ],
+      "evidence": "application",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    },
+    {
+      "id": "appcache-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "到期时间分散",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "大量缓存键在同一时刻过期可能导致什么，如何缓解？",
+      "answer": "可能集中回源造成数据库负载峰值；可在合理范围内为 TTL 加随机偏移。",
+      "explanation": "随机化只能分散到期，不替代容量规划和回源限流。",
+      "example": "为批量写入的键设置带随机偏移的过期时间。",
+      "tags": [
+        "应用缓存策略",
+        "到期时间分散"
+      ],
+      "evidence": "application",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    },
+    {
+      "id": "appcache-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "应用缓存策略",
+      "knowledgePoint": "缓存预热",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "新缓存节点接入前进行预热的目的是什么？",
+      "answer": "提前填充预计常访问的数据，减少接入后冷缓存造成的大量回源。",
+      "explanation": "预热范围应考虑真实访问分布及回源系统承载能力。",
+      "example": "新节点上线前通过受控请求加载热门页面。",
+      "tags": [
+        "应用缓存策略",
+        "缓存预热"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/caching/best-practices/"
+    }
+  ]
+}

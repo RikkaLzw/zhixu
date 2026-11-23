@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "math-statistical-inference",
+    "title": "动手学深度学习与 NIST：概率和统计推断",
+    "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/statistics.html",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题链接的资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "statdeep-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "条件独立",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "事件 A 与 B 在给定 C 时条件独立，满足什么关系？",
+      "answer": "当条件概率有定义时，P(A,B∣C)=P(A∣C)P(B∣C)。",
+      "explanation": "条件独立是相对于给定条件的性质。",
+      "example": "先固定共同环境，再判断两个事件是否独立。",
+      "tags": [
+        "条件独立",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_preliminaries/probability.html"
+    },
+    {
+      "id": "statdeep-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "协方差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "协方差描述两个随机变量的什么关系？",
+      "answer": "它衡量两个变量相对各自均值共同变化的线性趋势。",
+      "explanation": "协方差的大小受变量量纲和尺度影响。",
+      "example": "两个变量通常同向偏离各自均值时协方差为正。",
+      "tags": [
+        "协方差",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_3_1_covariance_correlation.php"
+    },
+    {
+      "id": "statdeep-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "不相关与独立",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "两个随机变量的协方差为 0，能否据此断定它们独立？",
+      "answer": "不能；零协方差不排除非线性依赖关系。",
+      "explanation": "在协方差存在时，独立通常蕴含零协方差，反向不一定成立。",
+      "example": "变量与其平方可能相关联，却具有零协方差。",
+      "tags": [
+        "不相关与独立",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter5/5_3_1_covariance_correlation.php"
+    },
+    {
+      "id": "statdeep-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "方差的线性变换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对有限方差的随机变量 X，Var(aX+b) 等于什么？",
+      "answer": "Var(aX+b)=a²Var(X)。",
+      "explanation": "常数平移 b 不改变方差。",
+      "example": "把数值放大 2 倍，方差变为原来的 4 倍。",
+      "tags": [
+        "方差的线性变换",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/random-variables.html"
+    },
+    {
+      "id": "statdeep-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "第一类与第二类错误",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "假设检验中的第一类错误和第二类错误有什么区别？",
+      "answer": "第一类错误是原假设为真却被拒绝；第二类错误是原假设为假却未被拒绝。",
+      "explanation": "两类错误以原假设是否成立为前提。",
+      "example": "无差异时误判有差异属于第一类错误。",
+      "tags": [
+        "第一类与第二类错误",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/statistics.html"
+    },
+    {
+      "id": "statdeep-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "检验功效",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "假设检验的统计功效是什么？",
+      "answer": "它是给定备择情形下，原假设为假时正确拒绝原假设的概率。",
+      "explanation": "若第二类错误概率为 β，功效为 1−β。",
+      "example": "比较两种方案真有差异时，功效衡量检出差异的概率。",
+      "tags": [
+        "检验功效",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/statistics.html"
+    },
+    {
+      "id": "statdeep-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "显著性水平与p值",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "假设检验中的显著性水平 α 与 p 值各是什么？",
+      "answer": "α 是预先设定的显著性水平，常用作拒绝阈值；p 值由样本和检验方法计算得到。",
+      "explanation": "常见规则是 p≤α 时拒绝原假设，前提是所用检验和假设适用。",
+      "example": "先设 α=0.05，再计算并比较 p 值。",
+      "tags": [
+        "显著性水平与p值",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/statistics.html"
+    },
+    {
+      "id": "statdeep-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "标准误",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "标准误与样本数据的标准差衡量什么不同的波动？",
+      "answer": "标准误衡量估计量在重复抽样中的波动；样本标准差衡量样本观测值的离散程度。",
+      "explanation": "估计量和样本的标准差不应混为一谈。",
+      "example": "样本均值的标准误描述均值估计的不确定性。",
+      "tags": [
+        "标准误",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/statistics.html"
+    },
+    {
+      "id": "statdeep-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "置信区间覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "频率学派的 95% 置信区间如何解释？",
+      "answer": "若在相同条件下反复抽样并构造区间，约 95% 的区间会覆盖固定的真实参数。",
+      "explanation": "对已算出的单个区间，参数在此框架下不是随机变量。",
+      "example": "重复抽样得到多个区间，考察其中覆盖真值的比例。",
+      "tags": [
+        "置信区间覆盖",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.itl.nist.gov/div898/handbook/prc/section1/prc14.htm"
+    }
+  ]
+}

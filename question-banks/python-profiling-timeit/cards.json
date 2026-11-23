@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "python-profiling-timeit",
+    "title": "Python 3.14：性能分析与计时",
+    "url": "https://docs.python.org/3.14/library/profile.html",
+    "type": "官方文档",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyprof-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 性能分析",
+      "knowledgePoint": "性能分析用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 cProfile 主要用于识别程序中的什么？",
+      "answer": "统计函数调用次数及所花时间，帮助定位需要关注的代码路径。",
+      "explanation": "分析结果仍需结合真实工作负载和测量开销解释。",
+      "example": "先分析整个任务，再关注耗时较高的函数。",
+      "tags": [
+        "Python 性能分析",
+        "性能分析用途"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/profile.html"
+    },
+    {
+      "id": "pyprof-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 性能分析",
+      "knowledgePoint": "自身与累计耗时",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python cProfile 报告中的 tottime 与 cumtime 分别表示什么？",
+      "answer": "tottime 是函数自身耗时，不含子函数调用；cumtime 是函数及其子函数的累计耗时。",
+      "explanation": "结合两者可区分自身计算与下游调用的耗时。",
+      "example": "一个函数主要等待其子函数时，自身耗时可能较低。",
+      "tags": [
+        "Python 性能分析",
+        "自身与累计耗时"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/profile.html"
+    },
+    {
+      "id": "pyprof-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 性能分析",
+      "knowledgePoint": "递归调用计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python cProfile 的 ncalls 出现 total/primitive 格式时，两个数字表示什么？",
+      "answer": "分别表示总调用次数和原始调用次数；后者不计递归调用。",
+      "explanation": "无递归时通常只显示一个调用数。",
+      "example": "递归函数可能显示 7/1。",
+      "tags": [
+        "Python 性能分析",
+        "递归调用计数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/profile.html"
+    },
+    {
+      "id": "pyprof-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Python 性能分析",
+      "knowledgePoint": "保存分析结果",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "如何用 Python 命令行把 cProfile 结果保存供后续分析？",
+      "answer": "可运行 python -m cProfile -o 结果文件 脚本.py。",
+      "explanation": "结果可由 pstats 读取和排序。",
+      "example": "保存分析结果后按累计耗时查看。",
+      "tags": [
+        "Python 性能分析",
+        "保存分析结果"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/profile.html"
+    },
+    {
+      "id": "pyprof-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 性能分析",
+      "knowledgePoint": "分析与基准",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "为什么不宜直接把 cProfile 输出当作精确的微基准比较？",
+      "answer": "分析器会引入开销，且对 Python 代码和 C 级调用的影响可能不同。",
+      "explanation": "微小代码片段计时可考虑 timeit，并使用代表性工作负载。",
+      "example": "比较两个短操作时应单独设计重复计时。",
+      "tags": [
+        "Python 性能分析",
+        "分析与基准"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/profile.html"
+    },
+    {
+      "id": "pyprof-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 性能分析",
+      "knowledgePoint": "计时总量",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python timeit.timeit(stmt, number=N) 返回的是一次执行的平均时间吗？",
+      "answer": "不是；它返回 N 次执行所用的总秒数。",
+      "explanation": "需要平均单次时间时可再除以 N。",
+      "example": "number=1000 的结果对应一千次执行。",
+      "tags": [
+        "Python 性能分析",
+        "计时总量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/timeit.html"
+    },
+    {
+      "id": "pyprof-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 性能分析",
+      "knowledgePoint": "重复计时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python timeit.repeat 的返回值是什么？",
+      "answer": "返回多次独立计时所得秒数的列表。",
+      "explanation": "每个计时结果对应配置的循环次数。",
+      "example": "可比较多个结果，观察环境干扰造成的波动。",
+      "tags": [
+        "Python 性能分析",
+        "重复计时"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/timeit.html"
+    },
+    {
+      "id": "pyprof-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 性能分析",
+      "knowledgePoint": "垃圾回收",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Python timeit 默认会在计时期间怎样处理垃圾回收？",
+      "answer": "暂时关闭垃圾回收；如测量需要可在 setup 中重新启用。",
+      "explanation": "结果可能不反映垃圾回收对真实任务的开销。",
+      "example": "比较产生大量循环引用的代码时需考虑这一点。",
+      "tags": [
+        "Python 性能分析",
+        "垃圾回收"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/timeit.html"
+    }
+  ]
+}

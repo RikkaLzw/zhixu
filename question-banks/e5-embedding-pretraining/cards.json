@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "e5-embedding-pretraining",
+    "title": "E5 原论文 v2：弱监督文本嵌入",
+    "url": "https://arxiv.org/pdf/2212.03533v2",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "e5embed-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "E5 文本嵌入",
+      "knowledgePoint": "训练数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E5 原论文的 CCPairs 主要由什么类型的数据组成？",
+      "answer": "来自社区问答、网页和论文等来源的半结构化文本对。",
+      "explanation": "这些配对提供弱监督信号，不等同于人工逐条验证标签。",
+      "example": "问题与对应回答可构成文本对。",
+      "tags": [
+        "E5 文本嵌入",
+        "训练数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.03533v2"
+    },
+    {
+      "id": "e5embed-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "E5 文本嵌入",
+      "knowledgePoint": "一致性过滤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E5 原论文的一致性过滤如何筛选文本对？",
+      "answer": "先训练模型，再用它对候选文本排序，只保留原配对落在前 k 名的样本。",
+      "explanation": "论文将候选池与 k 固定后进行筛选；过滤不能保证所有保留标签正确。",
+      "example": "弱相关的文本对可能因排序靠后而被剔除。",
+      "tags": [
+        "E5 文本嵌入",
+        "一致性过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.03533v2"
+    },
+    {
+      "id": "e5embed-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "E5 文本嵌入",
+      "knowledgePoint": "共享编码器与前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E5 原论文如何用共享编码器区分检索查询和候选文本？",
+      "answer": "两侧共用编码器，但分别给输入添加 query: 与 passage: 前缀。",
+      "explanation": "前缀使两侧角色不同，即使编码器参数共享。",
+      "example": "查询可写作 query: 问题，候选写作 passage: 文本。",
+      "tags": [
+        "E5 文本嵌入",
+        "共享编码器与前缀"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.03533v2"
+    },
+    {
+      "id": "e5embed-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "E5 文本嵌入",
+      "knowledgePoint": "序列向量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E5 原论文怎样把 Transformer 编码结果变成单个文本向量？",
+      "answer": "对最后一层输出做平均池化，得到固定长度向量。",
+      "explanation": "随后可用向量相似度比较文本。",
+      "example": "长短不同的文本可映射为同维度向量。",
+      "tags": [
+        "E5 文本嵌入",
+        "序列向量"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.03533v2"
+    },
+    {
+      "id": "e5embed-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "E5 文本嵌入",
+      "knowledgePoint": "训练阶段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "E5 原论文在弱监督对比预训练后，如何进一步利用少量高质量标注数据？",
+      "answer": "可进行第二阶段有监督微调，以改进文本嵌入质量。",
+      "explanation": "弱监督预训练和有监督微调使用的数据与目标需要分别说明。",
+      "example": "先用网页文本对训练，再用标注检索数据微调。",
+      "tags": [
+        "E5 文本嵌入",
+        "训练阶段"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2212.03533v2"
+    }
+  ]
+}

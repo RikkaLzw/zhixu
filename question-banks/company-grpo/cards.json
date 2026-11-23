@@ -1,0 +1,45 @@
+{
+  "source": {
+    "id": "company-grpo",
+    "title": "大厂公开面经：GRPO 训练",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%B0%8F%E7%B1%B3/%E3%80%900316%E3%80%91%E5%B0%8F%E7%B1%B3%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%9D%A2%E7%BB%8F.md",
+    "type": "公开面经合集",
+    "note": "根据逐题引用的资料自行整理；面经引用为合集转载的个人复盘，公司和经历未经企业确认。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "grpo-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "偏好与强化学习",
+      "knowledgePoint": "GRPO组内优势",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepSeekMath 的结果监督 GRPO 怎样估计组内相对优势？",
+      "answer": "对同一问题采样一组回答，将各回答奖励减去组内平均奖励并除以组内奖励标准差。",
+      "explanation": "组内平均奖励也作为基线，使论文中的方法无需单独训练价值模型；实现需处理标准差为零的情况。",
+      "example": "同题两个回答获得不同奖励时，按同组奖励计算相对优势。",
+      "tags": [
+        "GRPO组内优势",
+        "偏好与强化学习",
+        "公开面经",
+        "小米"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%B0%8F%E7%B1%B3/%E3%80%900316%E3%80%91%E5%B0%8F%E7%B1%B3%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-xiaomi",
+      "referenceTitle": "小米公开面经（合集转载，经历为分享者自述）",
+      "supportingReferences": [
+        {
+          "id": "technical-ref",
+          "title": "DeepSeekMath 论文：Group Relative Policy Optimization",
+          "url": "https://arxiv.org/abs/2402.03300",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ],
+      "referenceType": "公开面经合集"
+    }
+  ]
+}

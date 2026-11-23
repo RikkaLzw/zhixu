@@ -1,0 +1,50 @@
+{
+  "source": {
+    "id": "phiusiil-phishing-dataset",
+    "title": "UCI：PhiUSIIL 钓鱼 URL 数据集",
+    "url": "https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "phiusiil-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PhiUSIIL 钓鱼数据",
+      "knowledgePoint": "样本对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UCI PhiUSIIL 数据集的样本表示什么？",
+      "answer": "每个样本表示 URL 及其对应网页；特征从 URL 与网页源代码提取。",
+      "explanation": "UCI 页面列出 134850 条合法和 100945 条钓鱼 URL；该构成不代表真实环境中的类别比例。",
+      "example": "分析数据时区分 URL 特征和网页内容特征。",
+      "tags": [
+        "PhiUSIIL 钓鱼数据",
+        "样本对象"
+      ],
+      "evidence": "source",
+      "reference": "https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset"
+    },
+    {
+      "id": "phiusiil-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PhiUSIIL 钓鱼数据",
+      "knowledgePoint": "标签含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UCI PhiUSIIL 钓鱼 URL 数据集中标签 1 和 0 分别代表什么？",
+      "answer": "1 代表合法 URL，0 代表钓鱼 URL。",
+      "explanation": "这与某些数据集将 1 定义为攻击类的约定相反。",
+      "example": "计算钓鱼类召回率前先确认正类映射。",
+      "tags": [
+        "PhiUSIIL 钓鱼数据",
+        "标签含义"
+      ],
+      "evidence": "source",
+      "reference": "https://archive.ics.uci.edu/dataset/967/phiusiil+phishing+url+dataset"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "phishing-url-parsing",
+    "title": "URL 解析与域名边界",
+    "url": "https://docs.python.org/3.13/library/urllib.parse.html",
+    "type": "官方技术文档与标准",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "urlsec-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网址解析",
+      "knowledgePoint": "解析与校验",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 urlsplit() 成功解析后，能否直接认定网址安全或有效？",
+      "answer": "不能；urlsplit() 不执行安全验证，使用方仍需按用途验证组成部分。",
+      "explanation": "检查方案、主机名等是否符合业务允许范围。",
+      "example": "解析候选网址后再校验协议和主机。",
+      "tags": [
+        "解析与校验",
+        "网址解析"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/urllib.parse.html#url-parsing-security"
+    },
+    {
+      "id": "urlsec-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网址解析",
+      "knowledgePoint": "urljoin目标覆盖",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 urljoin() 为什么不宜直接拼接攻击者控制的 URL？",
+      "answer": "第二个参数如果是绝对 URL 或以 // 开头，可以改变结果的主机或方案。",
+      "explanation": "输出需经过用途相关的目标校验。",
+      "example": "把用户输入拼到站内路径前，检查输入是否为绝对地址。",
+      "tags": [
+        "urljoin目标覆盖",
+        "网址解析"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/urllib.parse.html#urllib.parse.urljoin"
+    },
+    {
+      "id": "urlsec-003",
+      "category": "detection",
+      "level": "实践",
+      "subtopic": "网址解析",
+      "knowledgePoint": "用户信息与主机",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "URL https://trusted.example@evil.example/login 的主机名是什么？",
+      "answer": "主机名是 evil.example；trusted.example 位于 @ 前的用户信息部分。",
+      "explanation": "不能只根据 URL 中出现的可信品牌或域名字符串判断目标。",
+      "example": "从解析后的 hostname 字段读取主机，而不是搜索整条 URL。",
+      "tags": [
+        "用户信息与主机",
+        "网址解析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3986.html#section-3.2.1"
+    },
+    {
+      "id": "urlsec-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "域名边界",
+      "knowledgePoint": "公共后缀与注册域",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么不能一律把域名最后两段当作可注册域名？",
+      "answer": "不同注册管理规则下公共后缀可能包含多段，例如 co.uk。",
+      "explanation": "可以使用持续更新的 Public Suffix List 作为识别边界的依据。",
+      "example": "a.example.co.uk 的注册边界不能简单按 co.uk 两段截取。",
+      "tags": [
+        "公共后缀与注册域",
+        "域名边界"
+      ],
+      "evidence": "source",
+      "reference": "https://publicsuffix.org/learn/"
+    },
+    {
+      "id": "urlsec-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "域名边界",
+      "knowledgePoint": "公共后缀列表限制",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "能否仅凭一份长期不更新的 Public Suffix List 判断域名是否有效？",
+      "answer": "不能；后缀和注册规则会变化，过期列表可能误判。",
+      "explanation": "Public Suffix List 主要用于识别公共后缀边界，不应替代域名有效性信息源。",
+      "example": "定期更新列表，并按用途另行检查域名。",
+      "tags": [
+        "公共后缀列表限制",
+        "域名边界"
+      ],
+      "evidence": "source",
+      "reference": "https://publicsuffix.org/learn/"
+    }
+  ]
+}

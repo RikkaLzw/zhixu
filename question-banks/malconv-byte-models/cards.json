@@ -1,0 +1,537 @@
+{
+  "source": {
+    "id": "malconv-byte-models",
+    "title": "MalConv 与长字节序列恶意软件检测",
+    "url": "https://arxiv.org/abs/1710.09435v1",
+    "type": "研究论文",
+    "note": "依据 MalConv 原论文和长序列固定内存方法论文整理，保留模型版本、数据来源与实验条件。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "malbyte-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "原始字节输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 原论文使用什么输入进行恶意软件检测？",
+      "answer": "它将可执行文件的原始字节序列作为静态分类模型的输入。",
+      "explanation": "静态分析无需为提取这些字节而运行样本。",
+      "example": "读取 PE 文件的字节并预测良性或恶意。",
+      "tags": [
+        "原始字节输入",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 1, 4 节"
+    },
+    {
+      "id": "malbyte-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "字节嵌入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 为什么用可学习嵌入表示字节，而不是直接把字节值当作连续数值？",
+      "answer": "嵌入允许模型学习字节表示，避免预先假定数值接近的字节在所有上下文中语义相近。",
+      "explanation": "字节的作用取决于它所处的位置和上下文。",
+      "example": "分别学习 0x01 与 0x02 的表示，而不是仅依赖两者数值差。",
+      "tags": [
+        "字节嵌入",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "文件结束标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 后续论文描述的 257 个输入符号由什么组成？",
+      "answer": "包括 256 种可能的字节值和一个文件结束标记。",
+      "explanation": "结束标记与普通字节值区分。",
+      "example": "0x00 是合法字节，不应直接等同于文件结束。",
+      "tags": [
+        "文件结束标记",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "字节卷积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 的一维卷积主要在文件的什么范围提取特征？",
+      "answer": "它在相邻字节构成的局部窗口上提取特征。",
+      "explanation": "同一组卷积参数在序列的不同位置使用。",
+      "example": "一个卷积窗口可以覆盖文件中相邻的一段字节。",
+      "tags": [
+        "字节卷积",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "卷积宽度与步长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "2017 年 MalConv 论文采用多大的卷积窗口和步长？",
+      "answer": "该论文的配置使用 500 字节窗口和 500 字节步长。",
+      "explanation": "后续实现和论文可能采用不同配置，不能把这个数字当作所有 MalConv 的固定要求。",
+      "example": "窗口和步长相同可减少处理超长序列的卷积位置数。",
+      "tags": [
+        "卷积宽度与步长",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "门控卷积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 的门控卷积怎样组合两条卷积分支？",
+      "answer": "一条分支产生特征，另一条经 sigmoid 产生门控值，两者逐元素相乘。",
+      "explanation": "门控值可抑制部分局部激活。",
+      "example": "某位置的门值较低时，对应特征响应被缩小。",
+      "tags": [
+        "门控卷积",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-007",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "时间最大池化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 的时间最大池化怎样把不同长度序列变成固定长度表示？",
+      "answer": "它对每个卷积通道沿序列位置取最大值，得到固定数量的通道特征。",
+      "explanation": "最终特征维数由通道数等模型配置决定，而不是文件长度。",
+      "example": "一个通道在不同窗口的最大响应作为该通道输出。",
+      "tags": [
+        "时间最大池化",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "局部信号稀疏",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 MalConv 论文倾向于使用最大池化处理稀疏的局部特征？",
+      "answer": "某些有用特征可能只在少数位置出现，平均池化可能把它们的强响应稀释。",
+      "explanation": "这是论文针对其任务和实验设计的动机，不表示最大池化总是更好。",
+      "example": "长文件只有一段窗口强烈响应时，最大值仍可保留该响应。",
+      "tags": [
+        "局部信号稀疏",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "池化位置信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 MalConv 的窗口激活做全局最大池化后，输出是否直接记录每个最大值的位置？",
+      "answer": "常规池化后的特征值不直接保留位置；若要定位，还需保留或重新计算索引。",
+      "explanation": "具体模型实现可以额外保存最大值位置。",
+      "example": "同一通道的最高响应位置可单独记录供分析。",
+      "tags": [
+        "池化位置信息",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "池化与顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "将已有的窗口激活按位置重排，逐通道全局最大池化的结果会怎样？",
+      "answer": "只要每个通道的激活值集合不变，最大池化结果不变。",
+      "explanation": "这不表示任意改动原始文件字节都不会改变卷积特征。",
+      "example": "交换两个窗口的激活后，该通道的最大值仍相同。",
+      "tags": [
+        "池化与顺序",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "输入长度上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 MalConv 训练为何需要关注文件的前约 200 万字节上限？",
+      "answer": "超过上限的文件尾部可能未进入模型，尾部信息因此无法影响该次预测。",
+      "explanation": "具体截断方式和限制以实际实现为准。",
+      "example": "重要内容位于截断边界之后时，模型不会直接看到它。",
+      "tags": [
+        "输入长度上限",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "分块标签噪声",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么把恶意文件的整体标签直接赋给随机文件块可能产生噪声？",
+      "answer": "恶意文件中许多块可能没有足以表明恶意性的内容，整体标签不一定适用于每个块。",
+      "explanation": "论文观察到独立块训练可能泛化不佳。",
+      "example": "某个恶意文件中的普通资源块不一定单独表现为恶意。",
+      "tags": [
+        "分块标签噪声",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4.1 节"
+    },
+    {
+      "id": "malbyte-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "长序列显存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么原始字节模型即使参数量不大，训练仍可能占用大量显存？",
+      "answer": "超长序列的嵌入和卷积中间激活需要存储以进行反向传播。",
+      "explanation": "显存需求还受批次大小、通道数和实现方式影响。",
+      "example": "文件字节数增长会增加待处理的位置和中间激活。",
+      "tags": [
+        "长序列显存",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-014",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "数据来源偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 论文为什么同时使用不同来源的测试集？",
+      "answer": "它利用来源不同的测试集观察模型是否依赖与标签相关的数据来源偏差。",
+      "explanation": "跨来源测试有助于发现泛化问题，但不能保证覆盖未来所有环境。",
+      "example": "训练与测试的良性程序来自不同收集流程。",
+      "tags": [
+        "数据来源偏差",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-015",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "来源捷径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "恶意软件数据集中良性与恶意样本来自明显不同来源时，模型可能学到什么捷径？",
+      "answer": "模型可能识别数据来源特征，而不是可迁移的恶意行为或文件特征。",
+      "explanation": "高测试分数在来源相关性改变后可能下降。",
+      "example": "良性样本集中来自同一厂商时，厂商痕迹可能成为捷径。",
+      "tags": [
+        "来源捷径",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-016",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "可复现数据限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 原论文使用非公开训练数据会对独立复现产生什么限制？",
+      "answer": "其他研究者可能无法直接重建相同训练集并复现报告的指标。",
+      "explanation": "不同数据来源和标签流程下的结果也不能简单视为可直接比较。",
+      "example": "需要记录可获得的数据版本及其收集方式。",
+      "tags": [
+        "可复现数据限制",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-017",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "激活位置解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 的最大池化激活位置能为人工分析提供什么？",
+      "answer": "它可提示哪些局部字节区域对模型某些通道的响应较强。",
+      "explanation": "高响应区域是解释线索，不能单凭它证明恶意行为或因果关系。",
+      "example": "将较高响应的窗口映射回文件区域再人工检查。",
+      "tags": [
+        "激活位置解释",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1710.09435v1",
+      "referenceTitle": "Malware Detection by Eating a Whole EXE（v1）：第 5.2 节"
+    },
+    {
+      "id": "malbyte-018",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "稀疏最大池化梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间最大池化的梯度为什么有利于 MalConv 的长序列内存优化？",
+      "answer": "对每个通道，梯度只需通过选中的最大响应位置回传。",
+      "explanation": "并列最大值如何选择取决于具体操作和实现。",
+      "example": "大量非最大窗口在该次池化反向传播中不接收梯度。",
+      "tags": [
+        "稀疏最大池化梯度",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-019",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "无梯度扫描",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定内存的时间最大池化方法第一阶段怎样处理长输入？",
+      "answer": "它关闭梯度记录，分块扫描并记录各通道最大激活的位置。",
+      "explanation": "扫描阶段避免保存整条长序列的反向计算图。",
+      "example": "依次处理窗口并更新每个通道当前最强响应。",
+      "tags": [
+        "无梯度扫描",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-020",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "重算获胜窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定内存方法找到最大激活位置后，如何进行反向传播？",
+      "answer": "它提取与获胜位置相关的窗口，重新计算所需激活，再进行反向传播。",
+      "explanation": "重算以额外计算换取较低的中间激活内存。",
+      "example": "只对参与最终最大池化的窗口建立梯度图。",
+      "tags": [
+        "重算获胜窗口",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-021",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "分块重叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定内存扫描为什么让相邻输入块重叠？",
+      "answer": "重叠让跨块边界的卷积感受野也能被正确评估。",
+      "explanation": "所需重叠大小与感受野和分块方式有关。",
+      "example": "一个卷积窗口跨越原分块边界时仍能被完整处理。",
+      "tags": [
+        "分块重叠",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-022",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "伪邻接风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "将选中的不相邻窗口直接拼接后再做卷积，可能出现什么边界问题？",
+      "answer": "拼接边界可能形成原文件中不存在的邻接模式，产生新的卷积响应。",
+      "explanation": "论文指出这一理论风险，并讨论独立卷积和池化作为避免方式。",
+      "example": "原本相距很远的两个片段在拼接处形成新的跨界窗口。",
+      "tags": [
+        "伪邻接风险",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-023",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "内存结论前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 后续论文的固定内存方法中，哪些资源并不因此必然与文件长度无关？",
+      "answer": "输入读取与处理时间仍会受文件长度影响，整体资源开销也取决于实现。",
+      "explanation": "论文主要针对长序列卷积和池化训练的工作内存。",
+      "example": "文件更长时仍需扫描更多输入块。",
+      "tags": [
+        "内存结论前提",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 3 节"
+    },
+    {
+      "id": "malbyte-024",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "全局通道门控动机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MalConv 后续论文提出全局通道门控（GCG）主要想补足什么能力？",
+      "answer": "利用文件的全局上下文调节局部特征，使相距较远的信息可以影响特征选择。",
+      "explanation": "原始单层局部卷积与时间池化对远距离特征交互的建模有限。",
+      "example": "结合一个区域的文件访问线索调整另一处加密相关特征。",
+      "tags": [
+        "全局通道门控动机",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 4 节"
+    },
+    {
+      "id": "malbyte-025",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件字节模型",
+      "knowledgePoint": "全局通道门控范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "论文中的 GCG 使用 sigmoid 门控时，对局部激活执行什么操作？",
+      "answer": "它用 0 到 1 之间的门值缩放局部激活，以全局上下文为条件抑制特征。",
+      "explanation": "具体数值由局部状态和上下文计算得到。",
+      "example": "不相关位置的激活可被压低。",
+      "tags": [
+        "全局通道门控范围",
+        "MalConv",
+        "恶意软件检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2012.09390v1",
+      "referenceTitle": "Classifying Sequences of Extreme Length with Constant Memory（v1）：第 4 节"
+    }
+  ]
+}

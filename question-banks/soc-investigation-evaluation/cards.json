@@ -1,0 +1,332 @@
+{
+  "source": {
+    "id": "soc-investigation-evaluation",
+    "title": "安全事件调查、AI 辅助与运营评估资料",
+    "url": "https://arxiv.org/html/2603.06422v1",
+    "type": "研究论文与官方技术文档",
+    "note": "依据 SIABench、SOC 人机协作和生产力研究、Microsoft Defender 与 ECS 文档整理；通用实践建议注明为应用。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "socstudy-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "调查提问",
+      "knowledgePoint": "前提中立",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "用大模型调查安全事件时，为什么应避免在问题中预设未经证实的攻击行为？",
+      "answer": "预设可能把模型引向特定结论；应先检查相关证据是否存在，再分析具体对象。",
+      "explanation": "SIABench 将假定扫描已发生的问题改为先检查是否有扫描证据。",
+      "example": "先确认流量是否支持扫描，再询问可能的来源。",
+      "tags": [
+        "前提中立",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2603.06422v1#S3.SS1",
+      "referenceTitle": "SIABench 论文：3.1 Real-world Alignment"
+    },
+    {
+      "id": "socstudy-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "调查工具",
+      "knowledgePoint": "执行错误与空结果",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "安全调查工具执行失败时，能否把没有输出当作未发现异常的证据？",
+      "answer": "不能；命令错误或工具不可用可能阻止分析，应先确认执行状态并排查失败。",
+      "explanation": "SIABench 报告了错误命令会中断调查等失败模式。",
+      "example": "抓包解析命令报错后，不能据此断言没有可疑连接。",
+      "tags": [
+        "执行错误与空结果",
+        "安全运营"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2603.06422v1#S5.SS2",
+      "referenceTitle": "SIABench 论文：5.2 Failure Modes"
+    },
+    {
+      "id": "socstudy-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "调查依赖",
+      "knowledgePoint": "上游错误传播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多步安全调查中，为什么要核验上游提取结果？",
+      "answer": "后续步骤可能依赖该结果；前一步提取错误会影响后续分析和结论。",
+      "explanation": "应保留中间结果及其依据，必要时回到原始材料复查。",
+      "example": "从流量中提取错文件后，对该文件的后续分析无法证明原始事件。",
+      "tags": [
+        "上游错误传播",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2603.06422v1#S5.SS2",
+      "referenceTitle": "SIABench 论文：5.2 Question Dependency"
+    },
+    {
+      "id": "socstudy-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "评估数据",
+      "knowledgePoint": "真假告警样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "评估 AI 告警研判能否识别误报时，为什么要纳入已确认的良性告警？",
+      "answer": "只有真实威胁样本无法检验模型能否正确识别良性告警。",
+      "explanation": "样本标签和来源仍需独立核验。",
+      "example": "评估集同时包含确认的真实告警与良性误报。",
+      "tags": [
+        "真假告警样本",
+        "安全运营"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2603.06422v1#S3.SS2",
+      "referenceTitle": "SIABench 论文：3.2 Alert Triage Dataset"
+    },
+    {
+      "id": "socstudy-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "评估指标",
+      "knowledgePoint": "完整场景与部分答案",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "SIABench 的完整解决场景数与部分答题正确率分别衡量什么？",
+      "answer": "前者统计所有问题都答对的场景数；后者概括场景内问题的正确比例。",
+      "explanation": "部分问题答对不表示整条调查流程已完成。",
+      "example": "一组调查问题中多数答对，但有关键问题未解决。",
+      "tags": [
+        "完整场景与部分答案",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2603.06422v1#S5.SS2",
+      "referenceTitle": "SIABench 论文：5.2 Fully and Partially Solved"
+    },
+    {
+      "id": "socstudy-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "评估设计",
+      "knowledgePoint": "框架与模型贡献",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "比较安全调查 Agent 的不同模型时，为什么要记录工具和工作流配置？",
+      "answer": "工具、上下文处理和工作流也会影响结果，否则难以判断性能差异来自哪里。",
+      "explanation": "可以固定配置或通过消融实验分别考察组件贡献。",
+      "example": "比较模型时记录可用工具、轮次限制和摘要模块。",
+      "tags": [
+        "框架与模型贡献",
+        "安全运营"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2603.06422v1#S5.SS4",
+      "referenceTitle": "SIABench 论文：5.4 Agent Design"
+    },
+    {
+      "id": "socstudy-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "时间线",
+      "knowledgePoint": "发生与采集时间",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "在 Elastic Common Schema 中，@timestamp 与 event.created 通常表示什么时间？",
+      "answer": "@timestamp 通常表示原始事件发生时间；event.created 表示采集代理或流水线首次读取时间。",
+      "explanation": "采集延迟和时钟偏差会影响时间线解释。",
+      "example": "用事件发生时间分析活动顺序，另用采集时间观察延迟。",
+      "tags": [
+        "发生与采集时间",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/docs/reference/ecs/ecs-event#field-event-created",
+      "referenceTitle": "Elastic Common Schema：event.created"
+    },
+    {
+      "id": "socstudy-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件分级",
+      "knowledgePoint": "严重性与结论",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "安全事件严重性很高，能否仅凭等级确认已发生真实攻击？",
+      "answer": "不能；严重性表示潜在影响或处理优先程度，真实威胁仍需结合证据分类。",
+      "explanation": "严重性和研判结论是不同信息。",
+      "example": "高严重度告警仍可能经调查确认为误报。",
+      "tags": [
+        "严重性与结论",
+        "安全运营"
+      ],
+      "evidence": "application",
+      "reference": "https://learn.microsoft.com/en-us/defender-xdr/manage-incidents",
+      "referenceTitle": "Microsoft Defender：管理事件和分类"
+    },
+    {
+      "id": "socstudy-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件分类",
+      "knowledgePoint": "预期活动与误报",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "在 Microsoft Defender 事件分类中，预期活动与误报有什么区别？",
+      "answer": "预期活动可指准确记录的授权测试或正常异常行为；误报指技术上不准确或有误导性的事件。",
+      "explanation": "具体标签含义应以所使用产品及组织流程为准。",
+      "example": "授权红队演练与错误匹配的检测规则可以使用不同分类。",
+      "tags": [
+        "预期活动与误报",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/defender-xdr/manage-incidents#specify-the-incidents-classification",
+      "referenceTitle": "Microsoft Defender：事件分类"
+    },
+    {
+      "id": "socstudy-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件分类",
+      "knowledgePoint": "状态与分类",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "事件的处理状态与事件分类分别说明什么？",
+      "answer": "状态说明事件处于处理还是已解决等阶段；分类说明它被判定为真实威胁、预期活动或误报等。",
+      "explanation": "不同产品的状态和分类名称可能不同。",
+      "example": "事件被解决后仍需记录其研判分类。",
+      "tags": [
+        "状态与分类",
+        "安全运营"
+      ],
+      "evidence": "application",
+      "reference": "https://learn.microsoft.com/en-us/defender-xdr/manage-incidents",
+      "referenceTitle": "Microsoft Defender：事件状态与分类"
+    },
+    {
+      "id": "socstudy-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "影响范围",
+      "knowledgePoint": "范围图数据限制",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么事件影响范围图中没有显示某条攻击路径，不能据此断定该路径不存在？",
+      "answer": "范围图依赖可用环境数据；未接入的数据或未定义的关键资产可能导致路径未显示。",
+      "explanation": "图中结果应结合实际资产清单和其他证据验证。",
+      "example": "未纳入某个云环境时，图中可能缺少相关资产关系。",
+      "tags": [
+        "范围图数据限制",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/defender-xdr/investigate-incidents#blast-radius-analysis",
+      "referenceTitle": "Microsoft Defender：Blast radius analysis"
+    },
+    {
+      "id": "socstudy-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件摘要",
+      "knowledgePoint": "摘要时效",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全事件出现新的关键证据后，为什么要重新检查先前生成的摘要？",
+      "answer": "旧摘要反映生成时可用的信息，后续证据可能改变事件范围或结论。",
+      "explanation": "应确认摘要所依据的数据时间和版本，并在需要时更新。",
+      "example": "新增受影响设备后，检查原摘要是否仍完整。",
+      "tags": [
+        "摘要时效",
+        "安全运营"
+      ],
+      "evidence": "application",
+      "reference": "https://learn.microsoft.com/en-us/defender-xdr/security-copilot-m365d-incident-summary",
+      "referenceTitle": "Microsoft Defender：事件摘要"
+    },
+    {
+      "id": "socstudy-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "效果评估",
+      "knowledgePoint": "使用量与效果",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "安全分析人员频繁使用大模型，能否单凭查询次数证明研判更快或更准确？",
+      "answer": "不能；使用量反映采用情况，效率和准确性需要独立的结果指标。",
+      "explanation": "SOC 人机协作研究记录了使用情况，但未直接测量研判速度或判断准确性。",
+      "example": "同时收集完整处理耗时和经核验的研判结果。",
+      "tags": [
+        "使用量与效果",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2508.18947v2#S5.SS5",
+      "referenceTitle": "LLMs in the SOC：研究局限"
+    },
+    {
+      "id": "socstudy-015",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "效果评估",
+      "knowledgePoint": "观察性比较与混杂",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "观察到采用 AI 的安全团队处理事件更快，为什么不能直接断定全部差异由 AI 造成？",
+      "answer": "团队预算、人员或培训等其他因素也可能同时变化，形成混杂。",
+      "explanation": "观察性研究可提供关联证据，但不能自动排除未观察到的差异。",
+      "example": "同时增加分析人员和部署 AI 时，需设计比较以区分影响。",
+      "tags": [
+        "观察性比较与混杂",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2411.03116v2#S4",
+      "referenceTitle": "SOC 生产力研究：观察性比较的限制"
+    },
+    {
+      "id": "socstudy-016",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "效果评估",
+      "knowledgePoint": "已解决事件选择偏差",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "只用已解决事件的平均处理时间评估安全运营效率，可能遗漏什么？",
+      "answer": "未解决或处理时间很长的事件可能被排除，结果不能代表全部事件。",
+      "explanation": "应说明样本筛选与观察期，并单独关注未完成事件。",
+      "example": "只分析 12 小时内关闭的事件时，复杂长事件不会进入该统计。",
+      "tags": [
+        "已解决事件选择偏差",
+        "安全运营"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2411.03116v2#S2.SS1",
+      "referenceTitle": "SOC 生产力研究：样本筛选"
+    },
+    {
+      "id": "socstudy-017",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件分级",
+      "knowledgePoint": "跨来源严重性",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么不能直接比较不同日志源的 event.severity 数字？",
+      "answer": "严重性数值的含义可能随事件来源和场景而不同，需要先理解并统一各来源的定义。",
+      "explanation": "Elastic Common Schema 将该字段定义为事件来源给出的严重性。",
+      "example": "防火墙和主机告警的同一数字不一定表示同等影响。",
+      "tags": [
+        "跨来源严重性",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/docs/reference/ecs/ecs-event#field-event-severity",
+      "referenceTitle": "Elastic Common Schema：event.severity"
+    }
+  ]
+}

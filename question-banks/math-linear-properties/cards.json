@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "math-linear-properties",
+    "title": "动手学深度学习：线性代数性质",
+    "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops.html",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题链接的资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "mlinear-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "对称矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实方阵是对称矩阵意味着什么？",
+      "answer": "它等于自己的转置，即 A=Aᵀ。",
+      "explanation": "因此对应的第 i 行第 j 列与第 j 行第 i 列元素相等。",
+      "example": "二维方阵的两个非对角位置数值相同。",
+      "tags": [
+        "对称矩阵",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_preliminaries/linear-algebra.html"
+    },
+    {
+      "id": "mlinear-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "矩阵秩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "矩阵的秩可以怎样用列向量描述？",
+      "answer": "它是矩阵中线性无关列向量的最大个数。",
+      "explanation": "秩不超过矩阵的行数或列数。",
+      "example": "两列完全相同且非零的矩阵，秩至多为 1。",
+      "tags": [
+        "矩阵秩",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops.html"
+    },
+    {
+      "id": "mlinear-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "向量正交",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个实向量正交时，它们的内积是多少？",
+      "answer": "内积为 0。",
+      "explanation": "对非零向量，几何上可理解为夹角为 90 度。",
+      "example": "向量 (1,0) 与 (0,1) 的内积为 0。",
+      "tags": [
+        "向量正交",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops.html"
+    },
+    {
+      "id": "mlinear-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "特征向量与特征值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "矩阵的特征向量 v 与对应特征值 λ 满足什么关系？",
+      "answer": "非零向量 v 满足 Av=λv。",
+      "explanation": "该关系适用于方阵及其相应的向量空间。",
+      "example": "若 Av=2v，则 2 是对应特征值。",
+      "tags": [
+        "特征向量与特征值",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/eigendecomposition.html"
+    },
+    {
+      "id": "mlinear-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "矩阵可逆条件",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "方阵的行列式为 0 时，该矩阵能否有通常意义上的逆矩阵？",
+      "answer": "不能；方阵可逆当且仅当其行列式不为 0。",
+      "explanation": "这里讨论的是普通方阵的逆，不是伪逆。",
+      "example": "某方阵将一个非零方向压缩为零时不可逆。",
+      "tags": [
+        "矩阵可逆条件",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops.html"
+    }
+  ]
+}

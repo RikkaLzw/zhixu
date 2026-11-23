@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "yara-base64-string-modifiers",
+    "title": "YARA 4.4：Base64 与 XOR 字符串修饰符",
+    "url": "https://github.com/VirusTotal/yara/blob/v4.4.0/docs/writingrules.rst",
+    "type": "YARA 固定版本文档",
+    "note": "逐题依据所列资料自行整理；例子为自编，版本与适用条件见题目。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "yarab64-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 编码字符串",
+      "knowledgePoint": "对齐变体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 的 base64 字符串修饰符为什么搜索三个编码变体？",
+      "answer": "它覆盖明文在 Base64 编码数据中可能出现的三种字节对齐位置。",
+      "explanation": "编码边界不同会使相同明文对应不同的可匹配片段。",
+      "example": "在更长的编码内容中搜索同一段明文。",
+      "tags": [
+        "YARA 编码字符串",
+        "对齐变体"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/VirusTotal/yara/blob/v4.4.0/docs/writingrules.rst"
+    },
+    {
+      "id": "yarab64-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 编码字符串",
+      "knowledgePoint": "编码后宽字符",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "YARA 4.4 的 base64wide 与 base64 在搜索结果编码上有什么区别？",
+      "answer": "base64wide 把 Base64 搜索结果转换为宽字符形式。",
+      "explanation": "它不同于先把原始明文转宽字符再做 Base64。",
+      "example": "搜索以宽字符保存的 Base64 文本。",
+      "tags": [
+        "YARA 编码字符串",
+        "编码后宽字符"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/VirusTotal/yara/blob/v4.4.0/docs/writingrules.rst"
+    },
+    {
+      "id": "yarab64-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 编码字符串",
+      "knowledgePoint": "修饰符顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 同时使用 wide 与 base64 时，先对什么进行转换？",
+      "answer": "先把原始字符串转为宽字符形式，再生成 Base64 搜索变体。",
+      "explanation": "转换后的明文宽字符本身不自动加入搜索。",
+      "example": "搜索宽字符明文经过 Base64 编码后的内容。",
+      "tags": [
+        "YARA 编码字符串",
+        "修饰符顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/VirusTotal/yara/blob/v4.4.0/docs/writingrules.rst"
+    },
+    {
+      "id": "yarab64-005",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "YARA 编码字符串",
+      "knowledgePoint": "不兼容修饰符",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "YARA 4.4 能否把 base64 与 nocase、xor 或 fullword 组合在同一个字符串上？",
+      "answer": "不能；这些组合会导致规则编译错误。",
+      "explanation": "需要改用其他字符串定义或处理方式。",
+      "example": "避免给同一个 base64 字符串再加 nocase。",
+      "tags": [
+        "YARA 编码字符串",
+        "不兼容修饰符"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/VirusTotal/yara/blob/v4.4.0/docs/writingrules.rst"
+    },
+    {
+      "id": "yarab64-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 编码字符串",
+      "knowledgePoint": "自定义字母表",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "YARA 4.4 为 base64 指定自定义字母表时，对字母表长度有什么要求？",
+      "answer": "字母表必须为 64 字节。",
+      "explanation": "它用于替换标准 Base64 字母表。",
+      "example": "长度不足 64 的字母表会导致编译失败。",
+      "tags": [
+        "YARA 编码字符串",
+        "自定义字母表"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/VirusTotal/yara/blob/v4.4.0/docs/writingrules.rst"
+    },
+    {
+      "id": "yarab64-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 编码字符串",
+      "knowledgePoint": "编码碰撞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 的 base64 字符串匹配为什么可能同时命中不同明文？",
+      "answer": "为适应编码对齐，生成的部分匹配片段会去除边界字符，不同明文可能产生相同片段。",
+      "explanation": "命中后仍需结合其他条件核实。",
+      "example": "两个相近明文可能共享某个 Base64 匹配变体。",
+      "tags": [
+        "YARA 编码字符串",
+        "编码碰撞"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/VirusTotal/yara/blob/v4.4.0/docs/writingrules.rst"
+    },
+    {
+      "id": "yarab64-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 编码字符串",
+      "knowledgePoint": "XOR 字节范围",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "YARA 4.4 的 xor(0x01-0xff) 对单字节异或键的范围如何解释？",
+      "answer": "使用从 0x01 到 0xff 的所有键，两端都包含。",
+      "explanation": "范围不含 0，因此不会因零键而直接搜索未异或的原文。",
+      "example": "限定非零单字节 XOR 键搜索字符串。",
+      "tags": [
+        "YARA 编码字符串",
+        "XOR 字节范围"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/VirusTotal/yara/blob/v4.4.0/docs/writingrules.rst"
+    },
+    {
+      "id": "yarab64-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA 编码字符串",
+      "knowledgePoint": "XOR 宽字符顺序",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "YARA 4.4 同时使用 wide 和 xor 时，插入的零字节会参与异或吗？",
+      "answer": "会；xor 在 wide 转换之后应用，也会作用于宽字符中插入的零字节。",
+      "explanation": "搜索内容因此不只是把原字符异或后再补零。",
+      "example": "键为 1 时，宽字符中原来的零字节变为 1。",
+      "tags": [
+        "YARA 编码字符串",
+        "XOR 宽字符顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/VirusTotal/yara/blob/v4.4.0/docs/writingrules.rst"
+    }
+  ]
+}

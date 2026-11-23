@@ -1,0 +1,264 @@
+{
+  "source": {
+    "id": "langchain-stream-context",
+    "title": "langchain-core 1.8.4：流式消息与上下文裁剪",
+    "url": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/ai.py",
+    "type": "固定版本官方源码",
+    "note": "依据 langchain-core 1.8.4 固定版本官方源码整理；分片合并和消息裁剪的代表性行为以本地合成消息验证，未调用外部模型。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "lcstream-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "流式工具参数表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 中，ToolCallChunk 的 args 与解析后的 ToolCall.args 分别是什么类型？",
+      "answer": "前者通常是 JSON 参数字符串片段（也可为 None），后者是解析出的参数字典。",
+      "explanation": "流中的字符串可能尚未完整，解析结果也可能随新片段更新。",
+      "example": "分片中的 args 可是字符串片段，完整调用中的 args 可是字典。",
+      "tags": [
+        "流式工具参数表示",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/tool.py#L220",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "流式工具分片合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 合并工具调用分片时，index 起什么作用？",
+      "answer": "只有 index 相同且非空的分片才会被合并为同一工具调用。",
+      "explanation": "同一回复可能同时包含多个工具调用，index 用于区分流内不同调用。",
+      "example": "index 为 0 的两个参数片段可以合并。",
+      "tags": [
+        "流式工具分片合并",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/tool.py#L261",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "流式工具调用完成判断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不应仅凭流式片段中出现了可解析的 tool_calls 就立即执行工具？",
+      "answer": "部分 JSON 可以被提前解析为不完整的参数；应等待调用数据完成并进行参数校验。",
+      "explanation": "langchain-core 会尝试解析部分 JSON，因此中间结果不代表模型已结束输出。",
+      "example": "工具参数还在流中继续生成时先缓存片段。",
+      "tags": [
+        "流式工具调用完成判断",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/ai.py#L510",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "流式文本合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 中两个文本内容的 AIMessageChunk 相加，文本通常如何合并？",
+      "answer": "字符串内容按顺序拼接成一个消息块。",
+      "explanation": "文本拼接是消息块合并的一部分；多模态内容应按其内容块规则处理。",
+      "example": "内容为“你好”和“世界”的分片可合并为“你好世界”。",
+      "tags": [
+        "流式文本合并",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/ai.py#L652",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "流式结果转消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 message_chunk_to_message 用于什么？",
+      "answer": "它把消息块转换为对应的普通消息类型，非消息块输入则原样返回。",
+      "explanation": "处理流式结果时，可以先合并分片，再将得到的块转换为普通消息。",
+      "example": "将合并后的 AIMessageChunk 转为 AIMessage。",
+      "tags": [
+        "流式结果转消息",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/utils.py#L573",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "流式用量合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 合并带 usage_metadata 的 AIMessageChunk 时，数值用量如何处理？",
+      "answer": "该实现对提供的用量字段进行累加。",
+      "explanation": "实际统计仍需核对模型集成提供的用量含义，缺失用量不能当作零消耗。",
+      "example": "两个增量分片报告的输出 token 数会相加。",
+      "tags": [
+        "流式用量合并",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/ai.py#L688",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "消息裁剪方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 trim_messages 中 first 与 last 策略各保留哪一端的消息？",
+      "answer": "first 优先保留开头；last 优先保留末尾，通常用于保留较新的对话。",
+      "explanation": "结果还受预算和其他裁剪参数的影响。",
+      "example": "需要较新上下文时可选 last。",
+      "tags": [
+        "消息裁剪方向",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/utils.py#L1146",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "消息计数器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 trim_messages 中 token_counter=len 时，max_tokens 实际限制什么？",
+      "answer": "它限制消息数量，而不是模型的 token 数。",
+      "explanation": "参数名仍叫 max_tokens，但计数单位取决于所传的计数器。",
+      "example": "传入 len 且预算为 3 时，最多按三条消息计数。",
+      "tags": [
+        "消息计数器",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/utils.py#L1191",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "系统消息可能超出预算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 使用 last 策略、include_system=True 且未设置 end_on 时，结果是否一定满足消息预算？",
+      "answer": "不一定；last 策略会保留位置 0 的系统消息，即使该消息单独超过预算，结果仍可能超出预算。",
+      "explanation": "实现会先计算系统消息占用并将剩余预算置为不小于零，随后仍加回完整系统消息。",
+      "example": "预算为零且开头有系统消息时，结果仍可包含该消息。",
+      "tags": [
+        "系统消息可能超出预算",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/utils.py#L1227",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "裁剪后对话起点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 langchain-core 1.8.4 的 last 消息裁剪策略中，start_on=\"human\" 的作用是什么？",
+      "answer": "裁剪到预算后，丢弃首个 HumanMessage 之前的消息；被单独保留的开头系统消息除外。",
+      "explanation": "这有助于满足部分模型对对话起始角色的要求，但仍需检查工具调用与结果的配对。",
+      "example": "保留最近对话时从用户消息开始。",
+      "tags": [
+        "裁剪后对话起点",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/utils.py#L1227",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "允许截取单条消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 trim_messages 的 allow_partial 控制什么？",
+      "answer": "它控制预算无法容纳完整消息时，是否尝试保留消息的一部分。",
+      "explanation": "截取方向取决于 first 或 last 策略，具体可切分内容和结果取决于实现。",
+      "example": "长消息超过预算时允许保留其中一段文本。",
+      "tags": [
+        "允许截取单条消息",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/utils.py#L1212",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    },
+    {
+      "id": "lcstream-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 消息与上下文",
+      "knowledgePoint": "相邻工具消息处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 merge_message_runs 会把相邻 ToolMessage 合并成一条吗？",
+      "answer": "不会；该实现将 ToolMessage 单独保留。",
+      "explanation": "其他相邻同类型消息可以合并，而工具结果需保留各自调用关联。",
+      "example": "两个不同 tool_call_id 的工具结果分别保留。",
+      "tags": [
+        "相邻工具消息处理",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/utils.py#L1119",
+      "referenceTitle": "langchain-core 1.8.4：流式消息与上下文裁剪"
+    }
+  ]
+}

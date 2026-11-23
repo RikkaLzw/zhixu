@@ -1,0 +1,35 @@
+{
+  "version": 9,
+  "note": "迁移用第九版旧主卡快照；仅合并未编辑且目标可用的卡片，归档原卡并保留记录。",
+  "cards": [
+    {
+      "id": "prime-005",
+      "category": "vulnerabilities",
+      "question": "只看成对样本的单条准确率为什么不够？",
+      "answer": "它不能直接反映模型是否同时正确判断一对修复前后代码。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "level": "实践",
+      "tags": [
+        "成对评估",
+        "指标"
+      ],
+      "explanation": "应单独统计两条都正确、只对一条和两条都错误的情况。",
+      "example": "模型对修复前后都判有漏洞时，可能获得单条正确，却没有识别修复差异。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "application",
+          "sourceCardId": "prime-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

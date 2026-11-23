@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "afl-instrumentation-feedback",
+    "title": "AFL++ 固定提交：比较反馈与插桩",
+    "url": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/instrumentation/README.cmplog.md",
+    "type": "固定版本开源项目文档",
+    "note": "依据 AFL++ 提交 d7986778 的文档自行整理；未运行 AFL++，示例为自编。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "aflins-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 比较反馈与插桩",
+      "knowledgePoint": "比较记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交 d7986778 的 AFL++ CmpLog 插桩主要记录什么信息？",
+      "answer": "它把比较操作数记录到共享内存，供相应变异策略使用。",
+      "explanation": "能否利用这些值取决于输入与程序状态之间的关系。",
+      "example": "记录一次整数比较的左右操作数。",
+      "tags": [
+        "AFL++ 比较反馈与插桩",
+        "比较记录"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/instrumentation/README.cmplog.md"
+    },
+    {
+      "id": "aflins-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 比较反馈与插桩",
+      "knowledgePoint": "双目标构建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交 d7986778 的 AFL++ CmpLog 文档推荐准备哪两种目标程序构建？",
+      "answer": "一个使用常规 AFL++ 插桩，另一个在编译时启用 AFL_LLVM_CMPLOG。",
+      "explanation": "两种构建应对应同一目标代码和兼容配置。",
+      "example": "分别生成普通目标和 CmpLog 目标。",
+      "tags": [
+        "AFL++ 比较反馈与插桩",
+        "双目标构建"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/instrumentation/README.cmplog.md"
+    },
+    {
+      "id": "aflins-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 比较反馈与插桩",
+      "knowledgePoint": "CmpLog配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交 d7986778 的 AFL++ 使用 CmpLog 时，afl-fuzz 的 -c 用于指定什么？",
+      "answer": "指定带 CmpLog 插桩的目标程序。",
+      "explanation": "常规目标程序仍在命令末尾指定。",
+      "example": "用 -c 指向单独编译的 CmpLog 构建。",
+      "tags": [
+        "AFL++ 比较反馈与插桩",
+        "CmpLog配置"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/instrumentation/README.cmplog.md"
+    },
+    {
+      "id": "aflins-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 比较反馈与插桩",
+      "knowledgePoint": "拆分整数比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交 d7986778 的 AFL++ laf-intel split-compares 如何帮助探索宽整数比较？",
+      "answer": "它把较宽的整数比较转换成更细粒度的比较链。",
+      "explanation": "更细粒度的反馈可能帮助变异逐步满足条件，但不保证一定触发目标路径。",
+      "example": "将 32 位比较拆成较小位宽的比较。",
+      "tags": [
+        "AFL++ 比较反馈与插桩",
+        "拆分整数比较"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/instrumentation/README.laf-intel.md"
+    },
+    {
+      "id": "aflins-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 比较反馈与插桩",
+      "knowledgePoint": "字符串比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交 d7986778 的 AFL++ laf-intel transform-compares 主要针对哪些比较？",
+      "answer": "它转换 strcmp、memcmp 等字符串或内存比较调用。",
+      "explanation": "目标是让覆盖引导变异更容易获得逐步接近条件的反馈。",
+      "example": "对固定魔数字符串的比较进行转换。",
+      "tags": [
+        "AFL++ 比较反馈与插桩",
+        "字符串比较"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/instrumentation/README.laf-intel.md"
+    },
+    {
+      "id": "aflins-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 比较反馈与插桩",
+      "knowledgePoint": "两种机制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交 d7986778 的 AFL++ CmpLog 与 laf-intel 处理比较条件的思路有什么不同？",
+      "answer": "CmpLog 记录比较操作数供变异器使用；laf-intel 在编译时转换比较以提供更细的覆盖反馈。",
+      "explanation": "二者的收益受目标程序和构建方式影响。",
+      "example": "一个记录比较值，另一个拆解宽比较。",
+      "tags": [
+        "AFL++ 比较反馈与插桩",
+        "两种机制"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/instrumentation/README.cmplog.md"
+    },
+    {
+      "id": "aflins-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 比较反馈与插桩",
+      "knowledgePoint": "插桩范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交 d7986778 的 AFL++ AFL_LLVM_ALLOWLIST 和 AFL_LLVM_DENYLIST 有什么作用？",
+      "answer": "它们根据指定列表选择需要插桩或跳过的文件、函数。",
+      "explanation": "限制插桩范围也会改变可见覆盖，比较实验时应保持口径一致。",
+      "example": "只对目标库中的指定代码启用插桩。",
+      "tags": [
+        "AFL++ 比较反馈与插桩",
+        "插桩范围"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/docs/env_variables.md"
+    },
+    {
+      "id": "aflins-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 比较反馈与插桩",
+      "knowledgePoint": "覆盖图大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交 d7986778 的 AFL++ 设置 AFL_MAP_SIZE 时，与目标程序编译时覆盖图大小有什么关系？",
+      "answer": "运行时共享图的大小必须不小于目标程序编译时使用的大小。",
+      "explanation": "同一实验中的工具和目标配置需要兼容。",
+      "example": "用 afl-showmap 分析目标前检查地图尺寸。",
+      "tags": [
+        "AFL++ 比较反馈与插桩",
+        "覆盖图大小"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/docs/env_variables.md"
+    },
+    {
+      "id": "aflins-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 比较反馈与插桩",
+      "knowledgePoint": "禁用forkserver",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交 d7986778 的 AFL++ 设置 AFL_NO_FORKSRV 后通常怎样启动每次测试？",
+      "answer": "禁用 forkserver 优化，回退为每个输入执行 fork 加 execve。",
+      "explanation": "这可能增加启动成本，文档指出可用于某些不适合 forkserver 的目标。",
+      "example": "为排查特殊初始化问题暂时关闭 forkserver。",
+      "tags": [
+        "AFL++ 比较反馈与插桩",
+        "禁用forkserver"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/docs/env_variables.md"
+    }
+  ]
+}

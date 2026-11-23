@@ -1,0 +1,315 @@
+{
+  "source": {
+    "id": "rl-learning-methods",
+    "title": "Berkeley CS188 与 Spinning Up：强化学习方法",
+    "url": "https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html",
+    "type": "教材与官方文档",
+    "note": "依据逐题所列资料自行整理中文问答；例子为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "rlmethod-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "模型式与无模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模型式强化学习与无模型强化学习的核心区别是什么？",
+      "answer": "模型式方法使用环境转移和奖励模型进行学习或规划；无模型方法不依赖这样的环境模型。",
+      "explanation": "这里的模型指环境模型，不是泛指策略网络。",
+      "example": "用模拟环境预演动作属于模型式方法。",
+      "tags": [
+        "模型式与无模型",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html"
+    },
+    {
+      "id": "rlmethod-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "模型可由经验学习",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模型式强化学习的环境模型一定要预先给定吗？",
+      "answer": "不一定；环境模型可以预先给定，也可以从交互经验中学习。",
+      "explanation": "学得的模型只是对环境的近似。",
+      "example": "从转移样本估计下一状态的概率。",
+      "tags": [
+        "模型可由经验学习",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html"
+    },
+    {
+      "id": "rlmethod-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "模型偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "强化学习中学得的环境模型有偏差时，规划可能出现什么问题？",
+      "answer": "策略可能利用模型的错误预测，在模型中表现好却在真实环境中表现差。",
+      "explanation": "模型拟合误差会影响模拟轨迹和规划结果。",
+      "example": "模型低估了某危险动作的失败概率。",
+      "tags": [
+        "模型偏差",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html"
+    },
+    {
+      "id": "rlmethod-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "经验转移概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在表格型模型式学习中，如何用观察计数估计转移概率 P(s′|s,a)？",
+      "answer": "用观察到 (s,a) 后转移到 s′ 的次数，除以观察到 (s,a) 的总次数。",
+      "explanation": "未观察到的状态动作对不能直接用该比例估计。",
+      "example": "某动作共观察 4 次，其中 3 次到达状态 D，经验概率为 3/4。",
+      "tags": [
+        "经验转移概率",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/rl/mbl.html"
+    },
+    {
+      "id": "rlmethod-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "直接策略评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "强化学习的直接策略评估如何估计给定策略的状态价值？",
+      "answer": "运行给定策略，统计从该状态开始实际获得的回报，并以样本平均估计价值。",
+      "explanation": "这类方法从完整回报样本学习，不要求环境转移模型。",
+      "example": "多次访问状态后平均各次后续回报。",
+      "tags": [
+        "直接策略评估",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/rl/mfl.html"
+    },
+    {
+      "id": "rlmethod-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "时序差分更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一步时序差分 TD(0) 如何利用 TD 误差更新给定策略下的状态价值？",
+      "answer": "先计算误差 δ=r+γV(s′)−V(s)，再更新 V(s)←V(s)+αδ；真正终止时后继价值按零处理。",
+      "explanation": "r 是本次奖励，α 是学习率，γ 是折扣因子。",
+      "example": "奖励为 1、γ=0.9、后继价值为 2 时，非终止目标为 2.8。",
+      "tags": [
+        "时序差分更新",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/rl/mfl.html",
+      "supportingReferences": [
+        {
+          "id": "gymnasium-handling-time-limits",
+          "title": "Gymnasium：处理终止与时间截断",
+          "url": "https://gymnasium.farama.org/tutorials/gymnasium_basics/handling_time_limits/",
+          "type": "官方教程",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "rlmethod-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "自举估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时序差分学习中的自举（bootstrapping）指什么？",
+      "answer": "用当前已有的价值估计构造更新目标，再据此更新价值估计。",
+      "explanation": "它不必等待整个回合的最终回报。",
+      "example": "用当前的 V(s′) 更新 V(s)。",
+      "tags": [
+        "自举估计",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/rl/mfl.html"
+    },
+    {
+      "id": "rlmethod-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "Q学习目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "表格型 Q-learning 的一步更新目标是什么？",
+      "answer": "非终止转移为 r+γ maxₐ′ Q(s′,a′)；真正终止时目标为本次奖励 r。",
+      "explanation": "再按学习率把 Q(s,a) 向该目标调整；后继状态使用当前估计最大的动作价值。 外部时间截断与真正终止需要区分。",
+      "example": "奖励为 1、γ=0.9、后继最大 Q 值为 2 时目标为 2.8。",
+      "tags": [
+        "Q学习目标",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/rl/mfl.html",
+      "supportingReferences": [
+        {
+          "id": "gymnasium-handling-time-limits",
+          "title": "Gymnasium：处理终止与时间截断",
+          "url": "https://gymnasium.farama.org/tutorials/gymnasium_basics/handling_time_limits/",
+          "type": "官方教程",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "rlmethod-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "在策略与离策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "强化学习中的在策略（on-policy）与离策略（off-policy）有何区别？",
+      "answer": "在策略方法依据用于采样的策略学习或改进该策略；离策略方法可以用另一行为策略产生的数据学习目标策略。",
+      "explanation": "行为策略决定如何采样，目标策略是要评估或优化的策略。",
+      "example": "用探索性行为收集数据，同时学习贪心目标策略。",
+      "tags": [
+        "在策略与离策略",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html"
+    },
+    {
+      "id": "rlmethod-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "Q学习为何离策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么表格型 Q-learning 被称为离策略方法？",
+      "answer": "它的更新目标取后继动作价值的最大值，采样行为可以由包含探索的另一策略产生。",
+      "explanation": "更新目标不要求后继实际采样动作就是价值最大的动作。",
+      "example": "行为策略偶尔随机行动，目标仍使用后继最大 Q 值。",
+      "tags": [
+        "Q学习为何离策略",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/rl/mfl.html"
+    },
+    {
+      "id": "rlmethod-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "探索与收敛",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能只因为训练时间很长就断言表格型 Q-learning 已收敛到最优值？",
+      "answer": "收敛还依赖充分访问状态动作对、合适的学习率等条件。",
+      "explanation": "训练过程若长期忽略某些动作，就缺乏相应经验。",
+      "example": "智能体从不尝试一条道路，无法仅凭时间证明其价值。",
+      "tags": [
+        "探索与收敛",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/rl/mfl.html"
+    },
+    {
+      "id": "rlmethod-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "近似动作价值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "近似 Q-learning 怎样利用特征表示动作价值？",
+      "answer": "它用状态动作特征和可训练参数近似 Q(s,a)，使参数更新能影响多个相关状态动作对。",
+      "explanation": "特征与函数形式决定能够怎样共享经验。",
+      "example": "用与目标的距离等特征构造线性动作价值函数。",
+      "tags": [
+        "近似动作价值",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/rl/mfl.html"
+    },
+    {
+      "id": "rlmethod-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "函数逼近的稳定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "把 Q-learning 从表格扩展为函数逼近时，还能直接套用表格型收敛保证吗？",
+      "answer": "不能直接套用；函数逼近、离策略数据和自举的组合可能导致价值学习不稳定。",
+      "explanation": "实际算法需要结合实现和实验评估稳定性。",
+      "example": "神经网络参数更新可能同时改变许多状态的价值估计。",
+      "tags": [
+        "函数逼近的稳定性",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html"
+    },
+    {
+      "id": "rlmethod-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "模型预测控制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模型预测控制（MPC）为什么在执行一步后重新规划？",
+      "answer": "它先执行有限步计划中的第一个动作，再依据新观测重新规划，以调整后续动作。",
+      "explanation": "重新规划可以根据新的环境信息调整后续动作。",
+      "example": "机器人行驶一小步后重新计算未来路径。",
+      "tags": [
+        "模型预测控制",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html"
+    },
+    {
+      "id": "rlmethod-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习方法",
+      "knowledgePoint": "模型生成经验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模型式强化学习如何利用模拟经验辅助无模型方法？",
+      "answer": "可以用环境模型生成虚拟转移，与真实经验一起或单独用于更新策略或价值函数。",
+      "explanation": "模拟数据的价值依赖环境模型质量。",
+      "example": "用学得的转移模型生成额外训练样本。",
+      "tags": [
+        "模型生成经验",
+        "强化学习方法"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro2.html"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "linux-strace-lsof-troubleshooting",
+    "title": "Linux strace 与 lsof 手册：进程排障",
+    "url": "https://man7.org/linux/man-pages/man1/strace.1.html",
+    "type": "标准、教材与技术手册",
+    "note": "依据逐题引用的标准、文档或手册自行整理；示例为自编。在线资料以 2026-11-22 查看内容为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "linuxtrace-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程与文件排障",
+      "knowledgePoint": "strace用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 strace 常用于观察进程的什么行为？",
+      "answer": "它跟踪系统调用及其返回结果，也可以显示进程收到的信号。",
+      "explanation": "它观察的是用户程序与内核接口，不等于自动追踪所有用户态函数调用。",
+      "example": "排查程序打开配置文件失败。",
+      "tags": [
+        "Linux 进程与文件排障",
+        "strace用途"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/strace.1.html"
+    },
+    {
+      "id": "linuxtrace-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 进程与文件排障",
+      "knowledgePoint": "errno观察",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "strace 中 openat(...) = -1 ENOENT 通常说明本次系统调用发生了什么？",
+      "answer": "该调用失败，内核报告所需的文件或路径组成部分不存在。",
+      "explanation": "应结合实际路径及工作目录定位，不应只凭这一行假设所有文件都不存在。",
+      "example": "程序尝试打开不存在的配置文件。",
+      "tags": [
+        "Linux 进程与文件排障",
+        "errno观察"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/strace.1.html"
+    },
+    {
+      "id": "linuxtrace-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 进程与文件排障",
+      "knowledgePoint": "系统调用过滤",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "strace -e trace=openat 命令 的主要作用是什么？",
+      "answer": "将显示的系统调用限制为 openat；进程的其他系统调用仍会执行。",
+      "explanation": "信号或退出信息仍可能显示；过滤条件不改变程序本身要执行的调用。",
+      "example": "跟踪程序尝试打开的文件。",
+      "tags": [
+        "Linux 进程与文件排障",
+        "系统调用过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/strace.1.html"
+    },
+    {
+      "id": "linuxtrace-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程与文件排障",
+      "knowledgePoint": "跟踪子进程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "strace -f 启动程序时，为什么常用于排查会创建子进程的命令？",
+      "answer": "它会继续跟踪由已跟踪进程创建的子进程。",
+      "explanation": "输出可包含多个进程的调用，需按进程标识解读。",
+      "example": "shell 脚本启动外部程序时一并追踪。",
+      "tags": [
+        "Linux 进程与文件排障",
+        "跟踪子进程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/strace.1.html"
+    },
+    {
+      "id": "linuxtrace-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 进程与文件排障",
+      "knowledgePoint": "附加进程",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "strace -p PID 的常见用途是什么？",
+      "answer": "将跟踪器附加到已有进程并观察之后发生的系统调用。",
+      "explanation": "能否附加受权限和内核追踪策略限制；附加前的调用不会补录。",
+      "example": "排查正在运行的服务为何持续等待。",
+      "tags": [
+        "Linux 进程与文件排障",
+        "附加进程"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/strace.1.html"
+    },
+    {
+      "id": "linuxtrace-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程与文件排障",
+      "knowledgePoint": "调用统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "strace -c 常用于得到什么信息？",
+      "answer": "程序结束后按系统调用汇总调用次数、错误次数及时间等统计信息。",
+      "explanation": "统计过程本身会带来开销；时间的具体口径应结合版本与选项。",
+      "example": "查看某程序最常发生哪些系统调用。",
+      "tags": [
+        "Linux 进程与文件排障",
+        "调用统计"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/strace.1.html"
+    },
+    {
+      "id": "linuxtrace-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 进程与文件排障",
+      "knowledgePoint": "指定输出文件",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "strace -o trace.log 程序 的 -o 选项做什么？",
+      "answer": "把跟踪输出写入指定文件。",
+      "explanation": "程序自身的标准输出和标准错误是否重定向由其单独设置。",
+      "example": "把调用记录留在 trace.log 中分析。",
+      "tags": [
+        "Linux 进程与文件排障",
+        "指定输出文件"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/strace.1.html"
+    },
+    {
+      "id": "linuxtrace-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 进程与文件排障",
+      "knowledgePoint": "lsof进程文件",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "lsof -p PID 常用于查看什么？",
+      "answer": "列出指定进程当前打开的文件及其他由 lsof 报告的打开对象。",
+      "explanation": "结果受权限、系统实现和进程瞬时状态影响。",
+      "example": "检查服务仍打开哪些日志文件。",
+      "tags": [
+        "Linux 进程与文件排障",
+        "lsof进程文件"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/lsof.8.html"
+    },
+    {
+      "id": "linuxtrace-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程与文件排障",
+      "knowledgePoint": "lsof删除文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 上 lsof +L1 常用于排查哪类磁盘占用问题？",
+      "answer": "查找链接数小于 1 但仍被进程打开的文件。",
+      "explanation": "读取范围受权限限制；是否真正释放空间还取决于引用和文件系统。",
+      "example": "日志已删除但进程仍保持打开，文件空间暂未释放。",
+      "tags": [
+        "Linux 进程与文件排障",
+        "lsof删除文件"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/lsof.8.html"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "bot-iot-dataset",
+    "title": "UNSW BoT-IoT：流量数据与使用边界",
+    "url": "https://research.unsw.edu.au/projects/bot-iot-dataset",
+    "type": "教材、研究论文与官方资料",
+    "note": "依据 UNSW 官网和逐题引用的原论文自行整理；数据集学术研究免费，商业用途须与作者商定，使用时须遵守引用要求。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "botiot-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "数据来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BoT-IoT 数据集来自什么类型的网络环境？",
+      "answer": "来自 UNSW Canberra Cyber Range 设计的实验网络，包含正常流量和模拟攻击流量。",
+      "explanation": "实验环境的流量分布不能直接视为所有真实 IoT 网络的分布。",
+      "example": "使用该数据集时注明实验网络来源。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "数据来源"
+      ],
+      "evidence": "source",
+      "reference": "https://research.unsw.edu.au/projects/bot-iot-dataset"
+    },
+    {
+      "id": "botiot-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "IoT 服务模拟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BoT-IoT 原论文用什么工具模拟部分 IoT 传感器和服务？",
+      "answer": "使用 Node-RED 模拟天气、温度等 IoT 服务。",
+      "explanation": "论文中的 IoT 服务并不全是实际物理设备流量。",
+      "example": "模拟天气站定期发布传感器数据。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "IoT 服务模拟"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.00701v1"
+    },
+    {
+      "id": "botiot-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "采集到流",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BoT-IoT 的原始数据与流特征之间经过了什么处理？",
+      "answer": "论文使用 tshark 捕获 PCAP，再用 Argus 提取网络流并生成特征。",
+      "explanation": "官方还提供 Argus 和 CSV 等不同格式。",
+      "example": "从数据包生成按连接汇总的流记录。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "采集到流"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.00701v1"
+    },
+    {
+      "id": "botiot-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "文件与标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BoT-IoT 按攻击类别组织 PCAP 时，一个攻击场景文件一定只含攻击流量吗？",
+      "answer": "不一定；论文的抓包同时包含背景正常流量和攻击流量。",
+      "explanation": "文件名或场景名称不能替代记录级标签。",
+      "example": "DDoS 场景抓包仍可能含正常通信。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "文件与标签"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.00701v1"
+    },
+    {
+      "id": "botiot-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "标签字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BoT-IoT 论文中 attack、category 与 subcategory 分别用于什么？",
+      "answer": "attack 区分正常与攻击，category 和 subcategory 进一步表示流量类别与子类。",
+      "explanation": "论文中二分类标签 0 为正常、1 为攻击。",
+      "example": "先进行二分类，再分析攻击类别。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "标签字段"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.00701v1"
+    },
+    {
+      "id": "botiot-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "地址标注",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BoT-IoT 原论文如何利用实验环境的地址信息辅助流量标注？",
+      "answer": "论文利用已知的攻击端和受害端地址，根据源与目的地址更新标签。",
+      "explanation": "这种标注方式依赖实验网络设计。",
+      "example": "实验中为特定攻击端与受害端流量赋标签。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "地址标注"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.00701v1"
+    },
+    {
+      "id": "botiot-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "地址捷径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BoT-IoT 训练集和测试集共享固定攻击端地址时，为什么模型可能高估对新环境的泛化？",
+      "answer": "模型可能利用与标签高度相关的地址捷径，而不是学习可迁移的攻击行为。",
+      "explanation": "可按环境或主机划分并检查模型使用的特征。",
+      "example": "测试未见过的攻击端主机。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "地址捷径"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/1811.00701v1"
+    },
+    {
+      "id": "botiot-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "统计窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BoT-IoT 原论文中新生成的部分流量统计特征使用多大的滑动窗口？",
+      "answer": "论文以 100 条连接为一个滑动窗口生成相关统计特征。",
+      "explanation": "窗口大小是论文的设计选择，不是 IoT 流量的通用标准。",
+      "example": "在连接窗口内统计每源地址的流量。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "统计窗口"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.00701v1"
+    },
+    {
+      "id": "botiot-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "子集分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "官方的 BoT-IoT 5% 子集能否不经检查就视为完整数据的无偏代表？",
+      "answer": "不能；官方说明该子集通过 MySQL 查询提取，需要检查提取方式和类别分布。",
+      "explanation": "子集更便于处理，但其组成不自动代表目标部署环境。",
+      "example": "报告评估时注明使用的是 5% 子集。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "子集分布"
+      ],
+      "evidence": "application",
+      "reference": "https://research.unsw.edu.au/projects/bot-iot-dataset"
+    },
+    {
+      "id": "botiot-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "缺失端口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BoT-IoT 原论文预处理时，协议不适用的源或目的端口如何表示？",
+      "answer": "论文将这些缺失端口值设置为 −1。",
+      "explanation": "−1 是数据预处理标记，不是实际的网络端口。",
+      "example": "ARP 流记录可能没有传输层端口。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "缺失端口"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1811.00701v1"
+    },
+    {
+      "id": "botiot-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 僵尸网络流量数据",
+      "knowledgePoint": "数据许可",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNSW 官方对 BoT-IoT 数据集的学术研究和商业使用有什么说明？",
+      "answer": "官方允许学术研究免费使用；商业用途需与作者达成同意。",
+      "explanation": "使用数据集时还应遵守其作者的引用要求。",
+      "example": "下载数据用于商业服务前核查具体授权。",
+      "tags": [
+        "IoT 僵尸网络流量数据",
+        "数据许可"
+      ],
+      "evidence": "source",
+      "reference": "https://research.unsw.edu.au/projects/bot-iot-dataset"
+    }
+  ]
+}

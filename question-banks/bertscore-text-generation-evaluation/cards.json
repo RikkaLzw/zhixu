@@ -1,0 +1,147 @@
+{
+  "source": {
+    "id": "bertscore-text-generation-evaluation",
+    "title": "BERTScore 原论文 v3 与 0.3.13 实现",
+    "url": "https://arxiv.org/pdf/1904.09675v3",
+    "type": "原论文与固定版本开源实现",
+    "note": "依据逐题引用的论文或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "bertscore-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "BERTScore 文本生成评估",
+      "knowledgePoint": "相似度基础",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERTScore 如何比较候选文本与参考文本中的 token？",
+      "answer": "它使用上下文化 token 向量的余弦相似度，而不是只要求 token 字面相同。",
+      "explanation": "候选和参考会先分别编码；相似度高不能单独证明事实正确。",
+      "example": "不同措辞表达相近意思时可能得到较高匹配。",
+      "tags": [
+        "BERTScore 文本生成评估",
+        "相似度基础"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1904.09675v3"
+    },
+    {
+      "id": "bertscore-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "BERTScore 文本生成评估",
+      "knowledgePoint": "精确率与召回率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERTScore 的精确率与召回率分别从哪一侧的 token 出发寻找最大相似度？",
+      "answer": "精确率从候选 token 找参考中的最佳匹配；召回率从参考 token 找候选中的最佳匹配。",
+      "explanation": "两侧 token 数量和内容不同时，两个分数可以不同。",
+      "example": "候选缺少参考中的一部分内容时，召回率可能较低。",
+      "tags": [
+        "BERTScore 文本生成评估",
+        "精确率与召回率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1904.09675v3"
+    },
+    {
+      "id": "bertscore-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "BERTScore 文本生成评估",
+      "knowledgePoint": "贪心匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERTScore 的逐 token 贪心匹配是否要求每个参考 token 只能匹配一个候选 token？",
+      "answer": "不要求；每个 token 独立选择另一侧的最大相似度，多个 token 可以选择同一匹配项。",
+      "explanation": "这不是一对一最优分配。",
+      "example": "多个相近候选词可能都匹配到同一个参考词。",
+      "tags": [
+        "BERTScore 文本生成评估",
+        "贪心匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1904.09675v3"
+    },
+    {
+      "id": "bertscore-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BERTScore 文本生成评估",
+      "knowledgePoint": "IDF权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERTScore 使用 IDF 加权时，希望怎样调整 token 的影响？",
+      "answer": "提高较少出现在参考语料中的 token 对匹配分数的相对权重。",
+      "explanation": "论文中的 IDF 从参考句子集合估计；加权是可选项。",
+      "example": "常见功能词的权重可能小于少见的内容词。",
+      "tags": [
+        "BERTScore 文本生成评估",
+        "IDF权重"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1904.09675v3"
+    },
+    {
+      "id": "bertscore-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BERTScore 文本生成评估",
+      "knowledgePoint": "模型条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较两次 BERTScore 时为什么要记录编码模型、层和分词配置？",
+      "answer": "不同模型、层和分词会改变 token 表示或匹配单位，得分不一定可直接比较。",
+      "explanation": "实现还可以记录 IDF 和基线缩放设置。",
+      "example": "同一文本用不同编码模型可能得到不同分数。",
+      "tags": [
+        "BERTScore 文本生成评估",
+        "模型条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1904.09675v3"
+    },
+    {
+      "id": "bertscore-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BERTScore 文本生成评估",
+      "knowledgePoint": "基线缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERTScore 的 baseline rescaling 主要做什么？",
+      "answer": "它用经验基线对原始分数做线性变换，以改善分数的可读性。",
+      "explanation": "变换不保证每个结果都位于 0 到 1 之间。",
+      "example": "原始分数低于基线时缩放结果可能为负。",
+      "tags": [
+        "BERTScore 文本生成评估",
+        "基线缩放"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1904.09675v3"
+    },
+    {
+      "id": "bertscore-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BERTScore 文本生成评估",
+      "knowledgePoint": "多参考实现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "bert-score 0.3.13 对一个候选的多个参考分别求分后，P、R、F 是否一定来自同一个参考？",
+      "answer": "不一定；该实现分别对各参考的 P、R、F 取最大值。",
+      "explanation": "三个最大值可能来自不同参考，返回的 F 不一定等于返回的 P、R 的调和平均。",
+      "example": "一个参考的精确率最高，另一个参考的召回率最高。",
+      "tags": [
+        "BERTScore 文本生成评估",
+        "多参考实现"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/Tiiiger/bert_score/blob/v0.3.13/bert_score/score.py",
+      "referenceTitle": "bert-score 0.3.13：score 实现",
+      "referenceType": "开源实现"
+    }
+  ]
+}

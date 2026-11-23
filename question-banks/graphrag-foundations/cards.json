@@ -1,0 +1,504 @@
+{
+  "source": {
+    "id": "graphrag-foundations",
+    "title": "GraphRAG：图索引与局部、全局检索",
+    "url": "https://arxiv.org/abs/2404.16130v1",
+    "type": "研究论文与官方文档",
+    "note": "依据 GraphRAG 原论文与固定版本 v3.3.0 文档整理；未运行依赖外部模型的完整索引流程。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "grag-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "TextUnit",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft GraphRAG 知识模型中的 TextUnit 是什么？",
+      "answer": "它是从输入文档切分得到、供后续分析使用的文本块。",
+      "explanation": "提取的知识项可关联 TextUnit，以便回溯来源。",
+      "example": "一份报告可被切成多个 TextUnit。",
+      "tags": [
+        "TextUnit",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Knowledge Model"
+    },
+    {
+      "id": "grag-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "图元素抽取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft GraphRAG 默认图抽取步骤主要从文本块中识别哪两类图元素？",
+      "answer": "识别实体及实体之间的关系。",
+      "explanation": "文档描述默认流程使用大模型抽取并生成描述。",
+      "example": "从报告中识别组织及其与某工具的关系。",
+      "tags": [
+        "图元素抽取",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Phase 3"
+    },
+    {
+      "id": "grag-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "图元素合并键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft GraphRAG v3.3.0 文档描述实体和关系分别如何合并？",
+      "answer": "标题与类型相同的实体合并；源实体与目标实体相同的关系合并，并分别汇集描述。",
+      "explanation": "按名称合并可能遇到同名不同实体的歧义，描述也需要核验。",
+      "example": "不同文本块中相同实体及相同端点关系的描述分别汇集。",
+      "tags": [
+        "图元素合并键",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Phase 3"
+    },
+    {
+      "id": "grag-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "元素摘要",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG 为什么要汇总同一实体或关系的多条描述？",
+      "answer": "它将来自不同文本块的描述压缩成单一、较易供后续使用的描述。",
+      "explanation": "生成式摘要可能遗漏或误述细节，应保留来源链路。",
+      "example": "多份报告对同一组织的描述被整理成实体摘要。",
+      "tags": [
+        "元素摘要",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Phase 3"
+    },
+    {
+      "id": "grag-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "声明抽取默认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft GraphRAG v3.3.0 的默认索引流程是否默认启用 claim extraction？",
+      "answer": "不启用；该步骤是可选的，文档说明通常需要提示词调优。",
+      "explanation": "启用与否影响可生成的 covariate 数据。",
+      "example": "需要实体相关声明时，按数据和任务配置该步骤。",
+      "tags": [
+        "声明抽取默认",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Phase 3"
+    },
+    {
+      "id": "grag-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "协变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft GraphRAG 知识模型中的 Covariate 通常表示什么？",
+      "answer": "它表示从文本抽取的与实体相关的声明信息，可带时间范围。",
+      "explanation": "这类声明仍需要按任务核验。",
+      "example": "某报告中关于组织活动时间的陈述可作为候选声明。",
+      "tags": [
+        "协变量",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Knowledge Model"
+    },
+    {
+      "id": "grag-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "社区检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG 如何把实体关系组织成可用于全局摘要的社区？",
+      "answer": "它在实体关系图上使用社区检测，将连接较紧密的实体组织成层次化社区。",
+      "explanation": "论文使用 Leiden 算法作为社区检测方法。",
+      "example": "相互关联较多的一组实体形成一个社区。",
+      "tags": [
+        "社区检测",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2404.16130v1",
+      "referenceTitle": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization（v1）：2.4"
+    },
+    {
+      "id": "grag-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "社区报告",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG 中的 Community Report 是什么？",
+      "answer": "它是对一个社区内容生成的摘要报告，可供阅读和后续检索使用。",
+      "explanation": "社区报告是生成内容，不能自动视为原始证据。",
+      "example": "为一组相关实体和关系生成主题摘要。",
+      "tags": [
+        "社区报告",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Knowledge Model"
+    },
+    {
+      "id": "grag-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "索引向量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft GraphRAG 默认数据流会对哪些内容构造文本嵌入？",
+      "answer": "默认对实体描述、文本块内容和社区报告内容生成文本嵌入。",
+      "explanation": "具体索引和存储实现可按配置调整。",
+      "example": "实体描述向量可辅助查询时选择相关实体。",
+      "tags": [
+        "索引向量",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Phase 6"
+    },
+    {
+      "id": "grag-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "局部与全局检索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft GraphRAG 的 Local Search 与 Global Search 分别适合哪类问题？",
+      "answer": "Local Search 适合围绕特定实体的问题；Global Search 适合归纳整个文档集合的主题。",
+      "explanation": "局部检索结合图与文本；全局检索通过社区报告做多阶段汇总。",
+      "example": "询问某组织使用的工具可用局部检索；汇总所有报告的主题可考虑全局检索。",
+      "tags": [
+        "局部与全局检索",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/query/overview.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Query Engine：Local Search",
+      "supportingReferences": [
+        {
+          "id": "graphrag-global-v33",
+          "title": "Microsoft GraphRAG v3.3.0：Global Search",
+          "url": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/query/global_search.md",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "grag-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "局部入口实体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG Local Search 怎样选择进入知识图谱的起点？",
+      "answer": "它根据用户输入寻找语义相关的实体，并以这些实体作为图谱访问入口。",
+      "explanation": "识别不全或选错入口会影响后续可检索内容。",
+      "example": "用问题找到相关组织实体，再查看它的关联信息。",
+      "tags": [
+        "局部入口实体",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/query/local_search.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Local Search：Methodology"
+    },
+    {
+      "id": "grag-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "局部上下文组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG Local Search 可以从入口实体扩展出哪些上下文？",
+      "answer": "可扩展相关实体、关系、社区报告及关联文本块等候选信息。",
+      "explanation": "可用内容取决于索引和配置。",
+      "example": "在组织节点附近查找相关工具，再取对应报告片段。",
+      "tags": [
+        "局部上下文组成",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/query/local_search.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Local Search：Methodology"
+    },
+    {
+      "id": "grag-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "局部上下文预算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG Local Search 为什么要对候选信息进行优先级排序和过滤？",
+      "answer": "它需要把候选数据压缩到预设的上下文窗口预算内。",
+      "explanation": "被过滤的信息不会进入这次生成的上下文。",
+      "example": "大量关联实体无法全部放入一次模型调用时需取舍。",
+      "tags": [
+        "局部上下文预算",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/query/local_search.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Local Search：Methodology"
+    },
+    {
+      "id": "grag-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "全局Map与Reduce",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG Global Search 的 map 与 reduce 阶段分别做什么？",
+      "answer": "map 将社区报告分批生成带评分的中间要点；reduce 筛选汇总要点并生成最终回答。",
+      "explanation": "最终上下文仍受 token 预算约束。",
+      "example": "先分别归纳报告批次，再将相关要点合成总体结论。",
+      "tags": [
+        "全局Map与Reduce",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/query/global_search.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Global Search：Methodology"
+    },
+    {
+      "id": "grag-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "零分中间结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG 原论文的全局回答流程如何处理评分为 0 的中间回答？",
+      "answer": "论文流程将评分为 0 的中间回答过滤掉。",
+      "explanation": "评分由模型针对问题给出，可能存在误判。",
+      "example": "不相关社区生成的零分要点不进入最终汇总。",
+      "tags": [
+        "零分中间结果",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2404.16130v1",
+      "referenceTitle": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization（v1）：2.6"
+    },
+    {
+      "id": "grag-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "社区层次取舍",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG 全局检索选择更细层次的社区报告，通常有什么取舍？",
+      "answer": "较细报告可能提供更多细节，但报告数量增加也可能提高时间和模型调用资源消耗。",
+      "explanation": "实际效果取决于语料、问题和配置。",
+      "example": "选更细的社区摘要可能覆盖更多局部主题。",
+      "tags": [
+        "社区层次取舍",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/query/global_search.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Global Search：Methodology"
+    },
+    {
+      "id": "grag-021",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "基础检索基线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft GraphRAG 的 Basic Search 使用哪种基本检索方式？",
+      "answer": "它提供基础向量 RAG，从文本块中选择 top-k 作为生成上下文。",
+      "explanation": "这是库内用于比较的简单基线。",
+      "example": "将最相似的若干文本块交给模型。",
+      "tags": [
+        "基础检索基线",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/query/overview.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Query Engine：Basic Search"
+    },
+    {
+      "id": "grag-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "DRIFT检索流程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG 的 DRIFT Search 如何结合社区报告和局部搜索？",
+      "answer": "它先利用相关社区报告生成初步回答及后续问题，再用 Local Search 细化探索。",
+      "explanation": "结果可按相关性组织成问题与答案的层次。",
+      "example": "从总体主题生成实体相关的后续查询并继续检索。",
+      "tags": [
+        "DRIFT检索流程",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/query/drift_search.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：DRIFT Search：Methodology"
+    },
+    {
+      "id": "grag-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "同名实体风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG 按标题和类型合并实体时，为什么仍要关注同名实体歧义？",
+      "answer": "不同真实对象可能具有相同名称和类型，直接合并会混淆它们的关系与描述。",
+      "explanation": "需要结合上下文或实体消歧策略检查。",
+      "example": "两个同名组织被误合并后，相关活动可能被错误归属。",
+      "tags": [
+        "同名实体风险",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Phase 3"
+    },
+    {
+      "id": "grag-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "抽取遗漏影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG 索引阶段遗漏了某个实体或关系，可能怎样影响检索？",
+      "answer": "依赖该图元素的路径或社区信息可能不完整，导致相关内容难以通过该图找到。",
+      "explanation": "原始文本检索和索引复核可帮助发现或缓解遗漏。",
+      "example": "漏掉工具与组织的关系会影响围绕该组织的关系查询。",
+      "tags": [
+        "抽取遗漏影响",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2404.16130v1",
+      "referenceTitle": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization（v1）：2.2"
+    },
+    {
+      "id": "grag-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "来源回溯",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 GraphRAG 应保留知识项到 TextUnit 的链接？",
+      "answer": "这样可从实体或关系追溯到源文本，检查抽取与摘要是否有依据。",
+      "explanation": "生成的图和摘要可能包含遗漏或错误。",
+      "example": "核对组织与工具的关系是否被原文明确支持。",
+      "tags": [
+        "来源回溯",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/default_dataflow.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Dataflow：Phase 1"
+    },
+    {
+      "id": "grag-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "相同请求缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft GraphRAG 文档中 LLM 缓存对相同输入请求有什么作用？",
+      "answer": "当相同提示与调用参数已有缓存结果时，可复用该结果。",
+      "explanation": "缓存有助于减少重复调用，但不保证结果事实正确。",
+      "example": "重新运行相同索引步骤时复用已有模型响应。",
+      "tags": [
+        "相同请求缓存",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/graphrag/blob/5faaaf4f5685fa2056fa8c3bf9342cb089f2942f/docs/index/architecture.md",
+      "referenceTitle": "Microsoft GraphRAG v3.3.0：Indexing Architecture：LLM Caching"
+    },
+    {
+      "id": "grag-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "实验范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphRAG 原论文报告的全局问答结果应如何理解其适用范围？",
+      "answer": "结果针对论文中的约百万 token 规模语料和全局归纳问题，与所选基线和评价方式相关。",
+      "explanation": "不能据此断言所有数据集和具体问题都优于其他 RAG 方法。",
+      "example": "在新领域应使用代表性问题与基线重新评测。",
+      "tags": [
+        "实验范围",
+        "GraphRAG",
+        "RAG"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2404.16130v1",
+      "referenceTitle": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization（v1）：Abstract, 3"
+    }
+  ]
+}

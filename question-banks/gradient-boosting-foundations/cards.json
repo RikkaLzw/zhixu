@@ -1,0 +1,446 @@
+{
+  "source": {
+    "id": "gradient-boosting-foundations",
+    "title": "XGBoost / scikit-learn：梯度提升与树模型",
+    "url": "https://xgboost.readthedocs.io/en/stable/tutorials/model.html",
+    "type": "官方文档与研究资料",
+    "note": "逐题依据官方文档与论文整理；腾讯云安全公开面经中的 GBDT 与 XGBoost 为部分题目的主题启发。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "boosting-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 和梯度提升树（GBDT）是什么关系？",
+      "answer": "XGBoost 提供梯度提升树的一种实现，并加入正则化和高效训练等设计；GBDT 是更广泛的模型方法。",
+      "explanation": "XGBoost 还支持其他 booster，具体功能取决于配置。",
+      "example": "用 XGBoost 的树 booster 训练二分类器。",
+      "tags": [
+        "关系",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://xgboost.readthedocs.io/en/stable/tutorials/model.html",
+      "referenceTitle": "XGBoost：Introduction to Boosted Trees",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析公开面经（合集收录，经历为分享者自述）",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "boosting-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "负梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "梯度提升树每一轮常用什么信号拟合新树？",
+      "answer": "依据当前模型预测计算损失对预测值的负梯度，用它指导新树拟合。",
+      "explanation": "平方误差下负梯度与目标值减预测值的残差成比例；其他损失不一定如此。",
+      "example": "下一轮依据当前预测的误差方向拟合。",
+      "tags": [
+        "负梯度",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html#gradient-boosting-formulation",
+      "referenceTitle": "scikit-learn：Gradient Boosting",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析公开面经（合集收录，经历为分享者自述）；梯度提升主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "boosting-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "分类与回归树",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "梯度提升树用于分类时，为什么仍可以使用输出连续值的回归树？",
+      "answer": "新树拟合的是连续的损失改进信号，集成得分再经过相应变换用于分类。",
+      "explanation": "树的叶节点输出不必直接是类别标签。",
+      "example": "二分类模型把累积得分映射为概率。",
+      "tags": [
+        "分类与回归树",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html#gradient-boosting-formulation",
+      "referenceTitle": "scikit-learn：Gradient Boosting",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析公开面经（合集收录，经历为分享者自述）；梯度提升主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "boosting-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "树得分累加",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "树模型的梯度提升通常怎样组合各轮树的输出？",
+      "answer": "在初始预测基础上累加各轮新树的得分贡献。",
+      "explanation": "贡献通常还会按学习率缩放；模型输出是否再做变换取决于任务。",
+      "example": "每加入一棵树就更新当前样本的得分。",
+      "tags": [
+        "树得分累加",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://xgboost.readthedocs.io/en/stable/tutorials/model.html",
+      "referenceTitle": "XGBoost：Introduction to Boosted Trees",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析公开面经（合集收录，经历为分享者自述）；梯度提升主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "boosting-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "训练目标与复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 树模型的训练目标为什么不仅看训练损失？",
+      "answer": "目标还可以包含树复杂度的正则项，以约束过于复杂的模型。",
+      "explanation": "正则化有助于抑制过拟合，但不能保证测试集效果。",
+      "example": "比较候选树时考虑叶节点复杂度。",
+      "tags": [
+        "训练目标与复杂度",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://xgboost.readthedocs.io/en/stable/tutorials/model.html",
+      "referenceTitle": "XGBoost：Introduction to Boosted Trees",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析公开面经（合集收录，经历为分享者自述）；梯度提升主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "boosting-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "二阶近似",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 树模型的常见目标近似会使用哪些导数信息？",
+      "answer": "使用损失对当前预测的一阶导数和二阶导数，近似评估新树的目标。",
+      "explanation": "二阶方法并非 XGBoost 独有，具体目标需满足相应条件。",
+      "example": "利用梯度和曲率统计评估候选分裂。",
+      "tags": [
+        "二阶近似",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1603.02754",
+      "referenceTitle": "XGBoost 原论文",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析公开面经（合集收录，经历为分享者自述）；梯度提升主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "boosting-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "缺失值方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 的树 booster 遇到缺失特征时通常如何选择分支？",
+      "answer": "训练分裂时学习该节点对缺失值采用的默认方向，预测时按该方向分流。",
+      "explanation": "这是树 booster 的行为；gblinear 对缺失值的处理不同。",
+      "example": "无法获得某个特征值的样本走该节点的默认分支。",
+      "tags": [
+        "缺失值方向",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://xgboost.readthedocs.io/en/stable/faq.html#how-to-deal-with-missing-values",
+      "referenceTitle": "XGBoost：FAQ",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云安全数据分析公开面经（合集收录，经历为分享者自述）；梯度提升主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6c-%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%89%E5%85%A8",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "boosting-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "稀疏输入与零",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么把稀疏矩阵转成以 0 填充的稠密矩阵后，XGBoost 树模型的预测可能改变？",
+      "answer": "在默认缺失值设置下，稀疏矩阵中未存储的元素按缺失处理；稠密矩阵中的显式 0 是有效数值。",
+      "explanation": "如果配置将 0 视为缺失，行为会不同；转换时应检查缺失值表示。",
+      "example": "比较未存储元素与显式存储的数值 0。",
+      "tags": [
+        "稀疏输入与零",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://xgboost.readthedocs.io/en/stable/faq.html#why-do-i-see-different-results-with-sparse-and-dense-data",
+      "referenceTitle": "XGBoost：FAQ",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "boosting-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "直方图分箱",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "直方图梯度提升为什么要先把连续特征分箱？",
+      "answer": "把连续数值映射到有限的离散区间，可以减少需要评估的候选分裂点。",
+      "explanation": "分箱带来近似；速度和效果取决于数据与配置。",
+      "example": "将流量数值特征分成有限数量的区间。",
+      "tags": [
+        "直方图分箱",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html#histogram-based-gradient-boosting",
+      "referenceTitle": "scikit-learn：Histogram-Based Gradient Boosting",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "boosting-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "最小分裂增益",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 树模型的 gamma 参数控制什么？",
+      "answer": "它规定进一步分裂叶节点所需的最小损失下降。",
+      "explanation": "阈值越高，算法通常越保守。",
+      "example": "只有候选分裂带来的目标改善足够大时才分裂。",
+      "tags": [
+        "最小分裂增益",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://xgboost.readthedocs.io/en/stable/parameter.html#parameters-for-tree-booster",
+      "referenceTitle": "XGBoost：Parameters for Tree Booster",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "boosting-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "子节点 Hessian",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 的 min_child_weight 总是等于子节点最少样本数吗？",
+      "answer": "不总是；它要求子节点样本的二阶导数（Hessian）之和达到指定阈值。",
+      "explanation": "在线性回归等特定情形下，该值可对应样本数量；其他目标和权重可能不同。",
+      "example": "调整该参数以限制权重不足的分裂。",
+      "tags": [
+        "子节点 Hessian",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://xgboost.readthedocs.io/en/stable/parameter.html#parameters-for-tree-booster",
+      "referenceTitle": "XGBoost：Parameters for Tree Booster",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "boosting-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "叶权重正则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 树 booster 的 reg_alpha 和 reg_lambda 分别施加什么正则？",
+      "answer": "reg_alpha 对叶权重施加 L1 正则，reg_lambda 对叶权重施加 L2 正则。",
+      "explanation": "这两个参数可以控制模型保守程度。",
+      "example": "比较两种叶权重约束对验证集的影响。",
+      "tags": [
+        "叶权重正则",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://xgboost.readthedocs.io/en/stable/parameter.html#parameters-for-tree-booster",
+      "referenceTitle": "XGBoost：Parameters for Tree Booster",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "boosting-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "行列抽样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 树 booster 的 subsample 与 colsample_bytree 分别抽样什么？",
+      "answer": "subsample 抽取训练样本行；colsample_bytree 为每棵树抽取特征列。",
+      "explanation": "两者控制不同维度的随机抽样，应在验证数据上调节。",
+      "example": "每轮抽取部分事件，并为树抽取部分特征。",
+      "tags": [
+        "行列抽样",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://xgboost.readthedocs.io/en/stable/parameter.html#parameters-for-tree-booster",
+      "referenceTitle": "XGBoost：Parameters for Tree Booster",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "boosting-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "二分类输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 的 binary:logistic 与 binary:logitraw 输出有什么区别？",
+      "answer": "前者输出逻辑变换后的概率，后者输出变换前的原始分数。",
+      "explanation": "原始分数不能直接当作概率；具体校准效果仍需验证。",
+      "example": "比较同一样本的概率和对应的原始分数。",
+      "tags": [
+        "二分类输出",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://xgboost.readthedocs.io/en/stable/parameter.html#learning-task-parameters",
+      "referenceTitle": "XGBoost：Learning Task Parameters",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "boosting-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "正类权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XGBoost 二分类中的 scale_pos_weight 主要调整什么？",
+      "answer": "它调整正类样本的相对权重，可用于处理类别不平衡。",
+      "explanation": "权重选择会影响模型学习，仍需在独立数据上检查阈值和概率质量。",
+      "example": "对少见攻击样本提高训练权重。",
+      "tags": [
+        "正类权重",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://xgboost.readthedocs.io/en/stable/parameter.html#parameters-for-tree-booster",
+      "referenceTitle": "XGBoost：Parameters for Tree Booster",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "boosting-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "单调约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "梯度提升模型中的特征单调约束表达什么先验？",
+      "answer": "其他特征固定时，指定特征增大不能让模型输出沿相反方向变化。",
+      "explanation": "约束方向需要符合任务假设，不保证该假设本身正确。",
+      "example": "固定其他条件，约束某特征增大时预测分数不降低。",
+      "tags": [
+        "单调约束",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html#monotonic-constraints",
+      "referenceTitle": "scikit-learn：Monotonic Constraints",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "boosting-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "梯度提升与 XGBoost",
+      "knowledgePoint": "验证集早停",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "梯度提升训练中的早停通常依据什么决定停止添加树？",
+      "answer": "监测验证集指标，指标在设定轮数内不再改善时停止训练。",
+      "explanation": "早停用的数据参与模型选择，最终效果仍应在独立测试集上报告。",
+      "example": "验证损失连续多轮没有改善时停止。",
+      "tags": [
+        "验证集早停",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/ensemble.html#gradientboostingclassifier-and-gradientboostingregressor",
+      "referenceTitle": "scikit-learn：Gradient Boosting",
+      "referenceType": "官方文档与研究资料"
+    }
+  ]
+}

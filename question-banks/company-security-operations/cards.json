@@ -1,0 +1,78 @@
+{
+  "source": {
+    "id": "company-security-operations",
+    "title": "蚂蚁公开面经：安全告警研判",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+    "type": "公开面经合集",
+    "note": "合集收录个人面试复盘，可能含转载；公司、岗位及经历为分享者自述，答案另依据逐题列出的资料核验。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "secint-ops-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "告警研判",
+      "knowledgePoint": "响应状态与攻击结果",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Web 攻击请求收到 HTTP 200，能否仅凭状态码确认攻击成功？",
+      "answer": "不能；200 表示请求成功处理，是否发生预期的安全影响仍需结合响应内容和其他证据核实。",
+      "explanation": "状态码的语义取决于请求方法，不等于漏洞已被利用。",
+      "example": "检查返回内容和服务端记录，再判断是否发生未授权的数据访问。",
+      "tags": [
+        "响应状态与攻击结果",
+        "告警研判",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "referenceId": "company-ant",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+      "referenceTitle": "蚂蚁公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "http-semantics-ref",
+          "title": "RFC 9110：200 OK",
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html#name-200-ok",
+          "type": "互联网标准",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-ops-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "告警研判",
+      "knowledgePoint": "异常聚类与事件保留",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "大量异常 URL 被聚成同一类后，能否直接忽略整类事件？",
+      "answer": "不能；相似请求中仍可能包含造成实际影响的事件，应结合响应、资产和其他证据核查。",
+      "explanation": "聚类有助于减少重复分析，但相似不等于同一处置结论。",
+      "example": "一组扫描请求中，单独核查返回敏感数据的请求。",
+      "tags": [
+        "异常聚类与事件保留",
+        "告警研判",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "referenceId": "company-ant",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+      "referenceTitle": "蚂蚁公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "ids-nist-ref",
+          "title": "NIST SP 800-94：入侵检测与防护",
+          "url": "https://csrc.nist.gov/pubs/sp/800/94/final",
+          "type": "官方标准",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

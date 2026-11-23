@@ -1,0 +1,351 @@
+{
+  "source": {
+    "id": "python-concurrency-fundamentals",
+    "title": "Python 3.13：线程、进程与协程",
+    "url": "https://docs.python.org/3.13/library/threading.html",
+    "type": "官方技术文档",
+    "note": "逐题依据 Python 3.13 文档整理；快手公开面经中的 Python 并发为部分卡片的主题启发。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyconcurrent-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "线程与进程内存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 多线程与多进程在内存空间上有什么主要区别？",
+      "answer": "同一进程中的线程共享进程内存；不同进程通常有各自的地址空间。",
+      "explanation": "进程也可通过共享内存、队列等机制交换数据。",
+      "example": "多个线程访问同一进程内的缓存。",
+      "tags": [
+        "线程与进程内存",
+        "Python",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.python.org/3.13/library/threading.html",
+      "referenceTitle": "Python 3.13：threading",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手安全实习公开面经（合集收录，经历为分享者自述）；Python 并发主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x2f-%E5%BF%AB%E6%89%8B-%E5%AE%89%E5%85%A8%E5%AE%9E%E4%B9%A0%E7%94%9F",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "pyconcurrent-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "I/O与CPU并发选型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用 GIL 的 CPython 中，I/O 密集与纯 Python CPU 密集任务如何考虑线程和进程？",
+      "answer": "线程可以重叠 I/O 等待；CPU 密集任务可考虑多进程利用多个 CPU 核。",
+      "explanation": "进程启动和数据传输有额外开销，实际收益需要测量。",
+      "example": "并发等待多个网络请求。",
+      "tags": [
+        "I/O与CPU并发选型",
+        "Python",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.python.org/3.13/library/threading.html",
+      "referenceTitle": "Python 3.13：threading",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手安全实习公开面经（合集收录，经历为分享者自述）；Python 并发主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x2f-%E5%BF%AB%E6%89%8B-%E5%AE%89%E5%85%A8%E5%AE%9E%E4%B9%A0%E7%94%9F",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "pyconcurrent-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "GIL与竞态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用 GIL 的 CPython 能否保证多个线程的复合读改写操作安全？",
+      "answer": "不能；复合操作可能跨多个步骤执行，线程交错可能导致竞态。",
+      "explanation": "共享状态仍需适当同步，不能把 GIL 当作业务级互斥锁。",
+      "example": "多个线程同时更新共享计数时使用锁。",
+      "tags": [
+        "GIL与竞态",
+        "Python",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.python.org/3.13/faq/library.html#what-kinds-of-global-value-mutation-are-thread-safe",
+      "referenceTitle": "Python 3.13：线程安全 FAQ",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手安全实习公开面经（合集收录，经历为分享者自述）；Python 并发主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x2f-%E5%BF%AB%E6%89%8B-%E5%AE%89%E5%85%A8%E5%AE%9E%E4%B9%A0%E7%94%9F",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "pyconcurrent-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "可重入锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python threading.RLock 与普通 Lock 在重复获取方面有什么区别？",
+      "answer": "同一线程可多次获取 RLock，但必须对应释放相同次数；普通 Lock 不提供这种重入语义。",
+      "explanation": "最后一次释放后，其他等待线程才可能获得该 RLock。",
+      "example": "持锁方法调用另一个也要获取同一把锁的方法。",
+      "tags": [
+        "可重入锁",
+        "Python"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/threading.html#rlock-objects",
+      "referenceTitle": "Python 3.13：RLock objects",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "pyconcurrent-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "进程启动方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python multiprocessing 的 spawn 与 fork 启动方式有什么区别？",
+      "answer": "spawn 启动新的 Python 解释器进程；fork 基于父进程创建子进程并继承其资源。",
+      "explanation": "可用方式和默认值依平台与 Python 版本而异；在多线程进程中安全 fork 有困难。",
+      "example": "为跨平台程序显式检查进程启动方式。",
+      "tags": [
+        "进程启动方式",
+        "Python",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.python.org/3.13/library/multiprocessing.html#contexts-and-start-methods",
+      "referenceTitle": "Python 3.13：进程启动方式",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手安全实习公开面经（合集收录，经历为分享者自述）；Python 并发主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x2f-%E5%BF%AB%E6%89%8B-%E5%AE%89%E5%85%A8%E5%AE%9E%E4%B9%A0%E7%94%9F",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "pyconcurrent-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "进程池可序列化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 ProcessPoolExecutor 为什么需要可序列化的调用对象和结果？",
+      "answer": "工作进程需要通过进程间通信接收任务并返回结果，接口要求这些对象可被 pickle。",
+      "explanation": "工作进程还必须能导入 __main__ 模块，交互式解释器中的函数可能不适用。",
+      "example": "把可导入模块中的函数提交给进程池。",
+      "tags": [
+        "进程池可序列化",
+        "Python"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/concurrent.futures.html#processpoolexecutor",
+      "referenceTitle": "Python 3.13：ProcessPoolExecutor",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "pyconcurrent-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "进程队列传值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python multiprocessing.Queue 传递普通对象时，接收方拿到的是原进程中的同一对象吗？",
+      "answer": "不是；对象会被序列化，在接收进程中重建。",
+      "explanation": "修改接收方对象不会自动修改发送方的原对象。",
+      "example": "在进程间传递日志记录字典。",
+      "tags": [
+        "进程队列传值",
+        "Python"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/multiprocessing.html#exchanging-objects-between-processes",
+      "referenceTitle": "Python 3.13：进程间对象交换",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "pyconcurrent-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "协程对象调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 中调用 async def 函数后，协程会立即自动运行吗？",
+      "answer": "不会；调用会得到协程对象，需要等待它或将它调度为任务。",
+      "explanation": "asyncio.create_task 在运行中的事件循环里安排协程执行。",
+      "example": "创建协程对象后用 create_task 调度。",
+      "tags": [
+        "协程对象调度",
+        "Python",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html#coroutines",
+      "referenceTitle": "Python 3.13：Coroutines and Tasks",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手安全实习公开面经（合集收录，经历为分享者自述）；Python 并发主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x2f-%E5%BF%AB%E6%89%8B-%E5%AE%89%E5%85%A8%E5%AE%9E%E4%B9%A0%E7%94%9F",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "pyconcurrent-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "事件循环阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不宜在 asyncio 协程中直接执行长时间阻塞操作？",
+      "answer": "阻塞操作会占住事件循环线程，其他协程在此期间无法正常推进。",
+      "explanation": "可使用异步接口或 asyncio.to_thread 处理合适的阻塞 I/O；启用 GIL 的 CPython 中纯 Python CPU 工作仍受 GIL 限制。",
+      "example": "异步服务中避免直接等待阻塞式网络调用。",
+      "tags": [
+        "事件循环阻塞",
+        "Python",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html#running-in-threads",
+      "referenceTitle": "Python 3.13：Running in Threads",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手安全实习公开面经（合集收录，经历为分享者自述）；Python 并发主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x2f-%E5%BF%AB%E6%89%8B-%E5%AE%89%E5%85%A8%E5%AE%9E%E4%B9%A0%E7%94%9F",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "pyconcurrent-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "TaskGroup异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Python 3.13 中，TaskGroup 和默认 gather 遇到子任务非取消异常时如何处理其他任务？",
+      "answer": "TaskGroup 会取消组内剩余任务；默认 gather 传播首个异常，但不会因此自动取消其他任务。",
+      "explanation": "TaskGroup 会等待任务结束并按规则汇总异常。",
+      "example": "一个并发请求失败时检查其余请求是否继续。",
+      "tags": [
+        "TaskGroup异常",
+        "Python"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html#task-groups",
+      "referenceTitle": "Python 3.13：Task Groups and gather",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "pyconcurrent-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "协程取消请求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调用 asyncio.Task.cancel() 后，协程一定会立即停止吗？",
+      "answer": "不一定；它请求在后续事件循环机会向协程抛出 CancelledError，协程可以清理并可能抑制取消。",
+      "explanation": "通常应在 finally 中清理资源，并按文档传播取消。",
+      "example": "取消网络任务后释放连接。",
+      "tags": [
+        "协程取消请求",
+        "Python"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/asyncio-task.html#task-cancellation",
+      "referenceTitle": "Python 3.13：Task Cancellation",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "pyconcurrent-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "Future取消边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "concurrent.futures.Future.cancel() 能取消已经运行的任务吗？",
+      "answer": "不能；任务正在运行或已经完成时，cancel() 返回 False。",
+      "explanation": "取消尚未开始的任务与中断正在执行的代码是不同操作。",
+      "example": "取消还在等待工作线程的任务。",
+      "tags": [
+        "Future取消边界",
+        "Python"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/concurrent.futures.html#concurrent.futures.Future.cancel",
+      "referenceTitle": "Python 3.13：Future.cancel",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "pyconcurrent-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "线程池等待死锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么线程池中的任务等待同一线程池的另一个任务可能死锁？",
+      "answer": "如果工作线程都被等待任务占用，尚未运行的依赖任务可能无法获得线程。",
+      "explanation": "嵌套提交和同步等待时应检查线程池容量与依赖关系。",
+      "example": "单线程池的任务等待另一个排队任务。",
+      "tags": [
+        "线程池等待死锁",
+        "Python"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/concurrent.futures.html#threadpoolexecutor",
+      "referenceTitle": "Python 3.13：ThreadPoolExecutor",
+      "referenceType": "官方技术文档"
+    }
+  ]
+}

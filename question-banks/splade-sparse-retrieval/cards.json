@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "splade-sparse-retrieval",
+    "title": "SPLADE 原论文：学习稀疏表示与词汇扩展",
+    "url": "https://arxiv.org/abs/2107.05720v1",
+    "type": "论文及官方技术资料",
+    "note": "依据原论文或 NIST 官方资料整理；应用判断和示例为自行整理。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "splade-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "稀疏表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 原论文用什么表示查询和文档？",
+      "answer": "它学习基于词表维度的稀疏权重向量，用于第一阶段检索。",
+      "explanation": "大量词表维度的权重为零。",
+      "example": "在词表维度上表示查询和文档。",
+      "tags": [
+        "稀疏表示",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "词汇扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 的词汇扩展能为文档原文未出现的词分配权重吗？",
+      "answer": "可以；模型可激活与输入语义相关但未显式出现的词表项。",
+      "explanation": "扩展有助于缓解查询与文档用词不一致。",
+      "example": "文档描述“腿骨”时可能为相关词赋予权重。",
+      "tags": [
+        "词汇扩展",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "掩码语言模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 原论文如何利用预训练掩码语言模型构造词表权重？",
+      "answer": "它利用输入 token 的上下文表示，经掩码语言模型预测层得到对词表项的权重信号。",
+      "explanation": "模型可由预训练 MLM 初始化。",
+      "example": "对每个输入位置计算词表维度的响应。",
+      "tags": [
+        "掩码语言模型",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "得分方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 原论文如何计算查询与文档的匹配分数？",
+      "answer": "它对查询和文档的稀疏词表权重向量计算内积。",
+      "explanation": "只有两者对应维度同时非零的部分会贡献该乘积。",
+      "example": "累加共同激活词表项的权重乘积。",
+      "tags": [
+        "得分方式",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "倒排索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "学习到稀疏词表权重后，SPLADE 为什么可以使用倒排索引检索？",
+      "answer": "索引可按非零词表项记录对应文档及其权重，以便查找匹配的文档。",
+      "explanation": "稀疏性有助于减少需要处理的索引项。",
+      "example": "按激活词项找到候选文档。",
+      "tags": [
+        "倒排索引",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "非负权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 原论文对词表响应使用 ReLU 后，得到的词项权重有什么符号约束？",
+      "answer": "权重非负；负响应被 ReLU 压为零。",
+      "explanation": "后续对响应取对数饱和并汇总。",
+      "example": "负激活不会成为负的词项权重。",
+      "tags": [
+        "非负权重",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "对数饱和",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 为什么对词项响应加入对数饱和？",
+      "answer": "它减弱特别大的响应对匹配分数的支配，并在论文实验中有助于获得稀疏表示。",
+      "explanation": "对数饱和与显式稀疏正则化可以共同使用。",
+      "example": "较大的响应继续增加时，增幅逐渐减小。",
+      "tags": [
+        "对数饱和",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "排序与稀疏目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 原论文的训练目标如何兼顾检索质量和稀疏性？",
+      "answer": "它联合优化排序损失与查询、文档表示的稀疏正则化项。",
+      "explanation": "正则化权重会影响效果与检索成本的取舍。",
+      "example": "调整正则化强度并同时观察召回与索引开销。",
+      "tags": [
+        "排序与稀疏目标",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "FLOPS正则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 论文中的 FLOPS 正则为什么会抑制频繁激活的词表项？",
+      "answer": "它对批次内各词项平均权重的平方求和，使高平均激活受到更强惩罚。",
+      "explanation": "该项是检索计算量的可优化近似，而不是实际运行时间。",
+      "example": "某词在大量样本中都有高权重时增加惩罚。",
+      "tags": [
+        "FLOPS正则",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "查询文档正则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 原论文为什么可对查询和文档设置不同的稀疏正则化权重？",
+      "answer": "两者在检索流程中的成本不同，分别调节可控制查询和文档表示的稀疏程度。",
+      "explanation": "论文指出查询稀疏性对快速检索尤其重要。",
+      "example": "加大查询侧正则并检查效果变化。",
+      "tags": [
+        "查询文档正则",
+        "学习型稀疏检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    },
+    {
+      "id": "splade-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习型稀疏检索",
+      "knowledgePoint": "稀疏概率边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPLADE 生成的词表权重能直接解释为总和为 1 的词概率分布吗？",
+      "answer": "不能；其权重由非负响应变换和汇总得到，并未要求在词表上归一化为概率分布。",
+      "explanation": "权重主要用于计算检索匹配分数。",
+      "example": "不要把某个词权重直接当作文档属于该主题的概率。",
+      "tags": [
+        "稀疏概率边界",
+        "学习型稀疏检索"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2107.05720v1"
+    }
+  ]
+}

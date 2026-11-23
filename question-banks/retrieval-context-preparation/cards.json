@@ -1,0 +1,112 @@
+{
+  "source": {
+    "id": "retrieval-context-preparation",
+    "title": "LangChain 切块与 Sentence Transformers 检索",
+    "url": "https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter",
+    "type": "官方技术文档",
+    "note": "依据逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "ctxprep-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文档切块",
+      "knowledgePoint": "块间重叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "文档切块时设置相邻片段重叠有什么用途？",
+      "answer": "它可让边界附近的上下文同时出现在相邻片段中，降低信息被切断的风险。",
+      "explanation": "重叠也会增加索引和上下文中的重复内容，应按任务验证。",
+      "example": "把跨段边界的条件及结论放进相邻片段。",
+      "tags": [
+        "块间重叠",
+        "文档切块",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter"
+    },
+    {
+      "id": "ctxprep-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "文档切块",
+      "knowledgePoint": "中文分隔符",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "递归字符切分中文文档时为什么可以补充中文标点作为分隔符？",
+      "answer": "默认分隔符未必适合缺少空格词界的文本，加入中文标点有助于按自然边界切分。",
+      "explanation": "具体分隔策略仍需检查实际切块结果。",
+      "example": "优先在中文句号或逗号处分割长段落。",
+      "tags": [
+        "中文分隔符",
+        "文档切块",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/integrations/splitters/recursive_text_splitter"
+    },
+    {
+      "id": "ctxprep-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文档切块",
+      "knowledgePoint": "标题元数据",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "LangChain 的 MarkdownHeaderTextSplitter 默认如何处理被用于切分的标题？",
+      "answer": "默认从片段正文中移除这些标题，但将标题信息保存在对应元数据中。",
+      "explanation": "可以通过 strip_headers=False 保留标题文本；后续检索时要确保元数据未丢失。",
+      "example": "片段正文没有标题时仍从 metadata 读取所属章节。",
+      "tags": [
+        "标题元数据",
+        "文档切块",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/integrations/splitters/markdown_header_metadata_splitter"
+    },
+    {
+      "id": "ctxprep-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义检索",
+      "knowledgePoint": "对称与非对称检索",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "语义检索中的对称任务与非对称任务有什么区别？",
+      "answer": "对称任务的查询和候选通常类型、长度及信息量相近；非对称任务常用短问题检索较长的答案段落。",
+      "explanation": "不同任务适合的嵌入模型或编码方式可能不同。",
+      "example": "相似问题检索与问题查找文档段落属于不同设置。",
+      "tags": [
+        "对称与非对称检索",
+        "语义检索",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://sbert.net/examples/sentence_transformer/applications/semantic-search/README.html"
+    },
+    {
+      "id": "ctxprep-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义检索",
+      "knowledgePoint": "查询与文档编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sentence Transformers 为什么提供 encode_query 和 encode_document？",
+      "answer": "它们可按查询或文档角色应用模型指定的提示或路由，使编码方式符合非对称检索任务。",
+      "explanation": "如果模型没有相应提示或路由，二者可能给出与通用 encode 相同的表示。",
+      "example": "分别编码用户问题和安全公告片段。",
+      "tags": [
+        "查询与文档编码",
+        "语义检索",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://sbert.net/examples/sentence_transformer/applications/semantic-search/README.html"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "diversevul-code-dataset",
+    "title": "DiverseVul 原论文 v2：漏洞代码与评估",
+    "url": "https://arxiv.org/abs/2304.00409v2",
+    "type": "论文、官方文档与源码",
+    "note": "根据逐题标注的论文、版本化文档或源码自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "diversevul-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "DiverseVul 漏洞代码数据",
+      "knowledgePoint": "数据来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DiverseVul 原论文主要从什么资料收集候选漏洞修复提交？",
+      "answer": "从安全问题跟踪网站收集问题内容和关联的 Git 提交，再获取对应项目代码。",
+      "explanation": "论文使用的来源与仅从 NVD 修复引用出发的采集方式不同。",
+      "example": "从安全问题记录关联到项目提交。",
+      "tags": [
+        "DiverseVul 漏洞代码数据",
+        "数据来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.00409v2"
+    },
+    {
+      "id": "diversevul-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "DiverseVul 漏洞代码数据",
+      "knowledgePoint": "函数标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DiverseVul 原论文怎样给修复提交前后和未变更函数分配初始标签？",
+      "answer": "将变更函数修复前版本标为有漏洞，修复后版本及相关文件中未变更函数标为无漏洞。",
+      "explanation": "这些是自动标注的近似标签，不保证函数确实安全或含漏洞。",
+      "example": "同一个变更函数的前后版本获得不同标签。",
+      "tags": [
+        "DiverseVul 漏洞代码数据",
+        "函数标签"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.00409v2"
+    },
+    {
+      "id": "diversevul-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DiverseVul 漏洞代码数据",
+      "knowledgePoint": "原始哈希去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DiverseVul 原论文按原始函数代码的 MD5 去重有什么局限？",
+      "answer": "它可去除相同代码，但格式或少量内容改变的近似克隆可能不被识别。",
+      "explanation": "论文未在哈希前规范化代码，也提醒近似克隆可能污染测试集。",
+      "example": "仅改变空格的复制函数可能得到不同哈希。",
+      "tags": [
+        "DiverseVul 漏洞代码数据",
+        "原始哈希去重"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.00409v2"
+    },
+    {
+      "id": "diversevul-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DiverseVul 漏洞代码数据",
+      "knowledgePoint": "标签冲突顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DiverseVul 论文按 MD5 去重时为何先处理有漏洞函数？",
+      "answer": "相同哈希第一次出现后，后续重复函数会被跳过，因此先处理有漏洞集合会优先保留其条目。",
+      "explanation": "这描述论文的数据构建顺序，不等于解决全部标签冲突。",
+      "example": "相同函数文本同时出现在两类候选中。",
+      "tags": [
+        "DiverseVul 漏洞代码数据",
+        "标签冲突顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.00409v2"
+    },
+    {
+      "id": "diversevul-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DiverseVul 漏洞代码数据",
+      "knowledgePoint": "标注审计范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DiverseVul 论文怎样估计自动漏洞标签的准确性？",
+      "answer": "从标为有漏洞的函数中随机抽样并人工检查代码、修复提交和漏洞描述等证据。",
+      "explanation": "论文对 DiverseVul 抽查 50 个函数；抽样结果不能直接视为全部标签的精确准确率。",
+      "example": "结合提交前后代码核实一个漏洞标签。",
+      "tags": [
+        "DiverseVul 漏洞代码数据",
+        "标注审计范围"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.00409v2"
+    },
+    {
+      "id": "diversevul-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DiverseVul 漏洞代码数据",
+      "knowledgePoint": "跨函数漏洞标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DiverseVul 论文为何把跨多个函数的漏洞列为函数级标签误差？",
+      "answer": "论文将正确标签限定为漏洞存在于该函数且不跨多个函数；跨函数成因不满足这一定义。",
+      "explanation": "这是论文人工复核采用的口径，不表示相关函数完全无关。",
+      "example": "漏洞需要结合调用方和被调用函数才能成立。",
+      "tags": [
+        "DiverseVul 漏洞代码数据",
+        "跨函数漏洞标签"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.00409v2"
+    },
+    {
+      "id": "diversevul-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DiverseVul 漏洞代码数据",
+      "knowledgePoint": "项目外评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DiverseVul 论文怎样评估模型对未见项目的泛化？",
+      "answer": "按项目留出测试集，从其余项目构建训练集，再在留出的项目上测试。",
+      "explanation": "论文在该设置下观察到性能下降，结果受数据与实验方案限制。",
+      "example": "训练和测试使用不同的项目集合。",
+      "tags": [
+        "DiverseVul 漏洞代码数据",
+        "项目外评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.00409v2"
+    },
+    {
+      "id": "diversevul-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DiverseVul 漏洞代码数据",
+      "knowledgePoint": "按CWE的假阳性率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DiverseVul 论文按 CWE 比较模型时，为何各类的 FPR 相同？",
+      "answer": "它对各 CWE 使用相同的全部无漏洞函数作为负样本，FPR 由同一模型在这组负样本上的预测计算。",
+      "explanation": "不同 CWE 的正样本不同，所以对应的真阳性率可以不同。",
+      "example": "分别查看 CWE-125 和 CWE-416 的 TPR 时共用负样本。",
+      "tags": [
+        "DiverseVul 漏洞代码数据",
+        "按CWE的假阳性率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.00409v2"
+    }
+  ]
+}

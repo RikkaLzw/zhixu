@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "ocsf-security-event-schema",
+    "title": "OCSF 1.2.0：安全事件标准化字段",
+    "url": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/dictionary.json",
+    "type": "论文、标准与技术文档",
+    "note": "逐题依据固定版本论文或规范自行整理，示例为自编；适用条件见卡片。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "ocsfbase-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 的安全事件模式主要解决什么数据问题？",
+      "answer": "为不同来源的安全事件提供统一的分类、字段和结构描述。",
+      "explanation": "字段映射后的质量仍依赖原始数据和转换过程。",
+      "example": "把不同日志源映射为统一的认证事件结构。",
+      "tags": [
+        "安全事件标准化",
+        "目标"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/events/base_event.json"
+    },
+    {
+      "id": "ocsfbase-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "类别与类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 的 category_uid 与 class_uid 分别标识什么？",
+      "answer": "category_uid 标识事件类别；class_uid 标识更具体的事件类。",
+      "explanation": "类定义事件可使用的属性。",
+      "example": "认证活动属于某个类别下的具体事件类。",
+      "tags": [
+        "安全事件标准化",
+        "类别与类"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/dictionary.json"
+    },
+    {
+      "id": "ocsfbase-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "活动标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 的 activity_id 表示什么？",
+      "answer": "表示触发事件的活动的标准化标识。",
+      "explanation": "各事件类可以定义自己的活动枚举。",
+      "example": "认证事件可区分登录和注销活动。",
+      "tags": [
+        "安全事件标准化",
+        "活动标识"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/dictionary.json"
+    },
+    {
+      "id": "ocsfbase-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "类型标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 的 type_uid 如何由事件类和活动标识计算？",
+      "answer": "type_uid = class_uid × 100 + activity_id。",
+      "explanation": "计算应使用同一事件的标准化标识。",
+      "example": "类标识为 3002、活动标识为 1 时类型标识为 300201。",
+      "tags": [
+        "安全事件标准化",
+        "类型标识"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/dictionary.json"
+    },
+    {
+      "id": "ocsfbase-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "未知与其他",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 中常见枚举的 Unknown 与 Other 有什么区别？",
+      "answer": "Unknown 表示值未知；Other 表示已知来源值未映射到标准枚举。",
+      "explanation": "对于 Other，应结合相应文本字段查看来源值。",
+      "example": "状态不可知与来源状态不在标准枚举中应区分。",
+      "tags": [
+        "安全事件标准化",
+        "未知与其他"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/dictionary.json"
+    },
+    {
+      "id": "ocsfbase-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "事件时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 的 time 与 metadata.logged_time 分别描述什么？",
+      "answer": "time 表示标准化的事件发生时间或发现创建时间；logged_time 表示记录系统收集并记录事件的时间。",
+      "explanation": "二者可能不同，分析时间延迟时应区分。",
+      "example": "事件发生后几秒才被日志系统记录。",
+      "tags": [
+        "安全事件标准化",
+        "事件时间"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/dictionary.json"
+    },
+    {
+      "id": "ocsfbase-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "处理时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 的 metadata.processed_time 记录哪类时间？",
+      "answer": "记录事件被处理的时间，例如 ETL 处理时间。",
+      "explanation": "它不是事件实际发生时间的同义词。",
+      "example": "日志标准化任务处理记录时写入处理时间。",
+      "tags": [
+        "安全事件标准化",
+        "处理时间"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/dictionary.json"
+    },
+    {
+      "id": "ocsfbase-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "原始字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 的 raw_data 与 unmapped 在用途上有什么区别？",
+      "answer": "raw_data 可保留收到的原始事件数据；unmapped 保存没有映射到事件模式的来源属性。",
+      "explanation": "两者都是可选信息，是否保留取决于采集和治理策略。",
+      "example": "标准化后保留无法映射的厂商字段。",
+      "tags": [
+        "安全事件标准化",
+        "原始字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/dictionary.json"
+    },
+    {
+      "id": "ocsfbase-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "模式版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 的 metadata.version 用于记录什么？",
+      "answer": "记录该事件使用的 OCSF 模式版本。",
+      "explanation": "消费者可据此判断可用字段和版本语义。",
+      "example": "接收方根据 1.2.0 解释事件字段。",
+      "tags": [
+        "安全事件标准化",
+        "模式版本"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/objects/metadata.json"
+    },
+    {
+      "id": "ocsfbase-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "认证对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 Authentication 事件中的 user 字段表示什么？",
+      "answer": "表示被认证的主体，例如用户、角色或账号。",
+      "explanation": "该事件还可用 actor 描述发起认证的行为主体。",
+      "example": "登录请求中记录被尝试认证的账号。",
+      "tags": [
+        "安全事件标准化",
+        "认证对象"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/events/iam/authentication.json"
+    },
+    {
+      "id": "ocsfbase-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "MFA字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 Authentication 事件的 is_mfa 字段表示什么？",
+      "answer": "它表示认证过程中是否使用了多因素认证。",
+      "explanation": "字段缺失时不能直接当作 false。",
+      "example": "有明确遥测表明使用多种因素时记录 true。",
+      "tags": [
+        "安全事件标准化",
+        "MFA字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/events/iam/authentication.json"
+    },
+    {
+      "id": "ocsfbase-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全事件标准化",
+      "knowledgePoint": "事件结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OCSF 1.2.0 的 status_id 为 Unknown、Success 或 Failure 时分别表示什么？",
+      "answer": "分别表示结果未知、成功或失败。",
+      "explanation": "应避免把未知状态计入成功或失败，除非另有明确证据。",
+      "example": "认证结果缺失时保留未知状态。",
+      "tags": [
+        "安全事件标准化",
+        "事件结果"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ocsf/ocsf-schema/blob/v1.2.0/dictionary.json"
+    }
+  ]
+}

@@ -1,0 +1,316 @@
+{
+  "source": {
+    "id": "os-fundamentals",
+    "title": "操作系统基础：OSTEP 与 Linux 手册",
+    "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/intro.pdf",
+    "type": "教材与官方技术文档",
+    "note": "依教材或官方文档自行整理，具体实现和版本条件见卡片。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "osbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "程序与进程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "程序与进程有什么基本区别？",
+      "answer": "程序是可执行的代码及相关数据；进程是程序的一次运行实例及其状态。",
+      "explanation": "同一个程序可以有多个进程实例。",
+      "example": "两个终端分别启动同一程序。",
+      "tags": [
+        "程序与进程",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/intro.pdf"
+    },
+    {
+      "id": "osbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "系统调用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "系统调用的主要作用是什么？",
+      "answer": "它提供受控接口，让用户程序请求操作系统内核提供服务。",
+      "explanation": "调用通常涉及从用户态进入内核态。",
+      "example": "程序通过系统调用读取文件。",
+      "tags": [
+        "系统调用",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/intro.pdf"
+    },
+    {
+      "id": "osbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "用户态与内核态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用户态和内核态在权限上有什么主要区别？",
+      "answer": "内核态可执行特权操作；用户态程序的操作受到硬件与操作系统限制。",
+      "explanation": "权限边界有助于隔离进程和保护系统资源。",
+      "example": "用户程序通过受控接口请求 I/O。",
+      "tags": [
+        "用户态与内核态",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/intro.pdf"
+    },
+    {
+      "id": "osbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "进程切换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "操作系统进行进程上下文切换时通常要保存和恢复什么？",
+      "answer": "需要保存当前执行状态并恢复另一进程的状态，例如寄存器和程序计数器。",
+      "explanation": "切换会带来额外开销。",
+      "example": "CPU 从一个可运行进程转去执行另一个进程。",
+      "tags": [
+        "进程切换",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-mechanisms.pdf"
+    },
+    {
+      "id": "osbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "时间片",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单核 CPU 怎样让多个可运行进程交替取得执行机会？",
+      "answer": "操作系统可通过时间片和调度，在不同进程之间切换。",
+      "explanation": "并发交替执行不等于单核上同时执行多条进程指令。",
+      "example": "多个程序轮流使用一个 CPU。",
+      "tags": [
+        "时间片",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/intro.pdf"
+    },
+    {
+      "id": "osbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "就绪与阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "进程的就绪状态与阻塞状态有什么区别？",
+      "answer": "就绪进程具备运行条件但在等待 CPU；阻塞进程在等待某个事件或资源。",
+      "explanation": "事件完成后阻塞进程可能重新变为就绪。",
+      "example": "等待磁盘读取的进程通常不能直接继续执行。",
+      "tags": [
+        "就绪与阻塞",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-sched.pdf"
+    },
+    {
+      "id": "osbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "虚拟地址空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "进程的虚拟地址空间主要提供什么抽象？",
+      "answer": "它为进程提供自己的地址视图，虚拟地址通过系统机制映射到实际存储。",
+      "explanation": "不同进程的相同虚拟地址不必对应同一物理位置。",
+      "example": "两个进程都使用同一个虚拟地址。",
+      "tags": [
+        "虚拟地址空间",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-intro.pdf"
+    },
+    {
+      "id": "osbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "分页",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "操作系统中的分页通常怎样组织虚拟内存？",
+      "answer": "它把虚拟地址空间划分为固定大小的页，并映射到物理页框等存储。",
+      "explanation": "映射及访问权限由相关数据结构管理。",
+      "example": "按页管理进程的一段内存。",
+      "tags": [
+        "分页",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf"
+    },
+    {
+      "id": "osbase-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "页表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "页表的主要作用是什么？",
+      "answer": "它保存虚拟页到物理页框等映射及相关状态和权限信息。",
+      "explanation": "具体页表结构和条目字段依硬件与系统实现而异。",
+      "example": "地址转换时查询虚拟页对应的位置。",
+      "tags": [
+        "页表",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf"
+    },
+    {
+      "id": "osbase-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "TLB",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLB 在虚拟地址转换中承担什么作用？",
+      "answer": "它缓存近期的地址转换结果，减少重复查询页表的开销。",
+      "explanation": "TLB 未命中时仍需进一步查找地址映射。",
+      "example": "频繁访问同一页可复用已缓存的转换。",
+      "tags": [
+        "TLB",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf"
+    },
+    {
+      "id": "osbase-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "缺页异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "发生缺页异常是否一定意味着程序访问非法地址？",
+      "answer": "不一定；有效虚拟页尚未驻留时也可能触发缺页，系统可载入或建立映射后继续。",
+      "explanation": "无效地址或权限错误则可能导致访问失败。",
+      "example": "首次访问按需分配的页面。",
+      "tags": [
+        "缺页异常",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys.pdf"
+    },
+    {
+      "id": "osbase-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "fork返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中 fork 成功后，在父进程和子进程中分别返回什么？",
+      "answer": "父进程得到子进程 PID，子进程得到 0。",
+      "explanation": "失败时父进程收到错误返回值且不会创建子进程。",
+      "example": "根据返回值区分父子进程执行分支。",
+      "tags": [
+        "fork返回值",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/fork.2.html"
+    },
+    {
+      "id": "osbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "fork执行顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "fork 成功后，父进程一定先于子进程运行吗？",
+      "answer": "不一定；两者的执行顺序由调度决定。",
+      "explanation": "需要顺序保证时应使用等待或其他同步机制。",
+      "example": "父子进程打印的先后顺序可能不同。",
+      "tags": [
+        "fork执行顺序",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-api.pdf"
+    },
+    {
+      "id": "osbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "写时复制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 fork 为什么通常不需要立即复制所有物理内存页？",
+      "answer": "它使用写时复制，父子进程初始可共享页面，在需要写入时再处理私有副本。",
+      "explanation": "这不表示父子进程始终共享所有可写内存。",
+      "example": "创建子进程后再修改一页私有数据。",
+      "tags": [
+        "写时复制",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/fork.2.html"
+    },
+    {
+      "id": "osbase-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "exec与进程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "成功调用 execve 后，是否会额外创建一个新进程？",
+      "answer": "不会；它用新程序映像替换当前进程的程序，进程标识不因此改变。",
+      "explanation": "成功的 execve 不会返回到原程序的调用位置。",
+      "example": "子进程 fork 后通过 execve 运行另一个程序。",
+      "tags": [
+        "exec与进程",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/execve.2.html"
+    },
+    {
+      "id": "osbase-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "僵尸进程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中的僵尸进程通常是什么？",
+      "answer": "它是已经终止、但父进程尚未读取其终止状态的子进程记录。",
+      "explanation": "父进程通过 wait 等接口收取状态后可释放该记录。",
+      "example": "子进程退出后等待父进程回收。",
+      "tags": [
+        "僵尸进程",
+        "操作系统基础"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/waitpid.2.html"
+    }
+  ]
+}

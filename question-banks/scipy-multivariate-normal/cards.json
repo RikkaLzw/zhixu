@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "scipy-multivariate-normal",
+    "title": "SciPy 1.15.3：多元正态分布",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.multivariate_normal.html",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "mvnscipy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多元正态分布接口",
+      "knowledgePoint": "分布参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 的 multivariate_normal 用什么参数指定多元正态分布的位置和相关结构？",
+      "answer": "使用 mean 指定均值向量，使用 cov 指定协方差。",
+      "explanation": "均值向量的长度对应随机向量的维度。",
+      "example": "二维分布可用两个均值和一个 2×2 协方差矩阵表示。",
+      "tags": [
+        "多元正态分布接口",
+        "分布参数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.multivariate_normal.html"
+    },
+    {
+      "id": "mvnscipy-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多元正态分布接口",
+      "knowledgePoint": "协方差简写",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 multivariate_normal 分别怎样解释标量和一维数组形式的 cov？",
+      "answer": "标量表示该值乘单位矩阵；一维数组表示协方差矩阵的对角线。",
+      "explanation": "这两种简写都将非对角协方差设为零。",
+      "example": "二维 cov=2 表示对角线均为 2；cov=[1,4] 表示两维方差分别为 1 和 4。",
+      "tags": [
+        "多元正态分布接口",
+        "协方差简写"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.multivariate_normal.html"
+    },
+    {
+      "id": "mvnscipy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多元正态分布接口",
+      "knowledgePoint": "奇异协方差",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 使用普通数组形式的奇异协方差矩阵时，需要怎样配置 multivariate_normal？",
+      "answer": "需设置 allow_singular=True；默认 False 要求矩阵正定。",
+      "explanation": "启用后使用针对退化多元正态的扩展处理。",
+      "example": "完全相关导致协方差矩阵奇异时，默认设置可能报错。",
+      "tags": [
+        "多元正态分布接口",
+        "奇异协方差"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.multivariate_normal.html"
+    },
+    {
+      "id": "mvnscipy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多元正态分布接口",
+      "knowledgePoint": "Covariance对象",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 multivariate_normal 使用 Covariance 对象作为 cov 时，allow_singular 参数如何处理？",
+      "answer": "文档说明该参数被忽略。",
+      "explanation": "Covariance 对象自身负责相应矩阵表示。",
+      "example": "使用 CovViaPrecision 时不应假定 allow_singular 会覆盖对象行为。",
+      "tags": [
+        "多元正态分布接口",
+        "Covariance对象"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.multivariate_normal.html"
+    },
+    {
+      "id": "mvnscipy-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "多元正态分布接口",
+      "knowledgePoint": "矩阵对称性",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 对数组形式 cov 是否自动核验输入矩阵完全对称？",
+      "answer": "文档说明不检查对称性，只使用下三角部分。",
+      "explanation": "调用前应自行确认协方差矩阵的构造符合预期。",
+      "example": "上、下三角不一致时不能假定两部分都会参与计算。",
+      "tags": [
+        "多元正态分布接口",
+        "矩阵对称性"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.multivariate_normal.html"
+    },
+    {
+      "id": "mvnscipy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多元正态分布接口",
+      "knowledgePoint": "累积分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 多元正态分布的 cdf(x) 对随机向量计算什么概率？",
+      "answer": "计算所有维度同时不超过各自 x 分量的联合概率。",
+      "explanation": "除非有适当独立性条件，不能随意把它拆成各维概率相乘。",
+      "example": "二维时对应 P(X₁≤x₁, X₂≤x₂)。",
+      "tags": [
+        "多元正态分布接口",
+        "累积分布"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.multivariate_normal.html"
+    },
+    {
+      "id": "mvnscipy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多元正态分布接口",
+      "knowledgePoint": "对数密度",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "SciPy multivariate_normal 的 logpdf 与 pdf 分别返回什么？",
+      "answer": "pdf 返回密度，logpdf 返回密度的自然对数。",
+      "explanation": "在极小密度计算中，直接使用对数形式通常更便于数值处理。",
+      "example": "计算多个独立观测的对数似然时可累加 logpdf。",
+      "tags": [
+        "多元正态分布接口",
+        "对数密度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.multivariate_normal.html"
+    }
+  ]
+}

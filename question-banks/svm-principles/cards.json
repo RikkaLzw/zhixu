@@ -1,0 +1,241 @@
+{
+  "source": {
+    "id": "svm-principles",
+    "title": "scikit-learn：支持向量分类与回归",
+    "url": "https://scikit-learn.org/stable/modules/svm.html",
+    "type": "官方技术文档",
+    "note": "逐题依据官方文档整理；腾讯云鼎复盘提及 SVM 与线性回归比较及非线性情况，延伸题明确标注。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "svmdeep-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "分类与回归",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二分类线性 SVM 和普通线性回归的主要目标有什么不同？",
+      "answer": "线性 SVM 分类器学习区分类别的决策边界；普通线性回归拟合连续数值目标。",
+      "explanation": "SVM 也可以用于回归，需区分支持向量分类和支持向量回归。",
+      "example": "分别预测告警类别和连续的处理时长。",
+      "tags": [
+        "分类与回归",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html#mathematical-formulation",
+      "referenceTitle": "scikit-learn：Support Vector Machines",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室公开面经（合集收录，经历为分享者自述）",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        },
+        {
+          "id": "sklearn-linear-regression-ref",
+          "title": "scikit-learn：Ordinary Least Squares",
+          "url": "https://scikit-learn.org/stable/modules/linear_model.html#ordinary-least-squares",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "svmdeep-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "硬间隔与软间隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "硬间隔与软间隔支持向量分类器怎样处理不能完全分开的样本？",
+      "answer": "硬间隔要求训练样本满足分离间隔；软间隔允许部分违反间隔，并对其施加惩罚。",
+      "explanation": "软间隔中的惩罚强度由模型参数控制。",
+      "example": "当类别有重叠时使用允许违反间隔的模型。",
+      "tags": [
+        "硬间隔与软间隔",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html#mathematical-formulation",
+      "referenceTitle": "scikit-learn：SVC formulation",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室公开面经（合集收录，经历为分享者自述）；SVM 主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "svmdeep-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "核技巧",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "核 SVM 中的核技巧有什么作用？",
+      "answer": "通过核函数计算特征空间中的内积，而不必显式构造该空间中的每个坐标。",
+      "explanation": "合适的非线性核可在原始输入空间形成非线性决策边界。",
+      "example": "使用 RBF 核处理不能用直线分开的样本。",
+      "tags": [
+        "核技巧",
+        "机器学习",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html#mathematical-formulation",
+      "referenceTitle": "scikit-learn：SVC formulation",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室公开面经（合集收录，经历为分享者自述）；SVM 主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "svmdeep-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "决策分数与概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SVM 的 decision_function 输出能直接当作类别概率吗？",
+      "answer": "不能；它是用于区分或排序样本的决策分数，概率估计需要额外校准。",
+      "explanation": "决策分数的大小不一定落在 0 到 1 之间。",
+      "example": "将分类分数用于排序，并单独评估概率校准。",
+      "tags": [
+        "决策分数与概率",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html#scores-and-probabilities",
+      "referenceTitle": "scikit-learn：Scores and probabilities",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "svmdeep-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "SVC概率接口版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 scikit-learn 1.9 中，SVC 的 probability 参数有什么版本变化？",
+      "answer": "该参数已弃用；文档建议使用 CalibratedClassifierCV 包装 SVC 来估计概率。",
+      "explanation": "文档计划在 1.11 移除该参数；升级时应检查实际版本。",
+      "example": "迁移已有依赖 predict_proba 的 SVC 流程。",
+      "tags": [
+        "SVC概率接口版本",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html",
+      "referenceTitle": "scikit-learn 1.9.1：SVC",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "svmdeep-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "多分类训练策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn SVC 设置 decision_function_shape=\"ovr\" 会把内部多分类训练改为一对其余吗？",
+      "answer": "不会；SVC 内部仍使用一对一训练，ovr 选项改变返回决策分数的组织形式。",
+      "explanation": "该参数对二分类忽略；LinearSVC 的多分类策略不同。",
+      "example": "三个类别时训练类别对，再转换输出分数。",
+      "tags": [
+        "多分类训练策略",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html",
+      "referenceTitle": "scikit-learn 1.9.1：SVC",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "svmdeep-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "类别权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn SVC 的 class_weight 如何影响不同类别的惩罚？",
+      "answer": "它按类别权重调整对应类别的 C，使不同类别的违例受到不同惩罚。",
+      "explanation": "balanced 模式根据训练样本中的类别频率设置权重。",
+      "example": "提高少数类别的训练权重。",
+      "tags": [
+        "类别权重",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html#unbalanced-problems",
+      "referenceTitle": "scikit-learn：Unbalanced problems",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "svmdeep-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "SVR容忍区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "epsilon-SVR 中的 epsilon 控制什么？",
+      "answer": "它规定不计入 epsilon 不敏感损失的绝对预测误差阈值。",
+      "explanation": "区间之外的误差会影响优化目标；epsilon 必须非负。",
+      "example": "允许小幅回归误差不计入 epsilon 不敏感损失。",
+      "tags": [
+        "SVR容忍区间",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVR.html",
+      "referenceTitle": "scikit-learn：SVR",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "svmdeep-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "核SVM扩展性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "训练样本很大时，为什么要评估核 SVC 的计算和存储成本？",
+      "answer": "核 SVC 使用样本间的核计算；libsvm 的拟合时间随样本量增长至少呈平方级。",
+      "explanation": "线性问题可比较 LinearSVC 等实现，效果与训练方式仍需实测。",
+      "example": "在海量告警样本上先比较规模和资源预算。",
+      "tags": [
+        "核SVM扩展性",
+        "机器学习"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/svm.html#complexity",
+      "referenceTitle": "scikit-learn：SVM Complexity",
+      "referenceType": "官方技术文档"
+    }
+  ]
+}

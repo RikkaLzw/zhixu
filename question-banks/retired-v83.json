@@ -1,0 +1,110 @@
+{
+  "version": 83,
+  "note": "拆分漏洞评估与验证组合题前的快照，用于保护个人编辑、来源和学习记录。",
+  "cards": [
+    {
+      "id": "ai4sec-023",
+      "category": "vulnerabilities",
+      "question": "如何评估大模型生成的漏洞分析？",
+      "answer": "检查漏洞类型、位置、触发条件和证据，并用可复现的测试或人工审计确认。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-023"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-030",
+      "category": "vulnerabilities",
+      "question": "代码模型发现疑似漏洞后应如何验证？",
+      "answer": "结合完整代码上下文进行人工审计，并在授权的隔离环境中构造可复现的测试。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "knowledgeArea": "13",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-030"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "llmv-004",
+      "category": "vulnerabilities",
+      "question": "大模型漏洞分析输出应包含哪些可复核内容？",
+      "answer": "应包含可疑位置、相关数据流、触发条件、结论和不确定之处。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "level": "实践",
+      "tags": [
+        "输出结构",
+        "证据"
+      ],
+      "explanation": "这些内容方便安全人员核实，而不只是接收一个漏洞标签。",
+      "example": "指出不可信输入到危险调用的路径，并列出尚未确认的校验条件。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmv-010",
+      "category": "vulnerabilities",
+      "question": "如何衡量大模型辅助漏洞审计的实际价值？",
+      "answer": "同时衡量有效漏洞发现、误报、审计时间、模型成本和人工复核工作量。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "level": "实践",
+      "tags": [
+        "审计效率",
+        "评估"
+      ],
+      "explanation": "离线准确率不能完整代表工具是否帮助安全团队。",
+      "example": "比较人工审计和辅助审计在相同代码集上的有效发现与耗时。",
+      "sources": [
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "bloom-filter-foundations",
+    "title": "Redis 官方文档：布隆过滤器",
+    "url": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，具体条件见各卡。在线文档以 2026-11-21 查看内容为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "bloomcs-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "成员查询结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准布隆过滤器回答“可能存在”和“一定不存在”分别意味着什么？",
+      "answer": "可能存在的结果可能是假阳性；在正确维护且使用相同编码和哈希规则时，一定不存在表示该元素未被插入。",
+      "explanation": "它适合先排除不存在的候选，肯定存在仍需精确数据源确认。",
+      "example": "过滤器返回可能存在后，再查数据库确认用户名。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "成员查询结果"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    },
+    {
+      "id": "bloomcs-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "空间与精度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "布隆过滤器为什么通常比保存完整元素的精确集合更省空间？",
+      "answer": "它用位数组及哈希映射表示成员信息，不保存每个元素的完整值。",
+      "explanation": "以允许一定概率的假阳性换取空间效率。",
+      "example": "大量 URL 只用于近似成员检查。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "空间与精度"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    },
+    {
+      "id": "bloomcs-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "位数组插入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准布隆过滤器插入一个元素时通常如何修改位数组？",
+      "answer": "计算该元素的多个哈希位置，并将对应位设为 1。",
+      "explanation": "不同元素可以映射到同一位置，位数组无法区分这些贡献。",
+      "example": "某元素的两个位置为 2、5，插入后这两位为 1。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "位数组插入"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    },
+    {
+      "id": "bloomcs-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "位数组查询",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "某布隆过滤器查询得到位置 2、5，且对应位分别为 1 和 0，应如何判断？",
+      "answer": "该元素一定未被插入到正确维护的这个过滤器中。",
+      "explanation": "插入过的元素会把它的全部哈希位置设为 1；前提是没有误清位、丢失更新或改变编码。",
+      "example": "只要有一个对应位为 0 即可判定不在过滤器中。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "位数组查询"
+      ],
+      "evidence": "application",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    },
+    {
+      "id": "bloomcs-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "误判原因",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么标准布隆过滤器可能把未插入的元素判断为可能存在？",
+      "answer": "该元素的各个哈希位置可能被其他已插入元素共同置为 1。",
+      "explanation": "这是哈希位置重叠造成的假阳性。",
+      "example": "两个已有元素分别把待查询元素所需的位设为 1。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "误判原因"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    },
+    {
+      "id": "bloomcs-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "删除限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么标准位数组布隆过滤器不能简单把待删除元素的哈希位置清零？",
+      "answer": "这些位可能也由其他元素使用，清零会使其他已插入元素出现假阴性。",
+      "explanation": "需要删除时可考虑专门支持删除的数据结构，并核对其条件。",
+      "example": "两个元素共享某个位，删除一个时不能直接清除共享位。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "删除限制"
+      ],
+      "evidence": "application",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    },
+    {
+      "id": "bloomcs-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "数据库唯一性",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "只用布隆过滤器判断用户名是否可注册，能否替代数据库唯一约束？",
+      "answer": "不能；可能存在是假阳性，并发请求也可能在检查后同时尝试写入。",
+      "explanation": "最终仍需由可靠的数据源及其唯一性约束处理。",
+      "example": "两个请求同时检查并注册同一个用户名。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "数据库唯一性"
+      ],
+      "evidence": "application",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    },
+    {
+      "id": "bloomcs-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "Redis 成员查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 的 BF.EXISTS 返回 1 与 0 分别表示什么？",
+      "answer": "1 表示元素可能存在；0 表示元素在该过滤器中不存在。",
+      "explanation": "实际应用还须确保所有目标数据都已正确同步到过滤器。",
+      "example": "BF.EXISTS filter alice 返回 1 后可查精确存储。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "Redis 成员查询"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    },
+    {
+      "id": "bloomcs-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "误判率与容量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis BF.RESERVE 的 error_rate 和 capacity 分别用于指定什么？",
+      "answer": "分别指定期望的假阳性率和预计插入元素数量。",
+      "explanation": "容量估计过大会浪费空间；可扩展过滤器低估容量时可能增加子过滤器及查询成本。",
+      "example": "BF.RESERVE names 0.001 1000000。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "误判率与容量"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    },
+    {
+      "id": "bloomcs-010",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "布隆过滤器与集合查询",
+      "knowledgePoint": "内存估算",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "按 Redis 文档给出的近似值，1% 目标假阳性率、容量 10000 项的布隆过滤器位数组约需要多少位？",
+      "answer": "约 95850 位，约 11.7 KiB。",
+      "explanation": "这是 9.585 位／项的理论估算，不包括数据结构及实现开销。",
+      "example": "10000×9.585=95850 位，再除以 8 和 1024。",
+      "tags": [
+        "布隆过滤器与集合查询",
+        "内存估算"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/probabilistic/bloom-filter/"
+    }
+  ]
+}

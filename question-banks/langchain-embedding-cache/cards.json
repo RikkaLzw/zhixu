@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "langchain-embedding-cache",
+    "title": "LangChain 0.3.27 源码：嵌入缓存",
+    "url": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain%3D%3D0.3.27/libs/langchain/langchain/embeddings/cache.py",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "lccache-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 嵌入缓存",
+      "knowledgePoint": "基本作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 的 CacheBackedEmbeddings 如何处理文档嵌入缓存？",
+      "answer": "先查找文本对应的向量，仅对未命中的文本调用底层嵌入器并写入缓存。",
+      "explanation": "缓存适合避免对相同内容重复计算，但结果受模型与预处理版本影响。",
+      "example": "再次嵌入未变化文档时复用向量。",
+      "tags": [
+        "LangChain 嵌入缓存",
+        "基本作用"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain%3D%3D0.3.27/libs/langchain/langchain/embeddings/cache.py"
+    },
+    {
+      "id": "lccache-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 嵌入缓存",
+      "knowledgePoint": "查询默认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 的 from_bytes_store 默认缓存查询嵌入吗？",
+      "answer": "默认不缓存；query_embedding_cache=False。",
+      "explanation": "可明确启用或传入单独的查询缓存。",
+      "example": "文档缓存命中不意味着查询默认也被缓存。",
+      "tags": [
+        "LangChain 嵌入缓存",
+        "查询默认"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain%3D%3D0.3.27/libs/langchain/langchain/embeddings/cache.py"
+    },
+    {
+      "id": "lccache-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 嵌入缓存",
+      "knowledgePoint": "共享查询缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 设置 query_embedding_cache=True 时，查询与文档使用什么缓存？",
+      "answer": "使用同一个缓存与相同键编码；相同文本可能命中文档向量。",
+      "explanation": "若查询和文档嵌入方法不同，混用同一文本键可能返回不适合查询的向量。",
+      "example": "需要区分两种向量时使用独立缓存。",
+      "tags": [
+        "LangChain 嵌入缓存",
+        "共享查询缓存"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain%3D%3D0.3.27/libs/langchain/langchain/embeddings/cache.py"
+    },
+    {
+      "id": "lccache-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 嵌入缓存",
+      "knowledgePoint": "命名空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 嵌入缓存的 namespace 常用于什么？",
+      "answer": "为缓存键增加命名空间，区分不同模型或配置的缓存。",
+      "explanation": "模型版本、维度或预处理变化后应评估是否更换命名空间。",
+      "example": "两个嵌入模型不共享同一命名空间。",
+      "tags": [
+        "LangChain 嵌入缓存",
+        "命名空间"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain%3D%3D0.3.27/libs/langchain/langchain/embeddings/cache.py"
+    },
+    {
+      "id": "lccache-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 嵌入缓存",
+      "knowledgePoint": "批内重复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 的 embed_documents 接收同批多个尚未缓存的相同文本，会自动去重后只调用一次底层嵌入吗？",
+      "answer": "不会；实现按未命中的位置收集文本，同一批的重复项可能多次提交给底层嵌入器。",
+      "explanation": "不同调用中已有缓存时则可命中。",
+      "example": "首次请求 [\"a\", \"a\"] 时底层可能接收两个 a。",
+      "tags": [
+        "LangChain 嵌入缓存",
+        "批内重复"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain%3D%3D0.3.27/libs/langchain/langchain/embeddings/cache.py"
+    },
+    {
+      "id": "lccache-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 嵌入缓存",
+      "knowledgePoint": "批次大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 的 CacheBackedEmbeddings 中 batch_size 控制什么？",
+      "answer": "控制每次缓存更新前送给底层嵌入器的一批未命中文档数量。",
+      "explanation": "它不改变已经命中的向量。",
+      "example": "对大量缓存缺失文本分批计算。",
+      "tags": [
+        "LangChain 嵌入缓存",
+        "批次大小"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain%3D%3D0.3.27/libs/langchain/langchain/embeddings/cache.py"
+    },
+    {
+      "id": "lccache-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 嵌入缓存",
+      "knowledgePoint": "自定义键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 的 from_bytes_store 使用自定义 callable key_encoder 时能同时设置非空 namespace 吗？",
+      "answer": "不能；该实现会抛出 ValueError。",
+      "explanation": "如需命名空间，应由自定义编码函数自行加入前缀。",
+      "example": "自定义键编码器负责模型版本隔离。",
+      "tags": [
+        "LangChain 嵌入缓存",
+        "自定义键"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain%3D%3D0.3.27/libs/langchain/langchain/embeddings/cache.py"
+    },
+    {
+      "id": "lccache-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 嵌入缓存",
+      "knowledgePoint": "编码变更",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 嵌入缓存更换键编码方式后，为什么需要考虑新缓存或迁移？",
+      "answer": "相同文本可能对应不同的新旧键，已有缓存未必能命中，也可能留下重复条目。",
+      "explanation": "应结合具体存储和编码规则进行迁移。",
+      "example": "升级哈希算法时评估旧缓存。",
+      "tags": [
+        "LangChain 嵌入缓存",
+        "编码变更"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain%3D%3D0.3.27/libs/langchain/langchain/embeddings/cache.py"
+    }
+  ]
+}

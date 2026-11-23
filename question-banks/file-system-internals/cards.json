@@ -1,0 +1,373 @@
+{
+  "source": {
+    "id": "file-system-internals",
+    "title": "OSTEP 与 Linux 手册：文件系统和持久化",
+    "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-implementation.pdf",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材、标准或固定版本文档自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "fsintern-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "inode元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在常见类 Unix 文件系统中，inode 主要保存什么信息？",
+      "answer": "它保存文件类型、权限、大小以及数据块位置等元数据。",
+      "explanation": "具体字段和布局取决于文件系统实现。",
+      "example": "通过 inode 查找文件内容和访问权限。",
+      "tags": [
+        "inode元数据",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-implementation.pdf"
+    },
+    {
+      "id": "fsintern-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "目录项名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 OSTEP 的简化 Unix 文件系统中，目录项怎样关联文件名与文件？",
+      "answer": "目录保存名称与 inode 编号的对应关系。",
+      "explanation": "名称来自目录项，并非文件对象只允许拥有一个名称。",
+      "example": "目录中的 report 对应某个 inode 编号。",
+      "tags": [
+        "目录项名称",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-implementation.pdf"
+    },
+    {
+      "id": "fsintern-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "inode标识范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 inode 编号可以单独作为整台机器上文件的唯一标识吗？",
+      "answer": "不能；区分同时存在的文件通常需要结合文件系统的设备标识和 inode 编号。",
+      "explanation": "不同文件系统可以使用相同的 inode 编号，删除后的编号也可能被复用。",
+      "example": "比较 stat 返回的 st_dev 与 st_ino。",
+      "tags": [
+        "inode标识范围",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inode.7.html"
+    },
+    {
+      "id": "fsintern-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "超级块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "类 Unix 文件系统的超级块通常保存什么？",
+      "answer": "它记录文件系统整体布局和状态等元数据，例如块数量及 inode 区域位置。",
+      "explanation": "具体字段由文件系统实现决定。",
+      "example": "挂载时读取超级块以了解文件系统布局。",
+      "tags": [
+        "超级块",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-implementation.pdf"
+    },
+    {
+      "id": "fsintern-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "空闲空间位图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "文件系统为什么需要跟踪空闲数据块和空闲 inode？",
+      "answer": "分配新文件或扩展文件时需要找到尚未分配的资源。",
+      "explanation": "位图是常见方案之一，并非唯一实现。",
+      "example": "在位图中查找可用块并将其标为已分配。",
+      "tags": [
+        "空闲空间位图",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-implementation.pdf"
+    },
+    {
+      "id": "fsintern-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "直接与间接块指针",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "传统 inode 的直接指针与间接指针在定位文件数据时有什么区别？",
+      "answer": "直接指针指向数据块；间接指针指向保存数据块地址的索引块。",
+      "explanation": "实际文件系统也可能使用 extent 等其他布局。",
+      "example": "小文件用直接指针，较大文件还需要间接块。",
+      "tags": [
+        "直接与间接块指针",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-implementation.pdf"
+    },
+    {
+      "id": "fsintern-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "stat与lstat",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 stat 与 lstat 遇到符号链接时有什么区别？",
+      "answer": "stat 跟随链接取得目标信息；lstat 返回符号链接本身的信息。",
+      "explanation": "路径前缀中的符号链接仍按路径解析规则处理。",
+      "example": "用 lstat 检查一个悬空符号链接。",
+      "tags": [
+        "stat与lstat",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/stat.2.html"
+    },
+    {
+      "id": "fsintern-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "mtime与ctime",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 文件的 mtime 和 ctime 分别记录什么变化？",
+      "answer": "mtime 记录文件内容的最后修改时间；ctime 记录 inode 状态的最后变更时间。",
+      "explanation": "ctime 不是文件创建时间，权限等元数据改变也可能更新 ctime。",
+      "example": "chmod 可能改变 ctime，却不一定改变 mtime。",
+      "tags": [
+        "mtime与ctime",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inode.7.html"
+    },
+    {
+      "id": "fsintern-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "atime含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux inode 的 atime 通常表示什么？",
+      "answer": "它表示文件数据最近一次访问的时间。",
+      "explanation": "挂载选项等机制可能使 atime 不在每次读取后更新。",
+      "example": "系统可能使用 relatime 减少访问时间写入。",
+      "tags": [
+        "atime含义",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inode.7.html"
+    },
+    {
+      "id": "fsintern-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "稀疏文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "读取支持稀疏文件的文件系统中尚未写入的文件空洞，通常得到什么？",
+      "answer": "空洞中的字节读取为零；这类区域未必需要占用相同大小的物理数据块。",
+      "explanation": "文件系统对空洞的分配与报告方式可能不同。",
+      "example": "先 seek 到较远位置再写入少量数据。",
+      "tags": [
+        "稀疏文件",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/lseek.2.html"
+    },
+    {
+      "id": "fsintern-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "文件数据同步",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 程序成功调用 write 后，为什么还不能直接认为数据已持久化？",
+      "answer": "write 成功不保证数据已经落到持久存储；需要根据要求同步并检查后续错误。",
+      "explanation": "具体持久性还受文件系统和存储设备保证影响。",
+      "example": "写入关键文件后检查 fsync 的返回结果。",
+      "tags": [
+        "文件数据同步",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/write.2.html"
+    },
+    {
+      "id": "fsintern-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "fsync目录项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中对新建文件调用 fsync 后，如何进一步确保包含该名称的目录项也被同步？",
+      "answer": "还需要对包含该文件的目录的文件描述符调用 fsync，并检查调用是否成功。",
+      "explanation": "文件内容和目录项的持久化是不同步骤，保障还依赖文件系统和存储设备。",
+      "example": "创建文件并同步文件后，再同步其父目录。",
+      "tags": [
+        "fsync目录项",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/fsync.2.html"
+    },
+    {
+      "id": "fsintern-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "fdatasync差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 fdatasync 与 fsync 对文件元数据的处理有什么区别？",
+      "answer": "fdatasync 不必刷新读取数据所不需要的元数据；fsync 还会刷新关联元数据。",
+      "explanation": "例如文件大小变化对后续正确读取通常是必要元数据。",
+      "example": "更新数据后按持久化需求选择同步接口。",
+      "tags": [
+        "fdatasync差异",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/fsync.2.html"
+    },
+    {
+      "id": "fsintern-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "rename原子替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux rename 成功替换同一挂载文件系统中的现有目标时，对路径可见性有什么原子性？",
+      "answer": "目标路径会被原子替换，不会有目标路径不存在的中间时刻。",
+      "explanation": "这不等于崩溃后目录项已持久化。",
+      "example": "用同一文件系统中的临时文件替换配置文件。",
+      "tags": [
+        "rename原子替换",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/rename.2.html"
+    },
+    {
+      "id": "fsintern-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "rename跨挂载点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux rename 跨不同挂载点时可能返回什么错误？",
+      "answer": "返回 EXDEV；即使同一文件系统被挂载到多个位置，也不能跨不同挂载点 rename。",
+      "explanation": "跨设备移动通常需要复制再删除等额外步骤。",
+      "example": "从一个挂载点重命名到另一个挂载点。",
+      "tags": [
+        "rename跨挂载点",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/rename.2.html"
+    },
+    {
+      "id": "fsintern-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "日志文件系统目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "文件系统日志（journaling）主要解决什么问题？",
+      "answer": "它记录有序的更新信息，以便崩溃后恢复一致的文件系统状态。",
+      "explanation": "日志并不消除所有硬件故障和应用级数据丢失。",
+      "example": "系统重启后回放已提交的日志事务。",
+      "tags": [
+        "日志文件系统目的",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-journaling.pdf"
+    },
+    {
+      "id": "fsintern-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "日志提交记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "写前日志中的提交记录为什么重要？",
+      "answer": "恢复时可据此区分已经完整提交的事务和不完整的事务。",
+      "explanation": "未完整提交的事务不应像完整事务一样被回放。",
+      "example": "崩溃前日志内容写入但提交记录尚未完成。",
+      "tags": [
+        "日志提交记录",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-journaling.pdf"
+    },
+    {
+      "id": "fsintern-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "日志检查点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "日志文件系统中的 checkpoint 通常做什么？",
+      "answer": "将已提交日志中的更新写入文件系统的最终位置，使日志空间之后可以重用。",
+      "explanation": "提交日志与更新最终位置是不同阶段。",
+      "example": "将已提交的 inode 和位图更新写回原位置。",
+      "tags": [
+        "日志检查点",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-journaling.pdf"
+    },
+    {
+      "id": "fsintern-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文件系统与持久化",
+      "knowledgePoint": "元数据日志限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "仅记录元数据的日志是否保证崩溃后文件数据一定是最新内容？",
+      "answer": "不保证；它主要帮助恢复元数据一致性，文件数据是否持久化取决于写入和同步策略。",
+      "explanation": "不同日志模式有不同的数据排序与持久化行为。",
+      "example": "新文件名恢复后，仍需考虑内容写入是否完成。",
+      "tags": [
+        "元数据日志限制",
+        "文件系统与持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/file-journaling.pdf"
+    }
+  ]
+}

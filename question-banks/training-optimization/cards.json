@@ -1,0 +1,342 @@
+{
+  "source": {
+    "id": "training-optimization",
+    "title": "深度学习训练优化与公开面经",
+    "url": "https://docs.pytorch.org/docs/2.15/amp.html",
+    "type": "教材、论文与官方技术文档",
+    "note": "根据逐题引用的资料自行整理；面经引用为合集转载的个人复盘，公司和经历未经企业确认。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "opt-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "激活与归一化",
+      "knowledgePoint": "Sigmoid函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigmoid 函数的表达式和输出范围是什么？",
+      "answer": "σ(x)=1/(1+e⁻ˣ)；对有限实数输入，输出位于 0 与 1 之间。",
+      "explanation": "它常用于二分类输出，但输出是否校准为概率还需另行评估。",
+      "example": "输入 0 时输出 0.5。",
+      "tags": [
+        "Sigmoid函数",
+        "激活与归一化",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-kuaishou",
+      "referenceTitle": "快手公开面经（合集转载，经历为分享者自述）",
+      "supportingReferences": [
+        {
+          "id": "technical-ref",
+          "title": "动手学深度学习：Sigmoid Function",
+          "url": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source"
+        }
+      ],
+      "referenceType": "公开面经合集"
+    },
+    {
+      "id": "opt-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "激活与归一化",
+      "knowledgePoint": "RMSNorm与LayerNorm",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RMSNorm 与 LayerNorm 在归一化时的主要区别是什么？",
+      "answer": "RMSNorm 按输入的均方根缩放而不减均值；LayerNorm 会先减均值，再按标准差缩放。",
+      "explanation": "实际实现通常带可学习缩放参数和数值稳定项。",
+      "example": "对同一隐藏向量，两者处理均值的方式不同。",
+      "tags": [
+        "RMSNorm与LayerNorm",
+        "激活与归一化",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900307%E3%80%91%E8%85%BE%E8%AE%AFPCG%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-tencent",
+      "referenceTitle": "腾讯公开面经（合集转载，经历为分享者自述）",
+      "supportingReferences": [
+        {
+          "id": "technical-ref",
+          "title": "Root Mean Square Layer Normalization",
+          "url": "https://arxiv.org/abs/1910.07467",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ],
+      "referenceType": "公开面经合集"
+    },
+    {
+      "id": "opt-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失函数",
+      "knowledgePoint": "BCEWithLogitsLoss",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 BCEWithLogitsLoss 为什么通常比先 sigmoid 再计算 BCELoss 更稳定？",
+      "answer": "它将 sigmoid 和二元交叉熵合并计算，利用 log-sum-exp 技巧改善数值稳定性。",
+      "explanation": "输入应是 logits，而不是已经经过 sigmoid 的概率。",
+      "example": "二分类线性输出直接送入 BCEWithLogitsLoss。",
+      "tags": [
+        "BCEWithLogitsLoss",
+        "损失函数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.BCEWithLogitsLoss.html"
+    },
+    {
+      "id": "opt-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失函数",
+      "knowledgePoint": "正类权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.15 的 BCEWithLogitsLoss 中 pos_weight 影响哪部分损失？",
+      "answer": "它对二元交叉熵中正类项加权，可调整正类错误的训练代价。",
+      "explanation": "它不能保证部署时的精确率或召回率达到某个值。",
+      "example": "训练数据的正例稀少时可评估不同正类权重。",
+      "tags": [
+        "正类权重",
+        "损失函数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.BCEWithLogitsLoss.html"
+    },
+    {
+      "id": "opt-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失函数",
+      "knowledgePoint": "交叉熵忽略目标",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 2.15 的 CrossEntropyLoss 中 ignore_index 用来做什么？",
+      "answer": "当目标是类别索引时，它使指定目标值不参与损失及输入梯度计算。",
+      "explanation": "忽略项通常用于填充位置；该选项不适用于概率形式的目标。",
+      "example": "序列标签中的填充值使用 ignore_index 排除。",
+      "tags": [
+        "交叉熵忽略目标",
+        "损失函数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.CrossEntropyLoss.html"
+    },
+    {
+      "id": "opt-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失函数",
+      "knowledgePoint": "标签平滑",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.15 的 CrossEntropyLoss 标签平滑如何改变目标？",
+      "answer": "它将原始目标与均匀类别分布按指定比例混合。",
+      "explanation": "平滑系数为 0 表示不做标签平滑。",
+      "example": "多分类训练中适度降低目标类别的独占权重。",
+      "tags": [
+        "标签平滑",
+        "损失函数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.CrossEntropyLoss.html"
+    },
+    {
+      "id": "opt-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练稳定性",
+      "knowledgePoint": "梯度范数裁剪",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 的 clip_grad_norm_ 按什么范围计算梯度范数？",
+      "answer": "它将给定参数的梯度视作拼接后的整体来计算总范数，并原地裁剪。",
+      "explanation": "最大范数是整体阈值，并非分别给每个参数设置阈值。",
+      "example": "对模型全部参数调用一次全局梯度裁剪。",
+      "tags": [
+        "梯度范数裁剪",
+        "训练稳定性"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.utils.clip_grad_norm_.html"
+    },
+    {
+      "id": "opt-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "混合精度",
+      "knowledgePoint": "autocast",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 混合精度训练中的 autocast 做什么？",
+      "answer": "它在指定区域为合适的运算自动选择计算精度。",
+      "explanation": "具体运算和设备决定使用的精度；不是所有运算都会转换为低精度。",
+      "example": "在 autocast 区域内执行前向计算与损失计算。",
+      "tags": [
+        "autocast",
+        "混合精度",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/amp.html",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900311%E3%80%91%E8%85%BE%E8%AE%AFWXG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "opt-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "混合精度",
+      "knowledgePoint": "梯度缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 float16 训练中，梯度缩放主要缓解什么问题？",
+      "answer": "先放大损失再反向传播，有助于减少小梯度因浮点下溢而变为零。",
+      "explanation": "更新前需要还原梯度；GradScaler 可管理缩放和非有限梯度检查。",
+      "example": "用 GradScaler 缩放损失后调用 backward。",
+      "tags": [
+        "梯度缩放",
+        "混合精度",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/amp.html",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900311%E3%80%91%E8%85%BE%E8%AE%AFWXG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "opt-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "混合精度",
+      "knowledgePoint": "缩放梯度裁剪",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 使用 GradScaler 时，为什么梯度裁剪前要先 unscale？",
+      "answer": "先还原梯度，才能按预期的真实梯度范数应用裁剪阈值。",
+      "explanation": "同一优化器每次 step 前最多手动 unscale 一次，并应在梯度累积完成后执行。",
+      "example": "scaler.unscale_(optimizer) 后再调用 clip_grad_norm_。",
+      "tags": [
+        "缩放梯度裁剪",
+        "混合精度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/notes/amp_examples.html"
+    },
+    {
+      "id": "opt-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "优化器",
+      "knowledgePoint": "AdamW权重衰减",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 AdamW 对权重衰减有什么特点？",
+      "answer": "它使用解耦的权重衰减，衰减项不会累积到动量或方差估计中。",
+      "explanation": "这不同于把 L2 惩罚直接混入 Adam 的梯度。",
+      "example": "用 AdamW 并通过 weight_decay 设置衰减系数。",
+      "tags": [
+        "AdamW权重衰减",
+        "优化器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.optim.AdamW.html"
+    },
+    {
+      "id": "opt-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "优化器",
+      "knowledgePoint": "参数组",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch 优化器的参数组有什么用途？",
+      "answer": "它允许对不同参数集合设置不同的学习率或权重衰减等选项。",
+      "explanation": "未在参数组中覆盖的选项会使用优化器默认值。",
+      "example": "为预训练层和新分类头设置不同学习率。",
+      "tags": [
+        "参数组",
+        "优化器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/optim.html"
+    },
+    {
+      "id": "opt-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "混合精度",
+      "knowledgePoint": "非有限梯度",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch GradScaler.step 发现非有限梯度时如何处理优化器更新？",
+      "answer": "它跳过该优化器的参数更新，避免用 inf 或 NaN 梯度更新参数。",
+      "explanation": "随后调用 scaler.update() 以调整后续缩放因子。",
+      "example": "一次反向传播产生 NaN 梯度时跳过该步。",
+      "tags": [
+        "非有限梯度",
+        "混合精度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/notes/amp_examples.html"
+    },
+    {
+      "id": "opt-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练与归一化",
+      "knowledgePoint": "BatchNorm评估统计",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch BatchNorm2d 默认在评估模式下使用哪一组统计量？",
+      "answer": "默认使用训练过程中维护的运行均值和运行方差。",
+      "explanation": "默认 track_running_stats=True；设为 False 时，训练和评估都使用当前批次的统计量。",
+      "example": "对模型调用 eval() 后，默认 BatchNorm 不再用当前批次更新运行统计量。",
+      "tags": [
+        "BatchNorm评估统计",
+        "训练与归一化",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-58",
+      "referenceTitle": "58同城公开面经（2020届，作者自述）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "technical-ref",
+          "title": "PyTorch：BatchNorm2d",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.BatchNorm2d.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

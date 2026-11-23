@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "nginx-load-balancing",
+    "title": "Nginx 官方文档：HTTP 负载均衡",
+    "url": "https://nginx.org/en/docs/http/load_balancing.html",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，具体条件见各卡。在线文档以 2026-11-21 查看内容为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "ngxlb-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "负载均衡作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Web 服务为什么常在多个后端实例前放置负载均衡器？",
+      "answer": "把请求分发到多个实例，以利用多台机器并提高系统承载与可用性。",
+      "explanation": "整体效果仍取决于实例健康、共享依赖和路由策略。",
+      "example": "入口接收请求并转发给多台应用服务器。",
+      "tags": [
+        "服务端负载均衡",
+        "负载均衡作用"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/load_balancing.html"
+    },
+    {
+      "id": "ngxlb-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "上游组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Nginx 的 upstream 与 proxy_pass 在 HTTP 转发中分别起什么作用？",
+      "answer": "upstream 定义后端服务器组；proxy_pass 可将请求转发给该组。",
+      "explanation": "这里讨论 HTTP 反向代理配置。",
+      "example": "upstream api 定义后端，location 中使用 proxy_pass http://api。",
+      "tags": [
+        "服务端负载均衡",
+        "上游组"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/ngx_http_upstream_module.html"
+    },
+    {
+      "id": "ngxlb-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "默认调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Nginx upstream 未指定调度方法时，默认采用什么分发方法？",
+      "answer": "加权轮询；没有单独配置权重时各服务器默认权重相同。",
+      "explanation": "服务器失败状态等也会影响实际分发。",
+      "example": "三个健康且等权的后端轮流处理请求。",
+      "tags": [
+        "服务端负载均衡",
+        "默认调度"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/ngx_http_upstream_module.html"
+    },
+    {
+      "id": "ngxlb-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "权重计算",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "Nginx 的三个健康后端权重分别为 3、1、1，按加权轮询且请求均匀处理时，5 个请求通常如何分配？",
+      "answer": "第一个后端约处理 3 个，另外两个各处理 1 个。",
+      "explanation": "这是官方示例的理想分配；失败或不同请求处理时间会影响实际结果。",
+      "example": "总权重 3+1+1=5。",
+      "tags": [
+        "服务端负载均衡",
+        "权重计算"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/load_balancing.html"
+    },
+    {
+      "id": "ngxlb-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "最少连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Nginx least_conn 主要依据什么选择后端？",
+      "answer": "选择当前活跃连接较少的后端，并考虑配置的权重。",
+      "explanation": "活跃连接数是负载的近似信号，并不直接反映每个请求的计算量。",
+      "example": "请求耗时差异大时，避免持续向连接繁忙的实例分发。",
+      "tags": [
+        "服务端负载均衡",
+        "最少连接"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/ngx_http_upstream_module.html"
+    },
+    {
+      "id": "ngxlb-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "会话粘性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 Nginx ip_hash 的主要目的是什么？",
+      "answer": "根据客户端 IP 选择后端，使同一 IP 的请求通常落到同一后端。",
+      "explanation": "后端不可用时可转向其他后端；客户端 IP 改变或多个用户共用 IP 都可能影响效果。",
+      "example": "同一客户端的多次访问通常复用同一实例。",
+      "tags": [
+        "服务端负载均衡",
+        "会话粘性"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/load_balancing.html"
+    },
+    {
+      "id": "ngxlb-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "轮询与会话状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用轮询分发时，为什么只把用户会话存在单台后端内存可能导致登录状态异常？",
+      "answer": "同一用户的后续请求可能到另一台后端，后者没有之前的会话数据。",
+      "explanation": "可根据需求考虑共享会话存储或合适的会话粘性方案。",
+      "example": "登录和下一次请求分别落到不同实例。",
+      "tags": [
+        "服务端负载均衡",
+        "轮询与会话状态"
+      ],
+      "evidence": "application",
+      "reference": "https://nginx.org/en/docs/http/load_balancing.html"
+    },
+    {
+      "id": "ngxlb-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "被动健康检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Nginx 文档所述的被动健康检查如何发现后端故障？",
+      "answer": "根据实际转发请求中的通信失败，将达到条件的后端暂时视为不可用。",
+      "explanation": "它依赖真实流量观察，并非定时发送独立探测请求。",
+      "example": "某后端在 fail_timeout 时间内达到失败次数阈值。",
+      "tags": [
+        "服务端负载均衡",
+        "被动健康检查"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/load_balancing.html"
+    },
+    {
+      "id": "ngxlb-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "故障参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Nginx upstream 的 max_fails 与 fail_timeout 如何配合？",
+      "answer": "在 fail_timeout 时间内失败次数达到 max_fails 后，该服务器会被暂时视为不可用；fail_timeout 也决定该状态的持续时间。",
+      "explanation": "失败判定受代理配置影响；只有一台服务器时这两个参数会被忽略。",
+      "example": "配置 max_fails=3、fail_timeout=30s。",
+      "tags": [
+        "服务端负载均衡",
+        "故障参数"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/ngx_http_upstream_module.html"
+    },
+    {
+      "id": "ngxlb-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "服务端负载均衡",
+      "knowledgePoint": "一致性哈希选项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Nginx upstream 的 hash key consistent 选项在后端增删时有什么目的？",
+      "answer": "使用一致性哈希，减少因服务器增删而重新映射的键。",
+      "explanation": "具体映射仍依赖配置及服务器集合；它不等于复制数据或保证应用状态一致。",
+      "example": "缓存服务器扩容时尽量保留原有键的路由。",
+      "tags": [
+        "服务端负载均衡",
+        "一致性哈希选项"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/ngx_http_upstream_module.html"
+    }
+  ]
+}

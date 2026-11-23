@@ -1,0 +1,135 @@
+{
+  "source": {
+    "id": "security-window-features",
+    "title": "pandas：安全事件时间窗口",
+    "url": "https://pandas.pydata.org/docs/user_guide/window.html",
+    "type": "官方技术文档",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "winfeat-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间窗口特征",
+      "knowledgePoint": "固定条数与固定时长窗口",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "pandas rolling 的整数窗口与时间偏移窗口各限制什么？",
+      "answer": "整数窗口按观测条数确定范围；时间偏移窗口按时长确定范围，条数可变化。",
+      "explanation": "日志间隔不均匀时，两者包含的事件可能明显不同。",
+      "example": "比较最近 100 条记录与最近 10 分钟的记录。",
+      "tags": [
+        "固定条数与固定时长窗口",
+        "时间窗口特征",
+        "pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/window.html"
+    },
+    {
+      "id": "winfeat-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间窗口特征",
+      "knowledgePoint": "滚动窗口最少观测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas rolling 的 min_periods 控制什么？",
+      "answer": "它规定窗口中计算结果所需的最少非缺失观测数；不足时结果通常为 NaN。",
+      "explanation": "整数窗口与时间窗口的默认 min_periods 不同。",
+      "example": "只在至少有三条可用事件时输出窗口均值。",
+      "tags": [
+        "滚动窗口最少观测",
+        "时间窗口特征",
+        "pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/window.html"
+    },
+    {
+      "id": "winfeat-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间窗口特征",
+      "knowledgePoint": "时间窗口排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 按时间偏移计算 rolling 窗口时，对时间索引有什么要求？",
+      "answer": "对应的时间索引必须单调。",
+      "explanation": "处理乱序日志时，应先检查并按任务需要排序。",
+      "example": "按事件时间排序后再计算最近五分钟的统计量。",
+      "tags": [
+        "时间窗口排序",
+        "时间窗口特征",
+        "pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/window.html"
+    },
+    {
+      "id": "winfeat-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间窗口特征",
+      "knowledgePoint": "窗口端点闭合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas rolling 的 closed 参数影响什么？",
+      "answer": "它决定窗口区间的左、右端点是否包含在计算中。",
+      "explanation": "需要仅使用当前时刻之前的记录时，可考虑排除右端点并核对时间顺序。",
+      "example": "选择 closed=\"left\" 排除当前时间边界。",
+      "tags": [
+        "窗口端点闭合",
+        "时间窗口特征",
+        "pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/window.html"
+    },
+    {
+      "id": "winfeat-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间窗口特征",
+      "knowledgePoint": "居中窗口与未来信息",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么不能直接把居中滚动窗口作为实时检测在当前时刻的历史特征？",
+      "answer": "居中窗口可能包含当前时刻之后的观测，实时预测时这些信息尚不可得。",
+      "explanation": "离线分析可以使用未来数据，但应明确与实时任务的边界。",
+      "example": "回测时检查窗口标签之后是否用了未来日志。",
+      "tags": [
+        "居中窗口与未来信息",
+        "时间窗口特征",
+        "pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/window.html"
+    },
+    {
+      "id": "winfeat-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间窗口特征",
+      "knowledgePoint": "窗口聚合连续行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么安全检测会在时间窗口内聚合多个事件？",
+      "answer": "窗口统计能呈现一段时间内的行为频率或变化，帮助识别单条记录不明显的连续活动。",
+      "explanation": "窗口大小应与要检测的行为节奏和响应时机匹配。",
+      "example": "按主机统计一段时间内访问过的目标端口数。",
+      "tags": [
+        "窗口聚合连续行为",
+        "时间窗口特征",
+        "安全检测"
+      ],
+      "evidence": "application",
+      "reference": "https://attack.mitre.org/techniques/T1046/",
+      "referenceId": "mitre-service-ref",
+      "referenceTitle": "MITRE ATT&CK：服务发现的窗口关联",
+      "referenceType": "官方知识库"
+    }
+  ]
+}

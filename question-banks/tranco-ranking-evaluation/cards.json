@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "tranco-ranking-evaluation",
+    "title": "Tranco：域名排名与安全评估",
+    "url": "https://tranco-list.eu/",
+    "type": "官方资料与技术文档",
+    "note": "依据逐题引用的官方资料自行整理；示例为自编，在线资料查看于 2026-11-21。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "trancoeval-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "域名榜单与评估",
+      "knowledgePoint": "榜单用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tranco 榜单主要对什么对象进行排名？",
+      "answer": "它提供流行网站域名的排名，服务于互联网测量和安全研究。",
+      "explanation": "排名是受数据来源和构建方法影响的观测。",
+      "example": "记录实验使用的流行域名列表。",
+      "tags": [
+        "域名榜单与评估",
+        "榜单用途"
+      ],
+      "evidence": "source",
+      "reference": "https://tranco-list.eu/"
+    },
+    {
+      "id": "trancoeval-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "域名榜单与评估",
+      "knowledgePoint": "版本固定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "研究中为什么应记录 Tranco 榜单的永久 ID 或具体日期？",
+      "answer": "榜单会定期更新；固定版本有助于重现当时的域名集合及排名。",
+      "explanation": "仅写“使用最新版”无法精确还原过去使用的列表。",
+      "example": "在实验记录中保存列表 ID 和下载日期。",
+      "tags": [
+        "域名榜单与评估",
+        "版本固定"
+      ],
+      "evidence": "source",
+      "reference": "https://tranco-list.eu/"
+    },
+    {
+      "id": "trancoeval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "域名榜单与评估",
+      "knowledgePoint": "流行与良性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "可以把 Tranco 榜单中的域名直接当作经过安全验证的良性标签吗？",
+      "answer": "不能；流行度排名不等于逐个域名或其所有页面的安全判定。",
+      "explanation": "热门域名也可能包含被滥用的资源。",
+      "example": "将排名作为参考特征，而不是唯一真值。",
+      "tags": [
+        "域名榜单与评估",
+        "流行与良性"
+      ],
+      "evidence": "application",
+      "reference": "https://tranco-list.eu/"
+    },
+    {
+      "id": "trancoeval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "域名榜单与评估",
+      "knowledgePoint": "负样本分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "仅用热门域名作为良性负样本，可能给安全模型评估带来什么偏差？",
+      "answer": "负样本可能集中于高流行度网站，不能代表真实业务中全部正常域名。",
+      "explanation": "应结合目标环境的域名分布和其他可靠来源评估。",
+      "example": "另外检查长尾正常域名的误报。",
+      "tags": [
+        "域名榜单与评估",
+        "负样本分布"
+      ],
+      "evidence": "application",
+      "reference": "https://tranco-list.eu/"
+    }
+  ]
+}

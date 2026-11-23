@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "clang-sanitizer-coverage",
+    "title": "Clang 20.1：SanitizerCoverage 插桩",
+    "url": "https://releases.llvm.org/20.1.0/tools/clang/docs/SanitizerCoverage.html",
+    "type": "教材、官方文档与固定版本源码",
+    "note": "依据逐题所列文档、教材或固定版本源码自行整理；示例为自编，使用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "sancov-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "覆盖插桩与反馈",
+      "knowledgePoint": "插桩层级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Clang SanitizerCoverage 支持哪些常见覆盖插桩层级？",
+      "answer": "可按函数入口、基本块或控制流边插桩。",
+      "explanation": "Clang 20.1 的默认粒度是边；不同层级提供不同粒度的执行反馈。",
+      "example": "函数级反馈比边级反馈更粗。",
+      "tags": [
+        "覆盖插桩与反馈",
+        "插桩层级"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/SanitizerCoverage.html"
+    },
+    {
+      "id": "sancov-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "覆盖插桩与反馈",
+      "knowledgePoint": "冗余裁剪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Clang SanitizerCoverage 的 no-prune 有什么作用？",
+      "answer": "它关闭对被认为冗余的插桩点的裁剪。",
+      "explanation": "关闭裁剪可改善覆盖可视化，但可能增加插桩开销。",
+      "example": "bb,no-prune 可保留更多基本块插桩点。",
+      "tags": [
+        "覆盖插桩与反馈",
+        "冗余裁剪"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/SanitizerCoverage.html"
+    },
+    {
+      "id": "sancov-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "覆盖插桩与反馈",
+      "knowledgePoint": "guard回调",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "trace-pc-guard 在插桩位置调用的回调接收什么？",
+      "answer": "接收指向该插桩点 guard 变量的指针。",
+      "explanation": "初始化回调提供一个 guard 数组区间，供运行时设置和管理。",
+      "example": "回调可通过 guard 标识记录执行。",
+      "tags": [
+        "覆盖插桩与反馈",
+        "guard回调"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/SanitizerCoverage.html"
+    },
+    {
+      "id": "sancov-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "覆盖插桩与反馈",
+      "knowledgePoint": "guard初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SanitizerCoverage 的 guard 初始化回调为什么需要能处理重复调用？",
+      "answer": "同一个动态共享对象的相同 guard 区间可能多次传入初始化回调。",
+      "explanation": "文档示例检查空区间和已初始化标志。",
+      "example": "重复加载或初始化路径可能再次出现相同范围。",
+      "tags": [
+        "覆盖插桩与反馈",
+        "guard初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/SanitizerCoverage.html"
+    },
+    {
+      "id": "sancov-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "覆盖插桩与反馈",
+      "knowledgePoint": "计数器反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SanitizerCoverage 的 inline-8bit-counters 与 inline-bool-flag 在记录方式上有什么区别？",
+      "answer": "前者在插桩点递增 8 位计数器；后者将对应布尔标志设为 true。",
+      "explanation": "两种机制在 Clang 20.1 文档中均标为实验性。",
+      "example": "布尔标志主要表示是否触达，计数器还能记录有限范围内的次数变化。",
+      "tags": [
+        "覆盖插桩与反馈",
+        "计数器反馈"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/SanitizerCoverage.html"
+    },
+    {
+      "id": "sancov-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "覆盖插桩与反馈",
+      "knowledgePoint": "PC表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SanitizerCoverage 的 pc-table 为每个插桩块记录什么？",
+      "answer": "它记录 PC 地址和标志位组成的条目；标志位可标识函数入口块。",
+      "explanation": "pc-table 需配合文档指定的计数器、布尔标志或 guard 插桩方式。",
+      "example": "运行时可将位置表与相应插桩数据关联。",
+      "tags": [
+        "覆盖插桩与反馈",
+        "PC表"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/SanitizerCoverage.html"
+    },
+    {
+      "id": "sancov-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "覆盖插桩与反馈",
+      "knowledgePoint": "关键边",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么只知道控制流图中所有基本块都执行过，仍可能不知道所有边是否都执行过？",
+      "answer": "同一组已执行的基本块可能由不同路径连接，某条边是否经过不能仅由节点覆盖推断。",
+      "explanation": "边覆盖可对关键边加入插桩以区分路径。",
+      "example": "分支直接汇合的边可能未执行，即使分支内各块都被其他路径覆盖。",
+      "tags": [
+        "覆盖插桩与反馈",
+        "关键边"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/SanitizerCoverage.html"
+    },
+    {
+      "id": "sancov-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "覆盖插桩与反馈",
+      "knowledgePoint": "排除函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Clang 中如何对指定函数禁用 SanitizerCoverage 插桩？",
+      "answer": "可对该函数使用 no_sanitize(\"coverage\") 属性。",
+      "explanation": "应结合编译器支持情况使用，例如用 __has_feature 检查。",
+      "example": "对不希望记录覆盖的辅助函数禁用该插桩。",
+      "tags": [
+        "覆盖插桩与反馈",
+        "排除函数"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/SanitizerCoverage.html"
+    }
+  ]
+}

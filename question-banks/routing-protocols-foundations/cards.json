@@ -1,0 +1,132 @@
+{
+  "source": {
+    "id": "routing-protocols-foundations",
+    "title": "RFC 2328、RFC 4271 与 RFC 1812：OSPF、BGP 和 IP 路由",
+    "url": "https://www.rfc-editor.org/rfc/rfc2328",
+    "type": "IETF 标准",
+    "note": "依据 OSPFv2、BGP-4 和 IPv4 路由器要求逐题整理；协议版本及适用范围以各卡引用的 RFC 为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "routeproto-001", "category": "foundations", "level": "入门", "subtopic": "路由协议与控制平面", "knowledgePoint": "控制平面与转发平面", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "路由器的控制平面与转发平面通常分别负责什么？", "answer": "控制平面计算并维护路由信息；转发平面依据已安装的转发表把数据包送到下一跳。", "explanation": "控制平面可以运行路由协议，转发平面需按数据包目的地址和转发表执行逐包转发。", "example": "OSPF 学到新路径后，路由管理过程可更新转发表，后续数据包再使用该表转发。", "tags": ["路由协议", "控制平面", "转发平面"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc1812"
+    },
+    {
+      "id": "routeproto-002", "category": "foundations", "level": "进阶", "subtopic": "路由协议与控制平面", "knowledgePoint": "RIB 与 FIB", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "路由信息库 RIB 与转发信息库 FIB 在路由器中的用途有什么区别？", "answer": "RIB 保存控制平面掌握的路由及其属性；FIB 是供转发路径快速查找的转发表。", "explanation": "设备可能根据策略和路由选择结果，从多条 RIB 路由中安装一条或多条转发项。", "example": "同一前缀的多个协议候选可保留在 RIB 中，但只有选中的路径进入 FIB。", "tags": ["路由协议", "RIB", "FIB"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc1812"
+    },
+    {
+      "id": "routeproto-003", "category": "foundations", "level": "入门", "subtopic": "路由协议与控制平面", "knowledgePoint": "自治系统", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "互联网路由中的自治系统 AS 通常指什么？", "answer": "由一个管理实体控制、对外呈现一致路由策略的一组网络和路由器。", "explanation": "AS 编号用于标识自治系统；具体管理和分配遵循相应编号政策。", "example": "一个运营商可用一个 AS 与其他运营商交换跨域路由。", "tags": ["自治系统", "AS"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-004", "category": "foundations", "level": "入门", "subtopic": "路由协议与控制平面", "knowledgePoint": "IGP 与 EGP", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "IGP 与 BGP 在路由范围上通常分别解决什么问题？", "answer": "IGP 在一个自治系统内部分发路由；BGP 用于自治系统之间交换可达性信息和路由策略。", "explanation": "BGP 也可在同一 AS 内运行，称为 iBGP，用于传播外部路由信息。", "example": "企业内部可运行 OSPF，企业边界再用 eBGP 与上游网络交换路由。", "tags": ["IGP", "BGP", "自治系统"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-005", "category": "foundations", "level": "进阶", "subtopic": "路由协议与控制平面", "knowledgePoint": "距离向量路由", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "距离向量路由协议通常怎样获得到远端网络的路径信息？", "answer": "路由器与邻居交换目的网络及到达代价，再据此更新自己的距离和下一跳估计。", "explanation": "更新依赖邻居通告，协议还需要机制处理拓扑变化和路由环路。", "example": "邻居通告某网段距离为 3，本地链路代价为 1 时，本地可计算经该邻居的代价为 4。", "tags": ["距离向量", "路由算法"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc1058"
+    },
+    {
+      "id": "routeproto-006", "category": "foundations", "level": "进阶", "subtopic": "路由协议与控制平面", "knowledgePoint": "计数到无穷", "questionType": "故障分析", "origin": "自行整理",
+      "question": "距离向量路由中的 count-to-infinity 问题是怎样形成的？", "answer": "故障后，邻居可能把彼此过期的可达通告误认为有效替代路径，距离值逐步增加，直到协议上限或超时。", "explanation": "分割水平、毒性逆转和有限最大度量等机制可以缓解特定环路情形，但不能代替完整的收敛设计。", "example": "链路失效后两个路由器互相通告仍能到达目标，反复增加跳数。", "tags": ["距离向量", "路由环路", "收敛"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc1058"
+    },
+    {
+      "id": "routeproto-007", "category": "foundations", "level": "进阶", "subtopic": "路由协议与控制平面", "knowledgePoint": "分割水平", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "距离向量协议中的 split horizon 如何减少路由环路？", "answer": "路由器通常不把从某个邻居学到的路由再通告回该邻居。", "explanation": "该规则针对某些由相邻路由器互相误学造成的环路，不保证消除所有环路。", "example": "R1 从 R2 学到网络 N 后，不再向 R2 宣告经 R2 到 N 的路径。", "tags": ["距离向量", "split horizon"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc1058"
+    },
+    {
+      "id": "routeproto-008", "category": "foundations", "level": "进阶", "subtopic": "路由协议与控制平面", "knowledgePoint": "毒性逆转", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "poisoned reverse 与 split horizon 的通告方式有什么区别？", "answer": "split horizon 不向原邻居通告该路由；poisoned reverse 则向该邻居通告为不可达的度量。", "explanation": "RIP 中不可达度量为 16；这种做法可帮助邻居更快识别经自己返回的环路路径。", "example": "R1 经 R2 到达 N，采用毒性逆转时会向 R2 宣告 N 的度量为 16。", "tags": ["距离向量", "poisoned reverse", "RIP"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc1058"
+    },
+    {
+      "id": "routeproto-009", "category": "foundations", "level": "进阶", "subtopic": "OSPFv2", "knowledgePoint": "链路状态路由", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "链路状态路由协议如何让路由器据网络拓扑计算路径？", "answer": "路由器传播本地链路状态，使区域内设备建立拓扑数据库，再各自计算到目的地的最短路径。", "explanation": "链路状态协议仍需处理数据库同步、拓扑变化和区域边界。", "example": "OSPF 路由器同步链路状态数据库后运行最短路径优先计算。", "tags": ["OSPF", "链路状态路由"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    },
+    {
+      "id": "routeproto-010", "category": "foundations", "level": "进阶", "subtopic": "OSPFv2", "knowledgePoint": "链路状态数据库", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "OSPF 区域中的链路状态数据库 LSDB 描述什么？", "answer": "它汇集该区域的链路状态通告，表示区域拓扑及相关路由信息。", "explanation": "同一区域内路由器需要同步相应数据库，才能基于一致拓扑运行 SPF 计算。", "example": "新增链路产生新的链路状态信息后，区域路由器更新 LSDB 并重新计算路径。", "tags": ["OSPF", "LSDB"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    },
+    {
+      "id": "routeproto-011", "category": "foundations", "level": "进阶", "subtopic": "OSPFv2", "knowledgePoint": "SPF 算法", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "OSPF 用 SPF 算法计算路由时，通常以什么为根建立最短路径树？", "answer": "以执行计算的本路由器为根，在链路状态数据库表示的拓扑上建立树。", "explanation": "每台路由器各自运行计算，因此树根和得到的下一跳可能不同。", "example": "R1 和 R2 对同一 LSDB 分别以自身为根计算到网络 N 的路径。", "tags": ["OSPF", "SPF", "Dijkstra"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    },
+    {
+      "id": "routeproto-012", "category": "foundations", "level": "进阶", "subtopic": "OSPFv2", "knowledgePoint": "链路状态通告", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "OSPF 的链路状态通告 LSA 在路由计算中提供什么信息？", "answer": "LSA 描述由相应 OSPF 路由器或网络对象产生的链路、网络或路由信息，并被传播到规定范围。", "explanation": "LSA 类型和泛洪范围不同；不能把所有 LSA 都视为在全自治系统内传播。", "example": "Router-LSA 描述路由器在区域内的链路信息。", "tags": ["OSPF", "LSA"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    },
+    {
+      "id": "routeproto-013", "category": "foundations", "level": "进阶", "subtopic": "OSPFv2", "knowledgePoint": "骨干区域", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "OSPFv2 中 backbone area（区域 0）承担什么角色？", "answer": "它是 OSPF 区域间路由的骨干，其他区域的区域边界路由器通常连接到该骨干。", "explanation": "标准允许通过虚链路处理特定的非连续骨干部署，但这不是一般设计首选。", "example": "区域 1 与区域 2 之间的区域间路由通常经区域 0 交换。", "tags": ["OSPF", "区域 0", "骨干区域"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    },
+    {
+      "id": "routeproto-014", "category": "foundations", "level": "进阶", "subtopic": "OSPFv2", "knowledgePoint": "DR 与 BDR", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "OSPF 在广播型多路访问网络中选举 DR 与 BDR 的主要目的是什么？", "answer": "减少该网络上路由器之间需要建立的邻接数量，并协助链路状态信息的交换。", "explanation": "DR/BDR 是按网络段选举；点到点网络通常不使用这种选举。", "example": "多个路由器接在同一广播网段时，由 DR 承担主要的数据库交换协调角色。", "tags": ["OSPF", "DR", "BDR"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    },
+    {
+      "id": "routeproto-015", "category": "foundations", "level": "进阶", "subtopic": "OSPFv2", "knowledgePoint": "Hello 报文", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "OSPF Hello 报文通常承担哪些邻居管理用途？", "answer": "用于发现和维护邻居关系，并协商或确认建立邻接所需的若干参数。", "explanation": "具体邻接条件还取决于网络类型、区域、认证及定时器等配置。", "example": "邻居停止按约定发送 Hello 后，路由器可在失效时间到达时判定邻居不可达。", "tags": ["OSPF", "Hello", "邻居发现"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    },
+    {
+      "id": "routeproto-016", "category": "foundations", "level": "进阶", "subtopic": "OSPFv2", "knowledgePoint": "Router ID", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "OSPF Router ID 的主要作用是什么？", "answer": "它是标识 OSPF 路由器的 32 位标识符。", "explanation": "其点分十进制表示看起来像 IPv4 地址，但它本身不必是可达的接口地址。", "example": "LSA 中的 Advertising Router 字段使用 Router ID 标识通告者。", "tags": ["OSPF", "Router ID"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    },
+    {
+      "id": "routeproto-017", "category": "foundations", "level": "进阶", "subtopic": "OSPFv2", "knowledgePoint": "OSPF 路径代价", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "OSPF 选择路径时如何比较路径代价？", "answer": "它累加路径中链路的 OSPF 代价，并优先选择代价较低的路径。", "explanation": "RFC 定义代价字段和计算框架；具体接口代价配置可能由实现或管理员决定。", "example": "到目标的两条路径代价分别为 8 和 12 时，通常选择代价为 8 的路径。", "tags": ["OSPF", "路径代价"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    },
+    {
+      "id": "routeproto-018", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "路径向量", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "BGP 为什么常被称为路径向量协议？", "answer": "它向邻居通告可达前缀及路径属性，其中 AS_PATH 等属性描述路由经过的自治系统路径。", "explanation": "BGP 路由选择还受本地策略和其他属性影响，不能只按路径长度决定。", "example": "收到的路由可包含 NLRI 前缀以及 AS_PATH、NEXT_HOP 等属性。", "tags": ["BGP", "路径向量", "AS_PATH"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-019", "category": "foundations", "level": "入门", "subtopic": "BGP-4", "knowledgePoint": "BGP 传输", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "BGP 邻居之间通常使用什么传输协议和端口建立会话？", "answer": "BGP 使用 TCP，目的端口为 179。", "explanation": "TCP 提供可靠有序的字节流；BGP 自身仍维护邻居状态和路由更新。", "example": "排查 BGP 会话建立时，可检查两端 TCP 179 的可达性。", "tags": ["BGP", "TCP", "端口 179"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-020", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "UPDATE 与 NLRI", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "BGP UPDATE 报文中的 NLRI 用于携带什么？", "answer": "它携带通过该报文通告的网络层可达信息，例如可达的 IP 前缀。", "explanation": "UPDATE 还可携带路径属性和撤销路由；NLRI 与这些属性共同描述路由。", "example": "一条 UPDATE 可通告一个前缀，并为它附带 AS_PATH 和 NEXT_HOP。", "tags": ["BGP", "UPDATE", "NLRI"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-021", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "AS_PATH 环路检测", "questionType": "故障分析", "origin": "自行整理",
+      "question": "BGP 如何利用 AS_PATH 检测常见的跨自治系统路由环路？", "answer": "自治系统收到路径中已经包含自身 AS 号的路由时，通常将其判为环路并拒绝。", "explanation": "该检查针对 AS 路径环路；它不能证明任意数据平面路径都无环。", "example": "AS 64500 收到 AS_PATH 中含 64500 的前缀时会拒绝该路由。", "tags": ["BGP", "AS_PATH", "环路检测"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-022", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "NEXT_HOP 属性", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "BGP 的 NEXT_HOP 属性通常表示什么？", "answer": "它标识为转发到通告前缀而应使用的下一跳地址。", "explanation": "下一跳必须在本地可解析或可达；可达性失败会使该 BGP 路由无法用于转发。", "example": "收到外部路由后，路由器还需确认其 NEXT_HOP 能通过本地路由表到达。", "tags": ["BGP", "NEXT_HOP"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-023", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "LOCAL_PREF", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "BGP LOCAL_PREF 通常用来表达什么偏好？", "answer": "它表达一个自治系统内部对外出路径的偏好，较高值通常优先。", "explanation": "该属性在 AS 内部传播，依 RFC 4271 不向外部 BGP 对等体发送。", "example": "管理员可设置较高 LOCAL_PREF，使 AS 优先从指定上游发送流量。", "tags": ["BGP", "LOCAL_PREF", "路由策略"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-024", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "MED 属性", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "BGP 多出口区分属性 MED 通常用于向相邻 AS 表达什么？", "answer": "向相邻 AS 提示从哪个入口进入本 AS 更合意；在比较时较低 MED 通常优先。", "explanation": "MED 是可选非传递属性；不同路由器的比较范围和策略可能不同，不应把它当作全局强制排序。", "example": "双宿主网络可向同一邻居 AS 通告不同 MED，提示其优先选择某条入口链路。", "tags": ["BGP", "MED", "路由策略"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-025", "category": "foundations", "level": "入门", "subtopic": "BGP-4", "knowledgePoint": "eBGP 与 iBGP", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "eBGP 与 iBGP 邻居关系通常建立在什么 AS 边界上？", "answer": "eBGP 邻居属于不同自治系统；iBGP 邻居属于同一自治系统。", "explanation": "两者都交换 BGP 路由，但会在路由传播和若干属性处理上遵循不同规则。", "example": "边界路由器与上游建立 eBGP，会把学到的路由分发给本 AS 内的 iBGP 邻居。", "tags": ["BGP", "eBGP", "iBGP"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-026", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "iBGP 水平分割规则", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "BGP 为什么通常不把从一个 iBGP 邻居学到的路由再通告给另一个 iBGP 邻居？", "answer": "这是 iBGP 的水平分割规则，用于防止同一 AS 内的路由传播形成环路。", "explanation": "规模较大的网络可通过 route reflector 或 BGP confederation 扩展传播结构。", "example": "未使用反射器时，多个 iBGP 路由器通常需要相互建立全互联会话。", "tags": ["BGP", "iBGP", "水平分割"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-027", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "Route Reflector", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "BGP Route Reflector 主要解决 iBGP 部署中的什么扩展问题？", "answer": "它允许服务器把客户端学到的路由反射给其他合规邻居，减少 iBGP 全互联会话数量。", "explanation": "反射规则使用 Originator ID 和 Cluster List 等机制辅助避免反射环路。", "example": "一个反射器连接多台客户端路由器，可替代这些客户端彼此建立全部会话。", "tags": ["BGP", "Route Reflector", "iBGP"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4456"
+    },
+    {
+      "id": "routeproto-028", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "BGP 路由选择策略", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "能否只根据 AS_PATH 最短就断定一条 BGP 路由一定会被选中？", "answer": "不能；本地策略、路由可用性及多个路径属性都可能影响选择。", "explanation": "RFC 4271 描述路径选择过程，但实现和运营策略会影响具体决策；AS 跳数不是唯一目标。", "example": "较长的 AS_PATH 路由可因较高 LOCAL_PREF 而胜过较短路径。", "tags": ["BGP", "路径选择", "LOCAL_PREF"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-029", "category": "foundations", "level": "进阶", "subtopic": "BGP-4", "knowledgePoint": "路由撤销", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "BGP 邻居发现某前缀不再可达时，如何向对端通知撤销？", "answer": "可在 UPDATE 报文的 Withdrawn Routes 字段中列出不再可达的前缀。", "explanation": "撤销更新让对端移除相应路径；不同路由仍可能通过其他路径保持可达。", "example": "原始通告撤回后，邻居删除该对等体提供的对应路由候选。", "tags": ["BGP", "UPDATE", "路由撤销"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc4271"
+    },
+    {
+      "id": "routeproto-030", "category": "foundations", "level": "进阶", "subtopic": "路由协议与控制平面", "knowledgePoint": "路由收敛", "questionType": "故障分析", "origin": "自行整理",
+      "question": "网络拓扑变化后，路由协议的收敛通常指什么过程？", "answer": "路由器发现变化、传播更新并完成计算，使相关路由状态趋于稳定的过程。", "explanation": "收敛期间不同设备可能暂时持有不一致路由，影响取决于拓扑、定时器和协议行为。", "example": "链路中断后，OSPF 传播新 LSA 并重新运行 SPF，安装新的下一跳。", "tags": ["路由协议", "收敛", "故障处理"], "evidence": "source", "reference": "https://www.rfc-editor.org/rfc/rfc2328"
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "pytorch-lr-schedulers",
+    "title": "PyTorch 2.7.1：学习率调度器",
+    "url": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py",
+    "type": "论文、标准与技术文档",
+    "note": "逐题依据固定版本论文或规范自行整理，示例为自编；适用条件见卡片。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "lrsched-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "调度器作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 学习率调度器通常通过什么对象改变学习率？",
+      "answer": "它更新所关联优化器参数组中的学习率。",
+      "explanation": "调度器不替代优化器对模型参数的更新。",
+      "example": "优化器更新权重后，调度器调整下一步学习率。",
+      "tags": [
+        "学习率调度实践",
+        "调度器作用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/optim.html"
+    },
+    {
+      "id": "lrsched-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "调用顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的常规学习率调度器为什么通常在 optimizer.step() 后调用 scheduler.step()？",
+      "answer": "若先调用调度器，可能跳过学习率计划中的第一个值。",
+      "explanation": "具体按调度器所需的批次或 epoch 频率调用。",
+      "example": "一次训练更新后再推进按步调度器。",
+      "tags": [
+        "学习率调度实践",
+        "调用顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/optim.html"
+    },
+    {
+      "id": "lrsched-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "StepLR",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 StepLR 的 step_size 和 gamma 分别控制什么？",
+      "answer": "step_size 控制衰减间隔，gamma 是每次衰减的乘数。",
+      "explanation": "调度器计数随 scheduler.step() 推进；不要把调用次数与数据轮次混淆。",
+      "example": "每两个调度步将学习率乘以 0.5。",
+      "tags": [
+        "学习率调度实践",
+        "StepLR"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py"
+    },
+    {
+      "id": "lrsched-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "MultiStepLR",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 MultiStepLR 与 StepLR 在衰减时点上有什么区别？",
+      "answer": "MultiStepLR 在指定的 milestones 衰减；StepLR 按固定间隔衰减。",
+      "explanation": "二者都可使用 gamma 控制乘法衰减。",
+      "example": "在第 3、7 个调度步衰减。",
+      "tags": [
+        "学习率调度实践",
+        "MultiStepLR"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py"
+    },
+    {
+      "id": "lrsched-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "ExponentialLR",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 ExponentialLR 每推进一步通常如何更新学习率？",
+      "answer": "将当前参数组学习率乘以 gamma。",
+      "explanation": "若每个 epoch 推进一次，就每个 epoch 衰减一次。",
+      "example": "gamma=0.9 时，每次更新保留原值的 90%。",
+      "tags": [
+        "学习率调度实践",
+        "ExponentialLR"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py"
+    },
+    {
+      "id": "lrsched-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "余弦退火",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 CosineAnnealingLR 主要按什么曲线调整学习率？",
+      "answer": "按余弦函数调整学习率，eta_min 指定退火区间的低值。",
+      "explanation": "T_max 的单位取决于调用 scheduler.step() 的频率；超过 T_max 后不会自动停止更新。",
+      "example": "每个训练 epoch 推进一步时按 epoch 配置 T_max。",
+      "tags": [
+        "学习率调度实践",
+        "余弦退火"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py"
+    },
+    {
+      "id": "lrsched-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "重启区别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 CosineAnnealingLR 是否会像 CosineAnnealingWarmRestarts 那样重置周期计数？",
+      "answer": "不会；CosineAnnealingLR 不执行 warm restart 的周期重置。",
+      "explanation": "不要将两种调度器的周期语义混为一谈。",
+      "example": "需要显式重启式调度时选择相应调度器。",
+      "tags": [
+        "学习率调度实践",
+        "重启区别"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py"
+    },
+    {
+      "id": "lrsched-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "指标调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 ReduceLROnPlateau 在调用 step 时需要什么额外信息？",
+      "answer": "需要传入被监控的指标值，例如验证损失。",
+      "explanation": "mode 决定期望指标下降还是上升。",
+      "example": "验证后调用 scheduler.step(val_loss)。",
+      "tags": [
+        "学习率调度实践",
+        "指标调度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py"
+    },
+    {
+      "id": "lrsched-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "耐心次数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 ReduceLROnPlateau 在 patience=0 时，建立基线后的首个不达改进标准的指标会怎样？",
+      "answer": "若满足其他更新条件，就降低学习率。",
+      "explanation": "是否达到改进标准还受 mode、threshold 等配置影响。",
+      "example": "mode=min，第二次指标比基线更差时触发衰减。",
+      "tags": [
+        "学习率调度实践",
+        "耐心次数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py"
+    },
+    {
+      "id": "lrsched-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "一次循环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 OneCycleLR 通常按什么频率推进？",
+      "answer": "按每个训练批次推进一次，而不是只在每个 epoch 结束时推进。",
+      "explanation": "总步数应与计划的训练更新步数一致。",
+      "example": "处理并更新一个批次后调用 scheduler.step()。",
+      "tags": [
+        "学习率调度实践",
+        "一次循环"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py"
+    },
+    {
+      "id": "lrsched-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "最近学习率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的调度器 get_last_lr() 返回什么？",
+      "answer": "返回上一次调度计算得到的各参数组学习率列表。",
+      "explanation": "列表顺序对应优化器参数组。",
+      "example": "记录两个参数组当前调度值。",
+      "tags": [
+        "学习率调度实践",
+        "最近学习率"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/optim/lr_scheduler.py"
+    },
+    {
+      "id": "lrsched-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习率调度实践",
+      "knowledgePoint": "恢复状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "恢复中断训练时，为什么通常需要同时保存优化器和学习率调度器的状态？",
+      "answer": "优化器保存参数组和优化状态，调度器保存自己的进度等状态；只恢复其中一方可能改变后续学习率或更新。",
+      "explanation": "还应保存模型及训练进度等必要状态。",
+      "example": "恢复后让下一次衰减发生在原计划的位置。",
+      "tags": [
+        "学习率调度实践",
+        "恢复状态"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/optim.html"
+    }
+  ]
+}

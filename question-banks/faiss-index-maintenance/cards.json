@@ -1,0 +1,152 @@
+{
+  "source": {
+    "id": "faiss-index-maintenance",
+    "title": "Faiss 索引参数、训练与更新",
+    "url": "https://github.com/facebookresearch/faiss/wiki/Faiss-indexes",
+    "type": "官方技术文档",
+    "note": "依据逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "faissdeep-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "向量索引",
+      "knowledgePoint": "HNSW邻居数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss IndexHNSW 的 M 参数主要影响什么？",
+      "answer": "它控制图中使用的邻居数量；较大的 M 往往提高检索精度，同时需要更多内存。",
+      "explanation": "效果和成本应在目标向量与查询上实测。",
+      "example": "比较不同 M 下的召回率和索引内存。",
+      "tags": [
+        "HNSW邻居数",
+        "向量索引",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/wiki/Faiss-indexes"
+    },
+    {
+      "id": "faissdeep-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "向量索引",
+      "knowledgePoint": "HNSW构建探索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss HNSW 的 efConstruction 参数主要控制什么？",
+      "answer": "它控制添加向量、构建图时的探索深度。",
+      "explanation": "较充分的构建搜索可能改变索引质量和构建成本。",
+      "example": "比较不同 efConstruction 设置下的构建时间与检索召回。",
+      "tags": [
+        "HNSW构建探索",
+        "向量索引",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/wiki/Faiss-indexes"
+    },
+    {
+      "id": "faissdeep-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "索引更新",
+      "knowledgePoint": "HNSW删除限制",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Faiss 文档所述的 IndexHNSW 是否支持直接删除向量？",
+      "answer": "不支持；文档指出删除会破坏图结构。",
+      "explanation": "这是 Faiss 该索引的限制，不能推广到所有 HNSW 实现。",
+      "example": "需要删除数据时，根据应用要求选择支持删除的方案或重建索引。",
+      "tags": [
+        "HNSW删除限制",
+        "索引更新",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/wiki/Faiss-indexes"
+    },
+    {
+      "id": "faissdeep-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "索引更新",
+      "knowledgePoint": "顺序索引删除与ID",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "从 Faiss 的顺序 IndexFlat 删除一个向量后，后续向量的顺序 ID 可能怎样变化？",
+      "answer": "删除会使后续向量的顺序编号前移；显式存储 ID 的 IndexIVF 或 IndexIDMap2 行为不同。",
+      "explanation": "应用不能假设所有索引删除后的 ID 语义相同。",
+      "example": "删除中间条目后重新核对向量与文档标识的映射。",
+      "tags": [
+        "顺序索引删除与ID",
+        "索引更新",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/wiki/Special-operations-on-indexes"
+    },
+    {
+      "id": "faissdeep-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "索引训练",
+      "knowledgePoint": "训练样本代表性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么训练 Faiss IVF 或量化索引时需要代表性向量样本？",
+      "answer": "训练阶段用样本估计数据分布和量化结构；不具代表性的样本可能使索引效果变差。",
+      "explanation": "嵌入模型或数据分布明显变化时，应重新评估索引。",
+      "example": "用覆盖主要文档类型的向量训练索引，再在独立查询上测试。",
+      "tags": [
+        "训练样本代表性",
+        "索引训练",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/wiki/FAQ"
+    },
+    {
+      "id": "faissdeep-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "索引查询",
+      "knowledgePoint": "全分区搜索与量化误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在没有额外截断或过滤限制时，Faiss IVFFlat 把 nprobe 设为 nlist 有什么效果？",
+      "answer": "它会搜索全部倒排分区，退化为对已存向量的穷举比较。",
+      "explanation": "IVFPQ 即使遍历全部分区仍可能保留量化误差；穷举通常可考虑 Flat 索引。",
+      "example": "用全分区扫描区分分区遗漏与量化误差。",
+      "tags": [
+        "全分区搜索与量化误差",
+        "索引查询",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/wiki/FAQ"
+    },
+    {
+      "id": "faissdeep-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "索引评估",
+      "knowledgePoint": "IVFPQ误差定位",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "如何区分 Faiss IVFPQ 结果误差来自分区遗漏还是向量压缩？",
+      "answer": "可将 IVFPQ 的 nprobe 设为全部分区检查压缩误差，再以原 nprobe 设置比较 IVFFlat 与精确检索，观察分区遗漏的影响。",
+      "explanation": "这是诊断步骤，需使用相同数据、查询和评估口径。",
+      "example": "先排除未搜索分区，再比较未压缩向量结果。",
+      "tags": [
+        "IVFPQ误差定位",
+        "索引评估",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/wiki/FAQ"
+    }
+  ]
+}

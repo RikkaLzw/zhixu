@@ -1,0 +1,403 @@
+{
+  "source": {
+    "id": "loss-regularization-foundations",
+    "title": "分类损失、数值稳定与正则化",
+    "url": "https://d2l.ai/chapter_linear-classification/softmax-regression.html",
+    "type": "教材、论文与官方文档",
+    "note": "逐题根据教材或指定版本文档整理；面经主题启发仅为延伸练习，经历为作者自述。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "nnloss-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "训练损失与评估指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "训练损失和评估指标必须是同一个量吗？",
+      "answer": "不必；训练可优化可微损失，评估可另外报告任务关心的指标。",
+      "explanation": "两者不一致时，应核查优化目标与实际目标的关系。",
+      "example": "分类训练用交叉熵，评估时另报精确率和召回率。",
+      "tags": [
+        "训练损失与评估指标",
+        "深度学习"
+      ],
+      "evidence": "application",
+      "reference": "https://d2l.ai/chapter_linear-classification/softmax-regression.html",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nnloss-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "损失聚合方式",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "同一批次的逐元素损失使用 sum 与 mean 聚合有什么区别？",
+      "answer": "sum 相加全部损失；mean 对相应元素求平均。",
+      "explanation": "在其他条件相同时，聚合方式会改变损失和梯度的尺度。",
+      "example": "四个相同损失求和是求平均结果的四倍。",
+      "tags": [
+        "损失聚合方式",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.MSELoss.html",
+      "referenceTitle": "PyTorch 2.15 官方文档"
+    },
+    {
+      "id": "nnloss-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "MSE与MAE",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "均方误差（MSE）和平均绝对误差（MAE）怎样度量预测误差？",
+      "answer": "MSE 对误差的平方取平均；MAE 对误差的绝对值取平均。",
+      "explanation": "平方项会让较大的误差相对更突出。",
+      "example": "比较回归预测与实际值的平方差或绝对差。",
+      "tags": [
+        "MSE与MAE",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.MSELoss.html",
+      "referenceTitle": "PyTorch 2.15 官方文档",
+      "supportingReferences": [
+        {
+          "id": "l1-loss-ref",
+          "title": "PyTorch 2.15：L1Loss",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.L1Loss.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "nnloss-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "Huber损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Huber 损失怎样分别处理较小和较大的回归误差？",
+      "answer": "误差绝对值较小时使用平方项，较大时使用线性项。",
+      "explanation": "切换点由正的 delta 参数控制。",
+      "example": "对少量大误差使用线性增长的惩罚。",
+      "tags": [
+        "Huber损失",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.HuberLoss.html",
+      "referenceTitle": "PyTorch 2.15 官方文档"
+    },
+    {
+      "id": "nnloss-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "单标签与多标签输出",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "互斥多分类与多标签分类常用的输出概率处理有什么区别？",
+      "answer": "互斥多分类常用 softmax 归一化类别；多标签任务常对各标签分别使用 sigmoid。",
+      "explanation": "具体损失函数和标签语义仍需匹配任务。",
+      "example": "一张图只选一种动物，或同时标注多个物体。",
+      "tags": [
+        "单标签与多标签输出",
+        "深度学习"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.BCEWithLogitsLoss.html",
+      "referenceTitle": "PyTorch 2.15 官方文档",
+      "supportingReferences": [
+        {
+          "id": "crossentropy-ref",
+          "title": "PyTorch 2.15：CrossEntropyLoss",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.CrossEntropyLoss.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "nnloss-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "单样本分类交叉熵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用独热目标且不加权时，单样本交叉熵如何利用真实类别的预测概率？",
+      "answer": "它等于真实类别预测概率的负对数。",
+      "explanation": "真实类别概率越接近零，损失通常越大。",
+      "example": "真实类别概率提高时，单样本交叉熵下降。",
+      "tags": [
+        "单样本分类交叉熵",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_linear-classification/softmax-regression.html#loss-function",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nnloss-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "交叉熵梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对单个样本的无权重 softmax 交叉熵，某类别 logit 的梯度是什么？",
+      "answer": "该类别的预测概率减去其独热目标值。",
+      "explanation": "批次平均、类别权重或其他设置会进一步改变尺度。",
+      "example": "真实类别对应目标为 1，其余类别目标为 0。",
+      "tags": [
+        "交叉熵梯度",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_linear-classification/softmax-regression.html#softmax-and-cross-entropy-loss",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nnloss-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "稳定Softmax",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对有限 logits 计算 softmax 前，为什么常从所有值中减去同一个最大值？",
+      "answer": "统一平移不改变 softmax 结果，同时可减少指数运算上溢的风险。",
+      "explanation": "仍需考虑浮点精度和极小值下溢。",
+      "example": "先将最大 logit 平移到零，再计算指数。",
+      "tags": [
+        "稳定Softmax",
+        "深度学习",
+        "公开面经",
+        "地平线"
+      ],
+      "evidence": "application",
+      "reference": "https://d2l.ai/chapter_linear-classification/softmax-regression-scratch.html",
+      "referenceTitle": "动手学深度学习",
+      "supportingReferences": [
+        {
+          "id": "company-horizon",
+          "title": "地平线智能驾驶算法实习笔试（2019 届作者自述）；Softmax 主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "nnloss-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "Softmax归一化轴",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对批量 logits 使用 softmax 时，为什么要正确指定类别维度？",
+      "answer": "softmax 沿指定维度归一化；选错维度会把不应归为一组的值一起归一化。",
+      "explanation": "应结合张量形状判断类别轴。",
+      "example": "形状为批次×类别时，沿类别轴归一化。",
+      "tags": [
+        "Softmax归一化轴",
+        "深度学习",
+        "公开面经",
+        "地平线"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.functional.softmax.html",
+      "referenceTitle": "PyTorch 2.15 官方文档",
+      "supportingReferences": [
+        {
+          "id": "company-horizon",
+          "title": "地平线智能驾驶算法实习笔试（2019 届作者自述）；Softmax 主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "nnloss-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "Softmax与最大值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在精确算术下，有限 logits 经 softmax 后，最大概率与最大 logit 对应的类别有什么关系？",
+      "answer": "它们一致；softmax 对同一向量内的值保持大小顺序。",
+      "explanation": "相等的 logits 仍对应相等的概率；有限精度计算可能引入舍入或下溢。",
+      "example": "只做贪心类别选择时可直接比较 logits。",
+      "tags": [
+        "Softmax与最大值",
+        "深度学习"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.functional.softmax.html",
+      "referenceTitle": "PyTorch 2.15 官方文档"
+    },
+    {
+      "id": "nnloss-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "LogSoftmax稳定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么通常用 log_softmax 计算对数概率，而不是分开计算 log(softmax(x))？",
+      "answer": "两步单独计算容易出现数值不稳定；log_softmax 使用更稳定的等价计算。",
+      "explanation": "具体精度仍受数据类型和输入范围影响。",
+      "example": "很小的 softmax 概率可能在单独计算时下溢。",
+      "tags": [
+        "LogSoftmax稳定性",
+        "深度学习",
+        "公开面经",
+        "地平线"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.functional.log_softmax.html",
+      "referenceTitle": "PyTorch 2.15 官方文档",
+      "supportingReferences": [
+        {
+          "id": "company-horizon",
+          "title": "地平线智能驾驶算法实习笔试（2019 届作者自述）；Softmax 主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "nnloss-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "L2正则项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "L2 正则化通常在训练目标中加入什么惩罚？",
+      "answer": "加入与所选权重平方和成比例的项，以惩罚较大的权重。",
+      "explanation": "具体系数和是否包含偏置由实现配置决定。",
+      "example": "在预测损失外加权重平方和。",
+      "tags": [
+        "L2正则项",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_linear-regression/weight-decay.html",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nnloss-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "L1与L2正则",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "L1 和 L2 正则化对参数稀疏性通常有什么不同影响？",
+      "answer": "L1 惩罚更容易得到部分恰为零的参数；L2 通常把参数平滑地向零缩小。",
+      "explanation": "具体结果依赖目标函数、优化方法和正则强度。",
+      "example": "用 L1 线性模型得到部分为零的系数。",
+      "tags": [
+        "L1与L2正则",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_linear-regression/weight-decay.html",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nnloss-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "SGD权重衰减",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在无动量的普通 SGD 中，L2 惩罚与权重衰减有什么关系？",
+      "answer": "使用一致系数时，L2 项产生的梯度更新等价于对相同权重施加对应的衰减。",
+      "explanation": "该等价不能直接推广到所有自适应优化器。",
+      "example": "梯度更新中额外减去与当前权重成比例的项。",
+      "tags": [
+        "SGD权重衰减",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_linear-regression/weight-decay.html",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nnloss-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "正则强度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "L2 正则化系数增大时，训练目标中什么会变得更重要？",
+      "answer": "权重惩罚相对于数据损失的权重增大。",
+      "explanation": "最终效果仍取决于任务和优化过程，不能只按系数推断泛化效果。",
+      "example": "用验证集比较不同惩罚系数。",
+      "tags": [
+        "正则强度",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_linear-regression/weight-decay.html",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nnloss-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "交叉熵目标形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.15 的 CrossEntropyLoss 可以使用哪两类目标表示？",
+      "answer": "可以使用类别索引，或使用与输入对应的类别概率分布。",
+      "explanation": "两种形式的形状和数据类型要求不同。",
+      "example": "用单个类别编号，或提供软标签概率。",
+      "tags": [
+        "交叉熵目标形式",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.CrossEntropyLoss.html",
+      "referenceTitle": "PyTorch 2.15 官方文档"
+    },
+    {
+      "id": "nnloss-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "损失与正则化",
+      "knowledgePoint": "软标签校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.15 的 CrossEntropyLoss 会严格验证概率目标是否是有效分布吗？",
+      "answer": "不会严格验证；调用方应确保各概率位于 [0, 1]，且按类别求和为 1。",
+      "explanation": "无效目标可能产生误导性的损失和梯度。",
+      "example": "软标签为负或概率和不为 1 时先检查数据。",
+      "tags": [
+        "软标签校验",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.CrossEntropyLoss.html",
+      "referenceTitle": "PyTorch 2.15 官方文档"
+    }
+  ]
+}

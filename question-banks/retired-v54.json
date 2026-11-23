@@ -1,0 +1,35 @@
+{
+  "version": 54,
+  "note": "拆清事件摘要质量评估前的旧卡快照，用于保护个人编辑、来源和学习记录。",
+  "cards": [
+    {
+      "id": "copilot-006",
+      "category": "operations",
+      "question": "如何比较 AI 事件摘要和人工摘要？",
+      "answer": "建立人工标注样本，分别检查事实正确性、关键事件覆盖、引用和阅读时间。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "knowledgeArea": "16",
+      "level": "实践",
+      "tags": [
+        "摘要评估",
+        "人工标注"
+      ],
+      "explanation": "审查者还应记录错误的严重程度和影响。",
+      "example": "评估是否遗漏关键受影响资产、是否错误归因攻击者。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

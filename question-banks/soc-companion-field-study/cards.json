@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "soc-companion-field-study",
+    "title": "SOC AI Companion：现场研究与调查工作流",
+    "url": "https://arxiv.org/pdf/2609.06250v1",
+    "type": "论文与官方技术文档",
+    "note": "根据逐题引用的论文或官方文档自行整理；例子为自编，具体方法和适用条件见各卡。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "socfield-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "AI 安全研判实践",
+      "knowledgePoint": "研究性质",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC AI Companion 现场研究的数据能否直接代表所有安全运营中心？",
+      "answer": "不能；论文研究的是单个大学 SOC，参与者和流程具有当地特点。",
+      "explanation": "它是嵌入式观察研究，推广到其他组织需要额外验证。",
+      "example": "在企业 SOC 试用时重新评估工具和工作流。",
+      "tags": [
+        "研究性质",
+        "AI 安全研判实践"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2609.06250v1"
+    },
+    {
+      "id": "socfield-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "AI 安全研判实践",
+      "knowledgePoint": "系统范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC AI Companion 现场研究中的工具调用是否能直接修改 SOC 系统状态？",
+      "answer": "不能；论文描述的工具调用限于读取和查询。",
+      "explanation": "分析人员仍负责最终判断和工单处理。",
+      "example": "查询告警与情报，而不是自动封禁主机。",
+      "tags": [
+        "系统范围",
+        "AI 安全研判实践"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2609.06250v1"
+    },
+    {
+      "id": "socfield-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "AI 安全研判实践",
+      "knowledgePoint": "依赖查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC AI Companion 如何利用 SIEM 和 DHCP 数据定位告警关联设备？",
+      "answer": "先根据告警与时间查询内部地址，再用相应 DHCP 租约信息关联设备标识或主机名。",
+      "explanation": "动态地址关联需要匹配事件时间，不能只看当前租约。",
+      "example": "为历史外联告警定位当时使用该地址的设备。",
+      "tags": [
+        "依赖查询",
+        "AI 安全研判实践"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2609.06250v1"
+    },
+    {
+      "id": "socfield-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "AI 安全研判实践",
+      "knowledgePoint": "文本复用与判断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC AI Companion 现场研究为什么把报告文本复用与分析结论采纳分开统计？",
+      "answer": "分析人员可能保留模型整理的证据文本，但改变模型给出的判断或处置建议。",
+      "explanation": "草稿相似度不能单独代表结论正确或处置被采纳。",
+      "example": "保留事件时间线但修改是否需要升级处理。",
+      "tags": [
+        "文本复用与判断",
+        "AI 安全研判实践"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2609.06250v1"
+    },
+    {
+      "id": "socfield-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "AI 安全研判实践",
+      "knowledgePoint": "相似度限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC AI Companion 现场研究中，为什么独立重写的报告仍可能与 AI 草稿有较高文本相似度？",
+      "answer": "两份报告可能共享同一事件的地址、主机名和特征等事实。",
+      "explanation": "论文的词集合相似度不能单独证明文本被直接复制。",
+      "example": "两人独立描述同一告警会使用相同 IP。",
+      "tags": [
+        "相似度限制",
+        "AI 安全研判实践"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2609.06250v1"
+    },
+    {
+      "id": "socfield-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "AI 安全研判实践",
+      "knowledgePoint": "选择偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC AI Companion 研究中，为什么使用过助手的工单不能当作告警队列的随机样本？",
+      "answer": "分析人员自行决定哪些工单交给助手，选择可能受工单类型和个人习惯影响。",
+      "explanation": "论文还指出各分析人员贡献的工单数量不均衡。",
+      "example": "简单工单和复杂工单的助手使用比例可能不同。",
+      "tags": [
+        "选择偏差",
+        "AI 安全研判实践"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2609.06250v1"
+    },
+    {
+      "id": "socfield-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "AI 安全研判实践",
+      "knowledgePoint": "非独立评审",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC AI Companion 研究为什么不能把参与者最终工单结论直接视为独立的模型准确性标注？",
+      "answer": "分析人员在做最终判断前已经看过助手输出，判断可能受到其影响。",
+      "explanation": "论文建议通过独立分析人员重新检查部分工单等方式补充评估。",
+      "example": "让未看过模型结果的人员独立复核事件。",
+      "tags": [
+        "非独立评审",
+        "AI 安全研判实践"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2609.06250v1"
+    },
+    {
+      "id": "socfield-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "AI 安全研判实践",
+      "knowledgePoint": "证据展示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC AI Companion 研究为方便分析人员核验，如何呈现工具查询的可视证据？",
+      "answer": "工具层访问对应来源页面并保存截图，供分析人员查看和附入报告。",
+      "explanation": "截图反映采集时的页面内容，仍需核对来源、时间和上下文。",
+      "example": "查看威胁情报查询页面的截图。",
+      "tags": [
+        "证据展示",
+        "AI 安全研判实践"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2609.06250v1"
+    }
+  ]
+}

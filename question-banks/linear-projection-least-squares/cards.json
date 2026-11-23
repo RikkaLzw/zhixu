@@ -1,0 +1,420 @@
+{
+  "source": {
+    "id": "linear-projection-least-squares",
+    "title": "线性代数：正交投影、最小二乘与矩阵性质",
+    "url": "https://textbooks.math.gatech.edu/ila/least-squares.html",
+    "type": "教材、论文与官方文档",
+    "note": "逐题依据所列资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "linproj-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "正交归一组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么是正交归一向量组？",
+      "answer": "组内不同向量两两正交，且每个向量的范数都是 1。",
+      "explanation": "它同时满足正交和单位长度两个条件。",
+      "example": "标准坐标向量构成正交归一组。",
+      "tags": [
+        "正交归一组",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/orthogonal-sets.html"
+    },
+    {
+      "id": "linproj-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "正交与独立",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一组两两正交的非零实向量一定线性无关吗？",
+      "answer": "一定线性无关。",
+      "explanation": "非零条件不能省略，因为含零向量的集合线性相关。",
+      "example": "两个相互垂直的非零平面向量线性无关。",
+      "tags": [
+        "正交与独立",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/orthogonal-sets.html"
+    },
+    {
+      "id": "linproj-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "单向量投影",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "非零向量 u 上，向量 v 的正交投影怎样计算？",
+      "answer": "投影为 (uᵀv / uᵀu)u。",
+      "explanation": "分母不能为零，因此 u 必须非零。",
+      "example": "把 v 投影到一条非零方向向量张成的直线。",
+      "tags": [
+        "单向量投影",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/orthogonal-sets.html"
+    },
+    {
+      "id": "linproj-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "正交基坐标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "矩阵 Q 的列向量正交归一时，Qᵀv 表示什么？",
+      "answer": "它给出向量 v 在这些正交基方向上的投影坐标。",
+      "explanation": "若列未张成整个空间，这些坐标只描述对应子空间的投影。",
+      "example": "用列向量表示的基计算各方向系数。",
+      "tags": [
+        "正交基坐标",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/orthogonal-sets.html"
+    },
+    {
+      "id": "linproj-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "投影矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "若 Q 的列正交归一，QQᵀv 表示什么？",
+      "answer": "它是 v 在 Q 的列空间上的正交投影。",
+      "explanation": "Q 若是非方阵，QQᵀ通常不是整个空间的单位矩阵。",
+      "example": "将三维向量投影到两列向量张成的平面。",
+      "tags": [
+        "投影矩阵",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/orthogonal-sets.html"
+    },
+    {
+      "id": "linproj-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "投影幂等性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "正交投影矩阵 P 为什么满足 P²=P？",
+      "answer": "向量投影到目标子空间后已属于该子空间，再投影一次不会改变它。",
+      "explanation": "正交投影矩阵还具有对称性。",
+      "example": "把向量投影到平面两次，第二次结果不变。",
+      "tags": [
+        "投影幂等性",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/orthogonal-sets.html"
+    },
+    {
+      "id": "linproj-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "最小二乘目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性最小二乘问题通常最小化什么量？",
+      "answer": "最小化残差 b−Ax 的欧氏范数或其平方。",
+      "explanation": "两种目标的最小解相同。",
+      "example": "为一组不完全共线的数据拟合直线。",
+      "tags": [
+        "最小二乘目标",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/least-squares.html"
+    },
+    {
+      "id": "linproj-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "正规方程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性最小二乘解满足什么正规方程？",
+      "answer": "满足 AᵀAx=Aᵀb，即残差与 A 的每个列向量正交。",
+      "explanation": "数值计算时不一定需要显式构造 AᵀA。",
+      "example": "用矩阵的列构成的空间逼近观测向量。",
+      "tags": [
+        "正规方程",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/least-squares.html"
+    },
+    {
+      "id": "linproj-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "最小二乘唯一性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性最小二乘解什么时候是唯一的？",
+      "answer": "当 A 的列线性无关，即 A 具有满列秩时，最小二乘解唯一。",
+      "explanation": "若列相关，可能存在多个具有相同最小残差的解。",
+      "example": "两个完全相同的特征列不能分别唯一确定系数。",
+      "tags": [
+        "最小二乘唯一性",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/least-squares.html"
+    },
+    {
+      "id": "linproj-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "精确拟合条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线性方程 Ax=b 的最小二乘残差何时可以为零？",
+      "answer": "当且仅当 b 位于 A 的列空间内。",
+      "explanation": "这时至少存在一个精确解，但系数不一定唯一。",
+      "example": "观测向量可由特征矩阵各列线性组合得到。",
+      "tags": [
+        "精确拟合条件",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://textbooks.math.gatech.edu/ila/least-squares.html"
+    },
+    {
+      "id": "linproj-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "伪逆与最小范数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "当线性最小二乘问题有多个解时，A 的 Moore–Penrose 伪逆 A⁺ 乘以 b 得到哪一个？",
+      "answer": "得到这些最小二乘解中欧氏范数最小的解。",
+      "explanation": "伪逆也可用于非方阵或秩不足的矩阵。",
+      "example": "欠定线性方程有多个解时选择长度最小的系数向量。",
+      "tags": [
+        "伪逆与最小范数",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.0/reference/generated/numpy.linalg.pinv.html"
+    },
+    {
+      "id": "linproj-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "伪逆构造",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用 SVD 构造矩阵伪逆时，奇异值如何处理？",
+      "answer": "将保留的非零奇异值取倒数，并交换左右奇异向量的角色；被截断的小奇异值按零处理。",
+      "explanation": "伪逆的形状会将原矩阵的行数和列数交换。",
+      "example": "2×3 矩阵的伪逆是 3×2。",
+      "tags": [
+        "伪逆构造",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.0/reference/generated/numpy.linalg.pinv.html"
+    },
+    {
+      "id": "linproj-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "lstsq返回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 2.0 的 numpy.linalg.lstsq 返回哪些主要结果？",
+      "answer": "返回最小二乘解、残差平方和数组、估计的矩阵秩和奇异值。",
+      "explanation": "残差数组的形状与矩阵形状及秩有关。",
+      "example": "同时检查解、有效秩和奇异值。",
+      "tags": [
+        "lstsq返回",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.0/reference/generated/numpy.linalg.lstsq.html"
+    },
+    {
+      "id": "linproj-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "空残差数组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 2.0 的 lstsq 返回空 residuals 数组，是否表示残差一定为零？",
+      "answer": "不一定；当矩阵秩不足或行数不大于列数时，接口返回空残差数组。",
+      "explanation": "若需要实际残差，可用 b−Ax 自行计算。",
+      "example": "欠定系统的 residuals 为空，仍应检查拟合误差。",
+      "tags": [
+        "空残差数组",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.0/reference/generated/numpy.linalg.lstsq.html"
+    },
+    {
+      "id": "linproj-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "数值秩阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 2.0 的 lstsq 中 rcond 用于什么？",
+      "answer": "它指定相对最大奇异值的截断比例，用于把足够小的奇异值视为零并确定数值秩。",
+      "explanation": "改变阈值可能改变估计的秩和最小二乘解。",
+      "example": "把接近机器精度的小奇异值视为零。",
+      "tags": [
+        "数值秩阈值",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.0/reference/generated/numpy.linalg.lstsq.html"
+    },
+    {
+      "id": "linproj-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "对称矩阵eigh",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 的 eigh 对实对称矩阵返回的特征值与特征向量如何对应？",
+      "answer": "特征值按升序返回，特征向量按列排列，与对应位置的特征值匹配。",
+      "explanation": "eigh 针对实对称或复 Hermitian 矩阵。",
+      "example": "用第 i 列特征向量对应第 i 个特征值。",
+      "tags": [
+        "对称矩阵eigh",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.0/reference/generated/numpy.linalg.eigh.html"
+    },
+    {
+      "id": "linproj-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "半正定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实对称矩阵 A 半正定的二次型条件是什么？",
+      "answer": "对任意实向量 x，都有 xᵀAx≥0。",
+      "explanation": "半正定允许某些非零向量得到零二次型。",
+      "example": "对角矩阵 diag(1,0) 是半正定矩阵。",
+      "tags": [
+        "半正定",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/matrix-algebra/positive-definite-matrix"
+    },
+    {
+      "id": "linproj-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "正定与半正定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实对称矩阵正定与半正定在特征值上有什么区别？",
+      "answer": "正定矩阵的特征值全为正；半正定矩阵的特征值全为非负。",
+      "explanation": "半正定矩阵可以有零特征值并因此不可逆。",
+      "example": "diag(1,0) 半正定但不正定。",
+      "tags": [
+        "正定与半正定",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/matrix-algebra/positive-definite-matrix"
+    },
+    {
+      "id": "linproj-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "Gram矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对任意实矩阵 A，为什么 AᵀA 是半正定的？",
+      "answer": "因为对任意 x，xᵀAᵀAx=‖Ax‖²≥0。",
+      "explanation": "当 A 满列秩时，对非零 x 该值严格大于零。",
+      "example": "用特征矩阵构造的 AᵀA 不会有负二次型。",
+      "tags": [
+        "Gram矩阵",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "application",
+      "reference": "https://www.statlect.com/matrix-algebra/positive-definite-matrix"
+    },
+    {
+      "id": "linproj-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "协方差正定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "协方差矩阵一定是正定且可逆的吗？",
+      "answer": "不一定；有限二阶矩下协方差矩阵总是半正定，但线性相关的变量可能使其奇异。",
+      "explanation": "线性冗余会产生零方差方向。",
+      "example": "一个特征是另一个特征的两倍时，协方差矩阵可能不可逆。",
+      "tags": [
+        "协方差正定性",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "source",
+      "reference": "https://statproofbook.github.io/P/covmat-psd.html"
+    },
+    {
+      "id": "linproj-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数与最小二乘",
+      "knowledgePoint": "正规方程数值稳定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对满列秩矩阵 A，为什么显式求解正规方程可能加重数值病态？",
+      "answer": "在 2 范数下 AᵀA 的条件数是 A 的条件数的平方；QR 或 SVD 方法常更稳健。",
+      "explanation": "这讨论的是数值误差，不改变正规方程的数学正确性。",
+      "example": "特征列近似线性相关时避免显式求 AᵀA 的逆。",
+      "tags": [
+        "正规方程数值稳定",
+        "线性代数与最小二乘"
+      ],
+      "evidence": "application",
+      "reference": "https://fncbook.com/normaleqns/",
+      "supportingReferences": [
+        {
+          "id": "fncbook-qr",
+          "title": "Fundamentals of Numerical Computation：QR 分解",
+          "url": "https://fncbook.com/qr/",
+          "type": "数值计算教材",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "phishing-visual",
+    "title": "Phishpedia 与 PhishIntention：视觉钓鱼检测",
+    "url": "https://www.usenix.org/system/files/sec21-lin.pdf",
+    "type": "研究论文",
+    "note": "根据逐题所列资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "visphish-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼页面识别",
+      "knowledgePoint": "检测与目标识别",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "钓鱼检测和钓鱼目标识别的输出有什么区别？",
+      "answer": "检测通常给出是否钓鱼的判断；目标识别还指出被冒充的品牌或对象。",
+      "explanation": "被识别的目标可以为分析人员提供额外上下文，但仍需核实。",
+      "example": "报告页面可疑，并指出其可能冒充的品牌。",
+      "tags": [
+        "检测与目标识别",
+        "钓鱼检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "visphish-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼页面识别",
+      "knowledgePoint": "Logo检测与匹配",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Phishpedia 的对象检测模型和孪生模型分别处理什么？",
+      "answer": "对象检测模型定位页面中的标识等元素；孪生模型比较检测到的标识与参考品牌标识。",
+      "explanation": "两个阶段解决位置定位与身份匹配这两个不同任务。",
+      "example": "先框出疑似 Logo，再比较其与参考 Logo 的表示。",
+      "tags": [
+        "Logo检测与匹配",
+        "钓鱼检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "visphish-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼页面识别",
+      "knowledgePoint": "品牌与域名一致性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Phishpedia 如何利用识别出的品牌和页面域名识别可疑页面？",
+      "answer": "它比较页面域名与该品牌参考域名；品牌匹配但域名不一致时可报告钓鱼目标。",
+      "explanation": "该论文方法依赖参考品牌和域名列表，不是对所有页面的通用判决规则。",
+      "example": "页面展示某品牌标识，却不属于该品牌记录的域名。",
+      "tags": [
+        "品牌与域名一致性",
+        "钓鱼检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "visphish-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼页面识别",
+      "knowledgePoint": "合法第三方标识误报",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么合法网页展示其他品牌的 Logo 可能误导只看品牌和域名的钓鱼检测？",
+      "answer": "合法网站也可能显示第三方登录、分享或广告标识，导致品牌与当前域名不一致。",
+      "explanation": "需要结合页面作用和上下文，不能仅凭第三方标识认定仿冒。",
+      "example": "网站使用其他公司的单点登录按钮。",
+      "tags": [
+        "合法第三方标识误报",
+        "钓鱼检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "visphish-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼页面识别",
+      "knowledgePoint": "品牌意图与凭据意图",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PhishIntention 中品牌意图和凭据收集意图分别表示什么？",
+      "answer": "品牌意图表示页面呈现或指向的品牌；凭据收集意图表示页面是否要求用户提供凭据。",
+      "explanation": "二者结合有助于区分品牌展示和冒充登录页面。",
+      "example": "页面显示品牌标识，但没有要求输入该品牌的账号。",
+      "tags": [
+        "品牌意图与凭据意图",
+        "钓鱼检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "visphish-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼页面识别",
+      "knowledgePoint": "关联凭据页面",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "页面当前没有凭据输入框时，PhishIntention 为什么还会分析部分链接或按钮？",
+      "answer": "这些元素可能通向要求用户提供凭据的页面，交互后可继续检查新页面。",
+      "explanation": "实际方法受搜索深度、交互可见性和页面状态限制。",
+      "example": "点击页面上的登录入口后，分析跳转到的登录页面。",
+      "tags": [
+        "关联凭据页面",
+        "钓鱼检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "visphish-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼页面识别",
+      "knowledgePoint": "参考品牌覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基于参考品牌标识的钓鱼识别为什么要关注参考集覆盖范围？",
+      "answer": "目标品牌未被参考集覆盖或标识未能匹配时，系统可能无法识别针对该品牌的仿冒。",
+      "explanation": "更新参考集可扩展覆盖，但仍需评估误匹配。",
+      "example": "为新业务品牌补充经过核验的标识与合法域名。",
+      "tags": [
+        "参考品牌覆盖",
+        "钓鱼检测"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "visphish-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼页面识别",
+      "knowledgePoint": "截图与HTML",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么可用截图补充 HTML 特征分析钓鱼页面？",
+      "answer": "视觉相似的页面可能由不同 HTML 实现，截图能提供页面呈现外观的另一种证据。",
+      "explanation": "截图也会受加载状态、视口和交互影响，不能保证检测成功。",
+      "example": "比较结构不同但视觉布局相近的登录页面。",
+      "tags": [
+        "截图与HTML",
+        "钓鱼检测"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    },
+    {
+      "id": "visphish-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼页面识别",
+      "knowledgePoint": "无需钓鱼样本训练",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Phishpedia 不依赖钓鱼样本训练，是否意味着它不需要任何训练数据或参考资料？",
+      "answer": "不是；其检测和标识匹配模型仍需训练数据，识别时还依赖品牌标识与合法域名参考集。",
+      "explanation": "论文中的“不需要钓鱼样本训练”不等于完全免训练。",
+      "example": "使用已标注 Logo 训练检测，再用参考品牌列表识别目标。",
+      "tags": [
+        "无需钓鱼样本训练",
+        "钓鱼检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec21-lin.pdf"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "fuzzilli-javascript-intermediate",
+    "title": "Fuzzilli 固定提交：JavaScript 引擎模糊测试",
+    "url": "https://raw.githubusercontent.com/googleprojectzero/fuzzilli/3f902407232d12d67c143949af503af5a2f14b1a/README.md",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据 Fuzzilli 固定提交 3f902407232d12d67c143949af503af5a2f14b1a 自行整理；示例自编。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fuzzilli-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzzilli 与 FuzzIL",
+      "knowledgePoint": "测试目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzzilli 主要面向什么类型的目标？",
+      "answer": "主要针对 JavaScript 等动态语言解释器和引擎进行覆盖引导模糊测试。",
+      "explanation": "论文或工具效果依目标引擎、插桩和配置而异。 该行为依据固定提交 3f902407。",
+      "example": "向 JavaScript shell 输入生成的测试程序。",
+      "tags": [
+        "Fuzzilli 与 FuzzIL",
+        "测试目标"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/googleprojectzero/fuzzilli/3f902407232d12d67c143949af503af5a2f14b1a/README.md"
+    },
+    {
+      "id": "fuzzilli-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzzilli 与 FuzzIL",
+      "knowledgePoint": "中间语言",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzzilli 的 FuzzIL 在生成和执行测试程序之间起什么作用？",
+      "answer": "以便于变异的中间指令表示程序，再将其转换为 JavaScript 执行。",
+      "explanation": "变异可以直接操作程序的数据流和控制流。 该行为依据固定提交 3f902407。",
+      "example": "先改变中间指令的输入变量，再生成脚本。",
+      "tags": [
+        "Fuzzilli 与 FuzzIL",
+        "中间语言"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/googleprojectzero/fuzzilli/3f902407232d12d67c143949af503af5a2f14b1a/README.md"
+    },
+    {
+      "id": "fuzzilli-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzzilli 与 FuzzIL",
+      "knowledgePoint": "变量约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzIL 对变量定义与使用顺序有什么基本约束？",
+      "answer": "变量必须先定义再使用；指令输出创建新变量，重赋值使用专门操作。",
+      "explanation": "这些约束有助于生成结构合理的程序。 该行为依据固定提交 3f902407。",
+      "example": "输入不能引用尚未定义的变量。",
+      "tags": [
+        "Fuzzilli 与 FuzzIL",
+        "变量约束"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/googleprojectzero/fuzzilli/3f902407232d12d67c143949af503af5a2f14b1a/README.md"
+    },
+    {
+      "id": "fuzzilli-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzzilli 与 FuzzIL",
+      "knowledgePoint": "输入与操作变异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzzilli 的 InputMutator 与 OperationMutator 分别怎样修改程序？",
+      "answer": "InputMutator 替换指令的输入变量；OperationMutator 修改操作参数，例如整数常量。",
+      "explanation": "前者主要改变数据流，后者改变操作本身的参数。 该行为依据固定提交 3f902407。",
+      "example": "把运算的一项输入换成已有变量。",
+      "tags": [
+        "Fuzzilli 与 FuzzIL",
+        "输入与操作变异"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/googleprojectzero/fuzzilli/3f902407232d12d67c143949af503af5a2f14b1a/README.md"
+    },
+    {
+      "id": "fuzzilli-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzzilli 与 FuzzIL",
+      "knowledgePoint": "拼接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzzilli 的 splicing 怎样组合已有程序？",
+      "answer": "将另一个程序中可独立使用的指令片段复制到当前程序中，并处理变量引用。",
+      "explanation": "拼接应保持变量定义和可见性等约束。 该行为依据固定提交 3f902407。",
+      "example": "把另一语料中的函数调用片段并入新样本。",
+      "tags": [
+        "Fuzzilli 与 FuzzIL",
+        "拼接"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/googleprojectzero/fuzzilli/3f902407232d12d67c143949af503af5a2f14b1a/Docs/HowFuzzilliWorks.md"
+    },
+    {
+      "id": "fuzzilli-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzzilli 与 FuzzIL",
+      "knowledgePoint": "持续执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzzilli 的 REPRL 执行模式如何减少重复执行的开销？",
+      "answer": "让修改过的目标引擎接收脚本、执行、重置状态并等待下一个脚本，减少反复创建进程的开销。",
+      "explanation": "重置行为依赖目标适配，仍需验证测试隔离。 该行为依据固定提交 3f902407。",
+      "example": "同一引擎进程连续处理多个脚本。",
+      "tags": [
+        "Fuzzilli 与 FuzzIL",
+        "持续执行"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/googleprojectzero/fuzzilli/3f902407232d12d67c143949af503af5a2f14b1a/README.md"
+    },
+    {
+      "id": "fuzzilli-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzzilli 与 FuzzIL",
+      "knowledgePoint": "有效程序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzzilli 为什么需要关注生成脚本的语义有效性？",
+      "answer": "未捕获异常可能让脚本提前结束，减少后续代码和 JIT 优化路径被执行的机会。",
+      "explanation": "大量插入异常捕获也可能改变原本的控制流。 该行为依据固定提交 3f902407。",
+      "example": "目标在脚本早期抛异常时，后续循环不会执行。",
+      "tags": [
+        "Fuzzilli 与 FuzzIL",
+        "有效程序"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/googleprojectzero/fuzzilli/3f902407232d12d67c143949af503af5a2f14b1a/Docs/HowFuzzilliWorks.md"
+    }
+  ]
+}

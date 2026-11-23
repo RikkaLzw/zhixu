@@ -1,0 +1,716 @@
+{
+  "source": {
+    "id": "numpy-data-fundamentals",
+    "title": "NumPy 数组与 Python 数据处理基础",
+    "url": "https://numpy.org/doc/2.2/user/quickstart.html",
+    "type": "官方技术文档",
+    "note": "依据 NumPy 2.2 和 Python 3.13 文档逐题整理；面经仅作主题启发，经历由作者自述。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "npstudy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "NumPy 数组",
+      "knowledgePoint": "数组形状与维数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 数组的 shape、ndim 和 size 分别描述什么？",
+      "answer": "shape 给出各轴长度，ndim 是轴的数量，size 是元素总数。",
+      "explanation": "size 通常等于 shape 中各维长度的乘积。",
+      "example": "形状 (3, 4) 的数组有 2 个轴和 12 个元素。",
+      "tags": [
+        "数组形状与维数",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/quickstart.html",
+      "referenceTitle": "NumPy 2.2：Quickstart"
+    },
+    {
+      "id": "npstudy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "NumPy 数组",
+      "knowledgePoint": "数组元素类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 数组的 dtype 描述什么？",
+      "answer": "它描述数组元素使用的数据类型及相关表示信息。",
+      "explanation": "普通数值数组的元素共享一个 dtype；object 类型的元素可引用不同 Python 对象。",
+      "example": "float32 数组的 dtype 指明元素为单精度浮点数。",
+      "tags": [
+        "数组元素类型",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/basics.types.html",
+      "referenceTitle": "NumPy 2.2：Data types"
+    },
+    {
+      "id": "npstudy-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 索引",
+      "knowledgePoint": "切片与高级索引",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NumPy 基本切片与整数数组高级索引在共享数据方面有什么区别？",
+      "answer": "基本切片产生共享底层数据的视图；读取整数数组高级索引通常得到数据副本。",
+      "explanation": "修改视图可能影响原数组，而修改独立副本不会。",
+      "example": "比较 a[1:3] 和 a[[1, 2]]。",
+      "tags": [
+        "切片与高级索引",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/basics.indexing.html",
+      "referenceTitle": "NumPy 2.2：Indexing"
+    },
+    {
+      "id": "npstudy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 索引",
+      "knowledgePoint": "高级索引直接赋值",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "NumPy 高级索引读取通常产生副本，为什么 a[[1, 2]] = 值仍会修改 a？",
+      "answer": "直接赋值时，索引表达式作为赋值目标，写入发生在原数组上。",
+      "explanation": "先把高级索引结果保存为变量再修改，则通常修改的是副本。",
+      "example": "用布尔掩码直接把原数组中的部分值设为零。",
+      "tags": [
+        "高级索引直接赋值",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/basics.copies.html",
+      "referenceTitle": "NumPy 2.2：Copies and views"
+    },
+    {
+      "id": "npstudy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 内存",
+      "knowledgePoint": "小视图保留大数组",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么保留大数组的一小段切片可能阻止原数组占用的内存释放？",
+      "answer": "基本切片是视图，会保留对底层数据的引用。",
+      "explanation": "如果不再需要原数据，可考虑复制小切片后释放大数组。",
+      "example": "从大批量特征中保留一小段并用 copy() 分离。",
+      "tags": [
+        "小视图保留大数组",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "application",
+      "reference": "https://numpy.org/doc/2.2/user/basics.indexing.html",
+      "referenceTitle": "NumPy 2.2：Basic slicing"
+    },
+    {
+      "id": "npstudy-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "NumPy 索引",
+      "knowledgePoint": "布尔掩码选元素",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 中布尔掩码与原数组形状相同时，a[mask] 的结果是什么形状？",
+      "answer": "结果是一维数组，包含掩码为 True 的元素。",
+      "explanation": "布尔高级索引读取返回副本，元素按 C 风格顺序收集。",
+      "example": "二维矩阵用同形状掩码选出满足条件的全部元素。",
+      "tags": [
+        "布尔掩码选元素",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/basics.indexing.html",
+      "referenceTitle": "NumPy 2.2：Boolean indexing"
+    },
+    {
+      "id": "npstudy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 索引",
+      "knowledgePoint": "布尔掩码选行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对形状为 (n, p) 的二维数组使用长度为 n 的一维布尔掩码索引第一轴，会得到什么？",
+      "answer": "它选出掩码为 True 的行，结果形状为 (选中行数, p)。",
+      "explanation": "该掩码作用于第一个轴，不是逐元素筛选整个矩阵。",
+      "example": "按样本是否有效筛选特征矩阵的行。",
+      "tags": [
+        "布尔掩码选行",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/basics.indexing.html",
+      "referenceTitle": "NumPy 2.2：Boolean indexing"
+    },
+    {
+      "id": "npstudy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 索引",
+      "knowledgePoint": "整数索引配对与笛卡尔积",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "NumPy 中 a[rows, cols] 与 a[np.ix_(rows, cols)] 的选择方式有什么区别？",
+      "answer": "同形状的 rows、cols 在前者中逐位置配对；后者生成可广播索引，选择行列的笛卡尔积。",
+      "explanation": "适用于二维数组的行列索引；实际结果还受索引广播规则约束。",
+      "example": "选取两行与两列交叉的四个元素。",
+      "tags": [
+        "整数索引配对与笛卡尔积",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/basics.indexing.html",
+      "referenceTitle": "NumPy 2.2：Integer array indexing"
+    },
+    {
+      "id": "npstudy-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 索引",
+      "knowledgePoint": "重复索引累加",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "NumPy 中 a[[0, 0]] += 1 与 np.add.at(a, [0, 0], 1) 对重复索引有何区别？",
+      "answer": "前者经临时缓冲后写回，位置 0 通常只增加一次；add.at 会对两次索引分别累加。",
+      "explanation": "需要按出现次数累加时可使用 add.at。",
+      "example": "统计同一个类别被重复命中的次数。",
+      "tags": [
+        "重复索引累加",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.ufunc.at.html",
+      "referenceTitle": "NumPy 2.2：ufunc.at"
+    },
+    {
+      "id": "npstudy-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组形状",
+      "knowledgePoint": "一维向量转置",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "NumPy 的一维数组 a 对 a.T 操作，会自动变成二维列向量吗？",
+      "answer": "不会；一维转置仍是一维数组，形状不变。",
+      "explanation": "可以使用 a[:, None] 等方式增加长度为 1 的轴。",
+      "example": "形状 (n,) 不会因 .T 自动变为 (n, 1)。",
+      "tags": [
+        "一维向量转置",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.transpose.html",
+      "referenceTitle": "NumPy 2.2：transpose"
+    },
+    {
+      "id": "npstudy-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数组形状",
+      "knowledgePoint": "自动推断形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy reshape 中的一个 -1 维度有什么作用？",
+      "answer": "它让 NumPy 根据元素总数和其他维度自动推断该轴长度。",
+      "explanation": "新形状必须与原数组元素总数兼容，只能有一个待推断维度。",
+      "example": "把 12 个元素 reshape 为 (3, -1)，得到形状 (3, 4)。",
+      "tags": [
+        "自动推断形状",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.reshape.html",
+      "referenceTitle": "NumPy 2.2：reshape"
+    },
+    {
+      "id": "npstudy-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组运算",
+      "knowledgePoint": "按轴归约",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对二维数组求均值时，axis=0 与 axis=1 分别沿哪个方向聚合？",
+      "answer": "axis=0 沿行方向聚合，得到每列均值；axis=1 沿列方向聚合，得到每行均值。",
+      "explanation": "轴编号指被聚合的维度，不是保留下来的维度。",
+      "example": "样本为行、特征为列时，axis=0 得到各特征均值。",
+      "tags": [
+        "按轴归约",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/quickstart.html",
+      "referenceTitle": "NumPy 2.2：Quickstart"
+    },
+    {
+      "id": "npstudy-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组形状",
+      "knowledgePoint": "归约保留轴",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 归约函数中的 keepdims=True 通常怎样影响输出形状？",
+      "answer": "被归约的轴保留为长度 1 的维度，便于与原数组广播。",
+      "explanation": "不是所有函数都使用相同参数，需查具体 API。",
+      "example": "对形状 (n, p) 按 axis=0 求均值并保留形状 (1, p)。",
+      "tags": [
+        "归约保留轴",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.mean.html",
+      "referenceTitle": "NumPy 2.2：mean"
+    },
+    {
+      "id": "npstudy-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组形状",
+      "knowledgePoint": "移除长度一的轴",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "NumPy 的 squeeze 默认会移除哪些轴，为什么处理单样本批次时要小心？",
+      "answer": "它移除所有长度为 1 的轴，可能连批次轴一起移除。",
+      "explanation": "可显式指定 axis；指定长度不为 1 的轴会报错。",
+      "example": "形状 (1, 1, 4) 默认 squeeze 后变为 (4,)。",
+      "tags": [
+        "移除长度一的轴",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.squeeze.html",
+      "referenceTitle": "NumPy 2.2：squeeze"
+    },
+    {
+      "id": "npstudy-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数组形状",
+      "knowledgePoint": "堆叠与拼接",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NumPy stack 与 concatenate 在轴上有什么主要区别？",
+      "answer": "stack 沿新建的轴组合形状相同的数组；concatenate 沿已有轴拼接。",
+      "explanation": "两者对输入形状的要求和结果维数不同。",
+      "example": "两个 (2, 3) 数组沿 axis=0 的 stack 得到 (2, 2, 3)。",
+      "tags": [
+        "堆叠与拼接",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.stack.html",
+      "referenceTitle": "NumPy 2.2：stack"
+    },
+    {
+      "id": "npstudy-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组形状",
+      "knowledgePoint": "拼接形状约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy concatenate 沿指定轴拼接数组时，其他轴的长度需要满足什么条件？",
+      "answer": "除拼接轴外，其他对应轴的长度必须相同。",
+      "explanation": "拼接轴上的长度可以不同；axis=None 是先展平再拼接的特殊情况。",
+      "example": "形状 (2, 3) 与 (4, 3) 可沿 axis=0 拼接。",
+      "tags": [
+        "拼接形状约束",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.concatenate.html",
+      "referenceTitle": "NumPy 2.2：concatenate"
+    },
+    {
+      "id": "npstudy-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数组运算",
+      "knowledgePoint": "逐元素与矩阵乘法",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "对二维 NumPy 数组，* 与 @ 分别执行什么运算？",
+      "answer": "* 按元素相乘；@ 执行矩阵乘法。",
+      "explanation": "逐元素乘法使用广播规则，矩阵乘法要求内层维度匹配。",
+      "example": "两个 2×2 数组的 A*B 与 A@B 通常不同。",
+      "tags": [
+        "逐元素与矩阵乘法",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/quickstart.html",
+      "referenceTitle": "NumPy 2.2：Quickstart"
+    },
+    {
+      "id": "npstudy-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 内存",
+      "knowledgePoint": "展平视图与副本",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NumPy 的 ravel 与 ndarray.flatten 在复制方面有什么区别？",
+      "answer": "ravel 尽可能返回一维视图，必要时复制；flatten 总是返回一维副本。",
+      "explanation": "具体内存布局和指定顺序会影响 ravel 能否共享数据。",
+      "example": "需要独立可修改的展平数组时可用 flatten。",
+      "tags": [
+        "展平视图与副本",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/basics.copies.html",
+      "referenceTitle": "NumPy 2.2：Copies and views"
+    },
+    {
+      "id": "npstudy-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 内存",
+      "knowledgePoint": "asarray复用输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在默认 copy 设置下，np.asarray 对 dtype 和内存顺序已匹配的 ndarray 是否一定复制？",
+      "answer": "不一定；对于已匹配的普通 ndarray，可以直接复用输入而不复制。",
+      "explanation": "如果要求转换 dtype 或其他条件不匹配，可能需要复制。",
+      "example": "对现有 float32 数组调用 np.asarray 时检查是否共享数据。",
+      "tags": [
+        "asarray复用输入",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.asarray.html",
+      "referenceTitle": "NumPy 2.2：asarray"
+    },
+    {
+      "id": "npstudy-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 内存",
+      "knowledgePoint": "广播视图只读",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "NumPy 2.2 的 np.broadcast_to 返回的广播数组可以直接写入吗？",
+      "answer": "它返回只读视图，直接赋值通常会报错。",
+      "explanation": "多个输出位置可能引用同一个底层内存位置。",
+      "example": "需要独立写入时显式复制广播结果。",
+      "tags": [
+        "广播视图只读",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.broadcast_to.html",
+      "referenceTitle": "NumPy 2.2：broadcast_to"
+    },
+    {
+      "id": "npstudy-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组运算",
+      "knowledgePoint": "最大值并列索引",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "NumPy 的 argmax 在同一归约范围有多个相同最大值时返回哪个索引？",
+      "answer": "返回第一个最大值的索引。",
+      "explanation": "未指定 axis 时，索引对应展平后的数组。",
+      "example": "[3, 5, 5] 的 argmax 为 1。",
+      "tags": [
+        "最大值并列索引",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.argmax.html",
+      "referenceTitle": "NumPy 2.2：argmax"
+    },
+    {
+      "id": "npstudy-022",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数组运算",
+      "knowledgePoint": "条件选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 的 np.where(condition, x, y) 按什么规则构造输出？",
+      "answer": "条件为 True 的位置取 x 的值，其余位置取 y 的值。",
+      "explanation": "condition、x 和 y 必须可广播到共同形状。",
+      "example": "把负数替换为零，同时保留其他数值。",
+      "tags": [
+        "条件选择",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.where.html",
+      "referenceTitle": "NumPy 2.2：where"
+    },
+    {
+      "id": "npstudy-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组数据质量",
+      "knowledgePoint": "有限数值检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 的 isfinite 能同时排查哪些非有限值？",
+      "answer": "它逐元素判断数值是否既不是 NaN，也不是正负无穷。",
+      "explanation": "返回布尔数组，可结合索引用于筛选。",
+      "example": "检查特征矩阵是否含 NaN 或无穷值。",
+      "tags": [
+        "有限数值检查",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.isfinite.html",
+      "referenceTitle": "NumPy 2.2：isfinite"
+    },
+    {
+      "id": "npstudy-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组数据质量",
+      "knowledgePoint": "固定宽度整数溢出",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么 NumPy 固定宽度整数运算的结果可能与 Python 普通整数不同？",
+      "answer": "NumPy 整数有固定表示范围，超出范围的运算可能溢出；Python 整数可随数值大小扩展。",
+      "explanation": "具体行为还受 dtype 和运算类型影响。",
+      "example": "对很大的数使用 int32 计算幂可能得到溢出结果。",
+      "tags": [
+        "固定宽度整数溢出",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/basics.types.html",
+      "referenceTitle": "NumPy 2.2：Data types and overflow"
+    },
+    {
+      "id": "npstudy-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组数据质量",
+      "knowledgePoint": "浮点转整数",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "将有限且在目标范围内的 NumPy 浮点数转换为整数 dtype 时，小数部分怎样处理？",
+      "answer": "小数部分向零截断，而不是四舍五入。",
+      "explanation": "需要其他取整规则时，应先显式进行相应取整。",
+      "example": "1.9 转为整数得到 1，-1.9 得到 -1。",
+      "tags": [
+        "浮点转整数",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "application",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.ndarray.astype.html",
+      "referenceTitle": "NumPy 2.2：ndarray.astype"
+    },
+    {
+      "id": "npstudy-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组运算",
+      "knowledgePoint": "浮点序列生成",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "需要在区间内生成指定数量的等间隔浮点数时，为什么常选 linspace 而不是浮点步长 arange？",
+      "answer": "linspace 直接指定样本数量；浮点步长 arange 可能因精度而难以准确预期元素数量。",
+      "explanation": "区间端点是否包含由函数参数决定。",
+      "example": "在 0 到 1 之间生成 101 个采样点。",
+      "tags": [
+        "浮点序列生成",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/user/quickstart.html",
+      "referenceTitle": "NumPy 2.2：Array creation"
+    },
+    {
+      "id": "npstudy-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数组运算",
+      "knowledgePoint": "数组真假判断",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么不能直接用 if 判断含多个元素的 NumPy 布尔数组？",
+      "answer": "多个元素的真假无法自动解释成一个条件，NumPy 会抛出异常。",
+      "explanation": "应明确使用 any()、all() 或检查数组大小。",
+      "example": "判断一批预测是否全部通过时使用 mask.all()。",
+      "tags": [
+        "数组真假判断",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/arrays.ndarray.html",
+      "referenceTitle": "NumPy 2.2：ndarray truth value"
+    },
+    {
+      "id": "npstudy-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 内存",
+      "knowledgePoint": "对象数组浅复制",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "对 dtype=object 的 NumPy 数组调用 copy，是否会深拷贝其中引用的 Python 对象？",
+      "answer": "不会；数组数据的复制是浅复制，新数组仍可引用相同的 Python 对象。",
+      "explanation": "需要隔离嵌套可变对象时，应考虑深拷贝或重新构造。",
+      "example": "复制存有列表对象的数组后，修改列表仍可能影响两边。",
+      "tags": [
+        "对象数组浅复制",
+        "NumPy",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.copy.html",
+      "referenceTitle": "NumPy 2.2：copy"
+    },
+    {
+      "id": "npstudy-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 基础",
+      "knowledgePoint": "字典视图动态性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 dict.keys() 等字典视图会自动反映之后对字典的修改吗？",
+      "answer": "会；字典视图动态反映底层字典的内容。",
+      "explanation": "遍历视图时改变字典大小可能引发错误或导致迭代不完整。",
+      "example": "取得 keys 视图后新增一个键，再查看该视图。",
+      "tags": [
+        "字典视图动态性",
+        "Python",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#dictionary-view-objects",
+      "referenceTitle": "Python 3.13：Dictionary view objects"
+    },
+    {
+      "id": "npstudy-030",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 基础",
+      "knowledgePoint": "可变默认参数",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Python 函数使用列表作默认参数时，为什么多次调用可能共享此前的内容？",
+      "answer": "默认值在函数定义时求值一次，多次未传该参数的调用会使用同一个列表。",
+      "explanation": "若每次都需要新列表，可用 None 作默认值并在函数内创建。",
+      "example": "多次调用向默认列表追加元素的函数。",
+      "tags": [
+        "可变默认参数",
+        "Python",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/controlflow.html#default-argument-values",
+      "referenceTitle": "Python 3.13：Default argument values"
+    },
+    {
+      "id": "npstudy-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 基础",
+      "knowledgePoint": "闭包晚绑定",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "在循环中创建引用同一循环变量的 Python 闭包时，为什么之后调用它们可能得到相同结果？",
+      "answer": "闭包在调用时查找该变量，循环结束后它们可能都看到变量的最终值。",
+      "explanation": "可使用默认参数等方式在每次迭代绑定当时的值。",
+      "example": "循环创建多个 lambda 后再调用。",
+      "tags": [
+        "闭包晚绑定",
+        "Python",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/faq/programming.html#why-do-lambdas-defined-in-a-loop-with-different-values-all-return-the-same-result",
+      "referenceTitle": "Python 3.13：Programming FAQ"
+    },
+    {
+      "id": "npstudy-033",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 迭代与装饰器",
+      "knowledgePoint": "装饰器保留元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 装饰器中的 functools.wraps 常用于什么？",
+      "answer": "它帮助包装函数保留被包装函数的名称、文档等元数据，并设置 __wrapped__ 引用。",
+      "explanation": "这有助于调试、文档生成和反射。",
+      "example": "用 wraps 装饰一个记录耗时的包装函数。",
+      "tags": [
+        "装饰器保留元数据",
+        "Python",
+        "数据工程",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/functools.html#functools.wraps",
+      "referenceTitle": "Python 3.13：functools.wraps",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节后端 Agent 一面公开面经（经历为作者自述）；Python 装饰器主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "npstudy-034",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 基础",
+      "knowledgePoint": "zip长度校验",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 zip(..., strict=True) 遇到长度不一致的可迭代对象时怎样处理？",
+      "answer": "迭代到发现长度不一致时抛出 ValueError。",
+      "explanation": "默认 zip 会在最短输入耗尽时结束，可能静默丢弃其他输入的余项。",
+      "example": "配对训练样本和标签时检查两者数量。",
+      "tags": [
+        "zip长度校验",
+        "Python",
+        "数据工程"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/functions.html#zip",
+      "referenceTitle": "Python 3.13：zip"
+    }
+  ]
+}

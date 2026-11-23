@@ -2,7 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { categories } from '../categories';
 import { IconButton, SectionTitle, Surface } from '../components/ui';
-import { formatInterval, getNextDue, getStreak, getStudyQueue, getTodayNewCount, localDayKey } from '../lib/scheduler';
+import { formatInterval, getNextDue, getStreak, getStudyQueue, getTodayNewCount, localDayKey, matchesScope } from '../lib/scheduler';
+import { enabledStudyLevels } from '../levels';
 import { colors } from '../theme';
 import { CategoryId, StudyData } from '../types';
 
@@ -16,6 +17,7 @@ export function HomeScreen({ data, now, onStudy, onSettings, onCategory }: {
   const date = new Date(now);
   const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
   const queue = getStudyQueue(data, now);
+  const regularCards = data.cards.filter((card) => matchesScope(card, { studySet: 'regular' }));
   const dueCount = queue.filter((card) => data.progress[card.id]).length;
   const newCount = queue.length - dueCount;
   const studiedToday = data.history.filter((event) => localDayKey(event.reviewedAt) === localDayKey(now));
@@ -78,7 +80,7 @@ export function HomeScreen({ data, now, onStudy, onSettings, onCategory }: {
           {queue.length > 0 && <Ionicons name="arrow-forward" size={19} color={colors.brandDark} />}
         </Pressable>
         <Text style={styles.heroHint}>
-          {queue.length > 0 ? '先复习到期内容，再学习新知识' : nextDue ? `下一张卡片将在约 ${formatInterval(nextDue - now)} 后到期` : '可在题库中添加新卡片'}
+          {queue.length > 0 ? '先复习到期内容，再学习新知识' : enabledStudyLevels(data.settings).length === 0 ? '请在学习设置中开启至少一个阶段' : nextDue ? `下一张卡片将在约 ${formatInterval(nextDue - now)} 后到期` : '可在题库中查看卡片或调整学习阶段'}
         </Text>
       </View>
 
@@ -104,10 +106,10 @@ export function HomeScreen({ data, now, onStudy, onSettings, onCategory }: {
       </View>
 
       <View style={styles.section}>
-        <SectionTitle title="你的知识路径" note={`${data.cards.length} 张卡片`} />
+        <SectionTitle title="你的知识路径" note={`${regularCards.length} 张常规卡片`} />
         <View style={styles.categoryGrid}>
           {categories.map((category) => {
-            const count = data.cards.filter((card) => card.category === category.id).length;
+            const count = regularCards.filter((card) => card.category === category.id).length;
             return (
               <Pressable
                 key={category.id}

@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "afl-persistent-harness",
+    "title": "AFL++ 固定提交：持久化测试入口",
+    "url": "https://github.com/AFLplusplus/AFLplusplus/blob/d7986778/instrumentation/README.persistent_mode.md",
+    "type": "论文、协议规范与开源实现",
+    "note": "依据逐题引用的论文、规范或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "aflpersist-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "AFL++ 持久化测试入口",
+      "knowledgePoint": "循环次数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 的 __AFL_LOOP(n) 中 n 控制什么？",
+      "answer": "它控制单个持久化子进程在重启前最多执行的循环次数。",
+      "explanation": "周期性重启可减轻内存泄漏等问题的累积影响。",
+      "example": "__AFL_LOOP(1000) 达到上限后会重新启动进程。",
+      "tags": [
+        "AFL++ 持久化测试入口",
+        "循环次数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d7986778/instrumentation/README.persistent_mode.md"
+    },
+    {
+      "id": "aflpersist-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "AFL++ 持久化测试入口",
+      "knowledgePoint": "共享输入位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 文档示例中，延迟初始化后何时取得 __AFL_FUZZ_TESTCASE_BUF？",
+      "answer": "在 __AFL_INIT() 之后、进入 __AFL_LOOP 之前取得缓冲区指针。",
+      "explanation": "这是共享内存输入示例要求的使用顺序。",
+      "example": "先初始化 forkserver，再绑定测试输入缓冲区。",
+      "tags": [
+        "AFL++ 持久化测试入口",
+        "共享输入位置"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d7986778/instrumentation/README.persistent_mode.md"
+    },
+    {
+      "id": "aflpersist-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "AFL++ 持久化测试入口",
+      "knowledgePoint": "每轮输入长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 共享内存持久化循环中，为什么应在每次迭代读取 __AFL_FUZZ_TESTCASE_LEN？",
+      "answer": "每轮测试输入的长度可能不同，需要读取当前输入对应的长度。",
+      "explanation": "文档示例把它存入局部变量后再调用目标函数。",
+      "example": "不同变异输入可有不同字节数。",
+      "tags": [
+        "AFL++ 持久化测试入口",
+        "每轮输入长度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d7986778/instrumentation/README.persistent_mode.md"
+    },
+    {
+      "id": "aflpersist-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 持久化测试入口",
+      "knowledgePoint": "状态记录重放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 的 AFL_PERSISTENT_RECORD 主要适合哪类持久化测试场景？",
+      "answer": "它可记录有状态的多轮输入，便于重放某次记录。",
+      "explanation": "例如前一轮状态会影响后续测试的网络协议栈。",
+      "example": "重现由一串交互触发的崩溃。",
+      "tags": [
+        "AFL++ 持久化测试入口",
+        "状态记录重放"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d7986778/instrumentation/README.persistent_mode.md"
+    },
+    {
+      "id": "aflpersist-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 持久化测试入口",
+      "knowledgePoint": "延迟克隆点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 延迟 forkserver 初始化为什么应谨慎避开关键线程创建之后的克隆点？",
+      "answer": "fork 后无法简单复制其他正在运行的线程，可能破坏目标运行所需状态。",
+      "explanation": "计时器和影响行为的共享文件描述符等也需要评估。",
+      "example": "先完成可安全复用的单线程初始化再选择克隆点。",
+      "tags": [
+        "AFL++ 持久化测试入口",
+        "延迟克隆点"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d7986778/instrumentation/README.persistent_mode.md"
+    }
+  ]
+}

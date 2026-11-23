@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "spanbert-span-boundaries",
+    "title": "SpanBERT 原论文 v3：连续片段预训练",
+    "url": "https://arxiv.org/pdf/1907.10529v3",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "spanbertpre-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SpanBERT 连续片段预训练",
+      "knowledgePoint": "片段掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SpanBERT 预训练与逐个独立抽取 token 的掩码方式有什么主要区别？",
+      "answer": "它选择连续的随机片段进行掩码。",
+      "explanation": "连续片段会让模型利用片段之外的上下文恢复内部内容。",
+      "example": "一个多词实体的连续词语可能一起被选中。",
+      "tags": [
+        "SpanBERT 连续片段预训练",
+        "片段掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.10529v3"
+    },
+    {
+      "id": "spanbertpre-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SpanBERT 连续片段预训练",
+      "knowledgePoint": "片段长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SpanBERT 原论文如何选择随机掩码片段的长度？",
+      "answer": "从几何分布采样长度，并限制其最大长度。",
+      "explanation": "几何分布的参数和长度上限会影响采样片段的长度分布。",
+      "example": "不同训练样本可出现不同长度的掩码片段。",
+      "tags": [
+        "SpanBERT 连续片段预训练",
+        "片段长度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.10529v3"
+    },
+    {
+      "id": "spanbertpre-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SpanBERT 连续片段预训练",
+      "knowledgePoint": "起点边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SpanBERT 原论文选择掩码片段起点时如何处理子词？",
+      "answer": "起点必须位于一个词的开头，并以完整词组成被选片段。",
+      "explanation": "片段长度采样与词到子词的映射需要一起处理。",
+      "example": "不会故意从某词的中间子词开始选片段。",
+      "tags": [
+        "SpanBERT 连续片段预训练",
+        "起点边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.10529v3"
+    },
+    {
+      "id": "spanbertpre-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SpanBERT 连续片段预训练",
+      "knowledgePoint": "边界目标输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SpanBERT 的 span boundary objective 用什么表示来预测片段内的 token？",
+      "answer": "使用片段外左右边界 token 的输出表示和目标 token 的相对位置表示。",
+      "explanation": "预测时这些信息共同形成片段内部位置的表示。",
+      "example": "被遮盖片段左侧与右侧的上下文可共同提供线索。",
+      "tags": [
+        "SpanBERT 连续片段预训练",
+        "边界目标输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.10529v3"
+    },
+    {
+      "id": "spanbertpre-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SpanBERT 连续片段预训练",
+      "knowledgePoint": "联合训练损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SpanBERT 的片段边界目标与普通 MLM 损失如何结合？",
+      "answer": "对被掩码位置，将片段边界目标损失与普通 MLM 损失相加。",
+      "explanation": "两种目标使用不同的预测表示。",
+      "example": "同一个被选 token 可以同时贡献两项损失。",
+      "tags": [
+        "SpanBERT 连续片段预训练",
+        "联合训练损失"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.10529v3"
+    }
+  ]
+}

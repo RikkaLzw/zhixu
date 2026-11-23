@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "pytorch-cross-entropy-shapes",
+    "title": "PyTorch 2.7 文档：交叉熵目标与归约",
+    "url": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.CrossEntropyLoss.html",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptce-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉熵目标与归约",
+      "knowledgePoint": "分割目标形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 CrossEntropyLoss 用类别索引做二维分割时，logits 为 (N,C,H,W)，目标形状应是什么？",
+      "answer": "目标形状为 (N,H,W)，每个位置保存一个类别索引。",
+      "explanation": "类别索引目标应使用 long 类型。",
+      "example": "每个像素对应一个类别编号，而不是额外的 C 维。",
+      "tags": [
+        "交叉熵目标与归约",
+        "分割目标形状"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.CrossEntropyLoss.html"
+    },
+    {
+      "id": "ptce-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉熵目标与归约",
+      "knowledgePoint": "逐位置损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 CrossEntropyLoss 接收 (N,C,H,W) logits、类别索引目标并设置 reduction=\"none\" 时，输出形状是什么？",
+      "answer": "输出形状为 (N,H,W)，即保留每个像素位置的损失。",
+      "explanation": "类别维已在损失计算中被归约。",
+      "example": "每张图可得到一个 H×W 的损失图。",
+      "tags": [
+        "交叉熵目标与归约",
+        "逐位置损失"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.CrossEntropyLoss.html"
+    },
+    {
+      "id": "ptce-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉熵目标与归约",
+      "knowledgePoint": "概率目标归约",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 CrossEntropyLoss 使用概率目标和 reduction=\"mean\" 时，如何归约逐位置损失？",
+      "answer": "将逐位置损失求和后除以位置数 N；类权重已用于每项损失计算。",
+      "explanation": "该规则与类别索引目标的加权平均分母不同。",
+      "example": "软标签分割任务按所有参与位置取平均。",
+      "tags": [
+        "交叉熵目标与归约",
+        "概率目标归约"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.CrossEntropyLoss.html"
+    },
+    {
+      "id": "ptce-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉熵目标与归约",
+      "knowledgePoint": "忽略索引范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 CrossEntropyLoss 使用类别索引目标时，ignore_index 必须在类别范围内吗？",
+      "answer": "不必须；指定的忽略值可以不在有效类别索引范围内。",
+      "explanation": "该选项只适用于类别索引目标。",
+      "example": "C=3 时可用 -100 标记忽略位置。",
+      "tags": [
+        "交叉熵目标与归约",
+        "忽略索引范围"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.CrossEntropyLoss.html"
+    }
+  ]
+}

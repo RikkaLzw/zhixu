@@ -1,0 +1,1061 @@
+{
+  "source": {
+    "id": "python-syntax-foundations",
+    "title": "Python 基础与进阶语法",
+    "url": "https://docs.python.org/3.13/tutorial/controlflow.html",
+    "type": "官方技术文档",
+    "note": "依据 Python 3.13 官方教程、语言参考和标准库文档整理；面经为作者自述的主题启发。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pysyntax-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数参数",
+      "knowledgePoint": "位置与关键字参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 函数签名中的 / 和 * 分别怎样限制参数传递方式？",
+      "answer": "/ 之前的参数只能按位置传入；单独的 * 之后的参数只能按关键字传入。",
+      "explanation": "两者之间的普通参数可以按位置或关键字传入。",
+      "example": "在 f(a, /, b, *, c) 中，a 为仅位置参数，c 为仅关键字参数。",
+      "tags": [
+        "位置与关键字参数",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/controlflow.html#special-parameters",
+      "referenceTitle": "Python 3.13：Special parameters"
+    },
+    {
+      "id": "pysyntax-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "函数参数",
+      "knowledgePoint": "可变参数收集",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 函数定义中的 *args 与 **kwargs 分别收集什么？",
+      "answer": "*args 收集额外的位置参数形成元组；**kwargs 收集额外的关键字参数形成字典。",
+      "explanation": "args 和 kwargs 是约定名称，关键语法是星号。",
+      "example": "包装函数用 *args 和 **kwargs 接收不同调用参数。",
+      "tags": [
+        "可变参数收集",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/controlflow.html#arbitrary-argument-lists",
+      "referenceTitle": "Python 3.13：Arbitrary argument lists"
+    },
+    {
+      "id": "pysyntax-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "函数参数",
+      "knowledgePoint": "调用参数解包",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 调用函数时，*序列 和 **映射 分别做什么？",
+      "answer": "前者将可迭代对象展开为位置参数；后者将映射展开为关键字参数。",
+      "explanation": "实际调用仍必须满足函数签名，重复或不匹配的参数会报错。",
+      "example": "调用 f(*values, **options)。",
+      "tags": [
+        "调用参数解包",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/controlflow.html#unpacking-argument-lists",
+      "referenceTitle": "Python 3.13：Unpacking argument lists"
+    },
+    {
+      "id": "pysyntax-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "作用域",
+      "knowledgePoint": "全局与外层绑定",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 的 global 与 nonlocal 声明分别指向哪类作用域？",
+      "answer": "global 指向模块全局作用域；nonlocal 指向已有绑定的外层函数作用域。",
+      "explanation": "nonlocal 不能用于创建不存在的外层绑定。",
+      "example": "嵌套函数通过 nonlocal 更新外层计数器。",
+      "tags": [
+        "全局与外层绑定",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/simple_stmts.html#the-nonlocal-statement",
+      "referenceTitle": "Python 3.13：global 与 nonlocal"
+    },
+    {
+      "id": "pysyntax-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "作用域",
+      "knowledgePoint": "局部变量未绑定",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "函数中对变量赋值前先读取同名外层变量，为什么可能出现 UnboundLocalError？",
+      "answer": "若该函数体把名字判定为局部变量，读取发生在局部绑定之前就会报错。",
+      "explanation": "适当使用参数、global 或 nonlocal，并明确数据流。",
+      "example": "函数内先打印 x，后对 x 赋值。",
+      "tags": [
+        "局部变量未绑定",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/faq/programming.html#why-am-i-getting-an-unboundlocalerror-when-the-variable-has-a-value",
+      "referenceTitle": "Python 3.13：Programming FAQ"
+    },
+    {
+      "id": "pysyntax-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本语法",
+      "knowledgePoint": "身份与相等",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 的 is 与 == 分别比较什么？",
+      "answer": "is 比较两个引用是否指向同一对象；== 比较值是否相等，具体相等行为可由类型定义。",
+      "explanation": "判断单例 None 通常使用 is None。",
+      "example": "两个内容相同的列表可以相等但不是同一对象。",
+      "tags": [
+        "身份与相等",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/expressions.html#comparisons",
+      "referenceTitle": "Python 3.13：Comparisons"
+    },
+    {
+      "id": "pysyntax-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本语法",
+      "knowledgePoint": "赋值与对象引用",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Python 执行 b = a 时，会自动复制 a 指向的可变对象吗？",
+      "answer": "不会；a 和 b 随后指向同一个对象。",
+      "explanation": "需要独立副本时应按对象结构选择合适的复制方式。",
+      "example": "a 和 b 指向同一列表时，原地追加会通过两个名字观察到。",
+      "tags": [
+        "赋值与对象引用",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/classes.html#a-word-about-names-and-objects",
+      "referenceTitle": "Python 3.13：Names and objects"
+    },
+    {
+      "id": "pysyntax-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "控制流",
+      "knowledgePoint": "循环else",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 for 循环带 else 时，else 在什么情况下执行？",
+      "answer": "迭代正常耗尽且未被 break 提前终止时执行；空迭代也属于正常耗尽。",
+      "explanation": "异常或函数返回会中断正常流程。",
+      "example": "遍历候选项没有找到目标并未 break 时执行 else。",
+      "tags": [
+        "循环else",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/compound_stmts.html#the-for-statement",
+      "referenceTitle": "Python 3.13：for statement"
+    },
+    {
+      "id": "pysyntax-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "控制流",
+      "knowledgePoint": "break与continue",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 循环中的 break 与 continue 有什么区别？",
+      "answer": "break 退出当前循环；continue 跳过本轮剩余语句并开始下一轮。",
+      "explanation": "两者只直接影响所在的最近一层循环。",
+      "example": "跳过无效样本用 continue，找到目标后退出用 break。",
+      "tags": [
+        "break与continue",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/controlflow.html#break-and-continue-statements",
+      "referenceTitle": "Python 3.13：Loop control"
+    },
+    {
+      "id": "pysyntax-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本语法",
+      "knowledgePoint": "range与切片停止边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 range(start, stop) 和序列切片 s[start:stop] 是否包含 stop？",
+      "answer": "两者都不包含 stop；range 生成整数序列，切片取出指定范围内的元素。",
+      "explanation": "两者都可指定步长；切片省略的起止边界会随步长方向变化。",
+      "example": "range(2, 5) 产生 2、3、4；[10, 20, 30, 40][1:3] 得到 [20, 30]。",
+      "tags": [
+        "range与切片停止边界",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#common-sequence-operations",
+      "referenceTitle": "Python 3.13：Sequence operations",
+      "supportingReferences": [
+        {
+          "id": "python-ranges-ref",
+          "title": "Python 3.13：range",
+          "url": "https://docs.python.org/3.13/library/stdtypes.html#ranges",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "pysyntax-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本语法",
+      "knowledgePoint": "枚举索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 enumerate(iterable, start) 在遍历时提供什么？",
+      "answer": "它逐项提供计数值和对应元素，计数从 start 开始，默认从 0 开始。",
+      "explanation": "计数是枚举位置，不一定是原始对象的键。",
+      "example": "遍历样本时同时获取序号和内容。",
+      "tags": [
+        "枚举索引",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/functions.html#enumerate",
+      "referenceTitle": "Python 3.13：enumerate"
+    },
+    {
+      "id": "pysyntax-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代与表达式",
+      "knowledgePoint": "生成器表达式",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 生成器表达式与列表推导式在产生结果时有什么区别？",
+      "answer": "生成器表达式按迭代逐项产生结果；列表推导式立即构造列表。",
+      "explanation": "生成器通常适合不需要一次保留全部结果的场景。",
+      "example": "用 (f(x) for x in data) 按需处理记录。",
+      "tags": [
+        "生成器表达式",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/classes.html#generator-expressions",
+      "referenceTitle": "Python 3.13：Generator expressions"
+    },
+    {
+      "id": "pysyntax-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "上下文管理",
+      "knowledgePoint": "上下文管理退出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 with 语句如何帮助管理文件等资源？",
+      "answer": "成功进入上下文后，退出代码块时会调用上下文管理器的 __exit__，包括代码块抛出异常时。",
+      "explanation": "如果 __enter__ 本身失败，不能假定 __exit__ 一定被调用。",
+      "example": "with open(...) 在退出代码块时关闭文件。",
+      "tags": [
+        "上下文管理退出",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/compound_stmts.html#the-with-statement",
+      "referenceTitle": "Python 3.13：with statement"
+    },
+    {
+      "id": "pysyntax-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "上下文管理",
+      "knowledgePoint": "上下文异常抑制",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "上下文管理器的 __exit__ 在处理代码块异常时返回真值有什么效果？",
+      "answer": "它表示异常已处理，with 语句会抑制该异常的继续传播。",
+      "explanation": "返回假值通常让异常继续传播。",
+      "example": "实现自定义上下文管理器时谨慎决定是否抑制异常。",
+      "tags": [
+        "上下文异常抑制",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/compound_stmts.html#the-with-statement",
+      "referenceTitle": "Python 3.13：with statement"
+    },
+    {
+      "id": "pysyntax-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "类与对象",
+      "knowledgePoint": "类属性与实例属性",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 的类属性与实例属性在共享方式上有什么区别？",
+      "answer": "类属性通常由实例共享访问；实例属性保存在各自实例中。",
+      "explanation": "若类属性是可变对象，原地修改可能影响其他实例看到的内容。",
+      "example": "每个对象在 __init__ 中创建自己的列表。",
+      "tags": [
+        "类属性与实例属性",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/classes.html#class-and-instance-variables",
+      "referenceTitle": "Python 3.13：Class and instance variables"
+    },
+    {
+      "id": "pysyntax-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类与对象",
+      "knowledgePoint": "类方法与静态方法",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 的 classmethod 与 staticmethod 在绑定上有什么区别？",
+      "answer": "classmethod 调用时自动接收类作为第一个参数；staticmethod 不自动接收类或实例。",
+      "explanation": "两者都可以通过类访问，适用场景取决于是否需要类状态。",
+      "example": "用 classmethod 编写替代构造方法。",
+      "tags": [
+        "类方法与静态方法",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/functions.html#classmethod",
+      "referenceTitle": "Python 3.13：classmethod 与 staticmethod"
+    },
+    {
+      "id": "pysyntax-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类与对象",
+      "knowledgePoint": "属性装饰器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 property 常用于什么？",
+      "answer": "它让方法以属性访问形式提供读取、设置或删除行为。",
+      "explanation": "属性访问仍可能执行代码，并不一定只是读取一个普通字段。",
+      "example": "通过属性读取时计算并返回派生值。",
+      "tags": [
+        "属性装饰器",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/functions.html#property",
+      "referenceTitle": "Python 3.13：property"
+    },
+    {
+      "id": "pysyntax-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数参数",
+      "knowledgePoint": "注解与运行时校验",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Python 的函数类型注解会让解释器自动检查参数和返回值类型吗？",
+      "answer": "不会；类型注解本身不自动执行运行时类型检查。",
+      "explanation": "类型检查器或第三方库可以另外使用这些注解。",
+      "example": "将参数标注为 int 并不会自动拒绝字符串。",
+      "tags": [
+        "注解与运行时校验",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/controlflow.html#function-annotations",
+      "referenceTitle": "Python 3.13：Function annotations"
+    },
+    {
+      "id": "pysyntax-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "异常处理",
+      "knowledgePoint": "异常链",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 raise 新异常 from 原异常 有什么作用？",
+      "answer": "它显式记录新异常的原因，保留异常之间的因果链。",
+      "explanation": "raise ... from None 可抑制默认展示的异常上下文。",
+      "example": "捕获底层解析异常后抛出领域异常并保留原因。",
+      "tags": [
+        "异常链",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/simple_stmts.html#the-raise-statement",
+      "referenceTitle": "Python 3.13：raise statement"
+    },
+    {
+      "id": "pysyntax-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异常处理",
+      "knowledgePoint": "Exception与BaseException",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Python 中 except Exception 会自动捕获 KeyboardInterrupt 和 SystemExit 吗？",
+      "answer": "不会；它们直接继承 BaseException，而不属于 Exception 的子类。",
+      "explanation": "捕获 BaseException 会影响退出和中断等控制流程。",
+      "example": "普通错误处理不应意外吞掉 Ctrl+C。",
+      "tags": [
+        "Exception与BaseException",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/exceptions.html#exception-hierarchy",
+      "referenceTitle": "Python 3.13：Exception hierarchy"
+    },
+    {
+      "id": "pysyntax-022",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本语法",
+      "knowledgePoint": "排序接口",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 的 sorted(values) 与列表的 values.sort() 有什么区别？",
+      "answer": "sorted 返回新列表；list.sort 原地排序并返回 None。",
+      "explanation": "两者都可使用 key 和 reverse 参数。",
+      "example": "需要保留原列表顺序时使用 sorted。",
+      "tags": [
+        "排序接口",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/howto/sorting.html#sorting-basics",
+      "referenceTitle": "Python 3.13：Sorting HOWTO"
+    },
+    {
+      "id": "pysyntax-023",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本语法",
+      "knowledgePoint": "排序稳定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的稳定排序对排序键相同的元素有什么保证？",
+      "answer": "排序键相同的元素保留排序前的相对顺序。",
+      "explanation": "稳定性适用于 list.sort 和 sorted。",
+      "example": "按部门排序时，同部门记录保留原先的时间顺序。",
+      "tags": [
+        "排序稳定性",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/howto/sorting.html#sort-stability-and-complex-sorts",
+      "referenceTitle": "Python 3.13：Sorting HOWTO"
+    },
+    {
+      "id": "pysyntax-024",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本语法",
+      "knowledgePoint": "字典get默认值",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Python 字典的 get(key, default) 会在键存在但值为 None 时返回 default 吗？",
+      "answer": "不会；键存在时返回对应的 None，只有键不存在时才返回 default。",
+      "explanation": "需要区分缺失键与显式 None 时，应检查成员关系或使用独特的哨兵值。",
+      "example": "{\"x\": None}.get(\"x\", 5) 返回 None。",
+      "tags": [
+        "字典get默认值",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#dict.get",
+      "referenceTitle": "Python 3.13：dict.get"
+    },
+    {
+      "id": "pysyntax-025",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模块与工程",
+      "knowledgePoint": "模块入口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 模块中的 if __name__ == \"__main__\" 常用于什么？",
+      "answer": "它让特定代码在模块作为主程序运行时执行，而在普通导入时不执行。",
+      "explanation": "常用于命令行入口或示例代码。",
+      "example": "同一文件可被导入函数，也可直接运行入口。",
+      "tags": [
+        "模块入口",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/modules.html#executing-modules-as-scripts",
+      "referenceTitle": "Python 3.13：Modules as scripts"
+    },
+    {
+      "id": "pysyntax-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代与装饰器",
+      "knowledgePoint": "装饰器应用顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 中依次写 @d1 和 @d2 装饰同一函数，相当于怎样组合？",
+      "answer": "相当于先用 d2 包装函数，再把结果交给 d1，即 d1(d2(f))。",
+      "explanation": "装饰器表达式的求值与包装的应用是两个相关但不同的步骤。",
+      "example": "日志和缓存装饰器的顺序可能改变行为。",
+      "tags": [
+        "装饰器应用顺序",
+        "Python",
+        "Python语法",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/compound_stmts.html#function-definitions",
+      "referenceTitle": "Python 3.13：Function definitions",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节后端 Agent 一面公开面经（经历为作者自述）；Python 装饰器主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "pysyntax-027",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "代码块",
+      "knowledgePoint": "缩进与代码块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多行 Python 代码块如何表示？",
+      "answer": "Python 用缩进划分多行代码块；同一个块内的语句应使用一致的缩进。",
+      "explanation": "缩进层级改变会开始或结束一个代码块。",
+      "example": "if 条件为真时，执行其下方缩进的语句。",
+      "tags": [
+        "缩进与代码块",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/controlflow.html#if-statements",
+      "referenceTitle": "Python 3.13 官方文档：缩进与代码块"
+    },
+    {
+      "id": "pysyntax-028",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "条件与循环",
+      "knowledgePoint": "条件分支顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 if、elif、else 如何选择执行分支？",
+      "answer": "按顺序检查条件，执行第一个条件为真的分支；若都不满足，则执行存在的 else 分支。",
+      "explanation": "一组 if/elif/else 最多执行一个分支。",
+      "example": "用 if、elif 和 else 区分不同分数范围。",
+      "tags": [
+        "条件分支顺序",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/controlflow.html#if-statements",
+      "referenceTitle": "Python 3.13 官方文档：条件分支顺序"
+    },
+    {
+      "id": "pysyntax-029",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "条件与循环",
+      "knowledgePoint": "while循环条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 while 循环何时执行循环体？",
+      "answer": "每次迭代前先判断条件；条件为真时执行循环体。",
+      "explanation": "循环体应适时改变状态，否则可能持续循环。",
+      "example": "while count < 3: 每次迭代后增加 count。",
+      "tags": [
+        "while循环条件",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/introduction.html#first-steps-towards-programming",
+      "referenceTitle": "Python 3.13 官方文档：while循环条件"
+    },
+    {
+      "id": "pysyntax-030",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "条件与循环",
+      "knowledgePoint": "常见假值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 条件判断中有哪些常见的假值？",
+      "answer": "None、False、数值零和空容器通常判断为假；非空容器通常为真。",
+      "explanation": "对象还可通过类型定义的真值规则决定条件结果。",
+      "example": "0、空字符串和空列表都可使 if 条件为假。",
+      "tags": [
+        "常见假值",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#truth-value-testing",
+      "referenceTitle": "Python 3.13 官方文档：常见假值"
+    },
+    {
+      "id": "pysyntax-031",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "条件与循环",
+      "knowledgePoint": "逻辑运算与短路",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 and 与 or 会总是返回布尔值吗？",
+      "answer": "不一定；它们按短路规则返回一个操作数。",
+      "explanation": "and 在左操作数为假时不再求右侧，or 在左操作数为真时不再求右侧。",
+      "example": "空字符串 or \"默认值\" 的结果是 \"默认值\"。",
+      "tags": [
+        "逻辑运算与短路",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#boolean-operations-and-or-not",
+      "referenceTitle": "Python 3.13 官方文档：逻辑运算与短路"
+    },
+    {
+      "id": "pysyntax-032",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "序列操作",
+      "knowledgePoint": "负索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 列表索引 -1 指向哪个元素？",
+      "answer": "它指向列表的最后一个元素；负索引从末尾向前计数。",
+      "explanation": "空列表没有最后一个元素，访问会引发 IndexError。",
+      "example": "[\"a\", \"b\"][-1] 的结果是 \"b\"。",
+      "tags": [
+        "负索引",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/introduction.html#lists",
+      "referenceTitle": "Python 3.13 官方文档：负索引"
+    },
+    {
+      "id": "pysyntax-033",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "序列操作",
+      "knowledgePoint": "反向切片",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 列表的 values[::-1] 通常得到什么？",
+      "answer": "得到一个元素顺序相反的新列表。",
+      "explanation": "切片中的步长 -1 表示从后往前取元素，不会原地反转原列表。",
+      "example": "[1, 2, 3][::-1] 得到 [3, 2, 1]。",
+      "tags": [
+        "反向切片",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#common-sequence-operations",
+      "referenceTitle": "Python 3.13 官方文档：反向切片"
+    },
+    {
+      "id": "pysyntax-034",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "列表方法",
+      "knowledgePoint": "追加与扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 列表的 append(x) 与 extend(xs) 有什么区别？",
+      "answer": "append 将 x 作为一个元素加入末尾；extend 将可迭代对象 xs 的元素逐个加入末尾。",
+      "explanation": "传入列表时，append 会加入整个列表对象，extend 会加入其中的元素。",
+      "example": "a.append([1, 2]) 与 a.extend([1, 2]) 得到的结构不同。",
+      "tags": [
+        "追加与扩展",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/datastructures.html#more-on-lists",
+      "referenceTitle": "Python 3.13 官方文档：追加与扩展"
+    },
+    {
+      "id": "pysyntax-035",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "列表方法",
+      "knowledgePoint": "按位置或值删除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 列表的 pop 与 remove 删除元素时依据什么？",
+      "answer": "pop 按索引删除并返回元素，默认删除最后一个；remove 按值删除首次匹配的元素。",
+      "explanation": "索引越界和找不到指定值分别会引发异常。",
+      "example": "items.pop(0) 删除并返回首项；items.remove(\"x\") 删除首个 \"x\"。",
+      "tags": [
+        "按位置或值删除",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/datastructures.html#more-on-lists",
+      "referenceTitle": "Python 3.13 官方文档：按位置或值删除"
+    },
+    {
+      "id": "pysyntax-036",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "字典方法",
+      "knowledgePoint": "缺失键访问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 字典缺少某个键时，d[key] 和 d.get(key) 默认如何表现？",
+      "answer": "d[key] 会引发 KeyError；d.get(key) 默认返回 None。",
+      "explanation": "get 也可以指定其他默认值。",
+      "example": "d.get(\"name\", \"未知\") 在键不存在时返回 \"未知\"。",
+      "tags": [
+        "缺失键访问",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/datastructures.html#dictionaries",
+      "referenceTitle": "Python 3.13 官方文档：缺失键访问"
+    },
+    {
+      "id": "pysyntax-037",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "字典方法",
+      "knowledgePoint": "字典成员判断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 表达式 key in d 对字典检查什么？",
+      "answer": "检查 key 是否是字典的键。",
+      "explanation": "这不是直接检查字典的值。",
+      "example": "\"name\" in {\"name\": \"小李\"} 的结果为 True。",
+      "tags": [
+        "字典成员判断",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#mapping-types-dict",
+      "referenceTitle": "Python 3.13 官方文档：字典成员判断"
+    },
+    {
+      "id": "pysyntax-038",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "字典方法",
+      "knowledgePoint": "字典键值对遍历",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 字典的 items() 提供什么？",
+      "answer": "它提供由键值对组成的字典视图，可用于同时遍历键和值。",
+      "explanation": "遍历时可以用两个变量解包每个键值对。",
+      "example": "for key, value in d.items(): 分别处理键与值。",
+      "tags": [
+        "字典键值对遍历",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#dict.items",
+      "referenceTitle": "Python 3.13 官方文档：字典键值对遍历"
+    },
+    {
+      "id": "pysyntax-039",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "字典方法",
+      "knowledgePoint": "字典插入顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 字典按什么顺序迭代键？",
+      "answer": "按键的插入顺序迭代；更新已有键的值不会改变它的位置。",
+      "explanation": "删除键后重新加入，该键会出现在末尾。",
+      "example": "依次加入 a、b 后，遍历键的顺序为 a、b。",
+      "tags": [
+        "字典插入顺序",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#mapping-types-dict",
+      "referenceTitle": "Python 3.13 官方文档：字典插入顺序"
+    },
+    {
+      "id": "pysyntax-040",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "字符串",
+      "knowledgePoint": "字符串不可变",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的字符串能否通过索引原地修改单个字符？",
+      "answer": "不能；字符串是不可变对象，需要构造新的字符串。",
+      "explanation": "重新绑定变量可以让变量指向新字符串。",
+      "example": "s = \"A\" + s[1:] 会产生新字符串。",
+      "tags": [
+        "字符串不可变",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#text-sequence-type-str",
+      "referenceTitle": "Python 3.13 官方文档：字符串不可变"
+    },
+    {
+      "id": "pysyntax-041",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "字符串",
+      "knowledgePoint": "格式化字符串",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 f-string 如何把表达式结果放入字符串？",
+      "answer": "在带 f 前缀的字符串中用花括号包住表达式，表达式会被求值并格式化。",
+      "explanation": "花括号内还可指定格式，例如小数位数。",
+      "example": "f\"{3.1:.2f}\" 的结果是 \"3.10\"。",
+      "tags": [
+        "格式化字符串",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/inputoutput.html#fancier-output-formatting",
+      "referenceTitle": "Python 3.13 官方文档：格式化字符串"
+    },
+    {
+      "id": "pysyntax-042",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数值运算",
+      "knowledgePoint": "向下取整除法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 整数的 // 运算如何处理负数商？",
+      "answer": "它对真实商向负无穷方向取整，不是简单地向零截断。",
+      "explanation": "普通 / 与 // 的结果和舍入行为不同。",
+      "example": "-7 // 3 的结果是 -3。",
+      "tags": [
+        "向下取整除法",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/introduction.html#numbers",
+      "referenceTitle": "Python 3.13 官方文档：向下取整除法"
+    },
+    {
+      "id": "pysyntax-043",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数值运算",
+      "knowledgePoint": "整数余数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 整数 a % b 的非零结果符号与什么一致？",
+      "answer": "与除数 b 的符号一致，并与向下取整除法满足 a == (a // b) * b + (a % b)。",
+      "explanation": "除数不能为零。",
+      "example": "-7 % 3 的结果是 2。",
+      "tags": [
+        "整数余数",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/expressions.html#binary-arithmetic-operations",
+      "referenceTitle": "Python 3.13 官方文档：整数余数"
+    },
+    {
+      "id": "pysyntax-044",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "赋值与函数",
+      "knowledgePoint": "序列解包",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 赋值 a, b = values 对 values 的元素数量有什么要求？",
+      "answer": "没有星号目标时，右侧可迭代对象必须恰好提供两个元素。",
+      "explanation": "元素过多或过少都会引发 ValueError。",
+      "example": "a, b = (1, 2) 分别绑定 1 和 2。",
+      "tags": [
+        "序列解包",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/datastructures.html#tuples-and-sequences",
+      "referenceTitle": "Python 3.13 官方文档：序列解包"
+    },
+    {
+      "id": "pysyntax-045",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "赋值与函数",
+      "knowledgePoint": "单元素元组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 如何写一个只包含 1 的元组？",
+      "answer": "写成 (1,)；形成元组的关键是逗号。",
+      "explanation": "(1) 只是带括号的整数表达式。",
+      "example": "type((1,)) 是 tuple，而 type((1)) 是 int。",
+      "tags": [
+        "单元素元组",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/datastructures.html#tuples-and-sequences",
+      "referenceTitle": "Python 3.13 官方文档：单元素元组"
+    },
+    {
+      "id": "pysyntax-046",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "赋值与函数",
+      "knowledgePoint": "函数默认返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通 Python 函数执行结束时没有 return 表达式，会返回什么？",
+      "answer": "返回 None；单独写 return 也会返回 None。",
+      "explanation": "本题讨论普通函数，不讨论生成器的迭代行为。",
+      "example": "没有 return 语句的函数调用结果为 None。",
+      "tags": [
+        "函数默认返回值",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/controlflow.html#defining-functions",
+      "referenceTitle": "Python 3.13 官方文档：函数默认返回值"
+    },
+    {
+      "id": "pysyntax-047",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文件与输入",
+      "knowledgePoint": "文件写入模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 open 使用 w 和 a 模式写文件时有什么区别？",
+      "answer": "w 打开已有文件时会截断原内容；a 将写入追加到文件末尾。",
+      "explanation": "两种模式在文件不存在时通常都会创建文件，具体还受权限等条件影响。",
+      "example": "追加日志可使用 open(path, \"a\", encoding=\"utf-8\")。",
+      "tags": [
+        "文件写入模式",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/inputoutput.html#reading-and-writing-files",
+      "referenceTitle": "Python 3.13 官方文档：文件写入模式"
+    },
+    {
+      "id": "pysyntax-048",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文件与输入",
+      "knowledgePoint": "输入返回类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 input() 返回用户输入的什么类型？",
+      "answer": "返回字符串，末尾换行符会被去掉。",
+      "explanation": "需要数值时要显式转换，并处理无效输入。",
+      "example": "int(input()) 可把合法的整数字符串转成整数。",
+      "tags": [
+        "输入返回类型",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/functions.html#input",
+      "referenceTitle": "Python 3.13 官方文档：输入返回类型"
+    },
+    {
+      "id": "pysyntax-049",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器操作",
+      "knowledgePoint": "容器长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 len() 对列表和字典分别计算什么？",
+      "answer": "返回列表的元素个数或字典的键值对个数。",
+      "explanation": "空列表和空字典的长度都是 0。",
+      "example": "len([10, 20]) 等于 2。",
+      "tags": [
+        "容器长度",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/functions.html#len",
+      "referenceTitle": "Python 3.13 官方文档：容器长度"
+    },
+    {
+      "id": "pysyntax-050",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "序列操作",
+      "knowledgePoint": "切片越界与索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对普通 Python 列表，切片边界超出范围与单个索引越界有何区别？",
+      "answer": "切片边界会被限制在有效范围内；单个索引越界会引发 IndexError。",
+      "explanation": "切片还可能得到空列表。",
+      "example": "[1, 2][10:20] 为 []，而 [1, 2][10] 会报错。",
+      "tags": [
+        "切片越界与索引",
+        "Python",
+        "Python语法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/stdtypes.html#common-sequence-operations",
+      "referenceTitle": "Python 3.13 官方文档：切片越界与索引"
+    }
+  ]
+}

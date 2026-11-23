@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "unigram-subword-segmentation",
+    "title": "Kudo 2018 论文：Unigram 子词模型",
+    "url": "https://arxiv.org/pdf/1804.10959v1",
+    "type": "固定版本论文、官方文档与数据规范",
+    "note": "依据逐题引用的资料自行整理；示例为自编。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "unigram-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Unigram 子词分词",
+      "knowledgePoint": "序列概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Unigram 子词模型怎样计算一个候选切分的概率？",
+      "answer": "在模型的独立性假设下，将候选中各子词的概率相乘。",
+      "explanation": "候选必须能够按顺序拼接回输入文本。",
+      "example": "两个子词的序列概率为各自概率的乘积。",
+      "tags": [
+        "Unigram 子词分词",
+        "序列概率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1804.10959v1"
+    },
+    {
+      "id": "unigram-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Unigram 子词分词",
+      "knowledgePoint": "最优切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Unigram 子词模型如何选择概率最高的确定性切分？",
+      "answer": "在可行切分中寻找序列概率最大的结果，可使用 Viterbi 算法求解。",
+      "explanation": "最高概率切分不一定等同于逐步选取局部最长子词。",
+      "example": "比较同一单词的多个合法子词序列。",
+      "tags": [
+        "Unigram 子词分词",
+        "最优切分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1804.10959v1"
+    },
+    {
+      "id": "unigram-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Unigram 子词分词",
+      "knowledgePoint": "词表构造",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kudo 的 Unigram 训练方法与常见 BPE 在词表构造方向上有什么区别？",
+      "answer": "Unigram 从较大的候选词表出发逐步删减；常见 BPE 从基本符号开始逐步合并。",
+      "explanation": "这里比较论文描述的典型算法，不代表所有实现细节都相同。",
+      "example": "从高频子串候选中裁剪到目标词表大小。",
+      "tags": [
+        "Unigram 子词分词",
+        "词表构造"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1804.10959v1"
+    },
+    {
+      "id": "unigram-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Unigram 子词分词",
+      "knowledgePoint": "参数估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定词表时，Kudo 的 Unigram 方法用什么思路估计子词概率？",
+      "answer": "使用 EM 算法优化语料的边缘似然。",
+      "explanation": "各训练句子可能对应多种候选切分。",
+      "example": "交替利用可能的切分估计子词使用概率。",
+      "tags": [
+        "Unigram 子词分词",
+        "参数估计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1804.10959v1"
+    },
+    {
+      "id": "unigram-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Unigram 子词分词",
+      "knowledgePoint": "删减标准",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kudo 的 Unigram 词表裁剪如何衡量某个子词是否值得保留？",
+      "answer": "估计移除该子词会使训练语料似然下降多少，优先保留损失较大的子词。",
+      "explanation": "这是一种论文中的迭代剪枝策略。",
+      "example": "删除某片段后剩余切分对语料解释明显变差，则倾向保留它。",
+      "tags": [
+        "Unigram 子词分词",
+        "删减标准"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1804.10959v1"
+    },
+    {
+      "id": "unigram-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Unigram 子词分词",
+      "knowledgePoint": "单字符保留",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kudo 的 Unigram 训练算法为什么保留训练语料中的单字符子词？",
+      "answer": "这样训练语料中的文本仍可用字符级切分表示。",
+      "explanation": "未在训练语料出现的新字符仍需结合分词器的未知符号等机制处理。",
+      "example": "长词没有整体词条时仍可退回其已见字符。",
+      "tags": [
+        "Unigram 子词分词",
+        "单字符保留"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1804.10959v1"
+    },
+    {
+      "id": "unigram-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Unigram 子词分词",
+      "knowledgePoint": "采样平滑",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kudo 的 n-best 子词采样中，较小的正 α 对候选切分概率有什么影响？",
+      "answer": "它使候选分布更平坦；较大的 α 更偏向高概率切分。",
+      "explanation": "这里讨论论文中对候选概率取 α 次幂并重新归一化的采样。",
+      "example": "α 变小时低概率切分更有机会被采到。",
+      "tags": [
+        "Unigram 子词分词",
+        "采样平滑"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1804.10959v1"
+    }
+  ]
+}

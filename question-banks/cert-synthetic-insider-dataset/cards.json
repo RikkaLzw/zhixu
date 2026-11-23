@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "cert-synthetic-insider-dataset",
+    "title": "CERT：合成内部威胁测试数据集",
+    "url": "https://www.sei.cmu.edu/library/insider-threat-test-dataset/",
+    "type": "官方文档、教材或论文",
+    "note": "依据逐题列出的资料自行整理；面经主题延伸注明非原题。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "certinsider-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CERT 合成内部威胁数据",
+      "knowledgePoint": "数据性质",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CERT Insider Threat Test Dataset 的背景活动与恶意行为记录是真实企业日志吗？",
+      "answer": "不是；官方说明两类数据均由合成方式生成。",
+      "explanation": "合成数据适合受控实验，但不能直接视为真实组织的行为分布。",
+      "example": "先注明样本来自合成环境再报告检测效果。",
+      "tags": [
+        "安全数据",
+        "数据性质"
+      ],
+      "evidence": "source",
+      "reference": "https://www.sei.cmu.edu/library/insider-threat-test-dataset/"
+    },
+    {
+      "id": "certinsider-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CERT 合成内部威胁数据",
+      "knowledgePoint": "版本说明",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CERT 内部威胁测试数据按什么组织，不同数据包的说明应在哪里查看？",
+      "answer": "按数据生成器版本组织；每个数据集压缩包内的 README 说明该版本的特性。",
+      "explanation": "不同版本或数据包不能不加区分地混为同一分布。",
+      "example": "查看 r4.2 数据包对应的 README。",
+      "tags": [
+        "安全数据",
+        "版本说明"
+      ],
+      "evidence": "source",
+      "reference": "https://www.sei.cmu.edu/library/insider-threat-test-dataset/"
+    },
+    {
+      "id": "certinsider-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CERT 合成内部威胁数据",
+      "knowledgePoint": "答案文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CERT 数据集的 answers.tar.bz2 记录哪些类别的信息？",
+      "answer": "它包含合成恶意活动的场景描述，以及涉及的合成用户标识。",
+      "explanation": "答案文件为实验标签提供线索，使用时要检查与具体数据版本的对应关系。",
+      "example": "依据答案文件定位某个合成内部威胁场景。",
+      "tags": [
+        "安全数据",
+        "答案文件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.sei.cmu.edu/library/insider-threat-test-dataset/"
+    },
+    {
+      "id": "certinsider-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CERT 合成内部威胁数据",
+      "knowledgePoint": "标签泄漏",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 CERT 合成数据训练模型时，为什么不能把测试对象的答案文件内容直接作为预测特征？",
+      "answer": "答案含场景和涉事用户等真值信息，直接用于预测会造成标签泄漏。",
+      "explanation": "标注与评估可以使用答案，但特征应限制为预测时可获得的信息。",
+      "example": "用日志特征预测，再用保留的答案评估。",
+      "tags": [
+        "安全数据",
+        "标签泄漏"
+      ],
+      "evidence": "source",
+      "reference": "https://www.sei.cmu.edu/library/insider-threat-test-dataset/"
+    },
+    {
+      "id": "certinsider-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CERT 合成内部威胁数据",
+      "knowledgePoint": "现实外推",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CERT 合成数据上的高分能否单独证明检测器在真实企业环境中有相同表现？",
+      "answer": "不能；真实行为、攻击方式和采集条件可能与合成环境不同，需要额外验证。",
+      "explanation": "应在允许的数据与环境中评估时间外和跨环境表现。",
+      "example": "将合成数据结果与真实环境验证分开报告。",
+      "tags": [
+        "安全数据",
+        "现实外推"
+      ],
+      "evidence": "source",
+      "reference": "https://www.sei.cmu.edu/library/insider-threat-test-dataset/"
+    }
+  ]
+}

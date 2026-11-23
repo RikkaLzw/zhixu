@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "windows-4688-process-audit",
+    "title": "Microsoft 文档：Windows 4688 进程创建事件",
+    "url": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688",
+    "type": "Microsoft 官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，版本与前提见题目。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "winproc-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Windows 4688 进程审核",
+      "knowledgePoint": "创建事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 安全日志的事件 4688 主要记录什么行为？",
+      "answer": "记录新进程被创建。",
+      "explanation": "是否产生事件取决于相应审核策略配置。",
+      "example": "调查某主机何时启动一个程序。",
+      "tags": [
+        "Windows 4688 进程审核",
+        "创建事件"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688"
+    },
+    {
+      "id": "winproc-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Windows 4688 进程审核",
+      "knowledgePoint": "新进程路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 4688 的 New Process Name 字段表示什么？",
+      "answer": "表示新进程可执行文件的完整路径和名称。",
+      "explanation": "它是进程映像路径，并不等同于完整命令行参数。",
+      "example": "查看新启动程序的可执行文件路径。",
+      "tags": [
+        "Windows 4688 进程审核",
+        "新进程路径"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688"
+    },
+    {
+      "id": "winproc-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 4688 进程审核",
+      "knowledgePoint": "进程标识",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Windows 4688 的 New Process ID 与 Creator Process ID 分别指什么？",
+      "answer": "前者是新进程的 PID，后者是创建该进程的进程 PID。",
+      "explanation": "字段在事件中以十六进制表示，可转换为十进制与工具中的 PID 比较。",
+      "example": "用 Creator Process ID 查找可能的创建进程事件。",
+      "tags": [
+        "Windows 4688 进程审核",
+        "进程标识"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688"
+    },
+    {
+      "id": "winproc-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 4688 进程审核",
+      "knowledgePoint": "版本新增字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 4688 的哪个事件版本新增了 Process Command Line 字段？",
+      "answer": "版本 1 新增了该字段，版本 2 也包含它。",
+      "explanation": "能否填充该字段还取决于审核策略。",
+      "example": "解析事件时先检查事件版本。",
+      "tags": [
+        "Windows 4688 进程审核",
+        "版本新增字段"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688"
+    },
+    {
+      "id": "winproc-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 4688 进程审核",
+      "knowledgePoint": "目标主体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 4688 版本 2 引入 Target Subject 的目的是什么？",
+      "answer": "在目标进程上下文与创建者上下文不同的情况下，记录目标主体信息。",
+      "explanation": "只看创建者主体可能不足以表示新进程实际目标身份。",
+      "example": "区分创建进程的账户与目标进程的账户。",
+      "tags": [
+        "Windows 4688 进程审核",
+        "目标主体"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688"
+    },
+    {
+      "id": "winproc-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 4688 进程审核",
+      "knowledgePoint": "提权令牌",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 4688 中 Token Elevation Type 的 %%1937 表示什么类型的令牌？",
+      "answer": "表示类型 2 的提升令牌。",
+      "explanation": "微软文档将它与 UAC 启用后以管理员身份运行等情况关联。",
+      "example": "分析以提升令牌启动的进程。",
+      "tags": [
+        "Windows 4688 进程审核",
+        "提权令牌"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688"
+    },
+    {
+      "id": "winproc-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 4688 进程审核",
+      "knowledgePoint": "完整性标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 4688 版本 2 的 Mandatory Label 描述什么？",
+      "answer": "它是分配给新进程的完整性标签 SID。",
+      "explanation": "该字段描述完整性级别，不等同于进程的可执行路径。",
+      "example": "检查进程完整性标签。",
+      "tags": [
+        "Windows 4688 进程审核",
+        "完整性标签"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688"
+    }
+  ]
+}

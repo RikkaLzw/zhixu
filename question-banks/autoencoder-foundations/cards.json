@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "autoencoder-foundations",
+    "title": "Deep Learning：自编码器与去噪表示",
+    "url": "https://www.deeplearningbook.org/contents/autoencoders.html",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题引用的教材、论文或固定版本文档自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "aebase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "自编码器基础",
+      "knowledgePoint": "编码与解码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通自编码器的编码器和解码器分别做什么？",
+      "answer": "编码器把输入映射到内部表示；解码器从该表示重构输入。",
+      "explanation": "内部表示也称编码或潜在表示。",
+      "example": "先把图像编码为向量，再由向量重建图像。",
+      "tags": [
+        "自编码器基础",
+        "编码与解码"
+      ],
+      "evidence": "source",
+      "reference": "https://www.deeplearningbook.org/contents/autoencoders.html"
+    },
+    {
+      "id": "aebase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "自编码器基础",
+      "knowledgePoint": "重构目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通自编码器训练时通常用什么作为重构目标？",
+      "answer": "通常使用原始输入本身作为目标，最小化输出与输入的差异。",
+      "explanation": "具体重构损失应适配数据和输出分布。",
+      "example": "以输入图像作为重建图像的训练目标。",
+      "tags": [
+        "自编码器基础",
+        "重构目标"
+      ],
+      "evidence": "source",
+      "reference": "https://www.deeplearningbook.org/contents/autoencoders.html"
+    },
+    {
+      "id": "aebase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "自编码器基础",
+      "knowledgePoint": "欠完备表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么是欠完备（undercomplete）自编码器？",
+      "answer": "它的编码维度小于输入维度。",
+      "explanation": "较低维度是结构约束，不保证模型必然学到有用特征。",
+      "example": "将 100 维输入映射到 10 维编码。",
+      "tags": [
+        "自编码器基础",
+        "欠完备表示"
+      ],
+      "evidence": "source",
+      "reference": "https://www.deeplearningbook.org/contents/autoencoders.html"
+    },
+    {
+      "id": "aebase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "自编码器基础",
+      "knowledgePoint": "恒等映射风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "自编码器的编码器和解码器容量过大时，为什么重构效果好不一定说明表示有用？",
+      "answer": "模型可能学会近似复制输入，却没有提取对下游任务有价值的结构。",
+      "explanation": "低重构误差与下游任务效果是不同目标。",
+      "example": "高容量模型可能记住训练样本。",
+      "tags": [
+        "自编码器基础",
+        "恒等映射风险"
+      ],
+      "evidence": "source",
+      "reference": "https://www.deeplearningbook.org/contents/autoencoders.html"
+    },
+    {
+      "id": "aebase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "自编码器基础",
+      "knowledgePoint": "过完备与约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "过完备自编码器的编码维度大于输入维度，是否一定不能学到有用表示？",
+      "answer": "不一定；合适的稀疏、去噪等约束也可能促使其学习有用结构。",
+      "explanation": "效果依赖训练目标、模型容量和数据。",
+      "example": "对高维编码添加稀疏惩罚。",
+      "tags": [
+        "自编码器基础",
+        "过完备与约束"
+      ],
+      "evidence": "source",
+      "reference": "https://www.deeplearningbook.org/contents/autoencoders.html"
+    },
+    {
+      "id": "aebase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "自编码器基础",
+      "knowledgePoint": "稀疏编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "稀疏自编码器在重构损失之外通常对什么施加约束？",
+      "answer": "对编码激活施加稀疏性约束，使表示倾向只激活少量特征。",
+      "explanation": "具体惩罚形式可以不同。",
+      "example": "对编码向量加入稀疏惩罚项。",
+      "tags": [
+        "自编码器基础",
+        "稀疏编码"
+      ],
+      "evidence": "source",
+      "reference": "https://www.deeplearningbook.org/contents/autoencoders.html"
+    },
+    {
+      "id": "aebase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "自编码器基础",
+      "knowledgePoint": "去噪任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "去噪自编码器训练时，输入与重构目标有什么区别？",
+      "answer": "输入是经过噪声或其他扰动的数据，目标是扰动前的原始数据。",
+      "explanation": "模型需学习从受扰动输入恢复信息。",
+      "example": "输入加噪图像，目标为对应干净图像。",
+      "tags": [
+        "自编码器基础",
+        "去噪任务"
+      ],
+      "evidence": "source",
+      "reference": "https://www.deeplearningbook.org/contents/autoencoders.html"
+    },
+    {
+      "id": "aebase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "自编码器基础",
+      "knowledgePoint": "扰动策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "去噪自编码器中的扰动方式为什么应根据数据和目标选择？",
+      "answer": "不同噪声或缺失模式会改变模型需要恢复的信息，进而影响所学表示。",
+      "explanation": "训练扰动与实际场景差异过大时效果可能受影响。",
+      "example": "用缺失字段模拟部署时的部分观测。",
+      "tags": [
+        "自编码器基础",
+        "扰动策略"
+      ],
+      "evidence": "source",
+      "reference": "https://www.deeplearningbook.org/contents/autoencoders.html"
+    }
+  ]
+}

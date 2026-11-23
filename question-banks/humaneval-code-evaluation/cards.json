@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "humaneval-code-evaluation",
+    "title": "HumanEval 原论文 v2：代码生成与 pass@k",
+    "url": "https://arxiv.org/abs/2107.03374v2",
+    "type": "论文、官方文档与系统手册",
+    "note": "依据逐题所列固定版本论文或官方资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "humaneval-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "代码生成评估与 pass@k",
+      "knowledgePoint": "任务内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HumanEval 原论文中的一道任务通常包含哪些内容？",
+      "answer": "题目数据包含函数签名、文档字符串、参考实现及若干单元测试。",
+      "explanation": "论文用签名和说明提示模型生成 Python 函数，再执行测试评估。",
+      "example": "根据函数说明生成实现并运行测试。",
+      "tags": [
+        "代码生成评估与 pass@k",
+        "任务内容"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.03374v2"
+    },
+    {
+      "id": "humaneval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码生成评估与 pass@k",
+      "knowledgePoint": "采样估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HumanEval 每题采样 n 个候选、其中 c 个通过测试，1≤k≤n 时如何估计 pass@k？",
+      "answer": "使用 1−C(n−c,k)/C(n,k)，再对问题取平均。",
+      "explanation": "n−c<k 时按组合含义该题值为 1；k=1 时该题估计值为 c/n。",
+      "example": "从生成的候选中评价 k 次机会至少一次通过。",
+      "tags": [
+        "代码生成评估与 pass@k",
+        "采样估计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.03374v2"
+    },
+    {
+      "id": "humaneval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码生成评估与 pass@k",
+      "knowledgePoint": "有偏替代式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能总把 1−(1−c/n)^k 当作 HumanEval 论文的无偏 pass@k 估计式？",
+      "answer": "它直接把样本通过比例代入非线性表达式，论文说明这会产生偏差。",
+      "explanation": "论文使用基于组合数的估计式。",
+      "example": "小样本下两种计算结果可能不同。",
+      "tags": [
+        "代码生成评估与 pass@k",
+        "有偏替代式"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.03374v2"
+    },
+    {
+      "id": "humaneval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码生成评估与 pass@k",
+      "knowledgePoint": "评测选择与实际选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么较高的 pass@k 不一定意味着系统能在没有测试的情况下选出正确候选？",
+      "answer": "pass@k 只要求候选中存在通过测试的解，相当于用测试结果作为选择依据。",
+      "explanation": "实际部署时能否识别正确候选是额外问题。",
+      "example": "生成多个实现但用户只能收到一个。",
+      "tags": [
+        "代码生成评估与 pass@k",
+        "评测选择与实际选择"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.03374v2"
+    },
+    {
+      "id": "humaneval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码生成评估与 pass@k",
+      "knowledgePoint": "采样设置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较不同模型的 HumanEval pass@k 时，为什么应记录采样温度等生成配置？",
+      "answer": "生成配置影响候选的分布和多样性，进而影响 pass@k。",
+      "explanation": "不同 k 下合适的采样温度也可能不同。",
+      "example": "比较两个模型时保持可比的采样预算和配置。",
+      "tags": [
+        "代码生成评估与 pass@k",
+        "采样设置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2107.03374v2"
+    }
+  ]
+}

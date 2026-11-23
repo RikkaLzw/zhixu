@@ -1,0 +1,2070 @@
+{
+  "version": 1,
+  "date": "2026-11-23",
+  "description": "人工筛选出更适合专项研究而非常规面试复习的卡片。按问题和答案匹配，个人修改后的卡片不自动降级；其他卡片仍需持续审核。",
+  "reasons": {
+    "experiment_detail": "特定论文的实验、评测或数据构造细节，适合复现该研究时查阅。",
+    "implementation_detail": "特定论文或实现的组件、参数和代码细节，适合专项研究时查阅。",
+    "benchmark_detail": "特定数据集或基准的组织与发布细节，适合使用该数据集时查阅。"
+  },
+  "cards": [
+    {
+      "id": "adalora-002",
+      "question": "AdaLoRA 原论文如何对权重增量进行类似 SVD 的参数化？",
+      "answer": "用两个矩阵与中间对角矩阵相乘表示增量，即 Δ=PΛQ。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "adalora-003",
+      "question": "AdaLoRA 原论文怎样初始化中间对角参数，使初始权重增量为零？",
+      "answer": "将对角参数 Λ 初始化为零，左右矩阵随机初始化。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "adalora-006",
+      "question": "AdaLoRA 原论文的敏感度指标怎样结合参数和梯度？",
+      "answer": "它使用参数值与损失梯度乘积的绝对值衡量该参数的敏感度。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "adalora-007",
+      "question": "AdaLoRA 原论文的全局秩预算 b(t) 表示什么？",
+      "answer": "它表示所有增量矩阵保留秩的总和，即保留的对角值数量。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "adalora-008",
+      "question": "AdaLoRA 原论文的秩预算大致经历哪些阶段？",
+      "answer": "先以较高预算预热，再逐步降低到目标预算，最后固定分配继续微调。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "aflfast-005",
+      "question": "AFLFast 论文的指数调度如何随种子反复被选择而调整能量？",
+      "answer": "在路径频率等其他因素固定时，指数项随选择次数增长；总能量还受频率和上界约束。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "aflgo-003",
+      "question": "AFLGo 论文计算跨函数目标距离时利用哪两类程序图？",
+      "answer": "利用函数级调用图和函数内部的控制流图。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "aflgo-007",
+      "question": "AFLGo 论文中的 patch testing 如何选择定向目标？",
+      "answer": "可把代码补丁中发生修改的位置作为目标，引导测试集中到改动附近。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "agentbench-005",
+      "question": "AgentBench 原论文的数据库选择类任务如何检查最终答案？",
+      "answer": "将智能体的文本答案与标准答案比较，并忽略顺序。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "agentbench-006",
+      "question": "AgentBench 原论文如何检查插入或更新数据库任务的结果？",
+      "answer": "比较智能体操作后的表哈希与正确操作后的表哈希。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "agentbench-007",
+      "question": "AgentBench 原论文的知识图谱问答环境采用什么主要指标？",
+      "answer": "使用答案 F1 衡量问答结果。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "agentboard-002",
+      "question": "AgentBoard 论文定义的进度率会因后续状态退步而下降吗？",
+      "answer": "不会；它记录截至当前时间达到过的最高匹配分数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "agentboard-005",
+      "question": "AgentBoard 论文中的 grounding accuracy 衡量什么？",
+      "answer": "衡量产生的动作中有效动作的比例。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "alce-002",
+      "question": "ALCE 论文中的 citation recall 主要按什么单位判断支持情况？",
+      "answer": "按生成回答中的陈述判断其引用集合是否共同支持该陈述，再对陈述求平均。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "alce-003",
+      "question": "在 ALCE 论文的 citation recall 定义中，没有任何引用的陈述得多少支持分？",
+      "answer": "该陈述得 0 分。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "alce-005",
+      "question": "ALCE 论文如何识别一条可能无关的引用？",
+      "answer": "若该引用单独不能支持陈述，且移除它后其余引用仍能支持陈述，就把它视为无关。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "alfworld-005",
+      "question": "ALFWorld 论文中的 BUTLER 由哪三类组件组成？",
+      "answer": "由文本决策组件 Brain、视觉状态估计组件 Vision 和低层控制组件 Body 组成。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "alfworld-008",
+      "question": "ALFWorld 论文的 seen 与 unseen 验证场景主要有什么区别？",
+      "answer": "seen 使用训练中见过的房间但改变实例配置；unseen 使用训练时未见过的房间和布局。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "apibank-004",
+      "question": "API-Bank 论文中的 API Search 如何选择返回的 API 描述？",
+      "answer": "比较查询关键词与 API 元数据的向量余弦相似度，返回最相似的 API 元数据。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "apibank-006",
+      "question": "API-Bank 论文分别用什么方式评估 API 调用和调用后的模型回复？",
+      "answer": "调用侧比较执行一致性并计算准确率；回复侧使用 ROUGE-L。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "apibank-007",
+      "question": "API-Bank 论文的评测对话与训练对话在构造方式上有什么区别？",
+      "answer": "评测对话由人工标注；训练数据由多个智能体分工生成并经过自动检查。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "ares-003",
+      "question": "ARES 论文生成合成样例后，如何得到自动评审器？",
+      "answer": "使用合成样例微调模型，使其针对所需评估维度判断输入三元组。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "assocanom-007",
+      "question": "Anomaly Transformer 原论文怎样结合关联差异与重构误差计算异常分数？",
+      "answer": "它对负关联差异做 softmax，再乘以对应时间点的平方 L2 重构误差。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "astpaper-004",
+      "question": "AST 原论文的主体结构是什么？",
+      "answer": "使用 Transformer 编码器进行音频分类，不依赖 CNN 特征提取骨干。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "astpaper-005",
+      "question": "AST 原论文用哪个输出作为整段音频的分类表示？",
+      "answer": "使用序列开头的 [CLS] token 经编码器处理后的输出。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "astpaper-006",
+      "question": "AST 原论文如何适配图像 ViT 的三通道 patch 投影以处理单通道频谱？",
+      "answer": "对原投影权重的三个输入通道取平均。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "bartpaper-004",
+      "question": "BART 论文中的 sentence permutation 如何破坏文档？",
+      "answer": "将文档按句子划分后，随机打乱这些句子的顺序。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "bartpaper-005",
+      "question": "BART 论文中的 document rotation 如何变换输入？",
+      "answer": "随机选取一个 token，并将文档旋转成从该 token 开始的序列。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "beir-008",
+      "question": "在 BEIR 原论文实验中，只输入文档前 512 个 wordpiece 可能遗漏什么？",
+      "answer": "超过截断位置的相关内容可能没有进入神经检索模型的输入。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "bodmas-001",
+      "question": "BODMAS 数据集除 PE 特征向量外，还提供哪些与实验有关的资料？",
+      "answer": "它提供样本时间和家族等元数据，也提供按条件申请的恶意样本文件。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "botiot-002",
+      "question": "BoT-IoT 原论文用什么工具模拟部分 IoT 传感器和服务？",
+      "answer": "使用 Node-RED 模拟天气、温度等 IoT 服务。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "botiot-005",
+      "question": "BoT-IoT 论文中 attack、category 与 subcategory 分别用于什么？",
+      "answer": "attack 区分正常与攻击，category 和 subcategory 进一步表示流量类别与子类。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "botiot-006",
+      "question": "BoT-IoT 原论文如何利用实验环境的地址信息辅助流量标注？",
+      "answer": "论文利用已知的攻击端和受害端地址，根据源与目的地址更新标签。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "botiot-008",
+      "question": "BoT-IoT 原论文中新生成的部分流量统计特征使用多大的滑动窗口？",
+      "answer": "论文以 100 条连接为一个滑动窗口生成相关统计特征。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "botiot-010",
+      "question": "BoT-IoT 原论文预处理时，协议不适用的源或目的端口如何表示？",
+      "answer": "论文将这些缺失端口值设置为 −1。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "chatafl-008",
+      "question": "ChatAFL 原论文的停滞计数在出现新覆盖或触发崩溃时如何变化？",
+      "answer": "重置为零；未发现有趣结果时增加。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "clappaper-002",
+      "question": "LAION CLAP 论文用什么投影网络将音频和文本编码结果映射到同一维度？",
+      "answer": "音频和文本各使用带 ReLU 的两层 MLP 投影。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "clappaper-007",
+      "question": "LAION CLAP 论文为什么把部分音频标签扩展成文本描述？",
+      "answer": "部分音频数据只有关键词标签，扩展成描述可作为音频—文本对用于训练。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "codepre-004",
+      "question": "CodeBERT 原论文在下游微调时还需要使用替换词检测训练中的生成器吗？",
+      "answer": "不需要；论文使用训练出的判别器表示，生成器在微调阶段被舍弃。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "codepre-013",
+      "question": "GraphCodeBERT 原论文评估了哪些类型的下游代码任务？",
+      "answer": "包括代码搜索、克隆检测、代码翻译和代码修订。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "colbert2-004",
+      "question": "ColBERTv2 论文如何压缩残差的各维度？",
+      "answer": "将每个残差维度量化为 1 位或 2 位。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "colbert2-011",
+      "question": "ColBERTv2 论文的 LoTTE 数据集主要评估什么检索情形？",
+      "answer": "评估面向不同领域、长尾主题的自然语言查询检索。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "cvefix-002",
+      "question": "CVEfixes 原论文的文件变更记录保存哪些代码版本？",
+      "answer": "保存变更前代码和变更后代码，并记录变更差异。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "cvefix-003",
+      "question": "CVEfixes 原论文的 method_change 记录怎样区分修复前和修复后的方法代码？",
+      "answer": "使用 before_change 标记表示该方法记录是否来自修复提交之前。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "cvefix-005",
+      "question": "CVEfixes 原论文的采集流程如何处理缺少可关联修复引用的 CVE？",
+      "answer": "这些记录不会进入可提取对应修复代码的集合。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "cvefix-006",
+      "question": "CVEfixes 原论文指出关联仓库不可用会产生什么数据覆盖问题？",
+      "answer": "无法获取相应修复代码，导致数据只覆盖可访问记录的子集。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "cvefix-008",
+      "question": "CVEfixes 原论文如何获取变更文件的编程语言信息？",
+      "answer": "它使用代码级语言分类工具对文件进行判断。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deberta-003",
+      "question": "DeBERTa 原论文为什么在实现中省略位置到位置项？",
+      "answer": "论文认为在使用相对位置嵌入时，这一项不提供太多额外信息。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deberta-004",
+      "question": "DeBERTa 原论文的增强掩码解码器何时引入绝对位置信息？",
+      "answer": "在 Transformer 层之后、预测被掩码词的解码阶段引入。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepcase-002",
+      "question": "DeepCASE 论文实验中的上下文同时受哪两类边界约束？",
+      "answer": "既限制最多使用多少个先前事件，也限制这些事件距离目标事件的最大时间。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepcase-005",
+      "question": "DeepCASE 论文的编码器在上下文不足固定长度时如何处理输入？",
+      "answer": "在较短序列左侧填充，使输入符合设定长度。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepcase-008",
+      "question": "DeepCASE 论文中的 Context Builder 使用什么结构编码事件上下文？",
+      "answer": "它使用带门控循环单元（GRU）的编码器，将上下文序列编码为向量。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepcase-013",
+      "question": "DeepCASE 论文用什么距离比较按事件类型汇总的注意力向量？",
+      "answer": "它使用 L1 距离，即各维度对应值的绝对差之和。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepcase-014",
+      "question": "DeepCASE 论文的 Interpreter 用哪种方法将相似上下文分组？",
+      "answer": "它使用 DBSCAN 对注意力加权的上下文表示进行聚类。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepcase-024",
+      "question": "DeepCASE 论文为什么没有在 HDFS 数据集上报告风险分类准确率？",
+      "answer": "论文指出该数据缺少安全事件风险等级元数据，因此用它评估工作量减少而非风险分类准确率。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepcase-025",
+      "question": "DeepCASE 作者的代码仓库对 Lastline 数据集公开性说明了什么？",
+      "answer": "由于保密协议，作者不能公开该数据集。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepdga-002",
+      "question": "DeepDGA 论文如何初始化后续生成与判别模型的基础网络？",
+      "answer": "先用 Alexa Top 1M 域名训练字符级自编码器。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepdga-006",
+      "question": "DeepDGA 论文观察到针对神经判别器生成的域名对另一类模型有什么影响？",
+      "answer": "在论文实验中，它们也使使用人工特征的随机森林更难区分。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepsad-004",
+      "question": "Deep SAD 论文的 η 参数主要平衡什么？",
+      "answer": "控制已标注项相对于未标注项在训练目标中的权重。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "deepsad-005",
+      "question": "Deep SAD 论文 v2 用距离还是平方距离定义测试时异常分数？",
+      "answer": "论文式 (4) 使用表示到中心的欧氏距离；训练目标中的未标注项使用平方距离。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "devignstudy-004",
+      "question": "Devign 原论文如何构造程序图节点的初始表示？",
+      "answer": "它把代码内容的 word2vec 表示与节点类型编码拼接。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "devignstudy-009",
+      "question": "Devign 论文的数据准备如何处理无法正确生成 AST 或 CFG 的函数？",
+      "answer": "它过滤掉无法生成相应图或图存在明显错误的函数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "distillbert-007",
+      "question": "DistilBERT 论文如何利用教师权重初始化学生的 Transformer 层？",
+      "answer": "从教师层中隔一层取一层来初始化学生。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "distillbert-008",
+      "question": "DistilBERT 原论文的三重训练损失由哪几类目标组成？",
+      "answer": "蒸馏损失、掩码语言模型损失和余弦嵌入损失。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "distillbert-010",
+      "question": "DistilBERT 原论文的预训练是否使用 BERT 原始的下一句预测目标？",
+      "answer": "没有；论文使用动态掩码训练而不使用下一句预测目标。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "diversevul-001",
+      "question": "DiverseVul 原论文主要从什么资料收集候选漏洞修复提交？",
+      "answer": "从安全问题跟踪网站收集问题内容和关联的 Git 提交，再获取对应项目代码。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "diversevul-002",
+      "question": "DiverseVul 原论文怎样给修复提交前后和未变更函数分配初始标签？",
+      "answer": "将变更函数修复前版本标为有漏洞，修复后版本及相关文件中未变更函数标为无漏洞。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "diversevul-004",
+      "question": "DiverseVul 论文按 MD5 去重时为何先处理有漏洞函数？",
+      "answer": "相同哈希第一次出现后，后续重复函数会被跳过，因此先处理有漏洞集合会优先保留其条目。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "diversevul-005",
+      "question": "DiverseVul 论文怎样估计自动漏洞标签的准确性？",
+      "answer": "从标为有漏洞的函数中随机抽样并人工检查代码、修复提交和漏洞描述等证据。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "diversevul-006",
+      "question": "DiverseVul 论文为何把跨多个函数的漏洞列为函数级标签误差？",
+      "answer": "论文将正确标签限定为漏洞存在于该函数且不跨多个函数；跨函数成因不满足这一定义。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "diversevul-008",
+      "question": "DiverseVul 论文按 CWE 比较模型时，为何各类的 FPR 相同？",
+      "answer": "它对各 CWE 使用相同的全部无漏洞函数作为负样本，FPR 由同一模型在这组负样本上的预测计算。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "dlfuzz-003",
+      "question": "LLMFuzz 原论文怎样提示生成模型构造初始种子？",
+      "answer": "它按步骤要求导入目标库、生成输入数据并调用目标 API。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "dlfuzz-004",
+      "question": "LLMFuzz 原论文在初始生成与变异阶段分别利用哪类代码生成能力？",
+      "answer": "初始阶段使用自回归代码生成，变异阶段使用代码片段填充模型。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "dlfuzz-012",
+      "question": "LLMFuzz 原论文如何定义用于统计的有效生成程序？",
+      "answer": "程序无异常执行完成，并至少调用一次目标 API。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "dorafund-001",
+      "question": "DoRA 原论文如何从预训练权重初始化幅值向量？",
+      "answer": "以预训练权重各列向量的范数初始化幅值。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "dorafund-003",
+      "question": "DoRA 原论文怎样处理加入低秩更新后的方向矩阵？",
+      "answer": "先对预训练方向加低秩更新，再按对应向量范数归一化，并乘可训练幅值。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "dorafund-004",
+      "question": "DoRA 原论文中预训练方向矩阵本身和幅值向量是否都直接训练？",
+      "answer": "预训练方向矩阵保持冻结；幅值向量及方向的低秩更新参数参与训练。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "dorafund-006",
+      "question": "DoRA 论文为了降低反向传播内存，如何处理归一化范数的梯度？",
+      "answer": "把范数从计算图中分离；前向时仍根据当前权重计算范数，但不对它反传梯度。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "dprbase-005",
+      "question": "DPR 原论文的维基百科检索语料如何划分段落？",
+      "answer": "把文章划为不重叠、每段约 100 个词的文本块。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "dprbase-006",
+      "question": "DPR 原论文如何利用维基百科文章标题编码段落？",
+      "answer": "在段落文本前加入对应文章标题，并用特殊分隔符分开。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "dprbase-007",
+      "question": "DPR 原论文对只有问题和答案、没有金标准段落的训练集，如何寻找正例段落？",
+      "answer": "用问题和答案进行 BM25 查询，从结果中选取排名最高且包含答案的段落。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "drainlog-004",
+      "question": "Drain 原论文的解析树第一层按日志消息的什么特征分支？",
+      "answer": "按预处理后消息的 token 数量分支。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "drainlog-005",
+      "question": "Drain 原论文为什么使用开头位置的 token 引导树搜索？",
+      "answer": "它利用日志消息前部 token 更可能是固定文字的经验假设。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "drainlog-006",
+      "question": "Drain 原论文在叶节点如何决定是否采用已有日志组？",
+      "answer": "比较消息与候选模板的 token 相似度，最高相似度达到阈值时采用相应组。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "drainlog-007",
+      "question": "Drain 原论文把新消息加入已有组时，如何处理模板中同位置不一致的 token？",
+      "answer": "将不同的位置更新为通配符，相同位置保持不变。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "drebin-003",
+      "question": "DREBIN 原论文从 Android 清单提取了哪些类别的特征？",
+      "answer": "包括硬件组件、请求权限、应用组件和 intent 过滤信息。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "drebin-004",
+      "question": "DREBIN 原论文从反汇编代码中提取哪些类别的特征？",
+      "answer": "包括受限 API、推断使用的权限、可疑 API 和网络地址。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "drebin-007",
+      "question": "DREBIN 原论文如何把应用特征映射成向量？",
+      "answer": "每个特征对应一个维度，应用包含该特征时为 1，否则为 0。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "drebin-011",
+      "question": "DREBIN 原论文的模型训练与手机端检测分别在哪里执行？",
+      "answer": "训练在离线环境完成，手机端对应用提取特征并使用已有模型检测。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "drebin-012",
+      "question": "DREBIN 原论文怎样利用十个杀毒引擎的结果初步标记恶意样本？",
+      "answer": "至少两个引擎报告恶意的应用被标为恶意，广告软件样本随后被排除。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "dspypaper-006",
+      "question": "DSPy 原论文描述的 BootstrapFewShot 未指定教师程序时，使用什么？",
+      "answer": "使用待编译程序的零样本版本生成候选轨迹。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "dspypaper-007",
+      "question": "DSPy 原论文的 BootstrapFewShot 与 BootstrapFinetune 在优化结果上有什么主要区别？",
+      "answer": "前者主要收集提示示例；后者可用示例对语言模型权重进行微调。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "e5embed-001",
+      "question": "E5 原论文的 CCPairs 主要由什么类型的数据组成？",
+      "answer": "来自社区问答、网页和论文等来源的半结构化文本对。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "e5embed-002",
+      "question": "E5 原论文的一致性过滤如何筛选文本对？",
+      "answer": "先训练模型，再用它对候选文本排序，只保留原配对落在前 k 名的样本。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "eif-004",
+      "question": "EIF 论文怎样用法向量和截距点判断样本进入哪一子节点？",
+      "answer": "依据 (x−p)·n 的符号，将样本分到超平面两侧。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "electra-007",
+      "question": "ELECTRA 原论文的生成器较小时，仍可与判别器共享哪些参数？",
+      "answer": "可共享 token 和位置嵌入，并通过投影适配较小生成器的隐藏维度。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "ephish-003",
+      "question": "E-PhishLLM 论文生成的数据涵盖哪些语言？",
+      "answer": "涵盖英语、意大利语和德语。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "ephish-004",
+      "question": "E-PhishGEN 论文对 E-PhishLLM 的检测器评测是否覆盖了全部三种语言？",
+      "answer": "论文中的该组检测器评测只使用英语部分，以便和既有英文方法比较。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "ephish-005",
+      "question": "E-PhishGEN 论文怎样处理部分生成结果不符合预期格式的情况？",
+      "answer": "将格式错误等失败的生成结果丢弃。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "ephish-007",
+      "question": "E-PhishGEN 论文的用户研究评价了邮件的什么质量，结果有哪些边界？",
+      "answer": "参与者对钓鱼邮件的说服力、书写和真实性进行评分；样本和参与者数量有限。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fairfuzz-004",
+      "question": "FairFuzz 原论文如何估计某些位置能否变异而仍命中目标分支？",
+      "answer": "在确定性阶段尝试逐位置变更并观察变异输入是否仍命中目标分支。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fbench-004",
+      "question": "FuzzBench 论文中 runner 和 measurer 如何配合记录覆盖随时间的变化？",
+      "answer": "runner 周期性保存语料快照，measurer 对快照测量覆盖并记录结果。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fbench-008",
+      "question": "FuzzBench 2021 论文默认的单基准两两比较分别用什么衡量效应量与显著性？",
+      "answer": "使用 Vargha–Delaney A12 衡量效应量，使用双侧 Mann–Whitney U 检验评估显著性。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fbench-010",
+      "question": "FuzzBench 2021 论文所述默认每个 fuzzer 与基准组合运行多少次、每次多长？",
+      "answer": "论文当时默认运行 20 次，每次 23 小时。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fimpaper-005",
+      "question": "FIM 论文的文档级变换在分词前还是分词后切分前缀、中间和后缀？",
+      "answer": "在分词前，按字符位置切分文档，再分别编码各段。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fimpaper-006",
+      "question": "FIM 论文的 PSM 训练是否只在中间片段上保留损失？",
+      "answer": "不是；论文对前缀、中间和后缀三个片段都保留训练损失。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fimpaper-007",
+      "question": "FIM 论文为什么提出将后缀放在前缀之前的 SPM 格式？",
+      "answer": "当前缀不断追加而后缀不变时，它可复用后缀部分已计算的 KV 缓存。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fimpaper-008",
+      "question": "FIM 论文中的“FIM-for-free”是否保证任何训练设置都不会影响从左到右生成能力？",
+      "answer": "不保证；论文报告的是其训练配置和评测范围内未观察到显著退化。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fpnstudy-003",
+      "question": "FPN 原论文在侧向连接上使用 1×1 卷积主要做什么？",
+      "answer": "调整侧向特征的通道维度，使其能与上采样后的特征逐元素相加。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "fpnstudy-004",
+      "question": "FPN 原论文的基本侧向融合操作如何合并两个对应特征图？",
+      "answer": "将上采样后的特征图与经过侧向投影的特征图逐元素相加。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "fpnstudy-006",
+      "question": "FPN 原论文在合并特征图后加 3×3 卷积的主要目的是什么？",
+      "answer": "减轻上采样带来的混叠效应，并生成最终金字塔特征。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "fuzzgpt-001",
+      "question": "FuzzGPT 论文的 few-shot 示例包含哪些与历史缺陷相关的信息？",
+      "answer": "包含目标或出错 API 名称、缺陷描述和相应代码片段。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fuzzgpt-003",
+      "question": "FuzzGPT 论文是否只研究必须提供历史缺陷代码的生成方式？",
+      "answer": "不是；论文也探索直接用指令要求 ChatGPT 生成特殊程序的变体，不提供历史缺陷信息。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "fuzzgpt-004",
+      "question": "FuzzGPT 原论文如何限制用于其历史缺陷代码数据集的样本？",
+      "answer": "清理后排除无法通过语法检查或超过 256 token 的代码片段。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "gaiabench-003",
+      "question": "GAIA 原论文怎样比较系统答案与参考答案？",
+      "answer": "按参考答案类型做一定规范化后，进行准精确匹配。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "gaiabench-005",
+      "question": "GAIA 原论文用什么信息作为任务难度分级的近似依据？",
+      "answer": "参考标注人员解题所需的步骤数和工具种类，并结合任务复杂度分级。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "gaiabench-006",
+      "question": "GAIA 原论文怎样检查新问题与参考答案是否清晰可靠？",
+      "answer": "让两名新的标注人员独立回答，并与原标注者的答案比较。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "genagent-004",
+      "question": "Generative Agents 原论文的记忆近期性主要根据哪个时间计算？",
+      "answer": "根据该记忆最近一次被检索或访问后的时间间隔计算。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-005",
+      "question": "Generative Agents 原论文如何给新记忆估计重要性？",
+      "answer": "在创建记忆时，让语言模型按提示给记忆打重要性分数。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-006",
+      "question": "Generative Agents 原论文怎样估计记忆与当前查询的相关性？",
+      "answer": "计算记忆文本向量与查询向量之间的余弦相似度。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-007",
+      "question": "Generative Agents 原论文在合并记忆检索的三个分数前做了什么？",
+      "answer": "分别将近期性、重要性和相关性分数缩放到 0 到 1 的范围，再加权求和。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-008",
+      "question": "Generative Agents 原论文的实现何时触发一次反思？",
+      "answer": "当最近事件的重要性分数累计超过设定阈值时触发。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-009",
+      "question": "Generative Agents 原论文如何把生成的反思与其依据联系起来？",
+      "answer": "把反思存入记忆流时保留其引用的记忆对象指针。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-011",
+      "question": "Generative Agents 原论文的计划条目通常包含哪些时间和位置要素？",
+      "answer": "计划包含行动地点、开始时间和持续时间。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-016",
+      "question": "CAMEL 原论文中的 task specifier 主要做什么？",
+      "answer": "结合初始想法和角色，生成更具体的协作任务描述。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-017",
+      "question": "CAMEL 原论文中 AI user 和 AI assistant 分别承担什么职责？",
+      "answer": "AI user 提供指令并推动任务；AI assistant 根据指令提供解决方案。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-019",
+      "question": "CAMEL 论文讨论的 role flipping 指什么？",
+      "answer": "原本跟随指令的助手转而向用户角色发号指令，双方职责发生反转。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-020",
+      "question": "CAMEL 论文中的 flake reply 是哪类回复？",
+      "answer": "助手只承诺将来会做某事，却没有提供推进当前任务的实际结果。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "genagent-021",
+      "question": "CAMEL 原论文的任务完成标记表示什么？",
+      "answer": "它表示 AI user 判断任务已完成并结束对话。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "geval-004",
+      "question": "G-Eval 论文如何利用离散评分的概率得到更细的分数？",
+      "answer": "将各候选评分与其归一化概率相乘并求和。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "geval-005",
+      "question": "G-Eval 原论文在当时使用 GPT-4 无法获得 token 概率时，怎样近似评分分布？",
+      "answer": "对同一评估采样多次，用多次评分的频率估计分布。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "gorilla-004",
+      "question": "Gorilla 论文的 APIBench 主要从哪些模型平台收集 API 文档？",
+      "answer": "从 Hugging Face、Torch Hub 和 TensorFlow Hub 收集。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "gorilla-005",
+      "question": "Gorilla 论文如何为 API 文档构造自然语言指令数据？",
+      "answer": "使用少量示例和 API 文档，引导模型合成指令与参考 API 对。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "gorilla-006",
+      "question": "Gorilla 论文如何区分 API 幻觉与错误调用？",
+      "answer": "论文将与数据库中任何 API 均不匹配的调用视为幻觉；对已有 API 的错误使用视为调用错误。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "gotpaper-004",
+      "question": "Graph of Thoughts 论文用什么图结构表示对同一个思路的迭代修订？",
+      "answer": "用该思路节点上的自环表示反复修改其内容。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "grag-019",
+      "question": "GraphRAG 原论文的全局回答流程如何处理评分为 0 的中间回答？",
+      "answer": "论文流程将评分为 0 的中间回答过滤掉。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "grag-028",
+      "question": "GraphRAG 原论文报告的全局问答结果应如何理解其适用范围？",
+      "answer": "结果针对论文中的约百万 token 规模语料和全局归纳问题，与所选基线和评价方式相关。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "gramfuzz-018",
+      "question": "The Fuzzing Book 的概率语法中，未显式设置概率的备选项如何分配剩余概率？",
+      "answer": "该实现把剩余概率平均分配给未指定概率的备选项。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "hotpot-006",
+      "question": "HotpotQA 原论文的 full wiki 设置与 distractor 设置在检索条件上有什么区别？",
+      "answer": "full wiki 不预先指定支持段落；distractor 提供两个支持段落和八个干扰段落并打乱。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "htnbase-005",
+      "question": "在 HDDL 论文给出的基础形式化中，复合任务本身直接定义状态效果吗？",
+      "answer": "不直接定义；它通过分解方法关联到子任务网络。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "htnbase-006",
+      "question": "在 HDDL 论文的 HTN 定义中，什么样的任务网络可构成解？",
+      "answer": "它须由初始网络经允许的分解、具体化和添加顺序约束得到，且全为原始任务并有可执行顺序。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "htnbase-007",
+      "question": "HDDL 论文中称任务网络为 ground，表示什么？",
+      "answer": "任务参数都已绑定或替换为具体常量。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "huggpt-005",
+      "question": "HuggingGPT 原论文如何缩小提示中需要展示的候选专家模型集合？",
+      "answer": "先按任务类型过滤模型，再按下载量排序并选取前十个候选。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "huggpt-008",
+      "question": "HuggingGPT 原论文的混合推理端点怎样选择本地和 Hugging Face 端点？",
+      "answer": "若所选模型已部署在本地则优先使用本地端点，否则使用 Hugging Face 端点。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "hydecore-005",
+      "question": "HyDE 原论文在平均多个假设文档向量时，对查询歧义作了什么简化假设？",
+      "answer": "假设查询对应的向量分布是单峰，即查询不存在歧义。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "ia3-002",
+      "question": "(IA)³ 原论文在每层 Transformer 的哪些激活上引入缩放向量？",
+      "answer": "在注意力机制的键和值以及前馈网络内部激活上引入向量。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "ia3-003",
+      "question": "为什么 (IA)³ 原论文把新增缩放向量初始化为全 1？",
+      "answer": "逐元素乘以 1 不改变原有激活，因此加入适配器时保持原模型计算。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "instructrl-009",
+      "question": "InstructGPT 论文如何初始化 PPO 阶段的价值函数？",
+      "answer": "用奖励模型的参数初始化价值函数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "instructrl-010",
+      "question": "InstructGPT 论文按用户 ID 划分训练、验证和测试提示有什么目的？",
+      "answer": "避免验证和测试集合包含训练用户的提示，以检验跨用户的泛化。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "kitsune-009",
+      "question": "Kitsune 原论文遇到报文不适用某种通信粒度时如何保持固定特征维数？",
+      "answer": "对应的特征设为零，使每个报文仍得到相同维数的向量。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "kitsune-012",
+      "question": "KitNET 原论文的特征映射是否允许一个输入特征重复出现在多个特征组中？",
+      "answer": "论文要求每个输入特征恰好映射一次。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "kitsune-013",
+      "question": "KitNET 原论文用怎样的相关距离比较特征？",
+      "answer": "采用 1 减去相关系数作为距离。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "kitsune-020",
+      "question": "Kitsune 论文讨论的简单阈值如何利用训练阶段的误差？",
+      "answer": "它可用训练阶段观察到的最大输出误差作为基准阈值。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "kitsune-021",
+      "question": "Kitsune 原论文的执行模式会继续更新异常检测器的模型参数吗？",
+      "answer": "不会；检测器执行前向计算并输出异常分数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "kitsune-023",
+      "question": "Kitsune-py 固定版本的 KitNET.process 在预热训练期间返回的 0.0 能直接当成正常评分吗？",
+      "answer": "不能；该返回值是训练阶段的占位输出，并非完成训练后的异常分数。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "kitsune-024",
+      "question": "未提供 feature_map 时，Kitsune-py 固定版本的 process 为何可能比 FM 和 AD 预热参数之和多处理一个训练样本？",
+      "answer": "该代码用 n_trained > FM_grace_period + AD_grace_period 判断进入执行模式，且计数从 0 开始。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "kitsune-025",
+      "question": "Kitsune-py 固定版本传入 feature_map 后，是否还需要先由特征映射器学习分组？",
+      "answer": "不需要；构造器直接依据给定映射创建异常检测器。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "kitsune-026",
+      "question": "Kitsune-py 固定版本的 proc_next_packet 返回 -1 表示什么？",
+      "answer": "特征提取器没有返回下一个向量，可能是数据结束或读取错误。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "kitsune-027",
+      "question": "Kitsune-py README 为什么提醒不能直接把 Python 实现速度当作论文性能？",
+      "answer": "README 说明该 Python 实现未针对速度优化，论文速度需要相应的编译或其他实现。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "kitsune-028",
+      "question": "Kitsune 论文用固定报文数作为训练阶段时，为什么训练对应的时长可能随数据集变化？",
+      "answer": "不同网络的报文到达速率不同，相同数量报文覆盖的时间也不同。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "kitsune-031",
+      "question": "Kitsune-py 固定版本在 NumPy 2.x 中可能遇到什么兼容问题？",
+      "answer": "该版本源码使用已移除的 np.Inf 别名，直接运行相关代码可能报错。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "lats-001",
+      "question": "LATS 论文的搜索节点状态通常包含哪些信息？",
+      "answer": "包含初始问题、到当前节点的动作序列及相应观察序列。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "lats-003",
+      "question": "LATS 论文中的节点价值估计结合哪两类信息？",
+      "answer": "结合语言模型自评得分与自一致性得分。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "lats-005",
+      "question": "LATS 论文的搜索过程在什么情况下停止？",
+      "answer": "任务成功或达到设定的计算预算时停止。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "lcmulticomp-011",
+      "question": "LangChain 0.3.27 搭配 langchain-core 0.3.75 时，构造 EmbeddingsFilter 并传入 k=None 会禁用 top-k 吗？",
+      "answer": "不会；该版本的 pre_init 会把 None 替换为 k 的默认值 20。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "linevd-006",
+      "question": "LineVD 论文中函数级输出为非漏洞类时，对语句预测有什么影响？",
+      "answer": "论文通过函数与语句输出的逐元素乘法，使该情况下的语句输出也为非漏洞类。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "linevd-007",
+      "question": "LineVD 原论文如何利用修复差异构造语句级候选标签？",
+      "answer": "论文将修复提交中删除的行及与新增行存在控制或数据依赖的相关行标作漏洞相关行。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "linevd-008",
+      "question": "LineVD 论文的数据清理和代码图是否把注释行作为训练与预测节点？",
+      "answer": "没有；论文移除注释，注释行不用于图中的训练和预测。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "linevd-009",
+      "question": "LineVD 原论文如何处理类别不平衡的训练数据？",
+      "answer": "在函数级对非漏洞样本欠采样，使训练集近似平衡；验证集和测试集保留原始不平衡比例。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "linevd-010",
+      "question": "LineVD 的跨项目实验如何组织测试项目？",
+      "answer": "每次将一个项目作为测试集，其余项目用于训练和验证。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "livecode-004",
+      "question": "LiveCodeBench 原论文除了代码生成，还考查哪些场景？",
+      "answer": "还考查自我修复、代码执行输出预测和测试输出预测。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "livecode-006",
+      "question": "LiveCodeBench 原论文自我修复的最终 pass@1 是否只统计原始程序失败后修复成功的题？",
+      "answer": "不是；它统计原始程序或尝试修复后的最终程序通过测试的比例。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "livecode-008",
+      "question": "LiveCodeBench 原论文在平台不能直接提供测试时，如何补充测试？",
+      "answer": "使用模型生成符合题目约束的输入生成器，并从生成器采样测试输入。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "llmlingua-007",
+      "question": "LLMLingua 论文中保留率 τ 与 compression ratio 有什么关系？",
+      "answer": "τ 是压缩后 token 数除以原 token 数，compression ratio 为 1/τ。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "llmseceval-008",
+      "question": "LLMSecEval 的 Manually-fixed NL Prompt 字段用于记录什么？",
+      "answer": "记录对部分低评分机器生成提示进行人工修订后的版本。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "loganom-006",
+      "question": "LogAnomaly 原论文如何从模板中的词向量构造模板向量？",
+      "answer": "对模板中的词向量做加权平均。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "loganom-007",
+      "question": "LogAnomaly 论文如何构造序列模式模型的输入？",
+      "answer": "将滑动窗口内的日志映射为按顺序排列的模板向量序列。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "loganom-011",
+      "question": "LogAnomaly 论文在 BGL 与 HDFS 数据上评估时，异常标注的基本单位分别是什么？",
+      "answer": "BGL 按单条日志标注；HDFS 按日志所属的数据块（block）标注。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "loganom-012",
+      "question": "LogAnomaly 原论文如何按日志时间划分训练和测试数据？",
+      "answer": "按时间顺序以前 80% 的日志训练、后 20% 测试。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "loggpt-003",
+      "question": "LogGPT 原论文采用什么模型结构表示日志序列上下文？",
+      "answer": "采用基于 Transformer 解码器的 GPT-2 结构。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "loggpt-004",
+      "question": "LogGPT 原论文的强化学习阶段将什么定义为动作？",
+      "answer": "从模型预测概率最高的 K 个日志键中采样一个日志键。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "loggpt-007",
+      "question": "LogGPT 原论文用什么方法更新强化学习阶段的策略？",
+      "answer": "论文采用 PPO 更新日志生成模型的策略参数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "longformer-004",
+      "question": "Longformer 原论文为分类和问答任务分别举了哪些全局注意力位置的例子？",
+      "answer": "分类使用 [CLS]；问答可让问题中的 token 使用全局注意力。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "longformer-005",
+      "question": "Longformer 原论文如何处理局部注意力和全局注意力的 Q、K、V 投影？",
+      "answer": "分别使用两套投影参数来计算局部与全局注意力。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "longformer-006",
+      "question": "Longformer 论文用于长文档下游任务的编码器怎样利用现有 RoBERTa 权重？",
+      "answer": "从 RoBERTa 检查点出发，继续以掩码语言建模目标预训练。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "maevision-008",
+      "question": "MAE 论文中的随机掩码如何选择图像块？",
+      "answer": "从图像块中按均匀分布无放回随机抽取一定比例。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "magmaeval-023",
+      "question": "FuzzBench 默认报告的跨基准平均排名依据什么构成？",
+      "answer": "先按各基准上各 fuzzer 的覆盖率中位数排名，再汇总这些排名。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "malbench-007",
+      "question": "EMBER2024 论文的主集合近重复检查在什么范围内比较文件？",
+      "answer": "按首次提交周，比较同一周内候选文件与已选文件的 TLSH 距离。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "malbench-009",
+      "question": "EMBER2024 论文怎样根据后续反病毒扫描结果给文件分配良性标签？",
+      "answer": "首次提交至少 30 天后重新扫描，若未被任何反病毒产品检出，则按该规则标记为良性。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "malbench-010",
+      "question": "EMBER2024 论文的恶意标签要求什么扫描证据？",
+      "answer": "论文要求至少五个没有已知关联的反病毒产品将文件检出为恶意。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "malbench-020",
+      "question": "SOREL-20M 发布的数据除预提取特征外，还包含哪些便于研究的资料？",
+      "answer": "它提供 PE 元数据、标签、行为相关标签及经过修改的恶意文件等。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "malbench-021",
+      "question": "SOREL-20M 官方仓库是否直接公开良性文件本体？",
+      "answer": "没有；仓库说明由于知识产权风险，不能自由提供这些良性文件。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "malbench-022",
+      "question": "SOREL-20M 的恶意样本文件名为什么可能与下载后内容的 SHA-256 不相同？",
+      "answer": "文件名使用修改前原始文件的 SHA-256，而公开文件经过了修改。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "malbench-023",
+      "question": "为什么不能假定对 SOREL-20M 公开修改后的文件重新提取的所有特征与原始文件一致？",
+      "answer": "公开文件的部分 PE 头字段已被修改，因此依赖这些字段的特征可能不同。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "malbench-024",
+      "question": "SOREL-20M 用什么标识把元数据和特征数据库中的同一文件关联起来？",
+      "answer": "使用原始文件的 SHA-256 作为记录键。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "malbench-025",
+      "question": "SOREL-20M 论文建议按什么时间字段划分训练、验证和测试数据？",
+      "answer": "按 ReversingLabs 遥测中的首次见到时间进行时间切分。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "malbench-026",
+      "question": "SOREL-20M 仓库对恶意／良性标签的形成依据作了什么说明？",
+      "answer": "标签使用非公开内部信息以及多种静态规则和分析结果共同生成。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "malbench-027",
+      "question": "SOREL-20M 的行为标签列中数值通常表示什么？",
+      "answer": "表示从厂商威胁描述中识别到的该标签相关 token 数量。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "malbench-028",
+      "question": "SOREL-20M 官方仓库提供缺失 EMBER 特征的 SHA-256 清单有什么用途？",
+      "answer": "可以在加载前排除没有相应特征的记录，减少加载错误并加快准备。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "malbyte-003",
+      "question": "MalConv 后续论文描述的 257 个输入符号由什么组成？",
+      "answer": "包括 256 种可能的字节值和一个文件结束标记。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "malbyte-005",
+      "question": "2017 年 MalConv 论文采用多大的卷积窗口和步长？",
+      "answer": "该论文的配置使用 500 字节窗口和 500 字节步长。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "malbyte-016",
+      "question": "MalConv 原论文使用非公开训练数据会对独立复现产生什么限制？",
+      "answer": "其他研究者可能无法直接重建相同训练集并复现报告的指标。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "malbyte-023",
+      "question": "MalConv 后续论文的固定内存方法中，哪些资源并不因此必然与文件长度无关？",
+      "answer": "输入读取与处理时间仍会受文件长度影响，整体资源开销也取决于实现。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "malbyte-025",
+      "question": "论文中的 GCG 使用 sigmoid 门控时，对局部激活执行什么操作？",
+      "answer": "它用 0 到 1 之间的门值缩放局部激活，以全局上下文为条件抑制特征。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "matryoshka-002",
+      "question": "Matryoshka 原论文的监督分类形式如何同时训练多个表示长度？",
+      "answer": "对选定的嵌套维度分别计算分类损失，再按权重聚合并共同训练编码器。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "matryoshka-003",
+      "question": "原论文的 MRL-E 相比基本 MRL 怎样减少分类头参数？",
+      "answer": "不同嵌套维度共享同一分类器权重的对应前缀。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "matryoshka-005",
+      "question": "Matryoshka 论文将嵌套表示用于对比学习时，为什么要分别处理各维度的归一化？",
+      "answer": "不同长度前缀的范数可能不同，应针对各个前缀分别处理归一化。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "megavul-002",
+      "question": "MegaVul 原论文用什么工具提取 C/C++ 函数？",
+      "answer": "使用增强语法规则的 Tree-sitter 解析器提取函数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "megavul-004",
+      "question": "MegaVul 原论文除原始函数外还提供哪些类型的补充表示？",
+      "answer": "包括函数签名、抽象化代码、Joern 解析的程序图及代码变更信息。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "megavul-007",
+      "question": "MegaVul 论文怎样过滤一部分与单元测试相关的文件或函数？",
+      "answer": "根据名称识别并过滤与单元测试相关的文件或函数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "memgpt-001",
+      "question": "MemGPT 原论文把主上下文分为哪三部分？",
+      "answer": "系统指令、可读写的工作上下文和保存近期消息的 FIFO 队列。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "memgpt-002",
+      "question": "MemGPT 原论文中的工作上下文通过什么方式修改？",
+      "answer": "由模型调用 MemGPT 提供的函数进行读写。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "memgpt-004",
+      "question": "MemGPT 原论文中的 memory pressure 警告通常在什么情况下出现？",
+      "answer": "提示长度超过预设警告阈值时，队列管理器加入警告消息。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "memgpt-007",
+      "question": "MemGPT 原论文中的 request_heartbeat=true 对函数调用后的控制流有什么作用？",
+      "answer": "函数完成后立即再次运行模型，使它能够继续后续函数调用。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "metagpt-002",
+      "question": "MetaGPT 论文中，Action 的输出 schema 与 instruct content 如何配合？",
+      "answer": "schema 定义预期输出结构；instruct content 是从动作输出中提取的结构化数据。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "metagpt-003",
+      "question": "MetaGPT 原论文中的 Role 与 Action 分别承担什么？",
+      "answer": "Role 封装专业能力和工作流；Action 执行具体子任务并生成输出。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "mind2web-005",
+      "question": "Mind2Web 原论文的逐步离线评测向模型提供什么历史？",
+      "answer": "对每一步独立评测时，提供真实轨迹中的历史动作。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "mind2web-008",
+      "question": "Mind2Web 原论文何时将一个步骤判为成功？",
+      "answer": "只有目标元素和预测操作都正确时，步骤才成功。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "mind2web-009",
+      "question": "Mind2Web 原论文的任务 Success Rate 对多步骤任务有什么要求？",
+      "answer": "任务中的所有步骤均成功，才把该任务记为成功。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "minteval-002",
+      "question": "MINT 论文的每一轮中，模型通常在执行工具和提交答案之间如何选择？",
+      "answer": "每轮选择执行 Python 代码获取工具反馈，或提交一个待验证的答案。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "minteval-004",
+      "question": "MINT 论文的 lazy user 设置何时结束一次任务交互？",
+      "answer": "答案正确、两次答案提交机会用完，或达到交互轮次上限时结束。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "minteval-007",
+      "question": "MINT 原论文用什么方式提供信息丰富的用户语言反馈？",
+      "answer": "使用 GPT-4 模拟用户给出自然语言反馈，并另行通过人工评估检查反馈质量。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "minteval-008",
+      "question": "MINT 论文中的 Δfeedback 表示什么？",
+      "answer": "在相同的五轮上限下，用模拟自然语言反馈的成功率减去基线成功率。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "mteb-002",
+      "question": "MTEB 原论文的检索任务使用什么主要指标？",
+      "answer": "使用 nDCG@10 作为主要指标。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "mteb-003",
+      "question": "MTEB 原论文中的重排任务给模型什么候选？",
+      "answer": "为每个查询给出一组相关和不相关的候选文本，由模型排序。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "mteb-004",
+      "question": "MTEB 原论文的 bitext mining 任务要解决什么？",
+      "answer": "在两种语言的句子集合之间寻找互为对应内容的句子。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "mteb-005",
+      "question": "MTEB 原论文的分类任务怎样使用训练集文本嵌入？",
+      "answer": "在训练集嵌入上拟合逻辑回归分类器，再在测试集上评分。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "mteb-006",
+      "question": "MTEB 原论文使用的 V-measure 为什么不依赖聚类标签的编号？",
+      "answer": "该指标评价聚类与真实类别的对应关系，标签编号置换不改变分数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "nab-004",
+      "question": "NAB 论文对同一异常窗口中的多次检测如何计分？",
+      "answer": "只给最早一次检测计入该窗口的命中奖励，忽略窗口内后续的重复检测。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "nab-005",
+      "question": "按 NAB 论文的评分定义，一个异常窗口没有任何检测时如何处理？",
+      "answer": "该窗口被计为一次漏检，并按应用配置施加相应惩罚。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "nab-006",
+      "question": "NAB 论文如何处理异常窗口外的检测？",
+      "answer": "将其视为误报；窗口之后的误报惩罚还随它距前一窗口的相对位置变化。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "nbaiot-005",
+      "question": "N-BaIoT 论文怎样从正常优化集的重构误差设置单样本阈值？",
+      "answer": "使用优化集均方重构误差的样本均值加一个样本标准差。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "nbaiot-008",
+      "question": "N-BaIoT 原论文的实验室评估使用哪两类 IoT 僵尸网络？",
+      "answer": "Mirai 和 BASHLITE。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "neurallog-004",
+      "question": "NeuralLog 原论文怎样由 BERT 表示构造一条日志消息的向量？",
+      "answer": "使用 BERT 最后一层的词或子词表示，再对相应向量取平均。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "neurallog-007",
+      "question": "NeuralLog 论文在 HDFS 数据集上如何构造日志序列？",
+      "answer": "它按相同 block ID 关联日志消息形成序列，因为该数据集按 block 标注。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "neurallog-008",
+      "question": "NeuralLog 原论文对 HDFS 与 BGL 等数据集的训练测试划分有什么不同？",
+      "answer": "HDFS 按日志序列随机划分；BGL、Thunderbird 和 Spirit 按日志时间前后划分。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "neuzz-004",
+      "question": "NEUZZ 论文如何让较短的变长输入适配固定大小的网络输入？",
+      "answer": "设置最大输入长度，并对较短输入补零。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "neuzz-005",
+      "question": "NEUZZ 论文为什么合并训练数据中总是同时出现的覆盖边？",
+      "answer": "它通过合并高度相关的输出标签减少需要预测的维度。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "neuzz-006",
+      "question": "NEUZZ 论文的边预测标签能直接为从未在训练数据中出现的边提供独立输出吗？",
+      "answer": "不能；论文的预处理只保留训练数据至少激活过一次的边。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "neuzz-007",
+      "question": "NEUZZ 论文用什么损失训练代理模型的边覆盖输出？",
+      "answer": "使用二元交叉熵比较预测覆盖与实际覆盖。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "optcritic-004",
+      "question": "Option-Critic 论文使用的 call-and-return 模式如何执行 option？",
+      "answer": "按高层策略选定 option 后遵循其内部策略，直到该 option 终止，再重新选择。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "optcritic-005",
+      "question": "Option-Critic 论文主要学习 option 的哪些部分？",
+      "answer": "学习 option 内部策略和终止函数，并结合 option 选择策略。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "optcritic-006",
+      "question": "Option-Critic 论文推导时对 option 的启动集合做了什么简化？",
+      "answer": "假设所有 option 在所有状态都可启动。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "osworld-004",
+      "question": "OSWorld 原论文中的 PyAutoGUI 动作可控制哪些常见桌面操作？",
+      "answer": "可表示鼠标移动、点击、拖动以及键盘输入和快捷键等操作。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "osworld-008",
+      "question": "OSWorld 原论文 v1 的主要基准和额外 Windows 分析集各有多少任务？",
+      "answer": "主要 Ubuntu 基准有 369 项任务；论文另有 43 项 Windows 任务用于分析。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "paeval-007",
+      "question": "论文提出的 PA%K 在什么情况下对某个真实异常区间执行点调整？",
+      "answer": "该区间中实际检测到的异常点比例严格超过阈值 K 时才调整。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "pegasus-002",
+      "question": "PEGASUS 原论文的基础模型采用什么 Transformer 结构？",
+      "answer": "采用编码器—解码器结构。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "pegasus-003",
+      "question": "PEGASUS 原论文的独立重要句选择如何估计句子的重要性？",
+      "answer": "用句子与文档其余部分之间的 ROUGE-1 F1 作为重要性代理。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "pegasus-007",
+      "question": "PEGASUS 论文的较大模型预训练为什么保留部分选中句子不遮盖？",
+      "answer": "为了鼓励模型复制输入中的内容。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "pegasus-008",
+      "question": "PEGASUS 论文最终的大模型预训练是否一定同时使用掩码语言模型目标？",
+      "answer": "不使用；论文最终的大模型配置采用缺句生成而不加入 MLM。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "phishmm-002",
+      "question": "PhishIntention 原论文的 AWL 使用哪些界面元素类型？",
+      "answer": "身份标志、输入框、按钮、文本标签和其他显著块。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "phishmm-003",
+      "question": "PhishIntention 论文怎样描述 AWL 中每个元素的区域？",
+      "answer": "记录矩形的位置、宽度、高度以及元素类型。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "phishmm-008",
+      "question": "PhishIntention 论文用什么相似度比较两个标志的嵌入？",
+      "answer": "使用标志嵌入之间的余弦相似度。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "phishpedia-001",
+      "question": "Phishpedia 原论文检测到多个 logo 候选时，如何选择身份 logo？",
+      "answer": "它按对象检测置信度排序，取最高的候选作为身份 logo。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "phishpedia-005",
+      "question": "Phishpedia 原论文如何得到用于 logo 相似度比较的图像表示？",
+      "answer": "先在 Logo2K+ 上训练品牌分类网络，再利用其骨干网络及全局平均池化构造向量表示。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "phishpedia-007",
+      "question": "Phishpedia 原论文清理已失效或空白页面后再评估，为什么应记录这一筛选条件？",
+      "answer": "评估样本主要是当时可访问且可分析的页面，未必代表所有已收集 URL。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "plansolve-002",
+      "question": "Plan-and-Solve 论文中的 PS+ 相比基本 PS 增加了什么提示？",
+      "answer": "增加提取相关变量、计算中间结果及注意计算等更详细的指令。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "primeeval-002",
+      "question": "PrimeVul-OneFunc 如何利用修复提交中修改的函数数量辅助标注？",
+      "answer": "它将安全相关提交中唯一发生变更的函数视为漏洞函数候选。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "ptcheck-014",
+      "question": "PyTorch 2.7 non-reentrant 检查点的 determinism_check=\"default\" 会检查重算数值完全相等吗？",
+      "answer": "不会；默认检查重算张量的形状、dtype 和设备是否与保存时一致。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "ptembed-002",
+      "question": "PyTorch 2.7 从非零权重调用 Embedding.from_pretrained 并指定 padding_idx，会自动将该行清零吗？",
+      "answer": "不会；传入的预训练权重按原值使用，填充索引的查表梯度仍被抑制。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "ptsampler-007",
+      "question": "PyTorch SubsetRandomSampler 如何处理传入的索引序列？",
+      "answer": "它随机排列给定序列的位置，再按排列顺序产出相应索引。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "pyodknn-004",
+      "question": "PyOD 2.0.5 的 KNN 为什么可能对训练样本得到不同的 decision_scores_ 和 decision_function(X_train)？",
+      "answer": "fit 的近邻查询不把样本自身作为邻居；重新传入训练样本查询时，距离为零的相同样本可进入近邻集合。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "rapplan-007",
+      "question": "RAP 论文在数学推理实例中如何估计世界模型答案的一致性？",
+      "answer": "对同一子问题采样多个答案，以最常见答案的比例作为置信度。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "revealvul-001",
+      "question": "ReVeal 原论文的数据集来自哪两类开源项目的漏洞修复记录？",
+      "answer": "来自 Chromium 与 Debian Linux 内核相关项目的公开漏洞和修复记录。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "revealvul-005",
+      "question": "ReVeal 原论文如何把 GGNN 更新后的节点表示汇总为函数图表示？",
+      "answer": "对节点向量逐元素求和，得到固定长度的图向量。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "revealvul-006",
+      "question": "ReVeal 原论文如何缓解训练图嵌入中的类别不平衡？",
+      "answer": "对训练样本进行多数类下采样，并在少数类近邻之间插值生成样本。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "robertapre-004",
+      "question": "RoBERTa 论文的 FULL-SENTENCES 输入格式能否跨越文档边界？",
+      "answer": "可以；相邻完整句子可来自多个文档，文档之间加入额外分隔符。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "robertapre-005",
+      "question": "RoBERTa 论文的 DOC-SENTENCES 与 FULL-SENTENCES 在文档边界上有什么区别？",
+      "answer": "DOC-SENTENCES 不跨文档边界，FULL-SENTENCES 可以跨越边界。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "robertapre-006",
+      "question": "RoBERTa 论文采用哪一种 BPE 基本符号来构建词表？",
+      "answer": "采用字节作为基本符号的 byte-level BPE。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "rrcfpaper-002",
+      "question": "RRCF 原论文怎样为一个点集选择随机切分维度？",
+      "answer": "按各维度在该点集中的取值跨度占总跨度的比例选择。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "selfask-003",
+      "question": "Self-Ask 原论文接入搜索引擎时，用什么标记确定追问结束并暂停模型作答？",
+      "answer": "模型输出 Intermediate answer: 标记后暂停，将完整的追问送到搜索引擎。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "selfask-006",
+      "question": "Self-Ask 原论文的 Bamboogle 数据集主要用于考查什么？",
+      "answer": "它由人工构造的双跳问题组成，用于考查问题分解和多步组合。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "sigmamod-017",
+      "question": "Sigma 2.1.0 的 wide 修饰符是哪个编码修饰符的别名？",
+      "answer": "它是 utf16le 的别名。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "skpdp-008",
+      "question": "scikit-learn 1.7.2 计算 ICE（kind=\"individual\"）能使用 method=\"recursion\" 吗？",
+      "answer": "不能；个体曲线需要使用 brute 方法。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "socbench-004",
+      "question": "SOC-bench 设计为什么不预先提供任务间依赖关系提示？",
+      "answer": "作者希望智能体自行发现并利用跨任务的数据或控制依赖。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "socbench-005",
+      "question": "SOC-bench 的 DP3 提议如何处理与人工流程不同的解题步骤？",
+      "answer": "按预先规定的结果评分，不因步骤与人工流程不同而直接扣分。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "socbench-007",
+      "question": "SOC-bench 的 Task Fox 按时间窗口评分，是否直接衡量系统的实际运行耗时？",
+      "answer": "不是；论文明确说明该任务不评分系统的实时运行性能，而按时间窗口评价。",
+      "reason": "benchmark_detail"
+    },
+    {
+      "id": "spanbertpre-002",
+      "question": "SpanBERT 原论文如何选择随机掩码片段的长度？",
+      "answer": "从几何分布采样长度，并限制其最大长度。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "spanbertpre-003",
+      "question": "SpanBERT 原论文选择掩码片段起点时如何处理子词？",
+      "answer": "起点必须位于一个词的开头，并以完整词组成被选片段。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "specdec-006",
+      "question": "原论文的单轮算法验证 K 个草稿 token，全部接受时最多可生成多少个新 token？",
+      "answer": "最多 K+1 个：K 个草稿 token 加上从目标模型分布再采样的一个 token。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "splade-006",
+      "question": "SPLADE 原论文对词表响应使用 ReLU 后，得到的词项权重有什么符号约束？",
+      "answer": "权重非负；负响应被 ReLU 压为零。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "splade-009",
+      "question": "SPLADE 论文中的 FLOPS 正则为什么会抑制频繁激活的词表项？",
+      "answer": "它对批次内各词项平均权重的平方求和，使高平均激活受到更强惩罚。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "splade-010",
+      "question": "SPLADE 原论文为什么可对查询和文档设置不同的稀疏正则化权重？",
+      "answer": "两者在检索流程中的成本不同，分别调节可控制查询和文档表示的稀疏程度。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "svdd-006",
+      "question": "Deep SVDD 原论文如何选择固定中心的一个可行初始值？",
+      "answer": "用初始网络对部分训练样本输出表示的均值设定中心。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "svdd-009",
+      "question": "Deep SVDD 论文为什么建议网络不使用偏置项？",
+      "answer": "偏置项可能使网络学习与输入无关的常量映射，导致球体塌缩。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "sweaci-004",
+      "question": "SWE-agent 原论文的文件查看器为什么显示文件的局部窗口？",
+      "answer": "限制单次反馈长度，同时允许通过滚动或跳转查看其他位置。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "sweaci-006",
+      "question": "SWE-agent 论文中集成的编辑检查发现指定代码错误时会怎样处理该编辑？",
+      "answer": "丢弃无效编辑，并向智能体反馈错误以便重试。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "sweaci-007",
+      "question": "SWE-agent 论文的搜索结果过多时，接口如何引导智能体？",
+      "answer": "不返回过量结果，并提示使用更具体的查询。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "sweaci-008",
+      "question": "SWE-agent 原论文如何缩减较早的环境观察记录？",
+      "answer": "将较早的观察压缩成简短记录，保留更近期的详细反馈。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "swebase-003",
+      "question": "SWE-bench 原论文如何把自然语言问题与参考修复关联？",
+      "answer": "从合并的 GitHub PR 中筛选能关联 issue 且包含测试修改的记录。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "swebase-007",
+      "question": "SWE-bench 原论文的 resolved rate 统计什么？",
+      "answer": "统计被判定解决的任务占评估任务总数的比例。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "swebase-011",
+      "question": "SWE-bench 原论文的 oracle 文件检索使用了什么额外信息？",
+      "answer": "它提供参考补丁实际修改过的文件。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "swebase-013",
+      "question": "SWE-bench 原论文中的评测任务覆盖什么编程语言仓库？",
+      "answer": "原始评测任务来自 Python 仓库。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "tau2-006",
+      "question": "τ²-bench 论文的电信任务主要使用什么判定任务成功？",
+      "answer": "使用针对最终环境状态的预定义断言函数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "tau2-009",
+      "question": "τ²-bench 论文的电信场景中，完整组合任务与报告用子集分别有多少项？",
+      "answer": "论文从 2285 个组合任务中抽取 114 个，平衡不同意图和子任务数。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "tessdetail-009",
+      "question": "TESSERACT 论文优化恶意类召回率和精确率时，分别限制哪种错误率？",
+      "answer": "优化召回率时限制假正例率；优化精确率时限制假负例率。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "tessdetail-015",
+      "question": "TESSERACT 论文为什么把每月对全部新样本标注并重训视为理想化对照？",
+      "answer": "这种方法需要持续为所有新样本获取标签并更新模型，标注和计算成本可能很高。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "toolbench-002",
+      "question": "ToolLLM v2 论文中的工具接口文档主要来自哪里？",
+      "answer": "来自 RapidAPI 上收集的真实 REST API 文档。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "toolbench-003",
+      "question": "ToolLLM v2 的工具使用指令是全部由真实用户编写的吗？",
+      "answer": "不是；论文根据采样的 API 使用模型生成指令。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "toolbench-004",
+      "question": "ToolLLM 论文生成多工具任务时，如何利用 RapidAPI 的工具组织关系？",
+      "answer": "它从同一类别或同一集合中抽取多个工具；同一集合中的工具可以跨类别。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "toolbench-009",
+      "question": "ToolLLM 论文中的 API 检索器如何估计指令与接口的相关性？",
+      "answer": "它分别编码指令和 API 文档，再比较嵌入的相似度。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "toolformer-005",
+      "question": "Toolformer 原论文的部分评测为什么难以完成需要连续调用两个工具的任务？",
+      "answer": "论文的评测设置限制每个输入最多调用一次 API，而训练数据中的候选调用也是独立采样的。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "toolsbx-004",
+      "question": "ToolSandbox 中 milestone 和 minefield 分别用于描述什么？",
+      "answer": "milestone 描述任务需要发生的关键事件；minefield 描述不能发生的事件。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "toolsbx-006",
+      "question": "ToolSandbox 论文怎样将一条轨迹与里程碑图匹配？",
+      "answer": "在满足时间依赖的匹配中，选择平均里程碑相似度最高的匹配。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "toolsbx-007",
+      "question": "ToolSandbox 原论文中检测到非零 minefield 匹配时，最终轨迹相似度如何处理？",
+      "answer": "最终相似度设为 0。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "tranad-003",
+      "question": "TranAD 论文在测试时怎样组合两阶段的重建误差？",
+      "answer": "对第一阶段和自条件化第二阶段的重建误差各赋一半权重。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "tranad-004",
+      "question": "TranAD 原论文使用什么方法为异常分数选择动态阈值？",
+      "answer": "使用基于极值理论的 Peak Over Threshold（POT）方法。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "tranad-005",
+      "question": "TranAD 原论文怎样从各维度的异常判定得到时间点级检测结果？",
+      "answer": "对各维度判定取逻辑或：任一维度异常则该时间点判为异常。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "truthqa-002",
+      "question": "TruthfulQA 原论文的测试集包含多少题，覆盖多少类主题？",
+      "answer": "包含 817 个问题，覆盖 38 个类别。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "truthqa-005",
+      "question": "TruthfulQA 原论文把这个测试集设计成什么提示设置的基准？",
+      "answer": "主要面向 zero-shot：不进行梯度更新，提示中不使用 TruthfulQA 的题目示例。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "truthqa-007",
+      "question": "TruthfulQA 原论文的多项选择真实性分数如何利用真假参考答案的似然？",
+      "answer": "对所有候选答案的似然归一化后，求真实答案所占的总概率质量。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "truthqa-008",
+      "question": "TruthfulQA 原论文验证 GPT-judge 对未见模型家族的泛化时，是否也把测试问题全部留出训练？",
+      "answer": "没有；论文为了评价这些固定问题，训练中仍包含所有问题，并按模型家族留出答案。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "truthqa-009",
+      "question": "TruthfulQA 原论文的 filtered 问题为什么可能对构题时使用的模型有选择偏差？",
+      "answer": "作者用 GPT-3-175B 测试并过滤掉大多数它能答对的问题，因此该部分针对该模型的弱点。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "truthqa-010",
+      "question": "TruthfulQA 原论文的人类生成任务基线是否完全不借助外部资料？",
+      "answer": "不是；一位研究生回答随机抽取的 250 题时被允许上网查资料。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "txlbase-008",
+      "question": "Transformer-XL 论文中的记忆长度 M 主要限制什么？",
+      "answer": "限制为当前片段保留并提供的历史隐藏状态数量。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "usadcode-001",
+      "question": "USAD 作者固定提交的 UsadModel 使用多少个编码器和解码器？",
+      "answer": "使用一个共享编码器和两个解码器。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "usadcode-002",
+      "question": "USAD 作者实现的 w3 如何从第一解码器输出生成？",
+      "answer": "先将第一解码器输出重新送入编码器，再由第二解码器解码。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "usadcode-003",
+      "question": "USAD 作者实现中，两个训练损失对级联重建误差项的符号有什么区别？",
+      "answer": "loss1 加上该误差项，loss2 减去该误差项。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "usadcode-004",
+      "question": "USAD 作者实现的两个优化器分别包含哪些模块？",
+      "answer": "第一个优化共享编码器和解码器 1；第二个优化共享编码器和解码器 2。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "usadcode-005",
+      "question": "USAD 作者实现的 testing 函数怎样组合两个重建误差？",
+      "answer": "对一次重建和级联重建的均方误差按 alpha、beta 加权求和。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "usadcode-006",
+      "question": "USAD 作者实现的 testing 函数是否直接给出二元异常标签？",
+      "answer": "不会；该函数返回每批样本的异常分数。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "vpn2016-005",
+      "question": "ISCXVPN2016 官方说明使用哪些工具捕获网络流量？",
+      "answer": "使用 Wireshark 和 tcpdump 进行抓包。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "vulberta-001",
+      "question": "VulBERTa 原论文在代码分词流水线中使用什么解析器？",
+      "answer": "使用 Clang 解析 C/C++ 源代码，形成代码 token 序列。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "vuldeep-009",
+      "question": "VulDeePecker 论文中的原版实现是否同时完整利用数据依赖和控制依赖？",
+      "answer": "没有；论文说明其实现使用数据依赖分析，控制依赖仍是后续扩展方向。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "vuldeep-013",
+      "question": "VulDeePecker 论文对同时获得正负标签的相同 code gadget 如何处理？",
+      "answer": "论文从数据中删除这类标签冲突的片段。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "vulrag-005",
+      "question": "Vul-RAG v3 论文使用哪种方法计算各查询元素的候选检索相似度？",
+      "answer": "使用 BM25。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "vulrag-008",
+      "question": "Vul-RAG 论文的 pairwise accuracy 在一对漏洞与修复代码上要求什么？",
+      "answer": "要求漏洞版本和修复版本都被正确分类，该对才计为正确。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "w2vpre-005",
+      "question": "wav2vec 2.0 原论文的对比任务从哪里采样干扰目标？",
+      "answer": "从同一条语音的其他被遮盖时间步均匀采样。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "w2vpre-008",
+      "question": "wav2vec 2.0 原论文如何组合多个码本得到量化表示？",
+      "answer": "每组选择一个码本向量，拼接后再通过线性变换。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "webshop-001",
+      "question": "WebShop 原论文中的智能体需要完成什么任务？",
+      "answer": "它根据自然语言要求，在模拟购物网站中搜索、选择并购买符合条件的商品。",
+      "reason": "implementation_detail"
+    },
+    {
+      "id": "webshop-003",
+      "question": "WebShop 原论文的 HTML 模式与 simple 模式在页面表示上有什么区别？",
+      "answer": "HTML 模式呈现网页 HTML；simple 模式去除多余元数据，提供较简化的页面表示。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "whisperbase-002",
+      "question": "Whisper 原论文处理中，当音频语言与转写语言不一致时如何处理？",
+      "answer": "通常不作为语音识别训练样本；若文本是英语，则作为到英语的语音翻译样本。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "whisperbase-003",
+      "question": "Whisper 原论文在计算输入梅尔频谱前把音频重采样到多少？",
+      "answer": "重采样到 16 kHz。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "whisperbase-004",
+      "question": "Whisper 原论文如何利用没有语音的音频片段训练模型？",
+      "answer": "用这些片段训练模型预测 no-speech 标记。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "whisperbase-005",
+      "question": "Whisper 原论文把前文转写作为解码上下文时，是否对这些前文 token 计算训练损失？",
+      "answer": "不计算；论文只对前文上下文的损失位置做掩码。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "whisperbase-006",
+      "question": "Whisper 原论文如何处理长于模型音频窗口的录音？",
+      "answer": "连续处理 30 秒窗口，并依据预测时间戳移动后续窗口。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "whisperbase-007",
+      "question": "Whisper 原论文的长音频处理中，为什么不只用 no-speech 概率判断静音？",
+      "answer": "论文观察到单独使用该概率不足，并结合平均生成对数概率进行判断。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "wordvec-027",
+      "question": "fastText 子词论文的主要实验采用多长的字符 n-gram？",
+      "answer": "论文主要实验提取长度为 3 到 6 的字符 n-gram。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "xlmr-006",
+      "question": "XLM-R 原论文是否使用显式语言嵌入？",
+      "answer": "不使用；论文指出这样有助于处理代码混用。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "xlmr-007",
+      "question": "XLM-R 原论文的预训练是否必须使用平行翻译语料？",
+      "answer": "不必须；其模型采用多语言单语数据上的无监督 MLM。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "xlnetpaper-006",
+      "question": "XLNet 原论文的 partial prediction 选择排列顺序中哪部分位置作为预测目标？",
+      "answer": "只预测排列顺序中靠后的目标子序列，以减轻训练优化难度。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "xlnetpaper-007",
+      "question": "XLNet 原论文在下游微调时可以丢弃哪条注意力流？",
+      "answer": "可以丢弃 query stream，使用 content stream 作为普通 Transformer 表示。",
+      "reason": "experiment_detail"
+    },
+    {
+      "id": "xlnetpaper-008",
+      "question": "XLNet 原论文借鉴 Transformer-XL 的哪些机制处理序列？",
+      "answer": "借鉴片段循环和相对位置编码机制。",
+      "reason": "experiment_detail"
+    }
+  ]
+}

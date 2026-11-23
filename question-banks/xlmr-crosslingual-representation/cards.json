@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "xlmr-crosslingual-representation",
+    "title": "XLM-R 原论文 v2：多语言表示与迁移",
+    "url": "https://arxiv.org/pdf/1911.02116v2",
+    "type": "固定版本研究论文",
+    "note": "逐题依据所列资料自行整理；例子为自编，版本与适用条件见题目。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "xlmr-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "XLM-R 跨语言表示",
+      "knowledgePoint": "预训练任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLM-R 原论文采用什么自监督预训练任务？",
+      "answer": "在多语言文本上训练掩码语言模型。",
+      "explanation": "论文使用清理后的 CommonCrawl 多语言语料。",
+      "example": "遮盖文本中的部分 token 并预测它们。",
+      "tags": [
+        "XLM-R 跨语言表示",
+        "预训练任务"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1911.02116v2"
+    },
+    {
+      "id": "xlmr-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLM-R 跨语言表示",
+      "knowledgePoint": "分词方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLM-R 原论文如何对多语言原始文本分词？",
+      "answer": "使用基于 Unigram 语言模型的 SentencePiece 直接处理原始文本。",
+      "explanation": "这一方式减少了对不同语言专用分词工具的依赖。",
+      "example": "不同语言的原始文本使用共享子词词表。",
+      "tags": [
+        "XLM-R 跨语言表示",
+        "分词方式"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1911.02116v2"
+    },
+    {
+      "id": "xlmr-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLM-R 跨语言表示",
+      "knowledgePoint": "零样本迁移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLM-R 论文中的跨语言零样本迁移通常怎样训练和测试？",
+      "answer": "在一种语言的标注数据上微调，再直接在其他语言的对应任务上测试。",
+      "explanation": "目标语言不使用该任务的标注训练集。",
+      "example": "用英文标注训练实体识别，再测试另一种语言。",
+      "tags": [
+        "XLM-R 跨语言表示",
+        "零样本迁移"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1911.02116v2"
+    },
+    {
+      "id": "xlmr-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLM-R 跨语言表示",
+      "knowledgePoint": "多语言容量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLM-R 论文的“多语言诅咒”描述什么权衡？",
+      "answer": "固定模型容量下，增加语言可能先带来迁移收益，之后容量稀释可能损害性能。",
+      "explanation": "论文研究的是具体模型和数据配置，不能假定每增加一种语言都会变差。",
+      "example": "模型容量不变时增加更多预训练语言。",
+      "tags": [
+        "XLM-R 跨语言表示",
+        "多语言容量"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1911.02116v2"
+    },
+    {
+      "id": "xlmr-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLM-R 跨语言表示",
+      "knowledgePoint": "语言采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLM-R 论文的语言采样平滑参数减小时，相对更常采到哪类语言？",
+      "answer": "相对提高低资源语言被采样的机会。",
+      "explanation": "论文用 α 控制按语料大小的采样分布平滑。",
+      "example": "小语料语言相对其原始占比得到更多训练批次。",
+      "tags": [
+        "XLM-R 跨语言表示",
+        "语言采样"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1911.02116v2"
+    },
+    {
+      "id": "xlmr-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLM-R 跨语言表示",
+      "knowledgePoint": "语言嵌入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLM-R 原论文是否使用显式语言嵌入？",
+      "answer": "不使用；论文指出这样有助于处理代码混用。",
+      "explanation": "这不意味着多语言模型无法利用文本内容识别语言。",
+      "example": "同一输入中包含两种语言的文本。",
+      "tags": [
+        "XLM-R 跨语言表示",
+        "语言嵌入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1911.02116v2"
+    },
+    {
+      "id": "xlmr-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLM-R 跨语言表示",
+      "knowledgePoint": "平行语料",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLM-R 原论文的预训练是否必须使用平行翻译语料？",
+      "answer": "不必须；其模型采用多语言单语数据上的无监督 MLM。",
+      "explanation": "论文没有在最终模型中使用依赖平行数据的监督式 TLM 目标。",
+      "example": "用多种语言各自的网页文本预训练。",
+      "tags": [
+        "XLM-R 跨语言表示",
+        "平行语料"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1911.02116v2"
+    }
+  ]
+}

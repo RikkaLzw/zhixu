@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "git-submodule-fundamentals",
+    "title": "Git 2.46 文档：子模块",
+    "url": "https://git-scm.com/docs/git-submodule/2.46.0",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "gitsub-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 子模块",
+      "knowledgePoint": "子模块引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 父项目如何记录子模块应使用的版本？",
+      "answer": "通过 gitlink 记录子模块的一个具体提交 ID。",
+      "explanation": "父项目提交不会自动跟随子模块远端的最新提交。",
+      "example": "同一父项目提交可指定子模块的固定版本。",
+      "tags": [
+        "Git 子模块",
+        "子模块引用"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/gitsubmodules/2.46.0"
+    },
+    {
+      "id": "gitsub-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 子模块",
+      "knowledgePoint": "配置文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 项目的 .gitmodules 通常保存哪些子模块信息？",
+      "answer": "保存子模块名称对应的路径和克隆 URL 等共享配置。",
+      "explanation": "它与父项目记录的子模块提交 ID 是不同信息。",
+      "example": "仓库根目录的 .gitmodules 指定依赖仓库地址。",
+      "tags": [
+        "Git 子模块",
+        "配置文件"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/gitmodules/2.46.0"
+    },
+    {
+      "id": "gitsub-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 子模块",
+      "knowledgePoint": "初始化更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "克隆父项目后，git submodule update --init --recursive 通常做什么？",
+      "answer": "初始化并更新父项目声明的子模块，还会递归处理嵌套的已注册子模块。",
+      "explanation": "默认更新到父项目期望的提交；具体更新方式可受配置或选项影响。",
+      "example": "克隆后补齐项目声明的子模块。",
+      "tags": [
+        "Git 子模块",
+        "初始化更新"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-submodule/2.46.0"
+    },
+    {
+      "id": "gitsub-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 子模块",
+      "knowledgePoint": "默认分离头",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 子模块以默认 checkout 方式更新后，HEAD 通常处于什么状态？",
+      "answer": "检出父项目记录的提交，通常处于 detached HEAD 状态。",
+      "explanation": "在子模块中开发时应明确建立或切换到所需分支。",
+      "example": "初始化后子模块不一定位于某个本地分支。",
+      "tags": [
+        "Git 子模块",
+        "默认分离头"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-submodule/2.46.0"
+    },
+    {
+      "id": "gitsub-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 子模块",
+      "knowledgePoint": "远程更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git submodule update --remote 与默认更新的目标有什么区别？",
+      "answer": "--remote 使用子模块配置的远端跟踪分支状态，默认更新使用父项目记录的提交。",
+      "explanation": "--remote 通常会先获取远端更新，具体可由选项和配置影响。",
+      "example": "有意升级依赖时检查远端结果再更新父项目。",
+      "tags": [
+        "Git 子模块",
+        "远程更新"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-submodule/2.46.0"
+    },
+    {
+      "id": "gitsub-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 子模块",
+      "knowledgePoint": "提交指针",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "子模块产生新提交后，怎样让其他人通过父项目使用该新版本？",
+      "answer": "先在子模块提交修改，再在父项目中暂存并提交子模块路径的 gitlink 更新，确保子模块提交可供他人获取。",
+      "explanation": "gitlink 指向具体提交，不包含子模块工作区的未提交修改。",
+      "example": "推送子模块新提交，再提交父项目中的版本引用。",
+      "tags": [
+        "Git 子模块",
+        "提交指针"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/gitsubmodules/2.46.0"
+    },
+    {
+      "id": "gitsub-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 子模块",
+      "knowledgePoint": "状态前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git submodule status 输出中的 -、+ 和 U 前缀分别表示什么？",
+      "answer": "分别表示未初始化、检出提交与父项目索引记录不同、存在合并冲突。",
+      "explanation": "status --cached 可查看父项目记录的提交。",
+      "example": "看到 + 时检查子模块版本引用的差异。",
+      "tags": [
+        "Git 子模块",
+        "状态前缀"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-submodule/2.46.0"
+    },
+    {
+      "id": "gitsub-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 子模块",
+      "knowledgePoint": "URL同步",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "修改 .gitmodules 中已初始化子模块的 URL 后，git submodule sync 有什么作用？",
+      "answer": "将已初始化子模块的远端 URL 配置同步为 .gitmodules 中的值。",
+      "explanation": "只对已有对应 URL 配置的子模块生效；可加 --recursive 处理嵌套。",
+      "example": "迁移依赖仓库地址后同步本地配置。",
+      "tags": [
+        "Git 子模块",
+        "URL同步"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-submodule/2.46.0"
+    },
+    {
+      "id": "gitsub-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 子模块",
+      "knowledgePoint": "取消初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git submodule deinit 与从父项目删除子模块有什么区别？",
+      "answer": "deinit 取消本地注册并移除子模块工作树；从仓库删除则需另行移除并提交。",
+      "explanation": "deinit 本身不会提交父项目删除子模块的变更。",
+      "example": "暂时不在本机检出某依赖时可取消初始化。",
+      "tags": [
+        "Git 子模块",
+        "取消初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-submodule/2.46.0"
+    }
+  ]
+}

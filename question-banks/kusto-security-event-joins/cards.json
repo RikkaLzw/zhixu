@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "kusto-security-event-joins",
+    "title": "Microsoft Kusto：安全事件关联与 join",
+    "url": "https://learn.microsoft.com/en-us/kusto/query/join-operator?view=microsoft-fabric",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，版本及适用条件见各题。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "kustojoin-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "安全日志关联查询",
+      "knowledgePoint": "默认连接类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kusto 查询的 join 未指定 kind 时使用什么连接类型？",
+      "answer": "默认使用 innerunique，会先按连接键对左表去重再匹配右表。",
+      "explanation": "需要保留全部匹配组合时，可显式指定 kind=inner。",
+      "example": "多个登录事件具有相同账号键时，默认连接可能减少左侧行。",
+      "tags": [
+        "安全日志关联查询",
+        "默认连接类型"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/kusto/query/join-operator?view=microsoft-fabric"
+    },
+    {
+      "id": "kustojoin-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "安全日志关联查询",
+      "knowledgePoint": "左表去重选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kusto 的 innerunique 左表存在相同连接键的多行时，能否依赖它保留某个特定事件？",
+      "answer": "不能；文档给出的例子允许保留相同键的不同左表记录。",
+      "explanation": "如果需要最新事件，应先用明确的时间规则选取，而非依赖默认去重。",
+      "example": "同一账号的两条登录事件可能产生不同的连接结果。",
+      "tags": [
+        "安全日志关联查询",
+        "左表去重选择"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/kusto/query/join-innerunique?view=microsoft-fabric"
+    },
+    {
+      "id": "kustojoin-004",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "安全日志关联查询",
+      "knowledgePoint": "左反连接",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "如何用 Kusto 找出左侧事件中没有匹配右表键的记录？",
+      "answer": "可使用 join kind=leftanti，结果保留左侧未匹配的行。",
+      "explanation": "这种结果只说明在当前数据和连接条件下未匹配，不能单独证明恶意。",
+      "example": "找出没有关联到设备清单的登录事件。",
+      "tags": [
+        "安全日志关联查询",
+        "左反连接"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/kusto/query/join-operator?view=microsoft-fabric"
+    },
+    {
+      "id": "kustojoin-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "安全日志关联查询",
+      "knowledgePoint": "左半连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kusto 的 leftsemi 连接输出哪些列和行？",
+      "answer": "它只输出左表列，并保留在右表有匹配键的左表行。",
+      "explanation": "它适合筛选存在关联的左侧记录，而不是带回右侧详情。",
+      "example": "筛选存在于观察名单中的账号事件。",
+      "tags": [
+        "安全日志关联查询",
+        "左半连接"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/kusto/query/join-operator?view=microsoft-fabric"
+    },
+    {
+      "id": "kustojoin-006",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "安全日志关联查询",
+      "knowledgePoint": "时间范围过滤",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "Kusto 文档的时间窗口连接为什么在按时间桶连接后还检查实际时间差？",
+      "answer": "时间桶先缩小候选范围，实际时间差过滤确保匹配满足要求的窗口。",
+      "explanation": "仅按桶键匹配不足以保证事件时间差满足业务条件。",
+      "example": "关联同一会话内相隔不超过一分钟的两个事件。",
+      "tags": [
+        "安全日志关联查询",
+        "时间范围过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/kusto/query/join-time-window?view=microsoft-fabric"
+    },
+    {
+      "id": "kustojoin-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "安全日志关联查询",
+      "knowledgePoint": "连接提示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kusto join 的 broadcast 或 shuffle 提示会改变连接的语义结果吗？",
+      "answer": "文档指出连接提示不改变 join 的语义，只影响执行方式和性能。",
+      "explanation": "选择合适的提示仍依赖表大小、键分布和集群环境。",
+      "example": "分析结果行含义时仍应先确认 join 的 kind 与条件。",
+      "tags": [
+        "安全日志关联查询",
+        "连接提示"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/kusto/query/join-operator?view=microsoft-fabric"
+    }
+  ]
+}

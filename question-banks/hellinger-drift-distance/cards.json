@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "hellinger-drift-distance",
+    "title": "NannyML 0.13.1 文档：Hellinger 分布距离",
+    "url": "https://nannyml.readthedocs.io/en/v0.13.1/how_it_works/univariate_drift_detection.html",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "hellinger-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Hellinger 分布距离",
+      "knowledgePoint": "距离含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Hellinger 距离用于比较什么？",
+      "answer": "比较两个概率分布的差异；它是对称的距离指标。",
+      "explanation": "比较数据漂移时可用参考分布和当前分布计算。",
+      "example": "比较两个时期的类别频率分布。",
+      "tags": [
+        "Hellinger 分布距离",
+        "距离含义"
+      ],
+      "evidence": "source",
+      "reference": "https://nannyml.readthedocs.io/en/v0.13.1/how_it_works/univariate_drift_detection.html"
+    },
+    {
+      "id": "hellinger-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Hellinger 分布距离",
+      "knowledgePoint": "距离边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "归一化 Hellinger 距离的 0 与 1 分别代表什么边界情形？",
+      "answer": "0 表示两个分布相同；1 表示两者的概率支持不重叠。",
+      "explanation": "实际估计可能受样本量与分箱影响。",
+      "example": "概率集中在完全不同类别时可得到距离 1。",
+      "tags": [
+        "Hellinger 分布距离",
+        "距离边界"
+      ],
+      "evidence": "source",
+      "reference": "https://nannyml.readthedocs.io/en/v0.13.1/how_it_works/univariate_drift_detection.html"
+    },
+    {
+      "id": "hellinger-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Hellinger 分布距离",
+      "knowledgePoint": "分类变量分箱",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NannyML 0.13.1 计算分类特征的 Hellinger 距离时，如何形成比较所需的分布？",
+      "answer": "按类别构造频率分布，再比较参考数据与当前数据对应类别的概率。",
+      "explanation": "新类别与参考类别应对齐，缺失类别的频率按实现处理。",
+      "example": "分别统计两个数据批次中各类别的相对频率。",
+      "tags": [
+        "Hellinger 分布距离",
+        "分类变量分箱"
+      ],
+      "evidence": "source",
+      "reference": "https://nannyml.readthedocs.io/en/v0.13.1/how_it_works/univariate_drift_detection.html"
+    },
+    {
+      "id": "hellinger-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Hellinger 分布距离",
+      "knowledgePoint": "缺失值处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NannyML 0.13.1 的单变量漂移检测方法如何处理缺失值？",
+      "answer": "文档说明实现会丢弃遇到的缺失值。",
+      "explanation": "因此仅看该距离可能漏掉缺失率本身的变化，应另行监控。",
+      "example": "两个批次缺失率不同但非缺失分布相近时，需要额外关注缺失情况。",
+      "tags": [
+        "Hellinger 分布距离",
+        "缺失值处理"
+      ],
+      "evidence": "source",
+      "reference": "https://nannyml.readthedocs.io/en/v0.13.1/how_it_works/univariate_drift_detection.html"
+    }
+  ]
+}

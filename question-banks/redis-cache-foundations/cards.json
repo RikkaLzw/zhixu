@@ -1,0 +1,373 @@
+{
+  "source": {
+    "id": "redis-cache-foundations",
+    "title": "Redis 7.2：数据结构、缓存与事务",
+    "url": "https://redis.io/docs/latest/develop/data-types/",
+    "type": "官方技术文档",
+    "note": "依据逐题引用的官方文档自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "rediscache-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "字符串",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 String 类型存储的是什么？",
+      "answer": "它存储字节序列，可以表示文本、数字或其他二进制数据。",
+      "explanation": "字符串不要求内容一定是自然语言文本。",
+      "example": "缓存一个序列化结果。",
+      "tags": [
+        "字符串",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/"
+    },
+    {
+      "id": "rediscache-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "哈希",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 Hash 适合表示什么结构？",
+      "answer": "它保存字段与值的映射，适合表示具有多个字段的记录。",
+      "explanation": "一个 Redis key 可以对应一个包含多个字段的 Hash。",
+      "example": "用用户 ID 作为 key，保存昵称和城市字段。",
+      "tags": [
+        "哈希",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/"
+    },
+    {
+      "id": "rediscache-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 List 保留什么顺序？",
+      "answer": "它是按插入位置组织的字符串序列，可以从两端操作。",
+      "explanation": "同一值可以出现多次。",
+      "example": "用 LPUSH 和 RPOP 操作队列两端。",
+      "tags": [
+        "列表",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/"
+    },
+    {
+      "id": "rediscache-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 Set 中能否包含重复成员？",
+      "answer": "不能；Set 是无序且成员唯一的字符串集合。",
+      "explanation": "重复添加同一成员不会产生第二份成员。",
+      "example": "保存去重后的用户标签。",
+      "tags": [
+        "集合",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/"
+    },
+    {
+      "id": "rediscache-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "有序集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 Sorted Set 如何组织成员？",
+      "answer": "它保存唯一成员及其分数，并按分数排序；分数相同时按成员字典序排序。",
+      "explanation": "相同分数不要求成员相同。",
+      "example": "按积分维护排行榜。",
+      "tags": [
+        "有序集合",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/sorted-sets/"
+    },
+    {
+      "id": "rediscache-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "过期时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 EXPIRE key seconds 对键设置什么？",
+      "answer": "它设置键的过期时间，达到期限后该键将不再可用。",
+      "explanation": "非正数秒会直接删除键；精确行为以服务端版本为准。",
+      "example": "为缓存设置 60 秒有效期。",
+      "tags": [
+        "过期时间",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/expire/"
+    },
+    {
+      "id": "rediscache-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "TTL返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 TTL 对不存在的键和没有过期时间的键分别返回什么？",
+      "answer": "不存在的键返回 -2；存在但没有过期时间的键返回 -1。",
+      "explanation": "设置了过期时间的键返回剩余秒数。",
+      "example": "区分缓存缺失与永久键。",
+      "tags": [
+        "TTL返回值",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/ttl/"
+    },
+    {
+      "id": "rediscache-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "覆盖与期限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 对有过期时间的 String 键执行不带选项的 SET，会保留原期限吗？",
+      "answer": "不会；成功的普通 SET 会覆盖值并清除原过期时间。",
+      "explanation": "需要保留时可使用支持该功能的 KEEPTTL 选项。",
+      "example": "重新写入缓存后检查 TTL。",
+      "tags": [
+        "覆盖与期限",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/set/"
+    },
+    {
+      "id": "rediscache-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "修改与期限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 对已有 Hash 执行 HSET 修改字段，会清除该键的过期时间吗？",
+      "answer": "不会；修改原值而不替换整个键的操作通常保留原来的过期时间。",
+      "explanation": "这与普通 SET 覆盖整个 String 键的行为不同。",
+      "example": "给已设置过期时间的用户记录更新一个字段。",
+      "tags": [
+        "修改与期限",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/expire/"
+    },
+    {
+      "id": "rediscache-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "条件设置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 SET key value NX EX seconds 的条件和期限是什么？",
+      "answer": "只在键不存在时设置值，并同时设置以秒为单位的过期时间。",
+      "explanation": "条件不满足时不会覆盖已有键。",
+      "example": "限时设置一个尚不存在的标记。",
+      "tags": [
+        "条件设置",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/set/"
+    },
+    {
+      "id": "rediscache-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "惰性与主动过期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 主要如何发现已过期的键？",
+      "answer": "访问键时可惰性检查，后台也会定期主动抽查带期限的键。",
+      "explanation": "未被访问的键不一定恰在到期瞬间立即从内存移除。",
+      "example": "冷门缓存也可由后台过期清理。",
+      "tags": [
+        "惰性与主动过期",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/expire/"
+    },
+    {
+      "id": "rediscache-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "快照持久化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 RDB 持久化主要保存什么？",
+      "answer": "它把某个时点的数据集保存为快照。",
+      "explanation": "发生故障时，最后一次快照之后的更新可能丢失。",
+      "example": "定期生成快照作为备份。",
+      "tags": [
+        "快照持久化",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/"
+    },
+    {
+      "id": "rediscache-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "追加日志持久化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 AOF 持久化如何用于恢复数据？",
+      "answer": "它记录写入操作；服务重启时通过读取 AOF 重建数据状态。",
+      "explanation": "实际丢失窗口取决于同步策略等条件。",
+      "example": "开启 AOF 后恢复最近的写入状态。",
+      "tags": [
+        "追加日志持久化",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/"
+    },
+    {
+      "id": "rediscache-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "淘汰策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 allkeys-lru 与 volatile-lru 淘汰策略的候选键范围有什么区别？",
+      "answer": "allkeys-lru 可从所有键中选择；volatile-lru 只从设置了过期时间的键中选择。",
+      "explanation": "Redis 的 LRU 使用近似算法。",
+      "example": "缓存中既有永久键也有带 TTL 的键。",
+      "tags": [
+        "淘汰策略",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/reference/eviction/"
+    },
+    {
+      "id": "rediscache-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "内存达到上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 使用 noeviction 策略且达到内存上限时，增加内存的写入通常会怎样？",
+      "answer": "服务器返回错误，而不是通过淘汰现有键为这类写入腾空间。",
+      "explanation": "读取已有数据等不增加内存的操作仍可执行。",
+      "example": "缓存写入应处理内存不足错误。",
+      "tags": [
+        "内存达到上限",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/reference/eviction/"
+    },
+    {
+      "id": "rediscache-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "事务隔离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 MULTI/EXEC 事务执行期间，其他客户端命令会插入到队列命令之间吗？",
+      "answer": "不会；EXEC 执行事务队列时，队列中的命令顺序执行而不被其他客户端命令插入。",
+      "explanation": "这不意味着事务提供关系数据库式的回滚。",
+      "example": "多个排队命令作为一个连续执行段。",
+      "tags": [
+        "事务隔离",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/using-commands/transactions/"
+    },
+    {
+      "id": "rediscache-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "事务运行时错误",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 事务中某条命令在 EXEC 后发生运行时错误，其他已排队命令会回滚吗？",
+      "answer": "不会；其他命令仍会执行，Redis 不提供事务回滚。",
+      "explanation": "入队时的语法等错误与执行时错误应分别判断。",
+      "example": "对字符串执行列表操作出错后，其他命令仍可能成功。",
+      "tags": [
+        "事务运行时错误",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/using-commands/transactions/"
+    },
+    {
+      "id": "rediscache-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "乐观锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 WATCH 如何帮助实现乐观并发控制？",
+      "answer": "它监视键；如果监视的键在 EXEC 前被修改，事务会中止。",
+      "explanation": "客户端通常需要根据中止结果重试。",
+      "example": "先读余额，再在未发生并发修改时提交更新。",
+      "tags": [
+        "乐观锁",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/using-commands/transactions/"
+    },
+    {
+      "id": "rediscache-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缓存与 Redis",
+      "knowledgePoint": "复制语义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的主从复制默认是同步确认每次写入的吗？",
+      "answer": "不是；复制默认是异步的，主节点写入成功不表示所有副本都已收到。",
+      "explanation": "网络或故障切换可能导致副本暂时落后。",
+      "example": "写后读取副本可能看到旧值。",
+      "tags": [
+        "复制语义",
+        "缓存与 Redis"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/operate/oss_and_stack/management/replication/"
+    }
+  ]
+}

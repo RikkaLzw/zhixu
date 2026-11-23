@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "libfuzzer-corpus-management",
+    "title": "LLVM 20.1：libFuzzer 语料与产物",
+    "url": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，版本及适用条件见各题。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fuzzcorp-001",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "模糊测试语料管理",
+      "knowledgePoint": "语料合并",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -merge=1 常用于怎样整理语料目录？",
+      "answer": "可将带来新覆盖的输入合并到第一个目录，或构造保留覆盖信息的较小语料集。",
+      "explanation": "保留的是当前目标与插桩下观察到的覆盖；换目标版本后应重新检查。",
+      "example": "将候选输入目录中有新覆盖的样本加入现有语料。",
+      "tags": [
+        "模糊测试语料管理",
+        "语料合并"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzcorp-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试语料管理",
+      "knowledgePoint": "合并与缺陷保留",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按覆盖率缩减 libFuzzer 语料后，能否保证每种业务语义或已知缺陷触发输入都被保留？",
+      "answer": "不能；覆盖率合并针对执行反馈，语义差异或缺陷复现还需另行验证。",
+      "explanation": "覆盖相同并不必然说明输入在所有后续场景等价。",
+      "example": "对已知崩溃样本单独保留并做回归复现。",
+      "tags": [
+        "模糊测试语料管理",
+        "合并与缺陷保留"
+      ],
+      "evidence": "application",
+      "reference": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzcorp-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试语料管理",
+      "knowledgePoint": "特征保持缩减",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -reduce_inputs 试图在缩小输入时保持什么？",
+      "answer": "保持该输入的完整特征集合。",
+      "explanation": "该选项与专门缩小一个崩溃输入的 -minimize_crash 用途不同。",
+      "example": "输入更短但仍保留相同执行特征。",
+      "tags": [
+        "模糊测试语料管理",
+        "特征保持缩减"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzcorp-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试语料管理",
+      "knowledgePoint": "恢复语料合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -merge_control_file 对长时间语料合并有什么用途？",
+      "answer": "它保存合并状态，使中断后的合并可按文档继续执行。",
+      "explanation": "要继续同一合并任务并保留控制文件。",
+      "example": "大语料合并被中断后使用同一控制文件恢复。",
+      "tags": [
+        "模糊测试语料管理",
+        "恢复语料合并"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzcorp-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试语料管理",
+      "knowledgePoint": "产物输出路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -exact_artifact_path 非空时如何影响 -artifact_prefix？",
+      "answer": "它指定失败产物的精确路径，并覆盖 -artifact_prefix 的命名方式。",
+      "explanation": "文档说明此时文件名不再使用校验和，并建议并行进程不要共用同一路径。",
+      "example": "为一次复现指定确定的崩溃文件路径。",
+      "tags": [
+        "模糊测试语料管理",
+        "产物输出路径"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzcorp-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试语料管理",
+      "knowledgePoint": "共享语料重载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多个 libFuzzer 进程共享语料目录时，-reload=0 会影响什么？",
+      "answer": "它禁用定期重读语料目录，其他进程新增的输入不会通过这一重载机制被发现。",
+      "explanation": "共享目录仍需结合运行方式和文件系统行为检查。",
+      "example": "保持默认重载可让进程发现其他工作进程加入的语料。",
+      "tags": [
+        "模糊测试语料管理",
+        "共享语料重载"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html"
+    }
+  ]
+}

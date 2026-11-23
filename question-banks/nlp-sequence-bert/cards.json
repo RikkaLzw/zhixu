@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "nlp-sequence-bert",
+    "title": "Hugging Face 与 BERT：序列标注和预训练",
+    "url": "https://huggingface.co/docs/transformers/tasks/token_classification",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题链接的资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "nlpseq-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "序列分类与标注",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "序列分类与 token 分类的输出单位有什么区别？",
+      "answer": "序列分类通常给整个输入一个标签；token 分类为各位置预测标签。",
+      "explanation": "具体模型也可能支持多标签或其他任务形式。",
+      "example": "判断一封邮件的类型与识别其中的组织名属于不同任务。",
+      "tags": [
+        "序列分类与标注",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/tasks/token_classification"
+    },
+    {
+      "id": "nlpseq-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "命名实体识别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "命名实体识别通常要从文本中找出什么？",
+      "answer": "找出实体所在的文本片段及其类型。",
+      "explanation": "类型由任务标签体系决定，例如人名、组织或地点。",
+      "example": "在报告中定位组织名称并标为组织实体。",
+      "tags": [
+        "命名实体识别",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/tasks/token_classification"
+    },
+    {
+      "id": "nlpseq-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "BIO标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "序列标注的 BIO 前缀 B、I、O 分别表示什么？",
+      "answer": "B 表示实体开始，I 表示同一实体内部，O 表示不属于目标实体。",
+      "explanation": "实体类型常跟在 B 或 I 之后。",
+      "example": "B-ORG、I-ORG 标记一个跨两个 token 的组织名。",
+      "tags": [
+        "BIO标签",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/tasks/token_classification"
+    },
+    {
+      "id": "nlpseq-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "子词标签对齐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按词标注的数据经过子词切分后，为什么要重新对齐标签？",
+      "answer": "一个词可能被拆成多个 token，且分词器可能加入特殊 token，输入与原标签的位置不再一一对应。",
+      "explanation": "对齐策略需在训练和评估时保持一致。",
+      "example": "一个词拆成两个子词时，原来的一条词标签不能直接对应全部输入位置。",
+      "tags": [
+        "子词标签对齐",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/tasks/token_classification"
+    },
+    {
+      "id": "nlpseq-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "word_ids特殊token",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Hugging Face 快速分词器的 word_ids 中，特殊 token 通常对应什么值？",
+      "answer": "通常对应 None，表示它没有对应的原始词索引。",
+      "explanation": "示例可将这些位置的标签设为损失函数的忽略值。",
+      "example": "CLS 和 SEP 在词索引映射中不对应原文词。",
+      "tags": [
+        "word_ids特殊token",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter7/2"
+    },
+    {
+      "id": "nlpseq-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "掩码语言模型目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 BERT 的掩码语言模型训练主要预测什么？",
+      "answer": "预测被选中位置原本的 token，利用其可见的左右上下文。",
+      "explanation": "它不同于只根据左侧上下文预测下一个 token 的训练目标。",
+      "example": "从上下文预测句中被选中的词片段。",
+      "tags": [
+        "掩码语言模型目标",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1810.04805"
+    },
+    {
+      "id": "nlpseq-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "BERT掩码替换策略",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "原始 BERT 中，被选作 MLM 预测目标的 token 总是被替换为 [MASK] 吗？",
+      "answer": "不是；原论文中 80% 替换为 [MASK]，10% 替换为随机 token，10% 保持不变。",
+      "explanation": "这些比例针对被选中的位置，具体变体可采用其他策略。",
+      "example": "某个被选中的 token 仍可能以原样出现在输入中。",
+      "tags": [
+        "BERT掩码替换策略",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1810.04805"
+    },
+    {
+      "id": "nlpseq-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "BERT分类标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 BERT 在句子级分类中常使用哪个特殊位置的最终表示？",
+      "answer": "使用序列开头 [CLS] 位置的最终隐藏表示作为分类输入。",
+      "explanation": "不同任务头或模型变体可能采用其他汇聚方法。",
+      "example": "用 CLS 表示预测一句话的类别。",
+      "tags": [
+        "BERT分类标记",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1810.04805"
+    },
+    {
+      "id": "nlpseq-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "BERT分隔标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERT 输入中的 [SEP] 通常有什么作用？",
+      "answer": "它用于分隔输入序列，也可标记序列末尾。",
+      "explanation": "具体特殊 token 的放置由分词器和模型约定。",
+      "example": "在两个句子组成的输入中用 SEP 分隔。",
+      "tags": [
+        "BERT分隔标记",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/model_doc/bert"
+    },
+    {
+      "id": "nlpseq-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本任务与模型",
+      "knowledgePoint": "静态与上下文词表示",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "静态词向量与上下文相关词表示在处理同一词的不同语境时有什么区别？",
+      "answer": "静态词向量通常为同一词使用固定表示；上下文表示可随周围文本改变。",
+      "explanation": "上下文表示能体现语境差异，但不保证总能正确消歧。",
+      "example": "同一个词出现在两种不同含义的句子中。",
+      "tags": [
+        "静态与上下文词表示",
+        "NLP"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1810.04805"
+    }
+  ]
+}

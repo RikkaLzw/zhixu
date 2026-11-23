@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "posix-awk-processing",
+    "title": "POSIX awk 手册：字段与记录处理",
+    "url": "https://man7.org/linux/man-pages/man1/awk.1p.html",
+    "type": "官方文档与手册",
+    "note": "依据逐题链接自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "awkops-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "awk 记录处理",
+      "knowledgePoint": "最后字段",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "在一条非空字段记录中，awk 的 $NF 表示什么？",
+      "answer": "表示当前记录的最后一个字段。",
+      "explanation": "NF 是字段数；$NF 把这个数作为字段编号。",
+      "example": "对 a b c，$NF 的值为 c。",
+      "tags": [
+        "awk 记录处理",
+        "最后字段"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "awkops-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "awk 记录处理",
+      "knowledgePoint": "输出分隔符",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "awk 中 OFS 控制什么？",
+      "answer": "控制 print 输出多个表达式时的字段分隔符。",
+      "explanation": "它不同于控制输入字段切分的 FS。",
+      "example": "awk 'BEGIN { OFS=\",\"; print 1,2 }' 输出 1,2。",
+      "tags": [
+        "awk 记录处理",
+        "输出分隔符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "awkops-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "awk 记录处理",
+      "knowledgePoint": "预先传参",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "awk 的 -v name=value 为什么适合给 BEGIN 代码传值？",
+      "answer": "-v 在执行程序之前赋值，因此 BEGIN 动作可以读取该变量。",
+      "explanation": "传入的值应作为参数提供，避免把外部数据直接拼进程序文本。",
+      "example": "awk -v limit=3 'BEGIN { print limit }'。",
+      "tags": [
+        "awk 记录处理",
+        "预先传参"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "awkops-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "awk 记录处理",
+      "knowledgePoint": "跳过当前记录",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "awk 执行 next 后，当前记录接下来会怎样？",
+      "answer": "停止对当前记录执行剩余规则，转而读取下一条输入记录。",
+      "explanation": "已经执行的动作不会撤销。",
+      "example": "在过滤条件下执行 next，可跳过该记录后续的输出规则。",
+      "tags": [
+        "awk 记录处理",
+        "跳过当前记录"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "awkops-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "awk 记录处理",
+      "knowledgePoint": "关联数组计数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "awk 的 count[$1]++ 常用于什么统计？",
+      "answer": "以第一个字段为键，将该键对应的计数加一。",
+      "explanation": "awk 数组按字符串下标关联值，未初始化的值在数值上下文中为零。",
+      "example": "逐行输入 a、a、b 后，count[\"a\"] 为 2。",
+      "tags": [
+        "awk 记录处理",
+        "关联数组计数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "awkops-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "awk 记录处理",
+      "knowledgePoint": "数组存在判断",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "awk 的 key in array 与直接读取 array[key] 在检查元素时有什么区别？",
+      "answer": "in 测试元素是否存在，且不会因检查而创建该元素。",
+      "explanation": "直接引用不存在的数组元素会创建它。",
+      "example": "可以用 if (key in count) 判断计数键是否已有记录。",
+      "tags": [
+        "awk 记录处理",
+        "数组存在判断"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "awkops-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "awk 记录处理",
+      "knowledgePoint": "重新构造记录",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "给 awk 的字段变量赋值后，$0 会怎样？",
+      "answer": "awk 会按当前字段值重新构造整条记录。",
+      "explanation": "重构时字段间使用 OFS；这可能改变原始空白格式。",
+      "example": "将 $1 改为 X 后打印 $0，可看到更新后的记录。",
+      "tags": [
+        "awk 记录处理",
+        "重新构造记录"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "awkops-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "awk 记录处理",
+      "knowledgePoint": "分割字符串",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "POSIX awk 的 split(s, a, sep) 返回什么，并怎样处理数组 a？",
+      "answer": "按给定分隔表达式切分字符串，返回字段数，并先清空数组 a 的原有元素。",
+      "explanation": "结果从 a[1] 开始存放；省略 sep 时使用 FS。",
+      "example": "split(\"a:b\", a, \":\") 返回 2，a[2] 为 b。",
+      "tags": [
+        "awk 记录处理",
+        "分割字符串"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    }
+  ]
+}

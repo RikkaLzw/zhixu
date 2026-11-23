@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "switch-moe-foundations",
+    "title": "Switch Transformer 原论文 v1：稀疏专家计算",
+    "url": "https://arxiv.org/pdf/2101.03961v1",
+    "type": "论文、标准与技术文档",
+    "note": "逐题依据固定版本论文或规范自行整理，示例为自编；适用条件见卡片。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "moeswitch-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "稀疏专家模型",
+      "knowledgePoint": "稀疏层",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Switch Transformer 主要用稀疏专家层替换 Transformer 块中的什么部分？",
+      "answer": "用 Switch 前馈层替换部分常规的稠密前馈网络。",
+      "explanation": "论文图示保留注意力层；不能把它理解为整个模型每处都变成专家。",
+      "example": "不同 token 的前馈变换可由不同专家承担。",
+      "tags": [
+        "稀疏专家模型",
+        "稀疏层"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2101.03961v1"
+    },
+    {
+      "id": "moeswitch-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "稀疏专家模型",
+      "knowledgePoint": "激活参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "稀疏 MoE 的总参数量增加时，为什么每个 token 的专家计算量不一定按总专家数同步增长？",
+      "answer": "路由器只选择部分专家处理每个 token，未被选中的专家不参与该 token 的前向计算。",
+      "explanation": "其他共享层、路由和通信仍有开销。",
+      "example": "新增专家不代表每个 token 都运行所有专家。",
+      "tags": [
+        "稀疏专家模型",
+        "激活参数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2101.03961v1"
+    },
+    {
+      "id": "moeswitch-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "稀疏专家模型",
+      "knowledgePoint": "门控输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Switch 层选中专家后，原论文如何利用路由概率形成输出？",
+      "answer": "将选中专家的输出乘以对应的路由门控值。",
+      "explanation": "路由器先计算各专家的概率，再选择最高概率的专家。",
+      "example": "路由到某专家后，用该专家的门控权重缩放输出。",
+      "tags": [
+        "稀疏专家模型",
+        "门控输出"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2101.03961v1"
+    },
+    {
+      "id": "moeswitch-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稀疏专家模型",
+      "knowledgePoint": "专家容量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Switch 论文中专家容量如何随批次 token 数和专家数变化？",
+      "answer": "以每批 token 数除以专家数得到平均负载，再乘容量因子确定每个专家的容量。",
+      "explanation": "具体实现可能需要取整或受并行分组影响。",
+      "example": "容量因子为 1 时，容量按平均分配量设置。",
+      "tags": [
+        "稀疏专家模型",
+        "专家容量"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2101.03961v1"
+    },
+    {
+      "id": "moeswitch-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稀疏专家模型",
+      "knowledgePoint": "容量因子权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "提高 Switch 层的容量因子有什么常见取舍？",
+      "answer": "额外容量可缓解路由不均导致的溢出，但也可能增加填充、计算和通信开销。",
+      "explanation": "实际权衡依赖实现和负载分布。",
+      "example": "为负载高的专家预留更多位置，也会增加空槽。",
+      "tags": [
+        "稀疏专家模型",
+        "容量因子权衡"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2101.03961v1"
+    },
+    {
+      "id": "moeswitch-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稀疏专家模型",
+      "knowledgePoint": "稀疏内存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MoE 每个 token 只运行少量专家，是否意味着部署时只需要存储这些被激活专家的权重？",
+      "answer": "不一定；系统通常仍需在设备或可访问存储中保有所有可能被路由到的专家权重。",
+      "explanation": "权重分片和按需加载会改变具体的内存与通信安排。",
+      "example": "不同请求可能被路由到不同专家。",
+      "tags": [
+        "稀疏专家模型",
+        "稀疏内存"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2101.03961v1"
+    },
+    {
+      "id": "moeswitch-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稀疏专家模型",
+      "knowledgePoint": "选择性精度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Switch Transformer 论文在低精度训练时，如何提高路由计算的稳定性？",
+      "answer": "对路由相关计算使用较高精度，例如将路由 logits 转为 float32 后计算 softmax。",
+      "explanation": "其余计算仍可使用 bfloat16；这是论文的选择性精度策略。",
+      "example": "路由概率计算采用 float32。",
+      "tags": [
+        "稀疏专家模型",
+        "选择性精度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2101.03961v1"
+    },
+    {
+      "id": "moeswitch-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稀疏专家模型",
+      "knowledgePoint": "分布式通信",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "专家分布在不同设备时，为什么 MoE 的实际速度不能只看每个 token 的浮点运算量？",
+      "answer": "token 表示和专家输出可能需要跨设备通信，还会受到负载不均与调度的影响。",
+      "explanation": "稀疏计算带来的收益需与通信和填充成本一起衡量。",
+      "example": "专家位于其他设备时需要发送输入并收回结果。",
+      "tags": [
+        "稀疏专家模型",
+        "分布式通信"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2101.03961v1"
+    }
+  ]
+}

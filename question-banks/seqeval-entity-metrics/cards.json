@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "seqeval-entity-metrics",
+    "title": "seqeval 1.2.2：序列标注与实体评估",
+    "url": "https://github.com/chakki-works/seqeval/blob/354c576ca2b3cf3c71d8bc80d4e91fccf3c9a047/seqeval/metrics/sequence_labeling.py",
+    "type": "原论文或官方文档与源码",
+    "note": "依据逐题引用的固定版本、原论文或官方文档自行整理；示例为自编，具体版本及适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "seqmetric-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "序列标注指标",
+      "knowledgePoint": "准确率与实体F1",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "seqeval 1.2.2 的 accuracy_score 与默认 f1_score 主要分别按什么单位评估？",
+      "answer": "accuracy_score 计算标签位置的准确率；f1_score 以提取出的实体片段计算 F1。",
+      "explanation": "边界预测错误时，标签准确率和实体 F1 可以明显不同。",
+      "example": "三个位置错一个时，实体边界可能仍完全不匹配。",
+      "tags": [
+        "序列标注指标",
+        "准确率与实体F1"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval/blob/354c576ca2b3cf3c71d8bc80d4e91fccf3c9a047/seqeval/metrics/sequence_labeling.py"
+    },
+    {
+      "id": "seqmetric-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "序列标注指标",
+      "knowledgePoint": "支持数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "seqeval 默认分类报告的 support 统计真实标注 token，还是实体片段？",
+      "answer": "它统计真实标签中该类别的实体片段数；多个 token 组成的同一实体只计一次。",
+      "explanation": "这里指默认不传 sample_weight 的分类报告。",
+      "example": "一个两词人名实体的 support 为 1。",
+      "tags": [
+        "序列标注指标",
+        "支持数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval/blob/354c576ca2b3cf3c71d8bc80d4e91fccf3c9a047/seqeval/metrics/sequence_labeling.py"
+    },
+    {
+      "id": "seqmetric-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注指标",
+      "knowledgePoint": "实体区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "seqeval 默认模式的 get_entities 返回的实体位置区间是什么约定？",
+      "answer": "返回实体类型、起始索引和结束索引，起止索引均包含在实体内。",
+      "explanation": "这是该函数的返回约定，不应与半开区间混淆。",
+      "example": "连续两个标签组成索引 0 到 1 的实体。",
+      "tags": [
+        "序列标注指标",
+        "实体区间"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval/blob/354c576ca2b3cf3c71d8bc80d4e91fccf3c9a047/seqeval/metrics/sequence_labeling.py"
+    },
+    {
+      "id": "seqmetric-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注指标",
+      "knowledgePoint": "样本边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "seqeval 默认 get_entities 接收多个标签序列时，会把相邻样本的实体连成一个吗？",
+      "answer": "不会；实现会在序列之间插入 O 作为边界。",
+      "explanation": "返回的索引基于展开后的序列表示。",
+      "example": "两个样本各自包含一个人名实体。",
+      "tags": [
+        "序列标注指标",
+        "样本边界"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval/blob/354c576ca2b3cf3c71d8bc80d4e91fccf3c9a047/seqeval/metrics/sequence_labeling.py"
+    },
+    {
+      "id": "seqmetric-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列标注指标",
+      "knowledgePoint": "后缀标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "seqeval 的 suffix=True 用于哪种实体标签写法？",
+      "answer": "用于将边界标记放在实体类型后面的写法，例如 PER-B、PER-I。",
+      "explanation": "默认写法通常将 B、I 放在类型前面。",
+      "example": "区分 B-PER 与 PER-B 两种约定。",
+      "tags": [
+        "序列标注指标",
+        "后缀标签"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval/blob/354c576ca2b3cf3c71d8bc80d4e91fccf3c9a047/seqeval/metrics/sequence_labeling.py"
+    }
+  ]
+}

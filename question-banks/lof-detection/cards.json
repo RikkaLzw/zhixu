@@ -1,0 +1,132 @@
+{
+  "source": {
+    "id": "lof-detection",
+    "title": "scikit-learn：局部异常与新颖性检测",
+    "url": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+    "type": "官方技术文档",
+    "note": "依据所引原文自行整理成中文问答，例子为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "lof-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "异常检测",
+      "knowledgePoint": "离群与新颖性检测",
+      "questionType": "比较与选型",
+      "question": "离群点检测与新颖性检测对训练数据的典型假设有什么区别？",
+      "answer": "离群点检测允许训练数据含异常；新颖性检测通常假设训练数据代表正常行为，再判断新样本。",
+      "explanation": "实际数据是否满足假设需要检查，不能仅凭方法名称保证训练集干净。",
+      "example": "用已筛查的正常流量训练，再检查后续新流量。",
+      "tags": [
+        "离群与新颖性检测",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+      "origin": "自行整理",
+      "referenceTitle": "scikit-learn：Novelty and Outlier Detection"
+    },
+    {
+      "id": "lof-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "局部异常",
+      "knowledgePoint": "LOF 局部密度",
+      "questionType": "概念与原理",
+      "question": "LOF 根据什么判断一个样本是否局部异常？",
+      "answer": "它比较样本与其近邻的局部密度；样本密度明显低于邻居时更可能是局部异常。",
+      "explanation": "判断依赖所选特征、距离度量和邻居数量。",
+      "example": "某主机行为在同类主机邻域中明显稀疏。",
+      "tags": [
+        "LOF 局部密度",
+        "局部异常"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+      "origin": "自行整理",
+      "referenceTitle": "scikit-learn：Novelty and Outlier Detection"
+    },
+    {
+      "id": "lof-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "局部异常",
+      "knowledgePoint": "LOF 邻域大小",
+      "questionType": "概念与原理",
+      "question": "LOF 的 n_neighbors 会影响什么？",
+      "answer": "它决定用于计算局部密度的邻居数量，从而影响异常的参照范围。",
+      "explanation": "邻域过大或过小都可能改变结果，应结合数据分布验证。",
+      "example": "对不同规模的业务群体比较邻域大小的效果。",
+      "tags": [
+        "LOF 邻域大小",
+        "局部异常"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html",
+      "origin": "自行整理",
+      "referenceTitle": "scikit-learn：LocalOutlierFactor"
+    },
+    {
+      "id": "lof-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "局部异常",
+      "knowledgePoint": "LOF 默认接口",
+      "questionType": "易错点",
+      "question": "scikit-learn 的 LocalOutlierFactor 默认能否对未见样本调用 predict？",
+      "answer": "默认 novelty=False 时不能；新颖性检测需要在拟合前设置 novelty=True。",
+      "explanation": "默认模式可用 fit_predict 标记拟合数据中的离群点。",
+      "example": "需要给未来流量评分时先启用 novelty 模式。",
+      "tags": [
+        "LOF 默认接口",
+        "局部异常"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+      "origin": "自行整理",
+      "referenceTitle": "scikit-learn：Novelty and Outlier Detection"
+    },
+    {
+      "id": "lof-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "局部异常",
+      "knowledgePoint": "LOF 新颖性评分",
+      "questionType": "易错点",
+      "question": "scikit-learn 的 LOF 设置 novelty=True 后，predict 等方法应该用于哪些数据？",
+      "answer": "应只用于训练时未见的新数据，不应把训练样本传入这些方法。",
+      "explanation": "训练样本的异常分数可查看 negative_outlier_factor_。",
+      "example": "训练后对下一天的新样本调用 predict。",
+      "tags": [
+        "LOF 新颖性评分",
+        "局部异常"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+      "origin": "自行整理",
+      "referenceTitle": "scikit-learn：Novelty and Outlier Detection"
+    },
+    {
+      "id": "lof-006",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "局部异常",
+      "knowledgePoint": "LOF 负异常因子",
+      "questionType": "概念与原理",
+      "question": "scikit-learn 的 negative_outlier_factor_ 如何表示训练样本的异常程度？",
+      "answer": "它是训练样本 LOF 分数的相反数；数值越低通常越异常，正常样本通常接近 -1。",
+      "explanation": "具体阈值和判定仍取决于模型设置。",
+      "example": "-3 比接近 -1 的训练样本更值得检查。",
+      "tags": [
+        "LOF 负异常因子",
+        "局部异常"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.LocalOutlierFactor.html",
+      "origin": "自行整理",
+      "referenceTitle": "scikit-learn：LocalOutlierFactor"
+    }
+  ]
+}

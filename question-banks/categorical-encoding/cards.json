@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "categorical-encoding",
+    "title": "scikit-learn：类别编码与分类阈值",
+    "url": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html",
+    "type": "官方技术文档",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "encode-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类别特征",
+      "knowledgePoint": "独热编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OneHotEncoder 怎样表示一个类别特征的不同取值？",
+      "answer": "它通常为各类别建立二元指示列，用这些列表示输入所属类别。",
+      "explanation": "输出可为稀疏矩阵或稠密数组。",
+      "example": "将协议类型的 TCP、UDP 分别编码为指示列。",
+      "tags": [
+        "独热编码",
+        "类别特征",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html"
+    },
+    {
+      "id": "encode-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类别特征",
+      "knowledgePoint": "未知类别默认行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 的 OneHotEncoder 默认遇到训练时未见类别会怎样？",
+      "answer": "默认 handle_unknown=\"error\"，转换时会报错。",
+      "explanation": "可以根据业务显式配置其他未知类别处理方式。",
+      "example": "新协议类型出现时检查编码器配置。",
+      "tags": [
+        "未知类别默认行为",
+        "类别特征",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html"
+    },
+    {
+      "id": "encode-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类别特征",
+      "knowledgePoint": "忽略未知类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OneHotEncoder 设置 handle_unknown=\"ignore\" 后，未知类别如何编码？",
+      "answer": "该特征对应的独热编码列全部为零。",
+      "explanation": "这不意味着未知类别已经在训练中获得独立类别列。",
+      "example": "线上出现未见的协议名称时得到全零编码。",
+      "tags": [
+        "忽略未知类别",
+        "类别特征",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html"
+    },
+    {
+      "id": "encode-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类别特征",
+      "knowledgePoint": "删除类别与未知类别歧义",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "同时使用 OneHotEncoder 的 drop=\"first\" 和 handle_unknown=\"ignore\" 时，全零编码有什么歧义？",
+      "answer": "被删除的已知类别和未知类别都可能映射为该特征的全零编码。",
+      "explanation": "逆变换时不能仅凭该编码区分这两种情况。",
+      "example": "检查某协议的全零编码究竟来自基准类别还是未知类别。",
+      "tags": [
+        "删除类别与未知类别歧义",
+        "类别特征",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html"
+    },
+    {
+      "id": "encode-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类别特征",
+      "knowledgePoint": "低频类别合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OneHotEncoder 的 min_frequency 或 max_categories 可用于什么？",
+      "answer": "它们可将低频类别合并成一个不常见类别，限制编码后的特征数量。",
+      "explanation": "合并依据拟合数据；未知类别如何处理还取决于 handle_unknown。",
+      "example": "把训练中很少出现的协议标签并入低频类别。",
+      "tags": [
+        "低频类别合并",
+        "类别特征",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html"
+    },
+    {
+      "id": "encode-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类别特征",
+      "knowledgePoint": "未知类别与低频桶",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OneHotEncoder 设置 handle_unknown=\"infrequent_if_exist\" 时，未知类别怎样处理？",
+      "answer": "若存在低频类别桶，则映射到该桶；否则按 ignore 方式处理。",
+      "explanation": "低频桶是否存在由拟合数据及频率配置决定。",
+      "example": "在线出现新类别时检查训练时是否形成低频桶。",
+      "tags": [
+        "未知类别与低频桶",
+        "类别特征",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html"
+    },
+    {
+      "id": "threshold-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分类决策",
+      "knowledgePoint": "分类分数与决策",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "分类模型的分数输出与阈值决策分别解决什么问题？",
+      "answer": "分数用于表达模型对类别的预测；阈值将分数转换为具体的类别决定或行动。",
+      "explanation": "阈值选择应考虑实际代价和目标。",
+      "example": "同一风险分数可在不同告警预算下对应不同处置。",
+      "tags": [
+        "分类分数与决策",
+        "分类决策",
+        "阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/classification_threshold.html"
+    },
+    {
+      "id": "threshold-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类决策",
+      "knowledgePoint": "阈值与排序曲线",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "固定模型输出分数时，仅改变分类阈值会改变该模型的 ROC 或 PR 曲线吗？",
+      "answer": "不会；分数排序不变，因此由所有阈值形成的曲线不变，但选定的工作点会变化。",
+      "explanation": "重新训练模型或改变分数排序则可能改变曲线。",
+      "example": "把告警阈值从 0.5 调低后检查新的精确率与召回率。",
+      "tags": [
+        "阈值与排序曲线",
+        "分类决策",
+        "阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/classification_threshold.html"
+    },
+    {
+      "id": "threshold-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类决策",
+      "knowledgePoint": "阈值与精确率单调性",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "对固定评分样本提高正类阈值，精确率一定提高吗？",
+      "answer": "不一定；被移除的低分告警中可能包含较多真实正例，精确率可能下降。",
+      "explanation": "提高阈值不会增加正预测数，但精确率取决于留下的真假正例比例。",
+      "example": "两条真实告警和一条误报中移除一条真实告警，精确率从 2/3 降为 1/2。",
+      "tags": [
+        "阈值与精确率单调性",
+        "分类决策",
+        "阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/classification_threshold.html"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "smoothquant-activation-quantization",
+    "title": "SmoothQuant 原论文 v3：激活量化",
+    "url": "https://arxiv.org/pdf/2211.10438v3",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "smoothq-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SmoothQuant 激活量化",
+      "knowledgePoint": "量化目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SmoothQuant 原论文主要希望支持哪种权重和激活量化配置？",
+      "answer": "将权重和激活都量化为 8 位整数，即 W8A8。",
+      "explanation": "这样可利用支持整数矩阵乘法的硬件内核；实际加速仍取决于实现和设备。",
+      "example": "模型的大型线性层可以采用 INT8 计算。",
+      "tags": [
+        "SmoothQuant 激活量化",
+        "量化目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.10438v3"
+    },
+    {
+      "id": "smoothq-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SmoothQuant 激活量化",
+      "knowledgePoint": "激活异常值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么大模型激活中的大幅值异常通道会使粗粒度量化更困难？",
+      "answer": "异常值扩大共享量化范围，使较小值使用更粗的量化步长，增加误差。",
+      "explanation": "具体误差还取决于量化粒度和数据分布。",
+      "example": "单个通道极大时，统一缩放可能降低其他通道的分辨率。",
+      "tags": [
+        "SmoothQuant 激活量化",
+        "激活异常值"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.10438v3"
+    },
+    {
+      "id": "smoothq-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SmoothQuant 激活量化",
+      "knowledgePoint": "迁移难度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SmoothQuant 的核心思想如何分担激活与权重的量化难度？",
+      "answer": "按输入通道缩小激活并相应放大权重，把部分量化难度从激活迁移到权重。",
+      "explanation": "变换后仍需要实际量化，误差不会自动消失。",
+      "example": "异常激活通道缩小后，粗粒度激活量化更容易。",
+      "tags": [
+        "SmoothQuant 激活量化",
+        "迁移难度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.10438v3"
+    },
+    {
+      "id": "smoothq-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SmoothQuant 激活量化",
+      "knowledgePoint": "线性层等价",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "SmoothQuant 在线性层中按通道同时缩放激活和权重，量化前为什么可保持输出不变？",
+      "answer": "激活除以非零缩放因子，权重沿对应输入通道乘以同一因子，矩阵乘积相互抵消。",
+      "explanation": "这是量化前的数学等价；有限精度和量化会引入误差。",
+      "example": "对一个通道令激活除以 2、对应权重乘以 2，乘积保持不变。",
+      "tags": [
+        "SmoothQuant 激活量化",
+        "线性层等价"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.10438v3"
+    },
+    {
+      "id": "smoothq-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SmoothQuant 激活量化",
+      "knowledgePoint": "标定样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SmoothQuant 如何估计用于平滑的激活通道尺度？",
+      "answer": "使用标定样本统计各输入激活通道的幅值范围。",
+      "explanation": "标定样本与实际输入差异较大时，估计可能不能代表部署分布。",
+      "example": "可用代表性的预训练文本样本收集通道幅值。",
+      "tags": [
+        "SmoothQuant 激活量化",
+        "标定样本"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.10438v3"
+    },
+    {
+      "id": "smoothq-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SmoothQuant 激活量化",
+      "knowledgePoint": "迁移强度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SmoothQuant 的迁移强度参数 α 控制什么？",
+      "answer": "它控制将量化难度从激活迁移到权重的程度。",
+      "explanation": "α 越大通常越强调平滑激活；合适值需结合模型和精度评估。",
+      "example": "不是对所有模型都能直接假定同一个 α 最优。",
+      "tags": [
+        "SmoothQuant 激活量化",
+        "迁移强度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.10438v3"
+    },
+    {
+      "id": "smoothq-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SmoothQuant 激活量化",
+      "knowledgePoint": "离线融合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SmoothQuant 为什么可以在某些模型结构中避免额外的在线缩放操作？",
+      "answer": "可将平滑因子预先融合进前一层参数和相应权重。",
+      "explanation": "是否能融合取决于相邻运算结构；某些残差分支可能需要额外处理。",
+      "example": "可把部分缩放合并到前面的线性层或归一化参数。",
+      "tags": [
+        "SmoothQuant 激活量化",
+        "离线融合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.10438v3"
+    },
+    {
+      "id": "smoothq-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SmoothQuant 激活量化",
+      "knowledgePoint": "精度边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SmoothQuant 的缩放在数学上等价，能否据此保证 W8A8 模型输出与原模型完全相同？",
+      "answer": "不能；后续取整和有限精度运算仍可能引入误差。",
+      "explanation": "是否满足任务精度要求需要在目标数据上验证。",
+      "example": "量化后应比较模型输出质量与基线。",
+      "tags": [
+        "SmoothQuant 激活量化",
+        "精度边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.10438v3"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "hotpotqa-multihop-evaluation",
+    "title": "HotpotQA 原论文 v1：多跳问答与证据",
+    "url": "https://arxiv.org/pdf/1809.09600v1",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本与环境为准。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "hotpot-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HotpotQA 多跳问答",
+      "knowledgePoint": "核心任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HotpotQA 原论文主要希望评估哪类问答能力？",
+      "answer": "从多个支持文档寻找信息并进行多跳推理以回答问题。",
+      "explanation": "该数据集基于维基百科段落构造。",
+      "example": "先找到人物所属组织，再查该组织的信息。",
+      "tags": [
+        "HotpotQA 多跳问答",
+        "核心任务"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1809.09600v1"
+    },
+    {
+      "id": "hotpot-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HotpotQA 多跳问答",
+      "knowledgePoint": "支持事实",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HotpotQA 的 supporting facts 标注粒度是什么？",
+      "answer": "为回答提供依据的句子级标注。",
+      "explanation": "可用来监督证据选择，也可评估预测证据。",
+      "example": "返回答案时同时标记相关段落中的句子。",
+      "tags": [
+        "HotpotQA 多跳问答",
+        "支持事实"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1809.09600v1"
+    },
+    {
+      "id": "hotpot-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HotpotQA 多跳问答",
+      "knowledgePoint": "桥接实体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HotpotQA 中的桥接实体（bridge entity）起什么作用？",
+      "answer": "连接两个相关段落，使从第一段得到的实体能够帮助查找或理解第二段。",
+      "explanation": "桥接实体对应多跳链中的中间信息。",
+      "example": "先识别乐队成员，再查该成员的另一支乐队。",
+      "tags": [
+        "HotpotQA 多跳问答",
+        "桥接实体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1809.09600v1"
+    },
+    {
+      "id": "hotpot-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HotpotQA 多跳问答",
+      "knowledgePoint": "比较问题",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HotpotQA 的 comparison question 通常要求模型做什么？",
+      "answer": "提取两个实体的相关事实并进行比较。",
+      "explanation": "比较问题也包含部分是／否形式。",
+      "example": "比较两个人的出生时间。",
+      "tags": [
+        "HotpotQA 多跳问答",
+        "比较问题"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1809.09600v1"
+    },
+    {
+      "id": "hotpot-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HotpotQA 多跳问答",
+      "knowledgePoint": "全维基设置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HotpotQA 原论文的 full wiki 设置与 distractor 设置在检索条件上有什么区别？",
+      "answer": "full wiki 不预先指定支持段落；distractor 提供两个支持段落和八个干扰段落并打乱。",
+      "explanation": "两者的检索难度和测试划分不同。",
+      "example": "全库问答还需自行检索候选段落。",
+      "tags": [
+        "HotpotQA 多跳问答",
+        "全维基设置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1809.09600v1"
+    },
+    {
+      "id": "hotpot-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HotpotQA 多跳问答",
+      "knowledgePoint": "联合指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HotpotQA 为什么同时报告答案、支持事实和联合指标？",
+      "answer": "分别衡量答案正确性、证据选择和两者结合的表现。",
+      "explanation": "答案正确并不自动说明引用的支持句子正确。",
+      "example": "回答正确但引用无关句子时证据指标仍可能较低。",
+      "tags": [
+        "HotpotQA 多跳问答",
+        "联合指标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1809.09600v1"
+    }
+  ]
+}

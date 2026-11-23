@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "pytorch-checkpoint-serialization",
+    "title": "PyTorch 2.7 文档：检查点序列化与加载",
+    "url": "https://docs.pytorch.org/docs/2.7/notes/serialization.html",
+    "type": "协议标准、官方文档与论文",
+    "note": "依据逐题标注的规范、固定版本文档或论文自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "ptsave-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 检查点序列化",
+      "knowledgePoint": "默认权重加载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 torch.load 未传 pickle_module 和 weights_only 时通常使用什么加载模式？",
+      "answer": "默认使用 weights_only=True 的受限反序列化模式。",
+      "explanation": "环境变量等显式配置可能改变行为；该默认变化始于 PyTorch 2.6。",
+      "example": "加载普通张量 state_dict。",
+      "tags": [
+        "PyTorch 检查点序列化",
+        "默认权重加载"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/notes/serialization.html"
+    },
+    {
+      "id": "ptsave-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 检查点序列化",
+      "knowledgePoint": "受限加载作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.load 的 weights_only=True 主要限制什么？",
+      "answer": "它限制反序列化可使用的对象和操作，适合普通张量及其常见状态字典。",
+      "explanation": "未允许的自定义类可能导致加载失败；受限加载仍应关注文件来源与资源消耗。",
+      "example": "不自动加载检查点中的任意自定义类。",
+      "tags": [
+        "PyTorch 检查点序列化",
+        "受限加载作用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/notes/serialization.html"
+    },
+    {
+      "id": "ptsave-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 检查点序列化",
+      "knowledgePoint": "允许列表范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 torch.serialization.safe_globals 上下文管理器有什么作用？",
+      "answer": "它在上下文中临时允许指定可信类或函数用于 weights_only 反序列化。",
+      "explanation": "退出上下文后不再保留由该上下文添加的允许项。",
+      "example": "在限定范围内加载可信的张量子类。",
+      "tags": [
+        "PyTorch 检查点序列化",
+        "允许列表范围"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/notes/serialization.html"
+    },
+    {
+      "id": "ptsave-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 检查点序列化",
+      "knowledgePoint": "静态检查局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 get_unsafe_globals_in_checkpoint 返回空列表能否证明检查点一定安全？",
+      "answer": "不能；它静态分析检查点，反序列化时动态构造的某些类型可能未被列出。",
+      "explanation": "结果只是一项辅助信息，不能代替对来源和加载方式的判断。",
+      "example": "某些 NumPy dtype 类型可能在加载过程中动态构造。",
+      "tags": [
+        "PyTorch 检查点序列化",
+        "静态检查局限"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/notes/serialization.html"
+    },
+    {
+      "id": "ptsave-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 检查点序列化",
+      "knowledgePoint": "设备映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.load 的 map_location=\"cpu\" 常用于什么？",
+      "answer": "它把加载的张量存储映射到 CPU，避免默认恢复到保存时的设备。",
+      "explanation": "之后可按需要将模型或张量移动到目标设备。",
+      "example": "在无 GPU 环境加载 GPU 保存的检查点。",
+      "tags": [
+        "PyTorch 检查点序列化",
+        "设备映射"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.load.html"
+    },
+    {
+      "id": "ptsave-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 检查点序列化",
+      "knowledgePoint": "共享存储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.save 保存共享底层存储的张量视图时，加载后通常怎样处理视图关系？",
+      "answer": "它保存存储及张量元数据，加载后重建这些张量之间的共享与视图关系。",
+      "explanation": "这可能使保存小切片时连同较大的底层存储一起保存。",
+      "example": "同时保存张量及其切片。",
+      "tags": [
+        "PyTorch 检查点序列化",
+        "共享存储"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/notes/serialization.html"
+    },
+    {
+      "id": "ptsave-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 检查点序列化",
+      "knowledgePoint": "切片文件大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么保存大张量的小视图前调用 clone 可能减小文件大小？",
+      "answer": "clone 为小视图创建只包含其元素的新存储，避免保存原来更大的共享存储。",
+      "explanation": "这也会失去与原张量的共享视图关系。",
+      "example": "保存大数组中的少量元素。",
+      "tags": [
+        "PyTorch 检查点序列化",
+        "切片文件大小"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/notes/serialization.html"
+    },
+    {
+      "id": "ptsave-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 检查点序列化",
+      "knowledgePoint": "内存映射加载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 torch.load(mmap=True) 怎样处理检查点中的张量存储？",
+      "answer": "它映射文件中的存储，使数据可按访问需要载入，而不是首先把所有存储复制到 CPU 内存。",
+      "explanation": "设备映射和后续实际访问仍影响内存使用。",
+      "example": "从本地文件按需读取大型检查点。",
+      "tags": [
+        "PyTorch 检查点序列化",
+        "内存映射加载"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.load.html"
+    }
+  ]
+}

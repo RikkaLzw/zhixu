@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "albert-parameter-sharing",
+    "title": "ALBERT 原论文 v6：参数共享与句序",
+    "url": "https://arxiv.org/pdf/1909.11942v6",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "albertpre-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALBERT 预训练",
+      "knowledgePoint": "嵌入分解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALBERT 如何把词表嵌入维度与 Transformer 隐藏层维度解耦？",
+      "answer": "先将词映射到较小的嵌入空间，再投影到隐藏层维度。",
+      "explanation": "当词表很大且嵌入维度远小于隐藏层维度时，可减少嵌入参数。",
+      "example": "词表大小 V、嵌入维度 E 和隐藏维度 H 对应约 V·E+E·H 个映射参数。",
+      "tags": [
+        "ALBERT 预训练",
+        "嵌入分解"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1909.11942v6"
+    },
+    {
+      "id": "albertpre-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALBERT 预训练",
+      "knowledgePoint": "跨层共享",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALBERT 的跨层参数共享如何减少模型参数？",
+      "answer": "多个 Transformer 层重复使用同一组参数，而不是每层都保存独立参数。",
+      "explanation": "共享参数不等于只执行一次层运算。",
+      "example": "同一组注意力和前馈权重可用于多个深度位置。",
+      "tags": [
+        "ALBERT 预训练",
+        "跨层共享"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1909.11942v6"
+    },
+    {
+      "id": "albertpre-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALBERT 预训练",
+      "knowledgePoint": "SOP与NSP",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "ALBERT 的 SOP 与 BERT 的 NSP 在负样本构造上有什么区别？",
+      "answer": "SOP 使用同一文档连续片段的逆序；原始 NSP 的负样本使用不同文档中的片段。",
+      "explanation": "SOP 旨在更直接考查片段顺序与连贯性。",
+      "example": "仅凭两个片段的主题差异不一定能解决 SOP。",
+      "tags": [
+        "ALBERT 预训练",
+        "SOP与NSP"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1909.11942v6"
+    },
+    {
+      "id": "albertpre-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALBERT 预训练",
+      "knowledgePoint": "训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALBERT 使用 SOP 后，是否仍保留掩码语言模型训练目标？",
+      "answer": "保留；SOP 与掩码语言模型损失共同用于预训练。",
+      "explanation": "句序预测是附加目标，不是替代全部词级训练。",
+      "example": "模型同时学习被遮盖词预测和片段顺序判断。",
+      "tags": [
+        "ALBERT 预训练",
+        "训练目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1909.11942v6"
+    }
+  ]
+}

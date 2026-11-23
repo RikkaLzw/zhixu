@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "fill-in-the-middle-training",
+    "title": "FIM 原论文 v1：自回归代码填空训练",
+    "url": "https://arxiv.org/abs/2207.14255v1",
+    "type": "固定版本文档、源码或论文",
+    "note": "依据逐题所列资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "fimpaper-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "FIM 填空训练",
+      "knowledgePoint": "填空目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语言模型的 fill-in-the-middle（FIM）任务要求模型利用哪些上下文生成内容？",
+      "answer": "利用缺口前的前缀和缺口后的后缀，生成两者之间的文本。",
+      "explanation": "这可用于已有前后代码的补全。",
+      "example": "在函数已有开头和结尾之间补写一段代码。",
+      "tags": [
+        "FIM 填空训练",
+        "填空目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2207.14255v1"
+    },
+    {
+      "id": "fimpaper-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "FIM 填空训练",
+      "knowledgePoint": "PSM序列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIM 论文的 PSM 训练格式按什么顺序组织文本片段？",
+      "answer": "先前缀、再后缀、最后中间片段，并用特殊标记区分各部分。",
+      "explanation": "模型仍按变换后的序列自回归训练。",
+      "example": "把缺口后的代码移到待生成内容之前。",
+      "tags": [
+        "FIM 填空训练",
+        "PSM序列"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2207.14255v1"
+    },
+    {
+      "id": "fimpaper-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "FIM 填空训练",
+      "knowledgePoint": "变换比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIM 论文中的 FIM rate 表示什么？",
+      "answer": "表示数据被应用 FIM 变换的概率。",
+      "explanation": "未被变换的样本可继续作为普通自回归训练数据。",
+      "example": "FIM rate 为 0.5 时按该概率选取需要变换的数据。",
+      "tags": [
+        "FIM 填空训练",
+        "变换比例"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2207.14255v1"
+    },
+    {
+      "id": "fimpaper-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "FIM 填空训练",
+      "knowledgePoint": "分段时机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIM 论文的文档级变换在分词前还是分词后切分前缀、中间和后缀？",
+      "answer": "在分词前，按字符位置切分文档，再分别编码各段。",
+      "explanation": "这是论文所述文档级方法，不代表所有实现都如此。",
+      "example": "先切分原始代码文本，再编码三个片段。",
+      "tags": [
+        "FIM 填空训练",
+        "分段时机"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2207.14255v1"
+    },
+    {
+      "id": "fimpaper-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "FIM 填空训练",
+      "knowledgePoint": "损失范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIM 论文的 PSM 训练是否只在中间片段上保留损失？",
+      "answer": "不是；论文对前缀、中间和后缀三个片段都保留训练损失。",
+      "explanation": "特殊标记的损失设置与此是不同的问题。",
+      "example": "变换后的完整训练序列仍提供自回归学习信号。",
+      "tags": [
+        "FIM 填空训练",
+        "损失范围"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2207.14255v1"
+    },
+    {
+      "id": "fimpaper-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "FIM 填空训练",
+      "knowledgePoint": "SPM缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIM 论文为什么提出将后缀放在前缀之前的 SPM 格式？",
+      "answer": "当前缀不断追加而后缀不变时，它可复用后缀部分已计算的 KV 缓存。",
+      "explanation": "优势取决于应用；修改后缀可能使后续缓存失效。",
+      "example": "编辑代码前缀而保留同一后缀。",
+      "tags": [
+        "FIM 填空训练",
+        "SPM缓存"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2207.14255v1"
+    },
+    {
+      "id": "fimpaper-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "FIM 填空训练",
+      "knowledgePoint": "实验结论边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIM 论文中的“FIM-for-free”是否保证任何训练设置都不会影响从左到右生成能力？",
+      "answer": "不保证；论文报告的是其训练配置和评测范围内未观察到显著退化。",
+      "explanation": "其他数据、模型和训练配置仍需单独验证。",
+      "example": "对新模型同时评估普通续写与填空能力。",
+      "tags": [
+        "FIM 填空训练",
+        "实验结论边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2207.14255v1"
+    }
+  ]
+}

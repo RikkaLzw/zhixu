@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "linux-file-permissions-fundamentals",
+    "title": "Linux man-pages：权限、umask 与特殊位",
+    "url": "https://man7.org/linux/man-pages/man7/inode.7.html",
+    "type": "论文、官方文档与源码",
+    "note": "根据逐题标注的论文、版本化文档或源码自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "linuxperm-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "删除文件权限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在通常权限规则下，删除目录中的文件主要检查哪里的权限？",
+      "answer": "主要检查包含该目录项的父目录的写入和搜索权限；文件自身可写并非必需。",
+      "explanation": "粘滞位、ACL、只读文件系统等还可能限制删除。",
+      "example": "目录可写时删除一个只读普通文件。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "删除文件权限"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/unlink.2.html"
+    },
+    {
+      "id": "linuxperm-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "掩码含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 创建文件时 umask 怎样影响请求的权限位？",
+      "answer": "在没有默认 ACL 时，它清除创建模式中与 umask 对应的权限位。",
+      "explanation": "它是按位屏蔽，不是对八进制数字做普通减法。",
+      "example": "请求 0666 且 umask 为 0022，通常得到 0644。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "掩码含义"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/umask.2.html"
+    },
+    {
+      "id": "linuxperm-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "掩码与已有文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "改变进程 umask 会自动修改已经存在的文件权限吗？",
+      "answer": "不会；它影响后续受该掩码控制的创建操作。",
+      "explanation": "已有文件可使用适当的权限修改接口或命令。",
+      "example": "修改 shell 的 umask 后再创建新文件。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "掩码与已有文件"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/umask.2.html"
+    },
+    {
+      "id": "linuxperm-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "默认ACL与掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 父目录有默认 ACL 时，新文件权限还按普通 umask 规则直接计算吗？",
+      "answer": "不会直接按普通 umask 规则；新对象继承默认 ACL，并受创建时请求的权限限制。",
+      "explanation": "具体 ACL 条目也影响最终权限。",
+      "example": "带默认 ACL 的共享目录中新建文件。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "默认ACL与掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/umask.2.html"
+    },
+    {
+      "id": "linuxperm-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "chmod符号增减",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU chmod 的 g+w 与 g=w 对所属组权限有什么区别？",
+      "answer": "g+w 增加组写权限；g=w 将组权限设置为写权限并清除该组其他权限位。",
+      "explanation": "其他用户类别的普通权限位不由这两个表达式直接指定。",
+      "example": "原组权限为 r-x 时，结果分别为 rwx 和 -w-。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "chmod符号增减"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/chmod.1.html"
+    },
+    {
+      "id": "linuxperm-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "条件执行位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU chmod 的大写 X 与小写 x 在添加执行权限时有什么区别？",
+      "answer": "X 仅对目录或已有任一执行位的文件设置执行／搜索权限；x 不受此条件限制。",
+      "explanation": "递归操作时常用 X 避免把普通数据文件一律设为可执行。",
+      "example": "chmod -R a+X dir。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "条件执行位"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/chmod.1.html"
+    },
+    {
+      "id": "linuxperm-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "粘滞位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "共享目录上的 sticky bit 对删除或重命名目录项有什么限制？",
+      "answer": "通常只允许文件所有者、目录所有者或特权进程删除或重命名该文件。",
+      "explanation": "仍需满足其他目录权限及文件系统规则。",
+      "example": "多人可写的临时目录设置粘滞位。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "粘滞位"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inode.7.html"
+    },
+    {
+      "id": "linuxperm-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "目录setgid",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 目录设置 setgid 位后，新建文件的所属组通常如何确定？",
+      "answer": "新文件继承父目录的所属组；在该目录中新建的子目录也继承 setgid 位。",
+      "explanation": "具体效果还受文件系统及权限环境影响。",
+      "example": "团队共享目录统一使用同一个组。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "目录setgid"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inode.7.html"
+    },
+    {
+      "id": "linuxperm-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "可执行文件setuid",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 执行设置 setuid 位的可执行二进制文件时，有效用户 ID 通常如何变化？",
+      "answer": "在允许生效的条件下，进程的有效用户 ID 变为程序文件的所有者 ID。",
+      "explanation": "no_new_privs、nosuid 挂载或被跟踪等条件可使该位被忽略；Linux 忽略脚本的 setuid 位。",
+      "example": "执行由特定用户拥有的 setuid 程序。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "可执行文件setuid"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/execve.2.html"
+    },
+    {
+      "id": "linuxperm-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件与目录权限",
+      "knowledgePoint": "掩码继承",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中 fork 和 execve 对进程 umask 分别有什么影响？",
+      "answer": "子进程经 fork 继承父进程的 umask；execve 不改变它。",
+      "explanation": "因此从 shell 启动的程序通常沿用 shell 的创建掩码。",
+      "example": "设置 umask 后启动文件创建程序。",
+      "tags": [
+        "Linux 文件与目录权限",
+        "掩码继承"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/umask.2.html"
+    }
+  ]
+}

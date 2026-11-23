@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "pyg-graphs",
+    "title": "PyTorch Geometric：图数据与消息传递",
+    "url": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html",
+    "type": "官方文档与标准",
+    "note": "根据所列资料自行编写并用简体中文整理，示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "graph-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图数据",
+      "knowledgePoint": "节点特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图学习中的节点特征表示什么？",
+      "answer": "它用向量描述一个节点自身可用于模型的信息。",
+      "explanation": "节点特征与节点之间的边关系是不同输入。",
+      "example": "用主机的角色和行为统计作为主机节点特征。",
+      "tags": [
+        "节点特征",
+        "图学习",
+        "图神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/get_started/introduction.html"
+    },
+    {
+      "id": "graph-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图数据",
+      "knowledgePoint": "边特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图神经网络中的边特征可用于表达什么？",
+      "answer": "它可以描述节点之间关系或交互的属性。",
+      "explanation": "是否使用边特征取决于模型和数据。",
+      "example": "用连接持续时间表示两台主机之间一次通信的属性。",
+      "tags": [
+        "边特征",
+        "图学习",
+        "图神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html"
+    },
+    {
+      "id": "graph-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图数据",
+      "knowledgePoint": "edge_index",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyTorch Geometric 中 edge_index 通常记录什么？",
+      "answer": "它以形状为 [2, 边数] 的索引张量记录每条边的两个端点。",
+      "explanation": "方向由端点顺序和消息传递配置共同决定。",
+      "example": "第一行保存源节点索引，第二行保存目标节点索引。",
+      "tags": [
+        "edge_index",
+        "图学习",
+        "图神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/get_started/introduction.html"
+    },
+    {
+      "id": "graph-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "消息传递",
+      "knowledgePoint": "消息传递",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图神经网络的消息传递层通常怎样更新节点表示？",
+      "answer": "它先构造邻居向节点发送的消息并聚合，再结合节点自身状态计算新表示。",
+      "explanation": "具体消息函数、聚合方式和更新函数因模型而异。",
+      "example": "聚合相邻账户的特征以更新当前账户表示。",
+      "tags": [
+        "消息传递",
+        "图学习",
+        "图神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html"
+    },
+    {
+      "id": "graph-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息传递",
+      "knowledgePoint": "邻居聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么图神经网络常用求和、均值或最大值聚合邻居消息？",
+      "answer": "这些操作对邻居输入顺序不敏感，适合没有固定邻居顺序的图。",
+      "explanation": "不同聚合方式保留的信息不同，应根据任务选择。",
+      "example": "打乱邻居列表顺序不会改变求和结果。",
+      "tags": [
+        "邻居聚合",
+        "图学习",
+        "图神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html"
+    },
+    {
+      "id": "graph-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "消息传递",
+      "knowledgePoint": "消息方向",
+      "questionType": "安全场景",
+      "origin": "自行整理",
+      "question": "在有向图消息传递中，为什么要明确 source 和 target 的方向？",
+      "answer": "消息沿指定边方向传播，反向传播可能表示不同的关系。",
+      "explanation": "PyG 的 flow 设置会影响源和目标节点的解释。",
+      "example": "账号访问主机的边 A→H 与主机访问账号的边 H→A 表示不同关系。",
+      "tags": [
+        "消息方向",
+        "图学习",
+        "图神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html"
+    },
+    {
+      "id": "graph-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息传递",
+      "knowledgePoint": "自环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在图卷积中加入自环有什么常见作用？",
+      "answer": "它使节点自身也能作为邻居参与该层的消息聚合。",
+      "explanation": "不同图模型也可能通过单独的更新函数保留自身信息。",
+      "example": "为主机节点加入指向自身的边，再聚合邻居。",
+      "tags": [
+        "自环",
+        "图学习",
+        "图神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html"
+    },
+    {
+      "id": "graph-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息传递",
+      "knowledgePoint": "多层邻域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "堆叠多层消息传递通常会怎样改变节点可利用的图信息？",
+      "answer": "节点表示可以逐层吸收更远邻域的信息。",
+      "explanation": "可达范围还取决于边方向和具体层的定义。",
+      "example": "两层单跳消息传递可间接结合两跳内邻居的信息。",
+      "tags": [
+        "多层邻域",
+        "图学习",
+        "图神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html"
+    },
+    {
+      "id": "graph-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图任务",
+      "knowledgePoint": "节点与图级预测",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "节点级预测与图级预测的输出对象有什么区别？",
+      "answer": "节点级任务为各节点预测；图级任务为整个图预测。",
+      "explanation": "图级输出通常需要将节点表示汇总成图表示。",
+      "example": "判断单个账号风险属于节点级任务，判断整个通信子图风险属于图级任务。",
+      "tags": [
+        "节点与图级预测",
+        "图学习",
+        "图神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/get_started/introduction.html"
+    }
+  ]
+}

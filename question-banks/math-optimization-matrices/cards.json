@@ -1,0 +1,612 @@
+{
+  "source": {
+    "id": "math-optimization-matrices",
+    "title": "数学基础：微积分、凸优化与矩阵分解",
+    "url": "https://d2l.ai/chapter_preliminaries/calculus.html",
+    "type": "教材与官方文档",
+    "note": "依据 Dive into Deep Learning、OpenStax 与 NumPy 2.2 官方文档整理；例子为自编。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "mathopt-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "微积分",
+      "knowledgePoint": "导数与瞬时变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一元函数在某点可导时，导数表示什么？",
+      "answer": "它表示该点处的瞬时变化率，也等于函数图像在该点的切线斜率。",
+      "explanation": "导数是变化量之比在增量趋近零时的极限。",
+      "example": "位置关于时间的导数可表示瞬时速度。",
+      "tags": [
+        "导数与瞬时变化",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/calculus.html#derivatives-and-differentiation",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：导数与瞬时变化"
+    },
+    {
+      "id": "mathopt-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "微积分",
+      "knowledgePoint": "幂函数求导",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "正整数 n 的幂函数 xⁿ 对 x 的导数是什么？",
+      "answer": "导数为 n·x⁽ⁿ⁻¹⁾。",
+      "explanation": "指数乘到前面，幂次减一。",
+      "example": "x³ 的导数为 3x²。",
+      "tags": [
+        "幂函数求导",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/calculus.html#derivatives-and-differentiation",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：幂函数求导"
+    },
+    {
+      "id": "mathopt-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "微积分",
+      "knowledgePoint": "乘积求导",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个可导函数 f(x) 和 g(x) 的乘积如何求导？",
+      "answer": "(fg)′ = f′g + fg′。",
+      "explanation": "分别对每个因子求导，再把两项相加。",
+      "example": "x·sin(x) 的导数是 sin(x)+x·cos(x)。",
+      "tags": [
+        "乘积求导",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/calculus.html#derivatives-and-differentiation",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：乘积求导"
+    },
+    {
+      "id": "mathopt-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "微积分",
+      "knowledgePoint": "指数函数求导",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "自然指数函数 eˣ 的导数是什么？",
+      "answer": "其导数仍是 eˣ。",
+      "explanation": "这里的底数是自然常数 e。",
+      "example": "d(eˣ)/dx = eˣ。",
+      "tags": [
+        "指数函数求导",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/calculus.html#derivatives-and-differentiation",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：指数函数求导"
+    },
+    {
+      "id": "mathopt-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "微积分",
+      "knowledgePoint": "自然对数求导",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 x > 0 时，ln(x) 对 x 的导数是什么？",
+      "answer": "导数为 1/x。",
+      "explanation": "实数范围内的自然对数要求输入为正。",
+      "example": "ln(x²) 的导数还需要应用链式法则。",
+      "tags": [
+        "自然对数求导",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/calculus.html#derivatives-and-differentiation",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：自然对数求导"
+    },
+    {
+      "id": "mathopt-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "向量微分",
+      "knowledgePoint": "方向导数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "可微标量函数沿单位向量 u 的方向导数怎样计算？",
+      "answer": "等于该点的梯度与 u 的内积，即 ∇f·u。",
+      "explanation": "单位向量使结果表示沿该方向每单位长度的变化率。",
+      "example": "若梯度为 (2, 0)，沿 (1, 0) 的方向导数为 2。",
+      "tags": [
+        "方向导数",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://openstax.org/books/calculus-volume-3/pages/4-6-directional-derivatives-and-the-gradient",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：方向导数"
+    },
+    {
+      "id": "mathopt-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "向量微分",
+      "knowledgePoint": "梯度与最快上升方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "可微函数在某点梯度非零时，哪个单位方向使局部方向导数最大？",
+      "answer": "沿梯度的单位方向 ∇f/‖∇f‖；相反方向使方向导数最小。",
+      "explanation": "这里比较的是欧氏长度为 1 的方向。",
+      "example": "梯度为 (3, 4) 时，上升方向可取 (3/5, 4/5)。",
+      "tags": [
+        "梯度与最快上升方向",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://openstax.org/books/calculus-volume-3/pages/4-6-directional-derivatives-and-the-gradient",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：梯度与最快上升方向"
+    },
+    {
+      "id": "mathopt-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "向量微分",
+      "knowledgePoint": "雅可比矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "从 n 维输入到 m 维输出的可微函数，其雅可比矩阵通常是什么形状？",
+      "answer": "按输出分量为行、输入分量为列的约定，其形状是 m×n。",
+      "explanation": "第 i 行第 j 列是第 i 个输出对第 j 个输入的偏导数。",
+      "example": "二维输入、三维输出对应 3×2 的雅可比矩阵。",
+      "tags": [
+        "雅可比矩阵",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/autograd.html#backward-for-non-scalar-variables",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：雅可比矩阵"
+    },
+    {
+      "id": "mathopt-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "向量微分",
+      "knowledgePoint": "向量雅可比积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "自动微分中的向量雅可比积有什么作用？",
+      "answer": "它把输出端给定的向量与局部雅可比相乘，得到对应的输入端梯度贡献。",
+      "explanation": "反向模式通常可直接计算该积，无须显式构造完整雅可比矩阵。",
+      "example": "给多个输出提供权重，再计算输入的加权梯度。",
+      "tags": [
+        "向量雅可比积",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/autograd.html#backward-for-non-scalar-variables",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：向量雅可比积"
+    },
+    {
+      "id": "mathopt-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "向量微分",
+      "knowledgePoint": "Hessian矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "n 元二阶可微标量函数的 Hessian 矩阵包含什么？",
+      "answer": "它是 n×n 的矩阵，元素为函数对各变量的二阶偏导数。",
+      "explanation": "Hessian 描述梯度在局部怎样变化。",
+      "example": "二维函数的 Hessian 有两行两列。",
+      "tags": [
+        "Hessian矩阵",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/optimization-intro.html#saddle-points",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：Hessian矩阵"
+    },
+    {
+      "id": "mathopt-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "优化基础",
+      "knowledgePoint": "驻点与极小值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "可微目标函数在某点梯度为零，能否直接认定该点是极小值？",
+      "answer": "不能；它也可能是极大值或鞍点。",
+      "explanation": "还需结合邻域行为或适用的二阶条件判断。",
+      "example": "f(x,y)=x²−y² 在原点梯度为零，但原点是鞍点。",
+      "tags": [
+        "驻点与极小值",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/optimization-intro.html#saddle-points",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：驻点与极小值"
+    },
+    {
+      "id": "mathopt-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "优化基础",
+      "knowledgePoint": "二阶充分条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二阶连续可微函数在驻点的 Hessian 正定，能得到什么结论？",
+      "answer": "该驻点是严格局部极小值。",
+      "explanation": "这是无约束问题的一种充分条件，不意味着该点一定是全局极小值。",
+      "example": "f(x)=x² 在 x=0 处满足此条件。",
+      "tags": [
+        "二阶充分条件",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/optimization-intro.html#saddle-points",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：二阶充分条件"
+    },
+    {
+      "id": "mathopt-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "凸优化",
+      "knowledgePoint": "凸集定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么是凸集？",
+      "answer": "集合中任意两点之间的整条线段都属于该集合时，这个集合是凸集。",
+      "explanation": "只要求集合内部任意两点的线段也留在集合内。",
+      "example": "圆盘是凸集，两个分离圆盘的并集不一定是凸集。",
+      "tags": [
+        "凸集定义",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/convexity.html#convex-sets",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：凸集定义"
+    },
+    {
+      "id": "mathopt-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "凸优化",
+      "knowledgePoint": "凸函数定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "凸函数在两点连线处的函数值与端点函数值的线性插值有何关系？",
+      "answer": "在凸定义域内，函数在两点加权平均处的值不超过端点函数值的同权重平均。",
+      "explanation": "权重非负且和为 1。",
+      "example": "f(x)=x² 满足这一不等式。",
+      "tags": [
+        "凸函数定义",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/convexity.html#convex-functions",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：凸函数定义"
+    },
+    {
+      "id": "mathopt-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "凸优化",
+      "knowledgePoint": "凸函数局部极小值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "凸函数在凸定义域上的局部极小值一定是全局极小值吗？",
+      "answer": "是；但全局极小值可能不唯一，也可能根本不存在。",
+      "explanation": "结论要求函数和定义域满足凸性。",
+      "example": "常数函数的每个点都是全局极小值。",
+      "tags": [
+        "凸函数局部极小值",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/convexity.html#local-minima-are-global-minima",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：凸函数局部极小值"
+    },
+    {
+      "id": "mathopt-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "凸优化",
+      "knowledgePoint": "Hessian判定凸性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二阶连续可微函数 f: Rⁿ→R 何时可用 Hessian 判断为凸函数？",
+      "answer": "当且仅当它在每一点的 Hessian 都是半正定矩阵时，f 是凸函数。",
+      "explanation": "单独检查某一点的 Hessian 不足以判断全局凸性。",
+      "example": "f(x)=x² 的二阶导数恒为 2，因此它是凸函数。",
+      "tags": [
+        "Hessian判定凸性",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/convexity.html#convexity-and-second-derivatives",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：Hessian判定凸性"
+    },
+    {
+      "id": "mathopt-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "凸优化",
+      "knowledgePoint": "Jensen不等式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "凸函数 φ 的 Jensen 不等式如何比较 φ(E[X]) 与 E[φ(X)]？",
+      "answer": "在相关期望存在且满足适用条件时，φ(E[X]) ≤ E[φ(X)]。",
+      "explanation": "凸函数作用于平均值的结果不超过函数值的平均。",
+      "example": "φ(x)=x² 时，E[X]² ≤ E[X²]。",
+      "tags": [
+        "Jensen不等式",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/convexity.html#jensens-inequality",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：Jensen不等式"
+    },
+    {
+      "id": "mathopt-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "优化基础",
+      "knowledgePoint": "梯度下降更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对可微目标 f，学习率为 η 的普通梯度下降如何更新参数 θ？",
+      "answer": "θ_new = θ − η∇f(θ)。",
+      "explanation": "梯度在当前参数位置计算，学习率通常取正数。",
+      "example": "对 f(θ)=θ²，一步更新为 θ−2ηθ。",
+      "tags": [
+        "梯度下降更新",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/gd.html#multivariate-gradient-descent",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：梯度下降更新"
+    },
+    {
+      "id": "mathopt-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "优化基础",
+      "knowledgePoint": "学习率大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "梯度下降的学习率过大或过小可能带来什么问题？",
+      "answer": "过大可能越过低点甚至发散；过小可能使收敛非常缓慢。",
+      "explanation": "实际行为还取决于目标函数和优化方法。",
+      "example": "在陡峭的二次函数上，较大学习率可能导致震荡。",
+      "tags": [
+        "学习率大小",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/gd.html#learning-rate",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：学习率大小"
+    },
+    {
+      "id": "mathopt-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "优化基础",
+      "knowledgePoint": "预条件与尺度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "优化中预条件处理通常希望缓解什么问题？",
+      "answer": "它通过调整不同方向的更新尺度，改善问题的条件状况并帮助优化。",
+      "explanation": "具体预条件矩阵和效果取决于方法及目标函数。",
+      "example": "对不同尺度的参数采用不同的更新缩放。",
+      "tags": [
+        "预条件与尺度",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/gd.html#preconditioning",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：预条件与尺度"
+    },
+    {
+      "id": "mathopt-021",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "向量外积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "m 维列向量 u 与 n 维列向量 v 的外积 uvᵀ是什么形状？",
+      "answer": "结果是 m×n 矩阵，第 i 行第 j 列为 uᵢvⱼ。",
+      "explanation": "外积产生矩阵，与输出标量的内积不同。",
+      "example": "长度为 2 和 3 的向量可形成 2×3 矩阵。",
+      "tags": [
+        "向量外积",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.outer.html",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：向量外积"
+    },
+    {
+      "id": "mathopt-022",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "矩阵乘法交换律",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "矩阵乘法是否通常满足 AB = BA？",
+      "answer": "不满足；即使两个乘积都存在，也可能得到不同结果。",
+      "explanation": "某些特殊矩阵对可以交换，但不能普遍假设。",
+      "example": "两个不同的 2×2 矩阵的乘积顺序可能改变结果。",
+      "tags": [
+        "矩阵乘法交换律",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://openstax.org/books/college-algebra-2e/pages/7-5-matrices-and-matrix-operations",
+      "referenceTitle": "OpenStax College Algebra 2e：矩阵乘法"
+    },
+    {
+      "id": "mathopt-023",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "Frobenius范数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实矩阵的 Frobenius 范数如何计算？",
+      "answer": "把所有元素的平方相加，再取平方根。",
+      "explanation": "它相当于将矩阵元素展平后计算向量的 L2 范数。",
+      "example": "对角线元素为 3 和 4 的矩阵，Frobenius 范数为 5。",
+      "tags": [
+        "Frobenius范数",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.linalg.norm.html",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：Frobenius范数"
+    },
+    {
+      "id": "mathopt-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "矩阵谱范数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实矩阵的谱范数（诱导 2 范数）与奇异值有什么关系？",
+      "answer": "它等于矩阵的最大奇异值。",
+      "explanation": "这与逐元素平方和的平方根不一定相等。",
+      "example": "对角矩阵 diag(3,4) 的谱范数是 4。",
+      "tags": [
+        "矩阵谱范数",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.linalg.norm.html",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：矩阵谱范数"
+    },
+    {
+      "id": "mathopt-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "奇异值分解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实矩阵的奇异值分解通常怎样表示？",
+      "answer": "可写为 A = UΣVᵀ，其中 U、V 的列向量正交，Σ 的对角元素为非负奇异值。",
+      "explanation": "具体矩阵形状会随完整或精简分解形式变化。",
+      "example": "NumPy 的 svd 返回 U、奇异值和 V 的转置。",
+      "tags": [
+        "奇异值分解",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.linalg.svd.html",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：奇异值分解"
+    },
+    {
+      "id": "mathopt-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "实对称矩阵特征分解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实对称矩阵的特征分解具有什么特点？",
+      "answer": "特征值均为实数，且可以选择一组正交归一的特征向量。",
+      "explanation": "这是实对称矩阵的性质，不适用于任意实矩阵。",
+      "example": "实对称矩阵可由正交特征向量对角化。",
+      "tags": [
+        "实对称矩阵特征分解",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.linalg.eigh.html",
+      "referenceTitle": "NumPy 2.2 eigh：实对称矩阵特征分解"
+    },
+    {
+      "id": "mathopt-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "奇异值与特征值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实矩阵 A 的奇异值与 AᵀA 的特征值有什么关系？",
+      "answer": "奇异值的平方是 AᵀA 的非负特征值；AᵀA 可能还有额外的零特征值。",
+      "explanation": "AᵀA 是对称半正定矩阵。",
+      "example": "A 的奇异值 3 对应 AᵀA 的特征值 9。",
+      "tags": [
+        "奇异值与特征值",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.linalg.svd.html",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：奇异值与特征值"
+    },
+    {
+      "id": "mathopt-028",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "矩阵秩上界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "m×n 矩阵的秩最多是多少？",
+      "answer": "最多为 min(m,n)。",
+      "explanation": "秩不能超过矩阵的行数或列数。",
+      "example": "3×5 矩阵的秩最多为 3。",
+      "tags": [
+        "矩阵秩上界",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.linalg.matrix_rank.html",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：矩阵秩上界"
+    },
+    {
+      "id": "mathopt-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "数值矩阵秩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么数值计算中的矩阵秩可能依赖容差？",
+      "answer": "接近零的奇异值是否计为零，需要按精度和所选阈值判断。",
+      "explanation": "NumPy matrix_rank 默认依据奇异值与浮点精度设置阈值。",
+      "example": "改变容差可能改变近似线性相关矩阵的估计秩。",
+      "tags": [
+        "数值矩阵秩",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/generated/numpy.linalg.matrix_rank.html",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：数值矩阵秩"
+    },
+    {
+      "id": "mathopt-030",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "凸优化",
+      "knowledgePoint": "凸集交并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "凸集的交集和并集是否都一定是凸集？",
+      "answer": "凸集的交集一定是凸集；并集不一定是凸集。",
+      "explanation": "并集中的两点可能来自不同集合，而它们之间的线段不在并集中。",
+      "example": "两个互不相交的圆盘并集不是凸集。",
+      "tags": [
+        "凸集交并",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_optimization/convexity.html#convex-sets",
+      "referenceTitle": "数学基础：微积分、凸优化与矩阵分解：凸集交并"
+    }
+  ]
+}

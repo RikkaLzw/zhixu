@@ -1,0 +1,112 @@
+{
+  "source": {
+    "id": "differential-privacy-ml-foundations",
+    "title": "NIST SP 800-226、Dwork 与 Roth、Opacus：差分隐私与 DP-SGD",
+    "url": "https://csrc.nist.gov/pubs/sp/800/226/final",
+    "type": "标准指南、教材与官方机器学习库文档",
+    "note": "依据 NIST 2025 年差分隐私评估指南、Dwork 与 Roth 教材及 Opacus 官方 API／教程独立整理，覆盖数学定义、隐私单位、DP-SGD 和实现参数；在线文档核对日期为 2026-11-23。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "dpml-001", "category": "foundations", "level": "入门", "subtopic": "差分隐私基础", "knowledgePoint": "相邻数据集定义", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "差分隐私中的“相邻数据集”表示什么？", "answer": "它表示按预先选定的隐私单位，只在一个单位的数据是否存在或取值上不同的两个数据集。隐私保证必须结合这个邻接定义解读。", "explanation": "常见定义包括增删一条记录，或替换一条记录；两者对应的敏感度可能不同。", "example": "若单位是事件，两份数据集可以只差一条事件记录。", "tags": ["差分隐私", "相邻数据集", "邻接关系"], "evidence": "source", "reference": "https://csrc.nist.gov/pubs/sp/800/226/final", "referenceTitle": "NIST SP 800-226：差分隐私保证评估指南", "referenceType": "标准指南"
+    },
+    {
+      "id": "dpml-002", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "差分隐私形式定义", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "ε-差分隐私要求相邻数据集上的输出分布满足什么关系？", "answer": "对任意输出事件 S，机制在相邻数据集上的概率满足 `Pr[M(D)∈S] ≤ e^ε Pr[M(D')∈S]`。该约束限制单个隐私单位对结果分布的影响。", "explanation": "定义对任意相邻数据集和任意输出事件都成立，而不是只对某个具体模型预测成立。", "example": "查询结果落入某个区间的概率，在两份相邻数据集上受同一个界约束。", "tags": ["差分隐私", "ε-DP", "概率界"], "evidence": "source", "reference": "https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf", "referenceTitle": "Dwork 与 Roth：The Algorithmic Foundations of Differential Privacy", "referenceType": "开放教材"
+    },
+    {
+      "id": "dpml-003", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "近似差分隐私参数δ", "questionType": "易错辨析", "origin": "自行整理",
+      "question": "(ε, δ)-差分隐私中的 δ 在定义中承担什么作用？", "answer": "δ 是概率界中的加性松弛项，允许机制以受限幅度偏离纯 ε-DP 的乘法界；它不是单次攻击成功率的直接估计。", "explanation": "报告 δ 时还应说明邻接单位、数据规模和机制条件。", "example": "写出模型满足 `(ε, δ)-DP`，比只报告 ε 提供了完整的参数对。", "tags": ["差分隐私", "δ", "近似差分隐私"], "evidence": "source", "reference": "https://csrc.nist.gov/pubs/sp/800/226/final", "referenceTitle": "NIST SP 800-226：差分隐私参数", "referenceType": "标准指南"
+    },
+    {
+      "id": "dpml-004", "category": "foundations", "level": "入门", "subtopic": "差分隐私基础", "knowledgePoint": "隐私参数ε解释", "questionType": "比较与选型", "origin": "自行整理",
+      "question": "在 δ、邻接定义和机制都相同的前提下，较小的 ε 通常表示什么？", "answer": "相邻数据集的输出分布受到更严格的约束，隐私损失上界更小；通常需要加入更多噪声或接受更低的统计效用。", "explanation": "ε 的数值不能脱离 δ、邻接单位和机制单独比较。", "example": "同一查询机制将 ε 从 2 调低到 0.5，通常需要更强随机化。", "tags": ["差分隐私", "ε", "隐私预算"], "evidence": "source", "reference": "https://csrc.nist.gov/pubs/sp/800/226/final", "referenceTitle": "NIST SP 800-226：差分隐私参数", "referenceType": "标准指南"
+    },
+    {
+      "id": "dpml-005", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "纯差分隐私与近似差分隐私", "questionType": "比较与选型", "origin": "自行整理",
+      "question": "纯 ε-DP 与 (ε, δ)-DP 的参数条件有什么区别？", "answer": "纯 ε-DP 对应 δ=0；(ε, δ)-DP 允许定义中的概率界额外有 δ 的加性松弛。", "explanation": "高斯机制通常给出近似差分隐私保证，而拉普拉斯机制可实现纯 ε-DP。", "example": "报告高斯机制结果时，不能省略 δ 只写 ε。", "tags": ["差分隐私", "纯DP", "近似DP"], "evidence": "source", "reference": "https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf", "referenceTitle": "Dwork 与 Roth：纯差分隐私和近似差分隐私", "referenceType": "开放教材"
+    },
+    {
+      "id": "dpml-006", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "记录级与用户级隐私单位", "questionType": "比较与选型", "origin": "自行整理",
+      "question": "记录级差分隐私与用户级差分隐私的邻接单位有何不同？", "answer": "记录级通常比较只差一条记录的数据集；用户级比较只差某个用户全部记录的数据集。若一人贡献多条样本，逐样本隐私保证不自动等于用户级保证。", "explanation": "隐私单位会影响敏感度、梯度裁剪方式和最终预算解释。", "example": "聊天数据按一条消息保护属于记录级；按一个人的全部消息保护属于用户级。", "tags": ["差分隐私", "记录级隐私", "用户级隐私"], "evidence": "source", "reference": "https://csrc.nist.gov/pubs/sp/800/226/final", "referenceTitle": "NIST SP 800-226：隐私单位", "referenceType": "标准指南"
+    },
+    {
+      "id": "dpml-007", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "查询敏感度", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "差分隐私机制中的查询敏感度衡量什么？", "answer": "它衡量查询结果在任意一对相邻数据集之间最多能改变多少；噪声通常依据敏感度校准。", "explanation": "敏感度依赖查询函数和邻接定义，不只由样本数量决定。", "example": "在增删一条记录的定义下，人数计数查询的绝对变化最多为 1。", "tags": ["差分隐私", "全局敏感度", "查询"], "evidence": "source", "reference": "https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf", "referenceTitle": "Dwork 与 Roth：敏感度与基本机制", "referenceType": "开放教材"
+    },
+    {
+      "id": "dpml-008", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "拉普拉斯机制", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "拉普拉斯机制怎样利用查询敏感度加入噪声？", "answer": "对查询输出加入拉普拉斯分布噪声，噪声尺度与 L1 敏感度成正比、与 ε 成反比，可得到纯 ε-DP 保证。", "explanation": "具体尺度还依赖采用的邻接关系和查询定义。", "example": "发布计数前，根据计数查询的 L1 敏感度校准随机噪声。", "tags": ["差分隐私", "拉普拉斯机制", "L1敏感度"], "evidence": "source", "reference": "https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf", "referenceTitle": "Dwork 与 Roth：拉普拉斯机制", "referenceType": "开放教材"
+    },
+    {
+      "id": "dpml-009", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "高斯机制", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "高斯机制校准噪声时通常依据哪些因素？", "answer": "通常依据查询的 L2 敏感度以及目标 ε、δ 校准正态噪声，从而获得近似差分隐私保证。", "explanation": "不能只报告噪声标准差而省略敏感度和隐私参数。", "example": "DP-SGD 按梯度裁剪界和噪声乘数生成高斯噪声。", "tags": ["差分隐私", "高斯机制", "L2敏感度"], "evidence": "source", "reference": "https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf", "referenceTitle": "Dwork 与 Roth：高斯机制", "referenceType": "开放教材"
+    },
+    {
+      "id": "dpml-010", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "中心模型与本地模型", "questionType": "比较与选型", "origin": "自行整理",
+      "question": "中心差分隐私模型和本地差分隐私模型主要把随机化放在哪里？", "answer": "中心模型由受信任的数据持有方汇总后再随机化；本地模型由用户设备在上传前随机化。后者减少对中心方的信任要求，通常需要更强噪声。", "explanation": "两种模型的信任假设与效用不能只按同一个 ε 数值比较。", "example": "设备先随机化单个用户的答案，再将结果发送给统计服务。", "tags": ["差分隐私", "中心模型", "本地差分隐私"], "evidence": "source", "reference": "https://csrc.nist.gov/pubs/sp/800/226/final", "referenceTitle": "NIST SP 800-226：差分隐私部署模型", "referenceType": "标准指南"
+    },
+    {
+      "id": "dpml-011", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "随机响应", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "随机响应如何在本地模型中保护一个二元答案？", "answer": "设备按概率报告真实答案，按概率报告相反答案；经过校准的随机翻转让不同真实答案对应的输出分布满足本地隐私约束。", "explanation": "隐私来自随机化后的概率分布，而不是隐藏已上传的原始答案。", "example": "用户设备以较高概率保留“是/否”，以较低概率翻转后再提交。", "tags": ["差分隐私", "随机响应", "本地隐私"], "evidence": "source", "reference": "https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf", "referenceTitle": "Dwork 与 Roth：随机响应与本地隐私", "referenceType": "开放教材"
+    },
+    {
+      "id": "dpml-012", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "差分隐私后处理", "questionType": "易错辨析", "origin": "自行整理",
+      "question": "对差分隐私输出进行确定性后处理，是否会额外消耗隐私预算？", "answer": "仅使用已有差分隐私输出和不含私有数据的信息进行后处理，不会削弱原保证或额外消耗隐私预算。", "explanation": "若后处理又读取原始私有数据，就不再只是后处理。", "example": "对已发布的私有直方图重新绘图不会额外访问原始样本。", "tags": ["差分隐私", "后处理", "隐私预算"], "evidence": "source", "reference": "https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf", "referenceTitle": "Dwork 与 Roth：后处理性质", "referenceType": "开放教材"
+    },
+    {
+      "id": "dpml-013", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "顺序组合", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "同一数据集上连续发布多个差分隐私结果时，基本顺序组合如何估计总预算？", "answer": "若第 i 次发布分别满足 `(εᵢ, δᵢ)-DP`，基本组合给出的总保证为 `(Σ εᵢ, Σ δᵢ)-DP`。更精细的会计方法可能得到更紧的界。", "explanation": "重复查询会累积隐私损失，不能把每次发布都当作独立的新预算。", "example": "对同一批训练数据进行多轮私有训练，需要累计每一步的预算。", "tags": ["差分隐私", "组合定理", "顺序组合"], "evidence": "source", "reference": "https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf", "referenceTitle": "Dwork 与 Roth：差分隐私组合", "referenceType": "开放教材"
+    },
+    {
+      "id": "dpml-014", "category": "foundations", "level": "进阶", "subtopic": "差分隐私基础", "knowledgePoint": "并行组合", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "差分隐私的并行组合何时允许总预算取各分区预算的最大值？", "answer": "当数据被划分为互不重叠的分区，且每个隐私单位只进入一个分区的机制时，可按各分区预算中的最大值给出组合界。", "explanation": "若同一用户跨越多个分区，不能直接套用这个条件。", "example": "每位用户只被哈希到一个互斥分片，再分别发布分片统计。", "tags": ["差分隐私", "组合定理", "并行组合"], "evidence": "source", "reference": "https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf", "referenceTitle": "Dwork 与 Roth：并行组合", "referenceType": "开放教材"
+    },
+    {
+      "id": "dpml-015", "category": "foundations", "level": "进阶", "subtopic": "DP-SGD 训练", "knowledgePoint": "DP-SGD步骤", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "DP-SGD 在每个训练批次中对梯度做哪几项核心处理？", "answer": "先计算逐样本梯度并裁剪每个梯度的范数，再汇总裁剪后的梯度并加入校准的高斯噪声，最后更新模型参数。", "explanation": "隐私会计还要累计抽样和多轮更新带来的损失。", "example": "Opacus 的 `PrivacyEngine.make_private` 会包装模型、优化器和数据加载器。", "tags": ["差分隐私", "DP-SGD", "梯度训练"], "evidence": "source", "reference": "https://github.com/meta-pytorch/opacus/blob/main/tutorials/intro_to_advanced_features.ipynb", "referenceTitle": "Opacus：逐样本梯度、裁剪、加噪与会计教程", "referenceType": "官方库教程"
+    },
+    {
+      "id": "dpml-016", "category": "foundations", "level": "进阶", "subtopic": "DP-SGD 训练", "knowledgePoint": "逐样本梯度必要性", "questionType": "易错辨析", "origin": "自行整理",
+      "question": "DP-SGD 为什么要在批次聚合前获得逐样本梯度？", "answer": "算法需要分别限制每条记录对更新的最大影响；只裁剪已经聚合的批次梯度，无法保证单条记录的敏感度上界。", "explanation": "逐样本梯度是应用每样本裁剪规则的输入。", "example": "先分别计算批内每个样本的梯度范数，再单独缩放超限梯度。", "tags": ["差分隐私", "DP-SGD", "逐样本梯度"], "evidence": "source", "reference": "https://github.com/meta-pytorch/opacus/blob/main/tutorials/intro_to_advanced_features.ipynb", "referenceTitle": "Opacus：逐样本梯度与 DP-SGD", "referenceType": "官方库教程"
+    },
+    {
+      "id": "dpml-017", "category": "foundations", "level": "进阶", "subtopic": "DP-SGD 训练", "knowledgePoint": "逐样本梯度裁剪", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "DP-SGD 的 L2 范数裁剪如何处理超过阈值 C 的单样本梯度？", "answer": "将梯度乘以 `min(1, C/||g||₂)`，使裁剪后范数不超过 C；这为单个样本对聚合更新的影响提供上界。", "explanation": "裁剪也会改变梯度方向或大小，因此阈值会影响模型效用。", "example": "范数为 4、阈值为 2 的梯度缩放为原来的二分之一。", "tags": ["差分隐私", "DP-SGD", "梯度裁剪"], "evidence": "source", "reference": "https://opacus.ai/api/privacy_engine.html#opacus.privacy_engine.PrivacyEngine.make_private", "referenceTitle": "Opacus PrivacyEngine：make_private 参数", "referenceType": "官方 API 文档"
+    },
+    {
+      "id": "dpml-018", "category": "foundations", "level": "进阶", "subtopic": "DP-SGD 训练", "knowledgePoint": "噪声乘数", "questionType": "接口与配置", "origin": "自行整理",
+      "question": "Opacus 的 `noise_multiplier` 表示什么？", "answer": "它表示高斯噪声标准差相对于逐样本梯度裁剪上限的乘数，本身不是 ε 隐私预算。", "explanation": "实际 ε 还取决于采样率、更新步数、δ 和所用会计方法。", "example": "增大 noise multiplier 通常会在其他条件相同时降低隐私损失，但可能增加训练噪声。", "tags": ["差分隐私", "Opacus", "noise_multiplier"], "evidence": "source", "reference": "https://opacus.ai/api/privacy_engine.html#opacus.privacy_engine.PrivacyEngine.make_private", "referenceTitle": "Opacus PrivacyEngine：make_private 参数", "referenceType": "官方 API 文档"
+    },
+    {
+      "id": "dpml-019", "category": "foundations", "level": "进阶", "subtopic": "DP-SGD 训练", "knowledgePoint": "隐私会计器", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "DP-SGD 的隐私会计器主要累计哪些信息？", "answer": "它根据每步的采样率、噪声乘数和更新次数累计隐私损失，并在给定 δ 后换算当前 ε 上界。", "explanation": "会计器提供预算核算，不会替代对邻接单位和训练实现的检查。", "example": "Opacus 的 `PrivacyEngine.get_epsilon(delta)` 查询当前已消耗的 ε。", "tags": ["差分隐私", "DP-SGD", "隐私会计"], "evidence": "source", "reference": "https://opacus.ai/api/privacy_engine.html#opacus.privacy_engine.PrivacyEngine.get_epsilon", "referenceTitle": "Opacus PrivacyEngine：get_epsilon", "referenceType": "官方 API 文档"
+    },
+    {
+      "id": "dpml-020", "category": "foundations", "level": "进阶", "subtopic": "DP-SGD 训练", "knowledgePoint": "采样与更新步数的隐私代价", "questionType": "比较与选型", "origin": "自行整理",
+      "question": "比较两次 DP-SGD 训练的隐私预算时，为什么不能只看每步噪声乘数？", "answer": "采样率和更新总步数也影响组合后的隐私损失；相同噪声乘数在不同训练计划下不保证相同 ε。", "explanation": "应让匹配所用采样机制的会计器核算完整训练轨迹。", "example": "训练更多轮次通常意味着更多更新步骤，需要重新核算预算。", "tags": ["差分隐私", "DP-SGD", "采样率", "隐私会计"], "evidence": "source", "reference": "https://github.com/meta-pytorch/opacus/blob/main/tutorials/intro_to_advanced_features.ipynb", "referenceTitle": "Opacus：采样率、训练步数与隐私会计", "referenceType": "官方库教程"
+    },
+    {
+      "id": "dpml-021", "category": "foundations", "level": "实践", "subtopic": "DP-SGD 训练", "knowledgePoint": "按目标ε配置DP-SGD", "questionType": "接口与配置", "origin": "自行整理",
+      "question": "Opacus 的 `make_private_with_epsilon` 与 `make_private` 在噪声配置上有什么主要区别？", "answer": "前者接受目标 ε、δ 和训练轮数等条件来推导噪声乘数；后者直接接收 `noise_multiplier`。两种方式都仍需匹配真实训练设置并核对会计结果。", "explanation": "接口给出的目标预算依赖传入的采样和训练假设。", "example": "预先确定 ε、δ 和 epoch 数时，可用目标预算接口配置 DP 优化器。", "tags": ["差分隐私", "Opacus", "make_private_with_epsilon"], "evidence": "source", "reference": "https://opacus.ai/api/privacy_engine.html#opacus.privacy_engine.PrivacyEngine.make_private_with_epsilon", "referenceTitle": "Opacus PrivacyEngine：make_private_with_epsilon", "referenceType": "官方 API 文档"
+    },
+    {
+      "id": "dpml-022", "category": "foundations", "level": "进阶", "subtopic": "DP-SGD 训练", "knowledgePoint": "安全随机数配置", "questionType": "接口与配置", "origin": "自行整理",
+      "question": "Opacus 的 `secure_mode=True` 会改变什么？", "answer": "它启用密码学强度的随机数生成，用于需要强随机性保障的差分隐私训练；配置是否启用应结合部署要求评估。", "explanation": "Opacus API 文档当前将 `secure_mode` 默认值列为 `False`。", "example": "面向正式发布的训练流程显式检查 PrivacyEngine 的安全随机数配置。", "tags": ["差分隐私", "Opacus", "随机数", "secure_mode"], "evidence": "source", "reference": "https://opacus.ai/api/privacy_engine.html", "referenceTitle": "Opacus PrivacyEngine：secure_mode", "referenceType": "官方 API 文档"
+    },
+    {
+      "id": "dpml-023", "category": "foundations", "level": "进阶", "subtopic": "差分隐私评估", "knowledgePoint": "差分隐私与匿名化", "questionType": "易错辨析", "origin": "自行整理",
+      "question": "数据经过匿名化或删除直接标识符后，是否就能认定满足差分隐私？", "answer": "不能；差分隐私要求针对相邻数据集的随机机制给出形式化概率界，删除标识符本身不构成这种保证。", "explanation": "NIST 将差分隐私视为可量化的隐私框架，并提醒评估实际实现中的隐私风险。", "example": "去掉姓名后发布稀有属性组合，仍不等同于差分隐私发布。", "tags": ["差分隐私", "匿名化", "隐私评估"], "evidence": "source", "reference": "https://csrc.nist.gov/pubs/sp/800/226/final", "referenceTitle": "NIST SP 800-226：差分隐私与匿名化", "referenceType": "标准指南"
+    },
+    {
+      "id": "dpml-024", "category": "foundations", "level": "入门", "subtopic": "差分隐私评估", "knowledgePoint": "隐私与效用权衡", "questionType": "设计与权衡", "origin": "自行整理",
+      "question": "在查询和数据不变时，为什么加强差分隐私通常会影响统计效用？", "answer": "更严格的隐私参数通常要求更强随机化或更严裁剪，使发布值或训练更新中的噪声相对增大，可能降低估计精度或模型效果。", "explanation": "最终效用还受数据规模、查询敏感度和训练方法影响。", "example": "较小的 ε 可能使稀有类别的计数更难精确估计。", "tags": ["差分隐私", "效用", "噪声"], "evidence": "source", "reference": "https://csrc.nist.gov/pubs/sp/800/226/final", "referenceTitle": "NIST SP 800-226：差分隐私部署权衡", "referenceType": "标准指南"
+    },
+    {
+      "id": "dpml-025", "category": "foundations", "level": "实践", "subtopic": "差分隐私评估", "knowledgePoint": "隐私保证报告信息", "questionType": "模型评估", "origin": "自行整理",
+      "question": "发布差分隐私模型的保证时，至少应同时说明哪些条件？", "answer": "至少说明 ε、δ、相邻数据集和隐私单位的定义、机制或训练流程，以及预算会计和采样假设。", "explanation": "只给出一个 ε 数字，无法判断保证保护的是事件、记录还是用户，也无法复核计算条件。", "example": "报告 DP-SGD 时注明每用户样本规则、裁剪界、噪声乘数、采样率、步数和 δ。", "tags": ["差分隐私", "模型评估", "隐私保证", "报告"], "evidence": "source", "reference": "https://csrc.nist.gov/pubs/sp/800/226/final", "referenceTitle": "NIST SP 800-226：差分隐私保证评估", "referenceType": "标准指南"
+    }
+  ]
+}

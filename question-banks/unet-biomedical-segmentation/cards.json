@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "unet-biomedical-segmentation",
+    "title": "U-Net 原论文：医学图像分割",
+    "url": "https://arxiv.org/pdf/1505.04597v1",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "unetpaper-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "U-Net 图像分割",
+      "knowledgePoint": "收缩与扩张路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "U-Net 原论文的收缩路径和扩张路径各有什么作用？",
+      "answer": "收缩路径聚合上下文；扩张路径逐步恢复空间分辨率以定位目标。",
+      "explanation": "两条路径共同形成 U 形结构。",
+      "example": "分割细胞时既要识别上下文，也要恢复边界位置。",
+      "tags": [
+        "U-Net 图像分割",
+        "收缩与扩张路径"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1505.04597v1"
+    },
+    {
+      "id": "unetpaper-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "U-Net 图像分割",
+      "knowledgePoint": "同层特征拼接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 U-Net 的扩张路径如何使用对应收缩层的特征？",
+      "answer": "将上采样特征与对应收缩层中裁剪后的特征图拼接，再进行卷积。",
+      "explanation": "拼接把较高分辨率的定位信息带入扩张路径。",
+      "example": "上采样到某尺度后，可与相应编码阶段特征拼接。",
+      "tags": [
+        "U-Net 图像分割",
+        "同层特征拼接"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1505.04597v1"
+    },
+    {
+      "id": "unetpaper-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "U-Net 图像分割",
+      "knowledgePoint": "特征裁剪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 U-Net 为什么要裁剪收缩路径的特征图才能拼接？",
+      "answer": "原始网络使用无填充卷积，卷积使特征图边缘尺寸缩小。",
+      "explanation": "这是原论文架构的条件；使用填充的变体可能采用不同处理。",
+      "example": "裁剪对应层特征图，使其空间尺寸与上采样结果一致。",
+      "tags": [
+        "U-Net 图像分割",
+        "特征裁剪"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1505.04597v1"
+    },
+    {
+      "id": "unetpaper-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "U-Net 图像分割",
+      "knowledgePoint": "边缘镜像",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 U-Net 使用重叠分块推理时，如何补足图像边界所需上下文？",
+      "answer": "通过镜像扩展输入图像来补足缺失的边界上下文。",
+      "explanation": "重叠分块可用于处理不能一次放入显存的大图。",
+      "example": "靠近图像边缘的输出也能获得扩展后的输入区域。",
+      "tags": [
+        "U-Net 图像分割",
+        "边缘镜像"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1505.04597v1"
+    },
+    {
+      "id": "unetpaper-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "U-Net 图像分割",
+      "knowledgePoint": "接触细胞边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "U-Net 原论文为什么提高相邻接触细胞之间背景像素的损失权重？",
+      "answer": "强调分开相邻细胞所需的边界区域。",
+      "explanation": "这是一种针对具体分割困难的像素加权设计。",
+      "example": "相邻细胞间狭窄的背景带可获得较高权重。",
+      "tags": [
+        "U-Net 图像分割",
+        "接触细胞边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1505.04597v1"
+    }
+  ]
+}

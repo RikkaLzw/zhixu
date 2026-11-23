@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "loghub-hdfs-data-variants",
+    "title": "Loghub HDFS 固定版本说明：日志数据差异",
+    "url": "https://raw.githubusercontent.com/logpai/loghub/374038faa4ca122dd7ca0730372c0b78f76f8597/HDFS/README.md",
+    "type": "官方技术文档、固定版本源码或研究论文",
+    "note": "依照逐题所列资料自行整理，示例自编；涉及实现的行为以指定版本为准。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "hdfsdata-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Loghub HDFS 数据集",
+      "knowledgePoint": "实验环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Loghub 的 HDFS_v1 日志是在什么环境产生的？",
+      "answer": "在私有云环境运行基准工作负载时产生。",
+      "explanation": "这类数据的工作负载与生产环境可能不同。",
+      "example": "基准日志不一定覆盖所有实际运维场景。",
+      "tags": [
+        "Loghub HDFS 数据集",
+        "实验环境"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/logpai/loghub/374038faa4ca122dd7ca0730372c0b78f76f8597/HDFS/README.md"
+    },
+    {
+      "id": "hdfsdata-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Loghub HDFS 数据集",
+      "knowledgePoint": "标签方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Loghub 的 HDFS_v1 异常标签来源是什么？",
+      "answer": "说明称采用人工制定的规则进行标注。",
+      "explanation": "规则标签也可能有遗漏或误判，使用时应考虑标注方法。",
+      "example": "将规则给出的异常标签作为评测依据前先检查。",
+      "tags": [
+        "Loghub HDFS 数据集",
+        "标签方式"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/logpai/loghub/374038faa4ca122dd7ca0730372c0b78f76f8597/HDFS/README.md"
+    },
+    {
+      "id": "hdfsdata-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Loghub HDFS 数据集",
+      "knowledgePoint": "版本标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Loghub HDFS_v1 与 HDFS_v2 在异常标签上有什么区别？",
+      "answer": "v1 提供正常／异常标签；v2 按原样提供且未标注。",
+      "explanation": "两个版本的采集环境和组织方式也不同。",
+      "example": "不能把 v2 直接当成已标注分类集。",
+      "tags": [
+        "Loghub HDFS 数据集",
+        "版本标签"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/logpai/loghub/374038faa4ca122dd7ca0730372c0b78f76f8597/HDFS/README.md"
+    },
+    {
+      "id": "hdfsdata-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Loghub HDFS 数据集",
+      "knowledgePoint": "日志缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Loghub 的 HDFS_v2 为什么需要关注日志完整性？",
+      "answer": "说明指出有三个节点经修复后部分日志丢失。",
+      "explanation": "缺失可能影响对完整事件与时间线的判断。",
+      "example": "跨节点关联时需要考虑缺失日志。",
+      "tags": [
+        "Loghub HDFS 数据集",
+        "日志缺失"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/logpai/loghub/374038faa4ca122dd7ca0730372c0b78f76f8597/HDFS/README.md"
+    },
+    {
+      "id": "hdfsdata-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Loghub HDFS 数据集",
+      "knowledgePoint": "TraceBench 故障",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Loghub 的 HDFS_v3 TraceBench 除正常轨迹外还包含哪类轨迹？",
+      "answer": "包含在不同注入故障场景下采集的轨迹。",
+      "explanation": "数据集说明也提到其中包含真实系统缺陷相关情形。",
+      "example": "研究故障检测时应区分注入场景与正常数据。",
+      "tags": [
+        "Loghub HDFS 数据集",
+        "TraceBench 故障"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/logpai/loghub/374038faa4ca122dd7ca0730372c0b78f76f8597/HDFS/README.md"
+    }
+  ]
+}

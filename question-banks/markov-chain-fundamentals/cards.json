@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "markov-chain-fundamentals",
+    "title": "ProbabilityCourse：离散时间马尔可夫链",
+    "url": "https://www.probabilitycourse.com/chapter11/11_2_1_introduction.php",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据逐题引用的论文或教材自行整理；例子为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "markovbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "转移矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "离散时间齐次马尔可夫链的转移矩阵 P 中，P[i,j] 表示什么？",
+      "answer": "它表示当前状态为 i 时，下一步转移到状态 j 的条件概率。",
+      "explanation": "这里约定第 i 行为起始状态，第 j 列为目标状态。",
+      "example": "P[0,1] 表示从状态 0 到状态 1 的一步概率。",
+      "tags": [
+        "转移矩阵",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_1_introduction.php"
+    },
+    {
+      "id": "markovbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "矩阵行和",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用行表示起始状态时，有限马尔可夫链的转移矩阵每一行之和是多少？",
+      "answer": "每一行的概率之和为 1，且各元素均非负。",
+      "explanation": "一行覆盖下一步可能到达的全部状态。",
+      "example": "检查估计出的转移矩阵是否合法。",
+      "tags": [
+        "矩阵行和",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_1_introduction.php"
+    },
+    {
+      "id": "markovbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "时间齐次",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间齐次马尔可夫链的转移概率对时间有什么假设？",
+      "answer": "给定当前状态后，一步转移概率不随时间步改变。",
+      "explanation": "时间齐次不表示状态分布本身不随时间变化。",
+      "example": "同一矩阵 P 可用于每一步更新。",
+      "tags": [
+        "时间齐次",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_1_introduction.php"
+    },
+    {
+      "id": "markovbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "多步转移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对有限时间齐次马尔可夫链，P 的 n 次幂中第 i 行第 j 列表示什么？",
+      "answer": "它表示从状态 i 出发，经过 n 步处于状态 j 的概率。",
+      "explanation": "这里 P 是按行表示起始状态的转移矩阵。",
+      "example": "P² 的一个元素汇总两步路径的概率。",
+      "tags": [
+        "多步转移",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_3_probability_distributions.php"
+    },
+    {
+      "id": "markovbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "分布推进",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "状态分布使用行向量表示时，如何由初始分布计算第 n 步分布？",
+      "answer": "用初始分布左乘 P 的 n 次幂：π(n)=π(0)Pⁿ。",
+      "explanation": "矩阵和向量的方向需与约定保持一致。",
+      "example": "将初始分布推进两步。",
+      "tags": [
+        "分布推进",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_3_probability_distributions.php"
+    },
+    {
+      "id": "markovbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "可达与互通",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "马尔可夫链中的状态 i 可达状态 j 与两个状态互通分别是什么意思？",
+      "answer": "可达表示存在有限步正概率路径从 i 到 j；互通要求两者彼此可达。",
+      "explanation": "可达不一定是对称关系。",
+      "example": "单向边可使一个状态到达另一个状态但无法返回。",
+      "tags": [
+        "可达与互通",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_4_classification_of_states.php"
+    },
+    {
+      "id": "markovbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "不可约",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "马尔可夫链不可约（irreducible）是什么意思？",
+      "answer": "所有状态都属于同一个互通类，也就是任意两个状态彼此可达。",
+      "explanation": "不可约不意味着每一步都能从任一状态直接到另一状态。",
+      "example": "经由中间状态也可建立互通。",
+      "tags": [
+        "不可约",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_4_classification_of_states.php"
+    },
+    {
+      "id": "markovbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "吸收状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "马尔可夫链中的吸收状态有什么特点？",
+      "answer": "进入该状态后，下一步仍留在该状态的概率为 1。",
+      "explanation": "因此之后也不会离开该状态。",
+      "example": "某流程进入不可撤销的终止状态。",
+      "tags": [
+        "吸收状态",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_5_using_the_law_of_total_probability_with_recursion.php"
+    },
+    {
+      "id": "markovbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "常返与暂态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "马尔可夫链中的常返状态与暂态状态按什么条件区分？",
+      "answer": "从该状态出发最终返回自身的概率为 1 时称为常返；小于 1 时称为暂态。",
+      "explanation": "常返不代表必然在某个固定有限步数返回。",
+      "example": "进入可离开的状态后，可能永远不再返回。",
+      "tags": [
+        "常返与暂态",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_4_classification_of_states.php"
+    },
+    {
+      "id": "markovbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "周期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "离散马尔可夫链状态的周期通常怎样定义？",
+      "answer": "对能够以正概率返回该状态的所有正步数取最大公约数。",
+      "explanation": "周期为 1 时称该状态非周期；无正步返回的特殊情况需单独约定。",
+      "example": "只能在偶数步返回的状态具有周期 2。",
+      "tags": [
+        "周期",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_4_classification_of_states.php"
+    },
+    {
+      "id": "markovbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "平稳分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "行向量 π 是马尔可夫链的平稳分布时满足什么方程？",
+      "answer": "它满足 πP=π，且各分量非负、总和为 1。",
+      "explanation": "从该分布初始化后，每一步的状态边缘分布保持不变。",
+      "example": "验证候选概率向量是否为平稳分布。",
+      "tags": [
+        "平稳分布",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_6_stationary_and_limiting_distributions.php"
+    },
+    {
+      "id": "markovbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "平稳与收敛",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "马尔可夫链存在平稳分布，是否意味着从任意初始状态出发的分布必然收敛到它？",
+      "answer": "不一定；例如两个状态确定性交替的周期链可有平稳分布，却从单一状态出发持续振荡。",
+      "explanation": "平稳性和从任意初态收敛是不同性质。",
+      "example": "概率在两个状态之间交替。",
+      "tags": [
+        "平稳与收敛",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_6_stationary_and_limiting_distributions.php"
+    },
+    {
+      "id": "markovbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "马尔可夫链基础",
+      "knowledgePoint": "有限链收敛",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有限马尔可夫链满足什么常见条件时，从任意初始分布会收敛到唯一平稳分布？",
+      "answer": "当链不可约且非周期时。",
+      "explanation": "这些条件是有限状态空间下的常见充分条件。",
+      "example": "有互通路径且适当自环的有限链。",
+      "tags": [
+        "有限链收敛",
+        "马尔可夫链基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_2_6_stationary_and_limiting_distributions.php"
+    }
+  ]
+}

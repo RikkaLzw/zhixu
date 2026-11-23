@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "mcnemar-paired-classification",
+    "title": "statsmodels 0.14.4：McNemar 成对分类检验",
+    "url": "https://www.statsmodels.org/v0.14.4/generated/statsmodels.stats.contingency_tables.mcnemar.html",
+    "type": "原论文或官方文档与源码",
+    "note": "依据逐题引用的固定版本、原论文或官方文档自行整理；示例为自编，具体版本及适用条件见各卡。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "mcnemar-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "成对分类统计检验",
+      "knowledgePoint": "适用数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较两个分类器时，McNemar 检验适用于怎样的预测结果？",
+      "answer": "适用于同一批样本上的成对二元结果，例如每个模型对每个样本是否预测正确。",
+      "explanation": "应保留每个样本对应的两种结果，不能只给出两个总准确率。",
+      "example": "在同一测试集比较两个分类器的逐例正确性。",
+      "tags": [
+        "成对分类统计检验",
+        "适用数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statsmodels.org/v0.14.4/generated/statsmodels.stats.contingency_tables.mcnemar.html"
+    },
+    {
+      "id": "mcnemar-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "成对分类统计检验",
+      "knowledgePoint": "原假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "McNemar 检验对成对二元结果的原假设是什么？",
+      "answer": "两个结果的边际分布相同；对 2×2 表等价于两个方向的不一致概率相等。",
+      "explanation": "它检验的是成对结果的差异，不直接说明错误发生的原因。",
+      "example": "比较两个模型的正确与错误边际比例。",
+      "tags": [
+        "成对分类统计检验",
+        "原假设"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statsmodels.org/v0.14.4/generated/statsmodels.stats.contingency_tables.mcnemar.html"
+    },
+    {
+      "id": "mcnemar-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "成对分类统计检验",
+      "knowledgePoint": "不一致格",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "2×2 配对正确性表中，McNemar 检验主要使用哪些计数？",
+      "answer": "使用一方正确另一方错误的两个不一致格计数。",
+      "explanation": "两者都正确或都错误的对角格不进入常见检验统计量。",
+      "example": "分别统计仅模型 A 正确和仅模型 B 正确的样本数。",
+      "tags": [
+        "成对分类统计检验",
+        "不一致格"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/statsmodels/statsmodels/blob/v0.14.4/statsmodels/stats/contingency_tables.py"
+    },
+    {
+      "id": "mcnemar-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "成对分类统计检验",
+      "knowledgePoint": "精确检验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "statsmodels 0.14.4 的 mcnemar 在 exact=True 和 exact=False 时分别使用什么分布？",
+      "answer": "exact=True 使用二项分布做精确检验；exact=False 使用自由度为 1 的卡方分布近似。",
+      "explanation": "exact 默认为 True；卡方近似适用性取决于数据条件。",
+      "example": "只比较两个方向的不一致样本。",
+      "tags": [
+        "成对分类统计检验",
+        "精确检验"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statsmodels.org/v0.14.4/generated/statsmodels.stats.contingency_tables.mcnemar.html"
+    },
+    {
+      "id": "mcnemar-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "成对分类统计检验",
+      "knowledgePoint": "精确统计量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "statsmodels 的 mcnemar 在 exact=True 时返回的 statistic 是什么？",
+      "answer": "它返回两个不一致格计数中的较小值。",
+      "explanation": "它不是此模式下的卡方统计量。",
+      "example": "不一致计数为 3 和 7 时 statistic 为 3。",
+      "tags": [
+        "成对分类统计检验",
+        "精确统计量"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/statsmodels/statsmodels/blob/v0.14.4/statsmodels/stats/contingency_tables.py"
+    },
+    {
+      "id": "mcnemar-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "成对分类统计检验",
+      "knowledgePoint": "连续性校正",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "statsmodels 的 mcnemar 中 correction 参数何时影响统计量？",
+      "answer": "仅在 exact=False 的卡方近似模式下影响统计量；默认启用连续性校正。",
+      "explanation": "精确二项检验不会使用该参数。",
+      "example": "对比启用和关闭校正的卡方结果。",
+      "tags": [
+        "成对分类统计检验",
+        "连续性校正"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statsmodels.org/v0.14.4/generated/statsmodels.stats.contingency_tables.mcnemar.html"
+    },
+    {
+      "id": "mcnemar-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "成对分类统计检验",
+      "knowledgePoint": "方向与p值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "交换 McNemar 2×2 表中两个不一致计数，双侧 p 值会改变吗？",
+      "answer": "不会；当两个计数不同时，哪一个模型在不一致样本中更常正确的方向会反转。",
+      "explanation": "报告 p 值时也应报告两个方向的计数。",
+      "example": "仅 A 正确 3 次、仅 B 正确 7 次。",
+      "tags": [
+        "成对分类统计检验",
+        "方向与p值"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/statsmodels/statsmodels/blob/v0.14.4/statsmodels/stats/contingency_tables.py"
+    }
+  ]
+}

@@ -1,0 +1,579 @@
+{
+  "source": {
+    "id": "stix-pattern-fundamentals",
+    "title": "STIX 2.1 模式表达式与观测匹配",
+    "url": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_me3pzm77qfnf",
+    "type": "标准规范",
+    "note": "依据 OASIS STIX 2.1 标准第 9 节整理；部分示例用 stix2-patterns 2.0.0 校验，实际数据上的匹配语义未运行验证。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "stixpat-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "模式基础",
+      "knowledgePoint": "模式作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 Patterning 语言主要用来描述什么？",
+      "answer": "它描述对网络、主机等可观测数据进行匹配的条件，可用于 Indicator 的 pattern。",
+      "explanation": "模式是可求值的表达式，不等同于观测本身。",
+      "example": "[file:name = 'foo.dll'] 描述一个文件名匹配条件。",
+      "tags": [
+        "模式作用",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_me3pzm77qfnf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.3 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "模式基础",
+      "knowledgePoint": "对象路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 模式中的对象路径通常指定什么？",
+      "answer": "它指定要比较的 SCO 类型及其属性路径。",
+      "explanation": "路径可包含嵌套属性和可解引用的对象引用。",
+      "example": "file:name 指向文件对象的 name 属性。",
+      "tags": [
+        "对象路径",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_me3pzm77qfnf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.3 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "模式基础",
+      "knowledgePoint": "观测表达式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 中的单个方括号观测表达式对什么范围进行匹配？",
+      "answer": "它对一个观测进行匹配，括号内的比较条件在该观测的对象范围内求值。",
+      "explanation": "多个方括号表达式可以用观测运算符组合。",
+      "example": "[file:name = 'foo.dll'] 是单个观测表达式。",
+      "tags": [
+        "观测表达式",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "模式基础",
+      "knowledgePoint": "方括号内外AND",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 模式的方括号内 AND 与连接两个方括号的 AND 在观测范围上有什么区别？",
+      "answer": "括号内 AND 的条件在同一观测中满足；方括号之间的 AND 要求匹配不同观测。",
+      "explanation": "方括号内的 AND 条件还必须能由同一起始对象满足。",
+      "example": "[file:name = 'a' AND file:size > 1] 与 [file:name = 'a'] AND [file:name = 'b'] 的范围不同。",
+      "tags": [
+        "方括号内外AND",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "模式基础",
+      "knowledgePoint": "同一对象约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 单个观测表达式内的 AND 条件，能否由两个互不关联的同类型 SCO 分别满足？",
+      "answer": "不能；AND 的各条件必须能从同一个起始 SCO 满足。",
+      "explanation": "不同根类型的比较不能直接用 AND 凑成同一对象；经引用路径可访问该对象关联的其他 SCO。",
+      "example": "两个独立 network-traffic 对象分别只有源和目的地址时，不能凑成同一连接。",
+      "tags": [
+        "同一对象约束",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "观测运算",
+      "knowledgePoint": "FOLLOWEDBY顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 FOLLOWEDBY 对左右观测时间有什么要求？",
+      "answer": "右侧匹配观测的时间必须大于或等于左侧观测时间，且是不同观测。",
+      "explanation": "该运算符表达时间顺序，不要求两个时间戳严格不同。",
+      "example": "先观察文件，再观察相同时间或之后的注册表事件。",
+      "tags": [
+        "FOLLOWEDBY顺序",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "观测运算",
+      "knowledgePoint": "重复限定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 REPEATS n TIMES 表示什么？",
+      "answer": "前面的观测表达式至少匹配 n 次，且每次是不同的观测。",
+      "explanation": "n 必须为正整数。",
+      "example": "某域名观测可要求 REPEATS 5 TIMES。",
+      "tags": [
+        "重复限定",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "观测运算",
+      "knowledgePoint": "窗口限定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 WITHIN n SECONDS 对多个匹配观测施加什么约束？",
+      "answer": "所有匹配观测必须在指定时间窗口内；最晚时间须早于最早时间加窗口长度。",
+      "explanation": "n 是正数，窗口的上边界不包含在内。",
+      "example": "WITHIN 120 SECONDS 要求最晚与最早相差小于 120 秒。",
+      "tags": [
+        "窗口限定",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "观测运算",
+      "knowledgePoint": "起止限定边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 START x STOP y 对观测时间的起止边界如何处理？",
+      "answer": "观测时间必须大于等于 x 且小于 y。",
+      "explanation": "x 和 y 都是 STIX 模式时间戳常量。",
+      "example": "START 为 00:00、STOP 为 01:00 时，不包含恰好 01:00 的观测。",
+      "tags": [
+        "起止限定边界",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "观测运算",
+      "knowledgePoint": "限定符作用范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 模式中怎样让 WITHIN 同时约束多个组合的观测表达式？",
+      "answer": "先用圆括号把组合表达式括起来，再把 WITHIN 放在括号后。",
+      "explanation": "若限定符紧跟其中一个表达式，它只作用于该表达式。",
+      "example": "([file:name = 'a'] AND [file:name = 'b']) WITHIN 300 SECONDS 约束整个组合。",
+      "tags": [
+        "限定符作用范围",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "观测运算",
+      "knowledgePoint": "限定符重复类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的一个观测表达式能否使用两个同类型的时间或重复限定符？",
+      "answer": "不能；同一表达式不能有多个同类型限定符。",
+      "explanation": "不同类型的限定符可以组合使用。",
+      "example": "可组合 REPEATS 与 WITHIN。",
+      "tags": [
+        "限定符重复类型",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "观测运算",
+      "knowledgePoint": "表达式优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 模式中 AND、OR 和 FOLLOWEDBY 的默认优先级如何排列？",
+      "answer": "AND 高于 OR，OR 高于 FOLLOWEDBY。",
+      "explanation": "可以用圆括号明确改变组合顺序。",
+      "example": "复杂模式应显式加括号，便于阅读。",
+      "tags": [
+        "表达式优先级",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_x1nsjyy75wtq",
+      "referenceTitle": "OASIS STIX 2.1：第 9.5 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "比较运算",
+      "knowledgePoint": "缺失属性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 比较表达式引用的属性不存在或无法读取时，比较结果是什么？",
+      "answer": "结果为 false，即使表达式中包含否定运算符。",
+      "explanation": "因此属性缺失不能直接当作“不等于某值”的证据。",
+      "example": "缺少 file:size 时，针对该路径的比较不能匹配。",
+      "tags": [
+        "缺失属性",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_boiciucr9smf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.6 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-015",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "比较运算",
+      "knowledgePoint": "IN集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 IN 比较运算符如何判断匹配？",
+      "answer": "当对象路径的值等于括号列出的某个常量时匹配。",
+      "explanation": "集合中的常量应为同一数据类型，并与属性兼容。",
+      "example": "[file:name IN ('a', 'b')] 匹配名字为 a 或 b 的文件。",
+      "tags": [
+        "IN集合",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_boiciucr9smf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.6 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-016",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "比较运算",
+      "knowledgePoint": "LIKE通配符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 LIKE 中 % 和 _ 分别匹配什么？",
+      "answer": "% 匹配零个或多个字符；_ 匹配任意一个字符。",
+      "explanation": "其通配符规则基于 SQL LIKE。",
+      "example": "[file:name LIKE 'report%.pdf'] 可匹配以 report 开头的 PDF 文件名。",
+      "tags": [
+        "LIKE通配符",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_boiciucr9smf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.6 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-017",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "比较运算",
+      "knowledgePoint": "MATCHES正则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 MATCHES 使用什么形式的模式，默认执行哪种匹配？",
+      "answer": "它使用 PCRE 兼容正则表达式并执行搜索；需要全串约束时可使用起止锚点。",
+      "explanation": "规范要求使用 DOTALL 选项，具体实现仍须满足规范。",
+      "example": "[file:name MATCHES '^report.*\\\\.pdf$'] 使用锚点限制完整名称。",
+      "tags": [
+        "MATCHES正则",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_boiciucr9smf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.6 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-019",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "比较运算",
+      "knowledgePoint": "IP父网比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 ISSUPERSET 与 ISSUBSET 对 IP 网络的包含方向有何区别？",
+      "answer": "ISSUPERSET 判断左侧是否包含右侧；ISSUBSET 判断左侧是否被右侧包含。",
+      "explanation": "两个运算符针对 IP 地址对象的 value 属性；相同地址或相同子网也满足包含关系。",
+      "example": "一个 /24 网络是其中 /27 网络的超集。",
+      "tags": [
+        "IP父网比较",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_boiciucr9smf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.6 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-020",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "比较运算",
+      "knowledgePoint": "EXISTS存在",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的 EXISTS 比较表达式检查什么？",
+      "answer": "它检查指定对象属性是否存在，不要求属性内容等于某个特定值。",
+      "explanation": "对象路径仍须能在匹配观测中解析。",
+      "example": "EXISTS 可用于检查注册表对象是否含 values 属性。",
+      "tags": [
+        "EXISTS存在",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_boiciucr9smf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.6 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-021",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "比较运算",
+      "knowledgePoint": "类型不兼容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 中对象属性与常量类型不兼容时，普通比较与 != 通常各返回什么？",
+      "answer": "普通比较返回 false；!= 是例外，会返回 true。",
+      "explanation": "这与对象路径不存在时比较一律为 false 的规则不同。",
+      "example": "整数属性与不可比较的字符串常量不能用相等比较匹配。",
+      "tags": [
+        "类型不兼容",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_boiciucr9smf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.6 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-022",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "比较运算",
+      "knowledgePoint": "字符串基本比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 的字符串 = 和 != 比较是否自动执行 Unicode 规范化？",
+      "answer": "不会；这些基本字符串比较按码点比较，默认不进行 Unicode 规范化。",
+      "explanation": "LIKE 和 MATCHES 有各自的规范化要求。",
+      "example": "预组合字符与不同码点序列的组合字符不一定相等。",
+      "tags": [
+        "字符串基本比较",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_boiciucr9smf",
+      "referenceTitle": "OASIS STIX 2.1：第 9.6 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-023",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "常量类型",
+      "knowledgePoint": "时间戳常量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 模式怎样标识时间戳常量？",
+      "answer": "在单引号括起的时间戳前加小写 t。",
+      "explanation": "时间戳内容仍须符合 STIX 时间格式。",
+      "example": "t'2024-01-01T00:00:00Z' 是时间戳常量的形式。",
+      "tags": [
+        "时间戳常量",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_bvkuhhujn5qm",
+      "referenceTitle": "OASIS STIX 2.1：第 9.2 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-024",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "常量类型",
+      "knowledgePoint": "二进制与十六进制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 模式中 b 和 h 前缀分别表示什么二进制常量形式？",
+      "answer": "b 表示 Base64 编码的字节，h 表示十六进制编码的字节。",
+      "explanation": "比较二进制属性时，关注解码后的字节值。",
+      "example": "b'ABI=' 与 h'0012' 都表示一组字节。",
+      "tags": [
+        "二进制与十六进制",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_bvkuhhujn5qm",
+      "referenceTitle": "OASIS STIX 2.1：第 9.2 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-025",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "对象路径",
+      "knowledgePoint": "列表索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 对象路径中的列表索引从几开始？索引越界时如何处理？",
+      "answer": "索引从 0 开始；越界时该路径上的比较结果为 false。",
+      "explanation": "也可使用通配符选择列表项。",
+      "example": "network-traffic:protocols[0] 指向第一个协议。",
+      "tags": [
+        "列表索引",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_i7kzkq2evwxj",
+      "referenceTitle": "OASIS STIX 2.1：第 9.7 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-026",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "对象路径",
+      "knowledgePoint": "列表通配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 对象路径中的列表通配符 [*] 要求所有元素都满足比较吗？",
+      "answer": "不要求；逐项尝试后，只要有任一项满足比较即可为 true。",
+      "explanation": "列表为空或没有匹配项时不会得到匹配。",
+      "example": "protocols[*] 可检查是否存在满足条件的某个协议。",
+      "tags": [
+        "列表通配",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_i7kzkq2evwxj",
+      "referenceTitle": "OASIS STIX 2.1：第 9.7 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-027",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "对象路径",
+      "knowledgePoint": "字典键引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 对象路径中的属性名包含连字符或点时，怎样避免与路径语法混淆？",
+      "answer": "用单引号括起该名称。",
+      "explanation": "哈希算法名和扩展名称经常需要这样引用。",
+      "example": "file:hashes.'SHA-256' 引用 SHA-256 哈希字段。",
+      "tags": [
+        "字典键引用",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_i7kzkq2evwxj",
+      "referenceTitle": "OASIS STIX 2.1：第 9.7 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-028",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "对象路径",
+      "knowledgePoint": "引用路径解引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 对象路径怎样访问嵌入式引用指向的 SCO 属性？",
+      "answer": "在引用属性后继续写被引用对象的属性，求值时解引用该对象。",
+      "explanation": "使用 object_refs 的 Observed Data 时，只能沿其中列出的 SCO 引用查找。",
+      "example": "network-traffic:src_ref.value 可访问源地址对象的 value。",
+      "tags": [
+        "引用路径解引用",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_i7kzkq2evwxj",
+      "referenceTitle": "OASIS STIX 2.1：第 9.7 节 STIX Patterning"
+    },
+    {
+      "id": "stixpat-029",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "模式基础",
+      "knowledgePoint": "无效模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 模式存在解析错误或无效常量时，规范要求怎样处理匹配？",
+      "answer": "无效模式不能匹配任何观测。",
+      "explanation": "语法校验可发现一部分问题，但不等于对数据和业务语义完成验证。",
+      "example": "错误的常量格式不应被当作有效检测结果。",
+      "tags": [
+        "无效模式",
+        "STIX",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_oxfmsowx7p3y",
+      "referenceTitle": "OASIS STIX 2.1：第 9.4 节 STIX Patterning"
+    }
+  ]
+}

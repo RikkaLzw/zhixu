@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "angora-taint-guided-fuzzing",
+    "title": "Angora 原论文 v1：污点与约束搜索",
+    "url": "https://arxiv.org/pdf/1803.01307v1",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "angora-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Angora 灰盒模糊测试",
+      "knowledgePoint": "目标思路",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Angora 原论文如何尝试探索尚未覆盖的分支？",
+      "answer": "利用污点跟踪找出影响分支条件的输入字节，并搜索能改变条件结果的输入。",
+      "explanation": "字节级污点跟踪识别影响条件的输入部分，从而缩小后续变异的搜索空间。",
+      "example": "集中修改影响某个比较的字节。",
+      "tags": [
+        "Angora 灰盒模糊测试",
+        "目标思路"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1803.01307v1"
+    },
+    {
+      "id": "angora-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Angora 灰盒模糊测试",
+      "knowledgePoint": "梯度搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Angora 对分支约束使用的梯度式搜索是否需要训练神经网络代理？",
+      "answer": "不需要；它把条件计算当作黑盒函数，通过输入扰动等方式搜索满足条件的值。",
+      "explanation": "输入是离散数据，方法依赖具体约束与实现。",
+      "example": "对影响比较的数值字段尝试调整方向。",
+      "tags": [
+        "Angora 灰盒模糊测试",
+        "梯度搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1803.01307v1"
+    },
+    {
+      "id": "angora-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Angora 灰盒模糊测试",
+      "knowledgePoint": "上下文覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Angora 为什么使用上下文敏感的分支覆盖？",
+      "answer": "区分同一分支在不同调用上下文中的执行，以更细地近似程序状态。",
+      "explanation": "更细的覆盖信号仍不等于完整程序语义。",
+      "example": "同一函数从不同调用位置进入时分别记录。",
+      "tags": [
+        "Angora 灰盒模糊测试",
+        "上下文覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1803.01307v1"
+    },
+    {
+      "id": "angora-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Angora 灰盒模糊测试",
+      "knowledgePoint": "输入形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Angora 推断多个输入字节的形状与类型有什么用途？",
+      "answer": "识别共同组成整数等值的字节，使搜索可按有意义的变量而非孤立字节进行。",
+      "explanation": "推断结果与程序操作和输入格式有关。",
+      "example": "把连续四字节作为一个整数来调整。",
+      "tags": [
+        "Angora 灰盒模糊测试",
+        "输入形状"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1803.01307v1"
+    },
+    {
+      "id": "angora-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Angora 灰盒模糊测试",
+      "knowledgePoint": "输入长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Angora 的输入长度探索针对什么问题？",
+      "answer": "识别长度可能限制分支条件或程序状态的情况，并尝试扩展输入。",
+      "explanation": "只改现有字节不一定能触达要求更长输入的代码。",
+      "example": "输入不足时增加长度以到达后续读取逻辑。",
+      "tags": [
+        "Angora 灰盒模糊测试",
+        "输入长度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1803.01307v1"
+    }
+  ]
+}

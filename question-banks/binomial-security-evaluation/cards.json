@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "binomial-security-evaluation",
+    "title": "SciPy 1.15.3：二项比例与安全评估",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.binomtest.html",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题所列论文或固定版本资料自行整理，示例为自编。在线文档按 2026-11-21 查看内容。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "binomeval-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "二项比例与安全评估",
+      "knowledgePoint": "检验输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用 scipy.stats.binomtest 评估一组二元结果时，k 和 n 分别表示什么？",
+      "answer": "k 是成功次数，n 是试验总次数。",
+      "explanation": "“成功”可以按问题定义为一次误报或一次命中。",
+      "example": "100 条正常样本中有 3 条误报，k=3、n=100。",
+      "tags": [
+        "二项比例与安全评估",
+        "检验输入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.binomtest.html"
+    },
+    {
+      "id": "binomeval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二项比例与安全评估",
+      "knowledgePoint": "样本比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 binomtest 结果中 statistic 表示什么？",
+      "answer": "样本成功比例 k/n。",
+      "explanation": "它不是用于检验的 p 值。",
+      "example": "3 次误报占 100 条样本时 statistic 为 0.03。",
+      "tags": [
+        "二项比例与安全评估",
+        "样本比例"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.binomtest.html"
+    },
+    {
+      "id": "binomeval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二项比例与安全评估",
+      "knowledgePoint": "原假设参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy binomtest 的 p 参数表示什么？",
+      "answer": "原假设下每次试验的成功概率。",
+      "explanation": "这个设定值与样本比例及返回的 pvalue 是不同量。",
+      "example": "检验真实误报率是否等于指定比例。",
+      "tags": [
+        "二项比例与安全评估",
+        "原假设参数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.binomtest.html"
+    },
+    {
+      "id": "binomeval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二项比例与安全评估",
+      "knowledgePoint": "区间默认方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 binomtest 结果调用 proportion_ci() 默认使用什么方法？",
+      "answer": "默认使用 Clopper–Pearson 精确区间。",
+      "explanation": "应记录置信水平、方法和样本条件。",
+      "example": "根据误报次数估计误报率区间。",
+      "tags": [
+        "二项比例与安全评估",
+        "区间默认方法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats._result_classes.BinomTestResult.proportion_ci.html"
+    },
+    {
+      "id": "binomeval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二项比例与安全评估",
+      "knowledgePoint": "Wilson方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 proportion_ci 中 wilson 和 wilsoncc 有什么区别？",
+      "answer": "wilson 使用不带连续性修正的 Wilson 方法；wilsoncc 使用连续性修正。",
+      "explanation": "不同区间方法可能给出不同边界。",
+      "example": "同一批告警分别计算两种区间。",
+      "tags": [
+        "二项比例与安全评估",
+        "Wilson方法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats._result_classes.BinomTestResult.proportion_ci.html"
+    },
+    {
+      "id": "binomeval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二项比例与安全评估",
+      "knowledgePoint": "单侧区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 binomtest 设置 alternative=\"less\" 后，proportion_ci 返回哪一侧有信息的区间？",
+      "answer": "返回以上界为重点的单侧区间，下界为 0。",
+      "explanation": "方向应与预先设定的检验目标一致。",
+      "example": "为误报概率构造单侧上界。",
+      "tags": [
+        "二项比例与安全评估",
+        "单侧区间"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats._result_classes.BinomTestResult.proportion_ci.html"
+    },
+    {
+      "id": "binomeval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "二项比例与安全评估",
+      "knowledgePoint": "二项前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用普通二项区间描述安全误报率时，为什么要检查样本之间的依赖？",
+      "answer": "标准二项模型假设各次试验独立且具有相同成功概率，关联样本可能不满足。",
+      "explanation": "同一攻击活动或主机产生的重复记录可能相关。",
+      "example": "同一批重复告警不能盲目按独立样本处理。",
+      "tags": [
+        "二项比例与安全评估",
+        "二项前提"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.binomtest.html"
+    }
+  ]
+}

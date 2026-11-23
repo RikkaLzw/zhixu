@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "falco-rule-authoring",
+    "title": "Falco 固定版本：规则与例外",
+    "url": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的固定版本或在线官方资料自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "falcobase-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "条件字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 规则的 condition 字段主要决定什么？",
+      "answer": "它定义对输入事件求值的布尔条件，满足条件的事件可触发规则。",
+      "explanation": "条件使用的字段要与事件来源和可见上下文相适配。",
+      "example": "筛选容器内特定进程的执行事件。",
+      "tags": [
+        "Falco 安全规则",
+        "条件字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md"
+    },
+    {
+      "id": "falcobase-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "宏与列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 的 macro 和 list 在规则复用中分别表示什么？",
+      "answer": "macro 复用一段条件表达式；list 复用一组值。",
+      "explanation": "宏和列表都可以被多条规则使用。",
+      "example": "用进程名列表构建可复用的条件宏。",
+      "tags": [
+        "Falco 安全规则",
+        "宏与列表"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md"
+    },
+    {
+      "id": "falcobase-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "对象定义顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 文档对列表引用其他列表、宏引用其他宏的定义顺序有什么要求？",
+      "answer": "被引用的同类列表或宏需要先定义。",
+      "explanation": "宏引用列表和规则引用宏的可见性规则不同。",
+      "example": "先定义基础列表，再在另一个列表中引用它。",
+      "tags": [
+        "Falco 安全规则",
+        "对象定义顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md"
+    },
+    {
+      "id": "falcobase-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "事件类型约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 规则只检查进程名而不限定事件类型时，为什么可能产生大量告警？",
+      "answer": "该进程的多个事件都可能满足同一元数据条件，而不只是目标行为发生的事件。",
+      "explanation": "应结合实际检测目标限制适用事件类型。",
+      "example": "容器内 shell 的多个系统调用都可能匹配进程名条件。",
+      "tags": [
+        "Falco 安全规则",
+        "事件类型约束"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md"
+    },
+    {
+      "id": "falcobase-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "规则优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 规则的 priority 表示什么，是否决定规则覆盖顺序？",
+      "answer": "它表示事件的严重程度，不决定规则覆盖或触发顺序。",
+      "explanation": "规则文件加载顺序另有规定。",
+      "example": "WARNING 表示告警严重程度，而不是覆盖另一条规则。",
+      "tags": [
+        "Falco 安全规则",
+        "规则优先级"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md"
+    },
+    {
+      "id": "falcobase-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "输出字段插值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 规则的 output 如何引用事件字段？",
+      "answer": "输出模板可用 %字段名插入事件中的相应值。",
+      "explanation": "如果字段对某事件不可用，输出中可能出现占位值。",
+      "example": "用 %proc.name 在告警中显示进程名。",
+      "tags": [
+        "Falco 安全规则",
+        "输出字段插值"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md"
+    },
+    {
+      "id": "falcobase-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "缺失字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 告警输出中的 <NA> 通常提示什么？",
+      "answer": "提示该事件的相应字段没有可用值。",
+      "explanation": "不能据此直接推断该字段在所有事件中都不存在。",
+      "example": "宿主机事件缺少容器镜像字段。",
+      "tags": [
+        "Falco 安全规则",
+        "缺失字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md"
+    },
+    {
+      "id": "falcobase-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "数据源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 规则的 source 字段用于什么？",
+      "answer": "它指定规则应在哪个事件来源上求值。",
+      "explanation": "可用字段依事件来源和插件而异；文档中的默认来源是 syscall。",
+      "example": "区分系统调用和插件提供的事件。",
+      "tags": [
+        "Falco 安全规则",
+        "数据源"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md"
+    },
+    {
+      "id": "falcobase-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "例外组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 规则例外中的 fields、comps 和 values 分别描述什么？",
+      "answer": "fields 指定事件字段，comps 指定对应比较操作，values 提供要排除的匹配值。",
+      "explanation": "字段、比较操作和各值元组需按位置对应。",
+      "example": "按进程和目录的组合排除已知正常行为。",
+      "tags": [
+        "Falco 安全规则",
+        "例外组合"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/exceptions.md"
+    },
+    {
+      "id": "falcobase-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "例外范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Falco 建议为规则例外同时考虑行为主体、动作和目标？",
+      "answer": "更具体的组合有助于避免例外过宽而屏蔽其他可疑行为。",
+      "explanation": "例外仍需结合本地业务和日志验证。",
+      "example": "只排除指定进程对指定目录的预期写入。",
+      "tags": [
+        "Falco 安全规则",
+        "例外范围"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/exceptions.md"
+    },
+    {
+      "id": "falcobase-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "例外覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 规则覆盖中 exceptions 的 append 与 replace 有什么区别？",
+      "answer": "append 增加已有例外的值；replace 替换指定例外的值列表。",
+      "explanation": "覆盖结果受规则文件加载顺序影响。",
+      "example": "为已有规则添加或替换允许的进程路径组合。",
+      "tags": [
+        "Falco 安全规则",
+        "例外覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/exceptions.md"
+    },
+    {
+      "id": "falcobase-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Falco 安全规则",
+      "knowledgePoint": "未知字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Falco 规则设置 skip-if-unknown-filter=true 后，遇到未知过滤字段会怎样？",
+      "answer": "Falco 可以接受该规则但不执行它。",
+      "explanation": "默默跳过会形成检测盲区，升级或部署时应检查兼容性。",
+      "example": "规则使用当前 Falco 不认识的新字段。",
+      "tags": [
+        "Falco 安全规则",
+        "未知字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/falcosecurity/falco-website/blob/a16386978afdaaad8bb6fb74bd5a8640c5d7e7d1/content/en/docs/concepts/rules/basic-elements.md"
+    }
+  ]
+}

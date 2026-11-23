@@ -1,0 +1,335 @@
+{
+  "source": {
+    "id": "algorithm-design-foundations",
+    "title": "算法设计：动态规划、二分与双指针",
+    "url": "https://cp-algorithms.com/dynamic_programming/intro-to-dp.html",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或手册自行整理；例子为自编，适用环境与前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "algdesign-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "记忆化搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "算法中的记忆化搜索如何避免重复计算子问题？",
+      "answer": "首次计算后保存子问题结果；再次遇到相同状态时直接复用。",
+      "explanation": "只有状态和相关条件相同时才应复用结果。",
+      "example": "缓存斐波那契数列中已算过的项。",
+      "tags": [
+        "记忆化搜索",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/intro-to-dp.html"
+    },
+    {
+      "id": "algdesign-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "自顶向下与自底向上",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "动态规划的自顶向下与自底向上通常怎样计算状态？",
+      "answer": "自顶向下从目标递归并记忆结果；自底向上从基础状态按依赖顺序推算。",
+      "explanation": "自底向上计算时，被依赖的状态需要先得到结果。",
+      "example": "从 F(n) 递归，或从 F(0)、F(1) 开始迭代。",
+      "tags": [
+        "自顶向下与自底向上",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/intro-to-dp.html"
+    },
+    {
+      "id": "algdesign-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "状态定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "动态规划中的状态为什么需要覆盖影响后续决策的必要信息？",
+      "answer": "如果不同情形被错误合并为同一状态，复用结果时可能得到错误答案。",
+      "explanation": "状态通常只保留足以决定子问题结果的信息。",
+      "example": "背包状态可包含已考虑的物品和剩余容量。",
+      "tags": [
+        "状态定义",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/knapsack.html"
+    },
+    {
+      "id": "algdesign-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "动态规划复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "当每个动态规划状态只计算一次时，如何估计运行时间？",
+      "answer": "可用状态数量乘以每个状态处理转移的成本来估计。",
+      "explanation": "状态访问、查表及不同状态的转移次数也要计入。",
+      "example": "n 个状态、每个处理常数个转移时通常是 O(n)。",
+      "tags": [
+        "动态规划复杂度",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/intro-to-dp.html"
+    },
+    {
+      "id": "algdesign-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "滚动空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "只求斐波那契数列第 n 项时，为什么可用常数个变量迭代？",
+      "answer": "每一项只依赖前两项，计算下一项后可丢弃更早的项。",
+      "explanation": "这里的 O(1) 空间按固定宽度数值的常见分析口径计算。",
+      "example": "保留 F(i-1) 和 F(i-2)。",
+      "tags": [
+        "滚动空间",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/intro-to-dp.html"
+    },
+    {
+      "id": "algdesign-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "背包物品数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "0-1 背包与完全背包对每种物品的选取次数有什么区别？",
+      "answer": "0-1 背包每个物品最多选一次；完全背包的每种物品可重复选取。",
+      "explanation": "两者使用不同的状态转移语义。",
+      "example": "同一商品在两类问题中能否重复使用不同。",
+      "tags": [
+        "背包物品数量",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/knapsack.html"
+    },
+    {
+      "id": "algdesign-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "背包更新方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准一维背包动态规划中，为什么 0-1 背包和完全背包遍历容量的方向不同？",
+      "answer": "0-1 背包从大到小更新以避免同一物品重复使用；完全背包从小到大更新以允许重复使用。",
+      "explanation": "该结论适用于按物品外层循环、原地更新的一维转移。",
+      "example": "方向会影响当前物品能否在同一轮被重复使用。",
+      "tags": [
+        "背包更新方向",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/knapsack.html"
+    },
+    {
+      "id": "algdesign-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "严格递增",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "求严格递增子序列时，相等元素能连续加入同一递增子序列吗？",
+      "answer": "不能；后一个元素必须严格大于前一个。",
+      "explanation": "非递减子序列允许相等，问题定义不同。",
+      "example": "[2, 2, 2] 的严格 LIS 长度为 1。",
+      "tags": [
+        "严格递增",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html"
+    },
+    {
+      "id": "algdesign-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "二分谓词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对答案范围进行二分查找时，判定条件通常需要满足什么性质？",
+      "answer": "判定结果应在搜索范围内具有单调性，使区间可按边界排除。",
+      "explanation": "还要正确处理全真、全假等边界情况。",
+      "example": "可行容量从某个阈值开始一直可行。",
+      "tags": [
+        "二分谓词",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/num_methods/binary_search.html"
+    },
+    {
+      "id": "algdesign-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "中点溢出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在有界有符号整数中计算非负二分端点的中点时，为什么常用 low + (high-low)/2？",
+      "answer": "它避免直接计算 low + high 时可能发生的溢出。",
+      "explanation": "假设 0 ≤ low ≤ high 且端点可表示；其他范围需另行处理。",
+      "example": "C++20 也可使用 std::midpoint。",
+      "tags": [
+        "中点溢出",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/num_methods/binary_search.html"
+    },
+    {
+      "id": "algdesign-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "bisect 插入边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 bisect_left 与 bisect_right 对已有相等元素分别返回什么位置？",
+      "answer": "前者返回相等元素之前的插入位置；后者返回相等元素之后的插入位置。",
+      "explanation": "这两个函数返回索引，不执行插入。",
+      "example": "[1, 2, 2, 3] 中插入 2 的边界分别为 1 和 3。",
+      "tags": [
+        "bisect 插入边界",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/bisect.html"
+    },
+    {
+      "id": "algdesign-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "bisect 命中检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 bisect_left 返回索引后，为什么还要检查索引和元素才能判断是否找到目标？",
+      "answer": "它返回保持有序的插入点，即使目标不存在也会返回一个索引。",
+      "explanation": "检查时须先确认索引没有越过序列末尾。",
+      "example": "对 [1, 3] 查找 2 会得到插入位置 1。",
+      "tags": [
+        "bisect 命中检查",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/bisect.html"
+    },
+    {
+      "id": "algdesign-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "bisect key",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 bisect_left(a, x, key=...) 搜索时会对 x 也调用 key 吗？",
+      "answer": "不会；key 用于提取序列元素的比较键，x 应与这些键可比较。",
+      "explanation": "insort 的 key 处理还包含插入时对原对象的保留。",
+      "example": "按记录的时间字段查找时，x 可为时间值。",
+      "tags": [
+        "bisect key",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/bisect.html"
+    },
+    {
+      "id": "algdesign-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "insort 复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Python 列表上使用 insort 时，为什么整体插入通常是 O(n)？",
+      "answer": "二分定位是 O(log n)，但列表插入可能移动线性数量的元素。",
+      "explanation": "具体开销取决于插入位置和列表大小。",
+      "example": "在列表开头插入可能移动所有已有元素。",
+      "tags": [
+        "insort 复杂度",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/bisect.html"
+    },
+    {
+      "id": "algdesign-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "前缀和区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "定义 P[0]=0、P[i+1]=P[i]+a[i] 时，如何求半开区间 [l, r) 的元素和？",
+      "answer": "使用 P[r] - P[l]。",
+      "explanation": "先构造前缀和后，单次区间求和可在常数时间完成。",
+      "example": "P[3]-P[1] 对应 a[1]+a[2]。",
+      "tags": [
+        "前缀和区间",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/silver/prefix-sums?lang=cpp"
+    },
+    {
+      "id": "algdesign-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "双指针有序两数和",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在升序数组中用左右指针寻找两数之和，当前和小于目标时通常移动哪个指针？",
+      "answer": "将左指针右移，以尝试更大的和。",
+      "explanation": "前提是数组已排序且两个指针指向不同元素。",
+      "example": "若两端之和太小，固定右端无法靠更小左值达到目标。",
+      "tags": [
+        "双指针有序两数和",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/silver/two-pointers?lang=cpp"
+    },
+    {
+      "id": "algdesign-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "常见算法思路",
+      "knowledgePoint": "滑动窗口条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么按窗口和超限就缩左端的简单滑动窗口算法通常要求元素非负？",
+      "answer": "非负时扩展窗口不会减小和；有负数时这一单调性不成立，可能提前丢掉有效区间。",
+      "explanation": "具体算法还需与目标约束匹配。",
+      "example": "在 [4, -3] 上，单看前缀 4 超限可能错过和为 1 的完整区间。",
+      "tags": [
+        "滑动窗口条件",
+        "常见算法思路"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/silver/two-pointers?lang=cpp"
+    }
+  ]
+}

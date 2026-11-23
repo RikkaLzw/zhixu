@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "pyod-copod-usage",
+    "title": "PyOD 2.0.5 源码：COPOD 异常分数",
+    "url": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/copod.py",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "pycopod-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PyOD COPOD 接口",
+      "knowledgePoint": "分数方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 COPOD.decision_function 返回值越大通常表示什么？",
+      "answer": "表示样本越异常。",
+      "explanation": "这是异常排序分数，不能直接当作已校准的攻击概率。",
+      "example": "优先检查分数较高的事件。",
+      "tags": [
+        "PyOD COPOD 接口",
+        "分数方向"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/copod.py"
+    },
+    {
+      "id": "pycopod-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PyOD COPOD 接口",
+      "knowledgePoint": "阈值比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 COPOD contamination 参数主要影响什么？",
+      "answer": "用于从训练样本异常分数确定阈值并生成二值标签。",
+      "explanation": "它不是已知真实攻击率，也不保证测试集异常占比。",
+      "example": "设定预期异常比例后仍需用独立数据验证阈值。",
+      "tags": [
+        "PyOD COPOD 接口",
+        "阈值比例"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/copod.py"
+    },
+    {
+      "id": "pycopod-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PyOD COPOD 接口",
+      "knowledgePoint": "测试批次影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 COPOD.decision_function 为什么可能因同批查询样本变化而改变同一查询点的分数？",
+      "answer": "实现会把查询样本与训练样本拼接后计算经验分布和偏度。",
+      "explanation": "因此评分受查询批次组成影响，不应假设每次都只基于固定训练分布。",
+      "example": "单独评分与批量评分应检查是否一致。",
+      "tags": [
+        "PyOD COPOD 接口",
+        "测试批次影响"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/copod.py"
+    }
+  ]
+}

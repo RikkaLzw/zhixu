@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "a2a-task-lifecycle",
+    "title": "A2A 1.0.0：任务状态与交互",
+    "url": "https://a2a-protocol.org/v1.0.0/specification/",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题链接的资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "a2atask-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体协议工程",
+      "knowledgePoint": "任务与会话标识",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "A2A 1.0.0 的 taskId 与 contextId 分别用于标识什么？",
+      "answer": "taskId 标识一个有状态任务；contextId 把相关任务和消息组织到同一交互上下文。",
+      "explanation": "一个上下文可关联多个任务。",
+      "example": "同一会话里的两个任务具有不同 taskId。",
+      "tags": [
+        "任务与会话标识",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://a2a-protocol.org/v1.0.0/specification/"
+    },
+    {
+      "id": "a2atask-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体协议工程",
+      "knowledgePoint": "等待输入状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "A2A 1.0.0 的 TASK_STATE_INPUT_REQUIRED 状态表示什么？",
+      "answer": "智能体需要额外输入才能继续该任务。",
+      "explanation": "客户端可以向同一任务发送后续消息。",
+      "example": "任务缺少必要参数时请求补充。",
+      "tags": [
+        "等待输入状态",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://a2a-protocol.org/v1.0.0/specification/"
+    },
+    {
+      "id": "a2atask-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体协议工程",
+      "knowledgePoint": "终止状态约束",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "A2A 1.0.0 中已完成的任务还能接收继续执行的消息吗？",
+      "answer": "不能；已完成是终止状态，服务端会拒绝向该任务发送的后续消息。",
+      "explanation": "如需后续工作，可按协议创建或引用适当的新任务。",
+      "example": "已完成的报告任务不能直接用新消息继续运行。",
+      "tags": [
+        "终止状态约束",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://a2a-protocol.org/v1.0.0/specification/"
+    },
+    {
+      "id": "a2atask-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体协议工程",
+      "knowledgePoint": "任务更新交付",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "A2A 1.0.0 的轮询与推送通知在任务更新时有什么区别？",
+      "answer": "轮询由客户端定期获取状态；推送由服务端向客户端登记的端点发送更新。",
+      "explanation": "推送需要客户端的接收端点可达。",
+      "example": "长任务运行时由客户端轮询，或接收 webhook 通知。",
+      "tags": [
+        "任务更新交付",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://a2a-protocol.org/v1.0.0/specification/"
+    }
+  ]
+}

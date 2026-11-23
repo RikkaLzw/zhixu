@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "cvss-v31",
+    "title": "FIRST CVSS v3.1 漏洞严重性评分",
+    "url": "https://www.first.org/cvss/v3.1/specification-document",
+    "type": "官方技术标准",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "cvss-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "漏洞情报",
+      "knowledgePoint": "CVSS与实际风险",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "CVSS v3.1 Base 分数能否单独代表组织的实际业务风险？",
+      "answer": "不能；Base 衡量漏洞固有严重性，组织还需考虑本地环境、资产与业务影响等因素。",
+      "explanation": "CVSS 可作为风险评估输入，但不包含所有业务损失因素。",
+      "example": "优先级排序时结合资产暴露和业务重要性。",
+      "tags": [
+        "CVSS与实际风险",
+        "漏洞情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v3.1/specification-document"
+    },
+    {
+      "id": "cvss-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "漏洞情报",
+      "knowledgePoint": "评分指标组",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "CVSS v3.1 的 Base、Temporal 和 Environmental 指标组分别关注什么？",
+      "answer": "Base 描述漏洞固有特征；Temporal 描述随时间变化的因素；Environmental 反映特定环境的影响与缓解条件。",
+      "explanation": "例如利用代码可用性可影响 Temporal，环境中的缓解措施可影响 Environmental。",
+      "example": "查看基础评分后，再考虑组织环境和当前状态。",
+      "tags": [
+        "评分指标组",
+        "漏洞情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v3.1/specification-document"
+    },
+    {
+      "id": "cvss-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "漏洞情报",
+      "knowledgePoint": "攻击向量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v3.1 的 Attack Vector 主要描述什么？",
+      "answer": "它描述利用漏洞所需的攻击路径或环境，例如网络、相邻网络、本地或物理访问。",
+      "explanation": "本地攻击路径不一定要求攻击者物理坐在设备旁。",
+      "example": "经 SSH 获得本地执行能力后触发漏洞时，按实际利用路径评估。",
+      "tags": [
+        "攻击向量",
+        "漏洞情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v3.1/specification-document#2-1-1-Attack-Vector-AV"
+    },
+    {
+      "id": "cvss-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "漏洞情报",
+      "knowledgePoint": "权限与用户交互",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "CVSS v3.1 的 Privileges Required 与 User Interaction 分别衡量什么？",
+      "answer": "前者衡量攻击者利用前需要的权限；后者衡量成功利用是否需要攻击者之外的用户参与。",
+      "explanation": "用户打开文档不等同于攻击者事先拥有受害系统的权限。",
+      "example": "区分需要登录的攻击和需要诱使用户打开文件的攻击。",
+      "tags": [
+        "权限与用户交互",
+        "漏洞情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v3.1/specification-document#2-1-3-Privileges-Required-PR"
+    },
+    {
+      "id": "cvss-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "漏洞情报",
+      "knowledgePoint": "安全范围变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CVSS v3.1 的 Scope Changed 表示什么？",
+      "answer": "漏洞利用可能影响受另一安全权限机构管理的组件资源，即影响跨越安全范围。",
+      "explanation": "判断依据是安全权限边界，而不是仅看是否涉及两个组件名称。",
+      "example": "漏洞从受限制组件影响到其他安全范围的资源。",
+      "tags": [
+        "安全范围变化",
+        "漏洞情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/cvss/v3.1/specification-document#2-2-Scope-S"
+    }
+  ]
+}

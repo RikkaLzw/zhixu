@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "coverage-py-branch-analysis",
+    "title": "coverage.py 7.6.1：分支覆盖与报告",
+    "url": "https://coverage.readthedocs.io/en/7.6.1/branch.html",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "covpy-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 测试覆盖率",
+      "knowledgePoint": "开启分支",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "coverage.py 7.6.1 如何在运行程序时同时测量分支覆盖？",
+      "answer": "使用 coverage run --branch。",
+      "explanation": "分支信息还需要程序执行后通过报告查看。",
+      "example": "运行测试入口时启用 --branch。",
+      "tags": [
+        "Python 测试覆盖率",
+        "开启分支"
+      ],
+      "evidence": "source",
+      "reference": "https://coverage.readthedocs.io/en/7.6.1/branch.html"
+    },
+    {
+      "id": "covpy-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 测试覆盖率",
+      "knowledgePoint": "分支测量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "coverage.py 如何识别可能未覆盖的分支？",
+      "answer": "比较静态分析得到的可能行间转移与实际执行到的转移。",
+      "explanation": "受限于源代码分析和排除规则，报告需要结合程序语义解释。",
+      "example": "判断条件的不同去向是否被执行。",
+      "tags": [
+        "Python 测试覆盖率",
+        "分支测量"
+      ],
+      "evidence": "source",
+      "reference": "https://coverage.readthedocs.io/en/7.6.1/branch.html"
+    },
+    {
+      "id": "covpy-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 测试覆盖率",
+      "knowledgePoint": "覆盖分母",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "coverage.py 的分支覆盖报告中，总覆盖百分比只计算分支而不计算语句吗？",
+      "answer": "不是；总百分比结合语句和分支目标的执行机会计算。",
+      "explanation": "不能直接把总百分比解释为纯分支比例。",
+      "example": "查看详细分支列以了解缺失分支。",
+      "tags": [
+        "Python 测试覆盖率",
+        "覆盖分母"
+      ],
+      "evidence": "source",
+      "reference": "https://coverage.readthedocs.io/en/7.6.1/branch.html"
+    },
+    {
+      "id": "covpy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 测试覆盖率",
+      "knowledgePoint": "排除分支",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "coverage.py 对某条件分支使用 pragma: no cover 排除后，可能怎样改变分支统计？",
+      "answer": "如果该条件只剩一个未排除去向，coverage.py 不再将其计为分支。",
+      "explanation": "排除代码会改变覆盖范围，应谨慎解释结果。",
+      "example": "将明确不纳入覆盖的 else 分支排除。",
+      "tags": [
+        "Python 测试覆盖率",
+        "排除分支"
+      ],
+      "evidence": "source",
+      "reference": "https://coverage.readthedocs.io/en/7.6.1/branch.html"
+    },
+    {
+      "id": "covpy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 测试覆盖率",
+      "knowledgePoint": "预期部分分支",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "coverage.py 的 pragma: no branch 用于什么？",
+      "answer": "标记已知只会部分执行的分支，使其不再被报告为部分覆盖。",
+      "explanation": "它不是执行额外测试，也不证明该代码无缺陷。",
+      "example": "标记工具难以自动识别的特殊循环退出条件。",
+      "tags": [
+        "Python 测试覆盖率",
+        "预期部分分支"
+      ],
+      "evidence": "source",
+      "reference": "https://coverage.readthedocs.io/en/7.6.1/branch.html"
+    },
+    {
+      "id": "covpy-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 测试覆盖率",
+      "knowledgePoint": "合并运行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "coverage run --append 相对默认运行有什么作用？",
+      "answer": "将本次测量结果追加到现有覆盖数据，而不是从空数据开始。",
+      "explanation": "追加结果时要确保代码版本和数据来源适合合并。",
+      "example": "分别运行两组测试后生成联合报告。",
+      "tags": [
+        "Python 测试覆盖率",
+        "合并运行"
+      ],
+      "evidence": "source",
+      "reference": "https://coverage.readthedocs.io/en/7.6.1/cmd.html"
+    },
+    {
+      "id": "covpy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 测试覆盖率",
+      "knowledgePoint": "阈值退出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "coverage report --fail-under=90 在总覆盖率低于 90 时如何退出？",
+      "answer": "返回状态码 2。",
+      "explanation": "覆盖率通过阈值不等于测试已验证所有行为。",
+      "example": "在 CI 中按指定阈值检查覆盖率。",
+      "tags": [
+        "Python 测试覆盖率",
+        "阈值退出"
+      ],
+      "evidence": "source",
+      "reference": "https://coverage.readthedocs.io/en/7.6.1/cmd.html"
+    },
+    {
+      "id": "covpy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 测试覆盖率",
+      "knowledgePoint": "测量上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "coverage.py 的测量上下文可用来记录什么？",
+      "answer": "记录代码在哪种上下文中执行，便于按运行或测试等来源分析覆盖。",
+      "explanation": "上下文的具体生成方式取决于配置或 API。",
+      "example": "区分不同测试对代码行的覆盖。",
+      "tags": [
+        "Python 测试覆盖率",
+        "测量上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://coverage.readthedocs.io/en/7.6.1/contexts.html"
+    }
+  ]
+}

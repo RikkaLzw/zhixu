@@ -1,0 +1,193 @@
+{
+  "source": {
+    "id": "lora-adaptation",
+    "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+    "url": "https://arxiv.org/abs/2106.09685",
+    "type": "官方文档与标准",
+    "note": "根据所列资料自行编写并用简体中文整理，示例为自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "lora-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "LoRA基本思想",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LoRA 如何减少模型适配时的可训练参数？",
+      "answer": "它冻结预训练权重，并用可训练的低秩矩阵表示部分权重更新。",
+      "explanation": "目标层和秩等配置决定实际新增参数量。",
+      "example": "只训练插入到注意力投影层的低秩矩阵。",
+      "tags": [
+        "LoRA基本思想",
+        "大模型",
+        "LoRA",
+        "公开面经",
+        "旷视",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2106.09685",
+      "supportingReferences": [
+        {
+          "id": "company-megvii",
+          "title": "旷视公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E6%97%B7%E8%A7%86/%E3%80%900323%E3%80%91%E6%97%B7%E8%A7%86.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        },
+        {
+          "id": "company-tencent",
+          "title": "腾讯公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900307%E3%80%91%E8%85%BE%E8%AE%AFPCG%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "lora-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "低秩更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LoRA 中的低秩分解通常表示什么？",
+      "answer": "它用两个较小矩阵的乘积表示目标权重矩阵的更新量。",
+      "explanation": "原始权重和更新量在前向计算时共同作用。",
+      "example": "以 BA 表示某层权重的增量 ΔW。",
+      "tags": [
+        "低秩更新",
+        "大模型",
+        "LoRA"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2106.09685"
+    },
+    {
+      "id": "lora-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "LoRA秩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LoRA 的秩 r 对适配参数有什么影响？",
+      "answer": "在其他配置不变时，增大 r 会增加低秩矩阵的参数量及更新的表示能力上限。",
+      "explanation": "更大的秩不保证在所有任务上效果更好。",
+      "example": "比较相同目标层上 r=4 与 r=16 的训练资源。",
+      "tags": [
+        "LoRA秩",
+        "大模型",
+        "LoRA",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2106.09685",
+      "supportingReferences": [
+        {
+          "id": "company-baidu",
+          "title": "百度公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "lora-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "LoRA初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在原始 LoRA 配置中，为什么常把一个低秩矩阵初始化为零？",
+      "answer": "这样两个矩阵的乘积在训练开始时为零，初始更新不会改变预训练权重的输出。",
+      "explanation": "不同实现可能提供其他初始化方法。",
+      "example": "论文使用随机初始化的 A 与零初始化的 B。",
+      "tags": [
+        "LoRA初始化",
+        "大模型",
+        "LoRA",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2106.09685",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900315%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "lora-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "冻结权重资源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "冻结基座权重通常能减少哪些训练状态的开销？",
+      "answer": "通常不需要为这些冻结参数保存参数梯度和优化器状态。",
+      "explanation": "计算仍可能需要保留激活等其他数据，不能认为冻结后训练不占显存。",
+      "example": "只为低秩适配参数维护 Adam 优化器状态。",
+      "tags": [
+        "冻结权重资源",
+        "大模型",
+        "LoRA"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2106.09685"
+    },
+    {
+      "id": "lora-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "LoRA权重合并",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "在满足实现条件时，为什么合并 LoRA 更新可避免额外的线性分支推理计算？",
+      "answer": "可以把低秩更新加到基座权重中，再按合并后的权重执行常规前向计算。",
+      "explanation": "量化或需要按请求切换适配器时，是否适合合并取决于具体实现。",
+      "example": "部署固定适配器时预先合并该层权重。",
+      "tags": [
+        "LoRA权重合并",
+        "大模型",
+        "LoRA"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2106.09685"
+    },
+    {
+      "id": "lora-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "LoRA任务切换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多个任务的 LoRA 适配器为什么可以共享同一个基座模型？",
+      "answer": "各任务可保存各自的低秩更新，而共同使用未修改的预训练权重。",
+      "explanation": "适配器必须与所用基座模型及目标层配置兼容。",
+      "example": "为不同任务加载各自的小型适配权重。",
+      "tags": [
+        "LoRA任务切换",
+        "大模型",
+        "LoRA"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2106.09685"
+    }
+  ]
+}

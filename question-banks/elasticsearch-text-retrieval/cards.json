@@ -1,0 +1,268 @@
+{
+  "source": {
+    "id": "elasticsearch-text-retrieval",
+    "title": "Elasticsearch 8.17：全文检索与分析",
+    "url": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/query-dsl-match-query.html",
+    "type": "官方技术文档与规范",
+    "note": "依据逐题引用的固定版本文档或规范自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "eslex-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "字段类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 8.17 的 text 和 keyword 字段常分别用于什么？",
+      "answer": "text 通常用于分析后的全文检索；keyword 通常用于精确值筛选、排序或聚合。",
+      "explanation": "具体行为受映射、分析器和 normalizer 配置影响。",
+      "example": "日志正文使用 text，状态或主机名使用 keyword。",
+      "tags": [
+        "字段类型",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/text.html"
+    },
+    {
+      "id": "eslex-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "文本分析组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 自定义文本分析器通常由哪些步骤组成？",
+      "answer": "它可由字符过滤器、一个 tokenizer 和零个或多个 token filter 组成。",
+      "explanation": "字符过滤先于分词，token filter 再处理得到的词项。",
+      "example": "去除字符后切词，再把词项转成小写。",
+      "tags": [
+        "文本分析组成",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/analysis-custom-analyzer.html"
+    },
+    {
+      "id": "eslex-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "分析API",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 的 _analyze API 用于检查什么？",
+      "answer": "它对输入文本执行分析并返回生成的 token 等信息。",
+      "explanation": "可指定分析器或参考字段配置来诊断分词结果。",
+      "example": "检查查询词是否按预期被切分。",
+      "tags": [
+        "分析API",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/indices-analyze.html"
+    },
+    {
+      "id": "eslex-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "标准与空白分析器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 8.17 的 standard 与 whitespace 分析器对大小写的默认处理有什么区别？",
+      "answer": "standard 会将词项转为小写；whitespace 按空白切分且不自动转小写。",
+      "explanation": "具体的 token 边界也不同。",
+      "example": "比较两种分析器处理 Error Log 的结果。",
+      "tags": [
+        "标准与空白分析器",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/analysis-analyzers.html"
+    },
+    {
+      "id": "eslex-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "match与term",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 的 match 查询与 term 查询如何处理输入文本？",
+      "answer": "match 先分析查询文本；term 查找给定的精确词项，不对查询值执行全文分析。",
+      "explanation": "对 text 字段直接使用 term 可能因索引分析后的词项不同而查不到原文；normalizer 等配置也会影响结果。",
+      "example": "全文正文用 match，精确状态值可用 term。",
+      "tags": [
+        "match与term",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/query-dsl-match-query.html",
+      "supportingReferences": [
+        {
+          "id": "elasticsearch-term-817",
+          "title": "Elasticsearch 8.17：term 查询",
+          "url": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/query-dsl-term-query.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "eslex-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "match默认操作符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 8.17 的 match 查询对多个分析后词项默认使用 OR 还是 AND？",
+      "answer": "默认使用 OR；可以用 operator 参数改为 AND。",
+      "explanation": "分析器和其他匹配参数也会影响实际查询结果。",
+      "example": "多个词中任一词匹配即可成为候选。",
+      "tags": [
+        "match默认操作符",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/query-dsl-match-query.html"
+    },
+    {
+      "id": "eslex-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "零词项查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 8.17 的 match 查询分析后没有剩余 token 时，默认返回什么？",
+      "answer": "默认不匹配任何文档；zero_terms_query 可配置为 all 以匹配全部文档。",
+      "explanation": "停用词过滤等分析步骤可能产生零 token。",
+      "example": "查询全由停用词组成时检查结果。",
+      "tags": [
+        "零词项查询",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/query-dsl-match-query.html"
+    },
+    {
+      "id": "eslex-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "短语查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 的 match_phrase 查询主要如何使用查询文本？",
+      "answer": "它先分析文本，再构造关注词项相对位置的短语查询。",
+      "explanation": "slop 可调整允许的位置差异，默认值为 0。",
+      "example": "检索按预期相邻出现的两个词。",
+      "tags": [
+        "短语查询",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/query-dsl-match-query-phrase.html"
+    },
+    {
+      "id": "eslex-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "布尔过滤与评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在查询上下文中，Elasticsearch bool 查询的 must 与 filter 在评分上有什么区别？",
+      "answer": "must 子句参与相关性评分；filter 子句用于筛选，不贡献相关性分数。",
+      "explanation": "两者都可要求文档满足条件；如果外层将整个 bool 放在过滤上下文中，则整体不计算相关性分数。",
+      "example": "用 must 搜索正文，用 filter 限制时间范围。",
+      "tags": [
+        "布尔过滤与评分",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/query-dsl-bool-query.html"
+    },
+    {
+      "id": "eslex-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "布尔排除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch bool 查询中的 must_not 用于什么？",
+      "answer": "它排除匹配指定条件的文档。",
+      "explanation": "该子句在过滤上下文中执行，不贡献相关性分数。",
+      "example": "排除指定状态的文档。",
+      "tags": [
+        "布尔排除",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/query-dsl-bool-query.html"
+    },
+    {
+      "id": "eslex-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "should默认阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 8.17 的 bool 查询何时默认要求至少一个 should 子句匹配？",
+      "answer": "有 should 且没有 must 或 filter 子句时默认要求一个；否则默认要求零个。",
+      "explanation": "可显式设置 minimum_should_match。",
+      "example": "在已有过滤条件时不要假设 should 必须命中。",
+      "tags": [
+        "should默认阈值",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/query-dsl-bool-query.html"
+    },
+    {
+      "id": "eslex-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "多字段映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 的 multi-fields 可怎样同时支持全文检索和精确聚合？",
+      "answer": "同一个输入值可建立不同类型的子字段，例如 text 用于全文检索、keyword 用于聚合。",
+      "explanation": "两个子字段各有自己的映射和索引方式。",
+      "example": "名称字段提供 name 和 name.keyword。",
+      "tags": [
+        "多字段映射",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/multi-fields.html"
+    },
+    {
+      "id": "eslex-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索与文本分析",
+      "knowledgePoint": "BM25频率参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 的 BM25 参数 k1 主要调节什么？",
+      "answer": "它控制非线性的词频饱和程度。",
+      "explanation": "k1 的作用与文档长度归一化参数 b 不同。",
+      "example": "调整重复查询词对相关性分数的边际影响。",
+      "tags": [
+        "BM25频率参数",
+        "关键词检索与文本分析"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/index-modules-similarity.html"
+    }
+  ]
+}

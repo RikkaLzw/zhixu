@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "git-ignore-patterns-practice",
+    "title": "Git 2.53 文档：忽略规则与排查",
+    "url": "https://github.com/git/git/blob/v2.53.0/Documentation/gitignore.adoc",
+    "type": "官方文档或教材",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以注明版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "gitignore-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "无斜杠模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在仓库根目录的 .gitignore 中，*.log 通常能匹配子目录内未跟踪的日志文件吗？",
+      "answer": "能；没有目录分隔符的模式可以匹配该 .gitignore 所在目录及其下层中的名称。",
+      "explanation": "规则作用于该文件所在目录及其后代。",
+      "example": "nested/train.log 可以被匹配。",
+      "tags": [
+        "Git",
+        "无斜杠模式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/gitignore.adoc"
+    },
+    {
+      "id": "gitignore-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "根目录锚定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "根目录 .gitignore 中的 /build/ 与 build/ 在匹配位置上有什么区别？",
+      "answer": "/build/ 只匹配该 .gitignore 所在目录下的 build 目录；build/ 还可匹配下层同名目录。",
+      "explanation": "前导斜杠使匹配位置相对于当前 .gitignore 固定。",
+      "example": "/build/ 不匹配 nested/build/。",
+      "tags": [
+        "Git",
+        "根目录锚定"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/gitignore.adoc"
+    },
+    {
+      "id": "gitignore-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "目录模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 忽略模式末尾的 / 限定匹配什么？",
+      "answer": "它限定该模式匹配目录；匹配的目录内容也会被排除。",
+      "explanation": "不带末尾斜杠的模式也可能匹配普通文件。",
+      "example": "cache/ 匹配目录 cache。",
+      "tags": [
+        "Git",
+        "目录模式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/gitignore.adoc"
+    },
+    {
+      "id": "gitignore-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "通配符跨目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 忽略模式 logs/*.log 中的 * 能跨越路径分隔符匹配 logs/a/x.log 吗？",
+      "answer": "不能；单个 * 不匹配斜杠，logs/*.log 匹配 logs 下直接一层的名称。",
+      "explanation": "匹配范围以该 .gitignore 所在目录为基准。",
+      "example": "logs/a.log 可匹配，logs/a/b.log 不匹配。",
+      "tags": [
+        "Git",
+        "通配符跨目录"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/gitignore.adoc"
+    },
+    {
+      "id": "gitignore-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "递归通配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 忽略模式 logs/**/debug.txt 中的 **/ 有什么作用？",
+      "answer": "它可匹配零层或多层目录，例如 logs/debug.txt 与 logs/a/b/debug.txt。",
+      "explanation": "特殊的 **/ 可以包含零个或多个中间目录。",
+      "example": "logs/a/debug.txt 也可匹配。",
+      "tags": [
+        "Git",
+        "递归通配"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/gitignore.adoc"
+    },
+    {
+      "id": "gitignore-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "否定与父目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "根目录 .gitignore 先忽略 cache/，再写 !cache/keep.txt，能重新包含该文件吗？",
+      "answer": "不能；父目录已被排除时，Git 通常不会遍历其内容，需要先让父目录可被遍历。",
+      "explanation": "Git 通常不会继续枚举已排除目录的内容。",
+      "example": "先允许 cache/，再排除目录内其他项目。",
+      "tags": [
+        "Git",
+        "否定与父目录"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/gitignore.adoc"
+    },
+    {
+      "id": "gitignore-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "规则顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一层级的 Git 忽略规则有多个匹配时，通常由哪条决定结果？",
+      "answer": "同一优先级内最后一个匹配的模式决定结果，包括否定模式。",
+      "explanation": "不同来源和目录层级的规则还存在优先级。",
+      "example": "先写 *.log，后写 !keep.log 可放行后者。",
+      "tags": [
+        "Git",
+        "规则顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/gitignore.adoc"
+    },
+    {
+      "id": "gitignore-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "查看规则来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git check-ignore -v 路径 的常见用途是什么？",
+      "answer": "它显示使路径匹配的忽略规则及其来源和行号，便于排查。",
+      "explanation": "默认通常不报告已跟踪路径。",
+      "example": "检查临时文件被哪行规则忽略。",
+      "tags": [
+        "Git",
+        "查看规则来源"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/git-check-ignore.adoc"
+    },
+    {
+      "id": "gitignore-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "已跟踪路径排查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 git check-ignore --no-index 有助于排查已跟踪文件的忽略模式？",
+      "answer": "它在检查时不把索引中已跟踪的路径排除，可测试该路径会匹配哪些忽略规则。",
+      "explanation": "这是用于诊断的检查，不会改变索引。",
+      "example": "git check-ignore -v --no-index tracked.log。",
+      "tags": [
+        "Git",
+        "已跟踪路径排查"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/git-check-ignore.adoc"
+    },
+    {
+      "id": "gitignore-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "强制添加",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 中确需暂存一个被忽略的未跟踪文件时，可使用什么选项？",
+      "answer": "可使用 git add -f 显式强制添加该路径。",
+      "explanation": "该选项针对显式给出的被忽略路径。",
+      "example": "git add -f debug.log。",
+      "tags": [
+        "Git",
+        "强制添加"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/git-add.adoc"
+    },
+    {
+      "id": "gitignore-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 忽略规则",
+      "knowledgePoint": "仓库本地规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 的 .git/info/exclude 适合保存什么忽略规则？",
+      "answer": "适合保存只用于本地仓库、不需要随项目提交给其他协作者的忽略规则。",
+      "explanation": "可共享的项目规则通常保存在仓库内的 .gitignore。",
+      "example": "将个人编辑器的临时文件规则写入本地 exclude。",
+      "tags": [
+        "Git",
+        "仓库本地规则"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/git/git/blob/v2.53.0/Documentation/gitignore.adoc"
+    }
+  ]
+}

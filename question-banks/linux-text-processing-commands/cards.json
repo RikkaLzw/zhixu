@@ -1,0 +1,306 @@
+{
+  "source": {
+    "id": "linux-text-processing-commands",
+    "title": "POSIX 与 GNU 手册：文本处理常用命令",
+    "url": "https://man7.org/linux/man-pages/man1/awk.1p.html",
+    "type": "官方技术文档与系统手册",
+    "note": "依据题目所列版本文档与手册自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "textcli-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "awk输入字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "awk 中 $0、$1 和 NF 分别表示什么？",
+      "answer": "$0 是当前整条记录，$1 是第一个字段，NF 是当前记录的字段数。",
+      "explanation": "默认记录通常是一行；字段含义取决于字段分隔符。",
+      "example": "一行有三个字段时 NF 为 3。",
+      "tags": [
+        "Linux 文本处理命令",
+        "awk输入字段"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "textcli-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "awk字段分隔符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "awk -F: 中的 -F: 指定什么？",
+      "answer": "指定冒号作为输入字段分隔符。",
+      "explanation": "它影响后续记录被拆分为字段的方式。",
+      "example": "用冒号分隔一行中的各个字段。",
+      "tags": [
+        "Linux 文本处理命令",
+        "awk字段分隔符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "textcli-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "awk BEGIN END",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "awk 的 BEGIN 和 END 模式对应的动作分别何时执行？",
+      "answer": "BEGIN 在处理输入记录前执行；END 在输入处理结束后执行。",
+      "explanation": "一般记录处理规则在二者之间执行。",
+      "example": "BEGIN 设置表头，END 输出计数。",
+      "tags": [
+        "Linux 文本处理命令",
+        "awk BEGIN END"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "textcli-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "awk记录编号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "awk 的 NR 与 FNR 分别记录什么？",
+      "answer": "NR 是当前运行中累计读取的记录数；FNR 是当前输入文件中的记录数。",
+      "explanation": "处理多个文件时，FNR 在每个文件重新计数。",
+      "example": "第二个文件的第一条记录中 FNR 为 1。",
+      "tags": [
+        "Linux 文本处理命令",
+        "awk记录编号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/awk.1p.html"
+    },
+    {
+      "id": "textcli-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "sed自动输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU sed -n 与 p 命令配合有什么用途？",
+      "answer": "-n 关闭默认自动输出，p 显式打印选中的模式空间。",
+      "explanation": "没有 -n 时，显式 p 可能使同一行输出两次。",
+      "example": "sed -n 2p 只显式打印第二行。",
+      "tags": [
+        "Linux 文本处理命令",
+        "sed自动输出"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sed.1.html"
+    },
+    {
+      "id": "textcli-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "sed默认替换次数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在逐行处理的 GNU sed 中，s/old/new/ 和 s/old/new/g 对同一行的替换次数有什么区别？",
+      "answer": "前者只替换该行首次匹配，后者替换该行所有匹配。",
+      "explanation": "正则表达式及替换文本的转义会影响具体匹配结果。",
+      "example": "old old 分别变成 new old 或 new new。",
+      "tags": [
+        "Linux 文本处理命令",
+        "sed默认替换次数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sed.1.html",
+      "supportingReferences": [
+        {
+          "id": "posix-sed-2017",
+          "title": "POSIX.1-2017 sed：替换标记",
+          "url": "https://man7.org/linux/man-pages/man1/sed.1p.html",
+          "type": "POSIX 系统手册",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "textcli-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "sed地址范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU sed 的 2,4p 在每次读入单行的普通用法中选择哪些行？",
+      "answer": "选择从第 2 行到第 4 行，包含两个端点。",
+      "explanation": "与 -n 配合可避免其他行的自动输出。",
+      "example": "sed -n 2,4p 输出这三行。",
+      "tags": [
+        "Linux 文本处理命令",
+        "sed地址范围"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sed.1.html"
+    },
+    {
+      "id": "textcli-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "sed原文件修改",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU sed 的 -i 选项有什么作用？",
+      "answer": "它对输入文件执行原位编辑；指定后缀时可创建备份。",
+      "explanation": "修改前应确认命令和备份，-i 的具体行为可能随实现而异。",
+      "example": "sed -i.bak 对文件编辑并保留 .bak 备份。",
+      "tags": [
+        "Linux 文本处理命令",
+        "sed原文件修改"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sed.1.html"
+    },
+    {
+      "id": "textcli-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "cut字段选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU cut -d: -f1 的常见作用是什么？",
+      "answer": "按冒号分隔字段并输出第一个字段。",
+      "explanation": "默认字段分隔符为制表符；无分隔符行默认仍会输出。",
+      "example": "从 a:b:c 中取出 a。",
+      "tags": [
+        "Linux 文本处理命令",
+        "cut字段选择"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/cut.1.html"
+    },
+    {
+      "id": "textcli-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "cut无分隔行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU cut -d: -f1 遇到完全不含冒号的行，默认如何处理？",
+      "answer": "默认仍输出该行；加 -s 可以不输出无分隔符的行。",
+      "explanation": "该行为可能影响处理格式不一致的文本。",
+      "example": "输入单独的 abc 仍输出 abc。",
+      "tags": [
+        "Linux 文本处理命令",
+        "cut无分隔行"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/cut.1.html"
+    },
+    {
+      "id": "textcli-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "sort逆序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU sort -r 的作用是什么？",
+      "answer": "反转比较结果，使输出按相反顺序排列。",
+      "explanation": "它可与数值排序等其他比较选项组合。",
+      "example": "sort -nr 按数值从大到小排序。",
+      "tags": [
+        "Linux 文本处理命令",
+        "sort逆序"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sort.1.html"
+    },
+    {
+      "id": "textcli-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "sort指定字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU sort -t, -k2,2n 通常按什么排序？",
+      "answer": "以逗号为字段分隔符，按第二字段的数值排序。",
+      "explanation": "第二个 2 限定排序键终点为第二字段。",
+      "example": "a,10 与 b,2 排序后 b,2 在前。",
+      "tags": [
+        "Linux 文本处理命令",
+        "sort指定字段"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sort.1.html"
+    },
+    {
+      "id": "textcli-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "sort人类可读单位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU sort -h 主要用于比较什么样的数值？",
+      "answer": "用于比较带人类可读单位后缀的数值，如 2K 和 1G。",
+      "explanation": "单位格式与具体工具的输出应匹配。",
+      "example": "对包含 2K、1M、1G 的大小列排序。",
+      "tags": [
+        "Linux 文本处理命令",
+        "sort人类可读单位"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sort.1.html"
+    },
+    {
+      "id": "textcli-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "tr字符删除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tr -d SET 对标准输入做什么？",
+      "answer": "删除属于指定字符集合的字符，再将结果写到标准输出。",
+      "explanation": "tr 处理字符转换或删除，并非通用的子串替换工具。",
+      "example": "删除输入中的数字字符。",
+      "tags": [
+        "Linux 文本处理命令",
+        "tr字符删除"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tr.1.html"
+    },
+    {
+      "id": "textcli-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本处理命令",
+      "knowledgePoint": "grep只输出匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU grep -o 通常输出什么？",
+      "answer": "仅输出每个匹配到的非空部分，每个匹配部分单独一行。",
+      "explanation": "它不会像默认 grep 那样输出整条匹配行。",
+      "example": "从一行中输出匹配到的各个数字串。",
+      "tags": [
+        "Linux 文本处理命令",
+        "grep只输出匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    }
+  ]
+}

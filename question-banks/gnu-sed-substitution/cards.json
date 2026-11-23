@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "gnu-sed-substitution",
+    "title": "GNU sed 手册：过滤和替换实践",
+    "url": "https://man7.org/linux/man-pages/man1/sed.1.html",
+    "type": "官方文档与手册",
+    "note": "依据逐题链接自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sedops-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "sed 过滤与替换",
+      "knowledgePoint": "删除匹配行",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU sed 的 /pattern/d 常用于什么？",
+      "answer": "对匹配该正则表达式的记录删除模式空间，并开始处理下一记录。",
+      "explanation": "该命令在普通逐行处理时可过滤匹配行。",
+      "example": "sed '/^#/d' 删除以 # 开头的行。",
+      "tags": [
+        "sed 过滤与替换",
+        "删除匹配行"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sed.1.html"
+    },
+    {
+      "id": "sedops-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "sed 过滤与替换",
+      "knowledgePoint": "扩展正则",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU sed -E 对表达式语法有什么影响？",
+      "answer": "使用扩展正则表达式，而非默认的基本正则表达式。",
+      "explanation": "编写括号、加号等时，要按对应语法确认转义方式。",
+      "example": "sed -E 's/(ab)+/X/' 使用扩展正则分组。",
+      "tags": [
+        "sed 过滤与替换",
+        "扩展正则"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sed.1.html"
+    },
+    {
+      "id": "sedops-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "sed 过滤与替换",
+      "knowledgePoint": "替换匹配内容",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "sed 的 s/正则/替换/ 中，替换部分的未转义 & 代表什么？",
+      "answer": "代表本次正则表达式匹配到的整段文本。",
+      "explanation": "若要输出字面量 &，需要在替换部分转义。",
+      "example": "把 cat 换成 [cat] 可使用 s/cat/[&]/。",
+      "tags": [
+        "sed 过滤与替换",
+        "替换匹配内容"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sed.1.html"
+    },
+    {
+      "id": "sedops-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "sed 过滤与替换",
+      "knowledgePoint": "替换捕获组",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "sed 替换部分的 \\1 表示什么？",
+      "answer": "表示正则中第一个捕获子表达式匹配到的文本。",
+      "explanation": "捕获组语法取决于使用基本还是扩展正则。",
+      "example": "sed -E 's/(ab)c/\\1/' 可把 abc 改成 ab。",
+      "tags": [
+        "sed 过滤与替换",
+        "替换捕获组"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sed.1.html"
+    },
+    {
+      "id": "sedops-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "sed 过滤与替换",
+      "knowledgePoint": "替换分隔符",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "sed 的 s 命令为何有时使用 # 代替 / 作为分隔符？",
+      "answer": "可以选用其他合法分隔符，减少替换路径时对斜杠的转义。",
+      "explanation": "分隔符本身出现在表达式或替换文本中时仍需适当转义。",
+      "example": "s#/old/path#/new/path# 使用 # 分隔。",
+      "tags": [
+        "sed 过滤与替换",
+        "替换分隔符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sed.1p.html"
+    }
+  ]
+}

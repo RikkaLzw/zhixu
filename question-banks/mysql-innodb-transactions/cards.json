@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "mysql-innodb-transactions",
+    "title": "MySQL 8.4 官方文档：InnoDB 事务与锁",
+    "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+    "type": "官方技术文档与系统手册",
+    "note": "依据题目所列版本文档与手册自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "mysqltx-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "默认隔离级别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 8.4 的 InnoDB 默认事务隔离级别是什么？",
+      "answer": "默认是 REPEATABLE READ。",
+      "explanation": "具体会话可通过配置改变隔离级别。",
+      "example": "检查连接实际使用的事务隔离设置。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "默认隔离级别"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html"
+    },
+    {
+      "id": "mysqltx-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "可重复读快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 默认 REPEATABLE READ 中，同一事务的普通一致性读通常使用何时建立的快照？",
+      "answer": "通常使用事务内第一次一致性读建立的快照。",
+      "explanation": "该描述针对普通非锁定 SELECT；特定语句或显式指定快照有不同细节。",
+      "example": "同一事务执行两次普通 SELECT。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "可重复读快照"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html"
+    },
+    {
+      "id": "mysqltx-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "快照读与锁定读",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不应把 InnoDB REPEATABLE READ 的普通 SELECT 和 SELECT ... FOR UPDATE 当作读取完全相同的视图？",
+      "answer": "普通一致性读使用快照；锁定读处理可锁定的当前数据，两者看到的状态可能不同。",
+      "explanation": "事务内混合使用时应明确需要的并发语义。",
+      "example": "普通读取与更新同一范围的记录。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "快照读与锁定读"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html"
+    },
+    {
+      "id": "mysqltx-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "记录锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 的记录锁作用于什么对象？",
+      "answer": "它锁定索引记录，即使表没有用户显式创建的索引也会使用内部聚簇索引。",
+      "explanation": "锁定范围取决于语句和访问路径。",
+      "example": "锁住某个已存在主键对应的索引记录。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "记录锁"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html"
+    },
+    {
+      "id": "mysqltx-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "间隙锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 的 gap lock 主要限制什么？",
+      "answer": "它限制其他事务向被保护的索引间隙插入记录。",
+      "explanation": "间隙可以位于相邻记录之间，也可以位于首尾。",
+      "example": "阻止在索引值 10 和 20 之间插入新值。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "间隙锁"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html"
+    },
+    {
+      "id": "mysqltx-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "临键锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 的 next-key lock 由哪两部分组成？",
+      "answer": "它结合索引记录锁和该记录之前间隙上的间隙锁。",
+      "explanation": "用于范围扫描时，具体锁定范围依隔离级别和访问路径而定。",
+      "example": "锁住索引记录 20 及其前面的间隙。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "临键锁"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html"
+    },
+    {
+      "id": "mysqltx-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "间隙锁共存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 中两个事务的 gap lock 一定互相冲突吗？",
+      "answer": "不一定；间隙锁可共存，其主要作用是阻止向间隙插入。",
+      "explanation": "间隙锁与记录上的共享锁、排他锁的冲突规则不同。",
+      "example": "两个事务都保护同一索引间隙。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "间隙锁共存"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html"
+    },
+    {
+      "id": "mysqltx-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "插入意向锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 的插入意向锁允许不同事务在同一间隙的不冲突位置插入吗？",
+      "answer": "允许；如果插入位置互不冲突，这些插入意向锁不必彼此等待。",
+      "explanation": "其他已有的间隙锁等条件仍可能阻塞插入。",
+      "example": "索引中相邻值为 4 和 7，两事务分别插入 5 和 6。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "插入意向锁"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html"
+    },
+    {
+      "id": "mysqltx-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "唯一索引精确查找",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 使用完整唯一索引条件锁定已存在的唯一行时，通常需要给该行前的间隙加锁吗？",
+      "answer": "通常不需要；针对找到的唯一行，一般只需记录锁而非该记录前的间隙锁。",
+      "explanation": "部分唯一复合索引条件或未找到记录时，不能直接套用此结论。",
+      "example": "按存在的主键精确查找并锁定记录。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "唯一索引精确查找"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-locking.html"
+    },
+    {
+      "id": "mysqltx-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "读已提交与间隙锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 的 READ COMMITTED 是否完全不使用间隙锁？",
+      "answer": "不是；一般搜索与索引扫描不使用间隙锁，但外键和重复键检查仍可能使用。",
+      "explanation": "更低的间隙锁使用量通常有助于并发，也可能出现幻读。",
+      "example": "插入时检查唯一约束。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "读已提交与间隙锁"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html"
+    },
+    {
+      "id": "mysqltx-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "历史版本重建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 如何利用 undo log 支持一致性读？",
+      "answer": "它可利用 undo 信息重建读取所需的较早行版本。",
+      "explanation": "undo 信息也用于事务回滚，但两种用途不同。",
+      "example": "查询快照早于某次已提交更新时重建旧版本。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "历史版本重建"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-multi-versioning.html"
+    },
+    {
+      "id": "mysqltx-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 事务与锁",
+      "knowledgePoint": "锁定扫描范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 的 UPDATE 或锁定读没有合适索引而扫描大量记录时，可能带来什么锁影响？",
+      "answer": "扫描可能锁定大量索引记录，降低其他事务的并发能力。",
+      "explanation": "具体锁及释放时机取决于隔离级别和执行路径。",
+      "example": "无适用索引的更新需要扫描大量行。",
+      "tags": [
+        "MySQL InnoDB 事务与锁",
+        "锁定扫描范围"
+      ],
+      "evidence": "application",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-locks-set.html"
+    }
+  ]
+}

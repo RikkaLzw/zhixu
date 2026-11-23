@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "python-futures-executors",
+    "title": "Python 3.12：concurrent.futures 线程池与任务",
+    "url": "https://docs.python.org/3.12/library/concurrent.futures.html",
+    "type": "官方技术文档与数据集资料",
+    "note": "依据逐题引用的版本文档或数据集官方说明自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "futurespy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "提交任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.12 的 Executor.submit 返回什么？",
+      "answer": "它安排可调用对象执行并返回一个 Future，供查询状态或获取结果。",
+      "explanation": "submit 返回时任务可能尚未开始或尚未完成。",
+      "example": "在线程池提交一次文件解析任务。",
+      "tags": [
+        "Python 线程池与 Future",
+        "提交任务"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Executor.submit"
+    },
+    {
+      "id": "futurespy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "结果与异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对执行失败的 concurrent.futures.Future，result() 和 exception() 分别做什么？",
+      "answer": "result() 重新抛出任务异常；exception() 返回该异常对象。",
+      "explanation": "任务被取消或等待超时也有对应的异常行为。",
+      "example": "统一收集线程池任务失败的原因。",
+      "tags": [
+        "Python 线程池与 Future",
+        "结果与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Future.exception"
+    },
+    {
+      "id": "futurespy-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "超时与取消",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "concurrent.futures.Future.result(timeout=...) 等待超时后，任务会自动取消吗？",
+      "answer": "不会；该调用抛出 TimeoutError，任务仍可能继续执行。",
+      "explanation": "若需要取消，应另行调用 cancel 并检查是否成功。",
+      "example": "等待远程读取超时后检查 Future 状态。",
+      "tags": [
+        "Python 线程池与 Future",
+        "超时与取消"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Future.result"
+    },
+    {
+      "id": "futurespy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "完成状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "concurrent.futures.Future.done() 为 True 是否一定表示任务成功？",
+      "answer": "不一定；任务执行结束或被取消时都算完成。",
+      "explanation": "执行结束也可能意味着任务抛出了异常。",
+      "example": "用 result 或 exception 进一步检查结果。",
+      "tags": [
+        "Python 线程池与 Future",
+        "完成状态"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Future.done"
+    },
+    {
+      "id": "futurespy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "完成回调",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "给已完成的 concurrent.futures.Future 添加 done callback 时会怎样？",
+      "answer": "回调会立即执行，并接收该 Future 作为唯一参数。",
+      "explanation": "未完成任务的回调在任务完成或取消时执行。",
+      "example": "为已结束的任务添加结果处理函数。",
+      "tags": [
+        "Python 线程池与 Future",
+        "完成回调"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Future.add_done_callback"
+    },
+    {
+      "id": "futurespy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "首次异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "concurrent.futures.wait 设置 FIRST_EXCEPTION，但所有任务都没有异常时何时返回？",
+      "answer": "它等同于 ALL_COMPLETED：等所有 Future 完成或取消后返回。",
+      "explanation": "如果有任务以异常结束，则可以更早返回。",
+      "example": "并发任务都成功时等待全部结果。",
+      "tags": [
+        "Python 线程池与 Future",
+        "首次异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.FIRST_EXCEPTION"
+    },
+    {
+      "id": "futurespy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "重复 Future",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "concurrent.futures.as_completed 收到同一个 Future 多次时，会重复产出吗？",
+      "answer": "不会；重复的 Future 只产出一次。",
+      "explanation": "迭代器产出的是已完成或已取消的 Future，而不是直接产出结果值。",
+      "example": "把重复任务引用传给 as_completed。",
+      "tags": [
+        "Python 线程池与 Future",
+        "重复 Future"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.as_completed"
+    },
+    {
+      "id": "futurespy-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "map 收集输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.12 的 Executor.map 对输入迭代器是惰性收集吗？",
+      "answer": "不是；它会立即迭代并提交输入，而不是等消费结果时才逐项提交。",
+      "explanation": "超长或无限迭代器需要采用有界提交等其他方式。",
+      "example": "处理大文件列表时控制待提交任务数量。",
+      "tags": [
+        "Python 线程池与 Future",
+        "map 收集输入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Executor.map"
+    },
+    {
+      "id": "futurespy-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "map 结果顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Executor.map 的成功结果按输入顺序还是完成顺序迭代？",
+      "answer": "按输入顺序迭代；后提交的任务即使先完成，也可能等待前面的结果。",
+      "explanation": "如需按完成顺序处理，可使用 submit 与 as_completed。",
+      "example": "第一个慢任务会推迟取得第二个任务的 map 结果。",
+      "tags": [
+        "Python 线程池与 Future",
+        "map 结果顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Executor.map"
+    },
+    {
+      "id": "futurespy-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "进程任务分块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.12 的 Executor.map 中 chunksize 对进程池与线程池有什么区别？",
+      "answer": "进程池用它决定提交的任务块大小；线程池忽略该参数。",
+      "explanation": "大块可能减少进程池任务调度开销，但具体效果依工作负载而异。",
+      "example": "对长序列使用进程池时调整 chunksize。",
+      "tags": [
+        "Python 线程池与 Future",
+        "进程任务分块"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Executor.map"
+    },
+    {
+      "id": "futurespy-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "关闭并取消",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Executor.shutdown(cancel_futures=True) 会取消哪些任务？",
+      "answer": "它取消尚未开始运行的待处理 Future，不会取消已运行或已完成的任务。",
+      "explanation": "wait 参数另行决定是否等待已开始的任务结束。",
+      "example": "关闭线程池时取消队列中未开始的任务。",
+      "tags": [
+        "Python 线程池与 Future",
+        "关闭并取消"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Executor.shutdown"
+    },
+    {
+      "id": "futurespy-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "上下文退出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 with 管理 Executor 时，退出代码块通常会等待已提交任务吗？",
+      "answer": "会；它执行与 shutdown(wait=True) 相当的资源清理。",
+      "explanation": "如果任务长期阻塞，退出上下文也可能长时间等待。",
+      "example": "在线程池代码块结束时等待任务清理。",
+      "tags": [
+        "Python 线程池与 Future",
+        "上下文退出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#concurrent.futures.Executor.shutdown"
+    },
+    {
+      "id": "futurespy-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 线程池与 Future",
+      "knowledgePoint": "主模块可导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.12 的 ProcessPoolExecutor 为什么不适合直接依赖交互式解释器中的 __main__？",
+      "answer": "工作进程需要能导入主模块；交互式解释器中的主模块通常无法满足该要求。",
+      "explanation": "函数与参数还需满足进程池的序列化要求。",
+      "example": "把进程池任务定义在可导入的模块中。",
+      "tags": [
+        "Python 线程池与 Future",
+        "主模块可导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/concurrent.futures.html#processpoolexecutor"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "linux-acl-permission-practice",
+    "title": "Linux 手册：访问控制列表",
+    "url": "https://man7.org/linux/man-pages/man5/acl.5.html",
+    "type": "固定版本论文、标准或官方文档",
+    "note": "根据逐题引用的资料自行整理，示例自编；行为以指定版本与前提为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "linuxacl-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux ACL 权限",
+      "knowledgePoint": "作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 文件访问 ACL 相比传统所有者、组和其他用户权限，增加了什么能力？",
+      "answer": "可为额外的指定用户或组配置访问权限。",
+      "explanation": "实际访问仍需按 ACL 检查顺序和掩码决定。",
+      "example": "为某个特定用户授予文件读取权限。",
+      "tags": [
+        "Linux ACL 权限",
+        "作用"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/acl.5.html"
+    },
+    {
+      "id": "linuxacl-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux ACL 权限",
+      "knowledgePoint": "掩码范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux ACL 的 mask 项限制哪些条目的有效权限？",
+      "answer": "限制命名用户、所属组及命名组条目的最大有效权限。",
+      "explanation": "文件所有者项和 other 项不受该 mask 直接限制。",
+      "example": "指定用户条目为 rwx 但 mask 为 r-- 时有效权限受限。",
+      "tags": [
+        "Linux ACL 权限",
+        "掩码范围"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/acl.5.html"
+    },
+    {
+      "id": "linuxacl-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux ACL 权限",
+      "knowledgePoint": "权限对应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "文件存在 ACL mask 时，ls 显示的组权限位与 ACL 中哪个条目对应？",
+      "answer": "与 mask 项对应；没有 mask 时才与所属组权限项对应。",
+      "explanation": "修改对应模式位也会影响相关 ACL 条目。",
+      "example": "看到组权限变化时同时检查 ACL 掩码。",
+      "tags": [
+        "Linux ACL 权限",
+        "权限对应"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/acl.5.html"
+    },
+    {
+      "id": "linuxacl-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux ACL 权限",
+      "knowledgePoint": "查看权限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux getfacl 怎样显示 ACL 条目被 mask 限制后的有效权限？",
+      "answer": "在受限制的条目旁可显示 effective 注释。",
+      "explanation": "默认显示策略还受输出类型和选项影响。",
+      "example": "查看命名用户权限实际被限制为哪些位。",
+      "tags": [
+        "Linux ACL 权限",
+        "查看权限"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/getfacl.1.html"
+    },
+    {
+      "id": "linuxacl-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux ACL 权限",
+      "knowledgePoint": "修改与移除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux setfacl 的 -m 与 -x 分别用于什么？",
+      "answer": "-m 修改或添加指定 ACL 项；-x 移除指定 ACL 项。",
+      "explanation": "修改权限时还要考虑 mask 可能被重新计算。",
+      "example": "添加命名用户项，之后按需移除。",
+      "tags": [
+        "Linux ACL 权限",
+        "修改与移除"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/setfacl.1.html"
+    },
+    {
+      "id": "linuxacl-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux ACL 权限",
+      "knowledgePoint": "掩码重算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux setfacl 默认修改 ACL 时通常怎样处理 mask？",
+      "answer": "默认重新计算 mask，除非显式提供 mask；-n 可阻止重算。",
+      "explanation": "重算会根据所属组及命名用户、组的权限求并集。",
+      "example": "限制 mask 时显式指定期望值。",
+      "tags": [
+        "Linux ACL 权限",
+        "掩码重算"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/setfacl.1.html"
+    },
+    {
+      "id": "linuxacl-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux ACL 权限",
+      "knowledgePoint": "删除扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux setfacl -b 会删除文件所有的权限条目吗？",
+      "answer": "不会；它删除扩展 ACL 项，保留所有者、所属组和其他用户的基础项。",
+      "explanation": "删除默认 ACL 使用单独的 -k 选项。",
+      "example": "清理额外用户和组授权。",
+      "tags": [
+        "Linux ACL 权限",
+        "删除扩展"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/setfacl.1.html"
+    }
+  ]
+}

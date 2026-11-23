@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "contingency-statistical-tests",
+    "title": "SciPy 1.15.3：列联表与统计检验",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.chi2_contingency.html",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的官方文档或论文自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "contingency-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "列联表数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "统计检验中的二维列联表通常记录什么？",
+      "answer": "记录两个分类变量各取值组合对应的观测频数。",
+      "explanation": "频数与类别比例或连续变量原始值不是同一种输入。",
+      "example": "按检测结果和真实类别统计样本个数。",
+      "tags": [
+        "列联表统计检验",
+        "列联表数据"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.chi2_contingency.html"
+    },
+    {
+      "id": "contingency-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "独立性原假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "列联表的卡方独立性检验通常以什么为原假设？",
+      "answer": "原假设是所考察的两个分类变量相互独立。",
+      "explanation": "拒绝原假设不能单独证明因果关系。",
+      "example": "检验告警类型与环境类别是否有关联。",
+      "tags": [
+        "列联表统计检验",
+        "独立性原假设"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.chi2_contingency.html"
+    },
+    {
+      "id": "contingency-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "期望频数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二维列联表在独立性假设下如何计算某格的期望频数？",
+      "answer": "将该格的行合计乘以列合计，再除以总频数。",
+      "explanation": "检验把期望频数与观测频数进行比较。",
+      "example": "用总体样本数和边际合计计算预期计数。",
+      "tags": [
+        "列联表统计检验",
+        "期望频数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.chi2_contingency.html"
+    },
+    {
+      "id": "contingency-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "自由度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通 r 行 c 列列联表卡方独立性检验的自由度是多少？",
+      "answer": "通常为 (r−1)(c−1)。",
+      "explanation": "这适用于标准二维列联表的独立性检验。",
+      "example": "2×3 表的自由度为 2。",
+      "tags": [
+        "列联表统计检验",
+        "自由度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.chi2_contingency.html"
+    },
+    {
+      "id": "contingency-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "连续性校正",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 chi2_contingency 默认何时应用 Yates 连续性校正？",
+      "answer": "默认 correction=True，且自由度为 1 时应用该校正。",
+      "explanation": "可显式设置 correction=False；比较结果时需记录此选项。",
+      "example": "比较 2×2 表校正前后的 p 值。",
+      "tags": [
+        "列联表统计检验",
+        "连续性校正"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.chi2_contingency.html"
+    },
+    {
+      "id": "contingency-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "Fisher原假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 2×2 表，SciPy 默认 Fisher 精确检验的原假设和条件是什么？",
+      "answer": "原假设为总体优势比等于 1，并以观测表的行列边际和为条件。",
+      "explanation": "其 p 值依赖所选备择假设和检验定义。",
+      "example": "分析两个二分类变量在固定边际下的关联。",
+      "tags": [
+        "列联表统计检验",
+        "Fisher原假设"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.fisher_exact.html"
+    },
+    {
+      "id": "contingency-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "Fisher备择方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy fisher_exact 对 2×2 表的 less 与 greater 分别对应什么备择假设？",
+      "answer": "less 对应总体优势比小于 1，greater 对应总体优势比大于 1。",
+      "explanation": "行列顺序会影响优势比方向，应先确定表格编码。",
+      "example": "先定义行列含义再选择单侧检验。",
+      "tags": [
+        "列联表统计检验",
+        "Fisher备择方向"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.fisher_exact.html"
+    },
+    {
+      "id": "contingency-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "样本优势比",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "2×2 表 [[a,b],[c,d]] 的样本优势比通常如何计算？",
+      "answer": "在分母非零时计算 ad/(bc)。",
+      "explanation": "优势比不等同于概率比，也不自动说明因果关系。",
+      "example": "在比较两组二分类结果时报告样本优势比。",
+      "tags": [
+        "列联表统计检验",
+        "样本优势比"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.contingency.odds_ratio.html"
+    },
+    {
+      "id": "contingency-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "统计量口径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 fisher_exact 对 2×2 表在默认方法和重采样方法下，statistic 分别是什么？",
+      "answer": "默认是样本优势比；指定重采样方法时是固定边际独立性原假设下观测表的概率质量。",
+      "explanation": "两种 statistic 的含义不同，不能直接比较。",
+      "example": "对照 odds_ratio(..., kind=\"sample\")。",
+      "tags": [
+        "列联表统计检验",
+        "统计量口径"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.fisher_exact.html"
+    },
+    {
+      "id": "contingency-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "列联表统计检验",
+      "knowledgePoint": "条件优势比",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 contingency.odds_ratio 默认使用哪种优势比估计？",
+      "answer": "默认 kind=\"conditional\"，使用条件最大似然估计。",
+      "explanation": "可选 kind=\"sample\" 计算样本优势比；两者不一定相等。",
+      "example": "报告估计值时同时记录 kind。",
+      "tags": [
+        "列联表统计检验",
+        "条件优势比"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.contingency.odds_ratio.html"
+    }
+  ]
+}

@@ -1,0 +1,335 @@
+{
+  "source": {
+    "id": "misp-threat-intelligence-format",
+    "title": "MISP core format draft-20：威胁情报数据结构",
+    "url": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt",
+    "type": "研究综述、互联网草案或官方文档",
+    "note": "依据固定版本 MISP core draft-20 与 galaxy draft-08 自行整理；截至 2026-11-21 两份 Internet-Draft 均已过期，使用时应核对最新规范及实例版本，示例为自编。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "mispfmt-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "事件用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 中，Event 的主要作用是什么？",
+      "answer": "它组织一组相关指标、属性及元数据，以表达一个事件或分析上下文。",
+      "explanation": "事件可以来自安全事件、分析报告等不同来源。",
+      "example": "把一组相关攻击指标组织在一个事件中。",
+      "tags": [
+        "事件用途",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "属性三元组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 中，Attribute 的 category、type 和 value 如何配合？",
+      "answer": "category 和 type 说明属性的语义与上下文，value 保存该类型对应的具体值。",
+      "explanation": "不同类别和类型有规定的有效组合。",
+      "example": "用域名类型和对应字符串描述一个指标。",
+      "tags": [
+        "属性三元组",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "跨实例标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 中，事件的 uuid 与 id 在跨实例使用上有什么区别？",
+      "answer": "uuid 用于标识同一事件并在更新或转移时保留；id 是特定实例内的人类可读标识。",
+      "explanation": "本地 id 不应被当作跨实例的稳定标识。",
+      "example": "同步同一事件到另一套 MISP 实例。",
+      "tags": [
+        "跨实例标识",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "事件日期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 的事件 date 表示什么？",
+      "answer": "它是事件发生的参考日期，使用 YYYY-MM-DD 格式，可能早于记录创建时间。",
+      "explanation": "日期与最近修改时间是不同字段。",
+      "example": "历史攻击活动在事后被录入情报平台。",
+      "tags": [
+        "事件日期",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-005",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "修改与发布时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 的事件 timestamp 与 publish_timestamp 分别表示什么？",
+      "answer": "timestamp 表示事件或其属性创建、最近编辑的参考时间；publish_timestamp 表示事件发布的参考时间。",
+      "explanation": "两者都以 Unix 秒数表示，但语义不同。",
+      "example": "事件修改后再次发布。",
+      "tags": [
+        "修改与发布时间",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "初次发布时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 的 first_publication 在事件再次发布时如何处理？",
+      "answer": "它记录原始创建者首次发布时间，初次发布后不应更新。",
+      "explanation": "未设置过时使用 0。",
+      "example": "事件补充指标并再次发布后保留首次发布时间。",
+      "tags": [
+        "初次发布时间",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "未发布状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 中事件 published 为 false 时，publish_timestamp 一定为 0 吗？",
+      "answer": "不一定；若事件以前发布过，该字段可保留上一次发布时间，只有从未发布时为 0。",
+      "explanation": "发布状态与历史发布时间需一起解读。",
+      "example": "已发布事件修改后重新处于未发布状态。",
+      "tags": [
+        "未发布状态",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "可用于检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 的属性 to_ids 表示什么？",
+      "answer": "它表示该属性是否意图用于自动化检测、日志分析或过滤等操作。",
+      "explanation": "该标记不单独证明指标准确或恶意。",
+      "example": "一个域名属性被标记为可用于检测。",
+      "tags": [
+        "可用于检测",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "属性分发继承",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 中属性 distribution 为 \"5\" 表示什么？",
+      "answer": "表示该属性继承所属事件的分发设置。",
+      "explanation": "事件与属性的分发规则需要按各自字段判断。",
+      "example": "事件更新共享范围时，继承设置的属性随事件分发。",
+      "tags": [
+        "属性分发继承",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "撤销属性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 中属性 deleted 为 true 表示什么？",
+      "answer": "该属性已被撤销，不再作为可操作指标，保留它是为了向其他实例传达撤销。",
+      "explanation": "消费同步数据时应处理撤销状态。",
+      "example": "接收方停止继续使用撤销的指标。",
+      "tags": [
+        "撤销属性",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "指标观察时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 的属性 first_seen 和 last_seen 表示什么？",
+      "answer": "分别表示属性首次和最近一次被观察到的参考时间。",
+      "explanation": "它们是可选的 ISO 8601 时间，与修改时间的含义不同。",
+      "example": "记录一个地址首次和最近被观察的时间。",
+      "tags": [
+        "指标观察时间",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "对象与属性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 中 Object 与单个 Attribute 有什么关系？",
+      "answer": "Object 将一组属性结合成具有上下文的较复杂结构。",
+      "explanation": "对象依据模板定义结构，并属于某个事件。",
+      "example": "把文件名和哈希等相关属性组织成文件对象。",
+      "tags": [
+        "对象与属性",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "对象模板版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 的 template_uuid 与 template_version 一起用于什么？",
+      "answer": "它们共同关联创建对象时使用的模板类型及其版本。",
+      "explanation": "读取对象时要考虑具体模板版本。",
+      "example": "区分同一对象模板的不同版本。",
+      "tags": [
+        "对象模板版本",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "对象引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 的 ObjectReference 用于表示什么？",
+      "answer": "它表达一个 Object 与另一个 Object 或 Attribute 的逻辑关系，并带关系类型。",
+      "explanation": "引用本身也有独立标识与撤销状态。",
+      "example": "文件对象通过 derived-from 关联另一对象。",
+      "tags": [
+        "对象引用",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-015",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "标签导出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 的 Tag 中 exportable 标志表示什么？",
+      "answer": "它表示该标签保留在本地还是可以导出到其他 MISP 实例。",
+      "explanation": "标签也可能使用约定的分类词汇。",
+      "example": "本地分析标签设置为不可导出。",
+      "tags": [
+        "标签导出",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-016",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "sighting类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP core draft-20 中 sighting 的类型 0 与类型 1 分别表示什么？",
+      "answer": "0 表示属性被观察到；1 表示属性被观察到并被确认是误报。",
+      "explanation": "sighting 还可带来源、时间和观察组织。",
+      "example": "记录某指标命中后确认是误报。",
+      "tags": [
+        "sighting类型",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-core.txt"
+    },
+    {
+      "id": "mispfmt-017",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 情报交换",
+      "knowledgePoint": "Galaxy用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP galaxy format draft-08 的 galaxy 和 cluster 可用于什么？",
+      "answer": "它们提供可附着于事件或属性的分类和背景信息，例如恶意软件或威胁组织集合。",
+      "explanation": "集合中的标记仍需结合具体证据判断。",
+      "example": "为事件附加威胁组织背景标签。",
+      "tags": [
+        "Galaxy用途",
+        "MISP 情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/MISP/misp-standard.org/blob/7b43c10be927adc84c1b55e1746b617b12bcc616/rfc/misp-standard-galaxy-format.txt"
+    }
+  ]
+}

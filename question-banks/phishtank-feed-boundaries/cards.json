@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "phishtank-feed-boundaries",
+    "title": "PhishTank 开发者文档：钓鱼数据与时间",
+    "url": "https://phishtank.org/developer_info.php",
+    "type": "官方资料与技术文档",
+    "note": "依据逐题引用的官方资料自行整理；示例为自编，在线资料查看于 2026-11-21。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "phishfeed-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "钓鱼情报数据",
+      "knowledgePoint": "验证状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishTank 提供的 online-valid 数据文件中 verified 和 online 字段表示什么？",
+      "answer": "verified 表示社区已验证该钓鱼记录；online 表示该网址在线且可用。",
+      "explanation": "这两个字段描述不同状态。",
+      "example": "某 URL 被验证为钓鱼，但未来可能下线。",
+      "tags": [
+        "钓鱼情报数据",
+        "验证状态"
+      ],
+      "evidence": "source",
+      "reference": "https://phishtank.org/developer_info.php"
+    },
+    {
+      "id": "phishfeed-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "钓鱼情报数据",
+      "knowledgePoint": "文件筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishTank 的 online-valid 下载文件能否直接代表全部历史钓鱼记录？",
+      "answer": "不能；该文件只提供已验证且在线的记录。",
+      "explanation": "被上报、验证且仍在线的筛选条件会影响样本分布和历史评估。",
+      "example": "研究已经下线的网址时不能仅依赖此文件。",
+      "tags": [
+        "钓鱼情报数据",
+        "文件筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://phishtank.org/developer_info.php"
+    },
+    {
+      "id": "phishfeed-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "钓鱼情报数据",
+      "knowledgePoint": "报告与验证时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishTank 的 submission_time 与 verification_time 分别记录什么？",
+      "answer": "前者是提交报告的时间；后者是社区验证记录的时间。",
+      "explanation": "二者不一定相同，也不等同于攻击首次发生的时间。",
+      "example": "比较上报与验证之间的时间间隔。",
+      "tags": [
+        "钓鱼情报数据",
+        "报告与验证时间"
+      ],
+      "evidence": "source",
+      "reference": "https://phishtank.org/developer_info.php"
+    },
+    {
+      "id": "phishfeed-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼情报数据",
+      "knowledgePoint": "目标字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishTank 的 target 字段表示什么，是否保证总有值？",
+      "answer": "它表示被冒充的公司或品牌；已知时才有相应信息。",
+      "explanation": "缺失 target 不表示该 URL 已被证明无害。",
+      "example": "被仿冒品牌未知时保留未知状态。",
+      "tags": [
+        "钓鱼情报数据",
+        "目标字段"
+      ],
+      "evidence": "source",
+      "reference": "https://phishtank.org/developer_info.php"
+    },
+    {
+      "id": "phishfeed-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "钓鱼情报数据",
+      "knowledgePoint": "更新时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 PhishTank 于 2026-11-21 的开发者文档，online-valid 文件多久更新一次？",
+      "answer": "文档说明文件按小时更新。",
+      "explanation": "实际可获得性和接口政策可能变化，应记录下载时间。",
+      "example": "比较模型效果时保留所用文件的时间。",
+      "tags": [
+        "钓鱼情报数据",
+        "更新时间"
+      ],
+      "evidence": "source",
+      "reference": "https://phishtank.org/developer_info.php"
+    }
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "source": {
+    "id": "browser-origin-cors-cookies",
+    "title": "MDN：同源策略、CORS 与 Cookie",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy",
+    "type": "官方技术文档与协议标准",
+    "note": "依据逐题引用的官方文档或协议标准自行整理；示例自编，版本和前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "weborigin-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "同源判断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "浏览器判断两个普通 HTTP(S) URL 是否同源，主要比较什么？",
+      "answer": "比较协议、主机和端口；三者相同才同源。",
+      "explanation": "路径不同本身不会改变源；省略端口时按协议默认端口判断。",
+      "example": "https://a.example/x 与 https://a.example/y 同源。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "同源判断"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy"
+    },
+    {
+      "id": "weborigin-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "跨源写入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "浏览器同源策略会阻止所有向其他源发送的请求吗？",
+      "answer": "不会；链接跳转、表单提交等跨源写入通常可以发生。",
+      "explanation": "能发送请求不等于脚本可以读取跨源响应。",
+      "example": "页面可以向另一站点提交表单。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "跨源写入"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy"
+    },
+    {
+      "id": "weborigin-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "CORS 目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "浏览器中的 CORS 主要通过什么机制控制跨源响应共享？",
+      "answer": "服务端通过 HTTP 响应头声明允许的来源等条件，浏览器据此决定是否向脚本暴露响应。",
+      "explanation": "CORS 规则由浏览器执行，不能替代服务端的身份认证和授权。",
+      "example": "API 允许指定前端源读取响应。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "CORS 目的"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+    },
+    {
+      "id": "weborigin-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "无预检请求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "跨源请求不触发 CORS 预检时，响应是否一定可被浏览器脚本读取？",
+      "answer": "不一定；响应仍需满足适用的 CORS 检查。",
+      "explanation": "部分符合简单请求条件的请求可先发送，但响应共享仍需服务端许可。",
+      "example": "跨源 GET 的响应缺少允许来源时脚本可能读不到。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "无预检请求"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+    },
+    {
+      "id": "weborigin-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "预检方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "浏览器在需要 CORS 预检时通常先发出哪种 HTTP 请求？",
+      "answer": "先发送 OPTIONS 请求，询问目标服务器是否允许后续请求。",
+      "explanation": "预检不是实际业务请求。",
+      "example": "跨源 PUT 带自定义请求头时可能先发送 OPTIONS。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "预检方法"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request"
+    },
+    {
+      "id": "weborigin-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "预检请求头",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CORS 预检中的 Access-Control-Request-Method 与 Access-Control-Request-Headers 分别说明什么？",
+      "answer": "前者说明实际请求拟使用的方法；后者列出拟使用的非简单请求头。",
+      "explanation": "服务器可据此返回允许的方法和请求头。",
+      "example": "预检声明将使用 PUT 和 X-Token。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "预检请求头"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request"
+    },
+    {
+      "id": "weborigin-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "预检响应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CORS 预检响应中的 Access-Control-Allow-Methods 与 Access-Control-Allow-Headers 分别允许什么？",
+      "answer": "前者列出允许的方法；后者列出允许用于实际请求的请求头。",
+      "explanation": "浏览器仍会检查来源及其他适用条件。",
+      "example": "预检响应允许 PUT 和 X-Token。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "预检响应"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+    },
+    {
+      "id": "weborigin-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "预检缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Access-Control-Max-Age 在 CORS 预检中控制什么？",
+      "answer": "它声明浏览器可缓存预检结果的时间，单位为秒。",
+      "explanation": "浏览器自身可能施加更短的上限。",
+      "example": "短时间重复的同类请求可能复用预检结果。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "预检缓存"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+    },
+    {
+      "id": "weborigin-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "允许来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Access-Control-Allow-Origin 响应头用于表达什么？",
+      "answer": "它指定允许读取响应的单个来源，或在适用条件下使用 * 允许任意来源。",
+      "explanation": "浏览器会将响应值与请求的源及凭据模式一起检查。",
+      "example": "服务端返回允许的前端源。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "允许来源"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+    },
+    {
+      "id": "weborigin-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "凭据与通配符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "浏览器跨源请求以 credentials: include 读取响应时，Access-Control-Allow-Origin 能使用 * 吗？",
+      "answer": "不能；响应需指定匹配的具体来源，并允许携带凭据。",
+      "explanation": "即便 CORS 允许，浏览器的第三方 Cookie 策略仍可能限制 Cookie。",
+      "example": "允许 https://app.example 并设置 Access-Control-Allow-Credentials: true。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "凭据与通配符"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+    },
+    {
+      "id": "weborigin-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "Fetch 默认凭据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "浏览器 Fetch 默认的 credentials: same-origin 对跨源请求有什么含义？",
+      "answer": "默认不会在跨源请求中携带凭据，也不会按该模式处理跨源响应中的凭据。",
+      "explanation": "设置 include 才会请求跨源携带凭据，仍受 Cookie 策略和 CORS 约束。",
+      "example": "跨源请求要发送符合条件的 Cookie 可配置 include。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "Fetch 默认凭据"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch"
+    },
+    {
+      "id": "weborigin-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "动态来源缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "服务器根据请求 Origin 动态返回允许来源时，为什么应返回 Vary: Origin？",
+      "answer": "它提示缓存按 Origin 区分响应，避免把一个来源的响应错误复用给另一个来源。",
+      "explanation": "服务端仍须验证允许的来源。",
+      "example": "允许两个前端域名时分别缓存响应。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "动态来源缓存"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+    },
+    {
+      "id": "weborigin-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "可读取响应头",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "跨源响应已经通过 CORS 后，脚本能自动读取所有响应头吗？",
+      "answer": "不能；除默认可暴露的响应头外，服务端可通过 Access-Control-Expose-Headers 指定额外可读的头。",
+      "explanation": "某些受限制的响应头仍不能暴露给脚本。",
+      "example": "允许脚本读取自定义的 X-Request-Id。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "可读取响应头"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+    },
+    {
+      "id": "weborigin-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "HttpOnly Cookie",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cookie 的 HttpOnly 属性对浏览器脚本和请求发送分别有什么影响？",
+      "answer": "脚本不能通过 document.cookie 读取该 Cookie，但符合条件时浏览器仍可在请求中发送它。",
+      "explanation": "HttpOnly 有助于限制脚本读取，不会独自防止所有跨站请求。",
+      "example": "fetch 请求仍可能自动携带 HttpOnly 会话 Cookie。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "HttpOnly Cookie"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+    },
+    {
+      "id": "weborigin-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "Secure Cookie",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cookie 的 Secure 属性对传输有什么约束？",
+      "answer": "浏览器通常只通过 HTTPS 等安全连接发送该 Cookie。",
+      "explanation": "localhost 存在浏览器相关例外；Secure 本身不阻止本地脚本读取非 HttpOnly Cookie。",
+      "example": "会话 Cookie 设置 Secure 以避免普通 HTTP 传送。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "Secure Cookie"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+    },
+    {
+      "id": "weborigin-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "Cookie 域范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Set-Cookie 省略 Domain 与显式指定 Domain，在发送范围上有什么区别？",
+      "answer": "省略时是仅限设置它的主机的 host-only Cookie；指定 Domain 时可涵盖该域及其子域。",
+      "explanation": "浏览器对可设置的域还有额外限制。",
+      "example": "由 example.com 设置的 host-only Cookie 不自动发送给子域。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "Cookie 域范围"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+    },
+    {
+      "id": "weborigin-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "Cookie 路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Cookie 的 Path 属性主要影响什么？",
+      "answer": "它影响浏览器向哪些请求路径发送该 Cookie。",
+      "explanation": "Path 不是隔离同源脚本访问 Cookie 的安全边界。",
+      "example": "Path=/docs 的 Cookie 可用于匹配该路径的请求。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "Cookie 路径"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+    },
+    {
+      "id": "weborigin-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "Cookie 期限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一个 Cookie 同时设置有效的 Max-Age 和 Expires 时，哪个优先？",
+      "answer": "Max-Age 优先，值表示距离过期的秒数。",
+      "explanation": "零或负的 Max-Age 可使 Cookie 立即过期。",
+      "example": "Max-Age=0 可用于要求浏览器删除匹配 Cookie。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "Cookie 期限"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+    },
+    {
+      "id": "weborigin-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "浏览器同源、跨域与 Cookie",
+      "knowledgePoint": "会话 Cookie",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "没有 Max-Age 和 Expires 的会话 Cookie 一定在浏览器关闭后永久消失吗？",
+      "answer": "不一定；浏览器的会话恢复可能重新恢复会话 Cookie。",
+      "explanation": "会话结束的判定依赖浏览器行为。",
+      "example": "恢复先前标签页时可能保留会话状态。",
+      "tags": [
+        "浏览器同源、跨域与 Cookie",
+        "会话 Cookie"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "jensen-shannon-distance",
+    "title": "SciPy 1.15.3：Jensen-Shannon 分布距离",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.spatial.distance.jensenshannon.html",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "jsdist-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率分布距离",
+      "knowledgePoint": "JS定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个离散概率分布的 Jensen-Shannon 散度如何构造？",
+      "answer": "令 M=(P+Q)/2，再取 KL(P‖M) 和 KL(Q‖M) 的平均值。",
+      "explanation": "比较的是同一事件空间上的两个概率分布。",
+      "example": "可用它比较两批数据的类别分布。",
+      "tags": [
+        "概率分布距离",
+        "JS定义"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.spatial.distance.jensenshannon.html"
+    },
+    {
+      "id": "jsdist-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率分布距离",
+      "knowledgePoint": "对称性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Jensen-Shannon 散度交换两个输入分布后会改变吗？",
+      "answer": "不会；它对两个输入分布是对称的。",
+      "explanation": "这是它与一般不对称的 KL 散度之间的一个区别。",
+      "example": "JS(P,Q) 等于 JS(Q,P)。",
+      "tags": [
+        "概率分布距离",
+        "对称性"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.spatial.distance.jensenshannon.html"
+    },
+    {
+      "id": "jsdist-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率分布距离",
+      "knowledgePoint": "距离与散度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 jensenshannon 返回 JS 散度还是 JS 距离？",
+      "answer": "它返回 Jensen-Shannon 散度的平方根，即 JS 距离。",
+      "explanation": "报告结果时应区分距离与其平方。",
+      "example": "要得到相应散度可将返回的距离平方。",
+      "tags": [
+        "概率分布距离",
+        "距离与散度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.spatial.distance.jensenshannon.html"
+    },
+    {
+      "id": "jsdist-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率分布距离",
+      "knowledgePoint": "非归一化输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 的 jensenshannon 接收和不为 1 的有效非负向量时怎样处理？",
+      "answer": "它会沿指定轴分别归一化两个输入，再计算距离。",
+      "explanation": "输入仍应是可以归一化的非负权重；零总和不能代表概率分布。",
+      "example": "[2,2] 和 [1,1] 会归一化为相同分布。",
+      "tags": [
+        "概率分布距离",
+        "非归一化输入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.spatial.distance.jensenshannon.html"
+    },
+    {
+      "id": "jsdist-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率分布距离",
+      "knowledgePoint": "KL零概率比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "当两个有限离散分布支持集互不重叠时，JS 散度一定像 KL(P‖Q) 那样无穷大吗？",
+      "answer": "不会；对有限离散概率分布，JS 散度仍有限，且在以 2 为底时此情况达到 1。",
+      "explanation": "JS 使用平均分布 M=(P+Q)/2，因此不同于直接计算 KL(P‖Q)。",
+      "example": "P=[1,0]、Q=[0,1] 时 base=2 的 JS 散度为 1。",
+      "tags": [
+        "概率分布距离",
+        "KL零概率比较"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.spatial.distance.jensenshannon.html"
+    },
+    {
+      "id": "jsdist-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "概率分布距离",
+      "knowledgePoint": "批量计算轴",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "SciPy jensenshannon 对形状为 (批次, 类别) 的两个数组逐行比较时应指定什么？",
+      "answer": "指定 axis=1，使每行沿类别维度计算一个距离。",
+      "explanation": "默认 axis=0；应先确认输入数组的维度含义。",
+      "example": "两批各三行时得到三个距离值。",
+      "tags": [
+        "概率分布距离",
+        "批量计算轴"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.spatial.distance.jensenshannon.html"
+    }
+  ]
+}

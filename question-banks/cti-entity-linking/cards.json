@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "cti-entity-linking",
+    "title": "spaCy / seqeval：威胁情报实体识别与链接",
+    "url": "https://spacy.io/api/entitylinker",
+    "type": "官方文档与研究资料",
+    "note": "按逐题所列资料自行整理；安全场景示例用于说明，不代表原资料中的实际事件。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "ctient-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报实体与关系抽取",
+      "knowledgePoint": "识别与链接",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "命名实体识别与实体链接分别解决什么问题？",
+      "answer": "实体识别定位文本提及并赋予类型；实体链接尝试把提及对应到知识库中的具体实体。",
+      "explanation": "识别出一个名称不保证能正确链接到唯一实体。",
+      "example": "识别威胁组织名称后，再查找对应的知识库编号。",
+      "tags": [
+        "识别与链接",
+        "情报实体与关系抽取"
+      ],
+      "evidence": "source",
+      "reference": "https://spacy.io/api/entitylinker"
+    },
+    {
+      "id": "ctient-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报实体与关系抽取",
+      "knowledgePoint": "实体提及与实体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "文本中的实体提及与知识库中的实体有什么区别？",
+      "answer": "提及是文本中的一次表述；实体是这些表述可能共同指向的对象。",
+      "explanation": "一篇或多篇报告可使用多个提及描述同一实体。",
+      "example": "同一威胁组织在报告中有全名和简称。",
+      "tags": [
+        "实体提及与实体",
+        "情报实体与关系抽取"
+      ],
+      "evidence": "source",
+      "reference": "https://spacy.io/usage/linguistic-features#named-entities"
+    },
+    {
+      "id": "ctient-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报实体与关系抽取",
+      "knowledgePoint": "实体别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实体链接为什么需要处理别名？",
+      "answer": "同一对象可能有不同名称或缩写；别名可帮助将这些表述关联到同一候选实体。",
+      "explanation": "别名也可能有歧义，仍需结合上下文判断。",
+      "example": "不同报告对同一组织使用不同名称。",
+      "tags": [
+        "实体别名",
+        "情报实体与关系抽取"
+      ],
+      "evidence": "source",
+      "reference": "https://spacy.io/api/entitylinker"
+    },
+    {
+      "id": "ctient-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报实体与关系抽取",
+      "knowledgePoint": "名称歧义与上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一个名称在威胁报告中出现时，为什么实体链接需要参考上下文？",
+      "answer": "同一名称可能对应多个候选实体，周围描述有助于选择正确对象。",
+      "explanation": "上下文不足时应保留不确定性，避免强行指定。",
+      "example": "相同缩写在不同报告中可能指不同工具。",
+      "tags": [
+        "名称歧义与上下文",
+        "情报实体与关系抽取"
+      ],
+      "evidence": "source",
+      "reference": "https://spacy.io/api/entitylinker"
+    },
+    {
+      "id": "ctient-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报实体与关系抽取",
+      "knowledgePoint": "链接拒判",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "实体链接分数低或没有合适候选时，为什么应允许不链接？",
+      "answer": "强行指定候选会产生错误归并；保留未链接结果可供后续人工核查或知识库更新。",
+      "explanation": "阈值设置会影响链接覆盖率与错误率。",
+      "example": "未知组织简称先标记为待核实。",
+      "tags": [
+        "链接拒判",
+        "情报实体与关系抽取"
+      ],
+      "evidence": "application",
+      "reference": "https://spacy.io/api/entitylinker"
+    },
+    {
+      "id": "ctient-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报实体与关系抽取",
+      "knowledgePoint": "共指与实体链接",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "共指消解和实体链接的目标有什么不同？",
+      "answer": "共指消解关联文本中指向同一对象的表达；实体链接把提及与知识库实体标识关联。",
+      "explanation": "两者可以配合，但一个成功不保证另一个正确。",
+      "example": "先关联“该工具”和工具名称，再查知识库编号。",
+      "tags": [
+        "共指与实体链接",
+        "情报实体与关系抽取"
+      ],
+      "evidence": "source",
+      "reference": "https://spacy.io/api/coref"
+    },
+    {
+      "id": "ctient-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报实体与关系抽取",
+      "knowledgePoint": "共现与关系",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "报告中两个实体同时出现，能否单凭共现认定它们存在某种攻击关系？",
+      "answer": "不能；还需检查上下文是否明确表达了该关系及其方向。",
+      "explanation": "共现可用于生成候选，但不能单独作为关系成立的证据。",
+      "example": "报告同时提到工具和组织，不等于该组织一定使用了该工具。",
+      "tags": [
+        "共现与关系",
+        "情报实体与关系抽取"
+      ],
+      "evidence": "application",
+      "reference": "https://aclanthology.org/P17-1113/"
+    },
+    {
+      "id": "ctient-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报实体与关系抽取",
+      "knowledgePoint": "否定与事实抽取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "从威胁报告抽取行为时，为什么要识别否定或不确定表述？",
+      "answer": "把“未观察到”或“可能发生”直接转成已确认行为，会改变原文含义。",
+      "explanation": "抽取结果应保留原文及断言状态。",
+      "example": "“未发现外联”不能写成“已发生外联”。",
+      "tags": [
+        "否定与事实抽取",
+        "情报实体与关系抽取"
+      ],
+      "evidence": "application",
+      "reference": "https://aclanthology.org/P15-1064/"
+    },
+    {
+      "id": "ctient-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报实体与关系抽取",
+      "knowledgePoint": "实体级边界匹配",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "实体抽取评估为什么要同时检查实体类别和文本边界？",
+      "answer": "只预测对类型但截断或扩展了实体片段，仍可能无法正确定位实体。",
+      "explanation": "具体是严格匹配还是允许部分匹配，应在评估协议中说明。",
+      "example": "将恶意域名只截取了一部分时不能按完整实体无条件计对。",
+      "tags": [
+        "实体级边界匹配",
+        "情报实体与关系抽取"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval"
+    }
+  ]
+}

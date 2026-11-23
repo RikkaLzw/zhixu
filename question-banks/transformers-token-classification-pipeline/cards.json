@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "transformers-token-classification-pipeline",
+    "title": "Transformers 4.55.4 源码：序列标注 Pipeline",
+    "url": "https://github.com/huggingface/transformers/blob/v4.55.4/src/transformers/pipelines/token_classification.py",
+    "type": "官方文档、固定版本源码或论文",
+    "note": "依据 Transformers 4.55.4 固定版本源码自行整理；示例模型和词表为自建。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "hftokencls-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformers 序列标注 Pipeline",
+      "knowledgePoint": "默认输出粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.55.4 的 TokenClassificationPipeline 默认 aggregation_strategy=\"none\" 返回什么粒度的结果？",
+      "answer": "默认不合并实体，返回逐 token 的分类结果；默认还会过滤 O 标签。",
+      "explanation": "返回结果通常含 entity、score 等字段，默认会过滤 O 标签。",
+      "example": "逐 token 检查模型输出。",
+      "tags": [
+        "Transformers 序列标注 Pipeline",
+        "默认输出粒度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.55.4/src/transformers/pipelines/token_classification.py"
+    },
+    {
+      "id": "hftokencls-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformers 序列标注 Pipeline",
+      "knowledgePoint": "BIO 实体合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.55.4 的 simple 聚合如何处理相邻同类型的两个 B 标签？",
+      "answer": "它们会作为两个实体，而不是因为类型相同就自动合并。",
+      "explanation": "B 标签表示一个新实体开始。",
+      "example": "相邻两个 B-PER 分别作为两个姓名实体。",
+      "tags": [
+        "Transformers 序列标注 Pipeline",
+        "BIO 实体合并"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.55.4/src/transformers/pipelines/token_classification.py"
+    },
+    {
+      "id": "hftokencls-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 序列标注 Pipeline",
+      "knowledgePoint": "子词聚合策略",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Transformers 4.55.4 的 first、average 和 max 子词聚合策略如何选择词的标签？",
+      "answer": "first 使用首个子词标签；average 先平均子词类别分数；max 使用最高分子词对应的标签。",
+      "explanation": "这些策略面向按词处理的分词场景。",
+      "example": "同一词被拆成多个子词时用 first 统一标签。",
+      "tags": [
+        "Transformers 序列标注 Pipeline",
+        "子词聚合策略"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.55.4/src/transformers/pipelines/token_classification.py"
+    },
+    {
+      "id": "hftokencls-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformers 序列标注 Pipeline",
+      "knowledgePoint": "快速分词器要求",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Transformers 4.55.4 的 TokenClassificationPipeline 使用 first、average 或 max 聚合时，能否使用慢速分词器？",
+      "answer": "不能；这些策略要求快速分词器，慢速分词器会触发 ValueError。",
+      "explanation": "可改用 simple 或更换快速分词器。",
+      "example": "使用基于 tokenizers 的快速分词器聚合子词。",
+      "tags": [
+        "Transformers 序列标注 Pipeline",
+        "快速分词器要求"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.55.4/src/transformers/pipelines/token_classification.py"
+    },
+    {
+      "id": "hftokencls-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformers 序列标注 Pipeline",
+      "knowledgePoint": "原文位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.55.4 的序列标注输出有 start 和 end 时，如何找回原文对应片段？",
+      "answer": "可用原文的 start:end 切片；word 字段是解码结果，不一定与原文完全相同。",
+      "explanation": "这些位置仅在分词器提供可用偏移时出现。",
+      "example": "用位置字段高亮原文中的实体。",
+      "tags": [
+        "Transformers 序列标注 Pipeline",
+        "原文位置"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.55.4/src/transformers/pipelines/token_classification.py"
+    },
+    {
+      "id": "hftokencls-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformers 序列标注 Pipeline",
+      "knowledgePoint": "长文本重叠",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Transformers 4.55.4 的序列标注 Pipeline 显式设置 aggregation_strategy=\"none\" 时能同时设置 stride 吗？",
+      "answer": "不能；该组合会触发 ValueError，应选用受支持的聚合策略。",
+      "explanation": "使用 stride 还要求快速分词器，且重叠长度须满足模型和特殊 token 的约束。",
+      "example": "为长文本指定 simple 聚合和可用的重叠长度。",
+      "tags": [
+        "Transformers 序列标注 Pipeline",
+        "长文本重叠"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.55.4/src/transformers/pipelines/token_classification.py"
+    }
+  ]
+}

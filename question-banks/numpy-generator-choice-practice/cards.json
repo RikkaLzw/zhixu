@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "numpy-generator-choice-practice",
+    "title": "NumPy 2.2 文档：随机抽样",
+    "url": "https://numpy.org/doc/2.2/reference/random/generated/numpy.random.Generator.choice.html",
+    "type": "官方文档、标准或固定版本论文",
+    "note": "依据逐题引用的资料自行整理，示例自编；具体行为以指定版本和前提为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "npchoice-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 随机抽样",
+      "knowledgePoint": "整数总体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 2.2 的 Generator.choice(5) 从什么范围抽取？",
+      "answer": "从整数 0、1、2、3、4 中抽取。",
+      "explanation": "整数参数等价于从 np.arange(5) 定义的总体抽样。",
+      "example": "从五个样本索引中随机选择一个。",
+      "tags": [
+        "NumPy 随机抽样",
+        "整数总体"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/random/generated/numpy.random.Generator.choice.html"
+    },
+    {
+      "id": "npchoice-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 随机抽样",
+      "knowledgePoint": "默认放回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 2.2 的 Generator.choice 默认是有放回抽样吗？",
+      "answer": "是；默认 replace=True，同一个总体位置可以被多次选中。",
+      "explanation": "设置 replace=False 可无放回抽样，抽取数量超过可选位置数会抛出 ValueError。",
+      "example": "随机抽取多个训练样本索引。",
+      "tags": [
+        "NumPy 随机抽样",
+        "默认放回"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/random/generated/numpy.random.Generator.choice.html"
+    },
+    {
+      "id": "npchoice-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 随机抽样",
+      "knowledgePoint": "概率参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 2.2 的 Generator.choice 中参数 p 表示什么？",
+      "answer": "指定各总体位置的抽样概率；省略时按均匀分布抽取。",
+      "explanation": "p 应是一维概率向量，与总体长度匹配且总和为 1。",
+      "example": "为不同样本设置不同抽样权重并归一化。",
+      "tags": [
+        "NumPy 随机抽样",
+        "概率参数"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/random/generated/numpy.random.Generator.choice.html"
+    },
+    {
+      "id": "npchoice-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 随机抽样",
+      "knowledgePoint": "抽样维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 2.2 的 Generator.choice 对二维数组默认沿哪个轴选择？",
+      "answer": "默认 axis=0，即按行选择；也可指定 axis=1 按列选择。",
+      "explanation": "返回形状取决于输入形状、axis 和 size。",
+      "example": "按行抽取矩阵中的若干条样本。",
+      "tags": [
+        "NumPy 随机抽样",
+        "抽样维度"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/random/generated/numpy.random.Generator.choice.html"
+    },
+    {
+      "id": "npchoice-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 随机抽样",
+      "knowledgePoint": "概率与序列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 2.2 中 p=None 与显式传入均匀概率，在相同种子下必然产生相同 choice 结果吗？",
+      "answer": "不必然；显式 p 使用的通用采样器与默认优化采样器可能产生不同序列。",
+      "explanation": "两种方式的目标分布仍可相同。",
+      "example": "复现实验时记录抽样参数而非只记录种子。",
+      "tags": [
+        "NumPy 随机抽样",
+        "概率与序列"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/random/generated/numpy.random.Generator.choice.html"
+    },
+    {
+      "id": "npchoice-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 随机抽样",
+      "knowledgePoint": "无放回重复值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NumPy 2.2 的 choice 设置 replace=False 后，结果中的值一定互不相同吗？",
+      "answer": "不一定；无放回约束的是总体位置，总体本身可能包含相同值。",
+      "explanation": "若要保证值唯一，需要先检查或去重总体。",
+      "example": "从 [1, 1, 2] 的不同位置可以抽到两个 1。",
+      "tags": [
+        "NumPy 随机抽样",
+        "无放回重复值"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/2.2/reference/random/generated/numpy.random.Generator.choice.html"
+    }
+  ]
+}

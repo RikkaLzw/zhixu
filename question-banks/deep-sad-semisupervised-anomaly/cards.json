@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "deep-sad-semisupervised-anomaly",
+    "title": "Deep SAD 原论文 v2：半监督异常检测",
+    "url": "https://arxiv.org/pdf/1906.02694v2",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "deepsad-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Deep SAD 异常检测",
+      "knowledgePoint": "训练数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SAD 原论文的半监督设置使用哪些类型的训练样本？",
+      "answer": "使用大部分为正常的未标注样本，以及少量已标注正常样本和异常样本。",
+      "explanation": "未标注数据可能含有异常污染。",
+      "example": "结合分析人员确认的正常和异常事件训练。",
+      "tags": [
+        "Deep SAD 异常检测",
+        "训练数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.02694v2"
+    },
+    {
+      "id": "deepsad-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Deep SAD 异常检测",
+      "knowledgePoint": "标注方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SAD 论文如何利用已标注正常样本和已标注异常样本？",
+      "answer": "使已标注正常表示靠近中心，并用逆平方距离损失推动已标注异常远离中心。",
+      "explanation": "这是相对于表示空间中预先确定的中心。",
+      "example": "让确认的异常事件远离正常表示区域。",
+      "tags": [
+        "Deep SAD 异常检测",
+        "标注方向"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.02694v2"
+    },
+    {
+      "id": "deepsad-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Deep SAD 异常检测",
+      "knowledgePoint": "无标签退化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SAD 的论文目标在没有标注训练样本时退化成什么？",
+      "answer": "退化为其所述的一类 Deep SVDD 目标。",
+      "explanation": "前提是论文同一目标函数及设置。",
+      "example": "未提供任何标注样本时只使用未标注项。",
+      "tags": [
+        "Deep SAD 异常检测",
+        "无标签退化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.02694v2"
+    },
+    {
+      "id": "deepsad-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Deep SAD 异常检测",
+      "knowledgePoint": "权重参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SAD 论文的 η 参数主要平衡什么？",
+      "answer": "控制已标注项相对于未标注项在训练目标中的权重。",
+      "explanation": "具体效果依赖数据组成和超参数。",
+      "example": "比较不同标注样本权重。",
+      "tags": [
+        "Deep SAD 异常检测",
+        "权重参数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.02694v2"
+    },
+    {
+      "id": "deepsad-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Deep SAD 异常检测",
+      "knowledgePoint": "分数含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SAD 论文 v2 用距离还是平方距离定义测试时异常分数？",
+      "answer": "论文式 (4) 使用表示到中心的欧氏距离；训练目标中的未标注项使用平方距离。",
+      "explanation": "距离可用于排序，但不等于已校准的攻击概率。",
+      "example": "比较论文中的测试分数与训练目标。",
+      "tags": [
+        "Deep SAD 异常检测",
+        "分数含义"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.02694v2"
+    }
+  ]
+}

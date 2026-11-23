@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "reveal-code-graph-detection",
+    "title": "ReVeal 原论文 v1：代码图与漏洞检测",
+    "url": "https://arxiv.org/pdf/2009.07235v1",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本与环境为准。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "revealvul-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ReVeal 代码漏洞检测",
+      "knowledgePoint": "数据来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReVeal 原论文的数据集来自哪两类开源项目的漏洞修复记录？",
+      "answer": "来自 Chromium 与 Debian Linux 内核相关项目的公开漏洞和修复记录。",
+      "explanation": "项目与标注来源会影响模型的适用范围。",
+      "example": "浏览器与操作系统代码包含不同的安全问题。",
+      "tags": [
+        "ReVeal 代码漏洞检测",
+        "数据来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.07235v1"
+    },
+    {
+      "id": "revealvul-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ReVeal 代码漏洞检测",
+      "knowledgePoint": "程序表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReVeal 原论文用什么程序图结合代码的语法与语义信息？",
+      "answer": "使用代码属性图（CPG），结合抽象语法、控制流和数据依赖等关系。",
+      "explanation": "图的覆盖取决于提取工具与程序上下文。",
+      "example": "函数内的控制依赖可作为图关系输入。",
+      "tags": [
+        "ReVeal 代码漏洞检测",
+        "程序表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.07235v1"
+    },
+    {
+      "id": "revealvul-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ReVeal 代码漏洞检测",
+      "knowledgePoint": "图聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReVeal 原论文如何把 GGNN 更新后的节点表示汇总为函数图表示？",
+      "answer": "对节点向量逐元素求和，得到固定长度的图向量。",
+      "explanation": "论文指出聚合函数可以在实现中替换。",
+      "example": "一个函数的多个节点汇总为一个输入向量。",
+      "tags": [
+        "ReVeal 代码漏洞检测",
+        "图聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.07235v1"
+    },
+    {
+      "id": "revealvul-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ReVeal 代码漏洞检测",
+      "knowledgePoint": "样本重采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReVeal 原论文如何缓解训练图嵌入中的类别不平衡？",
+      "answer": "对训练样本进行多数类下采样，并在少数类近邻之间插值生成样本。",
+      "explanation": "应保持测试集独立，避免用测试信息参与重采样。",
+      "example": "少量漏洞函数可在嵌入空间中生成插值样本。",
+      "tags": [
+        "ReVeal 代码漏洞检测",
+        "样本重采样"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.07235v1"
+    }
+  ]
+}

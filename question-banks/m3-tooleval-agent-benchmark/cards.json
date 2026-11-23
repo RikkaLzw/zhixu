@@ -1,0 +1,31 @@
+{
+  "source": {
+    "id": "m3-tooleval-agent-benchmark",
+    "title": "CodeAct 原论文 v2：M3 ToolEval",
+    "url": "https://arxiv.org/pdf/2402.01030v2",
+    "type": "原论文、官方文档与固定版本源码",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编，具体条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "m3eval-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多工具交互评测",
+      "knowledgePoint": "基准目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeAct 论文的 M3 ToolEval 主要考查哪类工具使用？",
+      "answer": "考查通常需要在多轮交互中组合多个工具和多次调用的复杂任务。",
+      "explanation": "论文使用 82 个人工整理任务、零样本设置和最多 10 轮交互。",
+      "example": "先检索信息再调用另一个工具计算。",
+      "tags": [
+        "多工具交互评测",
+        "基准目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.01030v2"
+    }
+  ]
+}

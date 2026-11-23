@@ -1,0 +1,35 @@
+{
+  "version": 52,
+  "note": "明确基于 Zeek 日志的模型评分含义前的旧卡快照，用于保留个人编辑、来源和学习记录。",
+  "cards": [
+    {
+      "id": "zeek-012",
+      "category": "detection",
+      "question": "Zeek 日志产生的高风险分数为什么仍需回查原始事件？",
+      "answer": "分数只能提示优先级，原始事件和关联上下文用于验证原因。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "knowledgeArea": "11",
+      "level": "实践",
+      "tags": [
+        "证据",
+        "告警研判"
+      ],
+      "explanation": "审查人员需要判断触发特征、业务合理性和其他证据是否支持结论。",
+      "example": "从高分主机回查对应 conn.log、dns.log 与资产信息。",
+      "sources": [
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/logs/index.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

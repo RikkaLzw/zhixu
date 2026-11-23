@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "llmcompiler-parallel-tools",
+    "title": "LLMCompiler 原论文：并行工具调用",
+    "url": "https://arxiv.org/pdf/2312.04511v3",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据逐题引用的论文、教材或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "llmcomp-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "整体结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMCompiler 原论文将工具调用流程分成哪三个主要组件？",
+      "answer": "Function Calling Planner 生成任务与依赖，Task Fetching Unit 调度就绪任务，Executor 调用工具执行任务。",
+      "explanation": "最终响应还需要汇总工具执行结果。",
+      "example": "先规划查询，再执行检索和计算。",
+      "tags": [
+        "整体结构",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    },
+    {
+      "id": "llmcomp-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "规划表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMCompiler 的 Planner 用什么结构表达工具任务之间的依赖？",
+      "answer": "它将任务、参数和先后依赖组织为有向无环图（DAG）。",
+      "explanation": "没有依赖关系的任务可以考虑并行。",
+      "example": "两个独立检索任务共同作为计算任务的前置节点。",
+      "tags": [
+        "规划表示",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    },
+    {
+      "id": "llmcomp-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "占位符依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMCompiler 的计划为什么会在工具参数中使用前序任务的占位符？",
+      "answer": "占位符标记尚未得到的前序输出，依赖解决后再替换为实际结果。",
+      "explanation": "后续任务不能在所需结果缺失时正确使用该参数。",
+      "example": "用第一个搜索结果填入后续计算参数。",
+      "tags": [
+        "占位符依赖",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    },
+    {
+      "id": "llmcomp-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "就绪任务调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMCompiler 的 Task Fetching Unit 何时可以分派一个任务？",
+      "answer": "当任务的依赖已解决、所需参数可由已有结果填充时，它可以将任务交给执行器。",
+      "explanation": "不同任务的依赖完成时间可能不同。",
+      "example": "一个独立任务无需等待无关分支。",
+      "tags": [
+        "就绪任务调度",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    },
+    {
+      "id": "llmcomp-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "并行执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMCompiler 如何处理同一计划中互不依赖的工具调用？",
+      "answer": "执行器可以并行执行这些就绪调用，而依赖其结果的任务需要等待。",
+      "explanation": "并行化不改变任务间的数据依赖。",
+      "example": "并行查询两个公司信息，随后计算比率。",
+      "tags": [
+        "并行执行",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    },
+    {
+      "id": "llmcomp-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "获取单元实现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMCompiler 的 Task Fetching Unit 必须再调用一个语言模型才能处理依赖吗？",
+      "answer": "不必须；论文说明可用简单的获取与队列机制处理任务和占位符。",
+      "explanation": "规划任务与调度已生成任务是不同职责。",
+      "example": "用程序替换已完成任务的输出引用。",
+      "tags": [
+        "获取单元实现",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    },
+    {
+      "id": "llmcomp-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "流式计划",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMCompiler 的流式 Planner 如何减少等待完整计划的时间？",
+      "answer": "它在生成任务后逐步输出，使依赖已满足的任务可在后续计划仍在生成时启动。",
+      "explanation": "实际收益取决于规划和工具执行耗时等条件。",
+      "example": "先开始已生成的检索任务，再继续生成后续步骤。",
+      "tags": [
+        "流式计划",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    },
+    {
+      "id": "llmcomp-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "动态重规划",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMCompiler 在什么情况下需要动态重规划？",
+      "answer": "当后续执行路径依赖中间工具结果、初始计划无法完全确定时，可将结果反馈给 Planner 生成新任务。",
+      "explanation": "重规划仍依赖工具结果和新计划的正确性。",
+      "example": "先查询候选结果，再决定下一次查询。",
+      "tags": [
+        "动态重规划",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    },
+    {
+      "id": "llmcomp-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "计划错误",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMCompiler 即使正确执行计划中的每个工具调用，也可能因为规划错误而失败吗？",
+      "answer": "可能；Planner 可能遗漏任务或生成错误的依赖图。",
+      "explanation": "执行正确不代表计划本身满足用户目标。",
+      "example": "缺少必要的查询步骤时结果仍可能错误。",
+      "tags": [
+        "计划错误",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    },
+    {
+      "id": "llmcomp-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具调用计划与调度",
+      "knowledgePoint": "并行加速限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 LLMCompiler 的工具并行化不保证端到端耗时无限缩短？",
+      "answer": "规划、最终生成和依赖链上的顺序步骤仍有开销，且慢任务可能限制完成时间。",
+      "explanation": "收益依赖任务结构、工具延迟和调度开销。",
+      "example": "两个短工具调用可能不足以抵消规划开销。",
+      "tags": [
+        "并行加速限制",
+        "工具调用计划与调度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2312.04511v3"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "misp-warninglist-triage",
+    "title": "MISP 3.0_wip 文档：威胁指标 warninglist",
+    "url": "https://www.circl.lu/doc/misp/warninglists/",
+    "type": "原论文与官方文档",
+    "note": "依据 MISP 3.0_wip 提交 99ebee729 对应的文档自行整理；示例为自编。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "mispwarn-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 警告列表",
+      "knowledgePoint": "命中解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP 3.0_wip 文档中，指标命中 warninglist 是否证明该指标无害？",
+      "answer": "不能；命中提供需要核查的上下文，并不证明无害或恶意。",
+      "explanation": "应结合具体观察、列表来源及预期用途判断。",
+      "example": "公共云地址命中已知范围时仍需检查实际行为。",
+      "tags": [
+        "MISP 警告列表",
+        "命中解释"
+      ],
+      "evidence": "source",
+      "reference": "https://www.circl.lu/doc/misp/warninglists/"
+    },
+    {
+      "id": "mispwarn-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 警告列表",
+      "knowledgePoint": "两种搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP 3.0_wip 的 warninglist 名称搜索与值匹配搜索有什么区别？",
+      "answer": "名称搜索查列表元数据；值匹配搜索查实际能够匹配该值的列表。",
+      "explanation": "两种搜索回答的问题不同。",
+      "example": "查找某个域名是否命中列表应使用值匹配。",
+      "tags": [
+        "MISP 警告列表",
+        "两种搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://www.circl.lu/doc/misp/warninglists/"
+    },
+    {
+      "id": "mispwarn-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 警告列表",
+      "knowledgePoint": "启用状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP 3.0_wip 的 warninglist 值匹配查询会使用已禁用的列表吗？",
+      "answer": "不会；文档说明该查询只使用已启用列表。",
+      "explanation": "没有命中也可能是相关列表未启用或未安装。",
+      "example": "测试某个列表前应先检查其启用状态。",
+      "tags": [
+        "MISP 警告列表",
+        "启用状态"
+      ],
+      "evidence": "source",
+      "reference": "https://www.circl.lu/doc/misp/warninglists/"
+    },
+    {
+      "id": "mispwarn-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 警告列表",
+      "knowledgePoint": "匹配类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP 3.0_wip warninglist 中 string 和 cidr 匹配类型分别检查什么？",
+      "answer": "string 检查值与条目是否完全相同；cidr 检查 IP 是否属于条目的网段。",
+      "explanation": "匹配逻辑取决于列表类型。",
+      "example": "单个 IP 可以命中包含它的 CIDR 条目。",
+      "tags": [
+        "MISP 警告列表",
+        "匹配类型"
+      ],
+      "evidence": "source",
+      "reference": "https://www.circl.lu/doc/misp/warninglists/"
+    },
+    {
+      "id": "mispwarn-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 警告列表",
+      "knowledgePoint": "子串与正则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP 3.0_wip warninglist 的 substring 与 regex 类型在匹配方式上有什么区别？",
+      "answer": "substring 检查条目是否出现在值中；regex 用条目的正则表达式匹配值。",
+      "explanation": "自定义列表应测试命中和不命中的边界情况。",
+      "example": "短字符串的子串匹配范围可能比预期更广。",
+      "tags": [
+        "MISP 警告列表",
+        "子串与正则"
+      ],
+      "evidence": "source",
+      "reference": "https://www.circl.lu/doc/misp/warninglists/"
+    },
+    {
+      "id": "mispwarn-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 警告列表",
+      "knowledgePoint": "告警与 IDS 标志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP 3.0_wip warninglist 显示提示后，会自动修改属性的 IDS 标志吗？",
+      "answer": "不会；显示警告本身不会开启或关闭该属性的 IDS 标志。",
+      "explanation": "警告展示与检测导出选择是不同操作。",
+      "example": "命中已知列表的属性仍可保留其原有 to_ids 值。",
+      "tags": [
+        "MISP 警告列表",
+        "告警与 IDS 标志"
+      ],
+      "evidence": "source",
+      "reference": "https://www.circl.lu/doc/misp/warninglists/"
+    },
+    {
+      "id": "mispwarn-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP 警告列表",
+      "knowledgePoint": "导出过滤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在支持该选项的 MISP 3.0_wip restSearch 导出中，enforceWarninglist 有什么作用？",
+      "answer": "可从导出结果中排除匹配已启用 warninglist 的属性。",
+      "explanation": "过滤检测导出前应确认列表与用途，调查时仍可能需要保留原始上下文。",
+      "example": "公共检测源可按配置排除已知不适合直接检测的值。",
+      "tags": [
+        "MISP 警告列表",
+        "导出过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://www.circl.lu/doc/misp/warninglists/"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "wazuh-rule-correlation-practice",
+    "title": "Wazuh 4.12 文档：规则关联与测试",
+    "url": "https://documentation.wazuh.com/4.12/user-manual/ruleset/ruleset-xml-syntax/rules.html",
+    "type": "官方文档或教材",
+    "note": "依据 Wazuh 4.12 官方规则语法与规则测试文档自行整理；示例为概念示意。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "wazrule-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Wazuh 规则关联",
+      "knowledgePoint": "历史规则关联",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Wazuh 4.12 的 if_matched_sid 与 if_sid 在关联对象上有什么区别？",
+      "answer": "if_matched_sid 用于指定时间窗口内此前触发的规则，通常配合 frequency 和 timeframe；if_sid 是当前日志的前置规则条件。",
+      "explanation": "频次关联还要满足规则配置中的其他条件。",
+      "example": "在时间窗口内多次匹配某规则后触发更高等级规则。",
+      "tags": [
+        "Wazuh 规则关联",
+        "历史规则关联"
+      ],
+      "evidence": "source",
+      "reference": "https://documentation.wazuh.com/4.12/user-manual/ruleset/ruleset-xml-syntax/rules.html"
+    },
+    {
+      "id": "wazrule-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Wazuh 规则关联",
+      "knowledgePoint": "频次与时间窗",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Wazuh 4.12 规则中的 frequency 和 timeframe 分别控制什么？",
+      "answer": "frequency 指定触发所需的匹配次数，timeframe 指定计数时间窗，单位为秒。",
+      "explanation": "它们常用于多次事件关联。",
+      "example": "配置 frequency=8、timeframe=120 表达 120 秒内的重复匹配条件。",
+      "tags": [
+        "Wazuh 规则关联",
+        "频次与时间窗"
+      ],
+      "evidence": "source",
+      "reference": "https://documentation.wazuh.com/4.12/user-manual/ruleset/ruleset-xml-syntax/rules.html"
+    },
+    {
+      "id": "wazrule-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Wazuh 规则关联",
+      "knowledgePoint": "关联来源地址",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Wazuh 4.12 频次关联规则中的 same_srcip 限制什么？",
+      "answer": "它要求关联事件的解码源 IP 相同。",
+      "explanation": "该条件与 frequency、timeframe 一起使用。",
+      "example": "只把来自同一源地址的多次失败计入关联条件。",
+      "tags": [
+        "Wazuh 规则关联",
+        "关联来源地址"
+      ],
+      "evidence": "source",
+      "reference": "https://documentation.wazuh.com/4.12/user-manual/ruleset/ruleset-xml-syntax/rules.html"
+    },
+    {
+      "id": "wazrule-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Wazuh 规则关联",
+      "knowledgePoint": "动态与静态字段",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Wazuh 4.12 的 same_field 可以直接替代 same_srcip 来比较静态 srcip 字段吗？",
+      "answer": "不可以；same_field 用于动态字段，静态 srcip 应使用专门的 same_srcip。",
+      "explanation": "动态字段名由解码器提取，静态字段有专用关联选项。",
+      "example": "比较 JSON 中的自定义 key 可使用 same_field。",
+      "tags": [
+        "Wazuh 规则关联",
+        "动态与静态字段"
+      ],
+      "evidence": "source",
+      "reference": "https://documentation.wazuh.com/4.12/user-manual/ruleset/ruleset-xml-syntax/rules.html"
+    },
+    {
+      "id": "wazrule-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Wazuh 规则关联",
+      "knowledgePoint": "中间规则级别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Wazuh 4.12 中用于 if_matched_sid 关联的中间规则为什么不应设为 level 0？",
+      "answer": "level 0 规则会被立即丢弃，无法用于这类历史关联；可用至少 level 1，并按需配置 no_log。",
+      "explanation": "no_log 可通过 options 配置为不记录该告警。",
+      "example": "设置中间规则 level 1，再让后续规则关联其 ID。",
+      "tags": [
+        "Wazuh 规则关联",
+        "中间规则级别"
+      ],
+      "evidence": "source",
+      "reference": "https://documentation.wazuh.com/4.12/user-manual/ruleset/ruleset-xml-syntax/rules.html"
+    },
+    {
+      "id": "wazrule-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Wazuh 规则关联",
+      "knowledgePoint": "解码器限制",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Wazuh 4.12 规则中的 decoded_as 用什么限制当前事件？",
+      "answer": "它要求事件由指定名称的解码器解码。",
+      "explanation": "该条件可用来为某类日志建立规则分组。",
+      "example": "decoded_as=json 限定使用 JSON 解码器的事件。",
+      "tags": [
+        "Wazuh 规则关联",
+        "解码器限制"
+      ],
+      "evidence": "source",
+      "reference": "https://documentation.wazuh.com/4.12/user-manual/ruleset/ruleset-xml-syntax/rules.html"
+    },
+    {
+      "id": "wazrule-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Wazuh 规则关联",
+      "knowledgePoint": "规则测试会话",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Wazuh 4.12 的 wazuh-logtest 为什么适合在同一会话中测试频次规则？",
+      "answer": "同一测试会话维护规则匹配计数，可连续输入事件观察关联规则是否触发。",
+      "explanation": "不同会话各自加载规则与解码器并维护自己的计数。",
+      "example": "在同一会话连续提交多条失败日志。",
+      "tags": [
+        "Wazuh 规则关联",
+        "规则测试会话"
+      ],
+      "evidence": "source",
+      "reference": "https://documentation.wazuh.com/4.12/user-manual/ruleset/testing.html"
+    }
+  ]
+}

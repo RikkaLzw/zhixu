@@ -1,0 +1,696 @@
+{
+  "source": {
+    "id": "software-architecture-patterns",
+    "title": "Microsoft Azure Architecture Center：架构风格与设计模式",
+    "url": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/",
+    "type": "架构设计指南与云设计模式文档",
+    "note": "依据 Microsoft Azure Architecture Center 的架构风格与模式文档逐题整理；示例为自编，模式适用条件以卡片说明和原文为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "archpat-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "N-tier 架构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N-tier 架构通常如何组织应用？",
+      "answer": "它把应用划分为多个逻辑层和物理层级（tier），让界面、业务逻辑和数据访问等职责按结构组织。",
+      "explanation": "逻辑层描述职责分工，物理 tier 描述部署边界；两者相关但不等同。",
+      "example": "浏览器、应用服务器和数据库服务器可以部署在不同 tier。",
+      "tags": [
+        "N-tier",
+        "软件架构",
+        "分层"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#n-tier"
+    },
+    {
+      "id": "archpat-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "逻辑层与物理 tier",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "软件架构中的逻辑层和物理 tier 是同一个概念吗？",
+      "answer": "不是。逻辑层按职责组织代码或组件，物理 tier 描述组件的部署边界；多个逻辑层可以部署在同一 tier。",
+      "explanation": "把层和部署机器一一对应会误以为每增加一层就必须增加一台服务器。",
+      "example": "表示层和业务层可在同一应用进程中运行，而数据层部署在独立数据库服务上。",
+      "tags": [
+        "N-tier",
+        "逻辑层",
+        "部署 tier"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#n-tier"
+    },
+    {
+      "id": "archpat-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "N-tier 适用场景",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "N-tier 风格在哪类应用中通常较容易采用？",
+      "answer": "已有分层结构、业务相对传统且更新频率较低的应用通常较适合；迁移时往往能复用既有结构。",
+      "explanation": "架构风格应与领域复杂度和变更频率匹配，不是所有系统都需要多层部署。",
+      "example": "已有表示层、业务层和数据层的企业系统可先按原边界拆分部署。",
+      "tags": [
+        "N-tier",
+        "适用场景",
+        "架构选型"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#n-tier"
+    },
+    {
+      "id": "archpat-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "Web-Queue-Worker 组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Web-Queue-Worker 架构通常由哪三部分组成？",
+      "answer": "它由处理 HTTP 请求的 Web 前端、传递异步消息的队列和执行后台任务的 Worker 组成。",
+      "explanation": "Worker 适合执行资源密集、耗时较长或批量处理的任务。",
+      "example": "前端接收报表请求后将任务入队，Worker 生成报表并保存结果。",
+      "tags": [
+        "Web-Queue-Worker",
+        "消息队列",
+        "后台任务"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#web-queue-worker"
+    },
+    {
+      "id": "archpat-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "队列解耦前端和 Worker",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Web-Queue-Worker 中的队列怎样帮助前端和后台任务协作？",
+      "answer": "队列让前端异步提交任务，不必同步等待 Worker 完成；Worker 可以稍后取出任务处理。",
+      "explanation": "队列提供时间上的解耦，但仍需处理积压、重试和消息失败等运行问题。",
+      "example": "上传文件后立即返回任务编号，后台 Worker 再完成转码。",
+      "tags": [
+        "Web-Queue-Worker",
+        "异步处理",
+        "解耦"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#web-queue-worker"
+    },
+    {
+      "id": "archpat-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "前端与 Worker 独立伸缩",
+      "questionType": "适用场景",
+      "origin": "自行整理",
+      "question": "Web-Queue-Worker 为什么可以分别扩展 Web 前端和 Worker？",
+      "answer": "两者承担不同工作负载并通过队列交接任务，因此可依据请求量和后台积压分别分配资源。",
+      "explanation": "独立扩展有助于针对瓶颈配置资源，但不能消除队列容量和下游依赖的限制。",
+      "example": "交互请求平稳但批量任务增加时，可以只增加 Worker 实例。",
+      "tags": [
+        "Web-Queue-Worker",
+        "独立伸缩",
+        "负载"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#web-queue-worker"
+    },
+    {
+      "id": "archpat-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "微服务定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "微服务架构如何拆分应用？",
+      "answer": "它把应用拆成一组小型自治服务，每个服务负责一个业务能力，并通过服务间通信协作。",
+      "explanation": "拆分应围绕领域职责，而不只是把代码目录或数据库表机械地拆开。",
+      "example": "订单服务负责订单流程，库存服务负责库存能力。",
+      "tags": [
+        "微服务",
+        "业务能力",
+        "架构风格"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#microservices"
+    },
+    {
+      "id": "archpat-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "微服务自治与发布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "微服务中的服务自治通常希望改善什么？",
+      "answer": "服务团队可以围绕各自业务能力独立开发和发布，从而支持更频繁的更新。",
+      "explanation": "自治不意味着服务不需要接口契约、兼容策略或跨服务协调。",
+      "example": "商品服务调整内部实现时，只要兼容对外契约，订单服务不必同步发布。",
+      "tags": [
+        "微服务",
+        "自治",
+        "独立发布"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#microservices"
+    },
+    {
+      "id": "archpat-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "微服务通信成本",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "把单体拆成微服务后，服务间通信一定会更快吗？",
+      "answer": "不一定；网络通信会增加延迟和流量，服务调用过多还可能造成网络拥塞。",
+      "explanation": "分布式边界带来部署自治，也带来远程调用、故障和观测方面的成本。",
+      "example": "一个页面串行调用大量小服务时，整体响应时间可能明显增加。",
+      "tags": [
+        "微服务",
+        "网络延迟",
+        "架构权衡"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#microservices"
+    },
+    {
+      "id": "archpat-010",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "软件架构风格",
+      "knowledgePoint": "微服务适用领域复杂度",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "微服务更适合哪类领域，而不一定适合什么样的应用？",
+      "answer": "它更适合业务领域复杂、需要频繁更新且团队能够承担分布式运维的应用；简单领域未必值得引入其复杂度。",
+      "explanation": "选择架构时应使结构复杂度与领域及团队能力相匹配。",
+      "example": "只有少量 CRUD 功能且由小团队维护的服务，先采用模块化单体可能更合适。",
+      "tags": [
+        "微服务",
+        "适用场景",
+        "架构复杂度"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/#microservices"
+    },
+    {
+      "id": "archpat-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "事件驱动架构",
+      "knowledgePoint": "事件驱动组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "事件驱动架构通常包含哪些核心角色？",
+      "answer": "它包含产生事件的生产者、传递事件的通道或代理，以及监听并处理事件的消费者。",
+      "explanation": "消费者可以对事件触发动作，也可以关联多个事件后再处理。",
+      "example": "订单服务发布订单创建事件，通知服务订阅后发送确认消息。",
+      "tags": [
+        "事件驱动",
+        "生产者",
+        "消费者",
+        "事件代理"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven"
+    },
+    {
+      "id": "archpat-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "事件驱动架构",
+      "knowledgePoint": "事件生产者与消费者解耦",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "事件驱动架构如何降低生产者与消费者之间的依赖？",
+      "answer": "生产者发布事件而不必知道有哪些消费者订阅；消费者也可彼此独立地响应同一事件流。",
+      "explanation": "解耦减少直接调用关系，但事件契约和投递语义仍需管理。",
+      "example": "订单事件可以同时由发票服务和通知服务订阅。",
+      "tags": [
+        "事件驱动",
+        "发布订阅",
+        "解耦"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven"
+    },
+    {
+      "id": "archpat-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "事件驱动架构",
+      "knowledgePoint": "发布订阅与事件流",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "发布订阅消息与持久化事件流在历史事件读取方面有什么区别？",
+      "answer": "在文档描述的发布订阅模式中，事件会发送给当前订阅者，但不保留供新订阅者读取的持久日志；持久化事件流则允许消费者从指定位置读取或重放。",
+      "explanation": "具体保留与重放能力取决于所用消息系统及其配置。",
+      "example": "新流处理器可从事件流较早的偏移量重新计算投影。",
+      "tags": [
+        "发布订阅",
+        "事件流",
+        "消息保留",
+        "重放"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven"
+    },
+    {
+      "id": "archpat-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "事件驱动架构",
+      "knowledgePoint": "事件驱动架构挑战",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "事件驱动架构会自动保证事件必达、顺序一致和数据强一致吗？",
+      "answer": "不会；系统仍需针对投递、事件顺序和最终一致性设计处理策略。",
+      "explanation": "生产者与消费者解耦的同时，也增加了异步故障和状态追踪的复杂度。",
+      "example": "消费者应明确重复事件如何处理，以及业务是否依赖分区内顺序。",
+      "tags": [
+        "事件驱动",
+        "事件顺序",
+        "可靠投递",
+        "最终一致性"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven"
+    },
+    {
+      "id": "archpat-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "CQRS 命令与查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CQRS 中的 command 和 query 分别表示什么？",
+      "answer": "Command 表示请求改变系统状态的操作；query 表示读取数据且不改变系统状态的操作。",
+      "explanation": "命令应表达业务意图，而不是只暴露低层字段赋值。",
+      "example": "“预订房间”是命令，“查询可用房间”是查询。",
+      "tags": [
+        "CQRS",
+        "命令",
+        "查询"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs"
+    },
+    {
+      "id": "archpat-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "CQRS 读写模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CQRS 中的写模型和读模型通常分别针对什么目标设计？",
+      "answer": "写模型负责命令校验、业务规则和状态更新；读模型面向查询，常通过投影或 DTO 提供适合展示和检索的数据。",
+      "explanation": "分离模型可以让读写逻辑各自针对其职责优化。",
+      "example": "订单写模型维护业务不变量，订单列表读模型预先组织列表需要的字段。",
+      "tags": [
+        "CQRS",
+        "读模型",
+        "写模型"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs#separate-read-models-and-write-models"
+    },
+    {
+      "id": "archpat-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "CQRS 读写存储同步",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "CQRS 使用独立读写存储时，需要额外解决什么问题？",
+      "answer": "需要让读模型及时反映写模型的变更，并处理同步失败、重复更新和读取到旧数据等情况。",
+      "explanation": "常见做法是写入后发布更新事件，由读侧据此刷新投影；这会引入同步与一致性管理。",
+      "example": "写入订单成功后，列表页短时间内仍可能读到更新前的投影。",
+      "tags": [
+        "CQRS",
+        "读写同步",
+        "最终一致性"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs#separate-read-models-and-write-models"
+    },
+    {
+      "id": "archpat-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "CQRS 与事件溯源关系",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "采用 CQRS 就必须采用事件溯源吗？",
+      "answer": "不必。CQRS 关注读写职责分离，事件溯源关注如何保存状态变化；两种模式可以组合，也可以分别使用。",
+      "explanation": "事件溯源可作为构建读模型的事件来源，但不是 CQRS 的必要条件。",
+      "example": "读写逻辑分开但共用一个关系数据库，仍然可以是基础形式的 CQRS。",
+      "tags": [
+        "CQRS",
+        "事件溯源",
+        "模式辨析"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs#combine-the-event-sourcing-and-cqrs-patterns"
+    },
+    {
+      "id": "archpat-019",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "CQRS 适用条件",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "什么负载特征可能使 CQRS 的读写分离有价值？",
+      "answer": "读写负载差异明显，或读模型和写模型需要不同扩展方式时，分离模型可能有价值。",
+      "explanation": "对于简单 CRUD 系统，额外模型、同步链路和运维复杂度可能得不偿失。",
+      "example": "读请求远多于写请求时，可独立扩展查询侧投影。",
+      "tags": [
+        "CQRS",
+        "适用场景",
+        "负载特征"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/cqrs#when-to-use-this-pattern"
+    },
+    {
+      "id": "archpat-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "事件溯源的持久化模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "事件溯源模式把什么作为系统状态变化的主要记录？",
+      "answer": "它把一系列按顺序追加的领域事件作为状态变化记录，而不是只覆盖保存当前状态。",
+      "explanation": "事件应表达已经发生的业务事实，事件流可以用于还原实体状态。",
+      "example": "账户余额由开户、存款和取款事件推导得到。",
+      "tags": [
+        "事件溯源",
+        "事件存储",
+        "状态变化"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing"
+    },
+    {
+      "id": "archpat-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "重放事件恢复状态",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "事件溯源系统如何从事件记录恢复实体当前状态？",
+      "answer": "按顺序读取该实体的事件，并依次应用每个事件对应的状态变更，可重建当前状态。",
+      "explanation": "事件顺序和事件处理逻辑的版本管理会影响重建结果。",
+      "example": "把账户初始余额依次应用存款和取款事件，得到当前余额。",
+      "tags": [
+        "事件溯源",
+        "事件重放",
+        "状态重建"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing"
+    },
+    {
+      "id": "archpat-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "事件溯源快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "事件溯源中的快照主要解决什么问题？",
+      "answer": "当事件流很长时，快照保存某个时点的状态，恢复时可从快照继续应用后续事件，减少重放工作量。",
+      "explanation": "快照是重建状态的优化，不能取代作为事实来源的事件记录。",
+      "example": "从第 1000 个事件后的快照恢复，只需再应用第 1001 个及之后的事件。",
+      "tags": [
+        "事件溯源",
+        "快照",
+        "性能优化"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing"
+    },
+    {
+      "id": "archpat-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "事件溯源历史审计",
+      "questionType": "适用场景",
+      "origin": "自行整理",
+      "question": "事件溯源相较只保留当前状态，在哪类需求上有优势？",
+      "answer": "它保留状态变化历史，便于审计、分析某个时点的状态，以及构建不同用途的投影。",
+      "explanation": "历史可追溯不等于所有查询都能直接高效地扫描事件流。",
+      "example": "审计人员可以检查账户余额由哪些业务事件逐步变化而来。",
+      "tags": [
+        "事件溯源",
+        "审计",
+        "历史状态"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing#pattern-advantages"
+    },
+    {
+      "id": "archpat-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CQRS 与事件溯源",
+      "knowledgePoint": "事件溯源复杂度",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "事件溯源能否让任意业务查询都直接从事件日志高效得到？",
+      "answer": "不能；面向查询通常需要构建并维护投影，还要处理事件版本演进、重放和投影恢复等问题。",
+      "explanation": "事件日志更适合作为变更历史，常见读模型会针对查询单独组织。",
+      "example": "按月份统计订单的报表可由事件构建投影，而不是每次扫描全部事件。",
+      "tags": [
+        "事件溯源",
+        "投影",
+        "模式成本"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing#problems-and-considerations"
+    },
+    {
+      "id": "archpat-025",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "系统集成与迁移",
+      "knowledgePoint": "反腐层职责",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "反腐层（Anti-Corruption Layer）在两个语义不同的子系统之间做什么？",
+      "answer": "它作为门面或适配边界翻译请求和数据模型，避免一方的内部语义直接泄漏到另一方。",
+      "explanation": "名称中的“反腐”指保护模型边界，不是网络安全意义上的防护组件。",
+      "example": "适配器把旧系统的客户编号和状态码映射为新领域模型。",
+      "tags": [
+        "反腐层",
+        "系统集成",
+        "模型转换"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer"
+    },
+    {
+      "id": "archpat-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "系统集成与迁移",
+      "knowledgePoint": "反腐层与遗留系统",
+      "questionType": "适用场景",
+      "origin": "自行整理",
+      "question": "新系统集成数据模型陈旧或接口不一致的遗留系统时，反腐层有什么作用？",
+      "answer": "它集中承担旧接口和新领域模型之间的转换，使新系统可以保持自身语义，而不必把遗留约定扩散到业务代码中。",
+      "explanation": "反腐层需要维护额外映射逻辑，适合确有边界隔离需求的集成场景。",
+      "example": "新系统把遗留系统的多个字段组合转换为统一的领域对象。",
+      "tags": [
+        "反腐层",
+        "遗留系统",
+        "领域模型"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer"
+    },
+    {
+      "id": "archpat-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "系统集成与迁移",
+      "knowledgePoint": "绞杀者模式迁移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "绞杀者模式（Strangler Fig）如何逐步替换遗留系统？",
+      "answer": "在客户端和旧系统之间放置门面或代理，逐步把部分功能请求路由到新服务，迁完后再下线旧系统。",
+      "explanation": "迁移期间新旧系统可能需要并存并相互调用。",
+      "example": "先把只读商品查询切到新服务，后续再逐个迁移订单操作。",
+      "tags": [
+        "Strangler Fig",
+        "绞杀者模式",
+        "渐进迁移"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig"
+    },
+    {
+      "id": "archpat-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "系统集成与迁移",
+      "knowledgePoint": "绞杀者门面路由",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "绞杀者迁移中的门面在迁移早期和后期分别如何路由请求？",
+      "answer": "早期大部分请求仍进入遗留系统；新功能逐步完成后，门面把越来越多请求转发到新系统，最终可移除门面或保留为兼容适配层。",
+      "explanation": "门面让客户端在迁移期间继续使用相同入口。",
+      "example": "按 URL 路径把新商品 API 路由到新服务，其余路径暂留旧应用。",
+      "tags": [
+        "Strangler Fig",
+        "请求路由",
+        "迁移门面"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig"
+    },
+    {
+      "id": "archpat-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "API 网关模式",
+      "knowledgePoint": "Gateway Routing",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gateway Routing 模式中的网关主要做什么？",
+      "answer": "网关依据请求的路由信息把请求转发到相应后端服务，为客户端提供统一入口。",
+      "explanation": "路由层可帮助客户端避免直接维护所有后端服务地址，但网关也成为需要运维的组件。",
+      "example": "网关把 `/orders` 请求转发到订单服务，把 `/catalog` 请求转发到商品服务。",
+      "tags": [
+        "Gateway Routing",
+        "API 网关",
+        "路由"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-routing"
+    },
+    {
+      "id": "archpat-030",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "API 网关模式",
+      "knowledgePoint": "Gateway Aggregation",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gateway Aggregation 模式怎样减少客户端请求？",
+      "answer": "客户端向网关发起一次请求，网关调用多个后端服务并聚合响应，再把组合结果返回客户端。",
+      "explanation": "这种模式可减少客户端与多个服务之间的往返，但网关自身需要足够的可用性和处理能力。",
+      "example": "商品详情页请求网关一次，由网关汇总商品、库存和评价服务的结果。",
+      "tags": [
+        "Gateway Aggregation",
+        "API 网关",
+        "响应聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-aggregation"
+    },
+    {
+      "id": "archpat-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "API 网关模式",
+      "knowledgePoint": "聚合网关风险",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Gateway Aggregation 是否会自动消除请求链路中的单点故障和瓶颈？",
+      "answer": "不会；网关可能成为单点故障或性能瓶颈，需要按可用性目标设计并按负载扩展。",
+      "explanation": "聚合减少客户端请求次数，但后端调用和聚合工作仍由网关承担。",
+      "example": "多个后端都正常时，容量不足的聚合网关仍可能导致整个页面超时。",
+      "tags": [
+        "Gateway Aggregation",
+        "单点故障",
+        "瓶颈"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/gateway-aggregation"
+    },
+    {
+      "id": "archpat-032",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sidecar 模式",
+      "knowledgePoint": "Sidecar 部署关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sidecar 模式中的辅助组件通常如何部署？",
+      "answer": "辅助组件作为独立进程或容器与主应用部署在同一主机或相关部署单元中，并与主应用实例共同运行。",
+      "explanation": "Sidecar 与主应用分开封装，但部署位置和生命周期彼此关联。",
+      "example": "每个应用实例旁边运行一个负责日志采集的 Sidecar 容器。",
+      "tags": [
+        "Sidecar",
+        "容器",
+        "部署模式"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sidecar"
+    },
+    {
+      "id": "archpat-033",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sidecar 模式",
+      "knowledgePoint": "Sidecar 跨领域功能",
+      "questionType": "适用场景",
+      "origin": "自行整理",
+      "question": "Sidecar 常用于把哪类功能从主应用中分离？",
+      "answer": "它常承载日志、监控、配置、网络代理或平台适配等外围和跨领域功能。",
+      "explanation": "主应用可通过稳定接口使用这些能力，而不必把所有平台实现绑定到应用代码中。",
+      "example": "Sidecar 统一转发服务流量并处理连接遥测。",
+      "tags": [
+        "Sidecar",
+        "日志",
+        "监控",
+        "平台抽象"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sidecar"
+    },
+    {
+      "id": "archpat-034",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Sidecar 模式",
+      "knowledgePoint": "Sidecar 与主应用生命周期",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Sidecar 实例与主应用实例通常是什么生命周期关系？",
+      "answer": "通常每个主应用实例配套一个 Sidecar 实例，二者共同部署并共享运行生命周期。",
+      "explanation": "Sidecar 可独立更新，但要考虑启动顺序、资源限制和进程间通信。",
+      "example": "主应用容器终止时，其日志代理 Sidecar 也随同工作负载停止。",
+      "tags": [
+        "Sidecar",
+        "生命周期",
+        "应用实例"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/architecture/patterns/sidecar"
+    }
+  ]
+}

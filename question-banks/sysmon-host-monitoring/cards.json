@@ -1,0 +1,298 @@
+{
+  "source": {
+    "id": "sysmon-host-monitoring",
+    "title": "Microsoft Sysmon：主机事件与过滤配置",
+    "url": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon",
+    "type": "官方技术文档",
+    "note": "依据 Microsoft Sysmon 文档逐题整理；腾讯公开复盘中的主机信息与进程关联为部分卡的主题启发。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "sysmonextra-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "文件创建时间变更",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon Event ID 2 记录什么文件时间相关操作？",
+      "answer": "它记录进程显式修改文件创建时间的行为。",
+      "explanation": "合法程序也可能修改创建时间，单条事件不能直接证明恶意。",
+      "example": "调查文件时间与其他主机证据是否一致。",
+      "tags": [
+        "文件创建时间变更",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-2-a-process-changed-a-file-creation-time",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "sysmonextra-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "进程终止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon Event ID 5 可用于观察进程生命周期中的什么时刻？",
+      "answer": "它记录进程终止，并提供时间、进程 GUID 和进程 ID 等信息。",
+      "explanation": "结合创建事件可辅助关联同一个进程实例的生命周期。",
+      "example": "把进程创建与终止记录按 ProcessGUID 关联。",
+      "tags": [
+        "进程终止",
+        "Sysmon",
+        "主机日志",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-5-process-terminated",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室安全与数据分析公开面经（个人自述，合集收录）；主机进程信息主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sysmonextra-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "Sysmon状态与配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon Event ID 4 和 Event ID 16 分别记录什么变化？",
+      "answer": "Event ID 4 记录 Sysmon 服务启动或停止；Event ID 16 记录 Sysmon 配置变化。",
+      "explanation": "两类事件有助于解释采集覆盖或过滤规则何时发生变化。",
+      "example": "检查事件缺口前后 Sysmon 是否停止或更改配置。",
+      "tags": [
+        "Sysmon状态与配置",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-4-sysmon-service-state-changed",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "sysmonextra-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "注册表事件分类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon Event ID 12、13 和 14 分别对应哪些注册表操作？",
+      "answer": "12 记录键或值的创建和删除；13 记录值修改；14 记录键或值重命名。",
+      "explanation": "实际能否看到事件仍取决于 Sysmon 的部署和过滤配置。",
+      "example": "区分自启动键创建与其值更新。",
+      "tags": [
+        "注册表事件分类",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-12-registryevent-object-create-and-delete",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "sysmonextra-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "具名流事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon Event ID 15 关注什么文件活动？",
+      "answer": "它记录具名文件流创建，并记录关联文件哈希及具名流内容等信息。",
+      "explanation": "浏览器下载附加的 Zone.Identifier 流是文档给出的使用场景。",
+      "example": "检查下载文件的标记来源。",
+      "tags": [
+        "具名流事件",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-15-filecreatestreamhash",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "sysmonextra-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "命名管道事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon Event ID 17 和 Event ID 18 对命名管道分别记录什么？",
+      "answer": "17 记录命名管道创建；18 记录客户端与服务端建立管道连接。",
+      "explanation": "命名管道也用于正常进程间通信，不能仅凭事件认定恶意。",
+      "example": "关联创建管道的进程和后续连接。",
+      "tags": [
+        "命名管道事件",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-17-pipeevent-pipe-created",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "sysmonextra-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "WMI事件订阅",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon Event ID 19、20 和 21 分别记录 WMI 事件订阅的哪些步骤？",
+      "answer": "19 记录事件过滤器注册；20 记录消费者注册；21 记录消费者与过滤器的绑定。",
+      "explanation": "这些是行为线索，需结合脚本、主体和环境判断用途。",
+      "example": "关联过滤条件、消费者和绑定关系。",
+      "tags": [
+        "WMI事件订阅",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-19-wmievent-wmieventfilter-activity-detected",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "sysmonextra-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "进程映像篡改",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon Event ID 25 提示什么类型的进程活动？",
+      "answer": "它在检测到进程映像篡改迹象时生成事件，例如文档列出的进程隐藏技术。",
+      "explanation": "事件仍需结合进程、映像和其他上下文核查。",
+      "example": "调查进程映像与预期执行内容不一致的线索。",
+      "tags": [
+        "进程映像篡改",
+        "Sysmon",
+        "主机日志",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-25-processtampering-process-image-change",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室安全与数据分析公开面经（个人自述，合集收录）；主机进程信息主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sysmonextra-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "可执行文件检测与阻止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon Event ID 27 与 Event ID 29 在可执行文件创建方面有什么区别？",
+      "answer": "27 表示检测并阻止 PE 文件创建；29 表示检测到新 PE 文件创建。",
+      "explanation": "事件可用性和行为取决于部署版本与配置。",
+      "example": "区分一个创建被阻止的文件与仅被记录的新文件。",
+      "tags": [
+        "可执行文件检测与阻止",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-27-fileblockexecutable",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "sysmonextra-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "Sysmon错误事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么安全数据流水线应关注 Sysmon Event ID 255？",
+      "answer": "它报告 Sysmon 自身错误，可能提示某些监控任务在负载或其他异常条件下未完成。",
+      "explanation": "应进一步检查错误原因和采集覆盖，不能从单条错误推断全部事件丢失。",
+      "example": "在高负载时核查遥测质量。",
+      "tags": [
+        "Sysmon错误事件",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-255-error",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "sysmonextra-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "包含排除优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon 同一事件同时匹配 include 和 exclude 过滤规则时，哪一方优先？",
+      "answer": "exclude 优先，匹配排除规则的事件不会因 include 命中而保留。",
+      "explanation": "评估未记录事件时需要检查具体过滤配置。",
+      "example": "某网络连接同时匹配包含端口和排除进程规则。",
+      "tags": [
+        "包含排除优先级",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-filtering-entries",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "sysmonextra-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 主机遥测",
+      "knowledgePoint": "配置架构版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sysmon 配置文件中的 schemaversion 与 Sysmon 程序版本是同一个版本号吗？",
+      "answer": "不是；配置 schema 版本独立于 Sysmon 二进制版本。",
+      "explanation": "记录两者有助于检查规则兼容性和复现实验配置。",
+      "example": "排查旧配置在新版采集程序上的行为。",
+      "tags": [
+        "配置架构版本",
+        "Sysmon",
+        "主机日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#configuration-files",
+      "referenceTitle": "Microsoft Sysmon 官方文档",
+      "referenceType": "官方技术文档"
+    }
+  ]
+}

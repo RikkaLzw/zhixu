@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "postgresql-upsert-set-operations",
+    "title": "PostgreSQL 17：写入冲突与集合查询",
+    "url": "https://www.postgresql.org/docs/17/sql-insert.html",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgwrite-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "冲突忽略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 INSERT ... ON CONFLICT DO NOTHING 遇到指定的唯一冲突时做什么？",
+      "answer": "跳过冲突的待插入行，不对该行执行插入。",
+      "explanation": "其他不属于该冲突处理范围的错误仍可能使语句失败。",
+      "example": "唯一用户名已存在时跳过重复记录。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "冲突忽略"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-insert.html"
+    },
+    {
+      "id": "pgwrite-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "冲突更新前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 ON CONFLICT DO UPDATE 使用什么约束或索引作为冲突仲裁？",
+      "answer": "需要指定冲突目标，并使用合适的非延迟唯一约束或唯一索引作为仲裁依据。",
+      "explanation": "排除约束不能作为 DO UPDATE 的仲裁约束。",
+      "example": "ON CONFLICT (user_id) 需要相应的可用唯一约束或索引。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "冲突更新前提"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-insert.html"
+    },
+    {
+      "id": "pgwrite-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "EXCLUDED 含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL UPSERT 的 EXCLUDED.column 表示什么值？",
+      "answer": "表示该行原本准备插入的列值。",
+      "explanation": "冲突更新可同时引用现有表中的值与 EXCLUDED 中的新值。",
+      "example": "SET name = EXCLUDED.name 使用拟插入的新名称。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "EXCLUDED 含义"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-insert.html"
+    },
+    {
+      "id": "pgwrite-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "冲突更新条件",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 ON CONFLICT DO UPDATE ... WHERE 条件为假时，该冲突行会出现在 RETURNING 结果里吗？",
+      "answer": "不会；该行被锁定，但没有更新，因此不返回。",
+      "explanation": "条件在确定冲突候选后判断。",
+      "example": "WHERE 只允许较新的版本覆盖旧记录。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "冲突更新条件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-insert.html"
+    },
+    {
+      "id": "pgwrite-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "冲突更新原子性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 ON CONFLICT DO UPDATE 未用 WHERE 排除冲突行时，对并发插入或更新提供什么保证？",
+      "answer": "没有独立错误时，每个候选行保证原子地插入或更新。",
+      "explanation": "它用于避免应用层先检查再写入时的竞争窗口。",
+      "example": "并发写同一唯一键时由数据库仲裁。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "冲突更新原子性"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-insert.html"
+    },
+    {
+      "id": "pgwrite-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "重复影响同一行",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的单条 INSERT ... ON CONFLICT DO UPDATE 能否两次更新同一个现有行？",
+      "answer": "不能；若候选行导致同一现有行被影响多次，会报 cardinality violation。",
+      "explanation": "批量导入前应处理同一冲突键的重复候选。",
+      "example": "单次插入中两条记录拥有同一唯一键可能触发该错误。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "重复影响同一行"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-insert.html"
+    },
+    {
+      "id": "pgwrite-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "修改后返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 INSERT ... RETURNING 常用于获得什么？",
+      "answer": "获得实际插入行的指定列，包括数据库生成的默认值。",
+      "explanation": "这样可避免为了读取生成值再发一条查询。",
+      "example": "INSERT ... RETURNING id 可取回生成的主键。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "修改后返回值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/dml-returning.html"
+    },
+    {
+      "id": "pgwrite-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "交集重复行",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "PostgreSQL 中某行在 INTERSECT ALL 左右结果中分别出现 3 次和 2 次时，结果中出现几次？",
+      "answer": "2 次。",
+      "explanation": "INTERSECT ALL 对每个相同行保留两侧出现次数的较小值。",
+      "example": "左侧 3 次、右侧 2 次，交集保留 2 次。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "交集重复行"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/sql-select.html"
+    },
+    {
+      "id": "pgwrite-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "差集重复行",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "PostgreSQL 中某行在 EXCEPT ALL 左右结果中分别出现 3 次和 2 次时，结果中出现几次？",
+      "answer": "1 次。",
+      "explanation": "EXCEPT ALL 按左侧次数减去右侧次数，结果不低于 0。",
+      "example": "左侧 3 次、右侧 2 次，差集保留 1 次。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "差集重复行"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/sql-select.html"
+    },
+    {
+      "id": "pgwrite-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 写入与集合运算",
+      "knowledgePoint": "集合运算优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中不加括号时，INTERSECT 与 UNION、EXCEPT 谁先结合？",
+      "answer": "INTERSECT 结合得更紧；UNION 和 EXCEPT 同优先级并从左到右结合。",
+      "explanation": "使用括号可明确改变结合顺序。",
+      "example": "A UNION B INTERSECT C 解释为 A UNION (B INTERSECT C)。",
+      "tags": [
+        "SQL 写入与集合运算",
+        "集合运算优先级"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-union.html"
+    }
+  ]
+}

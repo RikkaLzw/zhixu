@@ -1,0 +1,316 @@
+{
+  "source": {
+    "id": "sklearn-text-vectorization",
+    "title": "scikit-learn 1.7 文档：文本计数与 TF-IDF",
+    "url": "https://scikit-learn.org/1.7/modules/feature_extraction.html",
+    "type": "官方文档与教材",
+    "note": "依据题目所列文档或教材自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "sktext-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "词频矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 CountVectorizer 通常把文档集合转成什么矩阵？",
+      "answer": "转成文档—词项计数矩阵：行对应文档，列对应词项。",
+      "explanation": "默认返回稀疏 CSR 矩阵，词项由分词规则和词表确定。",
+      "example": "两篇文本对应两行，各词项的出现次数分别计数。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "词频矩阵"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "特征名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CountVectorizer 拟合后，get_feature_names_out() 的结果有什么用途？",
+      "answer": "它返回与特征矩阵列对应的词项名称。",
+      "explanation": "可据此解释某列的计数或权重。",
+      "example": "检查训练语料学到的词项顺序。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "特征名称"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "默认分词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 CountVectorizer 默认 word 模式会保留单字符词项吗？",
+      "answer": "默认正则要求至少两个连续的词字符，因此单字符词项通常被忽略。",
+      "explanation": "正则使用 Unicode 词字符规则；自定义分词器或模式时结论可能不同。",
+      "example": "默认模式会忽略单独的 a。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "默认分词"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "中文分词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能直接把 CountVectorizer 的默认 word 分词当作中文分词器？",
+      "answer": "默认正则按词字符片段匹配，不负责把连续中文句子切分成语义词。",
+      "explanation": "可按任务使用适合的中文分词器或字符 n-gram。",
+      "example": "连续中文句子可能被识别为较长的单个片段。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "中文分词"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "n元词组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CountVectorizer 的 ngram_range=(1, 2) 表示什么？",
+      "answer": "提取一元和二元 n-gram。",
+      "explanation": "默认 word 分析器下指连续一个词和连续两个词。",
+      "example": "输入 red fox 可得到 red、fox 和 red fox。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "n元词组"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "词内字符片段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CountVectorizer 的 char_wb 分析器与普通 char 分析器有什么区别？",
+      "answer": "char_wb 只在词边界内构造字符 n-gram，并在词边界用空格填充。",
+      "explanation": "普通 char 分析器直接从文本生成字符 n-gram。",
+      "example": "词首或词尾的字符片段包含边界空格。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "词内字符片段"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "文档频率阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CountVectorizer 中 min_df 和 max_df 的浮点值与整数值分别表示什么？",
+      "answer": "浮点值表示文档比例，整数表示文档数量。",
+      "explanation": "它们用于筛除文档频率过低或过高的词项。",
+      "example": "min_df=2 表示至少出现在两个文档中。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "文档频率阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "频率阈值边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CountVectorizer 构建词表时，min_df 和 max_df 的阈值边界是严格排除还是包含？",
+      "answer": "频率严格小于 min_df 或严格大于 max_df 的词被排除；恰好等于阈值不会因此被排除。",
+      "explanation": "阈值使用比例或计数取决于参数类型。",
+      "example": "min_df=2 时恰好出现在两篇文档的词可保留。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "频率阈值边界"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "二值词袋",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CountVectorizer 设置 binary=True 后非零词频如何表示？",
+      "answer": "非零计数设为 1，表示词项在文档中出现。",
+      "explanation": "它丢弃同一文档内该词出现次数的差异。",
+      "example": "某词出现三次也记为 1。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "二值词袋"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "固定词表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CountVectorizer 提供固定 vocabulary 后，min_df 和 max_df 是否继续筛选该词表？",
+      "answer": "不会；文档说明提供 vocabulary 时忽略这两个参数。",
+      "explanation": "固定词表的列由提供的词项及索引决定。",
+      "example": "手动词表中出现较少的词仍可保留。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "固定词表"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html"
+    },
+    {
+      "id": "sktext-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "TF-IDF 含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TF-IDF 的未归一化权重通常怎样结合词频和逆文档频率？",
+      "answer": "用文档内词频乘以词项的逆文档频率。",
+      "explanation": "不同实现对频率缩放、平滑和归一化的具体定义可能不同。",
+      "example": "同一词在文档内出现更多次可影响其权重。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "TF-IDF 含义"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/feature_extraction.html"
+    },
+    {
+      "id": "sktext-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "平滑逆文档频率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 默认平滑 IDF 的计算式是什么？",
+      "answer": "idf(t)=log((1+n)/(1+df(t)))+1，其中 n 为文档数，df(t) 为包含词项 t 的文档数。",
+      "explanation": "默认平滑相当于假想加入一篇包含所有词项的文档。",
+      "example": "某词出现在全部文档时其默认 IDF 为 1。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "平滑逆文档频率"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/feature_extraction.html"
+    },
+    {
+      "id": "sktext-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "次线性词频",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TfidfVectorizer 的 sublinear_tf=True 对非零词频做什么变换？",
+      "answer": "把词频 tf 替换为 1+log(tf)。",
+      "explanation": "这会减弱高频词增加次数带来的线性增长。",
+      "example": "词频为 1 时变换结果仍为 1。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "次线性词频"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html"
+    },
+    {
+      "id": "sktext-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "L2归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TfidfVectorizer 默认 norm=\"l2\" 对非零文档向量有什么效果？",
+      "answer": "将每个非零文档向量缩放到 L2 范数为 1。",
+      "explanation": "没有任何词项命中时零向量仍为零。",
+      "example": "对各文档分别按向量长度归一化。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "L2归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html"
+    },
+    {
+      "id": "sktext-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "二值输入与权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TfidfVectorizer 设置 binary=True 是否保证最终输出只有 0 和 1？",
+      "answer": "不保证；它只把词频部分二值化，IDF 加权和归一化仍可能产生其他值。",
+      "explanation": "要得到二值输出，还需按文档设置 use_idf=False 和 norm=None。",
+      "example": "两个文档的词项权重可能是 0.6、0.8。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "二值输入与权重"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html"
+    },
+    {
+      "id": "sktext-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "词袋与 TF-IDF 特征",
+      "knowledgePoint": "向量器组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TfidfVectorizer 与 CountVectorizer、TfidfTransformer 的常见关系是什么？",
+      "answer": "它相当于先进行词项计数，再转换成 TF-IDF 特征。",
+      "explanation": "具体结果仍取决于一致的参数和相同的训练语料。",
+      "example": "将文本编码及词权重变换封装在一个对象中。",
+      "tags": [
+        "词袋与 TF-IDF 特征",
+        "向量器组合"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html"
+    }
+  ]
+}

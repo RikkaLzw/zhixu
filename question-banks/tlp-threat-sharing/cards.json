@@ -1,0 +1,152 @@
+{
+  "source": {
+    "id": "tlp-threat-sharing",
+    "title": "FIRST TLP 2.0：威胁情报共享边界",
+    "url": "https://www.first.org/tlp/",
+    "type": "公开技术标准",
+    "note": "题目依据公开资料自行整理；安全场景的使用仍应结合部署条件。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "tlp-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报共享",
+      "knowledgePoint": "TLP:RED 共享范围",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "FIRST TLP 2.0 中，接收者可以继续分享 TLP:RED 信息吗？",
+      "answer": "不能；TLP:RED 信息仅限原接收者，不得再分享给其他人。",
+      "explanation": "会议中的信息仅限出席该会议的人。",
+      "example": "不要把 TLP:RED 报告转发给未参加原会议的同事。",
+      "tags": [
+        "TLP:RED 共享范围",
+        "情报共享",
+        "TLP"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/tlp/"
+    },
+    {
+      "id": "tlp-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报共享",
+      "knowledgePoint": "TLP:AMBER 与严格限制",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "TLP:AMBER 和 TLP:AMBER+STRICT 的共享边界有什么区别？",
+      "answer": "AMBER 可按知情需要在接收者所在组织及其客户内共享；AMBER+STRICT 限于组织内部。",
+      "explanation": "普通 AMBER 的客户范围也受保护组织及客户、防止进一步损害等目的限制。",
+      "example": "需限制客户也不能接收时，来源使用 AMBER+STRICT。",
+      "tags": [
+        "TLP:AMBER 与严格限制",
+        "情报共享",
+        "TLP"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/tlp/"
+    },
+    {
+      "id": "tlp-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报共享",
+      "knowledgePoint": "TLP:GREEN 共享范围",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "TLP:GREEN 情报能否发布到公开可访问的网站？",
+      "answer": "不能；它可在相关社区内分享，但不得通过公开可访问的渠道传播。",
+      "explanation": "如果来源没有定义社区，FIRST 指导默认按网络安全或防御社区理解。",
+      "example": "可在限定的行业防御社区分享，但不公开发布。",
+      "tags": [
+        "TLP:GREEN 共享范围",
+        "情报共享",
+        "TLP"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/tlp/"
+    },
+    {
+      "id": "tlp-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报共享",
+      "knowledgePoint": "TLP:CLEAR 共享范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLP:CLEAR 对信息披露范围有什么限制？",
+      "answer": "TLP 本身不限制向公众分享；使用信息时仍应遵守适用的版权规则。",
+      "explanation": "CLEAR 只描述披露边界，不代表其他适用规则自动失效。",
+      "example": "公开引用 CLEAR 情报时仍检查版权条件。",
+      "tags": [
+        "TLP:CLEAR 共享范围",
+        "情报共享",
+        "TLP"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/tlp/"
+    },
+    {
+      "id": "tlp-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报共享",
+      "knowledgePoint": "超出共享范围的许可",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如果接收者需要超出 TLP 标签规定的范围分享情报，应先做什么？",
+      "answer": "先取得信息来源的明确许可。",
+      "explanation": "来源还可以指定额外共享限制，接收者也应遵守。",
+      "example": "在向社区外部分享 GREEN 信息之前联系来源。",
+      "tags": [
+        "超出共享范围的许可",
+        "情报共享",
+        "TLP"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/tlp/"
+    },
+    {
+      "id": "tlp-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报共享",
+      "knowledgePoint": "TLP 与正式分类",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "FIRST TLP 是正式的信息密级分类或加密处理标准吗？",
+      "answer": "不是；TLP 表示接收者的信息共享边界，不规定正式密级、许可条款或加密处理规则。",
+      "explanation": "其他适用的分类与处理要求应单独遵守。",
+      "example": "标记 TLP:AMBER 后仍按组织政策处理数据。",
+      "tags": [
+        "TLP 与正式分类",
+        "情报共享",
+        "TLP"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/tlp/"
+    },
+    {
+      "id": "tlp-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报共享",
+      "knowledgePoint": "翻译后的 TLP 标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "把 TLP 标记的情报翻译成中文时，TLP 标签应怎样处理？",
+      "answer": "内容可以翻译，但标签必须保留原有形式，不能翻译标签名称。",
+      "explanation": "FIRST 要求有效标签保持规范写法。",
+      "example": "中文报告中仍使用 TLP:GREEN。",
+      "tags": [
+        "翻译后的 TLP 标签",
+        "情报共享",
+        "TLP"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/tlp/"
+    }
+  ]
+}

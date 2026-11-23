@@ -1,0 +1,223 @@
+{
+  "source": {
+    "id": "information-theory",
+    "title": "信息论与统计推断",
+    "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html",
+    "type": "教材、论文与官方技术文档",
+    "note": "根据逐题引用的资料自行整理；面经引用为合集转载的个人复盘，公司和经历未经企业确认。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "info-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "信息论",
+      "knowledgePoint": "自信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "概率为 p 的事件发生时，自信息如何表示？",
+      "answer": "当 0<p≤1 时，自信息为 −log₂p，单位是比特。",
+      "explanation": "概率越小，自信息越大；概率为 1 的事件自信息为 0。",
+      "example": "概率为 1/2 的事件携带 1 比特自信息。",
+      "tags": [
+        "自信息",
+        "信息论"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html"
+    },
+    {
+      "id": "info-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "信息论",
+      "knowledgePoint": "离散熵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "离散随机变量的熵如何由各结果的概率计算？",
+      "answer": "计算 −Σ p(x)log₂p(x)，即各结果自信息的期望。",
+      "explanation": "约定概率为 0 的项贡献为 0。",
+      "example": "等概率的两个结果对应 1 比特熵。",
+      "tags": [
+        "离散熵",
+        "信息论"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html"
+    },
+    {
+      "id": "info-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "信息论",
+      "knowledgePoint": "有限离散熵上界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定有限个可能结果时，什么分布达到最大的离散熵？",
+      "answer": "各结果等概率的均匀分布达到最大熵。",
+      "explanation": "最大值为 log₂n 比特，其中 n 是可能结果的个数。",
+      "example": "四个等概率结果的熵为 2 比特。",
+      "tags": [
+        "有限离散熵上界",
+        "信息论"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html"
+    },
+    {
+      "id": "info-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "信息论",
+      "knowledgePoint": "KL不对称",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "KL 散度 DKL(P‖Q) 交换 P 和 Q 后一般相同吗？",
+      "answer": "不一定；KL 散度一般不对称。",
+      "explanation": "因此它不满足度量距离所要求的对称性。",
+      "example": "比较模型分布偏离参考分布时要保留散度方向。",
+      "tags": [
+        "KL不对称",
+        "信息论"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html"
+    },
+    {
+      "id": "info-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "信息论",
+      "knowledgePoint": "KL支持集",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "离散分布中若 P(x)>0 而 Q(x)=0，DKL(P‖Q) 如何？",
+      "answer": "该散度为正无穷。",
+      "explanation": "Q 给 P 可能产生的结果分配零概率，会导致对数比值发散。",
+      "example": "真实分布可能输出某结果，而模型认为其概率为零。",
+      "tags": [
+        "KL支持集",
+        "信息论"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html"
+    },
+    {
+      "id": "info-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "信息论",
+      "knowledgePoint": "交叉熵与KL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "交叉熵 CE(P,Q) 与 KL 散度 DKL(P‖Q) 有什么关系？",
+      "answer": "CE(P,Q)=H(P)+DKL(P‖Q)；当 P 固定时，最小化交叉熵与最小化该 KL 散度对 Q 等价。",
+      "explanation": "表达式中的散度方向不能随意交换；支持集不匹配时可能出现无穷值。",
+      "example": "用固定标签分布 P 优化预测分布 Q。",
+      "tags": [
+        "交叉熵与KL",
+        "信息论",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900313%E3%80%91%E5%AD%97%E8%8A%82%E9%9D%A2%E7%BB%8F.md",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（合集转载，经历为分享者自述）",
+      "supportingReferences": [
+        {
+          "id": "technical-ref",
+          "title": "动手学深度学习：Information Theory",
+          "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "company-iflytek",
+          "title": "科大讯飞公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%A7%91%E5%A4%A7%E8%AE%AF%E9%A3%9E/%E3%80%900306%E3%80%91%E7%A7%91%E5%A4%A7%E8%AE%AF%E9%A3%9E%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ],
+      "referenceType": "公开面经合集"
+    },
+    {
+      "id": "info-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "信息论",
+      "knowledgePoint": "互信息与独立性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个随机变量的互信息为零意味着什么？",
+      "answer": "它们相互独立；反过来，独立变量的互信息也为零。",
+      "explanation": "互信息可反映不限于线性相关的统计依赖。",
+      "example": "独立掷两枚公平硬币时，二者互信息为零。",
+      "tags": [
+        "互信息与独立性",
+        "信息论"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html"
+    },
+    {
+      "id": "info-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率与统计",
+      "knowledgePoint": "标准差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准差与方差是什么关系？",
+      "answer": "标准差是方差的非负平方根。",
+      "explanation": "标准差与原变量具有相同量纲，方差的量纲则是原量纲的平方。",
+      "example": "数值的方差为 9 时，其标准差为 3。",
+      "tags": [
+        "标准差",
+        "概率与统计"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/probability.html"
+    },
+    {
+      "id": "info-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "统计推断",
+      "knowledgePoint": "无偏估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "统计估计量无偏是什么意思？",
+      "answer": "在给定抽样模型下，该估计量的期望等于被估计的真实参数。",
+      "explanation": "无偏不表示每一次样本估计都恰好等于真实值。",
+      "example": "独立同分布样本的均值是总体均值的无偏估计。",
+      "tags": [
+        "无偏估计",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/statistics.html"
+    },
+    {
+      "id": "info-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断",
+      "knowledgePoint": "p值",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "假设检验中的 p 值表示什么？",
+      "answer": "在原假设及检验模型成立时，得到与观测结果一样或更极端的检验统计量的概率。",
+      "explanation": "更极端的方向由具体检验设定；它不是原假设为真的概率。",
+      "example": "双侧检验按两侧偏离定义极端结果。",
+      "tags": [
+        "p值",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/statistics.html"
+    }
+  ]
+}

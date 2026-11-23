@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "memgpt-context-management",
+    "title": "MemGPT 原论文 v2：分层上下文管理",
+    "url": "https://arxiv.org/pdf/2310.08560v2",
+    "type": "固定版本论文、官方文档与数据规范",
+    "note": "依据逐题引用的资料自行整理；示例为自编。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "memgpt-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MemGPT 上下文与记忆",
+      "knowledgePoint": "主上下文结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MemGPT 原论文把主上下文分为哪三部分？",
+      "answer": "系统指令、可读写的工作上下文和保存近期消息的 FIFO 队列。",
+      "explanation": "它们共同组成一次模型推理的提示内容。",
+      "example": "近期对话与长期保存信息并不都直接位于主上下文。",
+      "tags": [
+        "MemGPT 上下文与记忆",
+        "主上下文结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.08560v2"
+    },
+    {
+      "id": "memgpt-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MemGPT 上下文与记忆",
+      "knowledgePoint": "工作上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MemGPT 原论文中的工作上下文通过什么方式修改？",
+      "answer": "由模型调用 MemGPT 提供的函数进行读写。",
+      "explanation": "论文将它作为固定大小的可读写文本块。",
+      "example": "把用户偏好写入工作上下文。",
+      "tags": [
+        "MemGPT 上下文与记忆",
+        "工作上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.08560v2"
+    },
+    {
+      "id": "memgpt-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MemGPT 上下文与记忆",
+      "knowledgePoint": "归档与回忆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MemGPT 的 archival storage 和 recall storage 分别主要保存什么？",
+      "answer": "前者保存可由函数读写的任意文本对象；后者保存交互消息记录。",
+      "explanation": "两者都位于当前模型提示之外。",
+      "example": "资料片段可入归档，用户与工具消息记录在回忆存储中。",
+      "tags": [
+        "MemGPT 上下文与记忆",
+        "归档与回忆"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.08560v2"
+    },
+    {
+      "id": "memgpt-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MemGPT 上下文与记忆",
+      "knowledgePoint": "内存压力",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MemGPT 原论文中的 memory pressure 警告通常在什么情况下出现？",
+      "answer": "提示长度超过预设警告阈值时，队列管理器加入警告消息。",
+      "explanation": "这给模型机会在队列清理前保存重要信息。",
+      "example": "上下文接近容量时提示保存关键偏好。",
+      "tags": [
+        "MemGPT 上下文与记忆",
+        "内存压力"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.08560v2"
+    },
+    {
+      "id": "memgpt-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MemGPT 上下文与记忆",
+      "knowledgePoint": "队列清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MemGPT 清理 FIFO 队列时如何处理被移出的消息？",
+      "answer": "它移除部分旧消息，并结合既有摘要生成新的递归摘要。",
+      "explanation": "被移出内容不再直接位于当前上下文，但可从回忆存储检索。",
+      "example": "旧对话压缩成摘要以腾出提示空间。",
+      "tags": [
+        "MemGPT 上下文与记忆",
+        "队列清理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.08560v2"
+    },
+    {
+      "id": "memgpt-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MemGPT 上下文与记忆",
+      "knowledgePoint": "心跳链式调用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MemGPT 原论文中的 request_heartbeat=true 对函数调用后的控制流有什么作用？",
+      "answer": "函数完成后立即再次运行模型，使它能够继续后续函数调用。",
+      "explanation": "未请求心跳时通常等待下一个外部事件。",
+      "example": "检索第一页后继续获取下一页。",
+      "tags": [
+        "MemGPT 上下文与记忆",
+        "心跳链式调用"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.08560v2"
+    },
+    {
+      "id": "memgpt-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MemGPT 上下文与记忆",
+      "knowledgePoint": "分页目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MemGPT 为什么对外部记忆检索结果使用分页？",
+      "answer": "分页限制每次返回到上下文中的信息量，降低一次检索溢出上下文窗口的风险。",
+      "explanation": "需要更多结果时模型可以继续请求其他页面。",
+      "example": "大量匹配文档分多页查看。",
+      "tags": [
+        "MemGPT 上下文与记忆",
+        "分页目的"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.08560v2"
+    }
+  ]
+}

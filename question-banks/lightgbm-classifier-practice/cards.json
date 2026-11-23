@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "lightgbm-classifier-practice",
+    "title": "LightGBM 4.6 文档：分类器接口",
+    "url": "https://lightgbm.readthedocs.io/en/v4.6.0/pythonapi/lightgbm.LGBMClassifier.html",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "lgbapi-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 分类器接口",
+      "knowledgePoint": "验证数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 LGBMClassifier.fit 的 eval_set 用于什么？",
+      "answer": "提供一组或多组验证数据，供训练期间计算评估指标。",
+      "explanation": "验证数据不应当被当成最终独立测试集。",
+      "example": "eval_set=[(X_val,y_val)] 可用于观察验证表现。",
+      "tags": [
+        "LightGBM 分类器接口",
+        "验证数据"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/pythonapi/lightgbm.LGBMClassifier.html"
+    },
+    {
+      "id": "lgbapi-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 分类器接口",
+      "knowledgePoint": "早停条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 的 early_stopping 回调至少需要什么？",
+      "answer": "至少需要一份验证数据和一个评估指标。",
+      "explanation": "训练数据的指标不作为该回调的早停依据。",
+      "example": "使用独立验证集及日志损失监控可触发早停。",
+      "tags": [
+        "LightGBM 分类器接口",
+        "早停条件"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/pythonapi/lightgbm.early_stopping.html"
+    },
+    {
+      "id": "lgbapi-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 分类器接口",
+      "knowledgePoint": "多指标早停",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 的 early_stopping 默认有多个验证指标时如何处理？",
+      "answer": "默认检查所有指标；first_metric_only=True 时只检查第一个指标。",
+      "explanation": "具体停止时点还受 stopping_rounds 和 min_delta 影响。",
+      "example": "多个指标存在时应明确早停监控口径。",
+      "tags": [
+        "LightGBM 分类器接口",
+        "多指标早停"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/pythonapi/lightgbm.early_stopping.html"
+    },
+    {
+      "id": "lgbapi-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 分类器接口",
+      "knowledgePoint": "实际训练轮数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 的 n_estimators_ 是否保证等于初始化的 n_estimators？",
+      "answer": "不保证；早停或树复杂度限制可能使实际轮数更少。",
+      "explanation": "n_estimators_ 记录实际进行的提升轮数。",
+      "example": "无法继续有效分裂时可能提前结束训练。",
+      "tags": [
+        "LightGBM 分类器接口",
+        "实际训练轮数"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/pythonapi/lightgbm.LGBMClassifier.html"
+    },
+    {
+      "id": "lgbapi-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 分类器接口",
+      "knowledgePoint": "特征重要性类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 的 importance_type=split 与 gain 如何定义特征重要性？",
+      "answer": "split 统计特征被用于分裂的次数；gain 汇总使用该特征的分裂增益。",
+      "explanation": "二者是不同口径，不直接证明因果作用。",
+      "example": "同一特征可被频繁使用但累计增益较小。",
+      "tags": [
+        "LightGBM 分类器接口",
+        "特征重要性类型"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/pythonapi/lightgbm.LGBMClassifier.html"
+    },
+    {
+      "id": "lgbapi-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 分类器接口",
+      "knowledgePoint": "类别特征负值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 将列指定为类别特征后，负值如何处理？",
+      "answer": "负值被视为缺失值。",
+      "explanation": "类别值会转为 int32；应避免把有效类别编码成负数。",
+      "example": "将 -1 当作真实类别时，模型会按缺失值处理。",
+      "tags": [
+        "LightGBM 分类器接口",
+        "类别特征负值"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/pythonapi/lightgbm.LGBMClassifier.html"
+    },
+    {
+      "id": "lgbapi-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 分类器接口",
+      "knowledgePoint": "类别权重概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 分类器用于多分类时，文档提醒使用 class_weight 可能对概率估计有什么影响？",
+      "answer": "多分类类别加权可能使单个类别的概率估计变差，需要时可在独立数据上校准。",
+      "explanation": "加权训练的目标和输出校准是不同问题。",
+      "example": "在类别不平衡任务中，应单独评估预测概率的可靠性。",
+      "tags": [
+        "LightGBM 分类器接口",
+        "类别权重概率"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/pythonapi/lightgbm.LGBMClassifier.html"
+    }
+  ]
+}

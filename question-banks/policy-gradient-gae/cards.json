@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "policy-gradient-gae",
+    "title": "Spinning Up 与 GAE 论文：策略梯度基础",
+    "url": "https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html",
+    "type": "教材、研究论文与官方资料",
+    "note": "依据逐题引用的教材或研究论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "pgbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "策略梯度与优势估计",
+      "knowledgePoint": "策略梯度目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "策略梯度方法要对什么量求关于策略参数的梯度？",
+      "answer": "对策略的期望回报求梯度，以调整参数并改进策略。",
+      "explanation": "估计梯度通常需要智能体与环境交互的数据。",
+      "example": "根据采样轨迹估计更新方向。",
+      "tags": [
+        "策略梯度与优势估计",
+        "策略梯度目标"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html"
+    },
+    {
+      "id": "pgbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "策略梯度与优势估计",
+      "knowledgePoint": "对数概率梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "随机策略梯度估计中，动作的 log π(a|s) 梯度通常与什么相乘？",
+      "answer": "与该状态动作对应的回报或优势估计等权重相乘。",
+      "explanation": "常见形式再对轨迹和时间步求和并求样本平均。",
+      "example": "对优势较高的采样动作给予正向权重。",
+      "tags": [
+        "策略梯度与优势估计",
+        "对数概率梯度"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html"
+    },
+    {
+      "id": "pgbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "策略梯度与优势估计",
+      "knowledgePoint": "因果回报",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "策略梯度中的 reward-to-go 从哪个时间范围累积奖励？",
+      "answer": "从当前动作之后对应的奖励开始，累积该时刻及之后的奖励。",
+      "explanation": "当前动作不能影响过去奖励，因此策略梯度可去除过去奖励项以减少估计噪声。",
+      "example": "在有限回合无折扣时，对当前及后续奖励求和。",
+      "tags": [
+        "策略梯度与优势估计",
+        "因果回报"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html"
+    },
+    {
+      "id": "pgbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "策略梯度与优势估计",
+      "knowledgePoint": "状态基线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "策略梯度中减去只依赖状态的基线，为什么在适当条件下不改变期望梯度？",
+      "answer": "给定状态时，策略动作的对数概率梯度的期望为零。",
+      "explanation": "基线项对该动作不依赖，并且计算策略梯度时不把基线当作需对策略求导的权重。",
+      "example": "用该状态的价值估计作为基线。",
+      "tags": [
+        "策略梯度与优势估计",
+        "状态基线"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html"
+    },
+    {
+      "id": "pgbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "策略梯度与优势估计",
+      "knowledgePoint": "动作依赖基线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "策略梯度中的基线可以随当前采样动作任意变化而仍保证无偏吗？",
+      "answer": "不能；动作依赖可能使被减去的基线项具有非零期望梯度。",
+      "explanation": "需额外满足无偏条件或进行相应修正。",
+      "example": "把不同动作各自的常数直接当作基线可能改变更新方向。",
+      "tags": [
+        "策略梯度与优势估计",
+        "动作依赖基线"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html"
+    },
+    {
+      "id": "pgbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "策略梯度与优势估计",
+      "knowledgePoint": "价值基线训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Spinning Up 的 VPG 示例怎样训练用于基线的价值函数？",
+      "answer": "把状态价值预测对采样回报做均方误差回归。",
+      "explanation": "近似价值函数可能不准确，需要随策略更新。",
+      "example": "用该状态之后的采样回报作为回归目标。",
+      "tags": [
+        "策略梯度与优势估计",
+        "价值基线训练"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/algorithms/vpg.html"
+    },
+    {
+      "id": "pgbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "策略梯度与优势估计",
+      "knowledgePoint": "损失与回报",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么策略梯度训练时代理损失下降不能单独证明策略表现改善？",
+      "answer": "代理损失依赖当前采样数据和梯度估计，本身不是策略真实期望回报。",
+      "explanation": "应结合独立环境评估和平均回报等指标。",
+      "example": "对同一旧批次反复优化后，环境表现可能没有改善。",
+      "tags": [
+        "策略梯度与优势估计",
+        "损失与回报"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html"
+    },
+    {
+      "id": "pgbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "策略梯度与优势估计",
+      "knowledgePoint": "GAE 残差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "广义优势估计（GAE）如何组合价值函数的时序差分残差？",
+      "answer": "按时间将后续 TD 残差以 (γλ) 的幂加权求和。",
+      "explanation": "非终止一步残差为 rₜ+γV(sₜ₊₁)−V(sₜ)。",
+      "example": "λ=0 时，估计退化为当前一步的 TD 残差。",
+      "tags": [
+        "策略梯度与优势估计",
+        "GAE 残差"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1506.02438v6"
+    },
+    {
+      "id": "pgbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "策略梯度与优势估计",
+      "knowledgePoint": "GAE 参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用近似价值函数时，GAE 的 λ 主要调节什么权衡？",
+      "answer": "它改变优势估计对多步残差的权重，通常用于权衡偏差和方差。",
+      "explanation": "具体偏差、方差与价值函数和数据有关，并非单调保证。",
+      "example": "λ 较小时更侧重短期自举估计。",
+      "tags": [
+        "策略梯度与优势估计",
+        "GAE 参数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1506.02438v6"
+    }
+  ]
+}

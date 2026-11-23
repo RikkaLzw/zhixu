@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "capa-capability-analysis",
+    "title": "capa v9.3.0 官方说明：程序能力分析",
+    "url": "https://raw.githubusercontent.com/mandiant/capa/v9.3.0/README.md",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "capabase-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "capa 程序能力分析",
+      "knowledgePoint": "能力识别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "capa 的主要用途是什么？",
+      "answer": "根据程序特征和规则识别可执行文件可能具备的能力。",
+      "explanation": "结果需要结合证据和上下文验证，不等于直接证明实际执行了这些行为。",
+      "example": "报告可能提示程序具有网络通信能力。",
+      "tags": [
+        "capa 程序能力分析",
+        "能力识别"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mandiant/capa/v9.3.0/README.md"
+    },
+    {
+      "id": "capabase-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "capa 程序能力分析",
+      "knowledgePoint": "分析输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "capa v9.3.0 除 PE 文件外，还可分析哪些类型的输入？",
+      "answer": "还支持 ELF、.NET 模块、shellcode 和受支持的沙箱报告等输入。",
+      "explanation": "不同输入可提供的特征和分析范围不同。",
+      "example": "可对受支持沙箱生成的报告运行 capa。",
+      "tags": [
+        "capa 程序能力分析",
+        "分析输入"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mandiant/capa/v9.3.0/README.md"
+    },
+    {
+      "id": "capabase-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "capa 程序能力分析",
+      "knowledgePoint": "详细证据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "capa 的 -vv 选项对能力报告提供什么帮助？",
+      "answer": "它显示能力匹配的详细证据及其位置，便于复核结论。",
+      "explanation": "详细输出可帮助分析人员定位需要进一步研究的区域。",
+      "example": "看到某个能力后，可查看规则在哪里匹配。",
+      "tags": [
+        "capa 程序能力分析",
+        "详细证据"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mandiant/capa/v9.3.0/README.md"
+    },
+    {
+      "id": "capabase-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "capa 程序能力分析",
+      "knowledgePoint": "加壳局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对加壳或混淆样本进行 capa 静态分析时，为什么结果可能不完整？",
+      "answer": "加壳或混淆可能隐藏程序逻辑，使静态提取的特征不足。",
+      "explanation": "可在授权环境下考虑先脱壳，或结合受支持的沙箱报告。",
+      "example": "未展开的代码能力可能没有被静态规则识别。",
+      "tags": [
+        "capa 程序能力分析",
+        "加壳局限"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mandiant/capa/v9.3.0/README.md"
+    },
+    {
+      "id": "capabase-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "capa 程序能力分析",
+      "knowledgePoint": "自定义规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "capa 的 --rules 参数通常用于什么？",
+      "answer": "指定文件系统中的规则目录，供能力识别时使用。",
+      "explanation": "自行提供规则时需要确保其与 capa 版本兼容。",
+      "example": "capa --rules /path/to/rules sample.exe。",
+      "tags": [
+        "capa 程序能力分析",
+        "自定义规则"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mandiant/capa/v9.3.0/doc/rules.md"
+    },
+    {
+      "id": "capabase-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "capa 程序能力分析",
+      "knowledgePoint": "规则版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用自定义 capa 规则时，官方说明为什么建议匹配规则与 capa 的主版本？",
+      "answer": "因为不同 capa 主版本可能改变规则语法；版本不匹配可能导致规则解析错误。",
+      "explanation": "应以使用的具体 capa 和规则发行版本为准。",
+      "example": "升级 capa 后检查对应版本的规则集。",
+      "tags": [
+        "capa 程序能力分析",
+        "规则版本"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/mandiant/capa/v9.3.0/doc/rules.md"
+    }
+  ]
+}

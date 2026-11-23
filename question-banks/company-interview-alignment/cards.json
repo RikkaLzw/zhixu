@@ -1,0 +1,184 @@
+{
+  "source": {
+    "id": "company-interview-alignment",
+    "title": "公开面经：强化学习、大模型训练与工程",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%B0%8F%E7%B1%B3/%E3%80%900316%E3%80%91%E5%B0%8F%E7%B1%B3%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%9D%A2%E7%BB%8F.md",
+    "type": "公开面经合集",
+    "note": "公司、岗位、轮次及经历为分享者自述；有些资料由合集转载。逐题记录面经来源和独立技术依据，标注主题启发的题目并非原帖逐题提出。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "companypractice-llm-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习面经",
+      "knowledgePoint": "优势函数与奖励",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在策略梯度训练中，为什么常用优势估计而不只看单步即时奖励？",
+      "answer": "优势估计把动作的长期回报与状态下的基线比较，有助于衡量该动作相对常规水平的好坏；合适的基线也可降低梯度估计方差。",
+      "explanation": "即时奖励可能无法反映延迟后果；具体优势估计会涉及偏差与方差的权衡。",
+      "example": "任务开头没有即时奖励，后续成功仍能通过回报影响前面的动作。",
+      "tags": [
+        "优势函数与奖励",
+        "强化学习面经",
+        "公开面经",
+        "小米"
+      ],
+      "evidence": "application",
+      "referenceId": "company-xiaomi",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%B0%8F%E7%B1%B3/%E3%80%900316%E3%80%91%E5%B0%8F%E7%B1%B3%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%9D%A2%E7%BB%8F.md",
+      "referenceTitle": "小米大模型面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "policy-baseline-interview",
+          "title": "Spinning Up：Baselines in Policy Gradients",
+          "url": "https://spinningup.openai.com/en/latest/spinningup/rl_intro3.html#baselines-in-policy-gradients",
+          "type": "公开教程",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypractice-llm-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练优化面经",
+      "knowledgePoint": "损失缩放与学习率",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "把损失乘以 10，与把学习率乘以 10 在所有优化器中都等价吗？",
+      "answer": "不一定。在无动量、权重衰减和梯度裁剪的普通 SGD 中，两者对该步的参数更新等价；Adam 会按历史一、二阶矩归一化，通常不具备这个等价关系。",
+      "explanation": "Adam 的历史状态、数值稳定项、权重衰减和梯度裁剪等都会影响具体结果。",
+      "example": "比较相同初始参数与状态下的普通 SGD 和 Adam 单步更新。",
+      "tags": [
+        "损失缩放与学习率",
+        "训练优化面经",
+        "公开面经",
+        "科大讯飞"
+      ],
+      "evidence": "application",
+      "referenceId": "company-iflytek",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%A7%91%E5%A4%A7%E8%AE%AF%E9%A3%9E/%E3%80%900306%E3%80%91%E7%A7%91%E5%A4%A7%E8%AE%AF%E9%A3%9E%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "科大讯飞公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "adam-paper-interview",
+          "title": "Adam 原论文",
+          "url": "https://arxiv.org/abs/1412.6980",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypractice-llm-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "偏好训练面经",
+      "knowledgePoint": "多轮偏好数据上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "构造 DPO 偏好对时，为什么 chosen 和 rejected 应对应同一个提示及对话上下文？",
+      "answer": "原始 DPO 比较同一上下文下两个回答的相对偏好；如果上下文不同，差异可能来自问题变化而非回答质量。",
+      "explanation": "多轮数据应约定上下文边界、角色格式和截断规则，再标注回答偏好。",
+      "example": "同一段用户与助手对话历史下比较两个候选的下一轮回答。",
+      "tags": [
+        "多轮偏好数据上下文",
+        "偏好训练面经",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900324%E3%80%91%E5%AD%97%E8%8A%82%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "字节大模型一面（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "dpo-paper-interview",
+          "title": "Direct Preference Optimization 原论文",
+          "url": "https://arxiv.org/abs/2305.18290",
+          "type": "研究论文",
+          "evidence": "source"
+        },
+        {
+          "id": "preference-format-interview",
+          "title": "TRL：Preference dataset format",
+          "url": "https://huggingface.co/docs/trl/main/en/dataset_formats",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypractice-llm-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "偏好训练面经",
+      "knowledgePoint": "奖励模型过度优化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "大模型偏好训练中的 reward hacking 为什么不能只靠奖励模型分数判断是否解决？",
+      "answer": "策略可能学会迎合奖励模型的偏差，使代理分数上升而真实目标或独立评估中的质量下降。",
+      "explanation": "应使用独立标注、未参与优化的评估集和具体失败案例共同检查；不同任务需要各自的质量标准。",
+      "example": "回答变得更冗长以提高打分，但事实准确性没有提高。",
+      "tags": [
+        "奖励模型过度优化",
+        "偏好训练面经",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900324%E3%80%91%E5%AD%97%E8%8A%82%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "字节大模型一面（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "reward-overoptimization-interview",
+          "title": "Scaling Laws for Reward Model Overoptimization",
+          "url": "https://arxiv.org/abs/2210.10760",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypractice-llm-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练面经",
+      "knowledgePoint": "ZeRO3权重显存估算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "假设 72B 参数均为 BF16，ZeRO-3 在 8 张卡均匀分片，仅静态参数分片理论上每卡约占多少？",
+      "answer": "72×10⁹ 个参数每个 2 字节，共约 144 GB；均匀分到 8 张卡约为 18 GB，约 16.8 GiB。",
+      "explanation": "这只是参数分片，不包含梯度、优化器状态、激活、通信缓冲和临时参数聚合；实际峰值显存需实测。",
+      "example": "把静态参数估算和训练过程中的显存峰值分别记录。",
+      "tags": [
+        "ZeRO3权重显存估算",
+        "分布式训练面经",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "referenceId": "company-tencent",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900324%E3%80%91%E8%85%BE%E8%AE%AFPCG%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "腾讯 PCG 大模型一面（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "deepspeed-zero-interview",
+          "title": "DeepSpeed：ZeRO optimization",
+          "url": "https://www.deepspeed.ai/tutorials/zero/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

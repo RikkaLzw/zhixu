@@ -1,0 +1,354 @@
+{
+  "source": {
+    "id": "kafka-messaging-foundations",
+    "title": "Apache Kafka 3.9：消息、消费与可靠性",
+    "url": "https://kafka.apache.org/39/design/design/",
+    "type": "官方技术文档",
+    "note": "依据逐题引用的官方文档自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "kafkabase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "主题",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 中的 topic 主要是什么？",
+      "answer": "它是组织和持久保存事件的逻辑类别，生产者向其写入，消费者从中读取。",
+      "explanation": "同一主题可以有多个生产者与订阅者。",
+      "example": "把支付事件写入 payments 主题。",
+      "tags": [
+        "主题",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/getting-started/introduction/"
+    },
+    {
+      "id": "kafkabase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "分区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 将 topic 划分为 partition 有什么常见作用？",
+      "answer": "分区使主题的数据能够分布到多个 broker，并支持并行读写。",
+      "explanation": "每条记录被追加到该主题的一个分区。",
+      "example": "多个消费者并行处理不同分区。",
+      "tags": [
+        "分区",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/getting-started/introduction/"
+    },
+    {
+      "id": "kafkabase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "顺序保证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 的顺序保证通常以什么为单位？",
+      "answer": "消费者按记录写入顺序读取单个 topic-partition 内的记录。",
+      "explanation": "不同分区之间没有同样的全局顺序保证。",
+      "example": "按一个分区中的偏移量处理事件。",
+      "tags": [
+        "顺序保证",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/getting-started/introduction/"
+    },
+    {
+      "id": "kafkabase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "键与分区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 使用基于 key 的分区策略时，同一个 key 通常有什么作用？",
+      "answer": "相同 key 可被映射到同一分区，以便保持该分区内的顺序和局部性。",
+      "explanation": "具体映射取决于分区器与分区数量；自定义分区器或扩容可能改变映射。",
+      "example": "按用户 ID 分区处理用户事件。",
+      "tags": [
+        "键与分区",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#the-producer"
+    },
+    {
+      "id": "kafkabase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "消费不删除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 的记录被一个消费者读取后会立即从 topic 删除吗？",
+      "answer": "不会；记录按主题的保留或压缩策略管理，可被其他消费者或同一消费者再次读取。",
+      "explanation": "数据也可能因保留期限、容量或压缩策略被移除。",
+      "example": "新消费者组在可用范围内重读事件。",
+      "tags": [
+        "消费不删除",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/getting-started/introduction/"
+    },
+    {
+      "id": "kafkabase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "偏移量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 消费者的已提交 offset 通常表示什么位置？",
+      "answer": "它通常表示该分区下次应该读取的记录位置。",
+      "explanation": "每个消费者组对每个分区分别维护位置。",
+      "example": "处理完 offset 10 后提交下一个位置。",
+      "tags": [
+        "偏移量",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#the-consumer"
+    },
+    {
+      "id": "kafkabase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "组内分配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 的普通消费者组中，一个 topic-partition 同时分配给几个组内消费者？",
+      "answer": "同一个消费者组内，一个分区在同一时刻分配给一个消费者。",
+      "explanation": "不同消费者组可以各自消费同一分区。",
+      "example": "两个组独立处理同一主题。",
+      "tags": [
+        "组内分配",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#the-consumer"
+    },
+    {
+      "id": "kafkabase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "拉取模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 消费者一般怎样获取记录？",
+      "answer": "消费者向分区 leader 发起 fetch 请求，并指定读取位置。",
+      "explanation": "消费者可以在保留范围内调整位置并重读。",
+      "example": "从较早的 offset 重新读取以修复处理结果。",
+      "tags": [
+        "拉取模型",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#the-consumer"
+    },
+    {
+      "id": "kafkabase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "至多一次",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "消费者先提交位置再处理记录，崩溃时可能产生什么结果？",
+      "answer": "在提交位置之后、处理完成之前崩溃可能导致记录不再被处理，形成至多一次语义。",
+      "explanation": "该结论假定恢复时从提交的位置继续消费。",
+      "example": "提交偏移后服务突然停止。",
+      "tags": [
+        "至多一次",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#message-delivery-semantics"
+    },
+    {
+      "id": "kafkabase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "至少一次",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "消费者先处理记录再提交位置，崩溃时可能产生什么结果？",
+      "answer": "处理完成后、提交位置前崩溃可能使同一记录被再次处理，形成至少一次语义。",
+      "explanation": "业务操作需要考虑重复处理。",
+      "example": "入库成功但偏移提交失败后重新消费。",
+      "tags": [
+        "至少一次",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#message-delivery-semantics"
+    },
+    {
+      "id": "kafkabase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "生产者幂等",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 的幂等生产者主要防止哪类重复？",
+      "answer": "它利用生产者 ID 和序列号，避免同一发送因重试而在日志中产生重复记录。",
+      "explanation": "应用主动再次发送同一业务事件不自动等同于同一次重试。",
+      "example": "网络响应丢失后生产者重试发送。",
+      "tags": [
+        "生产者幂等",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#message-delivery-semantics"
+    },
+    {
+      "id": "kafkabase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "精确一次边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 的事务性读取处理写入能否单独保证外部数据库副作用恰好执行一次？",
+      "answer": "不能；Kafka 内事务可原子提交 Kafka 输出及消费位置，外部系统还需协调或实现幂等。",
+      "explanation": "端到端保证取决于全部参与系统的处理方式。",
+      "example": "消费事件并更新外部数据库时处理重复写入。",
+      "tags": [
+        "精确一次边界",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#message-delivery-semantics"
+    },
+    {
+      "id": "kafkabase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "事务读取隔离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 消费者的 read_committed 隔离级别如何处理事务消息？",
+      "answer": "它返回已提交事务的消息，不返回中止事务的消息；非事务消息仍可返回。",
+      "explanation": "正在进行的事务可能暂时限制后续记录的可见性。",
+      "example": "消费者只读取已经提交的事务输出。",
+      "tags": [
+        "事务读取隔离",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/configuration/consumer-configs/#consumerconfigs_isolation.level"
+    },
+    {
+      "id": "kafkabase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "副本确认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 生产者的 acks=all 是否意味着所有已分配副本都已收到记录？",
+      "answer": "不一定；它等待当前同步副本集合（ISR）中的副本确认。",
+      "explanation": "ISR 可小于该分区的全部已分配副本。",
+      "example": "部分副本落后时检查 ISR 的规模。",
+      "tags": [
+        "副本确认",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#replication"
+    },
+    {
+      "id": "kafkabase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "最小同步副本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 中 min.insync.replicas 与 acks=all 如何配合？",
+      "answer": "当同步副本数低于设置的最小值时，使用 acks=all 的写入会被拒绝。",
+      "explanation": "提高最小值可以加强副本确认要求，同时降低故障时的写入可用性。",
+      "example": "要求至少两个同步副本才能确认写入。",
+      "tags": [
+        "最小同步副本",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#replication"
+    },
+    {
+      "id": "kafkabase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "日志压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 的日志压缩主要按什么规则清理旧记录？",
+      "answer": "它可移除同一分区中某个 key 较旧的记录，以保留该 key 的最新状态。",
+      "explanation": "压缩异步进行，删除标记和其他保留配置会影响最终保留内容。",
+      "example": "重建每个用户最后的状态。",
+      "tags": [
+        "日志压缩",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#log-compaction"
+    },
+    {
+      "id": "kafkabase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "压缩与offset",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 日志压缩后，保留下来的记录会重新编号 offset 吗？",
+      "answer": "不会；保留记录的 offset 不变，压缩后 offset 可以有空洞。",
+      "explanation": "读取被移除位置时会继续到下一个可用位置。",
+      "example": "记录 37 被移除后，记录 38 仍是 offset 38。",
+      "tags": [
+        "压缩与offset",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#log-compaction"
+    },
+    {
+      "id": "kafkabase-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "消息队列与 Kafka",
+      "knowledgePoint": "删除标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kafka 3.9 压缩日志中，带 key 且 value 为 null 的记录通常表示什么？",
+      "answer": "它是删除标记（tombstone），用于表示删除该 key 的状态。",
+      "explanation": "删除标记自身也会在保留期后被清理。",
+      "example": "在压缩主题中删除某用户状态。",
+      "tags": [
+        "删除标记",
+        "消息队列与 Kafka"
+      ],
+      "evidence": "source",
+      "reference": "https://kafka.apache.org/39/design/design/#log-compaction"
+    }
+  ]
+}

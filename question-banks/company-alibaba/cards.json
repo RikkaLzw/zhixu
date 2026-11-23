@@ -1,0 +1,81 @@
+{
+  "source": {
+    "id": "company-alibaba",
+    "title": "阿里 Agent 岗公开面经（作者自述）",
+    "url": "https://www.nowcoder.com/feed/main/detail/25f0445d66b947bf9f979c6acdbf9fef",
+    "type": "公开面经（个人自述）",
+    "note": "考点依据个人公开复盘整理；公司、岗位及经历为作者自述，答案另依据所列技术资料核验。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "ali-interview-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具错误处理",
+      "knowledgePoint": "工具错误反馈",
+      "questionType": "概念与原理",
+      "question": "智能体收到工具参数错误时，反馈信息可以怎样帮助后续执行？",
+      "answer": "将可理解的错误反馈给模型，让它判断是否修正参数并重试，或说明无法继续。",
+      "explanation": "重试仍应受权限、次数和副作用约束。",
+      "example": "工具返回日期格式错误后，模型按提示修正日期。",
+      "tags": [
+        "工具错误反馈",
+        "Agent",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://www.nowcoder.com/feed/main/detail/25f0445d66b947bf9f979c6acdbf9fef",
+      "referenceTitle": "阿里 Agent 岗公开面经（作者自述）",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "mcp-agent",
+          "title": "MCP 2025-11-25：工具错误处理",
+          "url": "https://modelcontextprotocol.io/specification/2025-11-25/server/tools#error-handling",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "ali-interview-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图与状态",
+      "knowledgePoint": "知识图谱与执行图",
+      "questionType": "比较与选型",
+      "question": "知识图谱与 Agent 执行图分别组织什么？",
+      "answer": "知识图谱组织实体及其语义关系；执行图组织工作流节点、状态和执行路径。",
+      "explanation": "它们可以共同使用，但图节点和边在两者中含义不同。",
+      "example": "用知识图谱表示资产关系，用执行图编排调查步骤。",
+      "tags": [
+        "知识图谱与执行图",
+        "Agent",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://www.nowcoder.com/feed/main/detail/25f0445d66b947bf9f979c6acdbf9fef",
+      "referenceTitle": "阿里 Agent 岗公开面经（作者自述）",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "graph-knowledge-ref",
+          "title": "Neo4j：What is a knowledge graph?",
+          "url": "https://neo4j.com/blog/what-is-knowledge-graph/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "langgraph-engineering",
+          "title": "LangGraph：Graph API",
+          "url": "https://docs.langchain.com/oss/python/langgraph/graph-api",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+{
+  "source": {
+    "id": "security-distribution-shift",
+    "title": "安全模型评估：标签偏移与协变量偏移",
+    "url": "https://proceedings.mlr.press/v80/lipton18a.html",
+    "type": "论文与官方技术文档",
+    "note": "依据 Lipton 等和 Sugiyama 等论文整理；概率关系使用合成分布验证，不代表真实安全数据的分布。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "shiftsec-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "标签偏移定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "机器学习中的标签偏移（label shift）通常假设什么发生变化？",
+      "answer": "类别先验 P(Y) 变化，而给定类别的特征分布 P(X|Y) 保持不变。",
+      "explanation": "这是建模假设，不能仅凭类别比例变化就认定它成立。",
+      "example": "攻击与正常样本比例变化，但各类别内部特征分布不变。",
+      "tags": [
+        "标签偏移定义",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "协变量偏移定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "机器学习中的协变量偏移（covariate shift）通常假设什么发生变化？",
+      "answer": "输入分布 P(X) 变化，而给定输入的标签条件分布 P(Y|X) 保持不变。",
+      "explanation": "它比笼统地说输入分布变化多了一项条件不变假设。",
+      "example": "不同业务来源的输入占比变化，但相同输入下的标签关系不变。",
+      "tags": [
+        "协变量偏移定义",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.jmlr.org/papers/v8/sugiyama07a.html",
+      "referenceTitle": "Sugiyama 等：Covariate Shift Adaptation (2007)"
+    },
+    {
+      "id": "shiftsec-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "标签先验与后验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在标签偏移下，P(X|Y) 不变是否保证 P(Y|X) 也不变？",
+      "answer": "不保证；类别先验改变后，同一特征对应的类别后验概率可能变化。",
+      "explanation": "两种条件概率方向不同，贝叶斯关系同时依赖类别先验。",
+      "example": "攻击比例升高时，相同特征下的攻击概率可能升高。",
+      "tags": [
+        "标签先验与后验",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "协变量偏移与类别比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在协变量偏移下，即使 P(Y|X) 不变，整体类别比例 P(Y) 是否可能变化？",
+      "answer": "可能；输入组成变化会改变对各条件概率加权后的总体类别比例。",
+      "explanation": "例如不同输入区域的标签比例不同时，区域占比变化可改变总体比例。",
+      "example": "风险较高的流量区域占比增加。",
+      "tags": [
+        "协变量偏移与类别比例",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.jmlr.org/papers/v8/sugiyama07a.html",
+      "referenceTitle": "Sugiyama 等：Covariate Shift Adaptation (2007)"
+    },
+    {
+      "id": "shiftsec-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "预测分布变化归因",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定模型的线上预测分布发生变化，能否仅凭这一现象断定发生了标签偏移？",
+      "answer": "不能；输入分布或类别内特征变化等其他原因也可能改变预测分布。",
+      "explanation": "判断标签偏移需要额外假设与证据，最好结合可用的标注样本复核。",
+      "example": "正常流量结构变化也可能改变告警分数分布。",
+      "tags": [
+        "预测分布变化归因",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "BBSE估计目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Lipton 等人的 BBSE 方法主要估计什么？",
+      "answer": "在标签偏移假设下，它利用源域标注数据和目标域未标注数据估计目标类别比例。",
+      "explanation": "它通过固定预测器的输出降低问题维度。",
+      "example": "用已有标注流量和新的未标注流量估计攻击比例。",
+      "tags": [
+        "BBSE估计目标",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "固定预测器的类别条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在标签偏移且使用同一个固定预测器时，源域与目标域的 P(预测类别|真实类别) 有什么关系？",
+      "answer": "在假设成立时，该条件分布保持不变。",
+      "explanation": "这一关系使源域估计的分类器混淆信息可用于推断目标类别比例。",
+      "example": "相同类别内部特征分布不变时，固定分类器的输出分布也不变。",
+      "tags": [
+        "固定预测器的类别条件",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "BBSE校准要求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BBSE 必须使用概率校准良好的分类器才能估计标签偏移吗？",
+      "answer": "不必须；论文指出即使预测器未校准，在所需条件满足时也可使用。",
+      "explanation": "预测器质量和混淆矩阵条件仍会影响估计精度。",
+      "example": "用硬分类结果估计目标类别比例。",
+      "tags": [
+        "BBSE校准要求",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "BBSE可识别条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BBSE 的硬分类器混淆矩阵不可逆时，直接求逆估计类别权重会怎样？",
+      "answer": "无法通过该矩阵的普通逆唯一求出权重。",
+      "explanation": "这通常意味着预测输出不能充分区分某些类别；论文也讨论其他变体。",
+      "example": "分类器对所有样本都输出同一类别。",
+      "tags": [
+        "BBSE可识别条件",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "标签支持条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标签偏移重加权为什么要求目标域出现的类别在源域也有正概率？",
+      "answer": "否则目标类别与源类别的比例权重无法由源域样本定义并估计。",
+      "explanation": "未见类别通常需要额外数据或开放集处理。",
+      "example": "源域没有某类攻击样本，但目标域出现该类。",
+      "tags": [
+        "标签支持条件",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "标签偏移权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在标签偏移假设下，按类别对源域样本重加权时使用什么比例？",
+      "answer": "使用该类别在目标域的先验概率除以其在源域的先验概率。",
+      "explanation": "权重依赖比例估计，并要求源域该类别概率非零。",
+      "example": "对目标环境中更常见的类别提高权重。",
+      "tags": [
+        "标签偏移权重",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "BBSE混淆估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 BBSE 示例用未参与预测器拟合的源域留出集估计混淆矩阵？",
+      "answer": "留出集有助于估计预测器在源域新样本上的输出与标签关系，减少训练内表现过于乐观的影响。",
+      "explanation": "论文算法先划分源域数据，再在留出集计算混淆矩阵。",
+      "example": "一部分标注数据训练分类器，另一部分估计其混淆信息。",
+      "tags": [
+        "BBSE混淆估计",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "近奇异矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BBSE 的混淆矩阵接近奇异时，为什么类别比例估计可能不稳定？",
+      "answer": "求逆会放大有限样本中的估计误差，使权重对数据波动敏感。",
+      "explanation": "论文算法对最小奇异值过小的情况使用回退处理。",
+      "example": "分类器难以区分两类攻击时，估计结果可能大幅波动。",
+      "tags": [
+        "近奇异矩阵",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/lipton18a.html",
+      "referenceTitle": "Lipton 等：Detecting and Correcting for Label Shift (2018)"
+    },
+    {
+      "id": "shiftsec-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "协变量重加权",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在协变量偏移假设下，输入 x 的重要性权重通常怎样定义？",
+      "answer": "用目标域输入密度除以源域输入密度，即 p_target(x)/p_source(x)。",
+      "explanation": "权重可用于使源域验证或训练样本更贴近目标输入分布。",
+      "example": "增加目标流量中更常出现的输入区域的权重。",
+      "tags": [
+        "协变量重加权",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "source",
+      "reference": "https://www.jmlr.org/papers/v8/sugiyama07a.html",
+      "referenceTitle": "Sugiyama 等：Covariate Shift Adaptation (2007)"
+    },
+    {
+      "id": "shiftsec-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "协变量支持重叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如果目标域某输入区域有正概率而源域该区域概率为零，仅靠源域样本的重要性加权能可靠评估该区域吗？",
+      "answer": "不能；源域没有该区域样本，无法用有限的源域权重补出缺失信息。",
+      "explanation": "需要额外的目标域数据或其他明确假设。",
+      "example": "新协议流量在线上出现，但历史标注数据完全没有该协议。",
+      "tags": [
+        "协变量支持重叠",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.jmlr.org/papers/v8/sugiyama07a.html",
+      "referenceTitle": "Sugiyama 等：Covariate Shift Adaptation (2007)"
+    },
+    {
+      "id": "shiftsec-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型分布偏移",
+      "knowledgePoint": "重加权的条件限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "协变量偏移的输入密度重加权能否保证修正所有形式的分布变化？",
+      "answer": "不能；若给定输入的标签关系也发生变化，协变量偏移的不变条件不再成立。",
+      "explanation": "权重方法的效果取决于假设和密度比估计质量。",
+      "example": "攻击者改变同一特征模式对应的真实行为。",
+      "tags": [
+        "重加权的条件限制",
+        "分布偏移",
+        "评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.jmlr.org/papers/v8/sugiyama07a.html",
+      "referenceTitle": "Sugiyama 等：Covariate Shift Adaptation (2007)"
+    }
+  ]
+}

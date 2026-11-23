@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "focal-loss-training-details",
+    "title": "Focal Loss 原论文与 torchvision 0.22 实现",
+    "url": "https://arxiv.org/pdf/1708.02002v2",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "focalloss-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Focal Loss 训练细节",
+      "knowledgePoint": "前景背景失衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Focal Loss 原论文主要针对密集目标检测中的哪种训练问题？",
+      "answer": "大量易分类的背景样本会在总损失和梯度中淹没较少的前景样本。",
+      "explanation": "损失通过降低容易样本的贡献，让训练更关注困难样本。",
+      "example": "大量背景候选框可能远多于含目标的候选框。",
+      "tags": [
+        "Focal Loss 训练细节",
+        "前景背景失衡"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1708.02002v2"
+    },
+    {
+      "id": "focalloss-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Focal Loss 训练细节",
+      "knowledgePoint": "真实类别概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二分类 Focal Loss 的 p_t 表示什么？",
+      "answer": "表示模型赋给真实类别的概率：正例为 p，负例为 1-p。",
+      "explanation": "p 是模型预测为正类的概率。",
+      "example": "标签为 0、正类概率为 0.2 时，p_t 为 0.8。",
+      "tags": [
+        "Focal Loss 训练细节",
+        "真实类别概率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1708.02002v2"
+    },
+    {
+      "id": "focalloss-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Focal Loss 训练细节",
+      "knowledgePoint": "零聚焦指数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "不使用类别权重的 Focal Loss 中 γ=0 时，损失退化成什么？",
+      "answer": "退化为普通二分类交叉熵。",
+      "explanation": "此时调制因子 (1-p_t)^γ 恒为 1；有 α 权重时得到的是加权交叉熵。",
+      "example": "γ=0、无 α 权重时，损失为 -log(p_t)。",
+      "tags": [
+        "Focal Loss 训练细节",
+        "零聚焦指数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1708.02002v2"
+    },
+    {
+      "id": "focalloss-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Focal Loss 训练细节",
+      "knowledgePoint": "输入张量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 sigmoid_focal_loss 接收概率还是 logits？",
+      "answer": "接收未经过 sigmoid 的预测 logits，以及形状相同的二分类目标张量。",
+      "explanation": "实现内部计算 sigmoid，并使用 binary_cross_entropy_with_logits。",
+      "example": "形状为 [N,C] 的 logits 对应形状为 [N,C] 的 0/1 目标。",
+      "tags": [
+        "Focal Loss 训练细节",
+        "输入张量"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/pytorch/vision/v0.22.0/torchvision/ops/focal_loss.py"
+    },
+    {
+      "id": "focalloss-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Focal Loss 训练细节",
+      "knowledgePoint": "损失归约",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 sigmoid_focal_loss 默认 reduction 是什么？",
+      "answer": "默认为 none，保留逐元素损失。",
+      "explanation": "也可设置 mean 或 sum 进行聚合。",
+      "example": "输入有多个元素时，默认输出对应的损失张量。",
+      "tags": [
+        "Focal Loss 训练细节",
+        "损失归约"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/pytorch/vision/v0.22.0/torchvision/ops/focal_loss.py"
+    },
+    {
+      "id": "focalloss-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Focal Loss 训练细节",
+      "knowledgePoint": "禁用类别权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 sigmoid_focal_loss 设置 alpha=-1 时有什么效果？",
+      "answer": "不应用 α 对正负样本的类别加权。",
+      "explanation": "聚焦因子仍由 γ 控制；这不表示忽略标签为 -1 的样本。",
+      "example": "alpha=-1、gamma=0 时不做 α 加权。",
+      "tags": [
+        "Focal Loss 训练细节",
+        "禁用类别权重"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/pytorch/vision/v0.22.0/torchvision/ops/focal_loss.py"
+    }
+  ]
+}

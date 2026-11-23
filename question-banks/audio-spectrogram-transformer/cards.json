@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "audio-spectrogram-transformer",
+    "title": "AST 原论文 v1：音频频谱 Transformer",
+    "url": "https://arxiv.org/pdf/2104.01778v1",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本与环境为准。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "astpaper-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频频谱 Transformer",
+      "knowledgePoint": "模型输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AST（Audio Spectrogram Transformer）原论文如何把音频转换为模型输入？",
+      "answer": "先把波形转换为对数 Mel 滤波器组频谱，再切分为二维频谱块。",
+      "explanation": "模型处理的是频谱表示而不是直接将原始波形当作 token。",
+      "example": "每个频谱块覆盖一段时间和频率范围。",
+      "tags": [
+        "音频频谱 Transformer",
+        "模型输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2104.01778v1"
+    },
+    {
+      "id": "astpaper-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频频谱 Transformer",
+      "knowledgePoint": "频谱块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AST 原论文使用的频谱块如何进入 Transformer？",
+      "answer": "将每个块展平并通过线性投影变成向量，再组成序列。",
+      "explanation": "块之间可以沿时间和频率方向重叠。",
+      "example": "一段音频形成多个 patch 向量。",
+      "tags": [
+        "音频频谱 Transformer",
+        "频谱块"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2104.01778v1"
+    },
+    {
+      "id": "astpaper-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频频谱 Transformer",
+      "knowledgePoint": "位置表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AST 为什么给频谱块加入可训练的位置嵌入？",
+      "answer": "让编码器能区分块在时间与频率平面上的位置。",
+      "explanation": "没有位置线索时自注意力本身不包含块的空间次序。",
+      "example": "相似声音出现在不同时间位置可被区分。",
+      "tags": [
+        "音频频谱 Transformer",
+        "位置表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2104.01778v1"
+    },
+    {
+      "id": "astpaper-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频频谱 Transformer",
+      "knowledgePoint": "结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AST 原论文的主体结构是什么？",
+      "answer": "使用 Transformer 编码器进行音频分类，不依赖 CNN 特征提取骨干。",
+      "explanation": "论文将频谱输入转换为序列后交给编码器。",
+      "example": "用自注意力建模不同频谱块的关系。",
+      "tags": [
+        "音频频谱 Transformer",
+        "结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2104.01778v1"
+    },
+    {
+      "id": "astpaper-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频频谱 Transformer",
+      "knowledgePoint": "分类表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AST 原论文用哪个输出作为整段音频的分类表示？",
+      "answer": "使用序列开头的 [CLS] token 经编码器处理后的输出。",
+      "explanation": "再通过分类层预测标签。",
+      "example": "一个音频对应一组分类分数。",
+      "tags": [
+        "音频频谱 Transformer",
+        "分类表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2104.01778v1"
+    },
+    {
+      "id": "astpaper-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频频谱 Transformer",
+      "knowledgePoint": "视觉权重迁移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AST 原论文如何适配图像 ViT 的三通道 patch 投影以处理单通道频谱？",
+      "answer": "对原投影权重的三个输入通道取平均。",
+      "explanation": "论文还需调整位置嵌入以适配不同的频谱形状。",
+      "example": "用视觉预训练的权重初始化音频模型。",
+      "tags": [
+        "音频频谱 Transformer",
+        "视觉权重迁移"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2104.01778v1"
+    },
+    {
+      "id": "astpaper-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频频谱 Transformer",
+      "knowledgePoint": "位置插值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "将预训练 ViT 迁移到 AST 时，为什么需要处理位置嵌入？",
+      "answer": "图像网格与音频频谱的块网格大小不同，需要裁剪或插值以适配。",
+      "explanation": "具体处理依目标频谱形状和实现而定。",
+      "example": "把方形图像位置网格适配为较长的时间轴。",
+      "tags": [
+        "音频频谱 Transformer",
+        "位置插值"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2104.01778v1"
+    }
+  ]
+}

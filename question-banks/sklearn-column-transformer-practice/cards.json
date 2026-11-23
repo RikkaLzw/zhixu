@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "sklearn-column-transformer-practice",
+    "title": "scikit-learn 1.7.2：ColumnTransformer 实践",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "coltrans-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "表格特征列变换",
+      "knowledgePoint": "多列预处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColumnTransformer 适合解决什么特征预处理问题？",
+      "answer": "它对不同列或列组分别应用变换器，再拼接为一个特征空间。",
+      "explanation": "适合数值、类别、文本等混合输入。",
+      "example": "对年龄缩放、对类别做独热编码。",
+      "tags": [
+        "表格特征列变换",
+        "多列预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html"
+    },
+    {
+      "id": "coltrans-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "表格特征列变换",
+      "knowledgePoint": "保留其他列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColumnTransformer 设置 remainder=\"passthrough\" 会怎样处理拟合时未指定的列？",
+      "answer": "它把这些列原样拼接到变换器输出之后。",
+      "explanation": "已有默认丢弃规则不同；推理时新增的 DataFrame 列不会自动加入。",
+      "example": "只缩放一列，其余拟合时存在的列直接保留。",
+      "tags": [
+        "表格特征列变换",
+        "保留其他列"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html"
+    },
+    {
+      "id": "coltrans-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "表格特征列变换",
+      "knowledgePoint": "新增DataFrame列",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "ColumnTransformer 拟合 DataFrame 后，即使 remainder=\"passthrough\"，transform 时新增列会自动进入结果吗？",
+      "answer": "不会；拟合时未见的额外 DataFrame 列会被排除。",
+      "explanation": "上线前应验证输入模式和特征版本。",
+      "example": "训练时没有的新日志字段不会自动拼入模型输入。",
+      "tags": [
+        "表格特征列变换",
+        "新增DataFrame列"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html"
+    },
+    {
+      "id": "coltrans-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "表格特征列变换",
+      "knowledgePoint": "列选择维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColumnTransformer 为变换器选择列时，字符串列名和单元素列名列表有什么常见维度区别？",
+      "answer": "标量列名适合需要一维输入的变换器；列名列表通常传入二维数据。",
+      "explanation": "具体行为取决于输入和变换器要求。",
+      "example": "文本向量器常接收单个字符串列，数值缩放器通常接收列列表。",
+      "tags": [
+        "表格特征列变换",
+        "列选择维度"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html"
+    },
+    {
+      "id": "coltrans-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "表格特征列变换",
+      "knowledgePoint": "输出顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColumnTransformer 输出特征的顺序主要由什么决定？",
+      "answer": "按 transformers 列表中的变换器顺序拼接；passthrough 的剩余列添加在后面。",
+      "explanation": "不要假定输出仍按原 DataFrame 列顺序排列。",
+      "example": "先定义类别变换、再定义数值变换，输出先出现类别特征。",
+      "tags": [
+        "表格特征列变换",
+        "输出顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html"
+    },
+    {
+      "id": "coltrans-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "表格特征列变换",
+      "knowledgePoint": "输出切片",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "拟合后的 ColumnTransformer.output_indices_ 用于什么？",
+      "answer": "它把变换器名称映射到其输出特征在拼接结果中的切片。",
+      "explanation": "可用它追踪哪些结果列来自哪个变换步骤。",
+      "example": "查询数值预处理步骤在最终矩阵中的列范围。",
+      "tags": [
+        "表格特征列变换",
+        "输出切片"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html"
+    },
+    {
+      "id": "coltrans-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "表格特征列变换",
+      "knowledgePoint": "稀疏输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColumnTransformer 设置 sparse_threshold=0 时，拼接输出是稀疏矩阵吗？",
+      "answer": "不是；文档说明设为 0 会返回稠密输出。",
+      "explanation": "一般情况下是否稀疏与各变换输出及整体密度有关。",
+      "example": "与独热编码器组合时注意可能带来的内存开销。",
+      "tags": [
+        "表格特征列变换",
+        "稀疏输出"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html"
+    },
+    {
+      "id": "coltrans-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "表格特征列变换",
+      "knowledgePoint": "步骤权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColumnTransformer 的 transformer_weights 对变换结果做什么？",
+      "answer": "按变换器名称将对应输出特征乘以指定权重。",
+      "explanation": "这不是按样本加权，也不直接设置模型损失。",
+      "example": "给一个文本特征分支的输出乘以 0.5。",
+      "tags": [
+        "表格特征列变换",
+        "步骤权重"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html"
+    },
+    {
+      "id": "coltrans-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "表格特征列变换",
+      "knowledgePoint": "特征名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ColumnTransformer 的 verbose_feature_names_out=False 时，若输出特征名不唯一会怎样？",
+      "answer": "调用 get_feature_names_out 会报错。",
+      "explanation": "保留变换器名称前缀有助于区分不同分支产生的同名特征。",
+      "example": "两个分支都产生相同列名时需要消除冲突。",
+      "tags": [
+        "表格特征列变换",
+        "特征名称"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html"
+    }
+  ]
+}

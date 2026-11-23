@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "apibank-tool-evaluation",
+    "title": "API-Bank 论文 v2：工具调用评估",
+    "url": "https://arxiv.org/abs/2304.08244v2",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "apibank-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "API-Bank 工具评估",
+      "knowledgePoint": "能力层次",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "API-Bank 论文的三类工具使用能力如何区分？",
+      "answer": "Call 使用已知 API；Retrieval+Call 先检索再调用单个未知 API；Plan+Retrieval+Call 需要规划并多次检索调用。",
+      "explanation": "三者对工具信息和调用步骤的要求不同。",
+      "example": "从已提供工具说明的调用扩展到未知工具检索。",
+      "tags": [
+        "API-Bank 工具评估",
+        "能力层次"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.08244v2"
+    },
+    {
+      "id": "apibank-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "API-Bank 工具评估",
+      "knowledgePoint": "工具检索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "API-Bank 论文中的 API Search 如何选择返回的 API 描述？",
+      "answer": "比较查询关键词与 API 元数据的向量余弦相似度，返回最相似的 API 元数据。",
+      "explanation": "检索结果不保证一定满足用户真实需求。",
+      "example": "根据任务关键词在 API 池中查找工具。",
+      "tags": [
+        "API-Bank 工具评估",
+        "工具检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.08244v2"
+    },
+    {
+      "id": "apibank-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "API-Bank 工具评估",
+      "knowledgePoint": "执行一致性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "API-Bank 如何比较预测 API 调用与人工标注调用的正确性？",
+      "answer": "初始化评测系统后比较调用对数据库的查询或修改及返回结果是否一致。",
+      "explanation": "评测关注执行效果，并非仅比较调用字符串。",
+      "example": "两次调用执行相同查询并返回相同结果。",
+      "tags": [
+        "API-Bank 工具评估",
+        "执行一致性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.08244v2"
+    },
+    {
+      "id": "apibank-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "API-Bank 工具评估",
+      "knowledgePoint": "回复质量",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "API-Bank 论文分别用什么方式评估 API 调用和调用后的模型回复？",
+      "answer": "调用侧比较执行一致性并计算准确率；回复侧使用 ROUGE-L。",
+      "explanation": "ROUGE-L 的词面匹配不能单独证明事实正确。",
+      "example": "同时检查工具操作与回复文本。",
+      "tags": [
+        "API-Bank 工具评估",
+        "回复质量"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.08244v2"
+    },
+    {
+      "id": "apibank-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "API-Bank 工具评估",
+      "knowledgePoint": "训练评测来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "API-Bank 论文的评测对话与训练对话在构造方式上有什么区别？",
+      "answer": "评测对话由人工标注；训练数据由多个智能体分工生成并经过自动检查。",
+      "explanation": "两者的来源与质量控制应分别说明。",
+      "example": "报告模型表现时区分评测集和合成训练集。",
+      "tags": [
+        "API-Bank 工具评估",
+        "训练评测来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.08244v2"
+    }
+  ]
+}

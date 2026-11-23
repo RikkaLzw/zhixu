@@ -1,0 +1,117 @@
+{
+  "source": {
+    "id": "agent-patterns",
+    "title": "Agent 经典范式：ReAct、规划与反思",
+    "url": "https://github.com/datawhalechina/hello-agents/blob/main/docs/chapter4/Chapter4-Building-Classic-Agent-Paradigms.md",
+    "type": "论文与教材",
+    "note": "依据所引原文自行整理成中文问答，例子为自编。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "agentp-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "推理与行动",
+      "knowledgePoint": "ReAct 交替循环",
+      "questionType": "概念与原理",
+      "question": "ReAct 范式如何结合模型推理与外部行动？",
+      "answer": "它交替生成推理和行动，并利用行动返回的观察结果决定后续步骤。",
+      "explanation": "行动可从环境或工具获取信息，下一步不必完全沿用初始计划。",
+      "example": "检索资料后根据结果决定是否继续查询。",
+      "tags": [
+        "ReAct 交替循环",
+        "推理与行动"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2210.03629",
+      "origin": "自行整理",
+      "referenceTitle": "ReAct：Synergizing Reasoning and Acting in Language Models",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentp-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "规划与执行",
+      "knowledgePoint": "Plan-and-Solve 两阶段",
+      "questionType": "概念与原理",
+      "question": "Plan-and-Solve 的基本流程分为哪两个阶段？",
+      "answer": "先将问题分解为步骤并生成计划，再依据计划逐步执行。",
+      "explanation": "计划和执行可以由不同的模型调用完成。",
+      "example": "先列出报告资料收集和整理步骤，再逐项完成。",
+      "tags": [
+        "Plan-and-Solve 两阶段",
+        "规划与执行"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/datawhalechina/hello-agents/blob/main/docs/chapter4/Chapter4-Building-Classic-Agent-Paradigms.md",
+      "origin": "自行整理",
+      "referenceTitle": "Datawhale Hello-Agents：第四章 智能体经典范式构建",
+      "referenceType": "中文教材"
+    },
+    {
+      "id": "agentp-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "反思与改进",
+      "knowledgePoint": "Reflection 反馈循环",
+      "questionType": "概念与原理",
+      "question": "智能体的 Reflection 循环如何利用反馈改进结果？",
+      "answer": "先生成初稿，再检查不足并依据反馈修订；必要时重复这一过程。",
+      "explanation": "反思本身也可能出错，重要结论仍需可靠证据或外部验证。",
+      "example": "检查报告是否遗漏题目要求后修订初稿。",
+      "tags": [
+        "Reflection 反馈循环",
+        "反思与改进"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/datawhalechina/hello-agents/blob/main/docs/chapter4/Chapter4-Building-Classic-Agent-Paradigms.md",
+      "origin": "自行整理",
+      "referenceTitle": "Datawhale Hello-Agents：第四章 智能体经典范式构建",
+      "referenceType": "中文教材"
+    },
+    {
+      "id": "agentp-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "反思与改进",
+      "knowledgePoint": "反思成本",
+      "questionType": "设计与权衡",
+      "question": "多轮反思通常会增加哪些主要开销？",
+      "answer": "额外模型调用会增加计算或接口费用，多轮串行执行也会增加延迟。",
+      "explanation": "是否值得增加轮次应结合质量收益和任务预算评估。",
+      "example": "对实时问答限制修订轮数。",
+      "tags": [
+        "反思成本",
+        "反思与改进"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/datawhalechina/hello-agents/blob/main/docs/chapter4/Chapter4-Building-Classic-Agent-Paradigms.md",
+      "origin": "自行整理",
+      "referenceTitle": "Datawhale Hello-Agents：第四章 智能体经典范式构建",
+      "referenceType": "中文教材"
+    },
+    {
+      "id": "agentp-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "推理与行动",
+      "knowledgePoint": "ReAct 循环上限",
+      "questionType": "设计与权衡",
+      "question": "为什么实际 ReAct 工作流常设置步骤或调用次数上限？",
+      "answer": "反复搜索或选择动作可能无法收敛，上限可以限制耗时和资源消耗。",
+      "explanation": "达到上限应返回当前进度或失败状态，而不是假称任务完成。",
+      "example": "同一查询反复无有效结果时结束并报告缺口。",
+      "tags": [
+        "ReAct 循环上限",
+        "推理与行动"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/datawhalechina/hello-agents/blob/main/docs/chapter4/Chapter4-Building-Classic-Agent-Paradigms.md",
+      "origin": "自行整理",
+      "referenceTitle": "Datawhale Hello-Agents：第四章 智能体经典范式构建",
+      "referenceType": "中文教材"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "source": {
+    "id": "sigma-correlation-detail",
+    "title": "Sigma 2.1.0：关联规则与转换边界",
+    "url": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html",
+    "type": "公开技术规范",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "sigcorr-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则关联",
+      "knowledgePoint": "关联引用规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 关联规则的 rules 可以怎样引用基础规则？",
+      "answer": "可以引用规则的 id 或在关联范围内唯一的 name。",
+      "explanation": "使用 name 时，工具需要把名称映射到相应规则。",
+      "example": "关联规则引用失败登录检测的名称。",
+      "tags": [
+        "关联引用规则",
+        "检测规则关联",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigcorr-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则关联",
+      "knowledgePoint": "多字段分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 group-by 同时指定用户与域名时，每个组依据什么划分？",
+      "answer": "按用户与域名的取值组合划分，两个字段共同确定每个组。",
+      "explanation": "例如用户名相同但域名不同可以形成不同分组。",
+      "example": "按用户名和域名组成的键统计失败登录。",
+      "tags": [
+        "多字段分组",
+        "检测规则关联",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigcorr-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则关联",
+      "knowledgePoint": "跨事件字段别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 关联规则的 aliases 如何帮助关联不同日志的字段？",
+      "answer": "它把各基础规则匹配事件中的不同字段映射为共同的别名，再用别名分组。",
+      "explanation": "它统一字段的引用方式，不会自动证明字段值的含义相同。",
+      "example": "将一个事件的 destination.ip 与另一事件的 source.ip 映射到同一别名。",
+      "tags": [
+        "跨事件字段别名",
+        "检测规则关联",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigcorr-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则关联",
+      "knowledgePoint": "嵌套关联的分组",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Sigma 嵌套关联中，外层关联会自动继承内层规则的 group-by 吗？",
+      "answer": "不会；外层关联使用它自己定义的 group-by。",
+      "explanation": "因此外层按用户分组时，不应假定自动按内层的主机字段分组。",
+      "example": "内层按计算机统计失败登录，外层按用户关联成功登录。",
+      "tags": [
+        "嵌套关联的分组",
+        "检测规则关联",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigcorr-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则关联",
+      "knowledgePoint": "关联时间范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 关联规则的 timespan 用于什么？",
+      "answer": "它定义需要检查关联事件的时间范围。",
+      "explanation": "规范用数字和小写单位表达，1 小时 30 分钟可写为 90m。",
+      "example": "在 10 分钟内关联多次失败登录和成功登录。",
+      "tags": [
+        "关联时间范围",
+        "检测规则关联",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigcorr-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则关联",
+      "knowledgePoint": "无序时间关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 的 temporal 关联要求哪些事件出现在时间范围内？",
+      "answer": "被引用的各规则对应的事件都需要在指定时间范围内出现，并满足分组条件。",
+      "explanation": "普通 temporal 不要求事件按规则列出的顺序发生。",
+      "example": "在同一主机上关联几类侦察行为。",
+      "tags": [
+        "无序时间关联",
+        "检测规则关联",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigcorr-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则关联",
+      "knowledgePoint": "后端必需能力缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 关联规则要求的必需能力在目标后端不受支持时，转换器应如何处理？",
+      "answer": "规范要求报错，避免生成改变规则含义的查询。",
+      "explanation": "例如后端无法按指定分组统计时，不应静默忽略分组。",
+      "example": "转换失败后选择支持该关联能力的后端或调整规则。",
+      "tags": [
+        "后端必需能力缺失",
+        "检测规则关联",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    },
+    {
+      "id": "sigcorr-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则关联",
+      "knowledgePoint": "生成基础规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 关联规则的 generate 选项用于控制什么？",
+      "answer": "它控制被关联引用的规则是否也转换为独立规则；默认只生成关联查询。",
+      "explanation": "将基础规则单独生成可能带来额外告警，应按用途配置。",
+      "example": "需要同时查看单次登录失败与关联结果时开启相应输出。",
+      "tags": [
+        "生成基础规则",
+        "检测规则关联",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-correlation-rules-specification.html"
+    }
+  ]
+}

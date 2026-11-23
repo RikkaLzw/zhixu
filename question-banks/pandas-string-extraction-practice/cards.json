@@ -1,0 +1,116 @@
+{
+  "source": {
+    "id": "pandas-string-extraction-practice",
+    "title": "pandas 2.3.3 文档：字符串筛选与提取",
+    "url": "https://pandas.pydata.org/pandas-docs/version/2.3.3/reference/api/pandas.Series.str.contains.html",
+    "type": "固定版本论文、标准或官方文档",
+    "note": "根据逐题引用的资料自行整理，示例自编；行为以指定版本与前提为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pdstring-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 字符串处理",
+      "knowledgePoint": "正则与字面",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 2.3.3 的 str.contains 和 str.replace 默认如何解释模式？",
+      "answer": "contains 默认按正则表达式解释；replace 默认按字面字符串解释。",
+      "explanation": "两者都可通过 regex 参数显式选择正则或字面模式。",
+      "example": "查找字面点号时避免把它当作任意字符。",
+      "tags": [
+        "Pandas 字符串处理",
+        "正则与字面"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.3.3/reference/api/pandas.Series.str.contains.html",
+      "supportingReferences": [
+        {
+          "id": "pandas-string-replace-reference",
+          "title": "pandas 2.3.3 文档：Series.str.replace",
+          "url": "https://pandas.pydata.org/pandas-docs/version/2.3.3/reference/api/pandas.Series.str.replace.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "pdstring-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 字符串处理",
+      "knowledgePoint": "缺失值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 2.3.3 的 Series.str.contains 设置 na=False 有什么作用？",
+      "answer": "将输入缺失值对应的匹配结果填为 False。",
+      "explanation": "未指定 na 时的缺失结果可能随字符串数据类型不同而变化。",
+      "example": "用包含判断结果筛选有缺失值的日志列。",
+      "tags": [
+        "Pandas 字符串处理",
+        "缺失值"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.3.3/reference/api/pandas.Series.str.contains.html"
+    },
+    {
+      "id": "pdstring-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 字符串处理",
+      "knowledgePoint": "命名分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 2.3.3 的 Series.str.extract 如何使用正则命名捕获组？",
+      "answer": "命名捕获组的名称会作为对应输出列名。",
+      "explanation": "未命名组通常使用数字列名。",
+      "example": "用 (?P<port>...) 给提取结果命名。",
+      "tags": [
+        "Pandas 字符串处理",
+        "命名分组"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.3.3/reference/api/pandas.Series.str.extract.html"
+    },
+    {
+      "id": "pdstring-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 字符串处理",
+      "knowledgePoint": "结果形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 2.3.3 的 Series.str.extract 在仅有一个捕获组并设置 expand=False 时返回什么？",
+      "answer": "对于 Series 输入，返回 Series；默认 expand=True 返回 DataFrame。",
+      "explanation": "多个捕获组仍需要二维结果。",
+      "example": "提取单列标识符时选用 Series 结果。",
+      "tags": [
+        "Pandas 字符串处理",
+        "结果形状"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.3.3/reference/api/pandas.Series.str.extract.html"
+    },
+    {
+      "id": "pdstring-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 字符串处理",
+      "knowledgePoint": "多次匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 2.3.3 的 Series.str.extractall 与 extract 在匹配次数上有什么区别？",
+      "answer": "extractall 返回每个字符串的所有匹配；extract 仅提取第一次匹配。",
+      "explanation": "两个接口都提取正则捕获组；extractall 的结果索引包含 match 层，无匹配的输入不会产生结果行。",
+      "example": "从一条记录中提取多个编号。",
+      "tags": [
+        "Pandas 字符串处理",
+        "多次匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.3.3/reference/api/pandas.Series.str.extractall.html"
+    }
+  ]
+}

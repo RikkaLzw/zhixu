@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "pytorch-embedding-cosine-contracts",
+    "title": "PyTorch 2.7：嵌入层与余弦相似度",
+    "url": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.Embedding.html",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题列出的资料自行整理；代码行为以题中版本为准。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptembed-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 嵌入与相似度",
+      "knowledgePoint": "填充行更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch Embedding 的 padding_idx 不产生查表梯度，是否保证该权重行绝不会改变？",
+      "answer": "不保证；直接修改权重或优化器的权重衰减等仍可能改变非零填充行。",
+      "explanation": "padding_idx 只约束来自嵌入查找的梯度贡献。",
+      "example": "预训练填充向量非零时，SGD 权重衰减可使其变化。",
+      "tags": [
+        "PyTorch",
+        "填充行更新"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.Embedding.html"
+    },
+    {
+      "id": "ptembed-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 嵌入与相似度",
+      "knowledgePoint": "预训练填充值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 从非零权重调用 Embedding.from_pretrained 并指定 padding_idx，会自动将该行清零吗？",
+      "answer": "不会；传入的预训练权重按原值使用，填充索引的查表梯度仍被抑制。",
+      "explanation": "新建普通 Embedding 的默认填充行与加载预训练权重是不同情形。",
+      "example": "把非零第 0 行设为 padding_idx 后，查表仍返回该非零向量。",
+      "tags": [
+        "PyTorch",
+        "预训练填充值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.Embedding.html"
+    },
+    {
+      "id": "ptembed-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 嵌入与相似度",
+      "knowledgePoint": "频率缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch Embedding 的 scale_grad_by_freq=True 如何处理同一批内重复索引的权重梯度？",
+      "answer": "按该索引在小批次中的出现次数倒数缩放其累积梯度。",
+      "explanation": "各位置的上游梯度仍会先按对应索引累积。",
+      "example": "同一索引重复三次且每次梯度为 1，缩放后该行梯度为 1。",
+      "tags": [
+        "PyTorch",
+        "频率缩放"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.Embedding.html"
+    },
+    {
+      "id": "ptembed-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 嵌入与相似度",
+      "knowledgePoint": "前向范数约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch Embedding 的 max_norm 不为空时，前向查表怎样处理超限的嵌入行？",
+      "answer": "对本次输入涉及且范数超限的权重行进行原位重归一化。",
+      "explanation": "它不是仅调整返回副本，也不保证本次未查到的行被调整。",
+      "example": "本批只查第 0 行时，第 1 行不会因该次查表而被重归一化。",
+      "tags": [
+        "PyTorch",
+        "前向范数约束"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.Embedding.html"
+    },
+    {
+      "id": "ptembed-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 嵌入与相似度",
+      "knowledgePoint": "稀疏梯度优化器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 Embedding(sparse=True) 能与任意优化器组合吗？",
+      "answer": "不能；支持稀疏梯度的优化器有限，应核对优化器及设备限制。",
+      "explanation": "文档列出 SGD、SparseAdam 和 CPU Adagrad 的相关支持。",
+      "example": "普通 Adam 不能直接处理该稀疏梯度。",
+      "tags": [
+        "PyTorch",
+        "稀疏梯度优化器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.Embedding.html"
+    },
+    {
+      "id": "ptembed-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 嵌入与相似度",
+      "knowledgePoint": "余弦输出形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 cosine_similarity 在指定 dim 上计算后，该维度在输出中如何处理？",
+      "answer": "两个输入先广播到共同形状，再沿 dim 计算并移除该维度。",
+      "explanation": "dim 指广播后的共同形状中的维度。",
+      "example": "形状 (2,1,3) 与 (1,4,3) 沿最后维比较得到 (2,4)。",
+      "tags": [
+        "PyTorch",
+        "余弦输出形状"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.cosine_similarity.html"
+    },
+    {
+      "id": "ptembed-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 嵌入与相似度",
+      "knowledgePoint": "零向量与 eps",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch cosine_similarity 遇到零向量时为什么通常返回有限值，而数学上的余弦仍需谨慎解释？",
+      "answer": "实现用 eps 限制范数分母，零向量与普通向量的输出为 0；零向量的方向本身并无定义。",
+      "explanation": "eps 是数值保护，不能赋予零向量真实方向。",
+      "example": "零向量与全 1 向量的该函数输出为 0。",
+      "tags": [
+        "PyTorch",
+        "零向量与 eps"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.cosine_similarity.html"
+    }
+  ]
+}

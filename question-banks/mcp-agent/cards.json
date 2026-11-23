@@ -1,0 +1,252 @@
+{
+  "source": {
+    "id": "mcp-agent",
+    "title": "MCP 2025-11-25：智能体工具与上下文协议",
+    "url": "https://modelcontextprotocol.io/specification/2025-11-25/architecture",
+    "type": "官方技术文档",
+    "note": "依据所引原文自行整理成中文问答，例子为自编。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "mcp-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "协议架构",
+      "knowledgePoint": "MCP 主机与客户端",
+      "questionType": "概念与原理",
+      "question": "MCP 架构中主机与客户端如何管理服务器连接？",
+      "answer": "主机创建和管理客户端；每个客户端维护与一个特定服务器的连接。",
+      "explanation": "主机负责协调多个客户端并管理连接权限。",
+      "example": "一个助手连接文件服务和搜索服务时使用不同客户端。",
+      "tags": [
+        "MCP 主机与客户端",
+        "协议架构"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/architecture",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Architecture"
+    },
+    {
+      "id": "mcp-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "协议架构",
+      "knowledgePoint": "能力协商",
+      "questionType": "概念与原理",
+      "question": "MCP 初始化时为什么要交换能力声明？",
+      "answer": "客户端和服务器声明各自支持的功能，使会话双方知道可以使用哪些协议能力。",
+      "explanation": "例如服务器声明工具能力，客户端声明是否支持采样。",
+      "example": "服务器未声明资源订阅时，客户端不能假设该能力可用。",
+      "tags": [
+        "能力协商",
+        "协议架构"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/architecture",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Architecture"
+    },
+    {
+      "id": "mcp-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具与资源",
+      "knowledgePoint": "工具和资源",
+      "questionType": "比较与选型",
+      "question": "MCP 的工具与资源分别主要用于什么？",
+      "answer": "工具用于执行计算或与外部系统交互；资源用于向客户端提供上下文数据。",
+      "explanation": "这是协议对两类原语的设计用途，具体界面由应用决定。",
+      "example": "查询接口是工具，文档内容可以作为资源。",
+      "tags": [
+        "工具和资源",
+        "工具与资源"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/docs/learn/server-concepts",
+      "origin": "自行整理",
+      "referenceTitle": "MCP：Understanding MCP servers"
+    },
+    {
+      "id": "mcp-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具发现",
+      "knowledgePoint": "工具发现与调用",
+      "questionType": "概念与原理",
+      "question": "MCP 2025-11-25 中客户端如何发现并调用服务器提供的工具？",
+      "answer": "通过 tools/list 获取工具定义，再通过 tools/call 提交工具名和参数。",
+      "explanation": "工具列表支持分页，客户端需要处理可能的后续页。",
+      "example": "先发现查询工具，再传入要查询的主机名。",
+      "tags": [
+        "工具发现与调用",
+        "工具发现"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Tools"
+    },
+    {
+      "id": "mcp-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具输入",
+      "knowledgePoint": "输入 Schema",
+      "questionType": "概念与原理",
+      "question": "MCP 工具定义中的 inputSchema 用来描述什么？",
+      "answer": "它用 JSON Schema 描述工具期望接收的参数结构。",
+      "explanation": "参数结构不代替服务端的权限检查和输入校验。",
+      "example": "查询工具可声明必须提供字符串类型的主机名。",
+      "tags": [
+        "输入 Schema",
+        "工具输入"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Tools"
+    },
+    {
+      "id": "mcp-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具结果",
+      "knowledgePoint": "执行错误与协议错误",
+      "questionType": "比较与选型",
+      "question": "MCP 工具调用的 isError 与 JSON-RPC 协议错误有什么区别？",
+      "answer": "工具执行错误可在结果中以 isError 标记；协议错误通过 JSON-RPC 错误响应报告。",
+      "explanation": "输入值超出工具允许范围可属于执行错误，未知工具名可产生协议错误。",
+      "example": "工具返回日期不合法与请求了不存在的工具是两类情况。",
+      "tags": [
+        "执行错误与协议错误",
+        "工具结果"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/server/tools",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Tools"
+    },
+    {
+      "id": "mcp-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "资源读取",
+      "knowledgePoint": "资源 URI",
+      "questionType": "概念与原理",
+      "question": "MCP 资源通过什么标识，客户端如何读取？",
+      "answer": "资源由 URI 标识；客户端可使用 resources/read 请求读取指定资源。",
+      "explanation": "资源可能是文本或二进制内容，是否可读取取决于服务端能力和权限。",
+      "example": "读取某个文件资源对应的 URI。",
+      "tags": [
+        "资源 URI",
+        "资源读取"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/server/resources",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Resources"
+    },
+    {
+      "id": "mcp-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "资源读取",
+      "knowledgePoint": "资源模板",
+      "questionType": "概念与原理",
+      "question": "MCP 资源模板的作用是什么？",
+      "answer": "它通过 URI 模板描述可带参数的资源，以便客户端构造具体资源标识。",
+      "explanation": "服务器可以为模板参数提供补全支持。",
+      "example": "按项目编号构造项目文档的资源 URI。",
+      "tags": [
+        "资源模板",
+        "资源读取"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/server/resources",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Resources"
+    },
+    {
+      "id": "mcp-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "资源通知",
+      "knowledgePoint": "资源订阅能力",
+      "questionType": "易错点",
+      "question": "MCP 服务器提供资源时一定支持资源变更订阅吗？",
+      "answer": "不一定；资源订阅是可选能力，客户端应检查服务器的能力声明。",
+      "explanation": "资源列表变化通知与单个资源的变更订阅也是独立能力。",
+      "example": "资源服务器可以提供读取功能但不支持订阅。",
+      "tags": [
+        "资源订阅能力",
+        "资源通知"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/server/resources",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Resources"
+    },
+    {
+      "id": "mcp-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "通信传输",
+      "knowledgePoint": "stdio 消息通道",
+      "questionType": "易错点",
+      "question": "MCP 的 stdio 传输中，服务器能否在 stdout 混写普通调试日志？",
+      "answer": "不能；stdout 必须只写有效 MCP 消息，日志可以写到 stderr。",
+      "explanation": "普通日志混入消息流会破坏客户端对协议消息的解析。",
+      "example": "将调试信息写入 stderr 而不是 stdout。",
+      "tags": [
+        "stdio 消息通道",
+        "通信传输"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Transports"
+    },
+    {
+      "id": "mcp-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "通信传输",
+      "knowledgePoint": "标准传输方式",
+      "questionType": "概念与原理",
+      "question": "MCP 2025-11-25 定义的两种标准传输方式是什么？",
+      "answer": "stdio 和 Streamable HTTP。",
+      "explanation": "实现也可以按协议约定提供其他自定义传输。",
+      "example": "本地子进程可使用 stdio，远程服务可使用 Streamable HTTP。",
+      "tags": [
+        "标准传输方式",
+        "通信传输"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Transports"
+    },
+    {
+      "id": "mcp-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "传输安全",
+      "knowledgePoint": "HTTP Origin 校验",
+      "questionType": "概念与原理",
+      "question": "MCP Streamable HTTP 服务器为什么需要校验 Origin 请求头？",
+      "answer": "校验 Origin 有助于防止攻击者借助 DNS 重绑定从远程网站访问服务器。",
+      "explanation": "规范要求对无效 Origin 返回 HTTP 403；本地服务还应注意绑定地址和认证。",
+      "example": "服务器拒绝来自不受信任网页来源的请求。",
+      "tags": [
+        "HTTP Origin 校验",
+        "传输安全"
+      ],
+      "evidence": "source",
+      "reference": "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports",
+      "origin": "自行整理",
+      "referenceTitle": "MCP 2025-11-25：Transports"
+    }
+  ]
+}

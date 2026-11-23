@@ -1,0 +1,45 @@
+{
+  "version": 19,
+  "note": "更新旧卡前保留的内容快照，用于保护用户编辑和学习记录。",
+  "cards": [
+    {
+      "id": "ai4sec-029",
+      "category": "vulnerabilities",
+      "question": "静态特征与动态行为特征有什么区别？",
+      "answer": "静态特征来自文件本身；动态特征来自隔离环境中的运行行为，两者能提供不同证据。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "knowledgeArea": "12",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-029"
+        },
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-012"
+        }
+      ],
+      "explanation": "两类证据的采集成本和覆盖范围不同，不能简单视为等价。",
+      "example": "对静态模型高风险但证据不足的样本安排受控行为分析。",
+      "alternateQuestions": [
+        "EMBER 静态基线与动态行为模型可以怎样互补？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "静态分析",
+        "动态分析"
+      ]
+    }
+  ]
+}

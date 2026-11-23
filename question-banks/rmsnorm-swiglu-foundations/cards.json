@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "rmsnorm-swiglu-foundations",
+    "title": "PyTorch 2.7 与 GLU 原论文：归一化和门控前馈",
+    "url": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.RMSNorm.html",
+    "type": "论文、官方文档与系统手册",
+    "note": "依据逐题所列固定版本论文或官方资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "rmsgate-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RMSNorm 与 SwiGLU",
+      "knowledgePoint": "RMS公式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch RMSNorm 的归一化分母如何由一组输入计算？",
+      "answer": "使用 sqrt(mean(x²)+ε)，再用它缩放输入。",
+      "explanation": "均方根按 normalized_shape 指定的尾部维度计算。",
+      "example": "计算单个 token 隐藏向量的均方根。",
+      "tags": [
+        "RMSNorm 与 SwiGLU",
+        "RMS公式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.RMSNorm.html"
+    },
+    {
+      "id": "rmsgate-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RMSNorm 与 SwiGLU",
+      "knowledgePoint": "可学习缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 RMSNorm 默认 elementwise_affine=True 时有什么可学习参数？",
+      "answer": "它包含按元素缩放的权重，默认初始化为 1。",
+      "explanation": "该模块文档描述的是权重，不应默认假定有额外偏置。",
+      "example": "每个隐藏维度学习一个缩放系数。",
+      "tags": [
+        "RMSNorm 与 SwiGLU",
+        "可学习缩放"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.RMSNorm.html"
+    },
+    {
+      "id": "rmsgate-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RMSNorm 与 SwiGLU",
+      "knowledgePoint": "RMS缩放边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么含非零 ε 的 RMSNorm 对正比例缩放输入不一定严格不变？",
+      "answer": "ε 不随输入平方同比例变化，因此缩放后分母并非严格同比例缩放。",
+      "explanation": "当 ε 可忽略或为 0 且输入非零时才有相应的比例不变性质。",
+      "example": "输入非常接近零时 ε 的影响更明显。",
+      "tags": [
+        "RMSNorm 与 SwiGLU",
+        "RMS缩放边界"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.RMSNorm.html"
+    },
+    {
+      "id": "rmsgate-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RMSNorm 与 SwiGLU",
+      "knowledgePoint": "SiLU公式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SiLU 激活函数如何由 sigmoid 表示？",
+      "answer": "SiLU(x)=x·sigmoid(x)。",
+      "explanation": "它也对应 β=1 的 Swish。",
+      "example": "输入 0 时输出为 0。",
+      "tags": [
+        "RMSNorm 与 SwiGLU",
+        "SiLU公式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.SiLU.html"
+    },
+    {
+      "id": "rmsgate-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RMSNorm 与 SwiGLU",
+      "knowledgePoint": "SwiGLU计算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "忽略偏置时，SwiGLU 如何组合输入的两路线性投影？",
+      "answer": "将一路投影经 SiLU 后，与另一路投影逐元素相乘。",
+      "explanation": "前馈层随后通常再应用输出投影。",
+      "example": "计算 SiLU(xW) ⊙ (xV)。",
+      "tags": [
+        "RMSNorm 与 SwiGLU",
+        "SwiGLU计算"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2002.05202v1"
+    },
+    {
+      "id": "rmsgate-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RMSNorm 与 SwiGLU",
+      "knowledgePoint": "SwiGLU门控范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SwiGLU 的 SiLU 门控值一定限制在 0 到 1 之间吗？",
+      "answer": "不一定；SiLU 可以为负，也可以大于 1。",
+      "explanation": "不能把它直接当成 sigmoid 概率。",
+      "example": "SiLU(2) 大于 1。",
+      "tags": [
+        "RMSNorm 与 SwiGLU",
+        "SwiGLU门控范围"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2002.05202v1"
+    },
+    {
+      "id": "rmsgate-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RMSNorm 与 SwiGLU",
+      "knowledgePoint": "隐藏维度折衷",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "忽略偏置并保持输入输出维度不变时，为使三矩阵 SwiGLU 与两矩阵 FFN 参数量相近，隐藏维度可如何调整？",
+      "answer": "可把 SwiGLU 的隐藏维度设为原 FFN 隐藏维度的约 2/3。",
+      "explanation": "忽略偏置时，三矩阵结构约为 3dh，普通两矩阵 FFN 约为 2dh；实际维度可按硬件对齐。",
+      "example": "原隐藏维度为 4d 时，约使用 8d/3。",
+      "tags": [
+        "RMSNorm 与 SwiGLU",
+        "隐藏维度折衷"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2002.05202v1"
+    }
+  ]
+}

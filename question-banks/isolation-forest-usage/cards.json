@@ -1,0 +1,152 @@
+{
+  "source": {
+    "id": "isolation-forest-usage",
+    "title": "scikit-learn：Isolation Forest 训练与决策",
+    "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+    "type": "官方技术文档",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "isouse-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "每棵树的自动采样量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn IsolationForest 的 max_samples=\"auto\" 每棵树使用多少训练样本？",
+      "answer": "使用 min(256, 训练样本数) 个样本。",
+      "explanation": "该值描述每棵基学习器的样本规模，不是整个数据集的大小。",
+      "example": "只有 100 条训练样本时，每棵树使用 100 条。",
+      "tags": [
+        "每棵树的自动采样量",
+        "异常检测模型",
+        "Isolation Forest"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html"
+    },
+    {
+      "id": "isouse-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "有放回采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IsolationForest 的 bootstrap 参数决定什么？",
+      "answer": "它决定为各棵树抽样时是否有放回；默认是无放回。",
+      "explanation": "bootstrap=True 可能使同一训练样本在一棵树的样本中重复出现。",
+      "example": "比较有放回与无放回的树训练样本。",
+      "tags": [
+        "有放回采样",
+        "异常检测模型",
+        "Isolation Forest"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html"
+    },
+    {
+      "id": "isouse-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "特征子采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IsolationForest 的 max_features 小于全部特征数时会怎样？",
+      "answer": "每棵基学习器使用抽取的一部分特征进行训练。",
+      "explanation": "抽取规则由参数类型和值决定，效果和运行时间需实测。",
+      "example": "对一组主机统计特征进行子采样。",
+      "tags": [
+        "特征子采样",
+        "异常检测模型",
+        "Isolation Forest"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html"
+    },
+    {
+      "id": "isouse-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "偏移与决策分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn IsolationForest 的 decision_function 与 score_samples、offset_ 有什么关系？",
+      "answer": "decision_function 等于 score_samples 减去 offset_。",
+      "explanation": "offset_ 由污染比例配置等条件决定，用于形成决策边界。",
+      "example": "对同一条记录分别查看原始分数和偏移后的分数。",
+      "tags": [
+        "偏移与决策分数",
+        "异常检测模型",
+        "Isolation Forest"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html"
+    },
+    {
+      "id": "isouse-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "决策分数符号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn IsolationForest 的 decision_function 为负时通常表示什么？",
+      "answer": "该样本位于估计的异常一侧；正值表示内点一侧。",
+      "explanation": "这不是攻击概率，仍需结合业务和证据判断。",
+      "example": "把负分记录作为待复核异常候选。",
+      "tags": [
+        "决策分数符号",
+        "异常检测模型",
+        "Isolation Forest"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html"
+    },
+    {
+      "id": "isouse-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "训练并行与评分并行",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "IsolationForest 构造参数 n_jobs 是否直接控制 decision_function 的并行计算？",
+      "answer": "不直接控制；该参数用于拟合，评分可另用 joblib 并行上下文。",
+      "explanation": "实际并行收益依数据量和环境而异。",
+      "example": "训练使用多个作业时，单独配置批量评分的并行方式。",
+      "tags": [
+        "训练并行与评分并行",
+        "异常检测模型",
+        "Isolation Forest"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html"
+    },
+    {
+      "id": "isouse-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "异常检测模型",
+      "knowledgePoint": "热启动增加树",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "scikit-learn IsolationForest 的 warm_start=True 如何复用上一次拟合结果？",
+      "answer": "它保留已有集成并允许增加新的基学习器，而不是重新拟合已有树。",
+      "explanation": "这不等同于已有树对新数据进行在线更新。",
+      "example": "增加 n_estimators 后再 fit 以扩展森林。",
+      "tags": [
+        "热启动增加树",
+        "异常检测模型",
+        "Isolation Forest"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html"
+    }
+  ]
+}

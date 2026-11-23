@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "hf-datasets-transform-practice",
+    "title": "Hugging Face Datasets 3.6.0：数据集变换",
+    "url": "https://huggingface.co/docs/datasets/v3.6.0/en/package_reference/main_classes",
+    "type": "论文、固定版本文档与源码",
+    "note": "根据逐题引用的资料自行整理；示例为自编，具体版本见题干。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "hfdata-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Hugging Face 数据集处理",
+      "knowledgePoint": "map输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Hugging Face Datasets 3.6.0 的 Dataset.map 通常如何处理映射函数新增或同名的列？",
+      "answer": "新增列会加入结果；返回的同名列会覆盖原列。",
+      "explanation": "变换通常返回新的 Dataset，调用方应使用返回值。",
+      "example": "给文本列生成 token 列。",
+      "tags": [
+        "Hugging Face 数据集处理",
+        "map输出"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/datasets/v3.6.0/en/package_reference/main_classes#datasets.Dataset.map"
+    },
+    {
+      "id": "hfdata-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Hugging Face 数据集处理",
+      "knowledgePoint": "批量输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dataset.map 设置 batched=True 时，映射函数通常接收什么结构？",
+      "answer": "它接收以列名为键、每列为一批值的字典。",
+      "explanation": "最后一批可能比 batch_size 小。",
+      "example": "批次中的 text 值是字符串列表。",
+      "tags": [
+        "Hugging Face 数据集处理",
+        "批量输入"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/datasets/v3.6.0/en/package_reference/main_classes#datasets.Dataset.map"
+    },
+    {
+      "id": "hfdata-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Hugging Face 数据集处理",
+      "knowledgePoint": "批次长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dataset.map 批量变换能否把一个输入批次转换为不同数量的输出行？",
+      "answer": "可以；但同一输出批次中保留的各列长度必须一致。",
+      "explanation": "改变行数时，原有长度不匹配的列应同步更新或移除。",
+      "example": "把两条长文本拆成多个片段时移除原始列。",
+      "tags": [
+        "Hugging Face 数据集处理",
+        "批次长度"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/datasets/v3.6.0/en/package_reference/main_classes#datasets.Dataset.map"
+    },
+    {
+      "id": "hfdata-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Hugging Face 数据集处理",
+      "knowledgePoint": "删除列时机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dataset.map 的 remove_columns 在函数读取输入前还是合并输出前删除列？",
+      "answer": "映射函数仍可读取这些输入列；它们在与函数输出合并前被删除。",
+      "explanation": "如果函数重新返回同名列，该新列仍会保留。",
+      "example": "读取 text 生成新 text，同时移除旧 text。",
+      "tags": [
+        "Hugging Face 数据集处理",
+        "删除列时机"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/datasets/v3.6.0/en/package_reference/main_classes#datasets.Dataset.map"
+    },
+    {
+      "id": "hfdata-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Hugging Face 数据集处理",
+      "knowledgePoint": "映射索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dataset.map 设置 with_indices=True 时，映射函数会额外得到什么？",
+      "answer": "得到当前样本或批次对应的索引。",
+      "explanation": "批量模式下索引与输入批次中的样本对应。",
+      "example": "为记录附加在当前数据集中的位置。",
+      "tags": [
+        "Hugging Face 数据集处理",
+        "映射索引"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/datasets/v3.6.0/en/package_reference/main_classes#datasets.Dataset.map"
+    },
+    {
+      "id": "hfdata-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Hugging Face 数据集处理",
+      "knowledgePoint": "格式方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dataset.set_format 与 Dataset.with_format 在对象修改方式上有什么区别？",
+      "answer": "set_format 修改当前对象的读取格式；with_format 返回设置了格式的新 Dataset。",
+      "explanation": "两者主要影响读取时的表示，不等于重新训练模型。",
+      "example": "with_format(\"numpy\") 创建读取时返回 NumPy 格式的视图。",
+      "tags": [
+        "Hugging Face 数据集处理",
+        "格式方法"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/datasets/v3.6.0/en/package_reference/main_classes#datasets.Dataset.with_format"
+    },
+    {
+      "id": "hfdata-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Hugging Face 数据集处理",
+      "knowledgePoint": "切分默认比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dataset.train_test_split 同时不指定 train_size 与 test_size 时，默认测试集比例是多少？",
+      "answer": "默认测试集占 25%。",
+      "explanation": "默认会打乱；涉及时间或分组泄漏时应自行选择合适切分方式。",
+      "example": "100 条样本默认分成 75 条训练和 25 条测试。",
+      "tags": [
+        "Hugging Face 数据集处理",
+        "切分默认比例"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/datasets/v3.6.0/en/package_reference/main_classes#datasets.Dataset.train_test_split"
+    },
+    {
+      "id": "hfdata-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Hugging Face 数据集处理",
+      "knowledgePoint": "分层列类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Datasets 3.6.0 的 train_test_split 使用 stratify_by_column 时，标签列需要什么类型？",
+      "answer": "实现要求该列是 ClassLabel 特征；普通整数列需先转换为适当的类别特征。",
+      "explanation": "分层还需要满足每个类别的样本数量等条件。",
+      "example": "调用 class_encode_column 后再尝试分层。",
+      "tags": [
+        "Hugging Face 数据集处理",
+        "分层列类型"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/datasets/blob/3.6.0/src/datasets/arrow_dataset.py#L4695"
+    }
+  ]
+}

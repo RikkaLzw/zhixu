@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "faiss-index-contracts",
+    "title": "Faiss 1.12：索引 ID、搜索结果与重建",
+    "url": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/Index.h",
+    "type": "教材与官方文档",
+    "note": "依据逐题所列资料自行整理中文问答；例子为自编。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "faissapi-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Faiss 索引接口",
+      "knowledgePoint": "搜索结果不足",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss 1.12 的 search 请求 k 个结果但结果不足时，结果标签如何填充？",
+      "answer": "不足位置的标签填为 -1。",
+      "explanation": "应用应过滤无效标签，不能把 -1 当作实际向量编号。",
+      "example": "索引只有两个候选但请求 3 个时，第三个标签为 -1。",
+      "tags": [
+        "搜索结果不足",
+        "Faiss 索引接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/Index.h"
+    },
+    {
+      "id": "faissapi-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Faiss 索引接口",
+      "knowledgePoint": "结果维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss 1.12 的 search 对 n 条查询各取 k 个邻居时，距离和标签输出各包含多少项？",
+      "answer": "距离和标签各有 n×k 项，对应每条查询的 k 个位置。",
+      "explanation": "输出形状依赖查询数和请求的邻居数，而非索引向量总数。",
+      "example": "4 条查询各取 3 个邻居，各输出 12 项。",
+      "tags": [
+        "结果维度",
+        "Faiss 索引接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/Index.h"
+    },
+    {
+      "id": "faissapi-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Faiss 索引接口",
+      "knowledgePoint": "显式ID支持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss 的每种索引都支持 add_with_ids 写入自定义 ID 吗？",
+      "answer": "不都支持；基类默认实现会失败，应核对具体索引或使用适合的 ID 映射包装。",
+      "explanation": "能调用同名接口不代表底层实现支持它。",
+      "example": "为不支持自定义 ID 的索引选择适当的包装器。",
+      "tags": [
+        "显式ID支持",
+        "Faiss 索引接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/Index.h"
+    },
+    {
+      "id": "faissapi-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Faiss 索引接口",
+      "knowledgePoint": "IDMap添加接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss 1.12 的 IndexIDMap 应使用 add 还是 add_with_ids 添加向量？",
+      "answer": "使用 add_with_ids 并提供 ID；直接调用 add 会失败。",
+      "explanation": "包装器维护外部 ID 与内部位置的映射。",
+      "example": "添加向量时同时提供业务侧的整数 ID。",
+      "tags": [
+        "IDMap添加接口",
+        "Faiss 索引接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/IndexIDMap.h"
+    },
+    {
+      "id": "faissapi-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Faiss 索引接口",
+      "knowledgePoint": "IDMap2重建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss 1.12 的 IndexIDMap2 相比 IndexIDMap 为按外部 ID 重建提供了什么？",
+      "answer": "它维护反向映射并实现按 ID 的重建；底层索引仍需支持相应重建能力。",
+      "explanation": "映射解决外部 ID 到内部位置的定位。",
+      "example": "用外部 ID 找到映射的位置并重建向量。",
+      "tags": [
+        "IDMap2重建",
+        "Faiss 索引接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/IndexIDMap.h"
+    },
+    {
+      "id": "faissapi-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Faiss 索引接口",
+      "knowledgePoint": "有损索引重建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss 索引重建出的向量一定与原始向量完全相同吗？",
+      "answer": "不一定；使用有损编码的索引可能只能重建近似向量，且某些索引不支持重建。",
+      "explanation": "需要精确原向量时应确认索引能力或另行保存原数据。",
+      "example": "乘积量化索引解码得到的向量可能存在量化误差。",
+      "tags": [
+        "有损索引重建",
+        "Faiss 索引接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/Index.h"
+    },
+    {
+      "id": "faissapi-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Faiss 索引接口",
+      "knowledgePoint": "索引向量总数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss Index 的 ntotal 属性表示什么？",
+      "answer": "表示索引中当前存储的向量总数。",
+      "explanation": "它不是向量维数，也不是一次搜索请求的 k。",
+      "example": "索引存入 100 条向量后可查看 ntotal。",
+      "tags": [
+        "索引向量总数",
+        "Faiss 索引接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/Index.h"
+    },
+    {
+      "id": "faissapi-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Faiss 索引接口",
+      "knowledgePoint": "训练状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss Index 的 is_trained 属性主要表示什么？",
+      "answer": "表示索引是否处于已训练状态；它不表示索引已经包含向量。",
+      "explanation": "一些索引无需训练即可处于已训练状态。",
+      "example": "新建的空 IndexFlat 可以已训练但 ntotal 为 0。",
+      "tags": [
+        "训练状态",
+        "Faiss 索引接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/Index.h"
+    },
+    {
+      "id": "faissapi-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Faiss 索引接口",
+      "knowledgePoint": "删除支持差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Faiss 的 remove_ids 是否适用于所有索引？",
+      "answer": "不适用于所有索引；应检查具体实现，成功调用时返回删除的元素数量。",
+      "explanation": "删除能力与索引结构有关。",
+      "example": "替换索引类型前先验证删除操作的支持情况。",
+      "tags": [
+        "删除支持差异",
+        "Faiss 索引接口"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/facebookresearch/faiss/blob/v1.12.0/faiss/Index.h"
+    }
+  ]
+}

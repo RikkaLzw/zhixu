@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "tcp-keepalive-small-packets",
+    "title": "RFC 9293 与 Linux tcp(7)：TCP 保活与小包",
+    "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+    "type": "官方文档与系统手册",
+    "note": "按逐题引用的文档自行整理；示例为自编，具体适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "tcpdetail-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 保活与小包",
+      "knowledgePoint": "空闲保活",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP keep-alive 主要想发现什么情况？",
+      "answer": "通过向空闲连接的对端发送探测并观察响应，帮助判断对端 TCP 是否仍可达。",
+      "explanation": "该机制针对空闲连接，不直接验证应用业务是否正常。",
+      "example": "长期空闲的客户端连接可按配置探测。",
+      "tags": [
+        "TCP 保活与小包",
+        "空闲保活"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpdetail-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 保活与小包",
+      "knowledgePoint": "保活默认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 9293 对实现了 TCP keep-alive 的连接，其默认开关有什么要求？",
+      "answer": "默认关闭，且应用必须能按连接开启或关闭。",
+      "explanation": "实际平台的配置和应用设置仍需检查。",
+      "example": "启用该功能应明确设置相应套接字选项。",
+      "tags": [
+        "TCP 保活与小包",
+        "保活默认"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpdetail-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 保活与小包",
+      "knowledgePoint": "单次探测无响应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 9293 为什么要求不能仅凭一次 TCP keep-alive 探测无响应就认定连接失效？",
+      "answer": "无数据的 ACK 报文可能丢失，单次未收到响应不足以证明连接已失效。",
+      "explanation": "具体失败判定由实现和配置决定。",
+      "example": "网络暂时丢包可能让某次探测没有得到回应。",
+      "tags": [
+        "TCP 保活与小包",
+        "单次探测无响应"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpdetail-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 保活与小包",
+      "knowledgePoint": "Linux 保活选项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 启用 SO_KEEPALIVE 后，TCP_KEEPIDLE、TCP_KEEPINTVL 和 TCP_KEEPCNT 分别控制什么？",
+      "answer": "分别控制发送探测前的空闲时间、探测间隔和连接被丢弃前的最大探测次数。",
+      "explanation": "前两项以秒为单位；这些 TCP 选项属于 Linux 特定接口。",
+      "example": "可同时配置空闲时间、探测间隔和探测次数。",
+      "tags": [
+        "TCP 保活与小包",
+        "Linux 保活选项"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/tcp.7.html"
+    },
+    {
+      "id": "tcpdetail-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 保活与小包",
+      "knowledgePoint": "Nagle 算法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 的 Nagle 算法主要希望减少什么现象？",
+      "answer": "减少应用少量多次写入时发送大量小报文段的情况。",
+      "explanation": "它会在适当条件下合并或推迟小段，具体行为依实现而定。",
+      "example": "逐字符写入时可能先合并数据再发送。",
+      "tags": [
+        "TCP 保活与小包",
+        "Nagle 算法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpdetail-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 保活与小包",
+      "knowledgePoint": "关闭 Nagle",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中 TCP_NODELAY 套接字选项的作用是什么？",
+      "answer": "启用后关闭 Nagle 算法，使数据在条件允许时尽快发送。",
+      "explanation": "这不保证每次应用写入都对应一个独立 TCP 报文段。",
+      "example": "对延迟敏感的小请求可评估是否需要此选项。",
+      "tags": [
+        "TCP 保活与小包",
+        "关闭 Nagle"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/tcp.7.html"
+    },
+    {
+      "id": "tcpdetail-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 保活与小包",
+      "knowledgePoint": "延迟确认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 的 delayed ACK 是什么？",
+      "answer": "接收端适当延迟确认，使接收多个数据段后可发送较少的 ACK。",
+      "explanation": "RFC 9293 要求确认延迟小于 0.5 秒，并给出其他建议。",
+      "example": "接收方可能用一个 ACK 累计确认多个数据段。",
+      "tags": [
+        "TCP 保活与小包",
+        "延迟确认"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpdetail-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 保活与小包",
+      "knowledgePoint": "小包延迟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Nagle 算法与 delayed ACK 的组合有时会增加请求响应延迟？",
+      "answer": "发送端可能等待未确认数据的 ACK 才发送后续小段，而接收端又延迟发送 ACK。",
+      "explanation": "是否出现明显延迟取决于应用写入方式和 TCP 实现。",
+      "example": "把一次小请求拆成多次写入时应检查实际时延。",
+      "tags": [
+        "TCP 保活与小包",
+        "小包延迟"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    }
+  ]
+}

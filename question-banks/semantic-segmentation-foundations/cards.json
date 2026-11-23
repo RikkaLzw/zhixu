@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "semantic-segmentation-foundations",
+    "title": "FCN 原论文与 TensorFlow 教程：语义分割",
+    "url": "https://arxiv.org/pdf/1411.4038v2",
+    "type": "论文、标准与技术文档",
+    "note": "逐题依据固定版本论文或规范自行整理，示例为自编；适用条件见卡片。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "segbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "分割与分类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语义分割与整图分类的输出粒度有什么主要区别？",
+      "answer": "语义分割逐像素或空间位置预测类别；整图分类通常给整张图一个类别。",
+      "explanation": "分割能表达物体或区域的空间范围。",
+      "example": "整图标为猫，与逐像素标出猫的区域不同。",
+      "tags": [
+        "语义分割基础",
+        "分割与分类"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1411.4038v2"
+    },
+    {
+      "id": "segbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "输出通道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多类语义分割模型的每个像素若输出 C 个类别 logits，这些通道代表什么？",
+      "answer": "它们分别对应这个像素属于各类别的未归一化分数。",
+      "explanation": "模型输出与标签的空间尺寸需要对齐。",
+      "example": "三类别模型在每个像素上输出三个分数。",
+      "tags": [
+        "语义分割基础",
+        "输出通道"
+      ],
+      "evidence": "source",
+      "reference": "https://www.tensorflow.org/tutorials/images/segmentation"
+    },
+    {
+      "id": "segbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "像素预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多类语义分割推理时，如何由每像素类别分数得到预测标签？",
+      "answer": "对每个像素沿类别维选择分数最高的类别。",
+      "explanation": "这适用于每个位置预测单一类别的设定。",
+      "example": "对每个像素的类别通道执行 argmax。",
+      "tags": [
+        "语义分割基础",
+        "像素预测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.tensorflow.org/tutorials/images/segmentation"
+    },
+    {
+      "id": "segbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "掩码缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么缩放存储类别编号的分割标签时常用最近邻插值？",
+      "answer": "最近邻通常保留原有离散类别编号，避免插值生成不存在的类别值。",
+      "explanation": "图像本身可以选择其他合适的插值方法。",
+      "example": "标签值 0 和 2 之间不应产生类别 1。",
+      "tags": [
+        "语义分割基础",
+        "掩码缩放"
+      ],
+      "evidence": "source",
+      "reference": "https://www.tensorflow.org/tutorials/images/segmentation"
+    },
+    {
+      "id": "segbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "增强同步",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对分割训练图像做随机翻转时，为什么要对标签掩码做相同的几何变换？",
+      "answer": "保持像素与标签的空间对应关系。",
+      "explanation": "图像和掩码可以采用各自适合的数据处理方法。",
+      "example": "图像水平翻转时，掩码也水平翻转。",
+      "tags": [
+        "语义分割基础",
+        "增强同步"
+      ],
+      "evidence": "source",
+      "reference": "https://www.tensorflow.org/tutorials/images/segmentation"
+    },
+    {
+      "id": "segbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "密集预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FCN 原论文为什么可以把分类网络改造成密集预测网络？",
+      "answer": "它将相关的全连接计算改写为卷积形式，使网络能在空间位置上输出预测。",
+      "explanation": "具体输出分辨率仍受网络下采样和上采样设计影响。",
+      "example": "网络对输入图像产生二维类别分数图。",
+      "tags": [
+        "语义分割基础",
+        "密集预测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1411.4038v2"
+    },
+    {
+      "id": "segbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "上采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FCN 中上采样层在语义分割里主要解决什么问题？",
+      "answer": "将较低分辨率的特征或预测恢复到更细的空间尺度。",
+      "explanation": "上采样本身不能保证恢复所有丢失的边界细节。",
+      "example": "把低分辨率类别分数图放大到接近原图大小。",
+      "tags": [
+        "语义分割基础",
+        "上采样"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1411.4038v2"
+    },
+    {
+      "id": "segbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "跳跃连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FCN 原论文组合较浅层与较深层特征的目的是什么？",
+      "answer": "结合较浅层的细节位置信息与较深层的语义信息。",
+      "explanation": "它有助于改善粗糙预测的空间细节。",
+      "example": "用浅层特征辅助还原物体边界。",
+      "tags": [
+        "语义分割基础",
+        "跳跃连接"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1411.4038v2"
+    },
+    {
+      "id": "segbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "类别不均衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语义分割中为什么单看像素总体准确率可能掩盖小类别的效果？",
+      "answer": "大面积类别可能主导总体准确率，小类别即使预测较差也不明显。",
+      "explanation": "应结合按类别的 IoU 等指标检查。",
+      "example": "背景占绝大多数时，全预测背景也可能得到较高准确率。",
+      "tags": [
+        "语义分割基础",
+        "类别不均衡"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/1411.4038v2"
+    },
+    {
+      "id": "segbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语义分割基础",
+      "knowledgePoint": "像素权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语义分割处理类别不均衡时，为损失设置类别或像素权重的目的是什么？",
+      "answer": "让不同类别的像素错误对训练目标产生不同权重。",
+      "explanation": "权重需要结合数据和验证指标选择。",
+      "example": "提高稀少类别像素的损失权重。",
+      "tags": [
+        "语义分割基础",
+        "像素权重"
+      ],
+      "evidence": "source",
+      "reference": "https://www.tensorflow.org/tutorials/images/segmentation"
+    }
+  ]
+}

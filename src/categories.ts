@@ -10,8 +10,8 @@ export const categories: {
 }[] = [
   {
     id: 'foundations',
-    label: '数据与方法',
-    description: '数据、特征与评估',
+    label: 'AI 与数据基础',
+    description: '数学、模型、Agent 与数据',
     color: '#5B6EB4',
     background: '#ECEFFD',
     icon: 'layers-outline',

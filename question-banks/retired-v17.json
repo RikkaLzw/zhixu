@@ -1,0 +1,68 @@
+{
+  "version": 17,
+  "note": "迁移用第十七版旧主卡快照；仅更新未编辑卡片，归档原卡并保留学习记录。",
+  "cards": [
+    {
+      "id": "prime-007",
+      "category": "vulnerabilities",
+      "question": "漏洞修复提交信息为什么应与代码模型输入分开？",
+      "answer": "提交信息可能包含漏洞描述或修复结论，直接泄露待预测标签。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "level": "进阶",
+      "tags": [
+        "提交信息",
+        "标签泄漏"
+      ],
+      "explanation": "若部署场景不提供修复信息，训练和测试也不应使用它。",
+      "example": "将提交信息保存在审计记录中，但不输入给函数级分类器。",
+      "sources": [
+        {
+          "id": "primevul",
+          "title": "PrimeVul 漏洞检测数据集",
+          "url": "https://github.com/DLVulDet/PrimeVul",
+          "type": "论文与开源数据集",
+          "evidence": "application",
+          "sourceCardId": "prime-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "semtaint-006",
+      "category": "vulnerabilities",
+      "question": "Semgrep 污点来源设置 exact: true 对嵌套子表达式有什么影响？",
+      "answer": "只把来源模式的精确匹配结果视为来源，不自动把其中所有子表达式也视为来源。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "subtopic": "污点规则",
+      "knowledgePoint": "精确匹配来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "精确匹配来源",
+        "污点规则"
+      ],
+      "explanation": "其他规则仍可能独立地将这些子表达式标记为污点。",
+      "example": "来源调用的参数里嵌套另一个表达式时，检查该选项的影响。",
+      "sources": [
+        {
+          "id": "semgrep-taint",
+          "title": "Semgrep 污点规则与数据流说明",
+          "url": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode/overview",
+          "type": "技术文档",
+          "evidence": "source",
+          "sourceCardId": "semtaint-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

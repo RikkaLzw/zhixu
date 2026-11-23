@@ -1,0 +1,537 @@
+{
+  "source": {
+    "id": "amd64-abi-call-conventions-foundations",
+    "title": "System V AMD64 ABI、Linux syscall ABI 与 Microsoft x64 调用约定",
+    "url": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex",
+    "type": "平台 ABI 规范与官方技术文档",
+    "note": "依据 System V AMD64 ABI、Linux syscall(2) 手册和 Microsoft x64 调用约定文档整理；寄存器规则按明确标注的平台区分。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "amd64abi-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "ABI 与 ISA",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "处理器 ISA 与应用二进制接口 ABI 分别规定什么？",
+      "answer": "ISA 规定处理器可执行的指令及架构状态；ABI 规定二进制组件之间的调用、数据布局、符号和运行时约定。",
+      "explanation": "遵守同一 ABI 的组件才可在相应平台上按约定互操作。",
+      "example": "两种编译器生成的 x86-64 代码可以因遵循同一 System V ABI 而相互调用。",
+      "tags": [
+        "ABI",
+        "ISA",
+        "二进制兼容"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "System V 整数参数寄存器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 ABI 的常见整数类标量参数依次使用哪些寄存器传递？",
+      "answer": "常见顺序为 RDI、RSI、RDX、RCX、R8、R9；后续参数通常通过栈传递。",
+      "explanation": "聚合参数还要按 ABI 类别拆分和分配，不能把所有源语言参数都简单视为一个寄存器。",
+      "example": "函数 f(a,b,c) 的三个普通整数参数通常分别进入 RDI、RSI、RDX。",
+      "tags": [
+        "System V ABI",
+        "参数传递",
+        "寄存器"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "System V 浮点参数寄存器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 ABI 通常用哪些寄存器传递浮点参数？",
+      "answer": "符合 SSE 类别的浮点参数通常通过 XMM 寄存器序列传递，最多使用约定范围内的向量寄存器。",
+      "explanation": "具体寄存器分配取决于参数类型分类和可用寄存器，不一定与整数参数共享同一序号。",
+      "example": "double 参数通常使用 XMM0 开始的浮点参数寄存器。",
+      "tags": [
+        "System V ABI",
+        "浮点参数",
+        "XMM"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "System V 整数返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 ABI 中，常见整数类标量返回值通常放在哪里？",
+      "answer": "通常放在 RAX 中。",
+      "explanation": "更大的聚合返回值可能使用额外约定，例如由调用者提供结果存储空间。",
+      "example": "返回 int 或指针的普通函数通常把结果写入 RAX。",
+      "tags": [
+        "System V ABI",
+        "返回值",
+        "RAX"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "System V 浮点返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 ABI 中，常见单精度或双精度浮点返回值通常放在哪里？",
+      "answer": "通常通过 XMM0 返回。",
+      "explanation": "较宽向量或聚合值需要按 ABI 的类别和返回规则处理。",
+      "example": "返回 double 的函数通常把结果放在 XMM0。",
+      "tags": [
+        "System V ABI",
+        "浮点返回值",
+        "XMM0"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "被调用者保存寄存器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 ABI 中，callee-saved 寄存器要求被调用函数做什么？",
+      "answer": "若函数修改这些寄存器，返回前必须恢复调用者原有值。",
+      "explanation": "常见被调用者保存的通用寄存器包括 RBX、RBP、R12–R15；RSP 也须按调用约定恢复。",
+      "example": "函数使用 R12 暂存局部值时，应在返回前还原先前 R12。",
+      "tags": [
+        "System V ABI",
+        "callee-saved",
+        "寄存器保存"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "调用者保存寄存器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调用者保存寄存器 caller-saved 对调用代码有什么影响？",
+      "answer": "调用者若要跨越函数调用保留这些寄存器中的值，必须自行保存；被调用函数可按约定覆盖它们。",
+      "explanation": "System V AMD64 中常见易失通用寄存器包括 RAX、RCX、RDX、RSI、RDI、R8–R11。",
+      "example": "调用可能覆盖 RAX，因此调用前仍需保留的临时值应先存到安全位置。",
+      "tags": [
+        "System V ABI",
+        "caller-saved",
+        "寄存器保存"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "调用点栈对齐",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "System V AMD64 ABI 的普通函数调用前，栈指针对齐要求有什么用途？",
+      "answer": "调用点按 ABI 规定保持栈对齐，使被调用函数可安全访问栈上传入的数据和使用对齐相关指令。",
+      "explanation": "典型基线是 call 指令执行前 RSP 按 16 字节对齐；call 压入返回地址后，函数入口的 RSP 相对该边界偏移 8 字节。特殊栈参数可能要求更强对齐。",
+      "example": "手写汇编在调用 C 函数前调整 RSP，使其满足调用点对齐要求。",
+      "tags": [
+        "System V ABI",
+        "栈对齐",
+        "函数调用"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "调用指令与返回地址",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "x86-64 的 near call 和 ret 指令如何协作完成常见函数调用？",
+      "answer": "call 保存返回地址并转到目标，ret 从栈顶取出该返回地址并继续执行。",
+      "explanation": "这描述常见近调用语义；调用约定还规定参数、寄存器和栈状态等其他内容。",
+      "example": "call 后执行被调用函数，ret 返回 call 之后的下一条指令。",
+      "tags": [
+        "x86-64",
+        "call",
+        "ret",
+        "返回地址"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "栈帧与帧指针",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "System V AMD64 函数是否必须用 RBP 建立传统帧指针？",
+      "answer": "不必须；编译器可省略帧指针，把 RBP 用作通用寄存器并通过其他方式寻址栈数据。",
+      "explanation": "调试信息和展开信息可在没有传统 RBP 链的情况下描述栈帧。",
+      "example": "开启省略帧指针优化后，函数序言可能不包含 push rbp 和 mov rbp,rsp。",
+      "tags": [
+        "System V ABI",
+        "栈帧",
+        "帧指针"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "System V Red Zone",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 用户态 ABI 的 red zone 是什么？",
+      "answer": "它是 RSP 下方 128 字节的区域，符合条件的叶函数可暂存数据而不先调整栈指针。",
+      "explanation": "该约定不适用于 Windows x64，也不应假设所有内核或中断上下文都保留这一区域。",
+      "example": "不再调用其他函数的短叶函数可把少量临时值放在 red zone。",
+      "tags": [
+        "System V ABI",
+        "red zone",
+        "栈"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "变参向量寄存器计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 ABI 调用可变参数函数时，AL 寄存器与向量参数有什么关系？",
+      "answer": "AL 携带按 ABI 规定传递可变参数所用向量寄存器数量的上界信息。",
+      "explanation": "被调用者可据此决定是否需要保存相应 XMM 参数寄存器；这属于 x86-64 SysV 特定约定。",
+      "example": "调用 printf 一类变参函数并传递浮点参数时，编译器会按 ABI 设置 AL。",
+      "tags": [
+        "System V ABI",
+        "变参函数",
+        "AL"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "间接结构体返回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 ABI 中，较大的聚合返回值为什么可能通过隐藏指针传递？",
+      "answer": "调用者可分配结果对象并把地址作为隐藏参数传给被调用者，由被调用者写入结果。",
+      "explanation": "是否直接用寄存器返回取决于返回类型按 ABI 分类后的大小和类别。",
+      "example": "返回较大结构体的函数可能接收一个指向调用者结果缓冲区的隐藏地址。",
+      "tags": [
+        "System V ABI",
+        "结构体返回",
+        "隐藏参数"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "System V 聚合参数分类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 ABI 为什么不能简单地把每个 C 函数参数都映射为一个参数寄存器？",
+      "answer": "聚合类型会被拆分为 ABI 定义的类别，可能占多个寄存器、部分走栈，或整体通过内存传递。",
+      "explanation": "寄存器不足时还要按规范处理已分配类别和栈参数布局。",
+      "example": "含多个成员的结构体可能按若干 eightbyte 分类后使用多个寄存器。",
+      "tags": [
+        "System V ABI",
+        "聚合参数",
+        "参数分类"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    },
+    {
+      "id": "amd64abi-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux x86-64 系统调用 ABI",
+      "knowledgePoint": "Linux x86-64 系统调用号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux x86-64 syscall 指令约定通常把系统调用号放在哪个寄存器？",
+      "answer": "系统调用号放在 RAX 中。",
+      "explanation": "参数和返回值也由 Linux x86-64 系统调用 ABI 约定，不能仅依赖普通 C 函数调用约定。",
+      "example": "汇编直接执行 syscall 前，先把所需系统调用号写入 RAX。",
+      "tags": [
+        "Linux",
+        "syscall",
+        "RAX"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/syscall.2.html"
+    },
+    {
+      "id": "amd64abi-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux x86-64 系统调用 ABI",
+      "knowledgePoint": "系统调用参数寄存器",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Linux x86-64 syscall 的第四个参数通常放在哪个寄存器？",
+      "answer": "放在 R10 中。",
+      "explanation": "普通 System V AMD64 函数调用的第四个整数参数通常用 RCX；系统调用约定不同。",
+      "example": "系统调用参数依次使用 RDI、RSI、RDX、R10、R8、R9。",
+      "tags": [
+        "Linux",
+        "syscall",
+        "R10",
+        "调用约定"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/syscall.2.html"
+    },
+    {
+      "id": "amd64abi-017",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux x86-64 系统调用 ABI",
+      "knowledgePoint": "syscall 指令寄存器破坏",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "Linux x86-64 执行 syscall 后，为什么不能依赖 RCX 和 R11 保留原值？",
+      "answer": "syscall 指令会用 RCX 保存返回指令地址，并用 R11 保存用户态标志状态，因此这两个寄存器会被破坏。",
+      "explanation": "内联汇编或手写汇编必须把这些寄存器列入 clobber 或自行保存。",
+      "example": "syscall 包装器在恢复计算前不能假设 RCX 仍保存旧临时值。",
+      "tags": [
+        "Linux",
+        "syscall",
+        "RCX",
+        "R11"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/syscall.2.html"
+    },
+    {
+      "id": "amd64abi-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux x86-64 系统调用 ABI",
+      "knowledgePoint": "syscall 与函数 call",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "x86-64 syscall 指令与普通函数 call 在控制转移上有什么区别？",
+      "answer": "call 按普通程序调用方式保存返回地址并跳到函数；syscall 通过处理器系统调用机制切换到内核入口，不使用普通 call 栈帧约定。",
+      "explanation": "用户态系统调用通常由 libc 包装函数封装，应用不必直接编写 syscall 汇编。",
+      "example": "调用 libc read() 是普通 ABI 函数调用，包装函数内部再通过 syscall 进入内核。",
+      "tags": [
+        "x86-64",
+        "syscall",
+        "call"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/syscall.2.html"
+    },
+    {
+      "id": "amd64abi-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux x86-64 系统调用 ABI",
+      "knowledgePoint": "libc 错误返回",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Linux 系统调用失败时，原始内核 ABI 与常见 libc 包装函数的错误表达有什么区别？",
+      "answer": "原始系统调用按架构约定返回负错误码；常见 libc 包装函数把失败转为 -1 并设置 errno。",
+      "explanation": "直接使用 syscall 或汇编时，必须按原始约定判断错误，而不能照搬 libc 返回规则。",
+      "example": "调用 libc open() 失败时检查返回值 -1 和 errno。",
+      "tags": [
+        "Linux",
+        "syscall",
+        "errno",
+        "libc"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/syscall.2.html"
+    },
+    {
+      "id": "amd64abi-020",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "普通调用与系统调用第四参数",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "手写汇编既调用普通 C 函数又发起 Linux x86-64 系统调用时，为什么第四个参数寄存器不能混用？",
+      "answer": "普通 System V 函数调用通常用 RCX 传第四个整数参数，而 Linux syscall 使用 R10。",
+      "explanation": "两种入口遵循不同 ABI；混用会把参数传到错误位置。",
+      "example": "先按函数 ABI 放置 C 参数，随后若直接 syscall，需按 syscall ABI 重排寄存器。",
+      "tags": [
+        "Linux",
+        "System V ABI",
+        "系统调用",
+        "参数寄存器"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/syscall.2.html"
+    },
+    {
+      "id": "amd64abi-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Windows x64 调用约定",
+      "knowledgePoint": "Microsoft x64 参数寄存器",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Microsoft x64 调用约定中，前四个整数或指针参数通常使用哪些寄存器？",
+      "answer": "依次使用 RCX、RDX、R8 和 R9。",
+      "explanation": "浮点参数按位置使用相应 XMM 寄存器，后续参数通常放在栈上。",
+      "example": "普通四参数函数的前四个整数参数分别进入 RCX、RDX、R8、R9。",
+      "tags": [
+        "Windows x64",
+        "参数传递",
+        "寄存器"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170"
+    },
+    {
+      "id": "amd64abi-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Windows x64 调用约定",
+      "knowledgePoint": "Shadow Space",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft x64 调用约定中的 shadow space 是什么？",
+      "answer": "调用者为每次调用在栈上预留的 32 字节 home space；被调函数可用它保存 RCX、RDX、R8、R9 中的参数值。",
+      "explanation": "这块空间由调用者提供；即使参数通过寄存器传递，普通调用也需预留。",
+      "example": "在 Windows x64 手写汇编调用函数前，确保栈上已有 32 字节 home space。",
+      "tags": [
+        "Windows x64",
+        "shadow space",
+        "栈"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170"
+    },
+    {
+      "id": "amd64abi-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Windows x64 调用约定",
+      "knowledgePoint": "Windows x64 非易失寄存器",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Microsoft x64 与 System V AMD64 ABI 对 RDI、RSI 的保存责任有什么常见区别？",
+      "answer": "Microsoft x64 通常把 RDI、RSI 作为非易失寄存器；System V AMD64 通常把它们作为调用者保存寄存器。",
+      "explanation": "跨 ABI 汇编或外部函数调用时，不能只按寄存器名称假定保存责任相同。",
+      "example": "Windows x64 被调用函数若修改 RDI，应按约定恢复原值。",
+      "tags": [
+        "Windows x64",
+        "System V ABI",
+        "寄存器保存"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170"
+    },
+    {
+      "id": "amd64abi-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Windows x64 调用约定",
+      "knowledgePoint": "Windows x64 向量寄存器保存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft x64 调用约定中，XMM0–XMM5 与 XMM6–XMM15 的保存责任有什么常见区别？",
+      "answer": "XMM0–XMM5 通常为易失寄存器，XMM6–XMM15 的低 128 位通常由被调用者保存。",
+      "explanation": "较宽向量寄存器的高位部分另有约定，不能把整个 YMM/ZMM 寄存器都视为同一保存规则。",
+      "example": "函数若修改 XMM8 的低 128 位，需按 ABI 恢复该部分。",
+      "tags": [
+        "Windows x64",
+        "XMM",
+        "寄存器保存"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170"
+    },
+    {
+      "id": "amd64abi-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Windows x64 调用约定",
+      "knowledgePoint": "ABI 不可混用",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "一个汇编函数按 System V AMD64 写参数位置，却被 Windows x64 调用者直接调用，可能发生什么？",
+      "answer": "参数可能从错误寄存器读取，栈空间和寄存器保存责任也可能不匹配，造成错误结果或破坏调用者状态。",
+      "explanation": "跨 ABI 接口需使用编译器支持的 ABI 标注或显式适配桩。",
+      "example": "Windows 调用者把首个整数参数放入 RCX，而 SysV 函数可能从 RDI 读取。",
+      "tags": [
+        "ABI",
+        "跨平台",
+        "调用约定"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170"
+    },
+    {
+      "id": "amd64abi-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "x86-64 ABI 与调用约定",
+      "knowledgePoint": "参数超出寄存器数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "System V AMD64 普通函数的整数参数寄存器耗尽后，额外参数通常如何传递？",
+      "answer": "按照 ABI 栈参数布局放在调用者提供的栈区域中。",
+      "explanation": "具体偏移还受参数大小、对齐及聚合类型分类影响。",
+      "example": "超过常用六个整数参数寄存器的第七个标量参数通常从栈上传递。",
+      "tags": [
+        "System V ABI",
+        "栈参数",
+        "参数传递"
+      ],
+      "evidence": "source",
+      "reference": "https://gitlab.com/x86-psABIs/x86-64-ABI/-/blob/master/x86-64-ABI/conventions.tex"
+    }
+  ]
+}

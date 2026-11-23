@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "flash-attention-algorithms",
+    "title": "FlashAttention 与 FlashAttention-2 原论文",
+    "url": "https://arxiv.org/abs/2205.14135v2",
+    "type": "教材、论文与官方文档",
+    "note": "逐题依据所列资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "flashalg-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "完整注意力矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "常见稠密注意力实现为何可能产生与序列长度平方相关的中间内存？",
+      "answer": "长度为 N 的自注意力得分或概率矩阵有 N×N 个元素。",
+      "explanation": "原始 FlashAttention 通过分块避免在 HBM 中存储完整中间矩阵。",
+      "example": "序列长度翻倍时，稠密注意力矩阵元素数变为四倍。",
+      "tags": [
+        "完整注意力矩阵",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.14135v2"
+    },
+    {
+      "id": "flashalg-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "稠密计算复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始稠密 FlashAttention 减少显存读写后，是否把注意力算术复杂度降为线性？",
+      "answer": "没有；论文的稠密算法仍需 O(N²d) 浮点运算，主要改进是内存访问与中间存储。",
+      "explanation": "N 是序列长度，d 是每个头的维度。",
+      "example": "较长序列仍需要处理稠密查询与键的配对。",
+      "tags": [
+        "稠密计算复杂度",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.14135v2"
+    },
+    {
+      "id": "flashalg-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "跨块softmax",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FlashAttention 分块时，为什么不能独立对每个键块做 softmax 后直接相加？",
+      "answer": "同一查询行的 softmax 分母依赖所有键；需要跨块更新归一化统计并重缩放贡献。",
+      "explanation": "否则各块分别归一化会改变全局注意力权重。",
+      "example": "两个键块的分数不同，独立归一化会错误地赋予各块相同总权重。",
+      "tags": [
+        "跨块softmax",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.14135v2"
+    },
+    {
+      "id": "flashalg-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "在线归一化统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 FlashAttention 为逐块计算稳定的 softmax 维护哪些行级统计？",
+      "answer": "维护已处理分数的行最大值和指数和，并在合并新块时相应重缩放。",
+      "explanation": "减去最大值有助于数值稳定。",
+      "example": "后一个块出现更大分数时更新最大值和累计量。",
+      "tags": [
+        "在线归一化统计",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.14135v2"
+    },
+    {
+      "id": "flashalg-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "注意力反向重算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 FlashAttention 在反向传播中如何避免保存完整注意力概率矩阵？",
+      "answer": "保存输出和 softmax 归一化统计，并根据 Q、K、V 的块重算所需注意力中间量。",
+      "explanation": "这是针对注意力的选择性重计算。",
+      "example": "反向时逐块重算分数和概率。",
+      "tags": [
+        "注意力反向重算",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.14135v2"
+    },
+    {
+      "id": "flashalg-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "重算与速度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 FlashAttention 即使在反向时增加重计算，仍可能更快？",
+      "answer": "减少较慢 HBM 的读写可能节省的时间超过额外计算开销。",
+      "explanation": "实际效果取决于设备、形状与实现。",
+      "example": "计算更多但避免读写大型中间矩阵。",
+      "tags": [
+        "重算与速度",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.14135v2"
+    },
+    {
+      "id": "flashalg-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "Dropout重建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FlashAttention 论文如何避免保存完整的注意力 Dropout 掩码供反向使用？",
+      "answer": "保存伪随机数生成器状态，在反向时重新生成相应的掩码。",
+      "explanation": "具体实现需保证重建与前向使用的随机序列对应。",
+      "example": "反向按保存状态重建各块掩码。",
+      "tags": [
+        "Dropout重建",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.14135v2"
+    },
+    {
+      "id": "flashalg-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "块稀疏注意力",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "块稀疏 FlashAttention 与完整稠密注意力相比改变了什么？",
+      "answer": "它依据块级稀疏掩码只计算选定的注意力块，因而相对完整稠密注意力通常是近似。",
+      "explanation": "若目标本身就是该稀疏注意力模式，计算该模式可以是精确的。",
+      "example": "不计算掩码排除的远距离块。",
+      "tags": [
+        "块稀疏注意力",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.14135v2"
+    },
+    {
+      "id": "flashalg-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "FA2序列并行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FlashAttention-2 为什么增加沿序列长度维度的并行？",
+      "answer": "当批量大小和注意力头数较小时，更多序列块可提高 GPU 工作单元的利用率。",
+      "explanation": "收益依赖具体工作负载和硬件。",
+      "example": "小批量长序列时把查询块分配给多个线程块。",
+      "tags": [
+        "FA2序列并行",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2307.08691v1"
+    },
+    {
+      "id": "flashalg-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "FA2工作分配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FlashAttention-2 前向中将 Q 切分给不同 warp 有什么目的？",
+      "answer": "让各 warp 计算各自输出片段，减少原先切分 K 时所需的共享内存通信。",
+      "explanation": "这是 GPU 工作划分上的优化。",
+      "example": "各 warp 共享 K、V，分别处理不同的 Q 片段。",
+      "tags": [
+        "FA2工作分配",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2307.08691v1"
+    },
+    {
+      "id": "flashalg-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "FA2非矩阵运算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FlashAttention-2 为什么努力减少非矩阵乘法操作？",
+      "answer": "GPU 的专用矩阵运算吞吐可能远高于其他运算，少量非矩阵运算也可能占用明显时间。",
+      "explanation": "优化面向具体硬件执行成本。",
+      "example": "减少重复的逐元素归一化操作。",
+      "tags": [
+        "FA2非矩阵运算",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2307.08691v1"
+    },
+    {
+      "id": "flashalg-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力计算优化",
+      "knowledgePoint": "因果块跳过",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "带因果掩码的分块注意力何时可以跳过一个完整的键块？",
+      "answer": "当该块对当前查询块中的所有位置都属于未来位置时，可以跳过该块。",
+      "explanation": "部分有效的块仍需在块内执行掩码。",
+      "example": "整块键都位于查询之后时不计算该块。",
+      "tags": [
+        "因果块跳过",
+        "注意力计算优化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2307.08691v1"
+    }
+  ]
+}

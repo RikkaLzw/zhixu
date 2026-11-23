@@ -1,0 +1,533 @@
+{
+  "source": {
+    "id": "backtracking-search-foundations",
+    "title": "CSES Competitive Programmer's Handbook 与 USACO Guide：回溯和完整搜索",
+    "url": "https://cses.fi/book/book.pdf",
+    "type": "公开算法教材与课程材料",
+    "note": "依据 CSES 完整搜索章节与 USACO Guide 题型说明整理；只有经过证明不会影响可行解或最优解的条件才用于剪枝。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "backtrack-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "回溯算法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "回溯算法通常如何系统地探索候选解？",
+      "answer": "它逐步构造部分解，递归尝试合法选择，并在分支结束后撤销选择以探索其他分支。",
+      "explanation": "回溯常可看作在隐式搜索树上执行深度优先搜索。",
+      "example": "生成排列时，先选一个未使用元素，递归填下一位置，再撤销本次选择。",
+      "tags": [
+        "回溯",
+        "深度优先搜索",
+        "搜索树"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "选择、递归与撤销",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "回溯代码中“选择、递归、撤销选择”三个步骤各自承担什么作用？",
+      "answer": "选择把状态推进到一个分支，递归搜索其后续，撤销则恢复父调用状态以便尝试其他分支。",
+      "explanation": "若遗漏撤销，兄弟分支可能共享并污染已修改的状态。",
+      "example": "在 used[i] 设为 true 后递归，返回时再恢复为 false。",
+      "tags": [
+        "回溯",
+        "状态恢复",
+        "递归"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    },
+    {
+      "id": "backtrack-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "部分解状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "设计回溯算法时，部分解状态为什么要保留决定后续合法选择所需的信息？",
+      "answer": "后续选择是否合法由当前状态决定；缺少必要信息可能允许非法分支或错误剪掉可行分支。",
+      "explanation": "状态应表达题目约束所需的最少信息，例如已用元素、当前和或冲突位置。",
+      "example": "N 皇后搜索需记录已占用列和对角线，才能检查新皇后是否冲突。",
+      "tags": [
+        "回溯",
+        "状态设计",
+        "约束"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "剪枝正确性",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "回溯搜索中，什么条件下可以安全剪掉一个部分解分支？",
+      "answer": "只有能证明该分支不可能产生可行解，或不可能超过当前最优解时，才能安全剪枝。",
+      "explanation": "仅凭启发式觉得分支“不太可能成功”而剪掉，会把完整搜索变成不保证正确的近似搜索。",
+      "example": "若部分分配已违反唯一使用约束，则其所有后续扩展都不可行，可以剪掉。",
+      "tags": [
+        "回溯",
+        "剪枝",
+        "正确性"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "可行性剪枝",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "约束满足问题中的可行性剪枝通常检查什么？",
+      "answer": "检查当前部分赋值是否已经违反约束；一旦违反，继续扩展也无法修复时即可停止该分支。",
+      "explanation": "剪枝条件要针对部分解而非完整解，并确保未来决策不能使已违反的不可变约束恢复。",
+      "example": "两个相邻皇后已在同一列时，后续放置其他皇后不能消除这次冲突。",
+      "tags": [
+        "回溯",
+        "可行性",
+        "约束满足"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    },
+    {
+      "id": "backtrack-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "子集二叉分支",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用回溯枚举 n 个元素的所有子集时，每个元素通常对应哪两类选择？",
+      "answer": "对当前元素选择纳入子集或不纳入子集。",
+      "explanation": "每个元素各有两种决策，完整搜索树有 2^n 个叶节点。",
+      "example": "对集合 {a,b} 枚举得到空集、{a}、{b} 和 {a,b}。",
+      "tags": [
+        "回溯",
+        "子集",
+        "完整搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    },
+    {
+      "id": "backtrack-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "子集枚举复杂度",
+      "questionType": "复杂度分析",
+      "origin": "自行整理",
+      "question": "枚举 n 个元素的所有子集时，仅输出每个子集所需的结果数量是多少？",
+      "answer": "共有 2^n 个子集；若每个子集还需遍历其元素，额外输出时间取决于输出总长度。",
+      "explanation": "输出型算法的复杂度应计入实际产生的所有输出。",
+      "example": "空集到全集共 2^n 种，而所有子集元素总数为 n·2^(n-1)。",
+      "tags": [
+        "回溯",
+        "子集",
+        "复杂度"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    },
+    {
+      "id": "backtrack-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "排列枚举复杂度",
+      "questionType": "复杂度分析",
+      "origin": "自行整理",
+      "question": "对 n 个互不相同元素枚举全部排列，搜索叶节点数量如何增长？",
+      "answer": "有 n! 个排列，增长速度是阶乘级。",
+      "explanation": "实际运行时间还包括递归构造部分排列与输出内容的开销。",
+      "example": "8 个互异元素已有 40320 个排列。",
+      "tags": [
+        "回溯",
+        "排列",
+        "阶乘复杂度"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "组合避免顺序重复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "枚举不考虑顺序的 k 元素组合时，为什么递归常传入下次可选元素的起始下标？",
+      "answer": "限制后续只选更大的下标，可避免同一组合按不同选择顺序重复生成。",
+      "explanation": "这会让每个组合按固定递增顺序构造。",
+      "example": "组合 {1,3} 只按先选 1 再选 3 的顺序生成。",
+      "tags": [
+        "回溯",
+        "组合",
+        "去重"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    },
+    {
+      "id": "backtrack-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "组合元素可重复",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "组合搜索中，选择某个元素后允许再次选它时，递归起点应如何变化？",
+      "answer": "若元素可无限重复，下一层可从当前下标继续；若每个元素最多用一次，则从下一个下标开始。",
+      "explanation": "递归起点编码了元素可重复使用的规则。",
+      "example": "组合总和允许重复取 2 时，选中 2 后仍可从该 2 的位置继续搜索。",
+      "tags": [
+        "回溯",
+        "组合",
+        "重复选择"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "重复值排列去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "输入含重复值时，枚举不重复排列的一种常见做法是什么？",
+      "answer": "先排序，并在同一递归层跳过与前一个相同且前一个尚未被本层路径使用的值。",
+      "explanation": "跨层重复值仍可依次使用；去重条件要区分同层选择与当前路径使用状态。",
+      "example": "输入 [1,1,2] 时，同一位置只尝试一次两个等价的 1。",
+      "tags": [
+        "回溯",
+        "排列去重",
+        "重复元素"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "重复值组合去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "候选数组含相同数值时，枚举不重复组合常怎样避免同层重复分支？",
+      "answer": "排序后，在同一递归深度跳过与前一个候选值相同的项。",
+      "explanation": "不同递归层是否可以再选同值，取决于题目对元素是否可重复使用的定义。",
+      "example": "两个数值相同但来自不同下标的候选，不应在组合结果中生成重复值序列。",
+      "tags": [
+        "回溯",
+        "组合去重",
+        "排序"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-013",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "全排列访问标记",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "用递归生成全排列时，如何确保每个输入位置在一个排列中最多使用一次？",
+      "answer": "维护 used 标记或原地交换状态；选中后标记，返回时撤销标记或恢复交换。",
+      "explanation": "若输入值重复，仍需额外使用同层去重规则。",
+      "example": "递归填第 k 个位置时，只尝试 used[i] 为 false 的下标。",
+      "tags": [
+        "回溯",
+        "全排列",
+        "访问标记"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "N 皇后逐行搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "N 皇后回溯中按行逐个放置皇后有什么好处？",
+      "answer": "每行恰好放一个皇后，自动满足行之间不冲突，只需检查列和对角线约束。",
+      "explanation": "这种状态构造减少了搜索空间，并使递归深度恰为棋盘行数。",
+      "example": "第 r 层递归只决定第 r 行皇后所在的列。",
+      "tags": [
+        "回溯",
+        "N 皇后",
+        "状态构造"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-015",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "N 皇后对角线冲突",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "在棋盘坐标 (r,c) 上，N 皇后如何用两个索引检查对角线冲突？",
+      "answer": "同一主对角线满足 r-c 相同，同一副对角线满足 r+c 相同。",
+      "explanation": "把已占用的列、r-c 和 r+c 分别存入集合，即可常数时间检查候选位置。",
+      "example": "坐标 (2,5) 与 (4,7) 的 r-c 都是 -3，因此互相攻击。",
+      "tags": [
+        "回溯",
+        "N 皇后",
+        "对角线"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-016",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "N 皇后位掩码",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "N 皇后使用列和对角线位掩码有什么主要优势？",
+      "answer": "可用位运算快速检查冲突列及受攻击对角线，并在递归返回时用局部状态自然恢复。",
+      "explanation": "具体对角线掩码需要随递归行推进而移位；位宽必须能覆盖棋盘。",
+      "example": "用 available = full & ~(cols | diagLeft | diagRight) 得到当前行可放列。",
+      "tags": [
+        "回溯",
+        "N 皇后",
+        "位掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-017",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "最受约束变量",
+      "questionType": "优化与诊断",
+      "origin": "自行整理",
+      "question": "数独或通用约束满足搜索中，为什么常优先选择候选值最少的未决变量？",
+      "answer": "先处理约束最紧的变量可更早发现无解分支，减少后续搜索。",
+      "explanation": "这类最少剩余值启发式改变搜索顺序，不改变完整枚举的正确性。",
+      "example": "若空格 A 仅有 2 个候选而空格 B 有 7 个，先尝试 A。",
+      "tags": [
+        "回溯",
+        "MRV",
+        "约束满足"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    },
+    {
+      "id": "backtrack-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "搜索顺序启发式",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "完整回溯中的变量或候选值排序启发式通常会影响什么？",
+      "answer": "它通常影响搜索速度和找到首个解的顺序，不应改变全部解或最优解的正确结果。",
+      "explanation": "若算法只搜索部分节点，启发式是否影响结果取决于是否仍保留正确性保证。",
+      "example": "先尝试较受约束变量可更快找到矛盾，但完整搜索仍需覆盖未剪掉的分支。",
+      "tags": [
+        "回溯",
+        "搜索顺序",
+        "启发式"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    },
+    {
+      "id": "backtrack-019",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "对称性剪枝",
+      "questionType": "优化与诊断",
+      "origin": "自行整理",
+      "question": "N 皇后或棋盘搜索中的对称性剪枝通常怎样减少重复工作？",
+      "answer": "利用旋转或镜像后等价的解，只搜索某个规范代表，再按对称关系计数或恢复其他解。",
+      "explanation": "实现必须按轨道大小正确处理对称不变解，不能简单把每个解数量乘固定倍数。",
+      "example": "首行只枚举左半列，再单独处理中间列可能出现的对称情况。",
+      "tags": [
+        "回溯",
+        "对称性",
+        "剪枝"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "分支限界",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "分支限界法与普通可行性回溯的剪枝依据有什么不同？",
+      "answer": "可行性剪枝排除违反约束的分支；分支限界还用目标函数的乐观界排除不可能优于当前最优解的分支。",
+      "explanation": "界必须保证乐观方向正确，例如最小化问题使用不大于真实最优完成代价的下界。",
+      "example": "若部分路径代价加剩余距离下界已不小于当前最优值，可停止扩展该分支。",
+      "tags": [
+        "分支限界",
+        "回溯",
+        "上下界"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-021",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "最优值上界剪枝",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "最大化问题使用分支限界时，当前分支的乐观上界不超过 incumbent 有什么含义？",
+      "answer": "该分支即使按最有利方式完成也不能超过当前已知最优值，因此可安全剪掉。",
+      "explanation": "incumbent 是当前最好可行解；若要枚举全部最优解，等值分支是否剪除需谨慎。",
+      "example": "当前最优收益为 20，某分支最多只能达到 18 时可停止搜索该分支。",
+      "tags": [
+        "分支限界",
+        "最大化",
+        "上界"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-022",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "递归状态恢复",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "回溯递归使用共享可变数组时，为什么返回前必须恢复被修改的元素？",
+      "answer": "后续兄弟分支应从相同父状态开始；残留修改会让分支之间相互影响。",
+      "explanation": "可通过显式撤销、复制状态或使用不可变值避免污染，具体取舍影响性能和代码复杂度。",
+      "example": "把候选加入 path 后递归，返回后执行 path.pop()。",
+      "tags": [
+        "回溯",
+        "可变状态",
+        "状态恢复"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    },
+    {
+      "id": "backtrack-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "回溯与记忆化搜索",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "搜索过程中不同选择序列可能到达相同子问题时，加入记忆化有什么作用？",
+      "answer": "缓存相同状态的计算结果，可避免重复展开相同子问题。",
+      "explanation": "缓存键必须包含决定后续结果的完整状态；若结果依赖已选路径顺序，单独用集合可能不够。",
+      "example": "子集和搜索中，若后续只依赖剩余下标和剩余目标值，可按这两个量缓存。",
+      "tags": [
+        "回溯",
+        "记忆化",
+        "状态复用"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-024",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "查找任一解与枚举全部解",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "回溯任务只需找任一可行解时，找到解后通常可以怎样处理？",
+      "answer": "可以向上传播成功并提前终止其他分支；若要列出所有解，则必须继续探索未剪枝分支。",
+      "explanation": "返回值或共享标志应明确区分找到解、无解和继续枚举等控制状态。",
+      "example": "数独只需任一解时返回 true 停止；统计解数时则累加并继续。",
+      "tags": [
+        "回溯",
+        "提前终止",
+        "枚举"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    },
+    {
+      "id": "backtrack-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "递归深度风险",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "完整搜索的递归深度随输入线性增长时，除时间复杂度外还要检查什么？",
+      "answer": "还要检查语言和运行环境的调用栈深度限制，必要时改用显式栈或迭代实现。",
+      "explanation": "递归深度和搜索节点数是不同资源指标；浅层但分支很多也可能耗时很长。",
+      "example": "对超长排列输入递归 n 层时，运行时可能先因栈限制失败。",
+      "tags": [
+        "回溯",
+        "递归深度",
+        "栈空间"
+      ],
+      "evidence": "source",
+      "reference": "https://cses.fi/book/book.pdf"
+    },
+    {
+      "id": "backtrack-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "回溯与完整搜索",
+      "knowledgePoint": "剪枝与近似搜索",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "启发式搜索为了速度而丢弃尚未证明无效的分支，会带来什么结果？",
+      "answer": "它可能更快找到候选解，但不再保证找到所有解或全局最优解。",
+      "explanation": "应明确区分保持完备性和最优性的安全剪枝，与基于经验的近似或束搜索。",
+      "example": "beam search 只保留有限个候选状态，可能丢弃之后才会变优的分支。",
+      "tags": [
+        "搜索",
+        "剪枝",
+        "完备性",
+        "最优性"
+      ],
+      "evidence": "source",
+      "reference": "https://usaco.guide/bronze/intro-complete"
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+{
+  "source": {
+    "id": "agent-evaluation-reliability",
+    "title": "LangSmith 与 LLM-as-a-Judge：Agent 评估可靠性",
+    "url": "https://docs.langchain.com/langsmith/evaluation-concepts",
+    "type": "官方文档与研究资料",
+    "note": "按逐题所列资料自行整理；安全场景示例用于说明，不代表原资料中的实际事件。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "agentjudge-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 评估实践",
+      "knowledgePoint": "评估参考输出隔离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangSmith 离线评估示例中的参考输出通常传给被评测应用吗？",
+      "answer": "不会；参考输出通常只供评估器比较，应用接收的是示例输入。",
+      "explanation": "不要把标准答案意外拼进被测 Agent 的输入。",
+      "example": "以参考答案评估告警摘要，但不把参考答案交给 Agent。",
+      "tags": [
+        "评估参考输出隔离",
+        "Agent 评估实践"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    },
+    {
+      "id": "agentjudge-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 评估实践",
+      "knowledgePoint": "数据集与实验",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "LangSmith 的评估数据集与实验分别代表什么？",
+      "answer": "数据集保存评测示例；实验记录某个应用版本在数据集上的输出、评分和轨迹等结果。",
+      "explanation": "多个实验可以在同一数据集上比较。",
+      "example": "用同一批调查问题比较两版 Agent。",
+      "tags": [
+        "数据集与实验",
+        "Agent 评估实践"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    },
+    {
+      "id": "agentjudge-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 评估实践",
+      "knowledgePoint": "评估示例元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "评估示例的 metadata 可以帮助做什么？",
+      "answer": "它可记录标签、来源或其他上下文，便于筛选和分组查看评测样本。",
+      "explanation": "元数据与标准答案和被测输入是不同字段。",
+      "example": "按告警类型筛选评估集中的示例。",
+      "tags": [
+        "评估示例元数据",
+        "Agent 评估实践"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    },
+    {
+      "id": "agentjudge-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 评估实践",
+      "knowledgePoint": "评估器人工校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么大模型评估器的评分仍需要人工核对？",
+      "answer": "评估器本身可能误判或受到提示与样本影响，需要用人工判断检查其一致性和失败类型。",
+      "explanation": "评估器不应被当作无条件正确的最终裁判。",
+      "example": "抽查模型判定为正确但缺少证据的回答。",
+      "tags": [
+        "评估器人工校验",
+        "Agent 评估实践"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    },
+    {
+      "id": "agentjudge-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 评估实践",
+      "knowledgePoint": "位置偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "成对大模型评审中的位置偏差指什么？",
+      "answer": "评审可能因回答展示顺序而偏好某个位置，即使回答内容不变。",
+      "explanation": "不同模型和任务的偏差程度可能不同。",
+      "example": "同一答案放在第一和第二位置时得到不同偏好。",
+      "tags": [
+        "位置偏差",
+        "Agent 评估实践",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900320%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁大模型一面（合集转载，经历为分享者自述）；LLM 评估主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "judge-bias-paper",
+          "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+          "url": "https://arxiv.org/abs/2306.05685",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "agentjudge-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Agent 评估实践",
+      "knowledgePoint": "交换顺序核查",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "如何用交换回答顺序检查成对评审的位置敏感性？",
+      "answer": "对同一答案对交换展示顺序后再次评审，比较偏好是否保持一致。",
+      "explanation": "顺序一致也不能单独证明评审结果正确。",
+      "example": "A、B 和 B、A 各评一次并记录不一致。",
+      "tags": [
+        "交换顺序核查",
+        "Agent 评估实践",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900320%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁大模型一面（合集转载，经历为分享者自述）；LLM 评估主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "judge-bias-paper",
+          "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+          "url": "https://arxiv.org/abs/2306.05685",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "agentjudge-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 评估实践",
+      "knowledgePoint": "冗长度偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "大模型评审中的冗长度偏差可能导致什么？",
+      "answer": "评审可能偏好更长的回答，即使它并没有提供更准确或更有用的信息。",
+      "explanation": "评价标准应关注任务质量，并结合人工样本检查。",
+      "example": "较长但包含无依据结论的摘要得到较高分。",
+      "tags": [
+        "冗长度偏差",
+        "Agent 评估实践",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900320%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁大模型一面（合集转载，经历为分享者自述）；LLM 评估主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "judge-bias-paper",
+          "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+          "url": "https://arxiv.org/abs/2306.05685",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "agentjudge-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 评估实践",
+      "knowledgePoint": "格式合规与事实正确",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "只验证 Agent 输出符合 JSON 结构，能否证明内容事实正确？",
+      "answer": "不能；结构校验只能检查格式及声明的字段约束，事实还需对照证据或可信标签。",
+      "explanation": "格式校验仍是有用的自动检查，但不是完整质量评估。",
+      "example": "字段齐全的报告仍可能引用不存在的日志。",
+      "tags": [
+        "格式合规与事实正确",
+        "Agent 评估实践"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    }
+  ]
+}

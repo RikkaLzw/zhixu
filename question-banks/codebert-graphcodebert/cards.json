@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "codebert-graphcodebert",
+    "title": "CodeBERT 与 GraphCodeBERT：代码预训练",
+    "url": "https://arxiv.org/pdf/2009.08366v4",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的论文或固定版本官方文档自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "codepre-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "代码与文本数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeBERT 原论文中的双模态训练样本指什么？",
+      "answer": "自然语言描述与代码组成的配对样本。",
+      "explanation": "这里的双模态是自然语言与编程语言，不一定涉及图像。",
+      "example": "函数文档与其对应函数代码组成一对。",
+      "tags": [
+        "代码表示与预训练",
+        "代码与文本数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2002.08155v4"
+    },
+    {
+      "id": "codepre-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "预训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeBERT 原论文的混合预训练目标包含哪两项？",
+      "answer": "包含掩码语言建模和替换词检测。",
+      "explanation": "两项任务都用于学习可迁移的代码与文本表示。",
+      "example": "预测被掩码的 token，并识别被替换的 token。",
+      "tags": [
+        "代码表示与预训练",
+        "预训练目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2002.08155v4"
+    },
+    {
+      "id": "codepre-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "替换词判别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeBERT 的替换词检测训练判别器在每个位置判断什么？",
+      "answer": "判断该位置的 token 与原始输入相比是否被替换。",
+      "explanation": "候选词由生成器根据上下文采样。",
+      "example": "检查一条代码序列中哪些词被替换。",
+      "tags": [
+        "代码表示与预训练",
+        "替换词判别"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2002.08155v4"
+    },
+    {
+      "id": "codepre-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "生成器角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeBERT 原论文在下游微调时还需要使用替换词检测训练中的生成器吗？",
+      "answer": "不需要；论文使用训练出的判别器表示，生成器在微调阶段被舍弃。",
+      "explanation": "这里指论文的预训练与微调流程。",
+      "example": "用判别器编码代码以训练下游分类头。",
+      "tags": [
+        "代码表示与预训练",
+        "生成器角色"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2002.08155v4"
+    },
+    {
+      "id": "codepre-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "同词替换标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeBERT 的替换词检测中，如果生成器在掩码位置恰好生成原词，该位置标签如何处理？",
+      "answer": "标作原词，而不是仅因为经过生成器就标为替换词。",
+      "explanation": "标签反映生成结果是否与原始 token 相同。",
+      "example": "采样出的标识符恰好和原输入一致。",
+      "tags": [
+        "代码表示与预训练",
+        "同词替换标签"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2002.08155v4"
+    },
+    {
+      "id": "codepre-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "模型输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphCodeBERT 预训练时除源代码外还输入哪些信息？",
+      "answer": "输入配对的注释和从代码提取的数据流变量节点。",
+      "explanation": "论文使用特殊标记区分输入片段。",
+      "example": "代码搜索训练中同时提供文本描述和数据流结构。",
+      "tags": [
+        "代码表示与预训练",
+        "模型输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.08366v4"
+    },
+    {
+      "id": "codepre-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "边预测掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphCodeBERT 训练数据流边预测时，为什么要遮蔽一部分边？",
+      "answer": "让模型根据其余上下文预测被遮蔽的边，学习结构关系。",
+      "explanation": "论文按采样节点遮蔽相关直接边。",
+      "example": "隐藏一条变量依赖后预测其是否存在。",
+      "tags": [
+        "代码表示与预训练",
+        "边预测掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.08366v4"
+    },
+    {
+      "id": "codepre-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "节点对齐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphCodeBERT 的节点对齐任务要预测哪种对应关系？",
+      "answer": "预测数据流变量节点对应的源代码 token 位置。",
+      "explanation": "它帮助模型连接代码文本表示和结构表示。",
+      "example": "将数据流中的变量节点关联到对应的标识符 token。",
+      "tags": [
+        "代码表示与预训练",
+        "节点对齐"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.08366v4"
+    },
+    {
+      "id": "codepre-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "图引导注意力",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphCodeBERT 如何把不允许的注意力连接从 softmax 权重中排除？",
+      "answer": "在这些连接的注意力分数上加负无穷掩码，使其 softmax 权重为零。",
+      "explanation": "具体允许的连接由代码、变量节点和图关系共同决定。",
+      "example": "没有规定关系的变量节点之间不能直接互相注意。",
+      "tags": [
+        "代码表示与预训练",
+        "图引导注意力"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.08366v4"
+    },
+    {
+      "id": "codepre-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "变量节点注意",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphCodeBERT 中一个数据流变量节点查询通常可以关注哪些变量节点？",
+      "answer": "可以关注自身，以及存在一条指向该查询节点的直接数据流边的变量节点。",
+      "explanation": "此处指节点到节点的图引导注意力规则。",
+      "example": "只允许由依赖边表示的变量关系通过该部分掩码。",
+      "tags": [
+        "代码表示与预训练",
+        "变量节点注意"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.08366v4"
+    },
+    {
+      "id": "codepre-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码表示与预训练",
+      "knowledgePoint": "下游任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphCodeBERT 原论文评估了哪些类型的下游代码任务？",
+      "answer": "包括代码搜索、克隆检测、代码翻译和代码修订。",
+      "explanation": "这些任务的论文结果不能直接当作漏洞检测效果。",
+      "example": "代码相似性检测与代码翻译是不同任务。",
+      "tags": [
+        "代码表示与预训练",
+        "下游任务"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2009.08366v4"
+    }
+  ]
+}

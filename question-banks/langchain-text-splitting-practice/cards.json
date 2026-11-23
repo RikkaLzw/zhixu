@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "langchain-text-splitting-practice",
+    "title": "LangChain Text Splitters 0.3.8：文档切分",
+    "url": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/base.py",
+    "type": "官方文档与源码",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "lcsplit-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 文档切分",
+      "knowledgePoint": "文本与文档接口",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "LangChain Text Splitters 0.3.8 的 split_text 与 split_documents 返回值有何区别？",
+      "answer": "split_text 返回字符串片段列表；split_documents 返回 Document 片段列表。",
+      "explanation": "文档片段可以携带来源等元数据。",
+      "example": "先将文本切分，再为每个 Document 保留来源信息。",
+      "tags": [
+        "LangChain 文档切分",
+        "文本与文档接口"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/base.py"
+    },
+    {
+      "id": "lcsplit-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 文档切分",
+      "knowledgePoint": "片段元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain Text Splitters 0.3.8 的 split_documents 如何处理输入文档的 metadata？",
+      "answer": "为切出的每个 Document 深复制相应输入文档的 metadata。",
+      "explanation": "各片段后续修改嵌套元数据时不会直接修改原文档。",
+      "example": "来源名称可随每个片段保留。",
+      "tags": [
+        "LangChain 文档切分",
+        "片段元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/base.py"
+    },
+    {
+      "id": "lcsplit-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 文档切分",
+      "knowledgePoint": "片段起始索引",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "LangChain Text Splitters 0.3.8 设置 add_start_index=True 后，会为片段添加什么？",
+      "answer": "在 Document 的 metadata 中添加 start_index，按源文本查找片段的位置。",
+      "explanation": "索引来自原文本中的字符串搜索，不应在脱离原文时盲目解释。",
+      "example": "可用于把片段定位回其原始文档。",
+      "tags": [
+        "LangChain 文档切分",
+        "片段起始索引"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/base.py"
+    },
+    {
+      "id": "lcsplit-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 文档切分",
+      "knowledgePoint": "重叠参数约束",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "LangChain Text Splitters 0.3.8 中 chunk_overlap 大于 chunk_size 会怎样？",
+      "answer": "初始化时抛出 ValueError。",
+      "explanation": "切分重叠量不能超过配置的片段长度。",
+      "example": "chunk_size=100、chunk_overlap=120 会报错。",
+      "tags": [
+        "LangChain 文档切分",
+        "重叠参数约束"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/base.py"
+    },
+    {
+      "id": "lcsplit-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 文档切分",
+      "knowledgePoint": "重叠目标",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "LangChain 递归字符切分器的 chunk_overlap 能保证每对相邻片段恰好重叠指定长度吗？",
+      "answer": "不能；实际重叠受分隔和合并边界影响，可能小于目标甚至为零。",
+      "explanation": "应检查实际切分结果再评估上下文连续性。",
+      "example": "按完整单词或段落合并时可能留不出指定长度的重叠。",
+      "tags": [
+        "LangChain 文档切分",
+        "重叠目标"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/base.py"
+    },
+    {
+      "id": "lcsplit-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 文档切分",
+      "knowledgePoint": "长度计算",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "LangChain Text Splitters 0.3.8 默认如何衡量 chunk_size，如何改用其他长度口径？",
+      "answer": "默认使用 Python 的 len；可通过 length_function 提供其他测量函数。",
+      "explanation": "若目标模型按 token 计费，应使用适合该分词器的长度函数并检查结果。",
+      "example": "传入按模型分词器计算 token 数的函数。",
+      "tags": [
+        "LangChain 文档切分",
+        "长度计算"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/base.py"
+    },
+    {
+      "id": "lcsplit-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 文档切分",
+      "knowledgePoint": "分隔符解释",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "LangChain RecursiveCharacterTextSplitter 0.3.8 默认把自定义 separators 当作正则表达式吗？",
+      "answer": "默认不当作正则；需设置 is_separator_regex=True 才按正则解释。",
+      "explanation": "默认实现会转义分隔符中的正则特殊字符。",
+      "example": "默认的点号分隔符表示字面的点。",
+      "tags": [
+        "LangChain 文档切分",
+        "分隔符解释"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/character.py"
+    },
+    {
+      "id": "lcsplit-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 文档切分",
+      "knowledgePoint": "超长不可分片段",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.8 递归切分器的自定义 separators 没有更细分隔符时，能否保证所有片段不超过 chunk_size？",
+      "answer": "不能；无法继续细分的超长片段可能原样保留。",
+      "explanation": "要检查分隔符列表是否适合数据，以及切分后的实际长度。",
+      "example": "仅用换行作分隔符时，无换行长文本可能仍是超长片段。",
+      "tags": [
+        "LangChain 文档切分",
+        "超长不可分片段"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/character.py"
+    },
+    {
+      "id": "lcsplit-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 文档切分",
+      "knowledgePoint": "保留分隔符",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "LangChain RecursiveCharacterTextSplitter 0.3.8 默认如何处理切分分隔符？",
+      "answer": "默认保留分隔符，并将其附在后续切分单元的开头。",
+      "explanation": "切分单元可能被合并；两端的空白还受 strip_whitespace 影响。",
+      "example": "保留标点分隔符有助于维持部分原文结构。",
+      "tags": [
+        "LangChain 文档切分",
+        "保留分隔符"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-text-splitters%3D%3D0.3.8/libs/text-splitters/langchain_text_splitters/character.py"
+    }
+  ]
+}

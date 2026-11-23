@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "chatgpt-phishing-website-study",
+    "title": "Koide 等 2023：语言模型钓鱼网页分析",
+    "url": "https://arxiv.org/pdf/2306.05816v1",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "phishgpt-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "语言模型钓鱼网页分析",
+      "knowledgePoint": "页面输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Koide 等 2023 年钓鱼网页研究向语言模型提供哪些主要页面信息？",
+      "answer": "提供 URL、处理后的 HTML 和从截图中通过 OCR 提取的文本。",
+      "explanation": "这些输入来自网页爬取与预处理，不等于模型直接观察原始页面的所有行为。",
+      "example": "分析前先收集页面地址和可见内容。",
+      "tags": [
+        "语言模型钓鱼网页分析",
+        "页面输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.05816v1"
+    },
+    {
+      "id": "phishgpt-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "语言模型钓鱼网页分析",
+      "knowledgePoint": "截图OCR目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Koide 等研究为什么在 HTML 之外加入截图的 OCR 文本？",
+      "answer": "页面可能把品牌或文字放在图像或 canvas 中，HTML 文本提取可能看不到。",
+      "explanation": "OCR 也可能识别错误，因此需要保留其局限。",
+      "example": "图像中的品牌标题可通过 OCR 转成文本线索。",
+      "tags": [
+        "语言模型钓鱼网页分析",
+        "截图OCR目的"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.05816v1"
+    },
+    {
+      "id": "phishgpt-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "语言模型钓鱼网页分析",
+      "knowledgePoint": "HTML长度处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Koide 等研究如何减少页面 HTML 中过长的嵌入资源和链接？",
+      "answer": "它缩短部分图像的 base64 src 内容以及过长的链接 href。",
+      "explanation": "压缩有助于满足输入预算，但可能损失分析所需细节。",
+      "example": "很长的内嵌图片编码不必完整送入模型。",
+      "tags": [
+        "语言模型钓鱼网页分析",
+        "HTML长度处理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.05816v1"
+    },
+    {
+      "id": "phishgpt-004",
+      "category": "detection",
+      "level": "实践",
+      "subtopic": "语言模型钓鱼网页分析",
+      "knowledgePoint": "页面文本可见性",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "Koide 等研究中，隐藏的 HTML 文本为什么可能导致钓鱼识别误报？",
+      "answer": "模型可能把未显示给用户的文本当成当前页面可见的诱导内容。",
+      "explanation": "静态 HTML 片段和实际渲染状态需要结合判断。",
+      "example": "display:none 中的旧提示不一定是用户看到的内容。",
+      "tags": [
+        "语言模型钓鱼网页分析",
+        "页面文本可见性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.05816v1"
+    },
+    {
+      "id": "phishgpt-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "语言模型钓鱼网页分析",
+      "knowledgePoint": "品牌域名知识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Koide 等研究中，语言模型对合法品牌域名了解不完整可能造成什么问题？",
+      "answer": "它可能把品牌实际使用的其他合法域名误认为可疑。",
+      "explanation": "品牌与域名关系应结合可信、及时的外部资料复核。",
+      "example": "同一国际品牌可能使用不同国家或产品域名。",
+      "tags": [
+        "语言模型钓鱼网页分析",
+        "品牌域名知识"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.05816v1"
+    },
+    {
+      "id": "phishgpt-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "语言模型钓鱼网页分析",
+      "knowledgePoint": "OCR删减策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Koide 等研究在 OCR 文本超过预算时如何优先删减内容？",
+      "answer": "按字体大小从较小的文本开始删除，直到满足预算。",
+      "explanation": "这一启发式可能删除小字号但重要的安全信息。",
+      "example": "删减页脚前仍应考虑是否包含与判断相关的文字。",
+      "tags": [
+        "语言模型钓鱼网页分析",
+        "OCR删减策略"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.05816v1"
+    }
+  ]
+}

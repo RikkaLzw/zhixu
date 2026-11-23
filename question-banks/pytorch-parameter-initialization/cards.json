@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "pytorch-parameter-initialization",
+    "title": "PyTorch 2.7 文档：参数初始化接口",
+    "url": "https://docs.pytorch.org/docs/2.7/nn.init.html",
+    "type": "官方技术文档、固定版本源码或研究论文",
+    "note": "依照逐题所列资料自行整理，示例自编；涉及实现的行为以指定版本为准。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptinit-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 参数初始化",
+      "knowledgePoint": "自动求导",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 torch.nn.init 初始化函数是否把初始化操作加入自动求导计算图？",
+      "answer": "不会；这些函数在 torch.no_grad() 模式下运行。",
+      "explanation": "初始化权重后仍可在后续正常前向和反向计算梯度。",
+      "example": "初始化需要梯度的参数不会因此建立初始化操作的反向图。",
+      "tags": [
+        "PyTorch 参数初始化",
+        "自动求导"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/nn.init.html"
+    },
+    {
+      "id": "ptinit-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 参数初始化",
+      "knowledgePoint": "Xavier 初始化范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 xavier_uniform_ 与 xavier_normal_ 如何设定采样尺度？",
+      "answer": "均匀分布上下界为 ±gain×sqrt(6/(fan_in+fan_out))；正态分布标准差为 gain×sqrt(2/(fan_in+fan_out))。",
+      "explanation": "两者都根据连接数设定尺度，但采样分布不同。",
+      "example": "同一线性层可根据需要选用均匀或正态初始化。",
+      "tags": [
+        "PyTorch 参数初始化",
+        "Xavier 初始化范围"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/nn.init.html"
+    },
+    {
+      "id": "ptinit-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 参数初始化",
+      "knowledgePoint": "Kaiming 模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 kaiming_uniform_ 的 mode=\"fan_in\" 与 \"fan_out\" 分别侧重保持哪一方向的方差尺度？",
+      "answer": "fan_in 侧重前向传播；fan_out 侧重反向传播。",
+      "explanation": "实际训练的数值稳定性还受网络结构和数据影响。",
+      "example": "常见 ReLU 前向初始化可选 fan_in。",
+      "tags": [
+        "PyTorch 参数初始化",
+        "Kaiming 模式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/nn.init.html"
+    },
+    {
+      "id": "ptinit-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 参数初始化",
+      "knowledgePoint": "权重转置约定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 初始化函数计算线性层 fan 时，默认假设权重以什么方式参与矩阵乘法？",
+      "answer": "假设权重形状为 [fan_out, fan_in]，计算形式为 x @ w.T。",
+      "explanation": "若直接使用形状 [fan_in, fan_out] 的 x @ w，应按文档将 w.T 传给相关初始化函数。",
+      "example": "自定义线性变换需要核对权重布局。",
+      "tags": [
+        "PyTorch 参数初始化",
+        "权重转置约定"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/nn.init.html"
+    },
+    {
+      "id": "ptinit-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 参数初始化",
+      "knowledgePoint": "激活增益",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 torch.nn.init.calculate_gain 用于什么？",
+      "answer": "返回给定非线性激活函数的推荐增益值。",
+      "explanation": "带参数的激活可传入相应参数，例如 Leaky ReLU 的负斜率。",
+      "example": "为 leaky_relu 和负斜率 0.2 计算增益。",
+      "tags": [
+        "PyTorch 参数初始化",
+        "激活增益"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/nn.init.html"
+    },
+    {
+      "id": "ptinit-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 参数初始化",
+      "knowledgePoint": "截断正态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 trunc_normal_ 与普通正态初始化在取值范围上有什么区别？",
+      "answer": "它从指定上下界截断的正态分布采样。",
+      "explanation": "均值、标准差和截断边界需结合具体参数解释。",
+      "example": "限制初始化值落在指定区间。",
+      "tags": [
+        "PyTorch 参数初始化",
+        "截断正态"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/nn.init.html"
+    }
+  ]
+}

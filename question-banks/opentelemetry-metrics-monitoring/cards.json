@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "opentelemetry-metrics-monitoring",
+    "title": "OpenTelemetry 1.40：指标与监控",
+    "url": "https://github.com/open-telemetry/opentelemetry-specification/blob/v1.40.0/specification/metrics/api.md",
+    "type": "官方技术文档与数据集资料",
+    "note": "依据逐题引用的版本文档或数据集官方说明自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "otelmetric-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "创建计量器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 指标 API 中 MeterProvider 和 Meter 分别用于什么？",
+      "answer": "MeterProvider 提供 Meter；Meter 用于创建计数器、直方图等测量工具。",
+      "explanation": "不同工具记录的测量随后可由 SDK 聚合。",
+      "example": "为模型服务获取 Meter 并创建请求计数器。",
+      "tags": [
+        "指标采集与监控",
+        "创建计量器"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/open-telemetry/opentelemetry-specification/blob/v1.40.0/specification/metrics/api.md"
+    },
+    {
+      "id": "otelmetric-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "计数器与上下计数器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 的 Counter 与 UpDownCounter 对增量的期望有什么区别？",
+      "answer": "Counter 用于非负增量；UpDownCounter 可记录正负变化。",
+      "explanation": "队列长度等可上升也可下降的总量常用 UpDownCounter。",
+      "example": "请求总次数与当前排队任务数使用不同工具。",
+      "tags": [
+        "指标采集与监控",
+        "计数器与上下计数器"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/open-telemetry/opentelemetry-specification/blob/v1.40.0/specification/metrics/api.md"
+    },
+    {
+      "id": "otelmetric-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "负数验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 1.40 的 Counter 期望非负增量，能否假定传负数一定会被 API 拒绝？",
+      "answer": "不能；规范要求说明非负期望，但不要求 API 一定校验并拒绝负数。",
+      "explanation": "应在使用者或具体实现中保证计数语义。",
+      "example": "避免把减少队列长度写入普通 Counter。",
+      "tags": [
+        "指标采集与监控",
+        "负数验证"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/open-telemetry/opentelemetry-specification/blob/v1.40.0/specification/metrics/api.md"
+    },
+    {
+      "id": "otelmetric-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "直方图用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 的 Histogram 适合记录什么类型的测量？",
+      "answer": "适合记录每次请求耗时等数值观测，再聚合成分布统计。",
+      "explanation": "单个请求耗时应作为一次测量记录。",
+      "example": "观察模型服务的响应延迟分布。",
+      "tags": [
+        "指标采集与监控",
+        "直方图用途"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/open-telemetry/opentelemetry-specification/blob/v1.40.0/specification/metrics/api.md"
+    },
+    {
+      "id": "otelmetric-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "同步与异步工具",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 的同步和异步指标工具在测量触发方式上有什么区别？",
+      "answer": "同步工具由业务代码直接记录；异步工具注册回调，在采集时读取观测值。",
+      "explanation": "这里的异步不等同于 Python 协程或 async/await。",
+      "example": "请求完成时递增计数，采集时回调读取队列大小。",
+      "tags": [
+        "指标采集与监控",
+        "同步与异步工具"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/open-telemetry/opentelemetry-specification/blob/v1.40.0/specification/metrics/api.md"
+    },
+    {
+      "id": "otelmetric-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "异步计数器值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 的 Asynchronous Counter 回调通常报告增量还是当前累计值？",
+      "answer": "报告当前的绝对累计值，而不是自上次采集以来的增量。",
+      "explanation": "下游可结合相邻观测值计算变化。",
+      "example": "采集进程累计处理字节数。",
+      "tags": [
+        "指标采集与监控",
+        "异步计数器值"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/open-telemetry/opentelemetry-specification/blob/v1.40.0/specification/metrics/api.md"
+    },
+    {
+      "id": "otelmetric-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "指标属性基数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么给指标附加用户 ID 等高基数字段可能显著增加开销？",
+      "answer": "不同属性组合需要分别维护聚合状态，组合过多会增加内存和存储压力。",
+      "explanation": "高基数字段也可能使查询与告警成本上升。",
+      "example": "避免为每次请求生成独立的指标标签组合。",
+      "tags": [
+        "指标采集与监控",
+        "指标属性基数"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/metrics/"
+    },
+    {
+      "id": "otelmetric-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "指标视图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry Metrics 的 View 可以用来调整什么？",
+      "answer": "它可选择或忽略指标工具，并配置输出聚合及保留的属性。",
+      "explanation": "具体配置方式取决于 SDK 实现。",
+      "example": "移除不需要的高基数属性。",
+      "tags": [
+        "指标采集与监控",
+        "指标视图"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/metrics/"
+    },
+    {
+      "id": "otelmetric-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "时间语义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry Sum 的 delta 与 cumulative 时间语义有什么区别？",
+      "answer": "delta 报告一个采集区间内的增量；cumulative 报告从起始时间以来的累计值。",
+      "explanation": "分析时应留意重启或计数器重置。",
+      "example": "按区间计算模型服务的请求数。",
+      "tags": [
+        "指标采集与监控",
+        "时间语义"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/open-telemetry/opentelemetry-specification/blob/v1.40.0/specification/metrics/data-model.md"
+    },
+    {
+      "id": "otelmetric-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指标采集与监控",
+      "knowledgePoint": "指标单位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 指标的 unit 字符串在大小写方面有什么要求？",
+      "answer": "单位字符串区分大小写，例如 kB 和 kb 不应视作同一单位。",
+      "explanation": "一致的单位有助于正确解释和聚合指标。",
+      "example": "明确记录延迟的秒或毫秒单位。",
+      "tags": [
+        "指标采集与监控",
+        "指标单位"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/open-telemetry/opentelemetry-specification/blob/v1.40.0/specification/metrics/api.md"
+    }
+  ]
+}

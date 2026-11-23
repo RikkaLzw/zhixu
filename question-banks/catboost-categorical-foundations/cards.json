@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "catboost-categorical-foundations",
+    "title": "CatBoost 文档与论文：类别特征和有序提升",
+    "url": "https://catboost.ai/docs/en/features/categorical-features",
+    "type": "官方文档、固定版本源码或论文",
+    "note": "依据 CatBoost 官方文档和论文自行整理；接口实验使用 CatBoost 1.2.8。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "catboost-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CatBoost 类别特征",
+      "knowledgePoint": "类别列声明",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CatBoostClassifier 的 cat_features 参数用来指定什么？",
+      "answer": "它指定哪些输入列是类别特征，可使用列索引或列名。",
+      "explanation": "使用列名时训练数据需要提供对应的特征名。",
+      "example": "DataFrame 中将 site 列声明为类别特征。",
+      "tags": [
+        "CatBoost 类别特征",
+        "类别列声明"
+      ],
+      "evidence": "source",
+      "reference": "https://catboost.ai/docs/en/concepts/python-reference_catboostclassifier"
+    },
+    {
+      "id": "catboost-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CatBoost 类别特征",
+      "knowledgePoint": "目标统计泄漏",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用完整训练集的标签均值直接编码每个训练样本的类别，为什么可能产生目标泄漏？",
+      "answer": "样本自己的标签会参与其特征编码，造成训练表示与测试时可用信息不一致。",
+      "explanation": "这种泄漏会影响对模型泛化能力的判断。",
+      "example": "仅出现一次的类别可能直接暴露该样本标签。",
+      "tags": [
+        "CatBoost 类别特征",
+        "目标统计泄漏"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1706.09516v5"
+    },
+    {
+      "id": "catboost-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CatBoost 类别特征",
+      "knowledgePoint": "有序目标统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CatBoost 论文中的有序目标统计怎样避免训练样本直接使用自己的标签计算该样本的编码？",
+      "answer": "先对样本排列，再用排在当前样本之前的同类别样本统计构造该样本的特征。",
+      "explanation": "实际实现还会使用先验和平滑；这不意味着其他数据泄漏都已消失。",
+      "example": "排列中的首个类别样本没有同类前序标签可用。",
+      "tags": [
+        "CatBoost 类别特征",
+        "有序目标统计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1706.09516v5"
+    },
+    {
+      "id": "catboost-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CatBoost 类别特征",
+      "knowledgePoint": "先验平滑",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CatBoost 类别目标统计中的先验有什么作用？",
+      "answer": "它为统计量提供平滑参考，尤其在某类别可用历史样本很少时。",
+      "explanation": "先验值及计算方式取决于具体统计类型和参数。",
+      "example": "某类别首次出现时不直接依赖空的历史均值。",
+      "tags": [
+        "CatBoost 类别特征",
+        "先验平滑"
+      ],
+      "evidence": "source",
+      "reference": "https://catboost.ai/docs/en/concepts/algorithm-main-stages_cat-to-numberic"
+    },
+    {
+      "id": "catboost-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CatBoost 类别特征",
+      "knowledgePoint": "独热与 Ctr",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CatBoost 的 one_hot_max_size 对满足阈值条件的类别特征有什么作用？",
+      "answer": "它可对不同取值数不超过阈值的类别特征使用独热编码；这些特征不再计算 Ctr。",
+      "explanation": "默认阈值和可用性取决于训练模式。",
+      "example": "指定阈值以控制低基数类别的处理方式。",
+      "tags": [
+        "CatBoost 类别特征",
+        "独热与 Ctr"
+      ],
+      "evidence": "source",
+      "reference": "https://catboost.ai/docs/en/features/categorical-features"
+    },
+    {
+      "id": "catboost-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CatBoost 类别特征",
+      "knowledgePoint": "频数统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CatBoost 文档中的 Counter 类型 Ctr 是否依赖目标标签值？",
+      "answer": "不依赖；它基于类别取值的出现次数计算。",
+      "explanation": "不同 Ctr 类型的计算方法和数据范围不同。",
+      "example": "统计某类别在训练数据中出现的频率。",
+      "tags": [
+        "CatBoost 类别特征",
+        "频数统计"
+      ],
+      "evidence": "source",
+      "reference": "https://catboost.ai/docs/en/concepts/algorithm-main-stages_cat-to-numberic"
+    },
+    {
+      "id": "catboost-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CatBoost 类别特征",
+      "knowledgePoint": "最佳迭代",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CatBoostClassifier 的 best_iteration_ 描述什么？",
+      "answer": "它标识最后一个验证集上评估指标或损失取得最佳结果的迭代。",
+      "explanation": "需要有相应验证评估信息才能解释该属性。",
+      "example": "训练后检查验证集对应的最佳迭代。",
+      "tags": [
+        "CatBoost 类别特征",
+        "最佳迭代"
+      ],
+      "evidence": "source",
+      "reference": "https://catboost.ai/docs/en/concepts/python-reference_catboostclassifier"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "python-argparse-cli",
+    "title": "Python 3.14：argparse 命令行参数",
+    "url": "https://docs.python.org/3.14/library/argparse.html",
+    "type": "官方文档",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyarg-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "参数解析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python argparse 的 parse_args() 不传参数列表时通常解析什么？",
+      "answer": "解析 sys.argv 中程序名之后的命令行参数。",
+      "explanation": "也可以传入字符串列表，方便测试解析逻辑。",
+      "example": "parse_args([\"--count\", \"3\"])。",
+      "tags": [
+        "Python 命令行参数",
+        "参数解析"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "位置参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "argparse 使用 add_argument(\"path\") 定义的普通位置参数，默认需要提供吗？",
+      "answer": "需要；未提供时默认报参数错误。",
+      "explanation": "可通过 nargs 等设置改变接收数量和必需性。",
+      "example": "命令行输入文件路径作为位置参数。",
+      "tags": [
+        "Python 命令行参数",
+        "位置参数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "布尔开关",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "argparse 对 --verbose 使用 action=\"store_true\"，默认缺省和出现时分别是什么？",
+      "answer": "默认缺省为 False，提供该选项时为 True。",
+      "explanation": "可以显式修改默认值；这里指未覆盖默认值的情况。",
+      "example": "脚本用 --verbose 控制更详细输出。",
+      "tags": [
+        "Python 命令行参数",
+        "布尔开关"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "类型转换",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "argparse 的 add_argument(\"--count\", type=int) 对输入值做什么？",
+      "answer": "尝试把对应字符串转换为整数，转换失败会产生参数错误。",
+      "explanation": "类型转换不等于业务范围校验。",
+      "example": "--count 3 得到整数 3。",
+      "tags": [
+        "Python 命令行参数",
+        "类型转换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "候选值约束",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "argparse 的 choices 参数用于什么？",
+      "answer": "限制参数转换后的值必须属于给定候选集合。",
+      "explanation": "不满足时解析器会报告错误。",
+      "example": "choices=[\"fast\", \"safe\"] 限制模式选项。",
+      "tags": [
+        "Python 命令行参数",
+        "候选值约束"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "缺省值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "argparse 对普通可选参数设置 default=10 后，未提供该参数通常得到什么？",
+      "answer": "解析结果中的对应属性使用默认值 10。",
+      "explanation": "显式提供的参数会按配置的 action 和类型处理。",
+      "example": "未提供 --count 时使用 10。",
+      "tags": [
+        "Python 命令行参数",
+        "缺省值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "重复参数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "argparse 的 action=\"append\" 如何处理同一选项的多次出现？",
+      "answer": "将每次出现的值依次追加到列表。",
+      "explanation": "适合接收重复指定的同类参数。",
+      "example": "--tag a --tag b 得到 [\"a\", \"b\"]。",
+      "tags": [
+        "Python 命令行参数",
+        "重复参数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "多值数量",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "argparse 中 nargs=\"*\" 与 nargs=\"+\" 对参数数量有什么区别？",
+      "answer": "* 接收零个或多个值；+ 要求至少一个值。",
+      "explanation": "两者都可将多个值收集起来。",
+      "example": "批量输入要求至少一个文件时可用 +。",
+      "tags": [
+        "Python 命令行参数",
+        "多值数量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "未知参数",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "argparse 的 parse_known_args 与 parse_args 如何处理未知参数？",
+      "answer": "parse_known_args 返回已解析结果和剩余参数；默认 parse_args 会对未知参数报错。",
+      "explanation": "缩写匹配等解析器配置仍可能影响哪些参数被识别。",
+      "example": "外层解析器可将剩余参数交给下游程序。",
+      "tags": [
+        "Python 命令行参数",
+        "未知参数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "帮助选项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "argparse 的 ArgumentParser 默认提供哪些帮助选项？",
+      "answer": "默认提供 -h 和 --help，用于显示帮助信息。",
+      "explanation": "默认帮助动作显示信息后退出；add_help=False 可关闭自动添加。",
+      "example": "python script.py --help 查看用法。",
+      "tags": [
+        "Python 命令行参数",
+        "帮助选项"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    },
+    {
+      "id": "pyarg-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 命令行参数",
+      "knowledgePoint": "互斥选项",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "argparse 的 mutually exclusive group 主要用于约束什么？",
+      "answer": "约束同一组中的多个选项不能同时使用。",
+      "explanation": "需要至少选择一个时可对该组设置 required=True。",
+      "example": "--quiet 与 --verbose 放入互斥组。",
+      "tags": [
+        "Python 命令行参数",
+        "互斥选项"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/argparse.html"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "agent-design-patterns",
+    "title": "Agent 工作流与多智能体协作",
+    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "type": "工程文档与研究论文",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "adesign-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工作流设计",
+      "knowledgePoint": "任务路由",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Agent 工作流中的路由通常如何选择后续处理？",
+      "answer": "先依据输入进行分类，再把任务交给相应的专门处理步骤或智能体。",
+      "explanation": "路由效果取决于分类是否可靠以及下游分支是否适合。",
+      "example": "把检索问题和代码审计问题分配给不同处理流程。",
+      "tags": [
+        "任务路由",
+        "工作流设计"
+      ],
+      "evidence": "source",
+      "reference": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "id": "adesign-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工作流设计",
+      "knowledgePoint": "并行分工与投票",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "并行工作流中的任务分块与投票有什么区别？",
+      "answer": "任务分块并行处理不同子任务；投票让多个调用处理同一任务，再汇总结果。",
+      "explanation": "两种方式都需要设计结果聚合方式，投票也不能保证答案正确。",
+      "example": "不同调用分别检查代码的权限和输入处理，或各自独立审查同一段代码。",
+      "tags": [
+        "并行分工与投票",
+        "工作流设计"
+      ],
+      "evidence": "source",
+      "reference": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "id": "adesign-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工作流设计",
+      "knowledgePoint": "动态分解与固定并行",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "协调者—工作者模式与固定子任务的并行流程在任务拆分上有什么区别？",
+      "answer": "前者由协调者依据输入动态决定子任务；后者通常预先定义各并行分支。",
+      "explanation": "两种模式都可以在子任务独立时并行执行。",
+      "example": "协调者根据待修改代码决定需要检查哪些文件。",
+      "tags": [
+        "动态分解与固定并行",
+        "工作流设计"
+      ],
+      "evidence": "source",
+      "reference": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "id": "adesign-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协作",
+      "knowledgePoint": "子智能体与交接",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "LangChain 文档中的 subagents 与 handoffs 模式在控制流上有什么区别？",
+      "answer": "subagents 由主智能体调用并将结果返回给主智能体；handoffs 通过状态变化切换处理当前交互的配置或智能体。",
+      "explanation": "这是文档中的两种设计模式，实际实现可以组合。",
+      "example": "主智能体调用研究工具后汇总，或把对话交给专门支持流程。",
+      "tags": [
+        "子智能体与交接",
+        "多智能体协作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/multi-agent"
+    },
+    {
+      "id": "adesign-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协作",
+      "knowledgePoint": "委派上下文选择",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "向子智能体只传任务描述而不传完整历史有什么取舍？",
+      "answer": "可减少上下文干扰与开销，但可能缺少先前约束或工作结果。",
+      "explanation": "应按任务需要选择历史、摘要和必要状态。",
+      "example": "独立检索只传检索要求；接续已有审计则传相关发现。",
+      "tags": [
+        "委派上下文选择",
+        "多智能体协作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/multi-agent/subagents"
+    },
+    {
+      "id": "adesign-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协作",
+      "knowledgePoint": "异步任务依赖",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "什么情况下主智能体不能直接把异步子任务视为已完成？",
+      "answer": "后续步骤依赖子任务结果时，必须先取得并检查该结果。",
+      "explanation": "后台执行适合可独立推进的工作；启动任务不等于结果已可用。",
+      "example": "报告需要子任务的验证结果时，先等待结果再写结论。",
+      "tags": [
+        "异步任务依赖",
+        "多智能体协作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/multi-agent/subagents"
+    },
+    {
+      "id": "adesign-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体记忆",
+      "knowledgePoint": "Reflexion文本反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 如何在后续尝试中利用先前失败的反馈？",
+      "answer": "它把反馈转为文字反思并放入情景记忆，供后续尝试作为上下文使用。",
+      "explanation": "论文中的这种反馈方式不需要因此更新语言模型权重，也不保证必然成功。",
+      "example": "记录一次工具使用失败的原因，再在下一次尝试中参考。",
+      "tags": [
+        "Reflexion文本反馈",
+        "智能体记忆"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.11366"
+    },
+    {
+      "id": "adesign-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体记忆",
+      "knowledgePoint": "外部记忆可见性",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "MemGPT 中保存在外部存储的信息能自动被当前模型输入看到吗？",
+      "answer": "不能；相关信息需要通过检索或其他操作移入当前上下文，才会进入模型本次输入。",
+      "explanation": "外部存储扩展了可取回的信息量，但单次上下文窗口仍有限。",
+      "example": "先检索历史记录，再把相关片段放入提示。",
+      "tags": [
+        "外部记忆可见性",
+        "智能体记忆"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.08560"
+    }
+  ]
+}

@@ -1,0 +1,292 @@
+{
+  "source": {
+    "id": "pytorch-training",
+    "title": "PyTorch 教程：自动微分与训练优化",
+    "url": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "torchtrain-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "自动微分",
+      "knowledgePoint": "计算图",
+      "questionType": "概念与原理",
+      "question": "PyTorch 的自动微分计算图记录什么？",
+      "answer": "它记录张量运算之间的依赖关系，以便按链式法则计算梯度。",
+      "explanation": "反向传播从目标张量沿依赖关系向前追踪。",
+      "example": "损失由模型输出计算得到时，可沿计算图求参数梯度。",
+      "tags": [
+        "计算图",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "自动微分",
+      "knowledgePoint": "requires_grad",
+      "questionType": "代码与配置",
+      "question": "PyTorch 张量设置 requires_grad=True 有什么作用？",
+      "answer": "它使相关运算被自动微分系统跟踪，以便计算该张量的梯度。",
+      "explanation": "常用于需要训练的模型参数。",
+      "example": "创建可训练权重张量时启用梯度跟踪。",
+      "tags": [
+        "requires_grad",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "自动微分",
+      "knowledgePoint": "backward",
+      "questionType": "代码与配置",
+      "question": "对标量损失调用 backward() 会做什么？",
+      "answer": "它沿计算图反向计算梯度，并把梯度累积到需要梯度的叶子张量。",
+      "explanation": "调用 backward 本身不更新模型参数。",
+      "example": "loss.backward() 后检查参数的 grad。",
+      "tags": [
+        "backward",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "自动微分",
+      "knowledgePoint": "梯度累积",
+      "questionType": "代码与配置",
+      "question": "为什么常在每次训练更新前清空梯度？",
+      "answer": "PyTorch 默认把新的梯度累加到已有的 .grad 中；不清空会混入之前的梯度。",
+      "explanation": "有意做梯度累积时，应按计划跨多个批次再清零。",
+      "example": "普通逐批训练使用 optimizer.zero_grad()。",
+      "tags": [
+        "梯度累积",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "自动微分",
+      "knowledgePoint": "no_grad",
+      "questionType": "代码与配置",
+      "question": "在 PyTorch 2.15 中，torch.no_grad() 上下文的主要作用是什么？",
+      "answer": "它通常关闭上下文内运算的反向模式梯度记录，减少不需要反向传播时的计算图开销。",
+      "explanation": "它不会切换模型的训练或评估模式，也不禁用前向模式自动微分；部分工厂函数有例外。",
+      "example": "验证阶段使用 no_grad 包裹前向计算。",
+      "tags": [
+        "no_grad",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.no_grad.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "自动微分",
+      "knowledgePoint": "detach",
+      "questionType": "代码与配置",
+      "question": "张量的 detach() 用于什么？",
+      "answer": "它返回一个与当前计算图分离的张量，使后续运算不通过原路径反向传播。",
+      "explanation": "分离不等于复制数据；修改共享存储时需要小心。",
+      "example": "保存某次预测用于展示时先从计算图分离。",
+      "tags": [
+        "detach",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练循环",
+      "knowledgePoint": "训练轮次",
+      "questionType": "概念与原理",
+      "question": "训练中的一个 epoch 通常表示什么？",
+      "answer": "通常表示模型遍历一次完整训练数据。",
+      "explanation": "一个 epoch 往往包含多个小批次和多次参数更新。",
+      "example": "训练集 1000 条、每批 100 条时，一个完整 epoch 约有 10 个批次。",
+      "tags": [
+        "训练轮次",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练循环",
+      "knowledgePoint": "批大小",
+      "questionType": "概念与原理",
+      "question": "训练中的 batch size 是什么？",
+      "answer": "它是一次小批次前向和反向计算所处理的样本数。",
+      "explanation": "批大小会影响显存、梯度估计和每轮更新次数。",
+      "example": "batch size 为 32 时，每批通常处理 32 条样本。",
+      "tags": [
+        "批大小",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练循环",
+      "knowledgePoint": "学习率",
+      "questionType": "概念与原理",
+      "question": "学习率在梯度优化中控制什么？",
+      "answer": "它控制参数沿更新方向调整的步长尺度。",
+      "explanation": "过大可能使训练不稳定，过小可能导致收敛缓慢。",
+      "example": "损失反复震荡时可检查学习率是否过大。",
+      "tags": [
+        "学习率",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练循环",
+      "knowledgePoint": "损失函数",
+      "questionType": "概念与原理",
+      "question": "监督训练中的损失函数承担什么作用？",
+      "answer": "它将模型预测与目标之间的偏差转成可优化的数值。",
+      "explanation": "损失的定义取决于任务，不能把不同损失的数值直接当作同一指标。",
+      "example": "回归任务可使用均方误差损失。",
+      "tags": [
+        "损失函数",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练循环",
+      "knowledgePoint": "优化器更新",
+      "questionType": "代码与配置",
+      "question": "PyTorch 中 optimizer.step() 的作用是什么？",
+      "answer": "它根据参数的当前梯度和优化器规则更新参数。",
+      "explanation": "通常先执行反向传播，再执行参数更新。",
+      "example": "调用 loss.backward() 后再调用 optimizer.step()。",
+      "tags": [
+        "优化器更新",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练循环",
+      "knowledgePoint": "交叉熵输入",
+      "questionType": "代码与配置",
+      "question": "PyTorch 的 CrossEntropyLoss 通常接收什么分类模型输出？",
+      "answer": "通常接收未经过 softmax 的 logits。",
+      "explanation": "该损失内部组合了对数 softmax 与负对数似然计算。",
+      "example": "多分类模型的线性输出直接传入 CrossEntropyLoss。",
+      "tags": [
+        "交叉熵输入",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练循环",
+      "knowledgePoint": "训练评估模式",
+      "questionType": "代码与配置",
+      "question": "model.train() 与 model.eval() 会改变什么？",
+      "answer": "它们切换某些层的训练或评估行为，例如 Dropout 和 BatchNorm。",
+      "explanation": "eval() 不会自动关闭梯度计算，需要时另用 no_grad()。",
+      "example": "验证前调用 model.eval()，回到训练时调用 model.train()。",
+      "tags": [
+        "训练评估模式",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "torchtrain-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "自动微分",
+      "knowledgePoint": "图释放",
+      "questionType": "代码与配置",
+      "question": "为什么同一 PyTorch 计算图默认不能反复 backward？",
+      "answer": "一次反向传播通常会释放为计算梯度保存的中间信息。",
+      "explanation": "确有需要时可使用 retain_graph=True，但应考虑额外内存开销。",
+      "example": "同一前向结果要做第二次反向传播时，检查是否必须保留计算图。",
+      "tags": [
+        "图释放",
+        "PyTorch",
+        "神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+      "origin": "自行整理"
+    }
+  ]
+}

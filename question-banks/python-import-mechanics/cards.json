@@ -1,0 +1,411 @@
+{
+  "source": {
+    "id": "python-import-mechanics",
+    "title": "Python 3.14：模块导入与缓存",
+    "url": "https://docs.python.org/3.14/reference/import.html",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的原论文或官方文档自行整理；例子为自编，适用版本与条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyimport-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "导入缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 导入模块时首先检查哪个模块缓存？",
+      "answer": "首先检查 sys.modules 中是否已有该模块名对应的对象。",
+      "explanation": "若缓存没有该模块，导入系统才继续查找和加载。",
+      "example": "重复导入已加载的同名模块。",
+      "tags": [
+        "导入缓存",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/import.html#the-module-cache"
+    },
+    {
+      "id": "pyimport-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "重复导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 中普通模块已成功导入且仍在 sys.modules 时，再次 import 通常会重新执行模块顶层代码吗？",
+      "answer": "通常不会；再次导入会复用缓存中的模块对象。",
+      "explanation": "显式重新加载或修改缓存会改变这一行为。",
+      "example": "模块顶层初始化通常只在首次导入时执行。",
+      "tags": [
+        "重复导入",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/tutorial/modules.html#more-on-modules"
+    },
+    {
+      "id": "pyimport-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "导入中注册",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 为什么在执行模块代码前先把模块放入 sys.modules？",
+      "answer": "这样模块加载期间的递归导入可以找到正在初始化的模块，避免无限重复加载。",
+      "explanation": "循环导入仍可能因访问尚未初始化的名称而失败。",
+      "example": "模块 A 导入 B，而 B 又导入 A。",
+      "tags": [
+        "导入中注册",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/import.html#loading"
+    },
+    {
+      "id": "pyimport-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "循环导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 循环导入时，为什么可能报告模块已部分初始化或找不到某个名称？",
+      "answer": "被循环引用的模块可能尚未执行到定义该名称的位置。",
+      "explanation": "调整依赖结构或延迟必要导入可帮助解决具体问题。",
+      "example": "A 初始化时导入 B，B 立即访问 A 中尚未定义的函数。",
+      "tags": [
+        "循环导入",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/import.html#loading"
+    },
+    {
+      "id": "pyimport-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "失败缓存清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 首次加载模块失败后，导入系统如何处理该失败模块的 sys.modules 项？",
+      "answer": "会移除加载失败的模块项；此前成功加载的副作用模块仍可能保留。",
+      "explanation": "异常仍向调用方传播；重新加载失败的模块不会按首次加载失败的规则移除。",
+      "example": "模块顶层抛出异常后检查模块缓存。",
+      "tags": [
+        "失败缓存清理",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/import.html#loading"
+    },
+    {
+      "id": "pyimport-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "模块缓存为None",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 中 sys.modules[模块名] 被设为 None 后，导入该名称通常会怎样？",
+      "answer": "导入会引发 ModuleNotFoundError。",
+      "explanation": "这与字典中没有该键、继续查找模块不同。",
+      "example": "显式设置缓存为 None 后尝试导入。",
+      "tags": [
+        "模块缓存为None",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/import.html#the-module-cache"
+    },
+    {
+      "id": "pyimport-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "删除缓存项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 中删除 sys.modules 的模块项后重新导入，已有的旧模块引用会自动更新吗？",
+      "answer": "不会；已有引用仍可能指向旧对象，新导入可能创建另一模块对象。",
+      "explanation": "删除缓存项不等于销毁所有对旧模块的引用。",
+      "example": "两个变量可能分别指向新旧模块对象。",
+      "tags": [
+        "删除缓存项",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/import.html#the-module-cache"
+    },
+    {
+      "id": "pyimport-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "重新加载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 importlib.reload 通常对已导入模块做什么？",
+      "answer": "它复用模块命名空间并重新执行模块代码，更新其中重新定义的名称。",
+      "explanation": "若加载过程替换 sys.modules 对象，返回对象可能不同。",
+      "example": "编辑模块后在交互会话中重新加载。",
+      "tags": [
+        "重新加载",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/importlib.html#importlib.reload"
+    },
+    {
+      "id": "pyimport-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "重新加载旧名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 重新加载模块时，新版本没有定义的旧名称一定被删除吗？",
+      "answer": "不一定；reload 保留模块字典，未被新代码覆盖的旧名称可能仍在。",
+      "explanation": "需要时应显式管理或清理旧状态。",
+      "example": "新源码删除某全局变量后检查 reload 的结果。",
+      "tags": [
+        "重新加载旧名称",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/importlib.html#importlib.reload"
+    },
+    {
+      "id": "pyimport-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "外部导入绑定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 中先执行 from module import name，再 reload(module)，本地的 name 会自动改绑吗？",
+      "answer": "不会；外部命名空间中的旧绑定不会自动更新。",
+      "explanation": "可重新执行 from 导入或通过 module.name 访问。",
+      "example": "重载函数所在模块后重新绑定本地函数名。",
+      "tags": [
+        "外部导入绑定",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/importlib.html#importlib.reload"
+    },
+    {
+      "id": "pyimport-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "旧实例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 模块重载并重新定义类后，重载前创建的实例会自动变成新类的实例吗？",
+      "answer": "不会；旧实例仍引用原来的类定义。",
+      "explanation": "需要显式创建新实例或设计状态迁移。",
+      "example": "旧实例的方法仍来自旧类对象。",
+      "tags": [
+        "旧实例",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/importlib.html#importlib.reload"
+    },
+    {
+      "id": "pyimport-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "重载并发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 importlib.reload 可以不加同步地由多个线程同时调用吗？",
+      "answer": "不应假定可以；官方文档说明 reload 不是线程安全的。",
+      "explanation": "多线程需要时应采用合适的同步机制。",
+      "example": "用锁保护同一模块的重新加载。",
+      "tags": [
+        "重载并发",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/importlib.html#importlib.reload"
+    },
+    {
+      "id": "pyimport-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "查找器缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 importlib.invalidate_caches() 与删除 sys.modules 项有什么区别？",
+      "answer": "前者要求查找器清理其内部发现缓存；它不会自动移除已加载的模块对象。",
+      "explanation": "动态创建模块文件后可能需要调用它。",
+      "example": "创建新模块文件后刷新查找器缓存。",
+      "tags": [
+        "查找器缓存",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/importlib.html#importlib.invalidate_caches"
+    },
+    {
+      "id": "pyimport-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "包初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 普通包首次导入时，包目录中的 __init__.py 通常有什么作用？",
+      "answer": "它作为包的初始化代码执行。",
+      "explanation": "已缓存包再次导入时通常不会自动重复执行。",
+      "example": "包初始化时设置公开名称。",
+      "tags": [
+        "包初始化",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/import.html#regular-packages"
+    },
+    {
+      "id": "pyimport-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "命名空间包",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 namespace package 能由多个位置的包部分组成吗？",
+      "answer": "可以；多个位置中的同名包部分可共同构成命名空间包。",
+      "explanation": "此类包通常没有普通的 __init__.py 文件。",
+      "example": "两个安装位置提供同一命名空间下的子包。",
+      "tags": [
+        "命名空间包",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/import.html#namespace-packages"
+    },
+    {
+      "id": "pyimport-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "导入绑定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 import package.submodule 默认把哪个顶层名称绑定到当前命名空间？",
+      "answer": "默认绑定顶层的 package 名称；子模块可通过 package.submodule 访问。",
+      "explanation": "使用 as 别名时绑定行为有所不同。",
+      "example": "import logging.handlers 后通过 logging.handlers 访问。",
+      "tags": [
+        "导入绑定",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/simple_stmts.html#the-import-statement"
+    },
+    {
+      "id": "pyimport-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "星号导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 模块定义 __all__ 时，from module import * 使用它做什么？",
+      "answer": "它指定星号导入时应导出的名称。",
+      "explanation": "__all__ 并不禁止显式访问其他模块属性。",
+      "example": "控制包对外公开的星号导入名称。",
+      "tags": [
+        "星号导入",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/simple_stmts.html#the-import-statement"
+    },
+    {
+      "id": "pyimport-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "相对导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 包内相对导入中的一个点与两个点通常分别表示什么？",
+      "answer": "一个点表示当前包；两个点表示向上一级包。",
+      "explanation": "相对导入需要正确的包上下文。",
+      "example": "用 from . import helper 引用同包模块。",
+      "tags": [
+        "相对导入",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/reference/import.html#package-relative-imports"
+    },
+    {
+      "id": "pyimport-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "动态导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 importlib.import_module(name, package) 中 package 参数何时有用？",
+      "answer": "当 name 使用相对模块名时，它提供解析该相对名称的包锚点。",
+      "explanation": "绝对模块名通常不需要该参数。",
+      "example": "从指定包动态导入 .helpers。",
+      "tags": [
+        "动态导入",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/importlib.html#importlib.import_module"
+    },
+    {
+      "id": "pyimport-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "字节码缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CPython 使用基于时间戳的 pyc 缓存时，为什么同一时间戳内等长改写源码可能继续使用旧字节码？",
+      "answer": "这种缓存以源码时间戳和大小判断有效性；两者未变化时可能无法发现内容变化。",
+      "explanation": "这是特定缓存失效模式下的边界，不适用于所有导入器或哈希模式。",
+      "example": "快速重写等长模块后重启解释器仍读到旧结果。",
+      "tags": [
+        "字节码缓存",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://peps.python.org/pep-0552/"
+    },
+    {
+      "id": "pyimport-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 模块导入",
+      "knowledgePoint": "哈希缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 默认配置下，checked-hash pyc 缓存如何验证源码是否变化？",
+      "answer": "解释器将源码内容的哈希与缓存中的哈希比较。",
+      "explanation": "unchecked-hash 模式默认将有效性维护交给外部系统；命令行选项也可改变检查策略。",
+      "example": "构建时选择内容哈希校验模式。",
+      "tags": [
+        "哈希缓存",
+        "Python 模块导入"
+      ],
+      "evidence": "source",
+      "reference": "https://peps.python.org/pep-0552/"
+    }
+  ]
+}

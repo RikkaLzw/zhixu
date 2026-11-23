@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "bart-denoising-architecture",
+    "title": "BART 原论文 v1：去噪预训练结构",
+    "url": "https://arxiv.org/pdf/1910.13461v1",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "bartpaper-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BART 去噪模型",
+      "knowledgePoint": "编码器解码器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BART 原论文的编码器和解码器分别以什么方向处理文本？",
+      "answer": "编码器双向处理受损输入；解码器从左到右自回归生成原文。",
+      "explanation": "解码器还通过交叉注意力读取编码器表示。",
+      "example": "受损文档经编码后由解码器逐词重建。",
+      "tags": [
+        "BART 去噪模型",
+        "编码器解码器"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1910.13461v1"
+    },
+    {
+      "id": "bartpaper-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BART 去噪模型",
+      "knowledgePoint": "训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BART 原论文对解码器输出与原文使用什么预训练目标？",
+      "answer": "最小化重建原始文档的负对数似然，也就是相应交叉熵损失。",
+      "explanation": "该目标针对原文序列，而不只预测被遮盖的位置。",
+      "example": "恢复被破坏的输入文档。",
+      "tags": [
+        "BART 去噪模型",
+        "训练目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1910.13461v1"
+    },
+    {
+      "id": "bartpaper-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BART 去噪模型",
+      "knowledgePoint": "输入输出长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BART 去噪时编码器输入与目标文本必须逐位置对齐且等长吗？",
+      "answer": "不必须；破坏变换可以改变输入长度，解码器仍生成原始文本。",
+      "explanation": "文本删除和片段填空都可能改变长度。",
+      "example": "多个原始词可被单个掩码替代。",
+      "tags": [
+        "BART 去噪模型",
+        "输入输出长度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1910.13461v1"
+    },
+    {
+      "id": "bartpaper-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BART 去噪模型",
+      "knowledgePoint": "句子重排",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BART 论文中的 sentence permutation 如何破坏文档？",
+      "answer": "将文档按句子划分后，随机打乱这些句子的顺序。",
+      "explanation": "模型需要利用上下文恢复原文。",
+      "example": "对多句文档改变句子排列。",
+      "tags": [
+        "BART 去噪模型",
+        "句子重排"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1910.13461v1"
+    },
+    {
+      "id": "bartpaper-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "BART 去噪模型",
+      "knowledgePoint": "文档旋转",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BART 论文中的 document rotation 如何变换输入？",
+      "answer": "随机选取一个 token，并将文档旋转成从该 token 开始的序列。",
+      "explanation": "原始文档的起点因此需要被恢复。",
+      "example": "把原本位于中间的位置移到输入开头。",
+      "tags": [
+        "BART 去噪模型",
+        "文档旋转"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1910.13461v1"
+    }
+  ]
+}

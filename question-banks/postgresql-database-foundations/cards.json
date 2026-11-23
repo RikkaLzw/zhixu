@@ -1,0 +1,449 @@
+{
+  "source": {
+    "id": "postgresql-database-foundations",
+    "title": "PostgreSQL 17：SQL、事务与索引基础",
+    "url": "https://www.postgresql.org/docs/17/tutorial-transactions.html",
+    "type": "教材与官方技术文档",
+    "note": "依教材或官方文档自行整理，具体实现和版本条件见卡片。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "dbbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "事务原子性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据库事务的原子性表示什么？",
+      "answer": "一个事务中的操作作为整体提交或回滚，不应只留下部分已提交效果。",
+      "explanation": "原子性不等于事务逻辑一定符合业务规则。",
+      "example": "转账的扣款与入账作为一个事务。",
+      "tags": [
+        "事务原子性",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-transactions.html"
+    },
+    {
+      "id": "dbbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "事务持久性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据库事务的持久性通常表示什么？",
+      "answer": "事务成功提交后，其已确认的结果应按数据库承诺在故障恢复后保留。",
+      "explanation": "实际保证还取决于系统配置和存储故障假设。",
+      "example": "提交成功后数据库恢复已提交的账户变更。",
+      "tags": [
+        "事务持久性",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-transactions.html"
+    },
+    {
+      "id": "dbbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "事务隔离性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据库事务的隔离性主要关注什么？",
+      "answer": "它规定并发事务之间可以看到哪些变化，以及允许出现哪些并发异常。",
+      "explanation": "不同隔离级别提供不同的保证。",
+      "example": "一个事务读取数据时考虑另一个事务的并发更新。",
+      "tags": [
+        "事务隔离性",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/transaction-iso.html"
+    },
+    {
+      "id": "dbbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "事务一致性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ACID 中的一致性是否意味着数据库自动保证所有业务规则都正确？",
+      "answer": "不意味着；数据库约束和正确的事务逻辑共同决定业务不变量能否被保持。",
+      "explanation": "数据库无法凭空推断未声明的业务要求。",
+      "example": "转账逻辑还需正确检查余额和业务权限。",
+      "tags": [
+        "事务一致性",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-transactions.html"
+    },
+    {
+      "id": "dbbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "提交与回滚",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "事务中的 COMMIT 和 ROLLBACK 分别做什么？",
+      "answer": "COMMIT 提交事务的更改；ROLLBACK 撤销当前事务尚未提交的更改。",
+      "explanation": "发生错误时可根据事务状态选择回滚。",
+      "example": "确认转账后提交，发现错误则回滚。",
+      "tags": [
+        "提交与回滚",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-transactions.html"
+    },
+    {
+      "id": "dbbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "保存点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据库事务中的 SAVEPOINT 有什么用途？",
+      "answer": "它在事务内部设置可回退位置，使之后的部分操作可以被撤销而保留更早的操作。",
+      "explanation": "最终保留下来的更改仍需事务提交。",
+      "example": "导入多条数据时回退其中一次尝试。",
+      "tags": [
+        "保存点",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-transactions.html"
+    },
+    {
+      "id": "dbbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "脏读",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据库事务中的脏读是什么？",
+      "answer": "一个事务读取到另一个并发事务尚未提交的数据。",
+      "explanation": "如果后者回滚，读到的数据可能从未正式提交。",
+      "example": "读取另一个事务暂时写入但随后撤销的余额。",
+      "tags": [
+        "脏读",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/transaction-iso.html"
+    },
+    {
+      "id": "dbbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "不可重复读",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据库中的不可重复读是什么？",
+      "answer": "同一事务重复读取同一行时，因其他事务提交修改而得到不同结果。",
+      "explanation": "不同隔离级别对此提供不同保证。",
+      "example": "两次读取同一账户余额之间有其他事务更新。",
+      "tags": [
+        "不可重复读",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/transaction-iso.html"
+    },
+    {
+      "id": "dbbase-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "幻读",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据库事务中的幻读通常指什么？",
+      "answer": "同一事务重复按条件查询时，其他事务的提交使符合条件的行集合发生变化。",
+      "explanation": "插入、删除或更新都可能影响查询匹配的行集合。",
+      "example": "两次查询某价格区间时，第二次多出一行。",
+      "tags": [
+        "幻读",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/transaction-iso.html"
+    },
+    {
+      "id": "dbbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "读已提交快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 READ COMMITTED 下，普通 SELECT 通常看到什么快照？",
+      "answer": "它看到语句开始前已提交的数据，也能看到本事务先前的修改。",
+      "explanation": "同一事务中的后续 SELECT 可能看到其他事务新提交的变化。",
+      "example": "两次查询之间另一个事务提交更新。",
+      "tags": [
+        "读已提交快照",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/transaction-iso.html"
+    },
+    {
+      "id": "dbbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "可重复读快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 REPEATABLE READ 通常以什么时候的快照进行读取？",
+      "answer": "通常使用事务中第一个非事务控制语句开始时的快照，并可看到本事务自己的修改。",
+      "explanation": "并发更新可能导致事务需要重试。",
+      "example": "事务内重复读取不使用每条语句的新快照。",
+      "tags": [
+        "可重复读快照",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/transaction-iso.html"
+    },
+    {
+      "id": "dbbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "可串行化与重试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 SERIALIZABLE 事务为什么仍可能需要应用重试？",
+      "answer": "数据库可能检测到无法保证可串行化的并发执行，并中止其中事务。",
+      "explanation": "应用应按自身业务语义处理序列化失败并重试整个事务。",
+      "example": "并发修改相互关联的数据时处理序列化错误。",
+      "tags": [
+        "可串行化与重试",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/transaction-iso.html"
+    },
+    {
+      "id": "dbbase-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "主键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "关系数据库中的主键通常有什么约束？",
+      "answer": "它用于唯一标识行；主键列的组合必须唯一且非空。",
+      "explanation": "主键可以由多个列组成。",
+      "example": "用订单编号作为订单表主键。",
+      "tags": [
+        "主键",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "dbbase-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "外键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "外键约束主要用于维护什么关系？",
+      "answer": "它维护引用完整性：单列外键的非空值必须匹配被引用表中的键；可空外键为 NULL 时可以不引用任何行。",
+      "explanation": "这是 PostgreSQL 单列外键的规则；复合外键是否跳过检查还受 MATCH 类型影响。",
+      "example": "订单中的商品编号引用商品表。",
+      "tags": [
+        "外键",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "dbbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "唯一约束与空值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 默认的 UNIQUE 约束是否总把多个 NULL 当作重复值？",
+      "answer": "不是；默认情况下 NULL 在唯一性比较中不视为相等，可用 NULLS NOT DISTINCT 改变该行为。",
+      "explanation": "其他数据库实现可能不同。",
+      "example": "唯一列可以按默认规则包含多个 NULL。",
+      "tags": [
+        "唯一约束与空值",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "dbbase-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "空值比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 中要判断一个值是否为 NULL，为什么通常使用 IS NULL 而不是 = NULL？",
+      "answer": "与 NULL 的普通相等比较结果为未知；IS NULL 专门测试是否为空值。",
+      "explanation": "WHERE 只保留条件为真的行。",
+      "example": "筛选尚未填写邮箱的记录。",
+      "tags": [
+        "空值比较",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-comparison.html"
+    },
+    {
+      "id": "dbbase-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "计数与空值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 COUNT(*) 与 COUNT(列名) 如何处理 NULL？",
+      "answer": "COUNT(*) 统计行数；COUNT(列名) 统计该表达式非 NULL 的行数。",
+      "explanation": "两者在列含空值时可能不同。",
+      "example": "统计总用户数与已填写邮箱的用户数。",
+      "tags": [
+        "计数与空值",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-aggregate.html"
+    },
+    {
+      "id": "dbbase-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "内连接外连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 INNER JOIN 与 LEFT JOIN 对左表未匹配的行如何处理？",
+      "answer": "INNER JOIN 不返回未匹配行；LEFT JOIN 保留左表未匹配行并在右表列填充 NULL。",
+      "explanation": "后续 WHERE 条件可能再次过滤这些行。",
+      "example": "列出所有用户及其可能存在的订单。",
+      "tags": [
+        "内连接外连接",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-join.html"
+    },
+    {
+      "id": "dbbase-019",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "WHERE与HAVING",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 WHERE 与 HAVING 在分组查询中分别筛选什么？",
+      "answer": "WHERE 在分组前筛选输入行；HAVING 对分组后的结果进行条件筛选。",
+      "explanation": "聚合条件通常放在 HAVING 中。",
+      "example": "先筛选日期，再筛选数量超过阈值的分组。",
+      "tags": [
+        "WHERE与HAVING",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-table-expressions.html"
+    },
+    {
+      "id": "dbbase-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "索引作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据库索引主要帮助解决什么问题？",
+      "answer": "它提供额外的数据访问结构，可加快某些条件查询或排序。",
+      "explanation": "索引也占用空间，并可能增加写入维护成本。",
+      "example": "为常用查询条件建立索引。",
+      "tags": [
+        "索引作用",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/indexes-types.html"
+    },
+    {
+      "id": "dbbase-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "B树范围查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 B-tree 索引适合哪些常见比较？",
+      "answer": "它可支持可排序数据的相等比较和范围比较。",
+      "explanation": "优化器是否实际使用索引仍取决于查询和成本估计。",
+      "example": "按编号精确查询或按时间范围筛选。",
+      "tags": [
+        "B树范围查询",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/indexes-types.html"
+    },
+    {
+      "id": "dbbase-022",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "索引不保证使用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "建立数据库索引后，查询是否一定会使用它？",
+      "answer": "不一定；优化器会根据条件、统计信息和估计成本选择执行计划。",
+      "explanation": "顺序扫描有时比索引扫描更合适。",
+      "example": "小表或返回大部分行时可能选择顺序扫描。",
+      "tags": [
+        "索引不保证使用",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    },
+    {
+      "id": "dbbase-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "执行计划与执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 EXPLAIN ANALYZE 与普通 EXPLAIN 有什么主要区别？",
+      "answer": "EXPLAIN ANALYZE 实际执行语句并报告运行统计；普通 EXPLAIN 主要展示估计计划。",
+      "explanation": "对会修改数据的语句，实际执行也会产生相应效果。",
+      "example": "在受控事务中测量查询执行计划。",
+      "tags": [
+        "执行计划与执行",
+        "数据库与 SQL 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/using-explain.html"
+    }
+  ]
+}

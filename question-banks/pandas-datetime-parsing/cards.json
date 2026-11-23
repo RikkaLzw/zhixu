@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "pandas-datetime-parsing",
+    "title": "pandas 2.2.3 文档：日期时间解析",
+    "url": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.to_datetime.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pddate-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 日期时间",
+      "knowledgePoint": "解析失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas.to_datetime 默认处理无效日期与设置 errors=\"coerce\" 有什么区别？",
+      "answer": "默认抛出异常；errors=\"coerce\" 将无效或越界输入转换为 NaT。",
+      "explanation": "应检查 NaT 的数量，避免静默丢失数据质量问题。",
+      "example": "解析失败的日期字符串变成缺失时间。",
+      "tags": [
+        "Pandas 日期时间",
+        "解析失败"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.to_datetime.html"
+    },
+    {
+      "id": "pddate-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 日期时间",
+      "knowledgePoint": "统一UTC",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas.to_datetime(..., utc=True) 如何处理无时区和已有时区的输入？",
+      "answer": "将无时区输入视作 UTC 本地化，将有时区输入转换到 UTC。",
+      "explanation": "若无时区时间实际代表其他时区，应先明确其原时区。",
+      "example": "东八区时间转换后对应的 UTC 时刻会不同。",
+      "tags": [
+        "Pandas 日期时间",
+        "统一UTC"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.to_datetime.html"
+    },
+    {
+      "id": "pddate-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 日期时间",
+      "knowledgePoint": "时间戳单位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas.to_datetime(..., unit=\"ms\", origin=\"unix\") 如何解释数值？",
+      "answer": "把数值解释为相对于 Unix 纪元的毫秒数。",
+      "explanation": "秒、毫秒和纳秒混淆会得到完全不同的时间。",
+      "example": "1000 毫秒对应纪元后一秒。",
+      "tags": [
+        "Pandas 日期时间",
+        "时间戳单位"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.to_datetime.html"
+    },
+    {
+      "id": "pddate-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Pandas 日期时间",
+      "knowledgePoint": "指定格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas.to_datetime 的 format 参数主要用于什么？",
+      "answer": "指定日期时间字符串应按何种格式解析。",
+      "explanation": "format=\"mixed\" 会逐项推断格式，应注意歧义风险。",
+      "example": "使用 %Y-%m-%d 解析固定格式日期。",
+      "tags": [
+        "Pandas 日期时间",
+        "指定格式"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.to_datetime.html"
+    },
+    {
+      "id": "pddate-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 日期时间",
+      "knowledgePoint": "格式精确度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas.to_datetime 同时指定普通 format 时，exact=True 与 False 有什么区别？",
+      "answer": "True 要求整个字符串匹配格式；False 允许格式匹配字符串中的一部分。",
+      "explanation": "exact 不能与 format=\"ISO8601\" 或 \"mixed\" 一起使用。",
+      "example": "包含额外前缀的文本在精确匹配下可能失败。",
+      "tags": [
+        "Pandas 日期时间",
+        "格式精确度"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.to_datetime.html"
+    },
+    {
+      "id": "pddate-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 日期时间",
+      "knowledgePoint": "日期优先",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas.to_datetime 的 dayfirst=True 是否严格要求所有日期以日开头？",
+      "answer": "不是；它优先按日开头解析，但不是严格约束。",
+      "explanation": "对固定输入应使用明确的 format。",
+      "example": "含歧义的 10/11/12 会优先把 10 当作日。",
+      "tags": [
+        "Pandas 日期时间",
+        "日期优先"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.to_datetime.html"
+    }
+  ]
+}

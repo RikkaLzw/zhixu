@@ -1,0 +1,132 @@
+{
+  "source": {
+    "id": "rag-indexing",
+    "title": "检索切块、索引更新与混合检索",
+    "url": "https://docs.langchain.com/oss/python/integrations/splitters",
+    "type": "官方技术文档",
+    "note": "依据所引原文自行整理成中文问答，例子为自编。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "indexing-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文档切块",
+      "knowledgePoint": "结构切块",
+      "questionType": "比较与选型",
+      "question": "按文档结构切块与单纯按固定长度切块有什么不同？",
+      "answer": "结构切块利用标题、段落或代码单元等边界组织片段；固定长度切块主要按长度限制划分。",
+      "explanation": "结构切块有助于保留逻辑关系，但仍需控制片段长度。",
+      "example": "Markdown 按标题分段，代码按函数分段。",
+      "tags": [
+        "结构切块",
+        "文档切块"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/integrations/splitters",
+      "origin": "自行整理",
+      "referenceTitle": "LangChain：Text splitter integrations"
+    },
+    {
+      "id": "indexing-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文档切块",
+      "knowledgePoint": "递归分隔",
+      "questionType": "概念与原理",
+      "question": "递归字符切分器如何处理超过目标长度的文本单元？",
+      "answer": "它先尝试保留较大的自然单元，过长时再使用更细的分隔层级切分。",
+      "explanation": "例如先尝试段落，再处理较小的句子或词语单元。",
+      "example": "超长段落继续按句子或更细边界拆分。",
+      "tags": [
+        "递归分隔",
+        "文档切块"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/integrations/splitters",
+      "origin": "自行整理",
+      "referenceTitle": "LangChain：Text splitter integrations"
+    },
+    {
+      "id": "indexing-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文档切块",
+      "knowledgePoint": "字符与 token 长度",
+      "questionType": "易错点",
+      "question": "为什么限制检索片段的字符数不能精确保证 token 数？",
+      "answer": "字符与 token 的对应关系取决于文本和分词器，二者并非固定比例。",
+      "explanation": "模型上下文限制按 token 计算时，应使用对应分词器测量。",
+      "example": "中英文混合片段即使字符数相同，token 数也可能不同。",
+      "tags": [
+        "字符与 token 长度",
+        "文档切块"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/integrations/splitters",
+      "origin": "自行整理",
+      "referenceTitle": "LangChain：Text splitter integrations"
+    },
+    {
+      "id": "indexing-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "索引更新",
+      "knowledgePoint": "Pinecone upsert 覆盖",
+      "questionType": "易错点",
+      "question": "在 Pinecone 文档索引中，对已有 ID 执行 upsert 会怎样？",
+      "answer": "同一命名空间中已有 ID 的文档会被整个新文档覆盖。",
+      "explanation": "只修改文档的一部分时，文档建议使用更新操作。",
+      "example": "用相同 ID 写入新版片段时需携带要保留的字段。",
+      "tags": [
+        "Pinecone upsert 覆盖",
+        "索引更新"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pinecone.io/guides/data/upsert-data",
+      "origin": "自行整理",
+      "referenceTitle": "Pinecone：Upsert data"
+    },
+    {
+      "id": "indexing-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "索引组织",
+      "knowledgePoint": "Pinecone 命名空间",
+      "questionType": "概念与原理",
+      "question": "Pinecone 的 namespace 在索引中起什么作用？",
+      "answer": "它在一个索引内划分数据，可用于组织多租户等不同数据集合。",
+      "explanation": "应用仍需正确配置和验证访问权限，不能只依靠名称假定授权完成。",
+      "example": "将不同租户的文档写入各自的命名空间。",
+      "tags": [
+        "Pinecone 命名空间",
+        "索引组织"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pinecone.io/guides/data/upsert-data",
+      "origin": "自行整理",
+      "referenceTitle": "Pinecone：Upsert data"
+    },
+    {
+      "id": "indexing-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "混合检索",
+      "knowledgePoint": "倒数排名融合",
+      "questionType": "概念与原理",
+      "question": "混合检索中的 RRF 主要融合什么？",
+      "answer": "它融合多个检索结果列表的排名，生成一个综合排序。",
+      "explanation": "它可合并关键词检索与向量检索结果，无需把两者原始分数直接当成同一尺度。",
+      "example": "合并全文检索列表和语义检索列表。",
+      "tags": [
+        "倒数排名融合",
+        "混合检索"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/docs/solutions/search/hybrid-search",
+      "origin": "自行整理",
+      "referenceTitle": "Elastic：Hybrid search"
+    }
+  ]
+}

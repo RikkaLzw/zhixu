@@ -1,0 +1,373 @@
+{
+  "source": {
+    "id": "postgresql-mvcc-locks",
+    "title": "PostgreSQL 17：并发控制与锁",
+    "url": "https://www.postgresql.org/docs/17/explicit-locking.html",
+    "type": "官方技术文档与规范",
+    "note": "依据逐题引用的固定版本文档或规范自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pglocks-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "MVCC快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 MVCC 如何帮助并发查询获得一致的数据视图？",
+      "answer": "语句根据数据库快照判断数据版本的可见性，而不是直接读取所有并发事务的未提交修改。",
+      "explanation": "快照的获取时机取决于事务隔离级别。",
+      "example": "并发更新时，普通查询读取其快照中的行版本。",
+      "tags": [
+        "MVCC快照",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/mvcc-intro.html"
+    },
+    {
+      "id": "pglocks-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "普通读取与写入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中，普通 SELECT 与并发 UPDATE 通常会因行级读写锁互相阻塞吗？",
+      "answer": "通常不会；普通快照读取不与行写入锁冲突，但表级排他锁等其他情况仍可能阻塞。",
+      "explanation": "SELECT FOR UPDATE 等显式锁定读取不属于这里的普通 SELECT。",
+      "example": "一条查询读取旧快照，同时另一事务更新该行。",
+      "tags": [
+        "普通读取与写入",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/mvcc-intro.html"
+    },
+    {
+      "id": "pglocks-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "可重复读幻读",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 REPEATABLE READ 是否允许同一事务中出现幻读？",
+      "answer": "不允许；PostgreSQL 的该级别还阻止 SQL 标准对 REPEATABLE READ 允许的幻读。",
+      "explanation": "这不等于它能阻止所有序列化异常。",
+      "example": "重复范围查询不会看到其他事务新提交的匹配行。",
+      "tags": [
+        "可重复读幻读",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/transaction-iso.html"
+    },
+    {
+      "id": "pglocks-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "FOR UPDATE行锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 SELECT FOR UPDATE 对选中的行有什么作用？",
+      "answer": "它取得行锁，阻止其他事务修改、删除或获取与之冲突的行锁，直到锁释放。",
+      "explanation": "普通不加锁的快照 SELECT 不会被行锁本身阻塞。",
+      "example": "处理订单前锁定对应订单行。",
+      "tags": [
+        "FOR UPDATE行锁",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/explicit-locking.html"
+    },
+    {
+      "id": "pglocks-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "行锁模式区别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 FOR NO KEY UPDATE 相比 FOR UPDATE 有什么较弱的锁冲突规则？",
+      "answer": "FOR NO KEY UPDATE 不阻塞其他事务对同一行获取 FOR KEY SHARE；FOR UPDATE 会阻塞。",
+      "explanation": "这两个模式仍会与多种其他行锁冲突。",
+      "example": "更新非键字段时允许并发的键共享锁。",
+      "tags": [
+        "行锁模式区别",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/explicit-locking.html"
+    },
+    {
+      "id": "pglocks-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "回退保存点释放锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 回滚到保存点时，保存点之后取得的锁如何处理？",
+      "answer": "这些锁会立即释放；此前取得且仍有效的锁不因该次局部回滚而自动释放。",
+      "explanation": "普通事务锁一般在事务结束时释放。",
+      "example": "在 SAVEPOINT 后锁行，再执行 ROLLBACK TO。",
+      "tags": [
+        "回退保存点释放锁",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/explicit-locking.html"
+    },
+    {
+      "id": "pglocks-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "NOWAIT与SKIP LOCKED",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 SELECT FOR UPDATE NOWAIT 和 SKIP LOCKED 遇到其他事务持有冲突行锁时有什么区别？",
+      "answer": "NOWAIT 立即报错；SKIP LOCKED 跳过无法立即锁定的行。",
+      "explanation": "这两个选项处理行级锁；表级锁仍按常规取得。跳过锁定行可造成不完整结果，适合某些队列场景。",
+      "example": "多个工作者从任务表领取未被锁住的行。",
+      "tags": [
+        "NOWAIT与SKIP LOCKED",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-select.html"
+    },
+    {
+      "id": "pglocks-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "数据库死锁处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 检测到事务死锁后通常如何打破等待环？",
+      "answer": "它中止其中一个事务，使其他事务有机会继续执行。",
+      "explanation": "具体中止哪个事务难以预测；应用应处理失败。",
+      "example": "两个事务以相反顺序更新两行。",
+      "tags": [
+        "数据库死锁处理",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/explicit-locking.html"
+    },
+    {
+      "id": "pglocks-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "普通查询表锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中，哪种表级锁会阻塞不带 FOR UPDATE 或 FOR SHARE 的普通 SELECT？",
+      "answer": "ACCESS EXCLUSIVE 表级锁会与普通 SELECT 所需的 ACCESS SHARE 锁冲突。",
+      "explanation": "行级锁本身不阻止普通快照读取。",
+      "example": "某些需要完全排他的表结构操作会等待或阻塞查询。",
+      "tags": [
+        "普通查询表锁",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/explicit-locking.html"
+    },
+    {
+      "id": "pglocks-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "锁等待超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 lock_timeout 与 statement_timeout 各限制什么？",
+      "answer": "前者限制单次获取锁的等待时间；后者限制整条语句的运行时间。",
+      "explanation": "它们可以分别配置，具体生效行为取决于设置值。",
+      "example": "为可能等待行锁的查询设置较短 lock_timeout。",
+      "tags": [
+        "锁等待超时",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/runtime-config-client.html"
+    },
+    {
+      "id": "pglocks-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "锁状态查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 pg_locks 视图可用于观察什么？",
+      "answer": "它提供服务器中锁对象、锁模式以及锁是否已获授等信息。",
+      "explanation": "需要结合会话和查询信息判断谁在阻塞谁。",
+      "example": "排查事务长期等待的锁。",
+      "tags": [
+        "锁状态查询",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/explicit-locking.html"
+    },
+    {
+      "id": "pglocks-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "咨询锁含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 advisory lock 为什么称为咨询锁？",
+      "answer": "锁的资源含义由应用定义，数据库不会自动强制其他代码遵守相同的应用协议。",
+      "explanation": "只有使用相同锁键并遵循协议的参与者才会按该约定协调。",
+      "example": "用应用定义的键串行化同一租户的后台任务。",
+      "tags": [
+        "咨询锁含义",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/explicit-locking.html"
+    },
+    {
+      "id": "pglocks-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "咨询锁生命周期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的会话级与事务级 advisory lock 在生命周期上有什么区别？",
+      "answer": "会话级锁持续到显式释放或会话结束；事务级锁在事务结束时自动释放。",
+      "explanation": "会话级锁不会因为获取它的事务回滚而自动释放。",
+      "example": "为短事务选择事务级咨询锁。",
+      "tags": [
+        "咨询锁生命周期",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/explicit-locking.html"
+    },
+    {
+      "id": "pglocks-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "咨询锁重复获取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 中同一会话多次成功获取同一个会话级 advisory lock，需要如何提前释放？",
+      "answer": "需要对应次数的解锁操作，才能在会话结束前完全释放该锁。",
+      "explanation": "事务级咨询锁没有显式解锁接口。",
+      "example": "同一个锁键获取两次后分别解锁两次。",
+      "tags": [
+        "咨询锁重复获取",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-admin.html"
+    },
+    {
+      "id": "pglocks-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "咨询锁非阻塞接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 pg_try_advisory_lock 无法立即获得锁时会怎样？",
+      "answer": "它立即返回 false，不等待冲突锁释放。",
+      "explanation": "成功获取时返回 true；它获取的是会话级排他咨询锁。",
+      "example": "后台任务尝试获得锁，失败后选择稍后重试。",
+      "tags": [
+        "咨询锁非阻塞接口",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-admin.html"
+    },
+    {
+      "id": "pglocks-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "VACUUM清理作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的普通 VACUUM 为什么要处理已经失效的行版本？",
+      "answer": "更新或删除后留下的失效版本需要清理，使空间可以被后续操作复用。",
+      "explanation": "可清理的范围受其他事务可见性等条件影响。",
+      "example": "频繁更新的表需要定期清理。",
+      "tags": [
+        "VACUUM清理作用",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/routine-vacuuming.html"
+    },
+    {
+      "id": "pglocks-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "VACUUM FULL代价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 VACUUM FULL 与普通 VACUUM 在表锁和空间回收上有什么重要区别？",
+      "answer": "VACUUM FULL 重写表并需要 ACCESS EXCLUSIVE 锁，可将空间归还操作系统；普通 VACUUM 通常可与常规读写并行并侧重复用空间。",
+      "explanation": "重写还需要临时额外磁盘空间。",
+      "example": "为膨胀表安排维护窗口。",
+      "tags": [
+        "VACUUM FULL代价",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/routine-vacuuming.html"
+    },
+    {
+      "id": "pglocks-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "长事务清理影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 PostgreSQL 中长期保持旧快照的事务可能妨碍清理旧行版本？",
+      "answer": "这些版本仍可能对旧快照可见，VACUUM 不能过早将其回收。",
+      "explanation": "长事务也可能造成其他锁和资源问题。",
+      "example": "长期运行的查询使旧行版本保留更久。",
+      "tags": [
+        "长事务清理影响",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/routine-vacuuming.html"
+    },
+    {
+      "id": "pglocks-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库并发与锁",
+      "knowledgePoint": "ANALYZE统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 ANALYZE 为查询规划器提供什么信息？",
+      "answer": "它收集表内容的统计信息，供规划器估计查询成本并选择执行计划。",
+      "explanation": "统计信息陈旧可能导致计划估计偏差。",
+      "example": "大量导入数据后更新表统计信息。",
+      "tags": [
+        "ANALYZE统计",
+        "数据库并发与锁"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/routine-vacuuming.html"
+    }
+  ]
+}

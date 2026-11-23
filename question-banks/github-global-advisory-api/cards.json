@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "github-global-advisory-api",
+    "title": "GitHub REST API：全球安全公告",
+    "url": "https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "ghsaapi-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "GitHub 安全公告接口",
+      "knowledgePoint": "默认范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GitHub 全球安全公告列表在不指定其他参数时默认返回哪类公告？",
+      "answer": "默认返回 GitHub 已审核且非恶意软件的公告。",
+      "explanation": "筛选范围会影响下游情报覆盖。",
+      "example": "不能将默认列表当作全部公告类型。",
+      "tags": [
+        "GitHub 安全公告接口",
+        "默认范围"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28"
+    },
+    {
+      "id": "ghsaapi-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "GitHub 安全公告接口",
+      "knowledgePoint": "恶意软件过滤",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GitHub 全球安全公告接口怎样请求恶意软件公告？",
+      "answer": "在查询中设置 type=malware。",
+      "explanation": "默认响应排除恶意软件公告。",
+      "example": "单独拉取恶意软件类型记录。",
+      "tags": [
+        "GitHub 安全公告接口",
+        "恶意软件过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28"
+    },
+    {
+      "id": "ghsaapi-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "GitHub 安全公告接口",
+      "knowledgePoint": "双重标识",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "GitHub 全球安全公告接口的 ghsa_id 与 cve_id 查询参数分别筛选什么？",
+      "answer": "分别按 GHSA 标识和 CVE 标识筛选公告。",
+      "explanation": "公告是否具有 CVE 标识应以记录内容为准。",
+      "example": "根据已知 CVE 查找关联的 GitHub 公告。",
+      "tags": [
+        "GitHub 安全公告接口",
+        "双重标识"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28"
+    },
+    {
+      "id": "ghsaapi-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "GitHub 安全公告接口",
+      "knowledgePoint": "受影响与修复版本",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "GitHub 公告中的 vulnerable_version_range 与 first_patched_version 分别描述什么？",
+      "answer": "前者描述受影响版本范围，后者描述首个已知修复版本。",
+      "explanation": "修复版本可能缺失，应检查具体记录。",
+      "example": "按公告版本范围判断依赖是否需要进一步核验。",
+      "tags": [
+        "GitHub 安全公告接口",
+        "受影响与修复版本"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28"
+    },
+    {
+      "id": "ghsaapi-006",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "GitHub 安全公告接口",
+      "knowledgePoint": "修复未知",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GitHub 公告的 first_patched_version 为空，是否能据此认定不存在任何修复？",
+      "answer": "不能；空值只表示该记录没有提供首个修复版本。",
+      "explanation": "应继续核对维护者公告和受影响版本。",
+      "example": "公告尚未填入修复版本时保留未知状态。",
+      "tags": [
+        "GitHub 安全公告接口",
+        "修复未知"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28"
+    },
+    {
+      "id": "ghsaapi-007",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "GitHub 安全公告接口",
+      "knowledgePoint": "撤回记录",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GitHub 全球公告接口的 is_withdrawn=true 筛选什么？",
+      "answer": "筛选已撤回的公告。",
+      "explanation": "返回记录的 withdrawn_at 可表示撤回时间。",
+      "example": "定期检查已撤回情报。",
+      "tags": [
+        "GitHub 安全公告接口",
+        "撤回记录"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28"
+    },
+    {
+      "id": "ghsaapi-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "GitHub 安全公告接口",
+      "knowledgePoint": "日期过滤",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "GitHub 全球公告接口的 updated 与 modified 日期筛选有什么区别？",
+      "answer": "updated 筛选更新时间；modified 筛选在日期范围内更新或发布的公告。",
+      "explanation": "日期范围语法应按 API 文档指定。",
+      "example": "增量同步时明确选择的时间口径。",
+      "tags": [
+        "GitHub 安全公告接口",
+        "日期过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.github.com/en/rest/security-advisories/global-advisories?apiVersion=2022-11-28"
+    }
+  ]
+}

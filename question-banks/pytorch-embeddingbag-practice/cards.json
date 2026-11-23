@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "pytorch-embeddingbag-practice",
+    "title": "PyTorch 2.7 文档：EmbeddingBag 聚合",
+    "url": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据题目所列固定版本资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "embedbag-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "EmbeddingBag 文本嵌入",
+      "knowledgePoint": "聚合目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 nn.EmbeddingBag 主要对一组索引的嵌入做什么？",
+      "answer": "查找嵌入并对每组执行求和、平均或最大值聚合。",
+      "explanation": "它避免显式构造全部中间嵌入，有利于处理词袋。",
+      "example": "把一个文本的词索引聚合成单个向量。",
+      "tags": [
+        "EmbeddingBag 文本嵌入",
+        "聚合目标"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html"
+    },
+    {
+      "id": "embedbag-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "EmbeddingBag 文本嵌入",
+      "knowledgePoint": "二维输入形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EmbeddingBag 的输入为形状 (B,N) 的二维索引时，输出形状是什么？",
+      "answer": "输出为 (B,D)，其中 D 是嵌入维度。",
+      "explanation": "每一行被视作一个长度为 N 的袋。",
+      "example": "32 条长度相同的索引序列得到 32 个向量。",
+      "tags": [
+        "EmbeddingBag 文本嵌入",
+        "二维输入形状"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html"
+    },
+    {
+      "id": "embedbag-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "EmbeddingBag 文本嵌入",
+      "knowledgePoint": "一维输入分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EmbeddingBag 接收一维索引时，offsets 的作用是什么？",
+      "answer": "它指定拼接后的索引中每个袋的起始位置。",
+      "explanation": "这允许各袋长度不同；二维输入时 offsets 必须为 None。",
+      "example": "indices 长度为 5、offsets=[0,2] 表示前两个和后三个索引。",
+      "tags": [
+        "EmbeddingBag 文本嵌入",
+        "一维输入分组"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html"
+    },
+    {
+      "id": "embedbag-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "EmbeddingBag 文本嵌入",
+      "knowledgePoint": "空袋输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 EmbeddingBag 对没有索引的空袋返回什么向量？",
+      "answer": "返回全零向量。",
+      "explanation": "空袋可能由相邻的相同 offsets 表示。",
+      "example": "offsets 中出现相邻相等的起始位置。",
+      "tags": [
+        "EmbeddingBag 文本嵌入",
+        "空袋输出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html"
+    },
+    {
+      "id": "embedbag-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "EmbeddingBag 文本嵌入",
+      "knowledgePoint": "填充值聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EmbeddingBag 的 padding_idx 对袋内聚合有什么影响？",
+      "answer": "该索引对应的嵌入不参与袋内的求和、均值或最大值聚合。",
+      "explanation": "即使填充向量被设为非零，它仍被排除在聚合之外。",
+      "example": "平均词向量时忽略填充位置。",
+      "tags": [
+        "EmbeddingBag 文本嵌入",
+        "填充值聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html"
+    },
+    {
+      "id": "embedbag-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "EmbeddingBag 文本嵌入",
+      "knowledgePoint": "逐样本权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 EmbeddingBag 使用 per_sample_weights 时支持哪些聚合模式？",
+      "answer": "只支持 mode=\"sum\"，按指定权重进行加权求和。",
+      "explanation": "权重张量形状须与输入索引相同。",
+      "example": "对词袋中每个词赋予权重后求和。",
+      "tags": [
+        "EmbeddingBag 文本嵌入",
+        "逐样本权重"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html"
+    },
+    {
+      "id": "embedbag-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "EmbeddingBag 文本嵌入",
+      "knowledgePoint": "尾部偏移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EmbeddingBag 的 include_last_offset=True 对 offsets 有什么要求？",
+      "answer": "offsets 多包含一个末尾元素，其值等于拼接索引的长度。",
+      "explanation": "这种格式与 CSR 的行指针形式相匹配。",
+      "example": "两袋索引的 offsets 可为 [0,2,5]。",
+      "tags": [
+        "EmbeddingBag 文本嵌入",
+        "尾部偏移"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html"
+    },
+    {
+      "id": "embedbag-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "EmbeddingBag 文本嵌入",
+      "knowledgePoint": "预训练冻结",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EmbeddingBag.from_pretrained 默认会训练传入的预训练权重吗？",
+      "answer": "默认 freeze=True，权重不参与梯度更新。",
+      "explanation": "要继续训练嵌入，可明确设置 freeze=False。",
+      "example": "加载词向量后先固定其权重。",
+      "tags": [
+        "EmbeddingBag 文本嵌入",
+        "预训练冻结"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html"
+    },
+    {
+      "id": "embedbag-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "EmbeddingBag 文本嵌入",
+      "knowledgePoint": "最大聚合限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 EmbeddingBag(mode=\"max\") 支持 sparse=True 或 scale_grad_by_freq=True 吗？",
+      "answer": "不支持这两个选项。",
+      "explanation": "配置组合应按具体版本文档检查。",
+      "example": "使用 max 聚合时避免设置稀疏梯度选项。",
+      "tags": [
+        "EmbeddingBag 文本嵌入",
+        "最大聚合限制"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.EmbeddingBag.html"
+    }
+  ]
+}

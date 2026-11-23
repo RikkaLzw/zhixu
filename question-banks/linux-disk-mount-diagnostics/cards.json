@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "linux-disk-mount-diagnostics",
+    "title": "GNU Coreutils 与 util-linux 手册：磁盘和挂载排查",
+    "url": "https://man7.org/linux/man-pages/man1/df.1.html",
+    "type": "标准、教材与技术手册",
+    "note": "依据逐题引用的标准、文档或手册自行整理；示例为自编。在线资料以 2026-11-22 查看内容为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "diskdiag-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 磁盘与挂载排查",
+      "knowledgePoint": "inode使用量",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "GNU df -i 路径 显示什么资源的使用情况？",
+      "answer": "显示包含该路径的文件系统的 inode 使用情况。",
+      "explanation": "文件系统空间不足与 inode 耗尽是不同问题。",
+      "example": "排查还有可用数据块但无法创建新文件的情况。",
+      "tags": [
+        "Linux 磁盘与挂载排查",
+        "inode使用量"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/df.1.html"
+    },
+    {
+      "id": "diskdiag-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 磁盘与挂载排查",
+      "knowledgePoint": "目录汇总",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "GNU du -sh 目录 常用于做什么？",
+      "answer": "汇总目录占用并以易读单位显示总量。",
+      "explanation": "du 根据可遍历的目录项统计；权限或挂载边界会影响结果。",
+      "example": "快速查看某日志目录的占用。",
+      "tags": [
+        "Linux 磁盘与挂载排查",
+        "目录汇总"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/du.1.html"
+    },
+    {
+      "id": "diskdiag-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 磁盘与挂载排查",
+      "knowledgePoint": "表观大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU du --apparent-size 与默认 du 统计的大小有什么区别？",
+      "answer": "前者统计文件的表观大小；默认统计分配的空间使用量。",
+      "explanation": "稀疏文件、元数据和文件系统实现会造成两者差异。",
+      "example": "包含大空洞的稀疏文件表观大小可能远大于已分配空间。",
+      "tags": [
+        "Linux 磁盘与挂载排查",
+        "表观大小"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/du.1.html"
+    },
+    {
+      "id": "diskdiag-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 磁盘与挂载排查",
+      "knowledgePoint": "硬链接计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU du 默认遍历多个指向同一 inode 的硬链接时，会对同一文件重复计费吗？",
+      "answer": "默认不会重复计入同一文件；使用 -l 或 --count-links 可改变该行为。",
+      "explanation": "不同命令行参数和遍历顺序可能影响每个路径单独显示的数值。",
+      "example": "同一文件的两个硬链接默认只计一次。",
+      "tags": [
+        "Linux 磁盘与挂载排查",
+        "硬链接计数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/du.1.html"
+    },
+    {
+      "id": "diskdiag-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 磁盘与挂载排查",
+      "knowledgePoint": "单文件系统",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU du -x 目录 的 -x 主要限制什么？",
+      "answer": "跳过与起始路径不在同一文件系统的目录。",
+      "explanation": "它适合避免目录树中的其他挂载点影响统计；不能替代权限检查。",
+      "example": "统计根目录时避免纳入另一个挂载的文件系统。",
+      "tags": [
+        "Linux 磁盘与挂载排查",
+        "单文件系统"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/du.1.html"
+    },
+    {
+      "id": "diskdiag-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 磁盘与挂载排查",
+      "knowledgePoint": "路径挂载点",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "findmnt -T 路径 常用于确定什么？",
+      "answer": "查找包含该路径的挂载文件系统及其挂载信息。",
+      "explanation": "实际输出列和解析方式受选项及 util-linux 版本影响。",
+      "example": "判断日志路径属于哪个挂载点。",
+      "tags": [
+        "Linux 磁盘与挂载排查",
+        "路径挂载点"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/findmnt.8.html"
+    },
+    {
+      "id": "diskdiag-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 磁盘与挂载排查",
+      "knowledgePoint": "块设备信息",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "util-linux 的 lsblk -f 常用于查看什么？",
+      "answer": "显示块设备及其文件系统相关信息，例如文件系统类型、UUID 和挂载点。",
+      "explanation": "某些字段或设备可能因权限、环境和版本而缺失。",
+      "example": "检查分区对应的文件系统和挂载位置。",
+      "tags": [
+        "Linux 磁盘与挂载排查",
+        "块设备信息"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/lsblk.8.html"
+    }
+  ]
+}

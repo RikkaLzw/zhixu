@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "sklearn-polynomial-features",
+    "title": "scikit-learn 1.7：多项式特征",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html",
+    "type": "固定版本文档、源码或论文",
+    "note": "依据逐题所列资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skpoly-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多项式与交互特征",
+      "knowledgePoint": "二阶展开",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 PolynomialFeatures 默认如何展开两个特征 a、b，include_bias=False 又会怎样？",
+      "answer": "默认生成 1、a、b、a²、ab、b²；include_bias=False 时去掉常数列 1。",
+      "explanation": "默认 degree=2，include_bias=True。",
+      "example": "输入 [2,3] 对应 [1,2,3,4,6,9]。",
+      "tags": [
+        "多项式与交互特征",
+        "二阶展开"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html"
+    },
+    {
+      "id": "skpoly-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多项式与交互特征",
+      "knowledgePoint": "交互项",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PolynomialFeatures 的 interaction_only=True 如何处理同一特征的平方项？",
+      "answer": "排除同一特征重复相乘的项，但可保留不同特征的乘积。",
+      "explanation": "原始的一次项仍可保留。",
+      "example": "生成 ab 而不生成 a²。",
+      "tags": [
+        "多项式与交互特征",
+        "交互项"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html"
+    },
+    {
+      "id": "skpoly-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多项式与交互特征",
+      "knowledgePoint": "指定次数范围",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PolynomialFeatures(degree=(2,3), include_bias=False) 会生成一次项吗？",
+      "answer": "不会；它生成二次到三次项，且不生成偏置列。",
+      "explanation": "include_bias 单独控制零次项。",
+      "example": "两个输入特征会生成 a²、ab、b² 等二三次项。",
+      "tags": [
+        "多项式与交互特征",
+        "指定次数范围"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html"
+    },
+    {
+      "id": "skpoly-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多项式与交互特征",
+      "knowledgePoint": "幂次矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "拟合后的 PolynomialFeatures.powers_ 描述什么？",
+      "answer": "每一行给出一个输出特征对各输入特征的指数。",
+      "explanation": "行顺序与生成的特征列对应。",
+      "example": "指数 [2,1] 表示第一个输入平方乘第二个输入。",
+      "tags": [
+        "多项式与交互特征",
+        "幂次矩阵"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html"
+    },
+    {
+      "id": "skpoly-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多项式与交互特征",
+      "knowledgePoint": "输出列数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PolynomialFeatures 的 n_output_features_ 表示什么？",
+      "answer": "拟合后生成的多项式特征总列数。",
+      "explanation": "可在训练前评估扩展后的维度和资源消耗。",
+      "example": "输入维度或最大次数增大时，输出列数可能快速增加。",
+      "tags": [
+        "多项式与交互特征",
+        "输出列数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html"
+    },
+    {
+      "id": "skpoly-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多项式与交互特征",
+      "knowledgePoint": "过拟合风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么增加多项式特征的最大次数可能加重过拟合？",
+      "answer": "高次项增加模型可表达的复杂度，也可能使特征数量快速增长。",
+      "explanation": "应结合验证集与正则化评估复杂度。",
+      "example": "小样本上大量高次特征可能拟合噪声。",
+      "tags": [
+        "多项式与交互特征",
+        "过拟合风险"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.PolynomialFeatures.html"
+    }
+  ]
+}

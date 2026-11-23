@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "instructgpt-rlhf-training",
+    "title": "InstructGPT 原论文 v1：偏好奖励与 PPO 训练",
+    "url": "https://arxiv.org/pdf/2203.02155v1",
+    "type": "教材、研究论文与官方资料",
+    "note": "依据逐题引用的教材或研究论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "instructrl-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "数据角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 InstructGPT 式 RLHF 流程中，SFT、奖励模型和 PPO 分别需要什么训练数据？",
+      "answer": "分别提供人工示范、同提示下的回答偏好排序，以及用于策略优化的提示。",
+      "explanation": "论文中 PPO 数据集本身没有人工标签。",
+      "example": "对新提示生成回答后由奖励模型评分。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "数据角色"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    },
+    {
+      "id": "instructrl-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "奖励输入输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InstructGPT 的奖励模型以什么为输入并输出什么？",
+      "answer": "输入提示和对应回答，输出一个标量奖励分数。",
+      "explanation": "分数是学习到的偏好代理，不能直接视为真实质量。",
+      "example": "对同一提示的两个候选回答分别打分。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "奖励输入输出"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    },
+    {
+      "id": "instructrl-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "成对偏好损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InstructGPT 的成对奖励模型损失如何利用偏好回答与非偏好回答的分数？",
+      "answer": "它对两个分数之差取 sigmoid，并最大化偏好回答胜出的对数概率。",
+      "explanation": "两条回答需对应同一提示。",
+      "example": "提高较优回答相对于较差回答的分数。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "成对偏好损失"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    },
+    {
+      "id": "instructrl-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "奖励平移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InstructGPT 的成对奖励损失为什么不确定统一平移后的绝对分数？",
+      "answer": "损失只依赖两个回答的分数差，给所有分数加同一个常数不会改变该差值。",
+      "explanation": "论文在强化学习前对奖励模型使用偏置归一化。",
+      "example": "两个分数同时加 5，成对差值不变。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "奖励平移"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    },
+    {
+      "id": "instructrl-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "排序与成对比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对同一个提示的 K 个回答给出严格排序，最多可以得到多少个两两比较？",
+      "answer": "可以得到 K(K−1)/2 个比较。",
+      "explanation": "这些比较共享回答和提示，不应当作完全独立的数据。",
+      "example": "4 个回答最多形成 6 个不同的回答对。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "排序与成对比较"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    },
+    {
+      "id": "instructrl-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "相关比较分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InstructGPT 为什么把同一提示的全部比较组织在一起训练奖励模型？",
+      "answer": "论文发现将高度相关的比较单独打散会导致过拟合，分组还可减少重复前向计算。",
+      "explanation": "具体效果取决于采样与训练方式。",
+      "example": "同一个提示的多个候选回答一起计算奖励。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "相关比较分组"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    },
+    {
+      "id": "instructrl-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "RL 参考模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InstructGPT 的 PPO 阶段相对于哪个模型施加逐 token KL 惩罚？",
+      "answer": "相对于监督微调得到的 SFT 参考模型施加惩罚。",
+      "explanation": "论文用它缓解奖励模型被过度优化的问题。",
+      "example": "策略偏离 SFT 模型时受到相应惩罚。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "RL 参考模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    },
+    {
+      "id": "instructrl-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "PPO-ptx",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InstructGPT 的 PPO-ptx 与论文中的 PPO 有什么主要训练区别？",
+      "answer": "PPO-ptx 在 PPO 优化中混入预训练分布上的梯度。",
+      "explanation": "论文这样做是为了缓解部分公开 NLP 任务上的性能下降。",
+      "example": "训练步骤同时累计偏好优化和预训练目标的梯度。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "PPO-ptx"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    },
+    {
+      "id": "instructrl-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "价值函数初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InstructGPT 论文如何初始化 PPO 阶段的价值函数？",
+      "answer": "用奖励模型的参数初始化价值函数。",
+      "explanation": "这是论文的实现选择，不是所有 RLHF 系统的必要条件。",
+      "example": "奖励模型和价值函数在论文中都使用 6B 模型。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "价值函数初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    },
+    {
+      "id": "instructrl-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "按用户切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InstructGPT 论文按用户 ID 划分训练、验证和测试提示有什么目的？",
+      "answer": "避免验证和测试集合包含训练用户的提示，以检验跨用户的泛化。",
+      "explanation": "它不能保证覆盖所有用户群体和任务分布。",
+      "example": "同一个用户的提示不跨训练集和测试集。",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "按用户切分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.02155v1"
+    }
+  ]
+}

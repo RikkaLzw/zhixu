@@ -1,0 +1,471 @@
+{
+  "source": {
+    "id": "lora-peft-practice",
+    "title": "LoRA 与 QLoRA：PEFT 配置、训练和部署",
+    "url": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+    "type": "官方文档与研究论文",
+    "note": "依据 PEFT 0.17.0 文档及 LoRA、QLoRA 论文整理；部分适配器行为用 PyTorch 2.7.1 CPU 实测，QLoRA GPU 量化未实测。应用推论标为 application。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "lorause-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LoRA配置",
+      "knowledgePoint": "目标模块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 的 LoraConfig.target_modules 用于什么？",
+      "answer": "它指定哪些模块需要插入 LoRA 适配器。",
+      "explanation": "不同架构的模块名称可能不同，需要检查实际模型。",
+      "example": "只对注意力层的特定投影模块添加适配器。",
+      "tags": [
+        "目标模块",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：LoRA / LoraConfig"
+    },
+    {
+      "id": "lorause-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA配置",
+      "knowledgePoint": "模块名称匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 target_modules 使用字符串与字符串列表时，匹配方式有什么区别？",
+      "answer": "字符串按正则表达式匹配；列表元素按模块名精确匹配或后缀匹配。",
+      "explanation": "应检查实际匹配到的模块，避免误配。",
+      "example": "列表中的 q_proj 可匹配以 q_proj 结尾的模块名。",
+      "tags": [
+        "模块名称匹配",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：LoRA / LoraConfig"
+    },
+    {
+      "id": "lorause-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA配置",
+      "knowledgePoint": "未知架构目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 对未知架构未指定 target_modules 时通常会怎样？",
+      "answer": "如果无法根据架构推断目标模块，会报错并要求显式指定。",
+      "explanation": "支持的模型架构可能有预定义目标。",
+      "example": "为自定义模型检查模块名后设置 target_modules。",
+      "tags": [
+        "未知架构目标",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：LoRA / LoraConfig"
+    },
+    {
+      "id": "lorause-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LoRA配置",
+      "knowledgePoint": "额外可训练模块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 的 modules_to_save 有什么用途？",
+      "answer": "它指定适配器之外仍需训练并在检查点中保存的模块。",
+      "explanation": "常用于需要一起训练的任务头。",
+      "example": "微调分类任务时保存新分类头。",
+      "tags": [
+        "额外可训练模块",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：LoRA / LoraConfig"
+    },
+    {
+      "id": "lorause-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LoRA配置",
+      "knowledgePoint": "适配器Dropout",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 的 lora_dropout 配置什么？",
+      "answer": "它配置 LoRA 层中使用的 dropout 概率。",
+      "explanation": "训练和评估模式下的 dropout 行为应按框架规则区分。",
+      "example": "训练时在低秩分支中应用配置的 dropout。",
+      "tags": [
+        "适配器Dropout",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：LoRA / LoraConfig"
+    },
+    {
+      "id": "lorause-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA配置",
+      "knowledgePoint": "调试初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 将 init_lora_weights 设为 False 时，初始 LoRA 更新是否仍保证为零？",
+      "answer": "不保证；A 和 B 都随机初始化，这种设置主要用于调试。",
+      "explanation": "默认初始化通常将 B 置零，使初始更新为零。",
+      "example": "比较默认初始化和随机初始化时的模型输出。",
+      "tags": [
+        "调试初始化",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：LoRA / LoraConfig",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁大模型一面公开面经（合集转载，经历为分享者自述）；LoRA 初始化主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900315%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "lorause-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA原理",
+      "knowledgePoint": "零初始化的首步梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 ΔW=BA 且 B 初始为零、损失仅通过该分支依赖 A 时，首次反向传播的 A 梯度怎样？",
+      "answer": "A 的梯度为零；B 的梯度仍可能非零。",
+      "explanation": "这是梯度结论；优化器的其他更新机制可能影响参数变化。",
+      "example": "B 更新后，后续步骤的 A 梯度可能不再为零。",
+      "tags": [
+        "零初始化的首步梯度",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2106.09685",
+      "referenceTitle": "LoRA: Low-Rank Adaptation of Large Language Models",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁大模型一面公开面经（合集转载，经历为分享者自述）；LoRA 初始化主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900315%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "lorause-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA配置",
+      "knowledgePoint": "训练偏置与禁用适配器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 训练了 LoRA 相关偏置后，禁用适配器一定能恢复原始基座输出吗？",
+      "answer": "不一定；训练过的偏置仍可能使输出不同。",
+      "explanation": "bias=\"all\" 或 \"lora_only\" 会使相应偏置参与训练。",
+      "example": "对比禁用适配器后的模型与未修改基座。",
+      "tags": [
+        "训练偏置与禁用适配器",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：LoRA / LoraConfig"
+    },
+    {
+      "id": "lorause-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "适配器管理",
+      "knowledgePoint": "加载后是否可训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 PeftModel.from_pretrained 默认把加载的适配器设为可训练吗？",
+      "answer": "默认不设为可训练；需要继续训练时可设置 is_trainable=True。",
+      "explanation": "具体还应检查需要训练的参数是否启用梯度。",
+      "example": "加载已有 LoRA 检查点继续微调。",
+      "tags": [
+        "加载后是否可训练",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/peft_model#peft.PeftModel",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：PeftModel"
+    },
+    {
+      "id": "lorause-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "适配器管理",
+      "knowledgePoint": "适配器检查点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 常规 save_pretrained 保存的适配器检查点是否包含完整基座权重？",
+      "answer": "通常不包含；加载适配器时还需要相应的基座模型。",
+      "explanation": "配置中还可能指定需要额外保存的模块。",
+      "example": "把小型适配器文件与其基座版本一起记录。",
+      "tags": [
+        "适配器检查点",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/developer_guides/checkpoint",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：PEFT checkpoint format"
+    },
+    {
+      "id": "lorause-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "适配器管理",
+      "knowledgePoint": "配置与权重文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 检查点中的 adapter_config.json 与 adapter_model 文件分别保存什么？",
+      "answer": "前者保存适配器配置；后者保存适配器相关的权重参数。",
+      "explanation": "两者共同用于重建和加载适配器。",
+      "example": "配置记录秩和目标模块，权重文件保存低秩矩阵。",
+      "tags": [
+        "配置与权重文件",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/developer_guides/checkpoint",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：PEFT checkpoint format"
+    },
+    {
+      "id": "lorause-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "适配器管理",
+      "knowledgePoint": "新增与激活适配器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 调用 add_adapter 创建新适配器后，会自动把它设为活动适配器吗？",
+      "answer": "不会；可使用 set_adapter 选择活动适配器。",
+      "explanation": "新创建的适配器还没有经过训练。",
+      "example": "创建新任务适配器后显式切换到它。",
+      "tags": [
+        "新增与激活适配器",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/peft_model#peft.PeftModel",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：PeftModel"
+    },
+    {
+      "id": "lorause-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "适配器管理",
+      "knowledgePoint": "切换适配器与梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 set_adapter 除切换活动适配器外，还可能怎样设置该适配器？",
+      "answer": "它会将所选适配器设置为可训练；不希望训练时应再检查并调整梯度设置。",
+      "explanation": "此行为以所述 PEFT 版本文档为准。",
+      "example": "推理时切换适配器后检查 requires_grad。",
+      "tags": [
+        "切换适配器与梯度",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/peft_model#peft.PeftModel",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：PeftModel"
+    },
+    {
+      "id": "lorause-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "适配器管理",
+      "knowledgePoint": "合并后功能",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 的 merge_and_unload 返回的合并模型还保留原来的适配器切换接口吗？",
+      "answer": "通常不保留；它返回合并后的基础模型，不能再按原 PEFT 接口切换或禁用适配器。",
+      "explanation": "是否支持合并还取决于适配器和配置。",
+      "example": "部署前合并权重后保留原适配器文件以便未来切换。",
+      "tags": [
+        "合并后功能",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/developer_guides/checkpoint",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：PEFT checkpoint format"
+    },
+    {
+      "id": "lorause-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "适配器管理",
+      "knowledgePoint": "量化模型合并限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用量化基座时，是否所有 PEFT 适配器都能直接合并并卸载？",
+      "answer": "不能保证；某些方法或量化设置不支持合并。",
+      "explanation": "应按具体 PEFT 版本和量化配置检查。",
+      "example": "部署前先验证当前量化配置支持的合并方式。",
+      "tags": [
+        "量化模型合并限制",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/developer_guides/checkpoint",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：PEFT checkpoint format"
+    },
+    {
+      "id": "lorause-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA变体",
+      "knowledgePoint": "秩稳定缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEFT 0.17 的 rsLoRA 与原始 LoRA 在缩放因子上有什么区别？",
+      "answer": "rsLoRA 使用 α/√r；原始 LoRA 默认使用 α/r。",
+      "explanation": "两者的 r 都表示低秩维度。",
+      "example": "在 LoraConfig 中启用 use_rslora。",
+      "tags": [
+        "秩稳定缩放",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：LoRA / LoraConfig"
+    },
+    {
+      "id": "lorause-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA变体",
+      "knowledgePoint": "DoRA分解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DoRA 如何扩展 LoRA 的权重适配？",
+      "answer": "它把权重更新分成方向与幅值两部分，方向使用低秩适配，幅值由额外参数处理。",
+      "explanation": "不同版本支持的层类型和合并方式可能不同。",
+      "example": "低秩分支之外再学习权重幅值。",
+      "tags": [
+        "DoRA分解",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/peft/v0.17.0/en/package_reference/lora#peft.LoraConfig",
+      "referenceTitle": "Hugging Face PEFT 0.17.0：LoRA / LoraConfig"
+    },
+    {
+      "id": "lorause-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "QLoRA",
+      "knowledgePoint": "双重量化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "QLoRA 的双重量化针对什么额外数据进行量化？",
+      "answer": "它进一步量化量化常数，以降低这些常数的存储开销。",
+      "explanation": "这与把基座权重本身量化为低位表示是不同步骤。",
+      "example": "对分块权重量化所需的尺度再做量化。",
+      "tags": [
+        "双重量化",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.14314v1",
+      "referenceTitle": "QLoRA: Efficient Finetuning of Quantized LLMs（v1）"
+    },
+    {
+      "id": "lorause-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "QLoRA",
+      "knowledgePoint": "分页优化器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "QLoRA 原论文引入分页优化器主要是为了缓解什么？",
+      "answer": "利用统一内存管理训练中的瞬时显存峰值，尤其是长序列和梯度检查点带来的峰值。",
+      "explanation": "是否适用及性能取决于硬件与实现。",
+      "example": "长序列批次出现临时显存高峰时使用分页机制。",
+      "tags": [
+        "分页优化器",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.14314v1",
+      "referenceTitle": "QLoRA: Efficient Finetuning of Quantized LLMs（v1）"
+    },
+    {
+      "id": "lorause-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "QLoRA",
+      "knowledgePoint": "存储与计算精度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "QLoRA 原论文中，4 位基座权重参与矩阵计算前通常怎样处理？",
+      "answer": "先将低位存储的权重反量化到计算数据类型，例如 BF16，再执行矩阵运算。",
+      "explanation": "4 位存储不意味着所有计算都在 4 位完成。",
+      "example": "以 NF4 保存权重、以 BF16 进行计算。",
+      "tags": [
+        "存储与计算精度",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.14314v1",
+      "referenceTitle": "QLoRA: Efficient Finetuning of Quantized LLMs（v1）"
+    },
+    {
+      "id": "lorause-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA实践",
+      "knowledgePoint": "训练显存构成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LoRA 可训练参数很少，是否意味着训练显存只由适配器参数决定？",
+      "answer": "不是；冻结基座权重和中间激活等仍需要显存。",
+      "explanation": "长序列和批次大小也会影响内存需求。",
+      "example": "适配器很小时，激活仍可能占据明显空间。",
+      "tags": [
+        "训练显存构成",
+        "LoRA",
+        "PEFT"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2305.14314v1",
+      "referenceTitle": "QLoRA: Efficient Finetuning of Quantized LLMs（v1）"
+    }
+  ]
+}

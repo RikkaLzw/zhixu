@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "tranad-self-conditioning",
+    "title": "TranAD 原论文：多变量时序异常检测",
+    "url": "https://arxiv.org/pdf/2201.07284v6",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "tranad-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "TranAD 时序异常检测",
+      "knowledgePoint": "检测数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TranAD 原论文主要针对什么类型的数据进行异常检测？",
+      "answer": "多变量时间序列，利用时间窗口和上下文进行重建与检测。",
+      "explanation": "各维度随时间变化，模型可为维度生成异常分数。",
+      "example": "服务的多项资源指标构成多变量序列。",
+      "tags": [
+        "TranAD 时序异常检测",
+        "检测数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2201.07284v6"
+    },
+    {
+      "id": "tranad-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "TranAD 时序异常检测",
+      "knowledgePoint": "自条件输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TranAD 的第二阶段用第一阶段的什么信息进行自条件化？",
+      "answer": "使用第一阶段重建结果与输入窗口的偏差形成 focus score，再用于第二阶段重建。",
+      "explanation": "论文用该信号调整注意力，使模型关注偏离较大的位置。",
+      "example": "第一阶段误差较高的子序列会影响第二阶段的注意力。",
+      "tags": [
+        "TranAD 时序异常检测",
+        "自条件输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2201.07284v6"
+    },
+    {
+      "id": "tranad-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "TranAD 时序异常检测",
+      "knowledgePoint": "两阶段分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TranAD 论文在测试时怎样组合两阶段的重建误差？",
+      "answer": "对第一阶段和自条件化第二阶段的重建误差各赋一半权重。",
+      "explanation": "这是论文中的异常分数定义，不是所有重建模型的通用规则。",
+      "example": "两个阶段误差分别为 0.2 和 0.4 时，对应平均为 0.3。",
+      "tags": [
+        "TranAD 时序异常检测",
+        "两阶段分数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2201.07284v6"
+    },
+    {
+      "id": "tranad-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "TranAD 时序异常检测",
+      "knowledgePoint": "动态阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TranAD 原论文使用什么方法为异常分数选择动态阈值？",
+      "answer": "使用基于极值理论的 Peak Over Threshold（POT）方法。",
+      "explanation": "阈值方法与神经网络给出的异常分数是两个不同环节。",
+      "example": "先计算各维异常分数，再依据阈值判定。",
+      "tags": [
+        "TranAD 时序异常检测",
+        "动态阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2201.07284v6"
+    },
+    {
+      "id": "tranad-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "TranAD 时序异常检测",
+      "knowledgePoint": "维度到时间点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TranAD 原论文怎样从各维度的异常判定得到时间点级检测结果？",
+      "answer": "对各维度判定取逻辑或：任一维度异常则该时间点判为异常。",
+      "explanation": "维度级结果还可辅助定位异常来源。",
+      "example": "三个维度中只有一个越过阈值，时间点仍被标记。",
+      "tags": [
+        "TranAD 时序异常检测",
+        "维度到时间点"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2201.07284v6"
+    }
+  ]
+}

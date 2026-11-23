@@ -1,0 +1,31 @@
+{
+  "source": {
+    "id": "codeql-python-models",
+    "title": "CodeQL Python 外部库建模",
+    "url": "https://codeql.github.com/docs/codeql-language-guides/customizing-library-models-for-python/",
+    "type": "官方技术文档",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "qlmodel-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "静态分析",
+      "knowledgePoint": "库传播摘要",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeQL Python 的 summaryModel 可以补充什么库行为？",
+      "answer": "它可以描述库调用中输入与输出之间的值流或污点传播。",
+      "explanation": "该数据扩展格式在所引文档中处于 beta，使用时需核对版本。",
+      "example": "为无法直接分析实现的库函数描述参数到返回值的传播。",
+      "tags": [
+        "库传播摘要",
+        "静态分析"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/codeql-language-guides/customizing-library-models-for-python/"
+    }
+  ]
+}

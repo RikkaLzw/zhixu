@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "zeek-tls-telemetry-fields",
+    "title": "Zeek 6.0.9：TLS 遥测字段",
+    "url": "https://docs.zeek.org/en/v6.0.9/scripts/base/protocols/ssl/main.zeek.html",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，版本及适用条件见各题。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "zeektls-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Zeek TLS 遥测字段",
+      "knowledgePoint": "请求的主机名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 6.0.9 的 ssl.log 中 server_name 通常来自哪里？",
+      "answer": "它来自客户端发送的 TLS Server Name Indication（SNI），表示客户端请求的服务端名称。",
+      "explanation": "这不是对域名归属、证书有效性或连接安全性的独立证明。",
+      "example": "多个域名共用一个 IP 时，可结合 SNI 观察请求的名称。",
+      "tags": [
+        "Zeek TLS 遥测字段",
+        "请求的主机名"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/protocols/ssl/main.zeek.html"
+    },
+    {
+      "id": "zeektls-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Zeek TLS 遥测字段",
+      "knowledgePoint": "服务端选择的参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek ssl.log 的 version 和 cipher 通常记录客户端支持的完整列表吗？",
+      "answer": "不是；它们分别记录服务端选择的 TLS 版本和密码套件。",
+      "explanation": "字段可能因为握手阶段、可见性或采集条件而缺失。",
+      "example": "服务端选择 TLS 1.2 不表示客户端只支持这一版本。",
+      "tags": [
+        "Zeek TLS 遥测字段",
+        "服务端选择的参数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/protocols/ssl/main.zeek.html"
+    },
+    {
+      "id": "zeektls-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek TLS 遥测字段",
+      "knowledgePoint": "会话恢复字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek ssl.log 的 resumed 标志表示什么？",
+      "answer": "它表示会话恢复时复用了先前连接交换的密钥材料。",
+      "explanation": "恢复与否本身不能证明连接正常或恶意。",
+      "example": "重用先前会话时可能记录 resumed=true。",
+      "tags": [
+        "Zeek TLS 遥测字段",
+        "会话恢复字段"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/protocols/ssl/main.zeek.html"
+    },
+    {
+      "id": "zeektls-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek TLS 遥测字段",
+      "knowledgePoint": "握手与信任",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek ssl.log 的 established 为 true，能否单独证明服务端证书可信？",
+      "answer": "不能；该字段表示 Zeek 观察到会话成功建立，不等同于证书链验证成功。",
+      "explanation": "证书验证结果有独立字段，而且受脚本和证书可见性影响。",
+      "example": "握手完成后仍需检查对应的验证状态。",
+      "tags": [
+        "Zeek TLS 遥测字段",
+        "握手与信任"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/protocols/ssl/main.zeek.html"
+    },
+    {
+      "id": "zeektls-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek TLS 遥测字段",
+      "knowledgePoint": "证书验证字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 6.0.9 的 ssl.log 没有 validation_status 时，能否直接认定证书验证通过？",
+      "answer": "不能；该可选字段需要相应验证脚本加载，也可能受数据可见性影响。",
+      "explanation": "缺失值不等同于成功或失败，应先确认采集与脚本配置。",
+      "example": "未加载 policy/protocols/ssl/validate-certs.zeek 时不能按该字段做判断。",
+      "tags": [
+        "Zeek TLS 遥测字段",
+        "证书验证字段"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/protocols/ssl/main.zeek.html"
+    },
+    {
+      "id": "zeektls-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek TLS 遥测字段",
+      "knowledgePoint": "SNI与证书匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 6.0.9 的 sni_matches_cert 在客户端未发送 SNI 时一定为 false 吗？",
+      "answer": "不一定；文档说明客户端未发送 SNI 时该可选字段不设置。",
+      "explanation": "false 表示记录到不匹配，缺失不能直接解释成不匹配。",
+      "example": "分析空值时先检查是否观测到 SNI 和证书。",
+      "tags": [
+        "Zeek TLS 遥测字段",
+        "SNI与证书匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/protocols/ssl/main.zeek.html"
+    },
+    {
+      "id": "zeektls-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek TLS 遥测字段",
+      "knowledgePoint": "证书链指纹",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用 Zeek SSL 文件脚本后，cert_chain_fps 字段保存什么？",
+      "answer": "它保存服务端提供的证书链中各证书指纹的有序列表。",
+      "explanation": "仅凭指纹列表不能确认整条链经过信任验证。",
+      "example": "可用指纹关联证书，但还需检查验证上下文。",
+      "tags": [
+        "Zeek TLS 遥测字段",
+        "证书链指纹"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/protocols/ssl/main.zeek.html"
+    },
+    {
+      "id": "zeektls-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek TLS 遥测字段",
+      "knowledgePoint": "协商应用协议",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek ssl.log 的 next_protocol 字段表示什么？",
+      "answer": "它记录服务端通过应用层下一协议扩展选定的协议，若该信息存在。",
+      "explanation": "字段缺失并不单独证明应用没有使用任何上层协议。",
+      "example": "记录的协议可帮助判断连接协商出的应用协议。",
+      "tags": [
+        "Zeek TLS 遥测字段",
+        "协商应用协议"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/v6.0.9/scripts/base/protocols/ssl/main.zeek.html"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "gnu-text-join-compare",
+    "title": "GNU join、paste、comm 与 tr 手册",
+    "url": "https://man7.org/linux/man-pages/man1/join.1.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本与环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "textmerge-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本合并与比较",
+      "knowledgePoint": "join用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU join 默认如何连接两个文本文件的行？",
+      "answer": "按各行第一个字段相等进行连接，并输出匹配行。",
+      "explanation": "默认字段由空白分隔，输入需按连接字段排序。",
+      "example": "两个文件都以用户 ID 为第一列时可按 ID 合并。",
+      "tags": [
+        "Linux 文本合并与比较",
+        "join用途"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/join.1.html"
+    },
+    {
+      "id": "textmerge-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本合并与比较",
+      "knowledgePoint": "join排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 GNU join 的输入通常需要按连接字段排序？",
+      "answer": "它按排序后的连接字段比较输入；排序不符合要求可能漏配或出现警告。",
+      "explanation": "排序规则应与 join 的字段及 locale 一致。",
+      "example": "可先在同一 locale 下按第一字段排序。",
+      "tags": [
+        "Linux 文本合并与比较",
+        "join排序"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/join.1.html"
+    },
+    {
+      "id": "textmerge-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本合并与比较",
+      "knowledgePoint": "join仅未匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU join -v 1 和 join -a 1 的主要输出区别是什么？",
+      "answer": "-v 1 只输出第一个文件未匹配的行；-a 1 还输出匹配行。",
+      "explanation": "两者仍基于指定的连接字段。",
+      "example": "找出只在第一个列表出现的键。",
+      "tags": [
+        "Linux 文本合并与比较",
+        "join仅未匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/join.1.html"
+    },
+    {
+      "id": "textmerge-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本合并与比较",
+      "knowledgePoint": "paste并列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU paste 默认怎样合并多个文本文件？",
+      "answer": "按对应行并排输出，默认用制表符分隔。",
+      "explanation": "它按行位置组合，不按键匹配。",
+      "example": "把两个单列文件并排成两列。",
+      "tags": [
+        "Linux 文本合并与比较",
+        "paste并列"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/paste.1.html"
+    },
+    {
+      "id": "textmerge-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本合并与比较",
+      "knowledgePoint": "paste串行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU paste -s 与默认 paste 的主要区别是什么？",
+      "answer": "-s 依次把每个文件自身的多行合并为一行；默认按文件间对应行并排。",
+      "explanation": "默认分隔符为制表符。",
+      "example": "将一个文件的多行展开到同一行。",
+      "tags": [
+        "Linux 文本合并与比较",
+        "paste串行"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/paste.1.html"
+    },
+    {
+      "id": "textmerge-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本合并与比较",
+      "knowledgePoint": "comm三列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU comm 默认输出的三列分别表示什么？",
+      "answer": "依次为第一个文件未配对的行、第二个文件未配对的行、两个文件中配对相同的行。",
+      "explanation": "输入应按同一排序规则排序；重复行会逐次配对，结果不一定等同于集合去重。",
+      "example": "比较两份已排序名单。",
+      "tags": [
+        "Linux 文本合并与比较",
+        "comm三列"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/comm.1.html"
+    },
+    {
+      "id": "textmerge-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本合并与比较",
+      "knowledgePoint": "comm交集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU comm -12 对两个已排序文件输出什么？",
+      "answer": "只输出两个文件中配对相同的行。",
+      "explanation": "-1 和 -2 隐藏各自未配对的列；重复行按出现次数逐次配对。",
+      "example": "列出两个名单的共同条目。",
+      "tags": [
+        "Linux 文本合并与比较",
+        "comm交集"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/comm.1.html"
+    },
+    {
+      "id": "textmerge-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文本合并与比较",
+      "knowledgePoint": "tr压缩重复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tr -s 主要对输入做什么？",
+      "answer": "把指定字符的连续重复序列压缩为单个字符。",
+      "explanation": "它处理标准输入并写到标准输出。",
+      "example": "tr -s \" \" 把连续空格压成一个空格。",
+      "tags": [
+        "Linux 文本合并与比较",
+        "tr压缩重复"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tr.1.html"
+    }
+  ]
+}

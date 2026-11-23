@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "tokenizers-encoding-contracts",
+    "title": "Hugging Face tokenizers 0.23.1：编码与对齐",
+    "url": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/encoding",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题引用的教材、论文或固定版本文档自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "tokenc-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分词编码与对齐",
+      "knowledgePoint": "序列标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tokenizers 0.23.1 的 Encoding.sequence_ids 如何区分序列对中的 token？",
+      "answer": "来自第一个和第二个输入序列的 token 通常分别为 0 和 1；不对应输入序列的特殊 token 可为 None。",
+      "explanation": "该字段与每个 token 的输入来源相关。",
+      "example": "问答输入中区分问题和上下文。",
+      "tags": [
+        "分词编码与对齐",
+        "序列标识"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/encoding"
+    },
+    {
+      "id": "tokenc-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分词编码与对齐",
+      "knowledgePoint": "序列对偏移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tokenizers 0.23.1 编码序列对时，token 的字符偏移应相对于哪个文本解释？",
+      "answer": "偏移相对于该 token 所属的输入序列，需要结合 sequence_ids 或 token_to_sequence 判断。",
+      "explanation": "两个输入的偏移通常各自从其字符串开头计算。",
+      "example": "将答案 token 映射回上下文前先确认它来自第二序列。",
+      "tags": [
+        "分词编码与对齐",
+        "序列对偏移"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/encoding"
+    },
+    {
+      "id": "tokenc-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分词编码与对齐",
+      "knowledgePoint": "字符到 token",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tokenizers 0.23.1 的 char_to_token 对没有对应 token 的字符一定返回索引吗？",
+      "answer": "不一定；找不到对应 token 时返回 None。",
+      "explanation": "空白字符是否对应 token 取决于具体分词器。",
+      "example": "查询被预分词器跳过的空格位置。",
+      "tags": [
+        "分词编码与对齐",
+        "字符到 token"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/encoding"
+    },
+    {
+      "id": "tokenc-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词编码与对齐",
+      "knowledgePoint": "词到子词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tokenizers 0.23.1 的 word_ids 在一个词被拆成多个子词时通常如何标记？",
+      "answer": "这些子词可共享同一个原始词索引。",
+      "explanation": "预分词输入的索引与给定词序列对应。",
+      "example": "一个词拆成两个子词时两个位置都指向同一个词。",
+      "tags": [
+        "分词编码与对齐",
+        "词到子词"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/encoding"
+    },
+    {
+      "id": "tokenc-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词编码与对齐",
+      "knowledgePoint": "溢出窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tokenizers 0.23.1 的 Encoding 调用 truncate 后，overflowing 可以提供什么？",
+      "answer": "它提供截断产生的后续编码窗口；没有溢出时列表为空。",
+      "explanation": "窗口的生成方式和数量取决于具体截断配置。",
+      "example": "长文档被截成多个可处理的窗口。",
+      "tags": [
+        "分词编码与对齐",
+        "溢出窗口"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/encoding"
+    },
+    {
+      "id": "tokenc-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词编码与对齐",
+      "knowledgePoint": "截断重叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tokenizers 0.23.1 的 Encoding.truncate 中，stride 控制什么？",
+      "answer": "控制溢出窗口中保留多少前一窗口的重叠 token。",
+      "explanation": "该参数是重叠长度，不是每次前进的 token 数。",
+      "example": "长度 5、重叠 2 时相邻窗口共享 2 个 token。",
+      "tags": [
+        "分词编码与对齐",
+        "截断重叠"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/encoding"
+    },
+    {
+      "id": "tokenc-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词编码与对齐",
+      "knowledgePoint": "填充倍数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tokenizers 0.23.1 的 pad_to_multiple_of 用来约束什么？",
+      "answer": "将填充后的序列长度向上调整为指定数的倍数。",
+      "explanation": "它可能比批次中最长序列再多填充一些位置。",
+      "example": "最长长度为 10，指定倍数 8 可填充到 16。",
+      "tags": [
+        "分词编码与对齐",
+        "填充倍数"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/tokenizer"
+    },
+    {
+      "id": "tokenc-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词编码与对齐",
+      "knowledgePoint": "偏移区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tokenizers 0.23.1 的 token_to_chars 返回的字符跨度使用什么区间约定？",
+      "answer": "返回起始位置和结束后位置，即左闭右开区间。",
+      "explanation": "部分特殊 token 不对应原始字符跨度。",
+      "example": "跨度 (0, 3) 可用于提取前三个字符。",
+      "tags": [
+        "分词编码与对齐",
+        "偏移区间"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/encoding"
+    },
+    {
+      "id": "tokenc-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词编码与对齐",
+      "knowledgePoint": "处理顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tokenizers 0.23.1 的 Tokenizer.post_process 按什么顺序应用截断、后处理和填充？",
+      "answer": "先按配置截断，再应用后处理器，最后按配置填充。",
+      "explanation": "后处理器可添加模型需要的特殊 token。",
+      "example": "先限制长度，再加入特殊标记并填充。",
+      "tags": [
+        "分词编码与对齐",
+        "处理顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.23.1/en/api/tokenizer"
+    }
+  ]
+}

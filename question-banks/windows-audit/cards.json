@@ -1,0 +1,173 @@
+{
+  "source": {
+    "id": "windows-audit",
+    "title": "Microsoft Windows 安全审核事件文档",
+    "url": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624",
+    "type": "技术文档",
+    "note": "依据逐题注明的资料及对应版本整理，示例为自行编写。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "winaudit-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 审核日志",
+      "knowledgePoint": "登录成功与失败",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Windows 安全事件 4624 与 4625 分别记录什么？",
+      "answer": "4624 表示成功创建登录会话；4625 表示一次登录尝试失败。",
+      "explanation": "事件生成位置和审核配置会影响采集结果。",
+      "example": "一次失败后成功登录可能产生两类记录。",
+      "tags": [
+        "登录成功与失败",
+        "Windows 审核日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624",
+      "supportingReferences": [
+        {
+          "id": "windows-audit-4625",
+          "title": "Microsoft：Windows 安全事件 4625",
+          "url": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "winaudit-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 审核日志",
+      "knowledgePoint": "登录类型",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Windows 登录事件中的 Logon Type 2、3 和 10 分别表示什么？",
+      "answer": "2 为交互式登录，3 为网络登录，10 为远程交互式登录。",
+      "explanation": "类型描述会话方式，本身不能证明行为恶意。",
+      "example": "远程桌面登录通常对应类型 10。",
+      "tags": [
+        "登录类型",
+        "Windows 审核日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624"
+    },
+    {
+      "id": "winaudit-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 审核日志",
+      "knowledgePoint": "失败状态码",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Windows 4625 中的 Status 与 Sub Status 有什么用途？",
+      "answer": "它们提供登录失败原因及补充状态信息。",
+      "explanation": "分析时应结合具体状态码、账号和认证上下文。",
+      "example": "状态信息可帮助区分账户禁用和密码错误。",
+      "tags": [
+        "失败状态码",
+        "Windows 审核日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4625"
+    },
+    {
+      "id": "winaudit-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 审核日志",
+      "knowledgePoint": "来源字段缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 登录事件中的来源地址为什么可能为空？",
+      "answer": "地址、端口及工作站名是否填充取决于认证上下文和协议提供的信息。",
+      "explanation": "缺少地址不能直接证明事件来自本机或没有网络来源。",
+      "example": "某些认证流程不会提供 TCP/IP 详情。",
+      "tags": [
+        "来源字段缺失",
+        "Windows 审核日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624"
+    },
+    {
+      "id": "winaudit-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 审核日志",
+      "knowledgePoint": "会话事件关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 审核日志中的 Logon ID 可以帮助关联什么？",
+      "answer": "它可以帮助关联同一主机上与同一登录会话有关的事件。",
+      "explanation": "关联还应结合主机和时间；不能把它当成跨所有主机永久唯一的标识。",
+      "example": "用登录 ID 关联登录成功和随后产生的进程创建记录。",
+      "tags": [
+        "会话事件关联",
+        "Windows 审核日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688"
+    },
+    {
+      "id": "winaudit-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 审核日志",
+      "knowledgePoint": "命令行采集策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 4688 事件的进程命令行字段为什么可能为空？",
+      "answer": "该字段默认不填充，需要启用相应的“在进程创建事件中包含命令行”审核策略。",
+      "explanation": "字段还受事件版本及实际采集配置影响。",
+      "example": "只启用进程创建审核而未启用命令行策略时，字段可为空。",
+      "tags": [
+        "命令行采集策略",
+        "Windows 审核日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4688"
+    },
+    {
+      "id": "winaudit-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 审核日志",
+      "knowledgePoint": "新凭据会话",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Windows 的 NewCredentials 登录类型 9 对本地与网络身份有什么含义？",
+      "answer": "会话保留原有本地身份，同时为后续出站网络连接指定其他凭据。",
+      "explanation": "不能简单把出站网络账号当作本地登录身份。",
+      "example": "进程以当前本地身份运行，但访问远程资源时使用另一组凭据。",
+      "tags": [
+        "新凭据会话",
+        "Windows 审核日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624"
+    },
+    {
+      "id": "winaudit-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows 审核日志",
+      "knowledgePoint": "登录 GUID 缺省",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 4624 的 Logon GUID 为空 GUID 时应怎样理解？",
+      "answer": "该事件可能没有采集到可用的 Logon GUID，不能据此将所有空 GUID 事件关联成同一会话。",
+      "explanation": "应结合其他字段与事件上下文寻找关联。",
+      "example": "多个事件的 GUID 均为全零，并不意味着来自同一次登录。",
+      "tags": [
+        "登录 GUID 缺省",
+        "Windows 审核日志"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4624"
+    }
+  ]
+}

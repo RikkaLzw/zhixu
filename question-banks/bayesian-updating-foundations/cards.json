@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "bayesian-updating-foundations",
+    "title": "Think Bayes 2：贝叶斯更新与赔率",
+    "url": "https://allendowney.github.io/ThinkBayes2/chap02.html",
+    "type": "教材、研究论文与官方资料",
+    "note": "依据逐题引用的教材或研究论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "bayesup-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "归一化权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有限且互斥完备的假设集合中，怎样由先验和似然得到各假设的后验？",
+      "answer": "先计算每个假设的先验乘以其似然，再除以这些乘积的总和。",
+      "explanation": "前提是观测数据的总概率大于零。",
+      "example": "先验相等时，似然较大的假设获得较高后验。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "归一化权重"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap02.html"
+    },
+    {
+      "id": "bayesup-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "似然求和",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "针对同一观测，不同假设下的似然值必须加起来等于 1 吗？",
+      "answer": "不必；这些似然分别以不同假设为条件，并非同一概率分布中的互斥结果。",
+      "explanation": "归一化的是后验概率，不是直接把似然当作后验。",
+      "example": "两个假设下观测概率可分别为 0.8 和 0.6。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "似然求和"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap02.html"
+    },
+    {
+      "id": "bayesup-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "零证据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "若离散贝叶斯模型中所有假设对观测数据的先验加权似然之和为 0，能直接归一化得到后验吗？",
+      "answer": "不能；分母为零时该条件概率未由当前模型定义。",
+      "explanation": "应检查假设空间、数据或似然设定。",
+      "example": "所有假设都认为所观测事件不可能发生。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "零证据"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap02.html"
+    },
+    {
+      "id": "bayesup-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "零先验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "离散贝叶斯更新中，先验概率为 0 的假设能否通过有限似然获得正后验？",
+      "answer": "不能；先验与似然相乘后仍为零。",
+      "explanation": "这是当前模型下的结论，不证明现实中该假设绝不可能。",
+      "example": "某假设先验为 0 时，普通更新不会重新赋予它正概率。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "零先验"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap02.html"
+    },
+    {
+      "id": "bayesup-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "赔率换算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "事件概率 p 与支持赔率（odds）如何相互转换？",
+      "answer": "当 0≤p<1 时赔率 o=p/(1−p)；有限赔率 o 对应概率 o/(1+o)。",
+      "explanation": "赔率是事件发生概率与不发生概率之比，不是事件概率本身。",
+      "example": "p=0.6 对应赔率 3:2，赔率 3:2 也对应概率 0.6。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "赔率换算"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap06.html"
+    },
+    {
+      "id": "bayesup-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "赔率形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个互斥且完备假设的后验赔率如何由先验赔率和观测似然得到？",
+      "answer": "后验赔率等于先验赔率乘以该观测在两个假设下的似然比。",
+      "explanation": "分母相关概率应为正，赔率才按该形式有定义。",
+      "example": "先验赔率 1:1、似然比 3:2 时，后验赔率为 3:2。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "赔率形式"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap06.html"
+    },
+    {
+      "id": "bayesup-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "中性证据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两种互补假设对某个观测给出相同的非零似然时，该观测如何改变它们的赔率？",
+      "answer": "似然比为 1，因此后验赔率与先验赔率相同。",
+      "explanation": "该观测不区分这两个假设。",
+      "example": "两个假设都以 0.4 的概率产生该观测。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "中性证据"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap06.html"
+    },
+    {
+      "id": "bayesup-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "顺序更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "贝叶斯顺序更新中，两次观测并非条件独立时应使用什么第二次似然？",
+      "answer": "使用给定假设和第一次观测后的条件似然 P(D₂|H,D₁)。",
+      "explanation": "只有满足相应条件独立时，才可直接用 P(D₂|H)。",
+      "example": "重复测量共享误差时不能无条件把边际似然相乘。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "顺序更新"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap04.html"
+    },
+    {
+      "id": "bayesup-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "更新顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "采用同一个联合概率模型和相同数据时，顺序更新与一次联合更新应得到相同后验吗？",
+      "answer": "应得到相同后验，只要各步骤使用正确的条件似然且归一化有定义。",
+      "explanation": "交换处理顺序时也需相应调整条件概率。",
+      "example": "先更新 D₁ 再更新 D₂，与使用 P(D₁,D₂|H) 更新一致。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "更新顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap04.html"
+    },
+    {
+      "id": "bayesup-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "贝叶斯更新与赔率",
+      "knowledgePoint": "先验影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一数据与似然下，不同先验一定得到相同后验吗？",
+      "answer": "不一定；后验同时由先验和似然决定。",
+      "explanation": "数据量增加后差异可能缩小，但取决于模型和数据。",
+      "example": "数据较少时，不同先验可能产生明显不同的后验。",
+      "tags": [
+        "贝叶斯更新与赔率",
+        "先验影响"
+      ],
+      "evidence": "source",
+      "reference": "https://allendowney.github.io/ThinkBayes2/chap04.html"
+    }
+  ]
+}

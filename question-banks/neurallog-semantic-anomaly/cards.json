@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "neurallog-semantic-anomaly",
+    "title": "NeuralLog 原论文 v1：日志异常检测",
+    "url": "https://arxiv.org/pdf/2108.01955v1",
+    "type": "原论文与固定版本开源实现",
+    "note": "依据逐题引用的论文或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "neurallog-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "NeuralLog 日志语义检测",
+      "knowledgePoint": "核心流程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NeuralLog 原论文如何从日志序列得到异常判断？",
+      "answer": "它先预处理并编码日志消息，再用 Transformer 分类模型判断日志序列是否异常。",
+      "explanation": "该方法不依赖模板 ID，使用训练标签对整个日志序列进行分类。",
+      "example": "把一组日志消息表示成向量后分类。",
+      "tags": [
+        "NeuralLog 日志语义检测",
+        "核心流程"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.01955v1"
+    },
+    {
+      "id": "neurallog-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "NeuralLog 日志语义检测",
+      "knowledgePoint": "解析误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NeuralLog 论文为什么关注日志解析器把不同消息合并为同一模板的情况？",
+      "answer": "解析可能去掉对异常判断有用的词，使不同含义的消息失去区分。",
+      "explanation": "这类信息损失可能影响下游检测。",
+      "example": "包含相反操作结果的日志被错误归入同一模板。",
+      "tags": [
+        "NeuralLog 日志语义检测",
+        "解析误差"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.01955v1"
+    },
+    {
+      "id": "neurallog-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "NeuralLog 日志语义检测",
+      "knowledgePoint": "预处理边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NeuralLog 不做日志模板解析，是否意味着原始日志完全不经过预处理？",
+      "answer": "不是；论文先切分并小写文本，并移除数字、标点等非字符 token。",
+      "explanation": "预处理仍可能舍弃对某些安全任务重要的变量信息。",
+      "example": "仅靠处理后文本可能无法区分不同端口号。",
+      "tags": [
+        "NeuralLog 日志语义检测",
+        "预处理边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.01955v1"
+    },
+    {
+      "id": "neurallog-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "NeuralLog 日志语义检测",
+      "knowledgePoint": "消息向量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NeuralLog 原论文怎样由 BERT 表示构造一条日志消息的向量？",
+      "answer": "使用 BERT 最后一层的词或子词表示，再对相应向量取平均。",
+      "explanation": "不同日志消息各得到一个固定维度向量。",
+      "example": "将一条消息的子词向量聚合成消息表示。",
+      "tags": [
+        "NeuralLog 日志语义检测",
+        "消息向量"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.01955v1"
+    },
+    {
+      "id": "neurallog-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "NeuralLog 日志语义检测",
+      "knowledgePoint": "顺序编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NeuralLog 为什么在日志消息向量序列上再加入位置编码？",
+      "answer": "单条消息的语义向量本身不表示它在日志序列中的位置；位置编码提供顺序信息。",
+      "explanation": "顺序可能影响对系统行为的判断。",
+      "example": "相同事件在不同执行位置可能具有不同上下文。",
+      "tags": [
+        "NeuralLog 日志语义检测",
+        "顺序编码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.01955v1"
+    },
+    {
+      "id": "neurallog-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "NeuralLog 日志语义检测",
+      "knowledgePoint": "序列构建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NeuralLog 论文在 HDFS 数据集上如何构造日志序列？",
+      "answer": "它按相同 block ID 关联日志消息形成序列，因为该数据集按 block 标注。",
+      "explanation": "其他数据集采用不同的窗口划分方式。",
+      "example": "把同一数据块相关的日志放在同一序列。",
+      "tags": [
+        "NeuralLog 日志语义检测",
+        "序列构建"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.01955v1"
+    },
+    {
+      "id": "neurallog-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "NeuralLog 日志语义检测",
+      "knowledgePoint": "切分口径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NeuralLog 原论文对 HDFS 与 BGL 等数据集的训练测试划分有什么不同？",
+      "answer": "HDFS 按日志序列随机划分；BGL、Thunderbird 和 Spirit 按日志时间前后划分。",
+      "explanation": "比较各数据集结果时应保留切分口径。",
+      "example": "时间后段测试能包含训练时未出现的日志。",
+      "tags": [
+        "NeuralLog 日志语义检测",
+        "切分口径"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.01955v1"
+    }
+  ]
+}

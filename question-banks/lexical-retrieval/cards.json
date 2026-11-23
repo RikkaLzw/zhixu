@@ -1,0 +1,92 @@
+{
+  "source": {
+    "id": "lexical-retrieval",
+    "title": "Elastic BM25 与排名融合",
+    "url": "https://www.elastic.co/blog/practical-bm25-part-2-the-bm25-algorithm-and-its-variables",
+    "type": "官方技术文档",
+    "note": "依据逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "lexrank-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索",
+      "knowledgePoint": "BM25逆文档频率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BM25 的逆文档频率（IDF）为什么通常让较稀有的查询词贡献更大？",
+      "answer": "它降低在很多文档中都出现的常见词的权重，让较稀有的词更能区分候选文档。",
+      "explanation": "IDF 的具体计算取决于检索引擎和索引统计。",
+      "example": "常见词与某个罕见漏洞编号同时出现时，稀有词通常有更强区分度。",
+      "tags": [
+        "BM25逆文档频率",
+        "关键词检索",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/blog/practical-bm25-part-2-the-bm25-algorithm-and-its-variables"
+    },
+    {
+      "id": "lexrank-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索",
+      "knowledgePoint": "词频饱和",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BM25 的词频饱和是什么意思？",
+      "answer": "同一查询词重复出现会提高匹配贡献，但后续每次出现带来的增益逐渐减小。",
+      "explanation": "k1 控制词频影响的饱和特征。",
+      "example": "一篇文档重复漏洞名多次，得分不会无限线性增长。",
+      "tags": [
+        "词频饱和",
+        "关键词检索",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/blog/practical-bm25-part-2-the-bm25-algorithm-and-its-variables"
+    },
+    {
+      "id": "lexrank-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关键词检索",
+      "knowledgePoint": "BM25长度归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BM25 的 b 参数控制哪种长度影响？",
+      "answer": "它控制文档字段长度相对于平均长度对评分的影响；b 为 0 时不应用该长度归一化。",
+      "explanation": "这里说的是 Elastic 文档描述的 BM25 设定。",
+      "example": "比较同样词频的短公告与长手册中的字段得分。",
+      "tags": [
+        "BM25长度归一化",
+        "关键词检索",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/blog/practical-bm25-part-2-the-bm25-algorithm-and-its-variables"
+    },
+    {
+      "id": "lexrank-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "混合检索",
+      "knowledgePoint": "RRF排名常量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elastic 的 RRF 中提高 rank_constant 会怎样改变低排名结果的相对影响？",
+      "answer": "较大的 rank_constant 会让较低排名结果相对有更多影响，减小名次差异造成的权重差距。",
+      "explanation": "融合效果仍要用目标查询集评估。",
+      "example": "调整常量后比较两种检索结果的融合排序。",
+      "tags": [
+        "RRF排名常量",
+        "混合检索",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/docs/reference/elasticsearch/rest-apis/reciprocal-rank-fusion"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "gnu-output-command-practice",
+    "title": "GNU 手册：printf、tee 与 wc",
+    "url": "https://man7.org/linux/man-pages/man1/printf.1.html",
+    "type": "官方文档与系统手册",
+    "note": "按逐题引用的文档自行整理；示例为自编，具体适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "outcmd-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 输出与统计命令",
+      "knowledgePoint": "格式化文本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Shell 中，printf \"%s\\n\" \"$value\" 通常如何输出变量？",
+      "answer": "将变量作为字符串参数输出，随后输出换行。",
+      "explanation": "把格式固定为 %s 可避免变量中的百分号或反斜杠被作为 printf 格式控制。",
+      "example": "即使变量含有 %d，也会按文本输出。",
+      "tags": [
+        "Linux 输出与统计命令",
+        "格式化文本"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/printf.1.html"
+    },
+    {
+      "id": "outcmd-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 输出与统计命令",
+      "knowledgePoint": "转义参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU printf 的 %b 格式对参数做什么？",
+      "answer": "按反斜杠转义规则解释对应的字符串参数。",
+      "explanation": "若要保留反斜杠的字面值，可使用 %s。",
+      "example": "参数含 \\n 时，%b 可将其解释为换行。",
+      "tags": [
+        "Linux 输出与统计命令",
+        "转义参数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/printf.1.html"
+    },
+    {
+      "id": "outcmd-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 输出与统计命令",
+      "knowledgePoint": "分流输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tee 命令在管道中通常做什么？",
+      "answer": "从标准输入读取数据，同时写到标准输出和指定文件。",
+      "explanation": "后续管道命令仍可读取 tee 的标准输出。",
+      "example": "command | tee out.log | other 可记录并继续处理输出。",
+      "tags": [
+        "Linux 输出与统计命令",
+        "分流输出"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tee.1.html"
+    },
+    {
+      "id": "outcmd-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 输出与统计命令",
+      "knowledgePoint": "追加输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU tee -a 与默认 tee 写入文件有什么区别？",
+      "answer": "-a 追加到文件；默认写入时会截断已有文件。",
+      "explanation": "多个文件参数可同时接收输出。",
+      "example": "追加记录时可使用 tee -a log。",
+      "tags": [
+        "Linux 输出与统计命令",
+        "追加输出"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/tee.1.html"
+    },
+    {
+      "id": "outcmd-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 输出与统计命令",
+      "knowledgePoint": "字节与字符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU wc 的 -c 与 -m 分别统计什么？",
+      "answer": "-c 统计字节数；-m 统计字符数。",
+      "explanation": "多字节编码文本的两种计数可能不同。",
+      "example": "UTF-8 中一个中文字符可能占多个字节。",
+      "tags": [
+        "Linux 输出与统计命令",
+        "字节与字符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/wc.1.html"
+    },
+    {
+      "id": "outcmd-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 输出与统计命令",
+      "knowledgePoint": "单词计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU wc -w 通常统计什么？",
+      "answer": "统计输入中的单词数；单词由空白分隔。",
+      "explanation": "单词判定受实现和区域设置影响。",
+      "example": "以空格分隔的文本可用 wc -w 粗略统计词数。",
+      "tags": [
+        "Linux 输出与统计命令",
+        "单词计数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/wc.1.html"
+    }
+  ]
+}

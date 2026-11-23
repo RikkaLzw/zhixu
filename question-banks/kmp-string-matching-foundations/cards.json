@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "kmp-string-matching-foundations",
+    "title": "字符串匹配：前缀函数与 KMP",
+    "url": "https://cp-algorithms.com/string/prefix-function.html",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；计算和场景示例为自编，具体前提见题目。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "kmpbase-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "字符串匹配与 KMP",
+      "knowledgePoint": "前缀函数定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "字符串前缀函数 π[i] 表示什么？",
+      "answer": "它是子串 s[0..i] 的最长真前缀与后缀相等时的长度。",
+      "explanation": "真前缀必须短于整个子串；前后缀可以重叠。",
+      "example": "对 ababa，最长相等的真前后缀是 aba，长度为 3。",
+      "tags": [
+        "前缀函数定义",
+        "字符串匹配与 KMP"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/string/prefix-function.html"
+    },
+    {
+      "id": "kmpbase-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "字符串匹配与 KMP",
+      "knowledgePoint": "前缀函数计算示例",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "按从 0 开始的下标，字符串 ababa 的前缀函数数组是什么？",
+      "answer": "[0, 0, 1, 2, 3]。",
+      "explanation": "每一项只考虑截至当前位置的前缀，不包含整个前缀自身。",
+      "example": "例如 abab 的最长相等真前后缀为 ab，长度为 2。",
+      "tags": [
+        "前缀函数计算示例",
+        "字符串匹配与 KMP"
+      ],
+      "evidence": "application",
+      "reference": "https://cp-algorithms.com/string/prefix-function.html"
+    },
+    {
+      "id": "kmpbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "字符串匹配与 KMP",
+      "knowledgePoint": "前缀函数失配回退",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KMP 已匹配模式串前 j 个字符后发生失配，j 大于 0 时通常如何利用前缀函数回退？",
+      "answer": "将 j 更新为 π[j−1]，再比较当前文本字符和新的模式字符；必要时继续回退。",
+      "explanation": "此前匹配部分的真前后缀信息让算法无需从零开始重比所有字符。",
+      "example": "如果 π[j−1] 为 0，可再尝试模式串开头。",
+      "tags": [
+        "前缀函数失配回退",
+        "字符串匹配与 KMP"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/string/prefix-function.html"
+    },
+    {
+      "id": "kmpbase-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "字符串匹配与 KMP",
+      "knowledgePoint": "重叠匹配",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "在文本 ababa 中查找模式 aba，允许重叠时有哪些起始下标？",
+      "answer": "按 0 起始下标为 0 和 2。",
+      "explanation": "找到一次匹配后仍需保留可复用的前后缀状态，才能发现重叠匹配。",
+      "example": "第一个 aba 的最后一个 a 也是第二个 aba 的开头。",
+      "tags": [
+        "重叠匹配",
+        "字符串匹配与 KMP"
+      ],
+      "evidence": "application",
+      "reference": "https://cp-algorithms.com/string/prefix-function.html"
+    },
+    {
+      "id": "kmpbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "字符串匹配与 KMP",
+      "knowledgePoint": "KMP复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用前缀函数的 KMP 在长度为 n 的文本中查找长度为 m 的非空模式，时间复杂度通常是多少？",
+      "answer": "O(n+m)。",
+      "explanation": "线性预处理模式串后，匹配过程使用失配回退，避免对文本进行二次扫描。",
+      "example": "文本 100 万字符、模式 100 字符时，分析规模与两者长度之和成正比。",
+      "tags": [
+        "KMP复杂度",
+        "字符串匹配与 KMP"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/string/prefix-function.html"
+    },
+    {
+      "id": "kmpbase-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "字符串匹配与 KMP",
+      "knowledgePoint": "拼接法分隔符",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "用前缀函数处理“模式 + 分隔符 + 文本”寻找匹配时，为什么分隔符应不出现在模式和文本中？",
+      "answer": "它阻止匹配跨越模式与文本的拼接边界，避免把跨界的字符当作有效匹配。",
+      "explanation": "如果输入可包含所有候选字符，可改用单独的 KMP 扫描等方式。",
+      "example": "模式和文本仅含小写字母时，可选择 # 作为分隔符。",
+      "tags": [
+        "拼接法分隔符",
+        "字符串匹配与 KMP"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/string/prefix-function.html"
+    }
+  ]
+}

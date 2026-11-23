@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "langchain-self-query-retrieval",
+    "title": "LangChain 0.3.27：自查询检索",
+    "url": "https://github.com/langchain-ai/langchain/blob/langchain%3D%3D0.3.27/libs/langchain/langchain/retrievers/self_query/base.py",
+    "type": "论文、固定版本文档与源码",
+    "note": "根据逐题引用的资料自行整理；示例为自编，具体版本见题干。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "lcselfq-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 自查询检索",
+      "knowledgePoint": "自查询构造",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain SelfQueryRetriever 的基本思路是什么？",
+      "answer": "先把用户问题构造成包含检索文本和结构化过滤条件的查询，再交给向量存储检索。",
+      "explanation": "结构化查询需要转换为目标向量库支持的参数。",
+      "example": "从“2023 年后的安全报告”提取主题与年份条件。",
+      "tags": [
+        "LangChain 自查询检索",
+        "自查询构造"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain%3D%3D0.3.27/libs/langchain/langchain/retrievers/self_query/base.py"
+    },
+    {
+      "id": "lcselfq-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 自查询检索",
+      "knowledgePoint": "元数据描述",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 自查询构造器的 AttributeInfo 通常描述什么？",
+      "answer": "描述可过滤元数据字段的名称、类型和含义。",
+      "explanation": "字段说明帮助查询构造器生成适合的结构化条件。",
+      "example": "声明 year 字段为整数并说明含义。",
+      "tags": [
+        "LangChain 自查询检索",
+        "元数据描述"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain%3D%3D0.3.27/libs/langchain/langchain/chains/query_constructor/schema.py"
+    },
+    {
+      "id": "lcselfq-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 自查询检索",
+      "knowledgePoint": "查询翻译器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SelfQueryRetriever 的 structured_query_translator 负责什么？",
+      "answer": "将结构化查询转换为具体向量存储使用的检索文本和搜索参数。",
+      "explanation": "不同向量存储支持的过滤操作和语法可能不同。",
+      "example": "把内部比较表达式转成某向量库的过滤参数。",
+      "tags": [
+        "LangChain 自查询检索",
+        "查询翻译器"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain%3D%3D0.3.27/libs/langchain/langchain/retrievers/self_query/base.py"
+    },
+    {
+      "id": "lcselfq-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 自查询检索",
+      "knowledgePoint": "保留原始问题",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 设置 use_original_query=True 后，结构化查询生成的过滤条件还会使用吗？",
+      "answer": "会；该选项只把检索文本换回原始问题，不会因此丢弃翻译后的搜索参数。",
+      "explanation": "具体过滤能否生效还依赖向量库实现。",
+      "example": "用原始问题做相似度检索，同时保留年份过滤。",
+      "tags": [
+        "LangChain 自查询检索",
+        "保留原始问题"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain%3D%3D0.3.27/libs/langchain/langchain/retrievers/self_query/base.py"
+    },
+    {
+      "id": "lcselfq-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 自查询检索",
+      "knowledgePoint": "结果数覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 中 StructuredQuery.limit 非空时如何影响搜索参数 k？",
+      "answer": "它将 k 设为该 limit，并覆盖 search_kwargs 中同名的静态值。",
+      "explanation": "只有查询中确实带有限制时才发生覆盖。",
+      "example": "静态 k=5 而生成 limit=2 时使用 k=2。",
+      "tags": [
+        "LangChain 自查询检索",
+        "结果数覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain%3D%3D0.3.27/libs/langchain/langchain/retrievers/self_query/base.py"
+    },
+    {
+      "id": "lcselfq-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 自查询检索",
+      "knowledgePoint": "同名参数优先",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 的 SelfQueryRetriever 合并静态 search_kwargs 与翻译结果时，同名参数采用谁的值？",
+      "answer": "采用翻译结果中的值。",
+      "explanation": "源码先展开静态参数，再展开翻译结果；不要假定两个过滤器自动合并。",
+      "example": "两边都提供 filter 时，后者替换前者。",
+      "tags": [
+        "LangChain 自查询检索",
+        "同名参数优先"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain%3D%3D0.3.27/libs/langchain/langchain/retrievers/self_query/base.py"
+    },
+    {
+      "id": "lcselfq-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 自查询检索",
+      "knowledgePoint": "限制生成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SelfQueryRetriever.from_llm 的 enable_limit=True 主要允许查询构造器生成什么？",
+      "answer": "允许结构化查询中包含结果数量限制。",
+      "explanation": "它不保证语言模型每次都生成 limit，也不替代向量库侧限制。",
+      "example": "问题要求“给出两条”时可能生成 limit=2。",
+      "tags": [
+        "LangChain 自查询检索",
+        "限制生成"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain%3D%3D0.3.27/libs/langchain/langchain/retrievers/self_query/base.py"
+    },
+    {
+      "id": "lcselfq-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 自查询检索",
+      "knowledgePoint": "过滤与权限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能只依赖语言模型生成的自查询过滤条件实施数据访问权限？",
+      "answer": "模型可能遗漏或误构过滤条件；权限约束应由可信的检索服务或访问控制独立强制执行。",
+      "explanation": "尤其要注意检索参数覆盖和向量库过滤能力。",
+      "example": "用户不应能通过改写自然语言访问其他租户的数据。",
+      "tags": [
+        "LangChain 自查询检索",
+        "过滤与权限"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain%3D%3D0.3.27/libs/langchain/langchain/retrievers/self_query/base.py"
+    }
+  ]
+}

@@ -1,0 +1,558 @@
+{
+  "source": {
+    "id": "sigma-modifier-fundamentals",
+    "title": "Sigma 2.1 规则条件与常用修饰符",
+    "url": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md",
+    "type": "公开技术规范",
+    "note": "依据固定版本 Sigma 2.1.0 规范整理，部分示例经 pySigma 2.1.0 与 Splunk 后端转换，未在真实日志上执行。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "sigmamod-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "检测条件",
+      "knowledgePoint": "映射列表组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 中一个 search identifier 包含多个映射项时，各映射项如何组合？",
+      "answer": "各映射项按 OR 组合；每个映射内部的字段条件按 AND 组合。",
+      "explanation": "这与在同一个映射内列出多个字段不同。",
+      "example": "一个映射匹配进程名，另一个映射匹配描述，满足任一映射即可。",
+      "tags": [
+        "映射列表组合",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#lists",
+      "referenceTitle": "Sigma 2.1.0 规范：lists"
+    },
+    {
+      "id": "sigmamod-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "检测条件",
+      "knowledgePoint": "关键词搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 规则中的关键词列表与指定字段匹配有什么区别？",
+      "answer": "关键词搜索针对完整日志消息；字段匹配针对指定字段的值。",
+      "explanation": "具体后端仍需支持该搜索方式。",
+      "example": "关键词可用于搜索无法可靠映射到特定字段的日志内容。",
+      "tags": [
+        "关键词搜索",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#keywords-search",
+      "referenceTitle": "Sigma 2.1.0 规范：keywords-search"
+    },
+    {
+      "id": "sigmamod-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "检测条件",
+      "knowledgePoint": "过滤条件取反",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 条件 selection and not filter 通常表达什么？",
+      "answer": "先要求 selection 匹配，再排除匹配 filter 的事件。",
+      "explanation": "filter 是另一个已定义的 search identifier。",
+      "example": "匹配某进程执行，同时排除已知预期用户。",
+      "tags": [
+        "过滤条件取反",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#condition",
+      "referenceTitle": "Sigma 2.1.0 规范：condition"
+    },
+    {
+      "id": "sigmamod-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测条件",
+      "knowledgePoint": "下划线标识符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 1 of them 是否包含以下划线开头的 search identifier？",
+      "answer": "不包含；规范约定这些标识符不被 them 通配选择。",
+      "explanation": "显式引用或其他模式是否包含某标识符，应按具体条件判断。",
+      "example": "_private 不被 1 of them 自动纳入。",
+      "tags": [
+        "下划线标识符",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#condition",
+      "referenceTitle": "Sigma 2.1.0 规范：condition"
+    },
+    {
+      "id": "sigmamod-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测条件",
+      "knowledgePoint": "所有条件的可扩展性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 规范为什么不推荐在规则中使用 all of them？",
+      "answer": "它会把所有非下划线 search identifier 一起要求成立，不利于下游通用过滤。",
+      "explanation": "可用 all of selection* 等限定模式表达预期的选择集合。",
+      "example": "后来增加 filter 时，all of them 可能把它当作必须匹配的条件。",
+      "tags": [
+        "所有条件的可扩展性",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#condition",
+      "referenceTitle": "Sigma 2.1.0 规范：condition"
+    },
+    {
+      "id": "sigmamod-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测条件",
+      "knowledgePoint": "多个条件查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 condition 写成列表时，各条件怎样处理？",
+      "answer": "列表中的各条件分别生成查询，逻辑上按 OR 连接。",
+      "explanation": "不同后端可能以各自支持的方式表示生成结果。",
+      "example": "条件列表分别引用 a 和 b 时，可生成两个查询。",
+      "tags": [
+        "多个条件查询",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#condition",
+      "referenceTitle": "Sigma 2.1.0 规范：condition"
+    },
+    {
+      "id": "sigmamod-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测条件",
+      "knowledgePoint": "逻辑优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma condition 中 not、and、or 默认按什么优先级结合？",
+      "answer": "not 高于 and，and 高于 or；圆括号可明确改变组合。",
+      "explanation": "复杂表达式用括号有助于审查。",
+      "example": "a or b and not c 默认按 a or (b and (not c)) 理解。",
+      "tags": [
+        "逻辑优先级",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#condition",
+      "referenceTitle": "Sigma 2.1.0 规范：condition"
+    },
+    {
+      "id": "sigmamod-008",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "检测条件",
+      "knowledgePoint": "通配符转义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 字符串中如何把星号表示为字面字符而非通配符？",
+      "answer": "在星号前使用反斜杠转义。",
+      "explanation": "当反斜杠本身紧邻通配符时，还要按规范处理反斜杠转义。",
+      "example": "\\* 表示字面星号；未转义的 * 表示通配符。",
+      "tags": [
+        "通配符转义",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#escape-character",
+      "referenceTitle": "Sigma 2.1.0 规范：escape-character"
+    },
+    {
+      "id": "sigmamod-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测条件",
+      "knowledgePoint": "空值列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 允许把 null 与普通字符串放在同一个字段值列表中吗？",
+      "answer": "不允许；可用独立的选择条件分别表达 null 与字符串。",
+      "explanation": "空字符串与 null 也不是同一个值。",
+      "example": "用 selection_null 和 selection_empty 分别定义两种情况。",
+      "tags": [
+        "空值列表",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#special-field-values",
+      "referenceTitle": "Sigma 2.1.0 规范：special-field-values"
+    },
+    {
+      "id": "sigmamod-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "修饰符顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 字段上的多个 value modifier 按什么顺序应用？",
+      "answer": "按字段名中从左到右给出的顺序应用。",
+      "explanation": "修饰符可改变值、值类型或列表的组合方式。",
+      "example": "field|mod1|mod2 先应用 mod1，再应用 mod2。",
+      "tags": [
+        "修饰符顺序",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#value-modifiers",
+      "referenceTitle": "Sigma 2.1.0 规范：value-modifiers"
+    },
+    {
+      "id": "sigmamod-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "all单值限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 规范允许对单个标量值使用 all 修饰符吗？",
+      "answer": "不允许；all 用于要求列表中的多个值都满足。",
+      "explanation": "解析器未必强制检查所有规范要求，仍需结合规则校验。",
+      "example": "单个值不需要用 all 改变列表组合逻辑。",
+      "tags": [
+        "all单值限制",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#generic-modifiers",
+      "referenceTitle": "Sigma 2.1.0 规范：generic-modifiers"
+    },
+    {
+      "id": "sigmamod-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "显式区分大小写",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 的 cased 修饰符有什么作用？",
+      "answer": "它要求按大小写敏感方式匹配相应值。",
+      "explanation": "普通字符串的默认匹配通常不区分大小写；目标后端需支持该语义。",
+      "example": "需要区分大小写的名称可使用 cased。",
+      "tags": [
+        "显式区分大小写",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#generic-modifiers",
+      "referenceTitle": "Sigma 2.1.0 规范：generic-modifiers"
+    },
+    {
+      "id": "sigmamod-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "正则子修饰符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 正则子修饰符 i、m、s 分别控制什么？",
+      "answer": "i 启用大小写不敏感；m 让起止锚点按行匹配；s 让点号也匹配换行符。",
+      "explanation": "具体转换结果仍需目标后端支持。",
+      "example": "re|i 可表示大小写不敏感的正则搜索。",
+      "tags": [
+        "正则子修饰符",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#regular-expression",
+      "referenceTitle": "Sigma 2.1.0 规范：regular-expression"
+    },
+    {
+      "id": "sigmamod-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "正则可移植范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 re 是否承诺支持所有 PCRE 特性？",
+      "answer": "不承诺；规范只列出支持的一组正则元字符，其他特性不应假定可用。",
+      "explanation": "转换器和后端的实际能力也可能影响兼容性。",
+      "example": "跨后端规则优先使用规范列出的分组、量词和字符类。",
+      "tags": [
+        "正则可移植范围",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#regular-expression",
+      "referenceTitle": "Sigma 2.1.0 规范：regular-expression"
+    },
+    {
+      "id": "sigmamod-015",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "Windows短横替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 的 windash 修饰符用于生成哪类匹配变体？",
+      "answer": "它为短横、斜线及规范列出的几种 Unicode 横线生成替代组合。",
+      "explanation": "用途是覆盖某些 Windows 命令行参数的不同写法。",
+      "example": "参数标志的 - 和 / 形式可作为匹配变体。",
+      "tags": [
+        "Windows短横替换",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#string-modifiers",
+      "referenceTitle": "Sigma 2.1.0 规范：string-modifiers"
+    },
+    {
+      "id": "sigmamod-016",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "Base64偏移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 的 base64offset 为什么需要考虑三个字节对齐位置？",
+      "answer": "一个值在整体字节流中的偏移会改变其 Base64 表示，因此需要覆盖三种对齐变体。",
+      "explanation": "这与只对整个值单独编码一次不同。",
+      "example": "目标字符串可能从已编码内容的不同字节位置开始。",
+      "tags": [
+        "Base64偏移",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#encoding",
+      "referenceTitle": "Sigma 2.1.0 规范：encoding"
+    },
+    {
+      "id": "sigmamod-017",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "wide别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 wide 修饰符是哪个编码修饰符的别名？",
+      "answer": "它是 utf16le 的别名。",
+      "explanation": "wide 本身并不等同于任意 UTF-16 编码形式。",
+      "example": "ASCII 字符 c 的 UTF-16LE 字节为 63 00。",
+      "tags": [
+        "wide别名",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#encoding",
+      "referenceTitle": "Sigma 2.1.0 规范：encoding"
+    },
+    {
+      "id": "sigmamod-018",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "UTF16字节序标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 的 utf16 与 utf16le 修饰符在规范示例中有什么区别？",
+      "answer": "utf16 会在编码结果前加字节序标记；utf16le 使用小端编码。",
+      "explanation": "实际后端必须能够处理对应转换结果。",
+      "example": "规范示例中 utf16 的输出以 FF FE 开始。",
+      "tags": [
+        "UTF16字节序标记",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#encoding",
+      "referenceTitle": "Sigma 2.1.0 规范：encoding"
+    },
+    {
+      "id": "sigmamod-019",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "修饰符",
+      "knowledgePoint": "数值比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 的 lt、lte、gt、gte 分别表示什么数值关系？",
+      "answer": "分别表示小于、小于等于、大于、大于等于。",
+      "explanation": "这些修饰符应用于数值类型。",
+      "example": "Size|gte: 1024 表示字段值至少为 1024。",
+      "tags": [
+        "数值比较",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#numeric-modifiers",
+      "referenceTitle": "Sigma 2.1.0 规范：numeric-modifiers"
+    },
+    {
+      "id": "sigmamod-020",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "时间提取限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 的 hour 等时间修饰符是否负责统一时区或日期格式？",
+      "answer": "不负责；它们从日期值提取相应数值，时区和格式转换需另行处理。",
+      "explanation": "规则作者需要核对日志源和后端处理的时间语义。",
+      "example": "hour 用于取小时值，不自动把本地时间转换为 UTC。",
+      "tags": [
+        "时间提取限制",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#time-modifiers",
+      "referenceTitle": "Sigma 2.1.0 规范：time-modifiers"
+    },
+    {
+      "id": "sigmamod-021",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "修饰符",
+      "knowledgePoint": "CIDR匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 的 cidr 修饰符用于什么？",
+      "answer": "它要求后端按 CIDR 网络范围处理字段值，支持 IPv4 和 IPv6 表示。",
+      "explanation": "匹配能否正确执行取决于日志字段类型与后端支持。",
+      "example": "DestinationIp|cidr 可指定 192.0.2.0/24。",
+      "tags": [
+        "CIDR匹配",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#ip-internet-protocol-modifiers",
+      "referenceTitle": "Sigma 2.1.0 规范：ip-internet-protocol-modifiers"
+    },
+    {
+      "id": "sigmamod-022",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "字段引用比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 的 fieldref 修饰符有什么用途？",
+      "answer": "它将值解释为另一个字段的引用，以便在匹配时比较事件中的两个字段。",
+      "explanation": "它可与 neq 组合；目标后端需支持字段间比较。",
+      "example": "比较 User 字段与 OtherUser 字段。",
+      "tags": [
+        "字段引用比较",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-appendix-modifiers.md#specific-modifiers",
+      "referenceTitle": "Sigma 2.1.0 规范：specific-modifiers"
+    },
+    {
+      "id": "sigmamod-023",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "占位符展开",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 规则中的 %name% 何时作为待展开的占位符处理？",
+      "answer": "从 Sigma 1.1 起，只有值应用 expand 修饰符时才按占位符处理。",
+      "explanation": "没有 expand 时，该文本按普通字面值处理。",
+      "example": "field|expand: %Servers% 可交由处理流水线替换。",
+      "tags": [
+        "占位符展开",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#placeholders",
+      "referenceTitle": "Sigma 2.1.0 规范：placeholders"
+    },
+    {
+      "id": "sigmamod-024",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "修饰符",
+      "knowledgePoint": "占位符不支持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 工具无法处理规则中要求展开的占位符时，规范要求怎样做？",
+      "answer": "必须拒绝该规则。",
+      "explanation": "静默保留或忽略占位符可能改变检测语义。",
+      "example": "部署前确认处理流水线提供了所需替换。",
+      "tags": [
+        "占位符不支持",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#placeholders",
+      "referenceTitle": "Sigma 2.1.0 规范：placeholders"
+    },
+    {
+      "id": "sigmamod-025",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "规则元数据",
+      "knowledgePoint": "规则关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma related 字段中的 derived 和 obsolete 分别表示什么关系？",
+      "answer": "derived 表示当前规则从所引用规则派生；obsolete 表示当前规则取代所引用规则。",
+      "explanation": "被引用规则是否仍然保留取决于关系类型与维护状态。",
+      "example": "新检测规则可记录其派生来源或已替代的旧规则。",
+      "tags": [
+        "规则关联",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#identification",
+      "referenceTitle": "Sigma 2.1.0 规范：identification"
+    },
+    {
+      "id": "sigmamod-026",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "规则元数据",
+      "knowledgePoint": "规则标签含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 规则带 attack 技术标签是否会自动完成 ATT&CK 行为验证？",
+      "answer": "不会；标签用于分类和关联，仍需检查规则逻辑与实际事件证据。",
+      "explanation": "技术标签的存在不保证命中事件符合该技术的全部条件。",
+      "example": "带 attack.t 标签的告警仍需结合上下文验证。",
+      "tags": [
+        "规则标签含义",
+        "Sigma",
+        "安全运营"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/SigmaHQ/sigma-specification/blob/0c857d07da0e71eaaab2d667b3cce6f2c8469578/specification/sigma-rules-specification.md#tags",
+      "referenceTitle": "Sigma 2.1.0 规范：tags"
+    }
+  ]
+}

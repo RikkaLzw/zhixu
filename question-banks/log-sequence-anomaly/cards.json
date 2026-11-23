@@ -1,0 +1,332 @@
+{
+  "source": {
+    "id": "log-sequence-anomaly",
+    "title": "DeepLog 与 LogBERT：系统日志序列异常检测",
+    "url": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+    "type": "研究论文",
+    "note": "依据 DeepLog（2017）与 LogBERT（2021）论文逐题整理；部署和安全场景为应用解释。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "logseq-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志解析",
+      "knowledgePoint": "日志键与参数",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "DeepLog 解析日志时，日志键与参数值分别表示什么？",
+      "answer": "日志键表示日志消息的固定模板；参数值记录该模板中变化的内容。",
+      "explanation": "将两者分开后，既可研究事件顺序，也可分析具体数值。",
+      "example": "“耗时 10 秒”和“耗时 20 秒”可对应同一模板及不同耗时值。",
+      "tags": [
+        "日志键与参数",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：2.1 Log parser"
+    },
+    {
+      "id": "logseq-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "序列构造",
+      "knowledgePoint": "并发序列分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么分析日志执行序列时要考虑并发任务的日志交错？",
+      "answer": "不同任务的日志可能穿插出现；直接把它们当成一条单任务序列会混淆执行顺序。",
+      "explanation": "可利用实例或任务标识分组；标识不完整时仍需注意关联误差。",
+      "example": "两个并发实例的创建和删除消息可能交替写入同一日志。",
+      "tags": [
+        "并发序列分组",
+        "日志异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：2.1 Log parser 和 4 Workflow construction"
+    },
+    {
+      "id": "logseq-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "序列预测",
+      "knowledgePoint": "下一日志键预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepLog 的日志键模型用什么信息预测什么？",
+      "answer": "它根据最近一段日志键序列，预测下一个日志键的条件概率分布。",
+      "explanation": "论文使用正常执行日志训练 LSTM，并把下一日志键作为预测目标。",
+      "example": "根据前几个任务步骤预测后续可能出现的步骤。",
+      "tags": [
+        "下一日志键预测",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：3.1 Execution path anomaly"
+    },
+    {
+      "id": "logseq-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "序列预测",
+      "knowledgePoint": "Top-g判定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepLog 如何用预测的前 g 个日志键判断新事件是否异常？",
+      "answer": "若实际出现的日志键不在预测概率最高的前 g 个候选中，就将其标为异常。",
+      "explanation": "这是序列模型的判断，不代表事件已被确认为攻击。",
+      "example": "正常候选包含连接成功和等待响应两种后续事件。",
+      "tags": [
+        "Top-g判定",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：3.1 Execution path anomaly"
+    },
+    {
+      "id": "logseq-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "序列预测",
+      "knowledgePoint": "Top-g候选数",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "预测结果固定时，增大 DeepLog 的候选数 g 会怎样影响日志键告警数量？",
+      "answer": "在相同排序下，更多实际日志键可能进入候选集，因此此步骤的告警数不会增加。",
+      "explanation": "候选集更大也可能让一些异常不再触发告警；应在验证数据上权衡。",
+      "example": "从前 2 个候选扩大到前 5 个候选。",
+      "tags": [
+        "Top-g候选数",
+        "日志异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：3.1 和 5.1.4 参数讨论"
+    },
+    {
+      "id": "logseq-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "参数异常",
+      "knowledgePoint": "模板正常但参数异常",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么日志键顺序正常仍可能存在异常？",
+      "answer": "日志模板可以按正常顺序出现，但模板中的耗时等参数值可能异常。",
+      "explanation": "只建模模板序列可能漏掉参数层面的异常。",
+      "example": "同一个任务结束模板对应的耗时突然远高于以往。",
+      "tags": [
+        "模板正常但参数异常",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：3.2 Parameter value and performance anomaly"
+    },
+    {
+      "id": "logseq-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "参数异常",
+      "knowledgePoint": "按日志键建模",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepLog 为什么分别为不同日志键建立参数值模型？",
+      "answer": "不同日志键的参数含义和分布可能不同，分开建模可以学习各自的正常参数序列。",
+      "explanation": "论文为每个不同日志键建立独立的参数值异常检测模型。",
+      "example": "对网络释放耗时和磁盘分配耗时分别建立模型。",
+      "tags": [
+        "按日志键建模",
+        "日志异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：3.2 Parameter value and performance anomaly"
+    },
+    {
+      "id": "logseq-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "参数异常",
+      "knowledgePoint": "参数预测误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepLog 的参数值模型怎样利用预测误差识别异常？",
+      "answer": "模型根据该日志键的历史参数向量预测下一向量，再检查预测与实际值之间的误差。",
+      "explanation": "论文利用验证数据中的误差分布设置判断范围。",
+      "example": "预测的任务耗时与实际记录耗时明显不符时触发检查。",
+      "tags": [
+        "参数预测误差",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：3.2 Parameter value and performance anomaly"
+    },
+    {
+      "id": "logseq-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "模型维护",
+      "knowledgePoint": "人工反馈更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepLog 如何利用确认的误报适应新的正常日志模式？",
+      "answer": "它可以把人工确认的正常记录作为反馈，增量更新模型权重。",
+      "explanation": "反馈质量影响更新结果，未经核实的告警不能自动视为正常。",
+      "example": "分析人员确认新部署流程正常后，使用该反馈更新模型。",
+      "tags": [
+        "人工反馈更新",
+        "日志异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：3.3 Online update"
+    },
+    {
+      "id": "logseq-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "调查辅助",
+      "knowledgePoint": "工作流诊断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepLog 的工作流模型在发现异常后有什么作用？",
+      "answer": "它根据日志键之间的执行关系，为分析人员提供诊断异常的上下文。",
+      "explanation": "工作流辅助定位和理解问题，不能单凭模型输出确认根因。",
+      "example": "在任务流程中查看异常事件出现前后的步骤。",
+      "tags": [
+        "工作流诊断",
+        "日志异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：4 Workflow construction"
+    },
+    {
+      "id": "logseq-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "适用条件",
+      "knowledgePoint": "日志完整性假设",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "DeepLog 论文对被分析日志的完整性有什么安全假设？",
+      "answer": "论文假设攻击者不能篡改日志本身，也不能修改系统源代码来改变日志行为。",
+      "explanation": "实际部署需评估日志丢失、篡改或采集被绕过对检测的影响。",
+      "example": "如果攻击者能删除审计记录，论文中的假设不再成立。",
+      "tags": [
+        "日志完整性假设",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.utah.edu/~lifeifei/papers/deeplog.pdf",
+      "referenceTitle": "DeepLog 论文：2.3 Threat model"
+    },
+    {
+      "id": "logseq-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "双向建模",
+      "knowledgePoint": "掩码日志键预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogBERT 的掩码日志键预测任务怎样学习正常日志序列？",
+      "answer": "它随机遮盖部分日志键，并利用序列上下文预测被遮盖的键。",
+      "explanation": "训练使用正常日志序列；模型的双向上下文来自 Transformer 编码器。",
+      "example": "遮盖流程中的一个日志键，再根据其前后事件预测它。",
+      "tags": [
+        "掩码日志键预测",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2103.04475#S3.SS2",
+      "referenceTitle": "LogBERT 论文：3.2 Masked Log Key Prediction"
+    },
+    {
+      "id": "logseq-013",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "双向建模",
+      "knowledgePoint": "正常序列表示约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogBERT 的超球体目标希望正常序列的表示具有什么特征？",
+      "answer": "它促使正常日志序列的整体表示在嵌入空间中靠近中心。",
+      "explanation": "论文使用序列级 DIST 表示，并与掩码预测目标共同训练。",
+      "example": "把多条正常执行流程的向量表示向同一个中心约束。",
+      "tags": [
+        "正常序列表示约束",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2103.04475#S3.SS2",
+      "referenceTitle": "LogBERT 论文：3.2 Volume of Hypersphere Minimization"
+    },
+    {
+      "id": "logseq-014",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "序列判定",
+      "knowledgePoint": "异常键数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogBERT 原论文如何由异常日志键得到序列级判断？",
+      "answer": "先统计被遮盖位置中真实日志键不在前 g 个预测候选的数量；超过阈值 r 时将序列判为异常。",
+      "explanation": "候选数 g 和数量阈值 r 通过验证集调整。",
+      "example": "一个序列中多个被遮盖位置的真实键都未进入候选集。",
+      "tags": [
+        "异常键数量",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2103.04475#S3.SS3",
+      "referenceTitle": "LogBERT 论文：3.3 Anomaly Detection"
+    },
+    {
+      "id": "logseq-015",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "实时检测",
+      "knowledgePoint": "双向上下文可用性",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "使用双向日志序列模型做实时检测时，为什么要注意上下文是否已到达？",
+      "answer": "双向模型可利用位置前后的上下文；若要使用后续日志，实时系统需等待其到达，或只使用当前可用内容。",
+      "explanation": "评估时不能把预测时尚不可获得的未来事件当成实时输入。",
+      "example": "窗口尚未结束时无法使用尚未到达的后半段日志。",
+      "tags": [
+        "双向上下文可用性",
+        "日志异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2103.04475#S3.SS2",
+      "referenceTitle": "LogBERT 论文：3.2 Masked Log Key Prediction"
+    },
+    {
+      "id": "logseq-016",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "双向建模",
+      "knowledgePoint": "遮盖比例与上下文",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "LogBERT 中为什么不能无限提高日志键遮盖比例？",
+      "answer": "遮盖过多会减少模型可利用的上下文，可能影响被遮盖日志键的预测。",
+      "explanation": "论文在其数据集和实验设置中观察到过高遮盖比例会降低效果。",
+      "example": "几乎整个日志序列都被遮盖时，剩余事件很难提供足够线索。",
+      "tags": [
+        "遮盖比例与上下文",
+        "日志异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2103.04475#S4.SS2",
+      "referenceTitle": "LogBERT 论文：4.2 Parameter analysis"
+    }
+  ]
+}

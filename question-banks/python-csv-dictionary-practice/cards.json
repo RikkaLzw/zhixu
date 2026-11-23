@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "python-csv-dictionary-practice",
+    "title": "Python 3.14 文档：CSV 字典读写",
+    "url": "https://docs.python.org/3.14/library/csv.html",
+    "type": "官方文档、标准或固定版本论文",
+    "note": "依据逐题引用的资料自行整理，示例自编；具体行为以指定版本和前提为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pycsv-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python CSV 字典读写",
+      "knowledgePoint": "读取表头",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 csv.DictReader 在未指定与显式指定 fieldnames 时，分别怎样处理第一行？",
+      "answer": "未指定时用第一行作字段名；显式指定时第一行作为数据读取。",
+      "explanation": "若显式指定列名而原文件已有表头，调用方需自行处理表头。",
+      "example": "将 a,b 表头映射为后续记录的键。",
+      "tags": [
+        "Python CSV 字典读写",
+        "读取表头"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/csv.html"
+    },
+    {
+      "id": "pycsv-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python CSV 字典读写",
+      "knowledgePoint": "多余字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 csv.DictReader 对行中多余和缺少的字段如何处理？",
+      "answer": "多余字段组成列表存入 restkey 指定的键；非空行缺少字段时用 restval 填充。",
+      "explanation": "restkey 和 restval 默认均为 None；缺少字段与空字符串字段不同。",
+      "example": "用 extra 收集超出表头的数据。",
+      "tags": [
+        "Python CSV 字典读写",
+        "多余字段"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/csv.html"
+    },
+    {
+      "id": "pycsv-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python CSV 字典读写",
+      "knowledgePoint": "写入字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 csv.DictWriter 如何决定输出列的顺序？",
+      "answer": "按构造时 fieldnames 给出的顺序写入各字段。",
+      "explanation": "DictWriter 的 fieldnames 必须提供；调用 writeheader() 可按这些字段写入表头。",
+      "example": "指定 [\"name\", \"score\"] 控制输出列。",
+      "tags": [
+        "Python CSV 字典读写",
+        "写入字段"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/csv.html"
+    },
+    {
+      "id": "pycsv-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python CSV 字典读写",
+      "knowledgePoint": "多余键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 csv.DictWriter 遇到未列在 fieldnames 中的键时，默认会怎样？",
+      "answer": "默认抛出 ValueError；可设置 extrasaction=\"ignore\" 忽略多余键。",
+      "explanation": "忽略键可能导致数据被丢弃。",
+      "example": "写入前核查记录是否含未预期字段。",
+      "tags": [
+        "Python CSV 字典读写",
+        "多余键"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/csv.html"
+    },
+    {
+      "id": "pycsv-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python CSV 字典读写",
+      "knowledgePoint": "空值写出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 csv.writer 默认如何写出 None，有什么恢复限制？",
+      "answer": "将 None 写成空字符串；读取后无法仅靠该输出区分原来的 None 和空字符串。",
+      "explanation": "如需无损往返，应约定明确的空值编码。",
+      "example": "数据库空值导出 CSV 后需保留额外语义。",
+      "tags": [
+        "Python CSV 字典读写",
+        "空值写出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/csv.html"
+    }
+  ]
+}

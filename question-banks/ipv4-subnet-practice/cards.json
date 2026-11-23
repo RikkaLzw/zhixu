@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "ipv4-subnet-practice",
+    "title": "IPv4 子网计算：RFC 4632 与 RFC 3021",
+    "url": "https://www.rfc-editor.org/rfc/rfc4632.html",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；计算和场景示例为自编，具体前提见题目。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "subnetcalc-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv4 子网计算",
+      "knowledgePoint": "前缀掩码换算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 的 /20 前缀对应什么子网掩码？",
+      "answer": "255.255.240.0。",
+      "explanation": "前 20 位为 1，后 12 位为 0。",
+      "example": "第三个字节为二进制 11110000，即十进制 240。",
+      "tags": [
+        "前缀掩码换算",
+        "IPv4 子网计算"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html"
+    },
+    {
+      "id": "subnetcalc-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "IPv4 子网计算",
+      "knowledgePoint": "网络与广播地址",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "在通常 IPv4 多访问子网中，192.168.10.77/26 的网络地址和定向广播地址是什么？",
+      "answer": "分别为 192.168.10.64 和 192.168.10.127。",
+      "explanation": "/26 在最后一个字节按 64 个地址划分，该地址落在 64–127 这一段。",
+      "example": "该子网通常的主机地址范围是 192.168.10.65–192.168.10.126。",
+      "tags": [
+        "网络与广播地址",
+        "IPv4 子网计算"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html"
+    },
+    {
+      "id": "subnetcalc-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "IPv4 子网计算",
+      "knowledgePoint": "子网可用地址",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "传统 IPv4 多访问子网 192.0.2.0/27 中，通常有多少个可分配给主机的地址？",
+      "answer": "通常为 30 个：32 个地址中去掉网络地址和定向广播地址。",
+      "explanation": "这是一种传统多访问子网计数，不应机械套用到 /31 点对点链路或 /32 主机路由。",
+      "example": "该前缀的地址范围为 192.0.2.0–192.0.2.31。",
+      "tags": [
+        "子网可用地址",
+        "IPv4 子网计算"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html"
+    },
+    {
+      "id": "subnetcalc-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "IPv4 子网计算",
+      "knowledgePoint": "等长子网划分",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "把一个 IPv4 /24 网段等分为 /27 子网，可以得到多少个子网？",
+      "answer": "8 个。",
+      "explanation": "增加 3 位前缀，因此子网数量为 2³。",
+      "example": "192.0.2.0/24 可分为从 .0、.32 等开始的 8 个 /27。",
+      "tags": [
+        "等长子网划分",
+        "IPv4 子网计算"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html"
+    },
+    {
+      "id": "subnetcalc-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "IPv4 子网计算",
+      "knowledgePoint": "跨字节网络范围",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "192.0.4.0/23 包含的 IPv4 地址范围是什么？",
+      "answer": "192.0.4.0–192.0.5.255，共 512 个地址。",
+      "explanation": "/23 的前缀跨越第三个字节，覆盖相邻两个 /24 地址块。",
+      "example": "192.0.5.200 属于该前缀，192.0.6.1 不属于。",
+      "tags": [
+        "跨字节网络范围",
+        "IPv4 子网计算"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html"
+    },
+    {
+      "id": "subnetcalc-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "IPv4 子网计算",
+      "knowledgePoint": "同网段判定",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "192.168.1.100 和 192.168.1.150 都配置为 /25 时，是否属于同一前缀？",
+      "answer": "不属于；它们分别位于 192.168.1.0/25 和 192.168.1.128/25。",
+      "explanation": "只看前三个字节相同不足以判断 /25 是否相同。",
+      "example": "以各地址与 /25 掩码逐位相与，得到不同网络前缀。",
+      "tags": [
+        "同网段判定",
+        "IPv4 子网计算"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html"
+    },
+    {
+      "id": "subnetcalc-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IPv4 子网计算",
+      "knowledgePoint": "点对点31位前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 点对点链路使用 RFC 3021 的 /31 前缀时，两个地址能否分别用于两个端点？",
+      "answer": "可以；在支持 RFC 3021 的点对点链路上，两个地址都用于端点。",
+      "explanation": "该场景不按传统多访问子网扣除网络和定向广播两个地址。",
+      "example": "192.0.2.0/31 的两个端点可使用 192.0.2.0 和 192.0.2.1。",
+      "tags": [
+        "点对点31位前缀",
+        "IPv4 子网计算"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3021.html"
+    },
+    {
+      "id": "subnetcalc-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IPv4 子网计算",
+      "knowledgePoint": "主机路由前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 路由中的 /32 前缀匹配多少个地址？",
+      "answer": "只匹配一个 IPv4 地址。",
+      "explanation": "/32 把全部 32 位都作为前缀，常用于主机路由。",
+      "example": "192.0.2.5/32 只匹配 192.0.2.5。",
+      "tags": [
+        "主机路由前缀",
+        "IPv4 子网计算"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html"
+    }
+  ]
+}

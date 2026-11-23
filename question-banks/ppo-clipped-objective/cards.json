@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "ppo-clipped-objective",
+    "title": "Spinning Up：PPO-Clip 目标与策略更新",
+    "url": "https://spinningup.openai.com/en/latest/algorithms/ppo.html",
+    "type": "教材、研究论文与官方资料",
+    "note": "依据逐题引用的教材或研究论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "ppoclip-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PPO 裁剪与更新",
+      "knowledgePoint": "重要性比率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PPO-Clip 中每个采样动作的新旧策略比率如何定义？",
+      "answer": "它是新策略在该状态下的动作概率除以采样时旧策略的动作概率。",
+      "explanation": "讨论该比率时要求旧策略对该采样动作的概率非零。",
+      "example": "旧概率 0.2、新概率 0.3，比例为 1.5。",
+      "tags": [
+        "PPO 裁剪与更新",
+        "重要性比率"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/algorithms/ppo.html"
+    },
+    {
+      "id": "ppoclip-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PPO 裁剪与更新",
+      "knowledgePoint": "裁剪目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PPO-Clip 的单样本目标如何使用原始比率和裁剪后的比率？",
+      "answer": "分别乘以优势估计，再取两个结果中的较小值作为要最大化的目标。",
+      "explanation": "裁剪区间通常写成 [1−ε, 1+ε]。",
+      "example": "对同一采样动作比较未裁剪项与裁剪项。",
+      "tags": [
+        "PPO 裁剪与更新",
+        "裁剪目标"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/algorithms/ppo.html"
+    },
+    {
+      "id": "ppoclip-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PPO 裁剪与更新",
+      "knowledgePoint": "优势符号与裁剪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PPO-Clip 的正、负优势样本分别在哪个方向停止获得更高的裁剪目标？",
+      "answer": "正优势样本的比率超过 1+ε 后继续增大不再提高目标；负优势样本的比率低于 1−ε 后继续减小不再提高目标。",
+      "explanation": "这限制的是该目标项的激励，而不是策略变化的硬边界。",
+      "example": "ε=0.2 时对应上界 1.2 和下界 0.8。",
+      "tags": [
+        "PPO 裁剪与更新",
+        "优势符号与裁剪"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/algorithms/ppo.html"
+    },
+    {
+      "id": "ppoclip-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PPO 裁剪与更新",
+      "knowledgePoint": "不利方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PPO-Clip 对超出裁剪区间但使目标变差的比率变化也一律截平吗？",
+      "answer": "不一律；目标取未裁剪项与裁剪项的较小值，变差方向仍可能产生惩罚。",
+      "explanation": "正优势且比率过低或负优势且比率过高时，未裁剪项可能更小。",
+      "example": "正优势样本的比率降到很低时目标仍会下降。",
+      "tags": [
+        "PPO 裁剪与更新",
+        "不利方向"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/algorithms/ppo.html"
+    },
+    {
+      "id": "ppoclip-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PPO 裁剪与更新",
+      "knowledgePoint": "硬约束误解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PPO-Clip 能保证所有动作的新旧概率比始终处于裁剪区间吗？",
+      "answer": "不能；它裁剪的是目标中的一项，并非直接给策略比率施加硬约束。",
+      "explanation": "共享参数和多步优化仍可能使比率超出区间。",
+      "example": "即使 ε=0.2，某些动作的比率仍可能大于 1.2。",
+      "tags": [
+        "PPO 裁剪与更新",
+        "硬约束误解"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/algorithms/ppo.html"
+    },
+    {
+      "id": "ppoclip-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PPO 裁剪与更新",
+      "knowledgePoint": "KL 提前停止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Spinning Up 的 PPO 实现为何会依据近似 KL 提前停止策略更新？",
+      "answer": "裁剪本身不能确保新旧策略始终足够接近；KL 监控可帮助限制过大的更新。",
+      "explanation": "具体阈值和停止规则取决于实现。",
+      "example": "平均 KL 超出实现设定的阈值时停止本轮优化。",
+      "tags": [
+        "PPO 裁剪与更新",
+        "KL 提前停止"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/algorithms/ppo.html"
+    },
+    {
+      "id": "ppoclip-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PPO 裁剪与更新",
+      "knowledgePoint": "PPO 变体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PPO-Clip 与 PPO-Penalty 使用哪两种不同方式抑制策略变化？",
+      "answer": "前者在代理目标中裁剪比率；后者在目标中加入 KL 散度惩罚。",
+      "explanation": "两者都是近端策略优化的变体，具体实现会有差异。",
+      "example": "PPO-Penalty 可按实现调整 KL 惩罚系数。",
+      "tags": [
+        "PPO 裁剪与更新",
+        "PPO 变体"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/algorithms/ppo.html"
+    },
+    {
+      "id": "ppoclip-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PPO 裁剪与更新",
+      "knowledgePoint": "批内多步优化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PPO-Clip 为何可以对一次采集的数据进行多步更新？",
+      "answer": "它使用相对采样策略的概率比构造代理目标，可在同一批数据上迭代优化。",
+      "explanation": "这不等于可以忽略策略差异并任意重用很旧的数据。",
+      "example": "先采样一批轨迹，再执行多次小批量更新。",
+      "tags": [
+        "PPO 裁剪与更新",
+        "批内多步优化"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/algorithms/ppo.html"
+    }
+  ]
+}

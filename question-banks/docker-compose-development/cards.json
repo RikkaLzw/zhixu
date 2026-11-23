@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "docker-compose-development",
+    "title": "Docker Compose 官方文档：多服务开发",
+    "url": "https://docs.docker.com/compose/how-tos/networking/",
+    "type": "官方文档与源码",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "composebase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Docker Compose 基础",
+      "knowledgePoint": "后台启动",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "docker compose up -d 的 -d 有什么作用？",
+      "answer": "以后台模式启动服务容器。",
+      "explanation": "不带 -d 时 up 通常附着并显示容器输出。",
+      "example": "启动数据库和 Web 服务后返回终端继续工作。",
+      "tags": [
+        "Docker Compose 基础",
+        "后台启动"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/cli/docker/compose/up/"
+    },
+    {
+      "id": "composebase-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Docker Compose 基础",
+      "knowledgePoint": "容器端口",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "Compose 服务间通过默认网络连接时，应使用目标服务的宿主机映射端口还是容器端口？",
+      "answer": "应使用目标服务监听的容器端口。",
+      "explanation": "宿主机端口用于从网络外部通过宿主机访问。",
+      "example": "宿主机 8001 映射数据库容器 5432，服务间使用 db:5432。",
+      "tags": [
+        "Docker Compose 基础",
+        "容器端口"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.docker.com/compose/how-tos/networking/"
+    },
+    {
+      "id": "composebase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Docker Compose 基础",
+      "knowledgePoint": "服务地址变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Compose 服务容器被重建后，其他服务为什么通常应继续使用服务名而不是旧 IP？",
+      "answer": "容器 IP 可能变化，而服务名仍可解析到新容器地址。",
+      "explanation": "已有连接可能需要重新建立。",
+      "example": "数据库更新后通过 db 名称重新连接。",
+      "tags": [
+        "Docker Compose 基础",
+        "服务地址变化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/compose/how-tos/networking/"
+    },
+    {
+      "id": "composebase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Docker Compose 基础",
+      "knowledgePoint": "启动与就绪",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Compose 的 depends_on 短语法能否保证依赖服务已经可以处理请求？",
+      "answer": "不能；它控制依赖启动顺序，但默认不等待应用就绪。",
+      "explanation": "需要结合健康检查和相应条件或由应用处理重试。",
+      "example": "数据库进程启动后仍可能需要时间完成初始化。",
+      "tags": [
+        "Docker Compose 基础",
+        "启动与就绪"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/compose/how-tos/startup-order/"
+    },
+    {
+      "id": "composebase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Docker Compose 基础",
+      "knowledgePoint": "健康依赖",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Compose 中 depends_on 的 condition: service_healthy 要求什么？",
+      "answer": "依赖服务的健康检查达到 healthy 后，才启动依赖它的服务。",
+      "explanation": "健康检查需要能反映该服务所需的就绪条件。",
+      "example": "Web 在数据库健康检查通过后启动。",
+      "tags": [
+        "Docker Compose 基础",
+        "健康依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/compose/how-tos/startup-order/"
+    },
+    {
+      "id": "composebase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Docker Compose 基础",
+      "knowledgePoint": "一次性命令",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "docker compose run 与 docker compose exec 对容器的使用有什么常见区别？",
+      "answer": "run 为一次性命令创建新容器；exec 在已有运行中的服务容器内执行命令。",
+      "explanation": "run 使用服务配置，但传入的命令会覆盖该服务的默认命令。",
+      "example": "run 可执行迁移任务，exec 可查看运行中容器的状态。",
+      "tags": [
+        "Docker Compose 基础",
+        "一次性命令"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/cli/docker/compose/run/",
+      "supportingReferences": [
+        {
+          "id": "compose-exec-manual",
+          "title": "Docker Compose exec 官方文档",
+          "url": "https://docs.docker.com/reference/cli/docker/compose/exec/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "composebase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Docker Compose 基础",
+      "knowledgePoint": "一次性端口映射",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "docker compose run 默认会发布服务配置中的端口吗？",
+      "answer": "不会；需要时可加 --service-ports 发布这些端口。",
+      "explanation": "默认行为有助于避免与已运行服务的端口冲突。",
+      "example": "临时运行 Web 命令时不会自动占用配置的宿主机端口。",
+      "tags": [
+        "Docker Compose 基础",
+        "一次性端口映射"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/cli/docker/compose/run/"
+    },
+    {
+      "id": "composebase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Docker Compose 基础",
+      "knowledgePoint": "停止与数据卷",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "docker compose down 默认会删除 Compose 声明的命名卷吗？",
+      "answer": "默认不会；指定 --volumes 会删除 Compose 声明的命名卷及容器关联的匿名卷。",
+      "explanation": "外部卷不由该命令删除。",
+      "example": "停止服务后命名卷中的数据库数据仍可保留。",
+      "tags": [
+        "Docker Compose 基础",
+        "停止与数据卷"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/cli/docker/compose/down/"
+    },
+    {
+      "id": "composebase-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Docker Compose 基础",
+      "knowledgePoint": "检查配置",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "docker compose config 常用于什么？",
+      "answer": "解析并展示 Compose 项目的实际配置，包括合并和变量插值结果。",
+      "explanation": "它有助于在启动服务前检查配置。",
+      "example": "检查多文件合并后的服务和网络定义。",
+      "tags": [
+        "Docker Compose 基础",
+        "检查配置"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.docker.com/reference/cli/docker/compose/config/"
+    }
+  ]
+}

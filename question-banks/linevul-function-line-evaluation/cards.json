@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "linevul-function-line-evaluation",
+    "title": "LineVul 固定提交：函数分类与行级定位",
+    "url": "https://github.com/awsm-research/LineVul/blob/9401ec6e60b762a9308645961268203244bee048/linevul/linevul_main.py",
+    "type": "原论文、官方文档与固定版本源码",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编，具体条件见各卡。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "linevul-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "函数与行级漏洞检测",
+      "knowledgePoint": "训练标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVul 固定提交的训练数据中，target 列提供哪一级标签？",
+      "answer": "它提供函数级的漏洞与否标签，而不是逐行训练标签。",
+      "explanation": "行级定位通过后续解释和评估流程处理。",
+      "example": "一个函数可带一个二分类标签。",
+      "tags": [
+        "函数与行级漏洞检测",
+        "训练标签"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/LineVul/blob/9401ec6e60b762a9308645961268203244bee048/README.md"
+    },
+    {
+      "id": "linevul-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "函数与行级漏洞检测",
+      "knowledgePoint": "词级路径长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVul 固定提交的 BPE 和词级 tokenizer 路径如何使用 block_size？",
+      "answer": "BPE 路径按 block_size−2 截断代码 token；词级路径写死截到 510 个 token 并补齐至 512，不使用传入的 block_size。",
+      "explanation": "两个路径都会为首尾特殊 token 留出位置；这是该固定提交的行为。",
+      "example": "block_size 设为 128 时，BPE 路径最多保留 126 个代码 token，词级路径仍按 512 长度处理。",
+      "tags": [
+        "函数与行级漏洞检测",
+        "词级路径长度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/LineVul/blob/9401ec6e60b762a9308645961268203244bee048/linevul/linevul_main.py"
+    },
+    {
+      "id": "linevul-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "函数与行级漏洞检测",
+      "knowledgePoint": "行级方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVul 固定提交是否只支持用 attention 为代码行排序？",
+      "answer": "不是；源码还提供 Integrated Gradients、Saliency、DeepLift 和部分 SHAP 类方法等选项。",
+      "explanation": "不同方法得到的行分数和排序可能不同。",
+      "example": "可比较 attention 与梯度归因的定位结果。",
+      "tags": [
+        "函数与行级漏洞检测",
+        "行级方法"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/LineVul/blob/9401ec6e60b762a9308645961268203244bee048/linevul/linevul_main.py"
+    },
+    {
+      "id": "linevul-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "函数与行级漏洞检测",
+      "knowledgePoint": "注意力聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVul 固定提交的 attention 行级解释使用哪些注意力信息？",
+      "answer": "它取第一层注意力，将各头和查询位置的权重汇总，再映射为 token 及行分数。",
+      "explanation": "这是该实现的聚合方式，不代表所有 attention 定位方法都如此。",
+      "example": "汇总后的键位置分数可再按代码行累加。",
+      "tags": [
+        "函数与行级漏洞检测",
+        "注意力聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/LineVul/blob/9401ec6e60b762a9308645961268203244bee048/linevul/linevul_main.py"
+    },
+    {
+      "id": "linevul-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "函数与行级漏洞检测",
+      "knowledgePoint": "真实正例口径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVul 的 do_local_explanation 分支主要对哪些函数计算局部行级解释？",
+      "answer": "它只处理函数分类为真实正例且具备可用缺陷行标注的样本。",
+      "explanation": "因此该分支的定位结果不能直接当作包含漏报在内的端到端定位效果。",
+      "example": "被函数分类器漏掉的漏洞函数不会进入此分支。",
+      "tags": [
+        "函数与行级漏洞检测",
+        "真实正例口径"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/LineVul/blob/9401ec6e60b762a9308645961268203244bee048/linevul/linevul_main.py"
+    },
+    {
+      "id": "linevul-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "函数与行级漏洞检测",
+      "knowledgePoint": "重复行标注",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVul 固定提交按行文本匹配缺陷行时，函数中相同文本出现多次可能有什么影响？",
+      "answer": "相同文本的多行都可能被标记为缺陷行。",
+      "explanation": "该行为来自按编码后的行内容相等进行匹配，不能单独区分相同文本的位置。",
+      "example": "两处完全相同的语句可能同时命中同一缺陷行文本。",
+      "tags": [
+        "函数与行级漏洞检测",
+        "重复行标注"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/LineVul/blob/9401ec6e60b762a9308645961268203244bee048/linevul/linevul_main.py"
+    },
+    {
+      "id": "linevul-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "函数与行级漏洞检测",
+      "knowledgePoint": "输入覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVul 局部行级评估中，如果所有已标注缺陷行都未能匹配截断后的输入，会怎样？",
+      "answer": "该定位样本被标记为不可评估，而不是正常计入成功定位。",
+      "explanation": "即使只有部分缺陷行匹配，源码也可能继续评估；如果无法映射到具体行仍会返回 NA。",
+      "example": "漏洞行位于被截掉的函数尾部。",
+      "tags": [
+        "函数与行级漏洞检测",
+        "输入覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/awsm-research/LineVul/blob/9401ec6e60b762a9308645961268203244bee048/linevul/linevul_main.py"
+    }
+  ]
+}

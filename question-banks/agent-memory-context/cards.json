@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "agent-memory-context",
+    "title": "LangChain 与 Anthropic：Agent 记忆与上下文",
+    "url": "https://docs.langchain.com/oss/python/concepts/memory",
+    "type": "教材与技术文档",
+    "note": "逐题根据所列教材或技术文档自行整理；例子用于说明适用条件。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "agentmem-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 记忆与上下文",
+      "knowledgePoint": "语义记忆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Agent 的语义记忆通常保存哪类内容？",
+      "answer": "通常保存可跨任务或会话使用的事实、概念和知识。",
+      "explanation": "它与“语义搜索”是不同概念；前者指记忆类型。",
+      "example": "保存用户偏好的输出语言。",
+      "tags": [
+        "语义记忆",
+        "Agent 记忆与上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/concepts/memory"
+    },
+    {
+      "id": "agentmem-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 记忆与上下文",
+      "knowledgePoint": "情景记忆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Agent 的情景记忆通常保存哪类内容？",
+      "answer": "它保存过去的经历、行动或具体任务过程，可作为后续相似任务的参考。",
+      "explanation": "历史经历可能过期或不适用于新任务。",
+      "example": "记录一次故障调查中的有效操作。",
+      "tags": [
+        "情景记忆",
+        "Agent 记忆与上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/concepts/memory"
+    },
+    {
+      "id": "agentmem-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 记忆与上下文",
+      "knowledgePoint": "程序性记忆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Agent 的程序性记忆通常保存哪类内容？",
+      "answer": "它保存执行任务时使用的规则、指引或操作方式。",
+      "explanation": "实际系统中这些内容可通过提示、技能或其他配置体现。",
+      "example": "保存处理某类报告的步骤说明。",
+      "tags": [
+        "程序性记忆",
+        "Agent 记忆与上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/concepts/memory"
+    },
+    {
+      "id": "agentmem-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 记忆与上下文",
+      "knowledgePoint": "语义记忆与语义搜索",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "语义记忆和语义搜索是同一个概念吗？",
+      "answer": "不是；语义记忆指保存事实和知识的记忆类型，语义搜索指按语义相似性查找内容的方法。",
+      "explanation": "语义搜索可以用于检索语义记忆，但二者并不等同。",
+      "example": "用向量检索查找已保存的用户偏好。",
+      "tags": [
+        "语义记忆与语义搜索",
+        "Agent 记忆与上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/concepts/memory"
+    },
+    {
+      "id": "agentmem-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 记忆与上下文",
+      "knowledgePoint": "资料档案与记忆集合",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "LangChain 文档中语义记忆的 profile 和 collection 分别怎样组织内容？",
+      "answer": "profile 将相关信息集中在一份结构化资料中；collection 将记忆组织为多条可分别管理的文档。",
+      "explanation": "两种组织方式在更新、检索和冲突处理上有不同取舍。",
+      "example": "单个用户档案与多条独立偏好记录。",
+      "tags": [
+        "资料档案与记忆集合",
+        "Agent 记忆与上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/concepts/memory"
+    },
+    {
+      "id": "agentmem-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 记忆与上下文",
+      "knowledgePoint": "同步与后台记忆更新",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "在 Agent 响应路径中更新记忆与在后台更新有什么主要取舍？",
+      "answer": "响应路径更新可更早提供新记忆，但可能增加响应延迟；后台更新可减少主路径等待，但新记忆可能稍后才可用。",
+      "explanation": "后台任务仍需要错误处理和一致性设计。",
+      "example": "对话中立即保存偏好，或响应后异步整理。",
+      "tags": [
+        "同步与后台记忆更新",
+        "Agent 记忆与上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/concepts/memory"
+    },
+    {
+      "id": "agentmem-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 记忆与上下文",
+      "knowledgePoint": "记忆命名空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangGraph 文档中的长期记忆 namespace 与 key 分别用于什么？",
+      "answer": "namespace 用于组织和限定一组记忆，key 用于标识该命名空间中的具体记录。",
+      "explanation": "命名空间只是组织方式，访问授权还需由应用和存储层落实。",
+      "example": "按用户或组织组织不同的记忆记录。",
+      "tags": [
+        "记忆命名空间",
+        "Agent 记忆与上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/concepts/memory"
+    },
+    {
+      "id": "agentmem-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 记忆与上下文",
+      "knowledgePoint": "即时与预先检索",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "Agent 在运行时按需检索上下文，与调用前一次性检索有什么取舍？",
+      "answer": "按需检索能根据中间发现逐步获取信息，但可能增加运行时延迟；预先检索更直接，但可能提供无关或过时内容。",
+      "explanation": "也可以结合两种方式，效果取决于任务。",
+      "example": "先读取文件列表，再按需要打开相关文件。",
+      "tags": [
+        "即时与预先检索",
+        "Agent 记忆与上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+    },
+    {
+      "id": "agentmem-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 记忆与上下文",
+      "knowledgePoint": "重叠工具与选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Agent 工具的功能描述需要尽量清楚地区分适用场景？",
+      "answer": "功能重叠或描述含糊会使模型难以判断应使用哪个工具。",
+      "explanation": "可结合任务测试工具选择和错误率。",
+      "example": "两个搜索工具支持不同数据源时明确各自范围。",
+      "tags": [
+        "重叠工具与选择",
+        "Agent 记忆与上下文"
+      ],
+      "evidence": "application",
+      "reference": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+    }
+  ]
+}

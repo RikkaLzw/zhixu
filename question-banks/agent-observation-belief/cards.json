@@ -1,0 +1,348 @@
+{
+  "source": {
+    "id": "agent-observation-belief",
+    "title": "Agent 基础：环境、观测与信念状态",
+    "url": "https://github.com/BerkeleyAI/textbook/blob/8ff98764ea2fa88e04d1c09b16df1c40f5d92104/search/agents.md",
+    "type": "高校教材与专题教程",
+    "note": "依据 Berkeley CS188 固定版本教材和 POMDP.org 教程整理；示例与实际系统边界为应用转述。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "obsagent-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "理性决策目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在结果存在不确定性时，理性智能体通常以什么为决策目标？",
+      "answer": "在可用信息和性能标准下选择预期表现最高的行动；随机结果仍可能不理想。",
+      "explanation": "理性决策基于决策时可获得的信息，而不是事后才能知道的结果。",
+      "example": "根据天气概率选择行程时，仍可能遇到低概率天气。",
+      "tags": [
+        "理性决策目标",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/8ff98764ea2fa88e04d1c09b16df1c40f5d92104/search/agents.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "PEAS任务描述",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "智能体任务环境描述中的 PEAS 分别指什么？",
+      "answer": "分别指性能度量、环境、执行器和传感器。",
+      "explanation": "它用于明确如何衡量任务，以及智能体在哪里行动、如何行动和获取信息。",
+      "example": "为自动驾驶任务列出安全指标、道路、转向控制与摄像头。",
+      "tags": [
+        "PEAS任务描述",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/8ff98764ea2fa88e04d1c09b16df1c40f5d92104/search/agents.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "感知与行动接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "智能体的传感器和执行器分别承担什么作用？",
+      "answer": "传感器获取环境信息；执行器让智能体对环境采取行动。",
+      "explanation": "二者可以是软件接口，不一定是物理硬件。",
+      "example": "日志查询可提供观测，发送经授权的请求可作为行动。",
+      "tags": [
+        "感知与行动接口",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/8ff98764ea2fa88e04d1c09b16df1c40f5d92104/search/agents.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "反射与规划",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "简单反射智能体与规划智能体如何选择行动？",
+      "answer": "简单反射智能体依据当前感知选择行动；规划智能体利用环境模型考虑可能的行动后果。",
+      "explanation": "规划依赖模型质量，也可能带来额外计算开销。",
+      "example": "遇障立即转向与先预测多条路线的效果。",
+      "tags": [
+        "反射与规划",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/8ff98764ea2fa88e04d1c09b16df1c40f5d92104/search/agents.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "环境可观测性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "完全可观测环境与部分可观测环境在智能体获取状态信息上有何区别？",
+      "answer": "前者提供决策所需的完整状态信息；后者的观测不足以确定完整状态。",
+      "explanation": "部分可观测时，历史观测或状态估计可能有助于决策。",
+      "example": "棋盘完整可见与对手手牌不可见分别体现两类情况。",
+      "tags": [
+        "环境可观测性",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/8ff98764ea2fa88e04d1c09b16df1c40f5d92104/search/agents.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "环境转移不确定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "确定性环境与随机环境在同一状态下执行同一动作的结果有何区别？",
+      "answer": "确定性转移给出唯一结果；随机转移可能有多个结果及其概率。",
+      "explanation": "这是环境转移的性质，与策略本身是否随机不同。",
+      "example": "同一指令在存在执行噪声时可能产生不同结果。",
+      "tags": [
+        "环境转移不确定性",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/8ff98764ea2fa88e04d1c09b16df1c40f5d92104/search/agents.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "已知模型与确定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "已知环境模型是否意味着环境一定是确定性的？",
+      "answer": "不意味着；转移概率已知的环境仍可能有多个随机结果。",
+      "explanation": "已知或未知指智能体是否掌握模型，确定或随机指转移是否有不确定性。",
+      "example": "已知硬币正反概率，仍无法确定下一次结果。",
+      "tags": [
+        "已知模型与确定性",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/8ff98764ea2fa88e04d1c09b16df1c40f5d92104/search/agents.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "静态与动态环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "智能体决策时，静态环境与动态环境的主要区别是什么？",
+      "answer": "静态环境在相关决策期间不自行变化；动态环境可能在智能体思考或行动时变化。",
+      "explanation": "动态环境需要关注信息时效和行动后重新观察。",
+      "example": "固定棋局分析与实时变化的网页状态不同。",
+      "tags": [
+        "静态与动态环境",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/8ff98764ea2fa88e04d1c09b16df1c40f5d92104/search/agents.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "马尔可夫性质",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "受控状态转移中的马尔可夫性质是什么意思？",
+      "answer": "给定当前状态和动作后，下一状态的条件分布不再依赖更早的状态与动作历史。",
+      "explanation": "这是对所选状态表示与模型的假设，不意味着任何单条观测都包含完整状态。",
+      "example": "若当前位置已包含必要信息，可用它和动作预测下一位置分布。",
+      "tags": [
+        "马尔可夫性质",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/601034bdb8ff393400f9ef3b54b1d26b5568d445/mdp/markov-decision-processes.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "状态转移模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "马尔可夫决策过程的转移模型 T(s,a,s′) 表示什么？",
+      "answer": "它表示处于状态 s 并采取动作 a 后转移到状态 s′ 的概率。",
+      "explanation": "它描述环境如何变化，不等同于智能体选择动作的策略。",
+      "example": "同一移动动作可能到达不同位置。",
+      "tags": [
+        "状态转移模型",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/BerkeleyAI/textbook/blob/601034bdb8ff393400f9ef3b54b1d26b5568d445/mdp/markov-decision-processes.md",
+      "referenceTitle": "Berkeley CS188：Agent 与 MDP"
+    },
+    {
+      "id": "obsagent-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "观测模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "POMDP 的观测模型描述什么？",
+      "answer": "它描述给定状态下产生各个观测的概率；某些建模方式也让该概率依赖动作。",
+      "explanation": "观测只是状态的线索，多个状态可能产生相同观测。",
+      "example": "位置不同也可能收到相同的传感器读数。",
+      "tags": [
+        "观测模型",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://www.pomdp.org/tutorial/pomdp-background.html",
+      "referenceTitle": "POMDP.org：部分可观测决策教程"
+    },
+    {
+      "id": "obsagent-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "信念状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "POMDP 中的信念状态（belief state）是什么？",
+      "answer": "它是依据已有信息对当前各可能环境状态形成的概率分布。",
+      "explanation": "它表达智能体的不确定性，不是对真实状态的直接观测。",
+      "example": "智能体认为目标位于甲、乙两处的概率分别为 0.7 和 0.3。",
+      "tags": [
+        "信念状态",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://www.pomdp.org/tutorial/pomdp-background.html",
+      "referenceTitle": "POMDP.org：部分可观测决策教程"
+    },
+    {
+      "id": "obsagent-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "信念更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在已知 POMDP 模型中，更新信念状态通常需要哪些信息？",
+      "answer": "需要先前信念、所采取的动作和新观测，并使用转移与观测模型计算新的分布。",
+      "explanation": "动作影响状态预测，观测再提供修正预测的证据。",
+      "example": "移动后结合传感器读数重新估计位置。",
+      "tags": [
+        "信念更新",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://www.pomdp.org/tutorial/pomdp-background.html",
+      "referenceTitle": "POMDP.org：部分可观测决策教程"
+    },
+    {
+      "id": "obsagent-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "基于信念的策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "POMDP 的基于信念策略以什么为输入来选择动作？",
+      "answer": "它根据当前信念状态选择动作。",
+      "explanation": "信念状态概括对隐藏状态的概率判断，动作仍受任务目标和模型约束。",
+      "example": "不确定物体位置时先选择一次观测动作。",
+      "tags": [
+        "基于信念的策略",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://www.pomdp.org/tutorial/pomdp-solving.html",
+      "referenceTitle": "POMDP.org：部分可观测决策教程"
+    },
+    {
+      "id": "obsagent-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "观测不足与记忆",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "环境的真实状态满足马尔可夫性质时，仅凭最新观测一定能正确选择动作吗？",
+      "answer": "不一定；部分可观测时，最新观测可能无法确定真实状态，历史或信念状态仍有用。",
+      "explanation": "真实状态的马尔可夫性不等于观测序列本身可直接充当完整状态。",
+      "example": "相同传感器读数可能对应不同位置。",
+      "tags": [
+        "观测不足与记忆",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "application",
+      "reference": "https://www.pomdp.org/tutorial/pomdp-background.html",
+      "referenceTitle": "POMDP.org：部分可观测决策教程"
+    },
+    {
+      "id": "obsagent-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 状态与观测",
+      "knowledgePoint": "信念的充分性前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准已知模型的 POMDP 为什么可以用当前信念状态代替完整历史进行决策？",
+      "answer": "在该模型假设下，当前信念包含历史对当前隐藏状态概率判断所需的信息。",
+      "explanation": "结论依赖模型和信念更新正确；真实系统模型失准时不能直接保证。",
+      "example": "用已更新的状态分布继续选择动作。",
+      "tags": [
+        "信念的充分性前提",
+        "Agent",
+        "决策"
+      ],
+      "evidence": "source",
+      "reference": "https://www.pomdp.org/tutorial/pomdp-background.html",
+      "referenceTitle": "POMDP.org：部分可观测决策教程"
+    }
+  ]
+}

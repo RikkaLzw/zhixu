@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "kibana-kql-investigation",
+    "title": "Kibana 8.17：KQL 日志筛选",
+    "url": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的原论文或官方文档自行整理；例子为自编，适用版本与条件见各卡。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "kqlbase-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 8.17 的 KQL 主要用于什么？",
+      "answer": "它使用文本表达式筛选符合条件的文档。",
+      "explanation": "KQL 本身不执行聚合、变换或排序。",
+      "example": "按来源地址筛选安全日志。",
+      "tags": [
+        "用途",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "方言区别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana Query Language 与 Lucene 查询语法是同一种语法吗？",
+      "answer": "不是；两者是不同查询语言，支持的功能和写法不同。",
+      "explanation": "在界面切换语言后应按对应语法编写。",
+      "example": "检查查询栏当前选择的是 KQL 还是 Lucene。",
+      "tags": [
+        "方言区别",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "字段存在",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 8.17 的 KQL 表达式 field:* 检查什么？",
+      "answer": "它匹配该字段有索引值的文档。",
+      "explanation": "空字符串也可以算索引值，字段映射及索引配置影响结果。",
+      "example": "查找具有索引值的用户字段。",
+      "tags": [
+        "字段存在",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "精确字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 8.17 的 KQL 查询 keyword 字段时，值匹配对大小写有什么要求？",
+      "answer": "通常要求与索引值精确匹配，包括大小写和标点。",
+      "explanation": "字段的具体映射与规范化配置也会影响索引值。",
+      "example": "查询 keyword 用户名时区分 Alice 和 alice。",
+      "tags": [
+        "精确字段",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "分析字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 的 KQL 查询 text 字段时，为什么应先了解字段的 analyzer？",
+      "answer": "查询文本会按字段映射的分析设置处理，结果不一定等于原始字符串的精确比较。",
+      "explanation": "分词、大小写处理等取决于分析器配置。",
+      "example": "搜索日志消息前检查该字段的映射。",
+      "tags": [
+        "分析字段",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "短语",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 8.17 的 KQL 如何在 text 字段上要求搜索词按给定顺序组成短语？",
+      "answer": "将查询值用双引号括起来。",
+      "explanation": "文本仍按字段分析规则处理。",
+      "example": "message: \"connection refused\"。",
+      "tags": [
+        "短语",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "比较范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 的 KQL 中如何表达数值字段大于下限且小于等于上限？",
+      "answer": "使用 field > 下限 and field <= 上限。",
+      "explanation": "字段类型应支持对应的范围比较。",
+      "example": "筛选响应字节数在指定区间的记录。",
+      "tags": [
+        "比较范围",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "日期数学",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 的 KQL 中 @timestamp < now-2w 通常筛选什么？",
+      "answer": "筛选时间早于相对当前时间两周之前的文档。",
+      "explanation": "比较基准和时间字段类型需与查询环境一致。",
+      "example": "查看两周前的日志。",
+      "tags": [
+        "日期数学",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "通配符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 8.17 的 KQL 通配符 * 匹配多少字符？",
+      "answer": "它匹配零个或多个字符。",
+      "explanation": "该版本文档只列出 * 作为通配符。",
+      "example": "匹配以某个路径前缀开头的值。",
+      "tags": [
+        "通配符",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "前导通配符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 8.17 为什么默认不允许前导通配符？",
+      "answer": "主要出于性能考虑；可通过 query:allowLeadingWildcards 设置改变。",
+      "explanation": "开启后仍需评估实际查询成本。",
+      "example": "避免在大索引上直接使用 *suffix。",
+      "tags": [
+        "前导通配符",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "布尔组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 的 KQL 如何组合多个筛选条件并明确优先关系？",
+      "answer": "用 AND、OR、NOT 组合条件，并用括号明确分组。",
+      "explanation": "关键字不区分大小写。",
+      "example": "把方法和状态码的两组条件分别括起来。",
+      "tags": [
+        "布尔组合",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "多字段通配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 的 KQL 用字段名通配符同时匹配不同类型字段时，为什么可能报错？",
+      "answer": "同一查询值可能不能用于所有匹配到的字段类型。",
+      "explanation": "例如字符串值可能不适合匹配到的数值字段。",
+      "example": "通配表达式同时命中文本和数值子字段。",
+      "tags": [
+        "多字段通配",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    },
+    {
+      "id": "kqlbase-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "KQL 日志查询",
+      "knowledgePoint": "嵌套对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kibana 的 KQL 对 nested 字段使用 field:{ ... } 有什么作用？",
+      "answer": "它要求括号中的条件匹配同一个嵌套对象。",
+      "explanation": "适用前提是该字段映射为 nested 类型。",
+      "example": "在同一 user 对象中同时匹配姓和名。",
+      "tags": [
+        "嵌套对象",
+        "KQL 日志查询"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/kibana/8.17/kuery-query.html"
+    }
+  ]
+}

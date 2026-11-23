@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "opentelemetry-agent-tracing",
+    "title": "OpenTelemetry 官方文档：分布式追踪",
+    "url": "https://opentelemetry.io/docs/concepts/signals/traces/",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题所列论文或固定版本资料自行整理，示例为自编。在线文档按 2026-11-21 查看内容。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "otelbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 工作流分布式追踪",
+      "knowledgePoint": "追踪标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 的 Trace ID 和 Span ID 分别标识什么？",
+      "answer": "Trace ID 标识一次追踪；Span ID 标识其中一个工作单元。",
+      "explanation": "同一追踪的多个 span 共享 Trace ID，但各自有 Span ID。",
+      "example": "一次请求包含模型调用和工具调用两个 span。",
+      "tags": [
+        "Agent 工作流分布式追踪",
+        "追踪标识"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/traces/"
+    },
+    {
+      "id": "otelbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 工作流分布式追踪",
+      "knowledgePoint": "父子关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 如何表达 span 之间的父子关系？",
+      "answer": "子 span 记录父 span 的标识；根 span 没有父 span。",
+      "explanation": "父子关系表示追踪中的层级，不必等同于物理进程层级。",
+      "example": "工具调用 span 挂在任务处理 span 下。",
+      "tags": [
+        "Agent 工作流分布式追踪",
+        "父子关系"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/traces/"
+    },
+    {
+      "id": "otelbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 工作流分布式追踪",
+      "knowledgePoint": "上下文传播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分布式追踪为什么需要在服务之间传播 span 上下文？",
+      "answer": "让不同服务产生的 span 可以关联到同一追踪及其上下文。",
+      "explanation": "传播机制和完整性会影响最终追踪的可见范围。",
+      "example": "调用远程工具时随请求传递追踪上下文。",
+      "tags": [
+        "Agent 工作流分布式追踪",
+        "上下文传播"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/traces/"
+    },
+    {
+      "id": "otelbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 工作流分布式追踪",
+      "knowledgePoint": "属性与事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "何时更适合把信息记录为 span event 而不是普通 span attribute？",
+      "answer": "当该信息对应的具体发生时间有意义时，可以记录为事件。",
+      "explanation": "普通属性更适合描述操作的元数据。",
+      "example": "记录等待人工审批开始的时刻。",
+      "tags": [
+        "Agent 工作流分布式追踪",
+        "属性与事件"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/traces/"
+    },
+    {
+      "id": "otelbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 工作流分布式追踪",
+      "knowledgePoint": "关联链接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 的 span link 主要解决什么关联需求？",
+      "answer": "把一个 span 与一个或多个其他 span 关联，表示相关或因果联系。",
+      "explanation": "链接可用于异步操作，并不等同于把所有相关 span 都设为父节点。",
+      "example": "批处理任务关联多个来源请求。",
+      "tags": [
+        "Agent 工作流分布式追踪",
+        "关联链接"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/traces/"
+    },
+    {
+      "id": "otelbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 工作流分布式追踪",
+      "knowledgePoint": "客户端与服务端",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 的 Client 和 Server span 分别表示什么？",
+      "answer": "Client 表示同步出站远程调用；Server 表示同步入站远程调用。",
+      "explanation": "这里的同步指调用关系，并不要求使用同步编程语法。",
+      "example": "调用服务与接收请求的服务各记录相应 span。",
+      "tags": [
+        "Agent 工作流分布式追踪",
+        "客户端与服务端"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/traces/"
+    },
+    {
+      "id": "otelbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 工作流分布式追踪",
+      "knowledgePoint": "生产者与消费者",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry 的 Producer 和 Consumer span 分别描述什么？",
+      "answer": "Producer 描述创建任务，Consumer 描述处理该任务。",
+      "explanation": "消费者可以在生产者结束后很久才开始。",
+      "example": "消息入队与后台消费分别产生 span。",
+      "tags": [
+        "Agent 工作流分布式追踪",
+        "生产者与消费者"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/traces/"
+    },
+    {
+      "id": "otelbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 工作流分布式追踪",
+      "knowledgePoint": "导出器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenTelemetry trace exporter 的主要作用是什么？",
+      "answer": "将追踪数据发送给收集器或其他接收端。",
+      "explanation": "导出与后端存储、查询能力是不同环节。",
+      "example": "把 span 发送到 OpenTelemetry Collector。",
+      "tags": [
+        "Agent 工作流分布式追踪",
+        "导出器"
+      ],
+      "evidence": "source",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/traces/"
+    },
+    {
+      "id": "otelbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 工作流分布式追踪",
+      "knowledgePoint": "可见性限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "追踪中没有某个工具调用的 span，能否直接断定该调用没有发生？",
+      "answer": "不能；插桩缺失、采样或导出失败都可能使 span 不可见。",
+      "explanation": "应结合日志与采样、导出状态判断。",
+      "example": "工具已执行，但其追踪数据未送达后端。",
+      "tags": [
+        "Agent 工作流分布式追踪",
+        "可见性限制"
+      ],
+      "evidence": "application",
+      "reference": "https://opentelemetry.io/docs/concepts/signals/traces/"
+    }
+  ]
+}

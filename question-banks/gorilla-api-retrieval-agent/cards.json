@@ -1,0 +1,167 @@
+{
+  "source": {
+    "id": "gorilla-api-retrieval-agent",
+    "title": "Gorilla 论文 v1：API 检索与调用",
+    "url": "https://arxiv.org/pdf/2305.15334v1",
+    "type": "固定版本论文、标准或官方文档",
+    "note": "根据逐题引用的资料自行整理，示例自编；行为以指定版本与前提为准。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "gorilla-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Gorilla 工具调用",
+      "knowledgePoint": "目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gorilla 原论文希望提升大模型哪种能力？",
+      "answer": "根据自然语言需求选择并生成合适的 API 调用。",
+      "explanation": "模型仍可能选择错误接口或生成不正确参数。 字节公开复盘提及 function calling；此题为主题延伸，非原题。",
+      "example": "根据任务描述选择适用的模型接口。",
+      "tags": [
+        "Gorilla 工具调用",
+        "目标",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.15334v1",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型公开面经：function calling 主题延伸，非原题",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "gorilla-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Gorilla 工具调用",
+      "knowledgePoint": "文档检索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gorilla 为什么在 API 调用任务中结合文档检索？",
+      "answer": "让模型参考与当前任务相关的接口文档，以应对大量或变化的 API。",
+      "explanation": "检索资料不保证一定正确或覆盖所需版本。 字节公开复盘提及 function calling；此题为主题延伸，非原题。",
+      "example": "根据当前接口文档生成调用。",
+      "tags": [
+        "Gorilla 工具调用",
+        "文档检索",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.15334v1",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型公开面经：function calling 主题延伸，非原题",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "gorilla-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Gorilla 工具调用",
+      "knowledgePoint": "检索训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gorilla 论文中的 retriever-aware training 怎样使用检索到的资料？",
+      "answer": "在训练提示中附加参考 API 文档，让模型学习结合文档回答调用需求。",
+      "explanation": "论文同时研究无检索和有检索的推理设置。",
+      "example": "训练模型从文档中识别参数。",
+      "tags": [
+        "Gorilla 工具调用",
+        "检索训练"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.15334v1"
+    },
+    {
+      "id": "gorilla-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Gorilla 工具调用",
+      "knowledgePoint": "基准来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gorilla 论文的 APIBench 主要从哪些模型平台收集 API 文档？",
+      "answer": "从 Hugging Face、Torch Hub 和 TensorFlow Hub 收集。",
+      "explanation": "论文使用合成指令与参考 API 组成评测数据。",
+      "example": "评估对不同模型平台接口的选择。",
+      "tags": [
+        "Gorilla 工具调用",
+        "基准来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.15334v1"
+    },
+    {
+      "id": "gorilla-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Gorilla 工具调用",
+      "knowledgePoint": "合成指令",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gorilla 论文如何为 API 文档构造自然语言指令数据？",
+      "answer": "使用少量示例和 API 文档，引导模型合成指令与参考 API 对。",
+      "explanation": "合成指令的分布和质量会影响评测范围。",
+      "example": "为一个模型接口生成多种任务表述。",
+      "tags": [
+        "Gorilla 工具调用",
+        "合成指令"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.15334v1"
+    },
+    {
+      "id": "gorilla-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Gorilla 工具调用",
+      "knowledgePoint": "幻觉定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gorilla 论文如何区分 API 幻觉与错误调用？",
+      "answer": "论文将与数据库中任何 API 均不匹配的调用视为幻觉；对已有 API 的错误使用视为调用错误。",
+      "explanation": "这是该论文的操作性定义，不等于所有工具评测的统一定义。",
+      "example": "区分虚构的接口和真实接口的错误参数。",
+      "tags": [
+        "Gorilla 工具调用",
+        "幻觉定义"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.15334v1"
+    },
+    {
+      "id": "gorilla-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Gorilla 工具调用",
+      "knowledgePoint": "静态评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gorilla 论文用 AST 子树匹配识别 API 调用，能否单独保证代码实际运行正确？",
+      "answer": "不能；子树匹配核对选定的语法和参数结构，运行环境与行为还需单独验证。",
+      "explanation": "不同版本或依赖状态可能导致实际执行结果不同。",
+      "example": "对匹配的候选调用继续执行受控验证。",
+      "tags": [
+        "Gorilla 工具调用",
+        "静态评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.15334v1"
+    }
+  ]
+}

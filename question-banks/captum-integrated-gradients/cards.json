@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "captum-integrated-gradients",
+    "title": "Captum 0.8.0 与原论文：积分梯度",
+    "url": "https://github.com/pytorch/captum/blob/v0.8.0/captum/attr/_core/integrated_gradients.py",
+    "type": "论文、固定版本文档与源码",
+    "note": "根据逐题引用的资料自行整理；示例为自编，具体版本见题干。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "intgrad-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "积分梯度模型解释",
+      "knowledgePoint": "积分梯度思想",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "积分梯度如何把模型输出变化分配到输入特征？",
+      "answer": "它沿基线到输入的路径积分梯度，并结合输入相对基线的变化。",
+      "explanation": "解释针对选定模型输出和基线，不直接证明因果关系。",
+      "example": "解释某条输入对分类分数的各特征贡献。",
+      "tags": [
+        "积分梯度模型解释",
+        "积分梯度思想"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1703.01365v2"
+    },
+    {
+      "id": "intgrad-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "积分梯度模型解释",
+      "knowledgePoint": "参考基线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "积分梯度中的基线表示什么？",
+      "answer": "它是作为解释参照的输入，积分路径从基线走向待解释样本。",
+      "explanation": "不同基线可能导致不同归因，需结合任务选择。",
+      "example": "用零向量作为数值特征的一个参考点。",
+      "tags": [
+        "积分梯度模型解释",
+        "参考基线"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1703.01365v2"
+    },
+    {
+      "id": "intgrad-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "积分梯度模型解释",
+      "knowledgePoint": "默认基线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Captum 0.8.0 IntegratedGradients 未传入 baselines 时使用什么？",
+      "answer": "对每个输入张量使用标量零作为基线并广播。",
+      "explanation": "零基线不一定在所有数据领域都有合理语义。",
+      "example": "图像解释可能需要考虑零像素是否合适。",
+      "tags": [
+        "积分梯度模型解释",
+        "默认基线"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/captum/blob/v0.8.0/captum/attr/_core/integrated_gradients.py"
+    },
+    {
+      "id": "intgrad-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "积分梯度模型解释",
+      "knowledgePoint": "完整性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准积分梯度的完整性性质如何联系归因总和与模型输出？",
+      "answer": "各特征归因之和等于输入输出与基线输出之差；数值近似可能有误差。",
+      "explanation": "这里指乘以输入差值的标准归因，并假定满足相应数学条件。",
+      "example": "线性模型可用归因和核对输出差。",
+      "tags": [
+        "积分梯度模型解释",
+        "完整性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1703.01365v2"
+    },
+    {
+      "id": "intgrad-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "积分梯度模型解释",
+      "knowledgePoint": "指定输出",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "Captum IntegratedGradients 解释多类别模型时，target 参数通常用来选择什么？",
+      "answer": "选择需要计算归因的输出索引，例如目标类别分数。",
+      "explanation": "二维输出可为整个批次指定一个类别，或为每个样本分别指定。",
+      "example": "解释类别 2 的 logit。",
+      "tags": [
+        "积分梯度模型解释",
+        "指定输出"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/captum/blob/v0.8.0/captum/attr/_core/integrated_gradients.py"
+    },
+    {
+      "id": "intgrad-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "积分梯度模型解释",
+      "knowledgePoint": "收敛误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Captum IntegratedGradients 设置 return_convergence_delta=True 会额外得到什么？",
+      "answer": "得到依据完整性计算的近似误差 delta。",
+      "explanation": "delta 小只说明归因和接近对应输出差，不能单独证明解释可信。",
+      "example": "比较数值积分误差时检查 delta。",
+      "tags": [
+        "积分梯度模型解释",
+        "收敛误差"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/captum/blob/v0.8.0/captum/attr/_core/integrated_gradients.py"
+    },
+    {
+      "id": "intgrad-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "积分梯度模型解释",
+      "knowledgePoint": "积分步数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Captum 的 IntegratedGradients 使用 n_steps 控制什么？",
+      "answer": "它控制近似积分时沿基线到输入路径使用的采样步数。",
+      "explanation": "精度和计算成本依模型、积分方法与步数而定。",
+      "example": "增加步数通常会增加前向和反向计算。",
+      "tags": [
+        "积分梯度模型解释",
+        "积分步数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/captum/blob/v0.8.0/captum/attr/_core/integrated_gradients.py"
+    },
+    {
+      "id": "intgrad-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "积分梯度模型解释",
+      "knowledgePoint": "额外前向参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Captum 的 additional_forward_args 会作为被归因的输入吗？",
+      "answer": "不会；它们传给前向函数，但不对这些参数计算归因。",
+      "explanation": "张量额外参数按文档沿积分步重复以匹配批次。",
+      "example": "模型还需要固定的序列长度时可将其作为额外参数。",
+      "tags": [
+        "积分梯度模型解释",
+        "额外前向参数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/captum/blob/v0.8.0/captum/attr/_core/integrated_gradients.py"
+    },
+    {
+      "id": "intgrad-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "积分梯度模型解释",
+      "knowledgePoint": "局部归因模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Captum IntegratedGradients 设置 multiply_by_inputs=False 时，输出与默认值有什么区别？",
+      "answer": "输出不再乘以输入与基线的差值，得到局部敏感度形式。",
+      "explanation": "标准完整性求和不能直接假定对该形式成立。",
+      "example": "输入等于基线时，局部梯度积分不必为零。",
+      "tags": [
+        "积分梯度模型解释",
+        "局部归因模式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/captum/blob/v0.8.0/captum/attr/_core/integrated_gradients.py"
+    }
+  ]
+}

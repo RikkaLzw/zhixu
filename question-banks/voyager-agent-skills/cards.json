@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "voyager-agent-skills",
+    "title": "Voyager 自动课程与技能：原论文与方法",
+    "url": "https://arxiv.org/html/2305.16291v1",
+    "type": "研究论文",
+    "note": "根据指定版本论文逐题整理；实践推论标为 application，原研究结论保留环境及实验前提。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "voyager-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Voyager 自动课程与技能",
+      "knowledgePoint": "自动课程的上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Voyager 的自动课程如何结合当前进度提出新任务？",
+      "answer": "它根据智能体当前状态及已完成、失败的任务，生成适合继续探索的新目标。",
+      "explanation": "论文中的目标不是固定顺序播放的任务清单。",
+      "example": "资源不足时，先提出更基础的采集任务。",
+      "tags": [
+        "自动课程的上下文",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2305.16291v1#S2.SS1",
+      "referenceTitle": "Voyager 自动课程与技能 原论文：S2.SS1"
+    },
+    {
+      "id": "voyager-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Voyager 自动课程与技能",
+      "knowledgePoint": "代码形式的技能",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Voyager 的技能库主要保存什么形式的技能？",
+      "answer": "保存可执行的代码程序，让智能体用程序完成一段较长的行为。",
+      "explanation": "每个技能对应自动课程提出的一类任务。",
+      "example": "把采集木材的行为封装成可调用程序。",
+      "tags": [
+        "代码形式的技能",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2305.16291v1#S2.SS2",
+      "referenceTitle": "Voyager 自动课程与技能 原论文：S2.SS2"
+    },
+    {
+      "id": "voyager-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Voyager 自动课程与技能",
+      "knowledgePoint": "技能索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Voyager 如何为技能库中的程序建立检索索引？",
+      "answer": "它用程序描述的向量作为索引，将对应程序作为可取回的内容。",
+      "explanation": "描述由模型生成，其质量会影响后续检索。",
+      "example": "按技能描述检索相关的采集程序。",
+      "tags": [
+        "技能索引",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2305.16291v1#S2.SS2",
+      "referenceTitle": "Voyager 自动课程与技能 原论文：S2.SS2"
+    },
+    {
+      "id": "voyager-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Voyager 自动课程与技能",
+      "knowledgePoint": "技能组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Voyager 怎样利用已有技能构造更复杂的技能？",
+      "answer": "新程序可以调用已有的技能程序，将较简单的行为组合起来。",
+      "explanation": "复用仍依赖可用的技能和正确的调用条件。",
+      "example": "把采集与制作程序组合成制作工具的程序。",
+      "tags": [
+        "技能组合",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2305.16291v1#S2.SS2",
+      "referenceTitle": "Voyager 自动课程与技能 原论文：S2.SS2"
+    },
+    {
+      "id": "voyager-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Voyager 自动课程与技能",
+      "knowledgePoint": "环境与解释器反馈",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Voyager 的环境反馈与代码执行错误分别提供什么信息？",
+      "answer": "环境反馈反映任务执行中的环境状态或进展；执行错误报告程序解释器发现的无效操作或语法错误。",
+      "explanation": "两种反馈都可以用于下一轮改进代码。",
+      "example": "材料不足属于环境反馈，未定义函数属于执行错误。",
+      "tags": [
+        "环境与解释器反馈",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2305.16291v1#S2.SS3",
+      "referenceTitle": "Voyager 自动课程与技能 原论文：S2.SS3"
+    },
+    {
+      "id": "voyager-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Voyager 自动课程与技能",
+      "knowledgePoint": "技能成功自检",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Voyager 如何检查生成的程序是否完成了当前任务？",
+      "answer": "它将当前状态和任务交给另一个 GPT-4 智能体充当评审，判断任务是否完成并在失败时提供建议。",
+      "explanation": "代码运行结束并不自动证明任务目标已经达成。",
+      "example": "程序运行后，再检查目标物品是否已获得。",
+      "tags": [
+        "技能成功自检",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2305.16291v1#S2.SS3",
+      "referenceTitle": "Voyager 自动课程与技能 原论文：S2.SS3"
+    },
+    {
+      "id": "voyager-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Voyager 自动课程与技能",
+      "knowledgePoint": "不微调的技能积累",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Voyager 如何在不微调 GPT-4 参数的情况下积累能力？",
+      "answer": "它通过黑盒调用模型，并把经过验证的程序保存在外部技能库中供后续检索和组合。",
+      "explanation": "库的增长是外部程序和上下文的积累，不等于模型权重更新。",
+      "example": "新任务检索并调用此前保存的程序。",
+      "tags": [
+        "不微调的技能积累",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2305.16291v1#S2.SS2",
+      "referenceTitle": "Voyager 自动课程与技能 原论文：S2.SS2"
+    },
+    {
+      "id": "voyager-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Voyager 自动课程与技能",
+      "knowledgePoint": "任务可行性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Voyager 自动课程提出的目标仍需检查可行性？",
+      "answer": "论文报告模型有时会提出环境中不存在或无法实现的任务。",
+      "explanation": "生成目标并不保证目标符合环境规则。",
+      "example": "模型要求制作游戏里不存在的装备。",
+      "tags": [
+        "任务可行性",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2305.16291v1#S4",
+      "referenceTitle": "Voyager 自动课程与技能 原论文：S4"
+    },
+    {
+      "id": "voyager-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Voyager 自动课程与技能",
+      "knowledgePoint": "新世界评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Voyager 的未见任务实验重置世界和清空物品后，还能利用什么已积累的能力？",
+      "answer": "仍可使用先前构建的技能库，检验技能在新世界和未见任务中的复用。",
+      "explanation": "这一区分有助于理解环境资源和外部技能程序的不同。",
+      "example": "新世界从空背包开始，仍检索已有采集程序。",
+      "tags": [
+        "新世界评估",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2305.16291v1#S3.SS3",
+      "referenceTitle": "Voyager 自动课程与技能 原论文：S3.SS3"
+    }
+  ]
+}

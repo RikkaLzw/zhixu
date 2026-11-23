@@ -1,0 +1,111 @@
+{
+  "source": {
+    "id": "company-ctrip-process",
+    "title": "携程公开面经：主机进程树",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x39-%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-%E5%9F%BA%E7%A1%80%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+    "type": "公开面经合集",
+    "note": "公司、岗位和经历为分享者自述；标注主题启发的卡是延伸练习，答案另由技术文档核验。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "ctripproc-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "进程树与主机行为",
+      "knowledgePoint": "进程树重建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全检测中如何利用进程创建事件构建进程树？",
+      "answer": "将进程实例作为节点，用事件中的父进程标识把子节点连接到对应的父节点。",
+      "explanation": "进程号可能复用，应结合进程实例标识或时间等上下文，并考虑采集缺失。",
+      "example": "将命令解释器与创建它的应用进程关联。",
+      "tags": [
+        "进程树重建",
+        "主机检测",
+        "公开面经",
+        "携程"
+      ],
+      "evidence": "application",
+      "referenceId": "company-ctrip",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x39-%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-%E5%9F%BA%E7%A1%80%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "携程基础安全工程师公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "ecs-process-interview",
+          "title": "Elastic Common Schema：进程与父进程字段",
+          "url": "https://www.elastic.co/guide/en/ecs/current/ecs-process.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "ctripproc-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "进程树与主机行为",
+      "knowledgePoint": "进程结束事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "采集进程结束事件能为进程树分析提供什么信息？",
+      "answer": "它提供进程实例的结束时间，可辅助估计进程存续时间并区分已结束的实例。",
+      "explanation": "判断当前状态仍受事件过滤、丢失和采集时段限制。",
+      "example": "关联同一进程的创建和结束事件。",
+      "tags": [
+        "进程结束事件",
+        "主机检测",
+        "公开面经",
+        "携程"
+      ],
+      "evidence": "application",
+      "referenceId": "company-ctrip",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x39-%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-%E5%9F%BA%E7%A1%80%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "携程基础安全工程师公开面经（合集收录，经历为分享者自述）；进程树主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sysmon-lifecycle-interview",
+          "title": "Sysmon：Process terminated",
+          "url": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-5-process-terminated",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "ctripproc-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "进程树与主机行为",
+      "knowledgePoint": "父进程标识伪装",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 进程树中的父进程标识能否单独证明真实的进程创建者？",
+      "answer": "不能；Windows 支持指定新进程的父进程，攻击者可能利用这一能力伪装父子关系。",
+      "explanation": "应结合其他进程创建和行为证据复核，指定父进程也可能有合法用途。",
+      "example": "调查进程树中的异常父子关系。",
+      "tags": [
+        "父进程标识伪装",
+        "主机检测",
+        "公开面经",
+        "携程"
+      ],
+      "evidence": "application",
+      "referenceId": "company-ctrip",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x39-%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-%E5%9F%BA%E7%A1%80%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "携程基础安全工程师公开面经（合集收录，经历为分享者自述）；进程树主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "mitre-parent-spoof-interview",
+          "title": "MITRE ATT&CK：Parent PID Spoofing",
+          "url": "https://attack.mitre.org/techniques/T1134/004/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

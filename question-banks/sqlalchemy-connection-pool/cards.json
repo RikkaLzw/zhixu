@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "sqlalchemy-connection-pool",
+    "title": "SQLAlchemy 2.0 文档：数据库连接池",
+    "url": "https://docs.sqlalchemy.org/en/20/core/pooling.html",
+    "type": "官方文档或教材",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以注明版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "dbpool-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库连接池",
+      "knowledgePoint": "惰性连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy 2.0 的连接池创建后会立即预建 pool_size 条数据库连接吗？",
+      "answer": "不会；连接池通常在首次使用时才创建连接，并按并发借用需求增长。",
+      "explanation": "首次借用才触发底层连接建立。",
+      "example": "仅创建 engine 不代表已建立 5 条连接。",
+      "tags": [
+        "SQLAlchemy",
+        "惰性连接"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/core/pooling.html"
+    },
+    {
+      "id": "dbpool-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库连接池",
+      "knowledgePoint": "归还连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy 2.0 使用连接池时关闭 Connection，通常对底层连接做什么？",
+      "answer": "通常将连接归还池中供复用；若池不保留该连接，也可能关闭底层连接。",
+      "explanation": "应用仍应尽快关闭或使用上下文管理器归还连接。",
+      "example": "with engine.connect() as conn 在块结束时关闭包装连接。",
+      "tags": [
+        "SQLAlchemy",
+        "归还连接"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/core/pooling.html"
+    },
+    {
+      "id": "dbpool-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库连接池",
+      "knowledgePoint": "并发上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy QueuePool 的 pool_size=5、max_overflow=2 时最多可同时借出多少连接？",
+      "answer": "最多 7 条：5 条池内连接加上 2 条临时溢出连接。",
+      "explanation": "该计算针对有限的正 pool_size 与非负 max_overflow。",
+      "example": "第 8 个并发借用请求需等待可用连接。",
+      "tags": [
+        "SQLAlchemy",
+        "并发上限"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/core/pooling.html"
+    },
+    {
+      "id": "dbpool-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库连接池",
+      "knowledgePoint": "溢出连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy QueuePool 超过 pool_size 的溢出连接在归还时如何处理？",
+      "answer": "池只保留最多 pool_size 条连接，多余的归还连接会被关闭。",
+      "explanation": "最终保留哪些物理连接取决于归还顺序等情况。",
+      "example": "pool_size=1 时，空闲池最多保留 1 条。",
+      "tags": [
+        "SQLAlchemy",
+        "溢出连接"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/core/pooling.html"
+    },
+    {
+      "id": "dbpool-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库连接池",
+      "knowledgePoint": "借用超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy QueuePool 已达到并发上限且连接未及时归还时，等待超过 pool_timeout 会怎样？",
+      "answer": "借用连接的调用会抛出超时异常。",
+      "explanation": "超时设置以秒为单位。",
+      "example": "pool_timeout=2 时等待上限为约 2 秒。",
+      "tags": [
+        "SQLAlchemy",
+        "借用超时"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/core/pooling.html"
+    },
+    {
+      "id": "dbpool-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库连接池",
+      "knowledgePoint": "归还清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy 2.0 默认归还连接时为什么要回滚未结束的事务？",
+      "answer": "回滚清除未提交数据和事务持有的锁等状态，避免下一次借用继承它们。",
+      "explanation": "Connection 本身和池的清理过程可能共同参与回滚。",
+      "example": "未提交的 INSERT 不应留给下一位借用者。",
+      "tags": [
+        "SQLAlchemy",
+        "归还清理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/core/pooling.html"
+    },
+    {
+      "id": "dbpool-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库连接池",
+      "knowledgePoint": "连接存活检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy 的 pool_pre_ping 主要在什么时候检查连接是否可用？",
+      "answer": "在从池中借出连接时检测；失效时尝试替换并使相关旧连接失效。",
+      "explanation": "具体 ping 或测试查询取决于数据库方言。",
+      "example": "数据库重启后，下次借用时检测失效连接。",
+      "tags": [
+        "SQLAlchemy",
+        "连接存活检查"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/core/pooling.html"
+    },
+    {
+      "id": "dbpool-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库连接池",
+      "knowledgePoint": "中途断线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy 的 pool_pre_ping 能否保证事务执行过程中网络断开时事务自动恢复？",
+      "answer": "不能；它主要检测借出时的连接，执行中断线仍需要应用按事务语义处理和重试。",
+      "explanation": "需要评估重试可能带来的重复写入。",
+      "example": "事务中途断开后重新开始整个事务。",
+      "tags": [
+        "SQLAlchemy",
+        "中途断线"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/core/pooling.html"
+    },
+    {
+      "id": "dbpool-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库连接池",
+      "knowledgePoint": "禁用复用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQLAlchemy 的 NullPool 对数据库连接如何处理？",
+      "answer": "每次借用时打开连接，归还时关闭底层连接，不在池中保留连接复用。",
+      "explanation": "NullPool 不等于应用可以忘记关闭连接。",
+      "example": "适用于不需要保持空闲连接的场景。",
+      "tags": [
+        "SQLAlchemy",
+        "禁用复用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.sqlalchemy.org/en/20/core/pooling.html"
+    }
+  ]
+}

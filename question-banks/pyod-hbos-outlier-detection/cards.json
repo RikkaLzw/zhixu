@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "pyod-hbos-outlier-detection",
+    "title": "PyOD 2.0.5 源码：HBOS 异常检测",
+    "url": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/hbos.py",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "pyhbos-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "HBOS 直方图异常检测",
+      "knowledgePoint": "方法假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 的 HBOS 用什么方式表示各特征分布，采用什么常见简化假设？",
+      "answer": "为各特征建立一维直方图，并假设特征相互独立。",
+      "explanation": "强特征依赖可能使该简化不能充分描述联合分布。",
+      "example": "对多个事件特征分别估计密度。",
+      "tags": [
+        "HBOS 直方图异常检测",
+        "方法假设"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/hbos.py"
+    },
+    {
+      "id": "pyhbos-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "HBOS 直方图异常检测",
+      "knowledgePoint": "密度与概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 HBOS 使用 density=True 的直方图时，柱高是否就是该区间的概率？",
+      "answer": "不一定；柱高是密度，柱高乘区间宽度才对应区间概率。",
+      "explanation": "各柱的宽度与高度乘积之和近似为 1。",
+      "example": "不能把不同宽度区间的柱高直接当作概率。",
+      "tags": [
+        "HBOS 直方图异常检测",
+        "密度与概率"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/hbos.py"
+    },
+    {
+      "id": "pyhbos-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "HBOS 直方图异常检测",
+      "knowledgePoint": "平滑参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 HBOS 的 alpha 在计算单特征分数时有什么作用？",
+      "answer": "在直方图密度上加平滑项后再取对数，避免零密度直接导致对数无穷。",
+      "explanation": "该值也会影响不同密度之间的分数差异。",
+      "example": "某个区间没有训练样本时仍可计算有限分量。",
+      "tags": [
+        "HBOS 直方图异常检测",
+        "平滑参数"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/hbos.py"
+    },
+    {
+      "id": "pyhbos-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "HBOS 直方图异常检测",
+      "knowledgePoint": "固定分箱边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 HBOS 设置 n_bins=2，调用 fit 会成功吗？",
+      "answer": "不会；该版本的参数检查使用开区间，2 会触发 ValueError。",
+      "explanation": "这是固定整数分箱路径的实现行为，应按使用版本验证。",
+      "example": "可使用大于 2 的合法整数进行固定分箱。",
+      "tags": [
+        "HBOS 直方图异常检测",
+        "固定分箱边界"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/hbos.py"
+    },
+    {
+      "id": "pyhbos-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "HBOS 直方图异常检测",
+      "knowledgePoint": "自动分箱",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 HBOS 设置 n_bins=\"auto\" 时，如何选择各特征的分箱数？",
+      "answer": "按每个特征的数据分别选择分箱数。",
+      "explanation": "不同特征可以得到不同数量的区间。",
+      "example": "无需对所有特征强制同一个固定分箱数。",
+      "tags": [
+        "HBOS 直方图异常检测",
+        "自动分箱"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/hbos.py"
+    },
+    {
+      "id": "pyhbos-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "HBOS 直方图异常检测",
+      "knowledgePoint": "范围外处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 PyOD 2.0.5 HBOS 的固定整数分箱路径中，tol 主要影响什么？",
+      "answer": "影响落在训练直方图区间之外的值，何时仍使用最近边界区间的分数。",
+      "explanation": "超出容差时实现采用该特征的最低密度分数；自动分箱路径另有实现细节。",
+      "example": "测试样本略超出最小或最大边界时检查分数规则。",
+      "tags": [
+        "HBOS 直方图异常检测",
+        "范围外处理"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/yzhao062/pyod/v2.0.5/pyod/models/hbos.py"
+    }
+  ]
+}

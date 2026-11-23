@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "nist-incident-analysis-communication",
+    "title": "NIST SP 800-61r3：事件分析与沟通",
+    "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf",
+    "type": "官方资料与技术文档",
+    "note": "依据逐题引用的官方资料自行整理；示例为自编，在线资料查看于 2026-11-21。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "nistir-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "事件分析与沟通",
+      "knowledgePoint": "隐蔽范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 NIST SP 800-61r3 建议在已知受影响资产之外检查其他潜在目标？",
+      "answer": "事件可能还影响其他资产；只检查已知目标可能低估范围。",
+      "explanation": "可结合持久化迹象和失陷指标扩大调查，并随新证据修订范围估计。",
+      "example": "在相关服务器上检查同类持久化行为。",
+      "tags": [
+        "事件分析与沟通",
+        "隐蔽范围"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "nistir-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件分析与沟通",
+      "knowledgePoint": "协调与通知",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 中 incident coordination 与 incident notification 的侧重点有什么区别？",
+      "answer": "协调是让参与响应的相关方同步当前及计划中的行动；通知是正式告知受影响方或监管方等。",
+      "explanation": "事件信息共享则通常向其他方提供观察到的威胁信息。",
+      "example": "处理团队协调处置，同时按流程通知受影响客户。",
+      "tags": [
+        "事件分析与沟通",
+        "协调与通知"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "nistir-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件分析与沟通",
+      "knowledgePoint": "遏制时效",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 选择遏制措施时为什么要考虑措施持续时间？",
+      "answer": "措施可能只是紧急或临时方案，需要明确何时复查、替换或移除。",
+      "explanation": "具体期限由事件和组织需要决定。",
+      "example": "临时隔离规则需要安排后续复核。",
+      "tags": [
+        "事件分析与沟通",
+        "遏制时效"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "nistir-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件分析与沟通",
+      "knowledgePoint": "恢复顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 建议如何确认关键业务服务已恢复正常？",
+      "answer": "验证关键服务按适当次序恢复，并与系统负责人确认恢复成功、运行状态回归正常。",
+      "explanation": "恢复顺序应考虑业务依赖和影响。",
+      "example": "先恢复关键身份服务，再恢复依赖它的应用。",
+      "tags": [
+        "事件分析与沟通",
+        "恢复顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "nistir-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件分析与沟通",
+      "knowledgePoint": "恢复后监测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 为什么建议监测已恢复系统的运行情况？",
+      "answer": "持续监测有助于验证恢复是否充分、系统是否正常运行。",
+      "explanation": "监测不应替代上线前的完整性检查。",
+      "example": "恢复服务后观察故障和可疑活动。",
+      "tags": [
+        "事件分析与沟通",
+        "恢复后监测"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "nistir-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件分析与沟通",
+      "knowledgePoint": "事后报告",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 建议事后报告至少记录哪类内容？",
+      "answer": "记录事件本身、响应和恢复行动，以及经验教训。",
+      "explanation": "报告可支持后续改进和追溯。",
+      "example": "总结发生的情况、已完成处置和待改进项。",
+      "tags": [
+        "事件分析与沟通",
+        "事后报告"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    }
+  ]
+}

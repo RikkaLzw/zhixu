@@ -1,0 +1,112 @@
+{
+  "source": {
+    "id": "threat-indicator-quality",
+    "title": "NIST SP 800-150：威胁指标质量",
+    "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf",
+    "type": "官方标准",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "ctiqual-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报质量",
+      "knowledgePoint": "多来源与独立性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多个报告提供同一威胁指标，为什么仍要检查其原始来源？",
+      "answer": "多个报告可能转引同一个来源，不能仅凭报告数量认定存在独立交叉验证。",
+      "explanation": "保留来源链可帮助分析哪些信息真正独立。",
+      "example": "两份报告都引用同一篇初始通告时继续寻找独立证据。",
+      "tags": [
+        "多来源与独立性",
+        "情报质量",
+        "威胁情报"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    },
+    {
+      "id": "ctiqual-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报质量",
+      "knowledgePoint": "指标准确与相关",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "威胁指标准确就一定与本组织有关吗？",
+      "answer": "不一定；准确性和与组织环境的相关性是不同的质量维度。",
+      "explanation": "无关但准确的指标仍可能消耗分析资源。",
+      "example": "已确认的攻击指标可能针对本组织未使用的平台。",
+      "tags": [
+        "指标准确与相关",
+        "情报质量",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    },
+    {
+      "id": "ctiqual-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报质量",
+      "knowledgePoint": "完整性与事实准确",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "通过数字签名验证的威胁情报，其内容一定准确吗？",
+      "answer": "不一定；签名可帮助验证来源和内容完整性，不能单独证明内容判断正确。",
+      "explanation": "内容仍需要结合来源可靠性和其他证据评估。",
+      "example": "可信来源签发的报告也可能包含后来被修正的指标。",
+      "tags": [
+        "完整性与事实准确",
+        "情报质量",
+        "威胁情报"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    },
+    {
+      "id": "ctiqual-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报质量",
+      "knowledgePoint": "指标修正与撤回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "威胁情报共享中发现已发布指标错误时，为什么要支持修正或撤回？",
+      "answer": "接收方可能已用该指标检测或阻断，及时更新有助于减少持续误判和不必要处置。",
+      "explanation": "应让接收方能够识别被修改或撤回的记录。",
+      "example": "确认某 IP 被错误标记后发布修正。",
+      "tags": [
+        "指标修正与撤回",
+        "情报质量",
+        "威胁情报"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    },
+    {
+      "id": "ctiqual-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报质量",
+      "knowledgePoint": "指标上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么仅有 IP、域名或文件哈希常不足以决定如何处置？",
+      "answer": "指标本身可能含糊，需要结合来源、时间、关联行为及可信度等上下文。",
+      "explanation": "补充元数据有助于理解指标的用途和适用范围。",
+      "example": "查看域名相关报告的观测时间及行为描述。",
+      "tags": [
+        "指标上下文",
+        "情报质量",
+        "威胁情报"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "http-versions-quic",
+    "title": "HTTP/2、HTTP/3 与 QUIC：RFC 9113、9114 和 9000",
+    "url": "https://www.rfc-editor.org/rfc/rfc9114.html",
+    "type": "标准、教材与官方技术文档",
+    "note": "根据逐题引用的标准、教材或官方文档自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "httpver-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "协议层次",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP/2 与 HTTP/3 分别通常使用什么传输协议？",
+      "answer": "HTTP/2 通常建立在 TCP 上；HTTP/3 把 HTTP 映射到 QUIC，QUIC 通常使用 UDP 数据报。",
+      "explanation": "QUIC 在 UDP 之上实现可靠传输、拥塞控制等机制。",
+      "example": "浏览器与服务器协商使用 HTTP/3 后，通过 QUIC 通信。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "协议层次"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9114.html"
+    },
+    {
+      "id": "httpver-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "语义兼容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP/2 把 HTTP 消息改成二进制分帧后，GET、POST 等方法语义是否自动改变？",
+      "answer": "不改变；HTTP/2 保留 HTTP 的方法、状态码等语义，改变消息的传输方式。",
+      "explanation": "应用仍应遵循相应 HTTP 语义。",
+      "example": "GET 和 POST 的含义并不因传输版本而互换。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "语义兼容"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9113.html"
+    },
+    {
+      "id": "httpver-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "二进制分帧",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP/2 的二进制分帧层主要做什么？",
+      "answer": "它把 HTTP 消息拆成不同类型的帧，在连接上标识并传输。",
+      "explanation": "例如 HEADERS 和 DATA 帧可承载消息头部和内容。",
+      "example": "一个响应的头部和内容可以分别编码。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "二进制分帧"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9113.html"
+    },
+    {
+      "id": "httpver-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "多路复用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP/2 的多路复用允许一个连接上发生什么？",
+      "answer": "允许多个 HTTP 流的帧在同一连接上交错传输。",
+      "explanation": "每个流承载相应请求与响应，应用仍需考虑资源限制。",
+      "example": "图片和页面请求可以共享连接。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "多路复用"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9113.html"
+    },
+    {
+      "id": "httpver-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "TCP队头阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP/2 在 TCP 上为什么仍可能出现传输层队头阻塞？",
+      "answer": "TCP 按序交付字节；丢失的 TCP 数据恢复前，后续数据可能无法交付给所有受影响的流。",
+      "explanation": "HTTP/2 的帧交错并不能消除 TCP 字节流层面的阻塞。",
+      "example": "同一 TCP 连接上的丢包可能使多个请求暂时停滞。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "TCP队头阻塞"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9114.html"
+    },
+    {
+      "id": "httpver-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "头部压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP/2 使用什么机制压缩请求和响应头部？",
+      "answer": "使用 HPACK 压缩头部字段。",
+      "explanation": "这减少重复字段传输，但不改变字段语义。",
+      "example": "多个请求可以复用压缩表中的头部信息。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "头部压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9113.html"
+    },
+    {
+      "id": "httpver-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "控制字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP/2 的 :method、:scheme 和 :path 这类字段有什么作用？",
+      "answer": "它们是伪头部字段，用于传递请求方法、目标等控制信息。",
+      "explanation": "伪头部字段有专门的顺序与适用规则。",
+      "example": "请求方法可放在 :method 中。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "控制字段"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9113.html"
+    },
+    {
+      "id": "httpver-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "HTTP3流",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP/3 通常如何承载一个请求及其响应？",
+      "answer": "一个请求—响应交互使用一个客户端发起的双向 QUIC 流。",
+      "explanation": "控制信息等还使用专门的单向流。",
+      "example": "两个并发请求可以使用两个不同的 QUIC 流。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "HTTP3流"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9114.html"
+    },
+    {
+      "id": "httpver-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "QUIC阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "QUIC 某个流的数据丢失是否必然阻止其他流交付已经收到的数据？",
+      "answer": "不必然；QUIC 在流级别提供有序可靠交付，一个流缺失数据不必阻塞其他流。",
+      "explanation": "流之间仍共享连接级拥塞控制，其他依赖也可能影响进度。",
+      "example": "请求 A 的缺失数据不必挡住请求 B 已到达的数据。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "QUIC阻塞"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9114.html"
+    },
+    {
+      "id": "httpver-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "头部压缩差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP/3 为什么用 QPACK 而不是直接使用 HTTP/2 的 HPACK？",
+      "answer": "QUIC 各流不提供跨流的统一有序交付，QPACK 针对这种传输方式调整了头部压缩。",
+      "explanation": "QPACK 仍可能因动态表依赖发生一定阻塞。",
+      "example": "压缩字段引用的表更新尚未收到时可能等待。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "头部压缩差异"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9114.html"
+    },
+    {
+      "id": "httpver-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "连接迁移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "QUIC 连接迁移允许什么情况？",
+      "answer": "在满足协议与对端限制时，连接可以在端点地址变化后继续使用。",
+      "explanation": "连接 ID 支持识别连接；迁移并非对所有网络路径都保证成功。",
+      "example": "移动设备切换网络后可能保持已有 QUIC 连接。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "连接迁移"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9000.html"
+    },
+    {
+      "id": "httpver-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 版本与 QUIC",
+      "knowledgePoint": "共享拥塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "QUIC 多个流相互独立交付，是否意味着它们不共享网络拥塞限制？",
+      "answer": "不意味着；同一 QUIC 连接中的流共享连接级拥塞控制。",
+      "explanation": "独立的流级交付不等于独立的网络容量。",
+      "example": "多个大下载仍会竞争连接的可用发送能力。",
+      "tags": [
+        "HTTP 版本与 QUIC",
+        "共享拥塞"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9114.html"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "source": {
+    "id": "distribution-drift-statistics",
+    "title": "SciPy 1.15.3：分布差异与安全数据漂移",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ks_2samp.html",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据题目所列固定版本资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "distshift-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "KS双样本目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "双样本 Kolmogorov–Smirnov 检验通常比较什么？",
+      "answer": "比较两个独立样本的连续分布，检验它们的分布是否有差异。",
+      "explanation": "应用于日志特征时还需核查样本独立性和连续性假设。",
+      "example": "比较两个时间窗口的请求间隔分布。",
+      "tags": [
+        "分布差异与漂移检测",
+        "KS双样本目的"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ks_2samp.html"
+    },
+    {
+      "id": "distshift-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "KS统计量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "双侧双样本 KS 检验的统计量 D 怎样由经验分布函数得到？",
+      "answer": "取两个样本经验累积分布函数差的绝对值最大值。",
+      "explanation": "D 描述分布差异的一个幅度，不是 p 值。",
+      "example": "在所有观测位置比较两个经验 CDF 的最大垂直距离。",
+      "tags": [
+        "分布差异与漂移检测",
+        "KS统计量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ks_2samp.html"
+    },
+    {
+      "id": "distshift-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "KS极值位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 ks_2samp 结果 statistic_location 表示什么？",
+      "answer": "它给出取得 KS 统计量对应差异的一处观测值。",
+      "explanation": "多个位置并列时不应假设它列出了所有极值位置。",
+      "example": "检查两个流量窗口在哪个请求时长处差异最大。",
+      "tags": [
+        "分布差异与漂移检测",
+        "KS极值位置"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ks_2samp.html"
+    },
+    {
+      "id": "distshift-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "KS极值方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy ks_2samp 的统计量大于 0 且 statistic_sign 为 +1 时，表示什么？",
+      "answer": "在 statistic_location 处，第一组经验 CDF 高于第二组。",
+      "explanation": "若统计量为 0，两条经验 CDF 可完全相同，不能仅根据符号判断高低。",
+      "example": "第一组样本整体偏小时，其 CDF 可能在某处更高。",
+      "tags": [
+        "分布差异与漂移检测",
+        "KS极值方向"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ks_2samp.html"
+    },
+    {
+      "id": "distshift-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "KS单侧方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "第一组数值整体较大时，为什么其 CDF 可能比第二组更低？",
+      "answer": "在同一阈值处，第一组落在阈值以下的比例可能更小。",
+      "explanation": "SciPy 的单侧备择是针对 CDF 方向描述的。",
+      "example": "固定 x 时，右移的分布通常有更小的 F(x)。",
+      "tags": [
+        "分布差异与漂移检测",
+        "KS单侧方向"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ks_2samp.html"
+    },
+    {
+      "id": "distshift-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "KS p值方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 ks_2samp 中 exact 和 asymp 分别如何计算 p 值？",
+      "answer": "exact 使用统计量的精确分布；asymp 使用渐近分布近似。",
+      "explanation": "auto 依据样本量选择，精确计算失败时可能回退并警告。",
+      "example": "记录漂移检验的计算方法。",
+      "tags": [
+        "分布差异与漂移检测",
+        "KS p值方法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ks_2samp.html"
+    },
+    {
+      "id": "distshift-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "离散值与依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对大量相同取值或强时间依赖的安全日志直接使用标准双样本 KS p 值，为什么需要谨慎？",
+      "answer": "标准检验说明假定样本独立并来自连续分布，这些条件可能不成立。",
+      "explanation": "应结合数据产生机制选择合适的检验或重采样方案。",
+      "example": "连续时段中同一主机产生的重复计数并非独立。",
+      "tags": [
+        "分布差异与漂移检测",
+        "离散值与依赖"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ks_2samp.html"
+    },
+    {
+      "id": "distshift-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "Wasserstein距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一维 Wasserstein-1 距离可怎样直观理解？",
+      "answer": "它是把一个分布的概率质量转移成另一个分布所需的最小总搬运成本。",
+      "explanation": "成本结合了移动的概率质量和移动距离。",
+      "example": "比较两个数值特征分布的整体位移。",
+      "tags": [
+        "分布差异与漂移检测",
+        "Wasserstein距离"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wasserstein_distance.html"
+    },
+    {
+      "id": "distshift-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "Wasserstein权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 的 wasserstein_distance 未传 u_weights、v_weights 时怎样给样本赋权？",
+      "answer": "每个输入值被赋予相同权重。",
+      "explanation": "也可提供与支持点对应的非负权重或计数。",
+      "example": "把各样本看作等权质量计算距离。",
+      "tags": [
+        "分布差异与漂移检测",
+        "Wasserstein权重"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wasserstein_distance.html"
+    },
+    {
+      "id": "distshift-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "距离与量纲",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "把两组一维数据都从秒换算成毫秒，对 Wasserstein-1 距离有什么影响？",
+      "answer": "距离会乘以 1000，单位也从秒变为毫秒。",
+      "explanation": "因此跨特征比较时要留意量纲和缩放。",
+      "example": "原距离 2 秒变为 2000 毫秒。",
+      "tags": [
+        "分布差异与漂移检测",
+        "距离与量纲"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wasserstein_distance.html"
+    },
+    {
+      "id": "distshift-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布差异与漂移检测",
+      "knowledgePoint": "KS与Wasserstein",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一维双侧 KS 统计量与 Wasserstein-1 距离如何比较两条经验 CDF？",
+      "answer": "KS 取绝对差的最大值；Wasserstein-1 对绝对差沿数值轴积分。",
+      "explanation": "两者强调的分布差异不同，数值单位也不同。",
+      "example": "局部最大差相同的两对分布可以有不同搬运距离。",
+      "tags": [
+        "分布差异与漂移检测",
+        "KS与Wasserstein"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.wasserstein_distance.html",
+      "supportingReferences": [
+        {
+          "id": "scipy-ks2-115",
+          "title": "SciPy 1.15.3：ks_2samp",
+          "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.ks_2samp.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

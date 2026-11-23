@@ -1,0 +1,778 @@
+{
+  "source": {
+    "id": "cpp-concurrency-memory-model",
+    "title": "cppreference C++ 并发与内存模型参考",
+    "url": "https://en.cppreference.com/w/cpp/language/multithread",
+    "type": "C++ 语言与标准库参考",
+    "note": "依据 C++ 多线程内存模型和标准库并发 API 参考逐题整理；C++20 特性在对应卡片中注明，具体实现和运行环境可能影响性能。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "cppcon-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 并发与内存模型",
+      "knowledgePoint": "数据竞争定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C++ 中什么情况通常构成数据竞争？",
+      "answer": "多个线程并发访问同一内存位置，至少一个访问是写入，访问之间没有 happens-before 关系，并且它们不是按原子规则同步时，会构成数据竞争。",
+      "explanation": "数据竞争属于未定义行为，不能依赖某次运行恰好得到预期值。",
+      "example": "两个线程无同步地读写同一个普通 int。",
+      "tags": [
+        "C++",
+        "数据竞争",
+        "内存模型"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/language/multithread#Data_races"
+    },
+    {
+      "id": "cppcon-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 并发与内存模型",
+      "knowledgePoint": "无数据竞争与逻辑正确性",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "避免 C++ 数据竞争是否就能保证并发算法在逻辑上正确？",
+      "answer": "不能；无数据竞争只排除特定的未定义行为，程序仍可能有丢失更新、错误顺序或不满足业务不变量等逻辑缺陷。",
+      "explanation": "应分别检查内存安全规则和算法的并发正确性。",
+      "example": "对两个不同原子变量各自执行安全更新，仍可能无法保证它们共同满足某个不变量。",
+      "tags": [
+        "C++",
+        "数据竞争",
+        "并发正确性"
+      ],
+      "evidence": "application",
+      "reference": "https://en.cppreference.com/w/cpp/language/multithread"
+    },
+    {
+      "id": "cppcon-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 并发与内存模型",
+      "knowledgePoint": "happens-before",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C++ 内存模型中的 happens-before 关系用于表达什么？",
+      "answer": "它表达操作之间由程序顺序或同步操作建立的先后可见关系；若一个写入 happens-before 另一个线程的读取，读取可依据该关系观察到相应写入。",
+      "explanation": "仅有墙上时钟上的先后或线程恰好先执行某行代码，不一定建立 happens-before。",
+      "example": "生产者写数据后解锁互斥量，消费者随后成功加锁，可建立跨线程同步顺序。",
+      "tags": [
+        "C++",
+        "happens-before",
+        "同步关系"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/memory_order#Happens-before"
+    },
+    {
+      "id": "cppcon-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 并发与内存模型",
+      "knowledgePoint": "线程启动同步",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "创建并启动 C++ std::thread 前的操作与新线程开始执行之间有什么同步关系？",
+      "answer": "构造 std::thread 前的调用线程操作 synchronizes-with 新线程函数的开始执行。",
+      "explanation": "该保证不意味着新线程完成后主线程可以不等待就安全读取其写入。",
+      "example": "线程启动前初始化的只读配置可由新线程在开始执行后读取。",
+      "tags": [
+        "C++",
+        "std::thread",
+        "线程启动",
+        "同步"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/thread/thread"
+    },
+    {
+      "id": "cppcon-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 并发与内存模型",
+      "knowledgePoint": "join 同步",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "std::thread::join 成功返回能提供什么同步保证？",
+      "answer": "被等待线程完成前的操作 synchronizes-with join 返回后的操作，因此 join 返回后可按该同步关系读取线程完成前写入的结果。",
+      "explanation": "若线程对象已 detach，join 无法再用于等待其完成。",
+      "example": "工作线程写入结果后退出，主线程 join 后读取该结果。",
+      "tags": [
+        "C++",
+        "join",
+        "线程同步",
+        "happens-before"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/thread/join"
+    },
+    {
+      "id": "cppcon-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 同步原语",
+      "knowledgePoint": "mutex 解锁所有权前置条件",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "C++ std::mutex 可以由未持有该锁的线程调用 unlock() 吗？",
+      "answer": "不可以；调用线程必须持有该互斥量，否则违反 std::mutex::unlock() 的前置条件，行为未定义。",
+      "explanation": "std::mutex 不是可由任意线程释放的信号量；应由成功加锁的线程负责解锁。",
+      "example": "线程 A lock() 后，线程 B 不能代替 A 调用同一 mutex 的 unlock()。",
+      "tags": [
+        "C++",
+        "std::mutex",
+        "unlock",
+        "所有权"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/mutex/unlock"
+    },
+    {
+      "id": "cppcon-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "C++ 同步原语",
+      "knowledgePoint": "lock_guard RAII",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "std::lock_guard 怎样管理互斥量？",
+      "answer": "构造时锁定互斥量，析构时自动解锁；它适合锁定后在整个局部作用域内持锁的简单场景。",
+      "explanation": "RAII 能在正常返回或异常栈展开时释放锁。",
+      "example": "std::lock_guard<std::mutex> lock(m); 后续作用域代码受该锁保护。",
+      "tags": [
+        "C++",
+        "lock_guard",
+        "RAII",
+        "mutex"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/lock_guard"
+    },
+    {
+      "id": "cppcon-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 同步原语",
+      "knowledgePoint": "unique_lock 能力",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "相较 std::lock_guard，std::unique_lock 提供了哪些额外控制？",
+      "answer": "unique_lock 可延迟加锁、显式 unlock／lock、尝试加锁并转移锁所有权，适合需要灵活管理锁状态的场景。",
+      "explanation": "条件变量等待通常使用 unique_lock，因为等待期间需要释放并重新获得锁。",
+      "example": "unique_lock 可先 defer_lock 创建，再与条件变量 wait 配合。",
+      "tags": [
+        "C++",
+        "unique_lock",
+        "lock_guard",
+        "mutex"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/unique_lock"
+    },
+    {
+      "id": "cppcon-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "C++ 同步原语",
+      "knowledgePoint": "scoped_lock 多锁",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "同时需要锁住多个互斥量时，C++17 的 std::scoped_lock 有什么用途？",
+      "answer": "它可在一个作用域内同时获得多个互斥量，并使用死锁避免算法协调加锁顺序；析构时释放这些互斥量。",
+      "explanation": "也可使用 std::lock 配合 adopt_lock，但必须避免部分锁获取后发生异常等错误处理问题。",
+      "example": "转账操作可同时锁住两个账户的互斥量，避免不同调用顺序引发循环等待。",
+      "tags": [
+        "C++17",
+        "scoped_lock",
+        "死锁避免",
+        "mutex"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/scoped_lock"
+    },
+    {
+      "id": "cppcon-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 同步原语",
+      "knowledgePoint": "条件变量等待流程",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "std::condition_variable::wait 等待期间如何处理互斥量？",
+      "answer": "wait 会原子地释放互斥量并阻塞；线程被唤醒后会重新获得互斥量，再从 wait 返回。",
+      "explanation": "等待线程应在持有同一互斥量并检查共享谓词的上下文中使用条件变量。",
+      "example": "消费者拿到 unique_lock 后，在队列为空时调用 cv.wait(lock)。",
+      "tags": [
+        "C++",
+        "condition_variable",
+        "wait",
+        "mutex"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/condition_variable/wait"
+    },
+    {
+      "id": "cppcon-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 同步原语",
+      "knowledgePoint": "condition_variable 等待者的 mutex 要求",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "多个线程同时等待同一个 std::condition_variable 时，可以各自使用不同的 mutex 吗？",
+      "answer": "不可以；对同一个条件变量并发等待的调用必须使用同一个 mutex，否则违反 wait 的要求，行为未定义。",
+      "explanation": "这一约束让 wait 的原子释放、阻塞和重新加锁操作围绕一致的互斥量协调。",
+      "example": "两个消费者等待同一个 cv 时，都应传入与队列状态配套的同一个 mutex。",
+      "tags": [
+        "C++",
+        "condition_variable",
+        "mutex",
+        "前置条件"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/condition_variable/wait"
+    },
+    {
+      "id": "cppcon-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 同步原语",
+      "knowledgePoint": "条件变量通知",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "condition_variable::notify_one 与 notify_all 有什么区别？",
+      "answer": "notify_one 至少唤醒一个正在等待的线程；notify_all 唤醒所有当前等待的线程。",
+      "explanation": "被唤醒线程仍需竞争互斥量，并检查条件是否满足。",
+      "example": "单个队列元素到达时可通知一个消费者；状态广播变化时可能通知全部等待者。",
+      "tags": [
+        "C++",
+        "notify_one",
+        "notify_all",
+        "condition_variable"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/condition_variable/notify_one"
+    },
+    {
+      "id": "cppcon-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "C++ 线程管理",
+      "knowledgePoint": "join 与 detach",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "std::thread 的 join 和 detach 分别意味着什么？",
+      "answer": "join 等待线程完成并回收其线程状态；detach 让线程独立运行，线程对象不再拥有对它的等待和管理能力。",
+      "explanation": "detach 后必须确保线程访问的对象在其使用期间仍然存活。",
+      "example": "局部变量被 detached 线程引用时，函数返回可能导致悬垂访问。",
+      "tags": [
+        "C++",
+        "std::thread",
+        "join",
+        "detach"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/thread/detach"
+    },
+    {
+      "id": "cppcon-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 线程管理",
+      "knowledgePoint": "joinable thread 析构",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "析构 std::thread 对象时它仍然 joinable 会怎样？",
+      "answer": "析构函数会调用 std::terminate；应在对象销毁前 join 或 detach。",
+      "explanation": "该规则防止线程资源在未明确处理的情况下被静默遗弃。",
+      "example": "线程函数抛出异常时，若局部 std::thread 仍 joinable，栈展开也可能触发 terminate。",
+      "tags": [
+        "C++",
+        "std::thread",
+        "joinable",
+        "terminate"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/thread/~thread"
+    },
+    {
+      "id": "cppcon-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 线程管理",
+      "knowledgePoint": "jthread 自动停止与等待",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "C++20 std::jthread 与 std::thread 在析构行为上有什么重要区别？",
+      "answer": "若 jthread 仍 joinable，析构会请求停止并 join；普通 thread 析构时仍 joinable 则调用 terminate。",
+      "explanation": "停止请求是协作式的，线程函数必须检查 stop_token 或使用支持停止的等待机制。",
+      "example": "jthread 的工作循环可定期检查 stop_token.stop_requested() 后退出。",
+      "tags": [
+        "C++20",
+        "std::jthread",
+        "stop_token",
+        "线程生命周期"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/jthread/~jthread"
+    },
+    {
+      "id": "cppcon-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 线程管理",
+      "knowledgePoint": "协作式停止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C++20 stop_token 请求停止会强制终止线程吗？",
+      "answer": "不会；它提供协作式停止请求，线程函数需要检查 stop_token 或响应 stop callback 后自行退出。",
+      "explanation": "停止请求不会像强制取消一样安全地中断任意指令或释放线程持有的资源。",
+      "example": "长循环可定期检查 token.stop_requested() 并清理后返回。",
+      "tags": [
+        "C++20",
+        "stop_token",
+        "协作式取消"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/stop_token"
+    },
+    {
+      "id": "cppcon-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "原子对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "std::atomic<T> 主要为对象提供什么保证？",
+      "answer": "它对该原子对象提供原子操作接口，使单次受支持的读改写不会以普通非原子访问的方式被其他线程观察为撕裂操作。",
+      "explanation": "原子对象只保护相应原子操作；它不自动让多个变量组成的复合不变量整体原子化。",
+      "example": "atomic<int> 的 fetch_add 可原子地更新单个计数器。",
+      "tags": [
+        "C++",
+        "std::atomic",
+        "原子操作"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/atomic"
+    },
+    {
+      "id": "cppcon-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "relaxed 内存顺序",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "memory_order_relaxed 的原子操作保证什么，又不保证什么？",
+      "answer": "它保证对该原子对象的操作是原子的，并遵守该对象的修改顺序；但不会单独建立跨对象的线程间同步或 happens-before 关系。",
+      "explanation": "它适合只需要原子计数等场景，不能仅凭 relaxed 原子标志发布其他普通数据。",
+      "example": "统计事件总数可用 relaxed fetch_add，但发布初始化好的对象通常还需同步顺序。",
+      "tags": [
+        "C++",
+        "memory_order_relaxed",
+        "原子操作"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/memory_order#Relaxed_ordering"
+    },
+    {
+      "id": "cppcon-019",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "release 与 acquire",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "C++ 中 release store 与 acquire load 如何用于发布普通数据？",
+      "answer": "生产者先写普通数据，再对原子变量执行 release store；消费者的 acquire load 若读到该发布值或其 release sequence 中的值，就与发布建立同步，使此前写入 happens-before 后续读取。",
+      "explanation": "仅仅分别使用 release 和 acquire 还不够，消费者必须读取到对应发布序列中的值。",
+      "example": "用 atomic<bool> 发布初始化完成状态，消费者观察到 true 后再读取数据。",
+      "tags": [
+        "C++",
+        "release",
+        "acquire",
+        "发布获取"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/memory_order#Release-Acquire_ordering"
+    },
+    {
+      "id": "cppcon-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "seq_cst 顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "memory_order_seq_cst 相较 acquire／release 增加了什么约束？",
+      "answer": "除相应 acquire／release 语义外，顺序一致操作还参与一个对所有线程一致的单一总序，并要求该总序与 happens-before 关系一致。",
+      "explanation": "更强的顺序约束通常更容易推理，但可能限制编译器或硬件优化；不意味着所有非原子访问自动同步。",
+      "example": "多个线程对不同 seq_cst 原子变量操作时，所有线程观察到的顺序必须兼容同一总序。",
+      "tags": [
+        "C++",
+        "memory_order_seq_cst",
+        "顺序一致性"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/memory_order#Sequentially-consistent_ordering"
+    },
+    {
+      "id": "cppcon-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "原子对象修改顺序",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "C++ 对同一个原子对象的修改顺序提供什么保证？",
+      "answer": "对每个原子对象，其修改操作存在一个对所有线程一致的单一修改顺序；不同原子对象各自有修改顺序，不自动合成一个全局顺序。",
+      "explanation": "memory_order_relaxed 仍遵守单个原子对象的修改顺序，但不建立跨对象同步。",
+      "example": "两个不同计数器的 relaxed 更新不能据此推断它们之间的先后关系。",
+      "tags": [
+        "C++",
+        "修改顺序",
+        "原子对象"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/memory_order"
+    },
+    {
+      "id": "cppcon-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "compare_exchange_weak 伪失败",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "compare_exchange_weak 返回 false 是否一定说明当前值与 expected 不同？",
+      "answer": "不一定；weak 版本允许伪失败，即使值相等也可能失败，因此通常放在循环中重试。",
+      "explanation": "compare_exchange_strong 不允许这种伪失败，但仍可能因实际值不匹配而失败。",
+      "example": "用 weak 更新原子计数器时，通常在 while 循环中重新读取并计算期望值。",
+      "tags": [
+        "C++",
+        "compare_exchange_weak",
+        "CAS",
+        "伪失败"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/atomic/compare_exchange"
+    },
+    {
+      "id": "cppcon-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "compare_exchange expected 参数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "compare_exchange 失败时会怎样处理 expected 参数？",
+      "answer": "若实际值不匹配，操作会把原子对象当前值写回 expected，便于调用方据此重新计算并重试。",
+      "explanation": "expected 是按引用传入的可更新参数，不只是常量比较值。",
+      "example": "CAS 循环失败后，expected 已包含观察到的新值。",
+      "tags": [
+        "C++",
+        "compare_exchange",
+        "CAS",
+        "expected"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/atomic/compare_exchange"
+    },
+    {
+      "id": "cppcon-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "atomic_flag",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "C++ std::atomic_flag 有什么特别的标准保证？",
+      "answer": "它是保证无锁的原子布尔标志类型，可用 test_and_set 原子设置并读取旧状态，用 clear 清除。",
+      "explanation": "用它实现自旋锁时仍需考虑内存顺序、忙等成本和线程调度。",
+      "example": "test_and_set 返回 true 时表示调用前标志已经处于置位状态。",
+      "tags": [
+        "C++",
+        "atomic_flag",
+        "无锁"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/atomic_flag"
+    },
+    {
+      "id": "cppcon-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "原子 fence",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "单独调用 atomic_thread_fence 是否就能让其他线程安全读取普通共享变量？",
+      "answer": "不能；fence 必须与合适的原子操作及同步关系配合，单独的 fence 不会自动消除普通变量的数据竞争。",
+      "explanation": "若没有建立跨线程同步链，普通共享数据仍需锁或正确的原子发布协议保护。",
+      "example": "在没有对应原子标志读写的情况下，分别放置 release 和 acquire fence 不构成完整发布协议。",
+      "tags": [
+        "C++",
+        "atomic_thread_fence",
+        "内存顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/atomic_thread_fence"
+    },
+    {
+      "id": "cppcon-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "volatile 与线程同步",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "C++ 中把共享变量声明为 volatile 能代替 atomic 或 mutex 吗？",
+      "answer": "不能；volatile 不提供线程间原子性或同步关系，普通共享读写仍可能构成数据竞争。",
+      "explanation": "volatile 主要用于语言规定的易变访问场景，不是通用并发原语。",
+      "example": "两个线程用 volatile bool 互相通知，不能仅凭 volatile 保证正确同步。",
+      "tags": [
+        "C++",
+        "volatile",
+        "线程同步",
+        "数据竞争"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/language/cv"
+    },
+    {
+      "id": "cppcon-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "原子操作与复合不变量",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "多个原子变量分别更新时，能否自动保证它们共同满足一个复合不变量？",
+      "answer": "不能；每个原子操作各自具备原子性，不代表跨多个变量的检查和更新作为一个事务执行。",
+      "explanation": "复合状态通常需要互斥锁、单一打包原子状态或专门设计的无锁算法。",
+      "example": "分别原子地读取余额与额度后再更新，仍可能违反两者之和的业务约束。",
+      "tags": [
+        "C++",
+        "原子变量",
+        "复合不变量"
+      ],
+      "evidence": "application",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/atomic"
+    },
+    {
+      "id": "cppcon-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "CAS 的 ABA 问题",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基于 compare_exchange 的无锁算法中，ABA 问题通常指什么？",
+      "answer": "线程先观察到值 A，期间其他线程把状态改为 B 又改回 A，CAS 只比较当前值时可能误以为状态从未变化。",
+      "explanation": "可使用版本计数、带标签指针或其他算法设计检测中间状态变化；具体方案还需处理回绕和内存回收。",
+      "example": "无锁栈节点地址被释放后复用，指针值回到 A 但节点身份已经不同。",
+      "tags": [
+        "C++",
+        "CAS",
+        "ABA",
+        "无锁算法"
+      ],
+      "evidence": "application",
+      "reference": "https://en.cppreference.com/w/cpp/atomic/atomic/compare_exchange"
+    },
+    {
+      "id": "cppcon-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "lock-free 与 wait-free",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "lock-free 与 wait-free 分别描述什么进展保证？",
+      "answer": "lock-free 保证系统整体持续取得进展；wait-free 进一步保证每个参与操作的线程都能在有限步骤内完成。",
+      "explanation": "原子类型支持 lock-free 不等于其所有算法都 wait-free，也不保证每个线程公平。",
+      "example": "CAS 循环算法可能整体持续成功，但某个线程反复失败，因此不一定 wait-free。",
+      "tags": [
+        "C++",
+        "lock-free",
+        "wait-free",
+        "进展保证"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/language/multithread#Forward_progress"
+    },
+    {
+      "id": "cppcon-030",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "C++ 性能与并发",
+      "knowledgePoint": "false sharing 伪共享",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "什么是 false sharing，为什么它会降低多线程性能？",
+      "answer": "不同线程修改逻辑上独立、但位于同一缓存行的变量时，缓存一致性协议可能反复转移该缓存行的写权限，造成无用通信和性能下降。",
+      "explanation": "它通常不表示数据竞争，而是缓存布局造成的性能问题；缓存行大小依平台实现。",
+      "example": "多个线程频繁更新相邻数组元素时，可测量并考虑分隔热点计数器。",
+      "tags": [
+        "C++",
+        "false sharing",
+        "缓存行",
+        "性能"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/language/multithread#Concurrency_and_false_sharing"
+    },
+    {
+      "id": "cppcon-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 异步任务",
+      "knowledgePoint": "promise 与 future",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "std::promise 与 std::future 如何传递异步结果？",
+      "answer": "promise 端设置共享状态中的值或异常，future 端等待并取得结果；promise 和 future 通过同一个共享状态关联。",
+      "explanation": "普通 std::future 是单消费者接口，get 后该 future 不再有效。",
+      "example": "工作线程通过 promise.set_value(result) 返回结果，调用线程用 future.get() 等待。",
+      "tags": [
+        "C++",
+        "promise",
+        "future",
+        "异步结果"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/promise"
+    },
+    {
+      "id": "cppcon-032",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 异步任务",
+      "knowledgePoint": "shared_future 多消费者",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "std::shared_future 与 std::future 在结果读取方面有什么主要区别？",
+      "answer": "shared_future 可复制并允许多个持有者等待和读取同一个共享结果；普通 future 通常是单一所有者且 get 后失效。",
+      "explanation": "多个读取者仍需避免对共享结果对象进行未经同步的并发修改。",
+      "example": "多个线程可共享同一个 shared_future 并等待同一任务完成。",
+      "tags": [
+        "C++",
+        "shared_future",
+        "future",
+        "多消费者"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/shared_future"
+    },
+    {
+      "id": "cppcon-033",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 异步任务",
+      "knowledgePoint": "async 默认启动策略",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "不指定启动策略时，std::async 一定会创建新线程吗？",
+      "answer": "不一定；默认策略允许实现选择 async 或 deferred，deferred 调用通常在 future 等待或取值时才执行。",
+      "explanation": "需要明确并发启动语义时应指定策略，并考虑创建线程的成本。",
+      "example": "std::async(std::launch::async, task) 明确请求异步启动策略。",
+      "tags": [
+        "C++",
+        "std::async",
+        "launch policy",
+        "deferred"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/async"
+    },
+    {
+      "id": "cppcon-034",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 异步任务",
+      "knowledgePoint": "packaged_task",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "std::packaged_task 在异步任务中起什么作用？",
+      "answer": "它包装可调用对象，并把调用结果或异常存入关联共享状态，调用方可通过 future 获取结果。",
+      "explanation": "packaged_task 本身不决定在哪个线程执行；任务可由线程、线程池或其他调度器运行。",
+      "example": "把 packaged_task 放入线程池队列，再从其 future 取得计算结果。",
+      "tags": [
+        "C++",
+        "packaged_task",
+        "future",
+        "任务调度"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/packaged_task"
+    },
+    {
+      "id": "cppcon-035",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 同步原语",
+      "knowledgePoint": "counting_semaphore",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "C++20 std::counting_semaphore 与 mutex 的主要用途有什么区别？",
+      "answer": "信号量维护可用许可计数，适合限制并发访问数量或表示可用资源；mutex 提供互斥所有权，通常保护临界区。",
+      "explanation": "信号量没有 mutex 那样的线程所有权语义，释放许可的线程不必是此前获取许可的线程。",
+      "example": "用初始计数为 5 的信号量限制最多五个任务同时访问某项资源。",
+      "tags": [
+        "C++20",
+        "counting_semaphore",
+        "mutex",
+        "资源限流"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/counting_semaphore"
+    },
+    {
+      "id": "cppcon-036",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "C++ 原子操作与内存顺序",
+      "knowledgePoint": "condition variable 与谓词竞态",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "生产者先修改条件再 notify，消费者只调用无谓词 wait 是否一定不会漏掉通知？",
+      "answer": "不一定；消费者可能在检查条件后、真正进入等待前错过通知，因此应在互斥量保护下检查谓词并循环等待。",
+      "explanation": "通知本身不是可累积的事件计数，条件变量应与共享谓词及互斥量配合。",
+      "example": "使用 cv.wait(lock, [&] { return ready; }) 保护 ready 条件。",
+      "tags": [
+        "C++",
+        "condition_variable",
+        "丢失唤醒",
+        "谓词"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/condition_variable/wait"
+    },
+    {
+      "id": "cppcon-037",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "C++ 异步任务",
+      "knowledgePoint": "future 异常传播",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "通过 std::promise 或 std::async 运行的任务抛出异常后，future 端通常怎样获知？",
+      "answer": "异常会存入共享状态，调用 future::get() 时重新抛出，以便调用方在消费结果的位置处理。",
+      "explanation": "若异步任务的异常未通过 future 消费，调用方可能遗漏重要失败信息。",
+      "example": "try { result = future.get(); } catch (const std::exception& e) { ... }。",
+      "tags": [
+        "C++",
+        "future",
+        "异常传播",
+        "异步任务"
+      ],
+      "evidence": "source",
+      "reference": "https://en.cppreference.com/w/cpp/thread/future"
+    }
+  ]
+}

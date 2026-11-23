@@ -1,0 +1,154 @@
+{
+  "source": {
+    "id": "integer-twos-complement",
+    "title": "MIT 计算机组成：整数与补码",
+    "url": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.1.2",
+    "type": "教材、标准与官方文档",
+    "note": "依据逐题引用的教材、标准或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "twos-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "补码与整数表示",
+      "knowledgePoint": "有符号与无符号范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "n 位二进制数按无符号数与按补码有符号数解释，表示范围分别是什么？",
+      "answer": "无符号数为 0 到 2^n−1；补码有符号数为 −2^(n−1) 到 2^(n−1)−1。",
+      "explanation": "补码最高位的权重为负值；无符号数每一位的权重均为非负。",
+      "example": "8 位无符号范围是 0 到 255，补码范围是 −128 到 127。",
+      "tags": [
+        "补码与整数表示",
+        "有符号与无符号范围"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.1"
+    },
+    {
+      "id": "twos-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "补码与整数表示",
+      "knowledgePoint": "最高位权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 n 位补码中，最高位 1 的数值权重是什么？",
+      "answer": "它的权重为 −2^(n−1)，其余位仍按正的二进制权重计值。",
+      "explanation": "最高位也常称符号位。",
+      "example": "8 位 11111111 的值为 −128+127，即 −1。",
+      "tags": [
+        "补码与整数表示",
+        "最高位权重"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.1.2"
+    },
+    {
+      "id": "twos-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "补码与整数表示",
+      "knowledgePoint": "取反加一",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 n 位补码位模式求模 2^n 的相反数，常用哪两个步骤？",
+      "answer": "逐位取反，再加一，保留低 n 位。",
+      "explanation": "对于最小负数，数学上的正数超出同位宽补码范围。",
+      "example": "8 位 5 为 00000101，−5 为 11111011。",
+      "tags": [
+        "补码与整数表示",
+        "取反加一"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.1.2"
+    },
+    {
+      "id": "twos-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "补码与整数表示",
+      "knowledgePoint": "最小负数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 n 位补码最小负数的绝对值不能用同位宽补码正数表示？",
+      "answer": "负数端多一个值：最小值为 −2^(n−1)，最大正数只有 2^(n−1)−1。",
+      "explanation": "不能假定任何同位宽有符号数都能安全取相反数。",
+      "example": "8 位的 −128 没有对应的 8 位补码正数 128。",
+      "tags": [
+        "补码与整数表示",
+        "最小负数"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.1.2"
+    },
+    {
+      "id": "twos-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "补码与整数表示",
+      "knowledgePoint": "同一位模式",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "同一 n 位二进制位模式按补码和无符号数解释，数值一定相同吗？",
+      "answer": "不一定；最高位为 1 时，两种解释相差 2^n。",
+      "explanation": "位模式本身没有附带解释方式。",
+      "example": "8 位 11111111 按无符号为 255，按补码为 −1。",
+      "tags": [
+        "补码与整数表示",
+        "同一位模式"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.1.2"
+    },
+    {
+      "id": "twos-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "补码与整数表示",
+      "knowledgePoint": "加法与溢出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定 n 位补码中，两个正数相加得到负数表示什么？",
+      "answer": "数学结果超出该位宽的有符号表示范围，发生有符号溢出。",
+      "explanation": "这里讨论固定宽度位运算，不假定某语言对溢出的处理方式。",
+      "example": "8 位 127 加 1 得到位模式 10000000。",
+      "tags": [
+        "补码与整数表示",
+        "加法与溢出"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.1.2"
+    },
+    {
+      "id": "twos-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "补码与整数表示",
+      "knowledgePoint": "符号扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "扩大补码整数的位宽时，如何通过符号扩展保持原数值？",
+      "answer": "在高位重复原来的最高位；正数补 0，负数补 1。",
+      "explanation": "扩展只改变位宽，不改变所表示的整数。",
+      "example": "8 位 −1 的 11111111 扩成 16 个 1。",
+      "tags": [
+        "补码与整数表示",
+        "符号扩展"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.1.2",
+      "supportingReferences": [
+        {
+          "id": "jls-widening",
+          "title": "Java 语言规范 21：整数扩大转换中的符号扩展",
+          "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html#jls-5.1.2",
+          "type": "语言规范",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

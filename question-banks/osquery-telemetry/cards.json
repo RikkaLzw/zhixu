@@ -1,0 +1,212 @@
+{
+  "source": {
+    "id": "osquery-telemetry",
+    "title": "osquery：主机状态、事件与采集限制",
+    "url": "https://osquery.readthedocs.io/en/stable/deployment/logging/",
+    "type": "官方技术文档",
+    "note": "题目依据公开资料自行整理；安全场景的使用仍应结合部署条件。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "osq-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "查询时状态与事件缓存",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "osquery 的普通状态表与事件表在获取数据的时间上有什么区别？",
+      "answer": "普通状态表通常在查询时获取当前状态；事件表先异步缓存事件，再在查询时返回已缓冲的记录。",
+      "explanation": "不同事件表的可见性还取决于平台、配置和权限。",
+      "example": "分别查询当前进程列表和已缓存的进程事件。",
+      "tags": [
+        "查询时状态与事件缓存",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/development/pubsub-framework/"
+    },
+    {
+      "id": "osq-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "周期快照漏检短进程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么周期性查询 osquery processes 状态表可能漏掉短生命周期进程？",
+      "answer": "进程可能在两次查询之间启动并结束，因此从未出现在任一查询时刻的进程列表中。",
+      "explanation": "需要事件采集时，应确认事件源及相应权限和配置可用。",
+      "example": "进程在两次相隔一分钟的快照之间完成运行。",
+      "tags": [
+        "周期快照漏检短进程",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/development/pubsub-framework/"
+    },
+    {
+      "id": "osq-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "差分日志与快照日志",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "osquery 定时查询的差分日志与快照日志分别记录什么？",
+      "answer": "差分日志记录相邻查询结果中新增和移除的行；快照日志记录该次查询的完整结果集。",
+      "explanation": "完整快照更便于直接查看当前结果，但可能产生更多日志。",
+      "example": "查询挂载点时比较状态变化与每次完整清单。",
+      "tags": [
+        "差分日志与快照日志",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/deployment/logging/"
+    },
+    {
+      "id": "osq-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "首次差分结果与新增事件",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么 osquery 首次定时差分查询中的 added 行不能直接当作刚发生的新增事件？",
+      "answer": "首次执行没有上次结果，原有结果会相对于空结果全部标为 added。",
+      "explanation": "告警应区分初始基线与后续变化；事件表的初始计数方式也可能不同。",
+      "example": "首次盘点已有用户时，不把所有用户都当成刚创建。",
+      "tags": [
+        "首次差分结果与新增事件",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/deployment/logging/"
+    },
+    {
+      "id": "osq-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "事件缓存过期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 osquery 事件表不能保证查询到任意久之前发生的事件？",
+      "answer": "事件缓存会过期，保留时长由配置控制；过期记录可能已从缓冲中删除。",
+      "explanation": "定时查询的事件优化也可能在处理后删除相应缓冲。",
+      "example": "调查较早进程事件时查询集中存储，而不只依赖本地缓存。",
+      "tags": [
+        "事件缓存过期",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/development/pubsub-framework/"
+    },
+    {
+      "id": "osq-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "交互式 shell 与守护进程事件",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么 osqueryi 中事件表为空不能直接证明 osqueryd 没有采集事件？",
+      "answer": "交互式 shell 和守护进程独立运行，不共享事件循环和缓存存储。",
+      "explanation": "还应分别核对所用进程的事件源、配置和权限。",
+      "example": "检查守护进程输出或其事件状态，而不只查询新开的 shell。",
+      "tags": [
+        "交互式 shell 与守护进程事件",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/development/pubsub-framework/"
+    },
+    {
+      "id": "osq-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "Linux Audit 采集冲突",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 osquery 的 Linux Audit 采集文档，为什么不应同时运行 auditd 和 osqueryd 进程审计？",
+      "answer": "两者可能争用内核 audit netlink socket，导致采集冲突。",
+      "explanation": "该结论针对文档所述 Audit 采集方式，不代表其他采集后端也有同样约束。",
+      "example": "部署前检查 auditd 服务及所使用的事件采集后端。",
+      "tags": [
+        "Linux Audit 采集冲突",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/deployment/process-auditing/"
+    },
+    {
+      "id": "osq-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "非阻塞连接状态",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "osquery Linux Audit 的 socket_events 中，status 为 in_progress 能否说明连接成功？",
+      "answer": "不能；它表示非阻塞 connect 调用仍在进行，osquery 无法据此确定最终是否成功。",
+      "explanation": "排查时应结合后续状态或其他证据。",
+      "example": "不要把仍在进行的连接计入已成功连接数。",
+      "tags": [
+        "非阻塞连接状态",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/deployment/process-auditing/"
+    },
+    {
+      "id": "osq-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "进程与套接字事件启用",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "启用 osquery 的 Linux Audit 进程事件后，socket_events 会自动启用吗？",
+      "answer": "不会；套接字事件需要另外启用相关配置。",
+      "explanation": "官方文档指出套接字事件可能带来较大系统负载。",
+      "example": "检查套接字采集开关，而不只检查进程事件开关。",
+      "tags": [
+        "进程与套接字事件启用",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/deployment/process-auditing/"
+    },
+    {
+      "id": "osq-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "安全遥测",
+      "knowledgePoint": "差分日志 epoch 变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "osquery 定时查询的 schedule epoch 改变后，差分日志如何处理当前结果？",
+      "answer": "如果上次执行的 epoch 不匹配，当前查询按初始执行处理，重新建立差分基线。",
+      "explanation": "这可能产生一批基线 added 行，使用差分告警时应考虑该变化。",
+      "example": "重新设置 epoch 后区分基线记录与真实新增。",
+      "tags": [
+        "差分日志 epoch 变化",
+        "安全遥测",
+        "osquery"
+      ],
+      "evidence": "source",
+      "reference": "https://osquery.readthedocs.io/en/stable/deployment/logging/"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "python-subprocess-foundations",
+    "title": "Python 3.12 官方文档：subprocess 命令执行",
+    "url": "https://docs.python.org/3.12/library/subprocess.html",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；具体实现和适用条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pysubproc-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 子进程与命令执行",
+      "knowledgePoint": "运行与结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.12 的 subprocess.run 完成后通常返回什么？",
+      "answer": "它等待子进程结束并返回 CompletedProcess，包含参数和退出码等结果。",
+      "explanation": "是否捕获标准输出和标准错误取决于调用参数。",
+      "example": "读取 result.returncode 判断子进程退出状态。",
+      "tags": [
+        "Python 子进程与命令执行",
+        "运行与结果"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/subprocess.html"
+    },
+    {
+      "id": "pysubproc-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 子进程与命令执行",
+      "knowledgePoint": "捕获输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python subprocess.run 的 capture_output=True 会捕获哪些输出？",
+      "answer": "它同时捕获标准输出和标准错误，分别存入结果的 stdout 和 stderr。",
+      "explanation": "不能同时为 stdout 或 stderr 再传单独参数。",
+      "example": "适合检查命令输出和错误信息。",
+      "tags": [
+        "Python 子进程与命令执行",
+        "捕获输出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/subprocess.html"
+    },
+    {
+      "id": "pysubproc-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 子进程与命令执行",
+      "knowledgePoint": "文本与字节",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python subprocess.run 捕获输出时，text=True 与默认设置有什么区别？",
+      "answer": "默认捕获的是字节；text=True 使用文本模式，返回字符串。",
+      "explanation": "也可使用 encoding 或 errors 指定文本处理方式。",
+      "example": "文本模式下 stdout 可直接按字符串处理。",
+      "tags": [
+        "Python 子进程与命令执行",
+        "文本与字节"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/subprocess.html"
+    },
+    {
+      "id": "pysubproc-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 子进程与命令执行",
+      "knowledgePoint": "异常退出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python subprocess.run 的 check=True 如何处理非零退出码？",
+      "answer": "子进程以非零状态退出时抛出 CalledProcessError。",
+      "explanation": "默认 check=False 时通常返回结果，需要自行检查 returncode。",
+      "example": "调用失败时异常对象可提供退出码和已捕获输出。",
+      "tags": [
+        "Python 子进程与命令执行",
+        "异常退出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/subprocess.html"
+    },
+    {
+      "id": "pysubproc-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 子进程与命令执行",
+      "knowledgePoint": "输入数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python subprocess.run 的 input 参数把数据传给子进程的哪里？",
+      "answer": "它把数据送到子进程标准输入，并由内部管道传递。",
+      "explanation": "使用 input 时不能同时提供 stdin 参数；默认输入应为字节，文本模式应为字符串。",
+      "example": "把一段文本交给读取标准输入的程序。",
+      "tags": [
+        "Python 子进程与命令执行",
+        "输入数据"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/subprocess.html"
+    },
+    {
+      "id": "pysubproc-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 子进程与命令执行",
+      "knowledgePoint": "两种超时清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.12 的 subprocess.run 和 Popen.communicate 超时后，对子进程的处理有什么区别？",
+      "answer": "run 会杀死并等待直接子进程，然后抛出 TimeoutExpired；communicate 抛出异常但不会自动杀死子进程。",
+      "explanation": "使用 communicate 时调用者可按需要终止进程并再次 communicate；run 也不保证清理所有后代进程。",
+      "example": "捕获 communicate 超时后可调用 kill 和 communicate 完成清理。",
+      "tags": [
+        "Python 子进程与命令执行",
+        "两种超时清理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/subprocess.html"
+    },
+    {
+      "id": "pysubproc-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 子进程与命令执行",
+      "knowledgePoint": "管道阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python Popen 设置 stdout=PIPE 后只调用 wait，为什么可能死锁？",
+      "answer": "子进程写满管道后会等待父进程读取，而父进程在等待子进程退出。",
+      "explanation": "对可控大小的输出可使用 communicate 同时读取并等待；大量输出需考虑内存。",
+      "example": "持续输出的程序可能填满管道缓冲区。",
+      "tags": [
+        "Python 子进程与命令执行",
+        "管道阻塞"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/subprocess.html"
+    },
+    {
+      "id": "pysubproc-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 子进程与命令执行",
+      "knowledgePoint": "shell风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python subprocess 的 shell=True 为什么需要谨慎处理不可信输入？",
+      "answer": "输入可能被 shell 当作特殊语法执行，造成命令注入。",
+      "explanation": "确实需要 shell 时，应根据平台和 shell 正确处理输入。",
+      "example": "用户内容中的分号可能改变 shell 命令结构。",
+      "tags": [
+        "Python 子进程与命令执行",
+        "shell风险"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/subprocess.html"
+    },
+    {
+      "id": "pysubproc-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 子进程与命令执行",
+      "knowledgePoint": "子进程环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python subprocess.run 指定 env 映射时，它与默认环境继承有什么区别？",
+      "answer": "子进程使用给定的环境变量映射，替代默认继承的环境。",
+      "explanation": "若要在继承基础上修改，可先复制当前环境再更新。",
+      "example": "复制 os.environ 后加入单个配置变量。",
+      "tags": [
+        "Python 子进程与命令执行",
+        "子进程环境"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/subprocess.html"
+    }
+  ]
+}

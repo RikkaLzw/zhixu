@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "gaia-agent-benchmark",
+    "title": "GAIA 原论文 v1：通用助手评测",
+    "url": "https://arxiv.org/abs/2311.12983v1",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题标注的文档或论文自行整理；示例为自编。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "gaiabench-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GAIA 助手评测",
+      "knowledgePoint": "评测目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GAIA 原论文主要评测什么类型的系统能力？",
+      "answer": "评测通用 AI 助手解决真实任务时的推理、多模态处理和工具使用等能力。",
+      "explanation": "不同任务要求的能力组合可能不同。",
+      "example": "查阅网页并处理附件后回答问题。",
+      "tags": [
+        "GAIA 助手评测",
+        "评测目的"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2311.12983v1"
+    },
+    {
+      "id": "gaiabench-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GAIA 助手评测",
+      "knowledgePoint": "答案设计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GAIA 原论文为什么倾向设计简短且明确的答案？",
+      "answer": "简短、无歧义的事实答案便于自动化和较一致的评估。",
+      "explanation": "这要求问题本身明确约束答案形式。",
+      "example": "给出一个数值或简短实体名称。",
+      "tags": [
+        "GAIA 助手评测",
+        "答案设计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2311.12983v1"
+    },
+    {
+      "id": "gaiabench-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GAIA 助手评测",
+      "knowledgePoint": "答案评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GAIA 原论文怎样比较系统答案与参考答案？",
+      "answer": "按参考答案类型做一定规范化后，进行准精确匹配。",
+      "explanation": "这种评分主要衡量最终答案，不直接评价完整推理轨迹。",
+      "example": "对数值和文本分别做适当规范化后比较。",
+      "tags": [
+        "GAIA 助手评测",
+        "答案评分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2311.12983v1"
+    },
+    {
+      "id": "gaiabench-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GAIA 助手评测",
+      "knowledgePoint": "多模态输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GAIA 问题是否都只依赖题干中的纯文本？",
+      "answer": "不是；部分问题附带文件或需要处理图像、音频、视频等多种材料。",
+      "explanation": "是否使用特定工具和具体解题路径由系统及任务决定。",
+      "example": "从电子表格和网页信息中得出答案。",
+      "tags": [
+        "GAIA 助手评测",
+        "多模态输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2311.12983v1"
+    },
+    {
+      "id": "gaiabench-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GAIA 助手评测",
+      "knowledgePoint": "难度级别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GAIA 原论文用什么信息作为任务难度分级的近似依据？",
+      "answer": "参考标注人员解题所需的步骤数和工具种类，并结合任务复杂度分级。",
+      "explanation": "步骤和工具没有唯一划分方式，级别定义不是严格硬阈值。",
+      "example": "复杂网页导航可能影响题目的等级。",
+      "tags": [
+        "GAIA 助手评测",
+        "难度级别"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2311.12983v1"
+    },
+    {
+      "id": "gaiabench-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GAIA 助手评测",
+      "knowledgePoint": "独立验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GAIA 原论文怎样检查新问题与参考答案是否清晰可靠？",
+      "answer": "让两名新的标注人员独立回答，并与原标注者的答案比较。",
+      "explanation": "有分歧的问题会尝试修正，否则移除。",
+      "example": "三名标注者独立得到一致结果。",
+      "tags": [
+        "GAIA 助手评测",
+        "独立验证"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2311.12983v1"
+    },
+    {
+      "id": "gaiabench-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GAIA 助手评测",
+      "knowledgePoint": "网页变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GAIA 这类依赖网页证据的评测为什么需要关注证据版本或时间？",
+      "answer": "网页可能更新或删除信息，使原本的证据和答案随时间变化。",
+      "explanation": "标明页面版本或日期有助于复核。",
+      "example": "使用带日期的页面版本核验历史数据。",
+      "tags": [
+        "GAIA 助手评测",
+        "网页变化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2311.12983v1"
+    }
+  ]
+}

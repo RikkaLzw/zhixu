@@ -1,0 +1,50 @@
+{
+  "source": {
+    "id": "incident-evidence-workflow",
+    "title": "NIST SP 800-61r3：证据与恢复决策",
+    "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf",
+    "type": "官方标准",
+    "note": "根据逐题所列资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "irwork-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件取证",
+      "knowledgePoint": "正式保管链适用性",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 是否要求每个安全事件都执行正式证据保管链流程？",
+      "answer": "不一定；正式取证与保管链是否适用取决于事件和组织流程。",
+      "explanation": "未执行正式保管链也不等于可以忽视已采集数据的完整性与来源。",
+      "example": "按组织规定判断该事件是否需要正式证据处理。",
+      "tags": [
+        "正式保管链适用性",
+        "事件响应"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "irwork-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "事件恢复",
+      "knowledgePoint": "恢复时机与业务中断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "选择事件恢复启动时机时，NIST SP 800-61r3 建议考虑什么运行影响？",
+      "answer": "考虑恢复操作可能带来的业务中断，并结合既定恢复条件决定何时启动。",
+      "explanation": "恢复本身也可能需要重启或中断服务。",
+      "example": "安排恢复窗口时评估服务短时不可用的影响。",
+      "tags": [
+        "恢复时机与业务中断",
+        "事件响应"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    }
+  ]
+}

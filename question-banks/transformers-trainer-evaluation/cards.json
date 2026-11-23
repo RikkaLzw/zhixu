@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "transformers-trainer-evaluation",
+    "title": "Transformers 4.51.3：Trainer 评估与检查点",
+    "url": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/training_args.py",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题列出的资料自行整理；代码行为以题中版本为准。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "hftrainer-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "最优模型策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 启用 load_best_model_at_end，且 save_strategy 不是 best 时，保存和评估策略有什么要求？",
+      "answer": "save_strategy 与 eval_strategy 必须相同；save_strategy=\"best\" 是源码中的特殊分支。",
+      "explanation": "不匹配会在 TrainingArguments 初始化时被拒绝。",
+      "example": "评估按 epoch、保存按 steps 的组合会报错。",
+      "tags": [
+        "Trainer",
+        "最优模型策略"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/training_args.py"
+    },
+    {
+      "id": "hftrainer-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "保存评估间隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 启用 load_best_model_at_end 且按步评估和保存时，save_steps 与 eval_steps 如何配合？",
+      "answer": "保存间隔必须是评估间隔的整数倍。",
+      "explanation": "不能混用无法保证整倍数关系的比例和绝对步数。",
+      "example": "eval_steps=100、save_steps=200 满足要求。",
+      "tags": [
+        "Trainer",
+        "保存评估间隔"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/training_args.py"
+    },
+    {
+      "id": "hftrainer-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "默认最优指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 启用 load_best_model_at_end 而未指定 metric_for_best_model，默认使用什么指标？",
+      "answer": "默认使用 loss，并默认认为较小值更好。",
+      "explanation": "指标名可使用或省略 eval_ 前缀。",
+      "example": "按评估损失选择最佳检查点。",
+      "tags": [
+        "Trainer",
+        "默认最优指标"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/training_args.py"
+    },
+    {
+      "id": "hftrainer-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "指标方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 以 perplexity 作为最佳模型指标且未设 greater_is_better，默认方向是否符合困惑度越低越好？",
+      "answer": "不符合；名字不以 loss 结尾时默认认为越大越好，应显式设置 greater_is_better=False。",
+      "explanation": "其他越小越好的自定义指标也需要检查方向。",
+      "example": "metric_for_best_model=\"perplexity\" 时指定 False。",
+      "tags": [
+        "Trainer",
+        "指标方向"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/training_args.py"
+    },
+    {
+      "id": "hftrainer-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "保留检查点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 启用最佳模型加载并设 save_total_limit=1 时，训练中最多只能存在一个检查点吗？",
+      "answer": "不一定；最佳检查点与最新检查点不同时，可能暂时同时保留两份。",
+      "explanation": "最终轮换行为还受训练过程及版本实现影响。",
+      "example": "旧检查点最佳但最近检查点用于恢复时可能各保留一份。",
+      "tags": [
+        "Trainer",
+        "保留检查点"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/training_args.py"
+    },
+    {
+      "id": "hftrainer-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "仅保存模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 save_only_model=True 会保存完整训练恢复所需的优化器和调度器状态吗？",
+      "answer": "不会；它省略优化器、调度器和随机数状态，无法完整恢复原训练状态。",
+      "explanation": "该选项可节省检查点空间，但不适合要求精确续训的场景。",
+      "example": "需要完整续训时保留常规训练检查点。",
+      "tags": [
+        "Trainer",
+        "仅保存模型"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/training_args.py"
+    },
+    {
+      "id": "hftrainer-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "早停与最佳模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 使用 EarlyStoppingCallback 但未启用 load_best_model_at_end，会立即因为该选项断言失败吗？",
+      "answer": "不会；回调发出警告，训练结束时也不会因此自动加载最佳模型。",
+      "explanation": "回调仍要求评估策略与最佳模型指标配置有效。",
+      "example": "显式配置 metric_for_best_model 和评估策略。",
+      "tags": [
+        "Trainer",
+        "早停与最佳模型"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/trainer_callback.py"
+    },
+    {
+      "id": "hftrainer-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "早停耐心",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers EarlyStoppingCallback 的 early_stopping_patience 按什么计数？",
+      "answer": "按未达到所需改善条件的评估调用次数计数，达到耐心值后请求停止训练。",
+      "explanation": "它不是直接按训练 batch 或 epoch 数计数。",
+      "example": "patience=2 时连续两次评估未改善可触发停止。",
+      "tags": [
+        "Trainer",
+        "早停耐心"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/trainer_callback.py"
+    },
+    {
+      "id": "hftrainer-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "早停阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 早停指标改善的绝对幅度恰好等于 early_stopping_threshold，会重置耐心计数吗？",
+      "answer": "不会；源码要求改善幅度严格大于该阈值。",
+      "explanation": "同时还必须按 greater_is_better 指定的方向改善。",
+      "example": "阈值 0.125 时，改善恰好 0.125 不满足严格大于条件。",
+      "tags": [
+        "Trainer",
+        "早停阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/trainer_callback.py"
+    },
+    {
+      "id": "hftrainer-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "缺失早停指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 早停回调在评估结果中找不到所需指标时会怎样？",
+      "answer": "它记录警告并跳过这次早停检查，不会凭缺失值推进耐心计数。",
+      "explanation": "实际评估结果的键需要与配置的指标对应。",
+      "example": "设置 accuracy 但只返回 eval_loss 时无法据 accuracy 早停。",
+      "tags": [
+        "Trainer",
+        "缺失早停指标"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/trainer_callback.py"
+    },
+    {
+      "id": "hftrainer-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Trainer 评估与保存",
+      "knowledgePoint": "评估输出累积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers Trainer 的 eval_accumulation_steps 控制什么？",
+      "answer": "控制积累多少个预测步骤的输出后将结果移到 CPU，以降低设备端累积占用。",
+      "explanation": "未设置时输出通常在设备侧累积更久。",
+      "example": "显存紧张时可设置较小的累积步数。",
+      "tags": [
+        "Trainer",
+        "评估输出累积"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/training_args.py"
+    }
+  ]
+}

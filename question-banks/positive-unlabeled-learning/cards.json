@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "positive-unlabeled-learning",
+    "title": "Elkan 与 Noto：正例与未标注样本学习",
+    "url": "https://cseweb.ucsd.edu/~elkan/posonly.pdf",
+    "type": "研究论文",
+    "note": "依据 Elkan 与 Noto 2008 年论文自行整理；概率公式需满足可靠正例和 SCAR 等前提。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "pulearn-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正例与未标注样本学习",
+      "knowledgePoint": "未标注集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "正例与未标注样本学习（PU learning）中的未标注集合是否等同于负例集合？",
+      "answer": "不等同；未标注集合可能同时包含正例与负例。",
+      "explanation": "是否被标注与真实类别是两个不同变量。",
+      "example": "尚未确认的安全事件中可能仍有真实攻击。",
+      "tags": [
+        "正例与未标注样本学习",
+        "未标注集合"
+      ],
+      "evidence": "source",
+      "reference": "https://cseweb.ucsd.edu/~elkan/posonly.pdf"
+    },
+    {
+      "id": "pulearn-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正例与未标注样本学习",
+      "knowledgePoint": "标签与选择状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elkan–Noto 的 PU 模型中 y 与 s 分别代表什么？",
+      "answer": "y 表示真实二分类标签，s 表示样本是否被选中并标注为正例。",
+      "explanation": "该模型假定被标注的样本都是正例。",
+      "example": "s=0 的样本真实 y 可能为 0 或 1。",
+      "tags": [
+        "正例与未标注样本学习",
+        "标签与选择状态"
+      ],
+      "evidence": "source",
+      "reference": "https://cseweb.ucsd.edu/~elkan/posonly.pdf"
+    },
+    {
+      "id": "pulearn-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正例与未标注样本学习",
+      "knowledgePoint": "SCAR 假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PU 学习中的 SCAR 假设如何描述正例被标注的概率？",
+      "answer": "在真实类别为正时，被标注的概率是与样本特征 x 无关的常数。",
+      "explanation": "这是关于标注机制的假设，不是数据自动满足的事实。",
+      "example": "不同特征的正例有相同概率被选中标注。",
+      "tags": [
+        "正例与未标注样本学习",
+        "SCAR 假设"
+      ],
+      "evidence": "source",
+      "reference": "https://cseweb.ucsd.edu/~elkan/posonly.pdf"
+    },
+    {
+      "id": "pulearn-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正例与未标注样本学习",
+      "knowledgePoint": "标注概率关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "真实标签为 y、正例标注状态为 s；可靠正例、SCAR 且 c=P(s=1|y=1)>0 时，P(s=1|x) 与 P(y=1|x) 有什么关系？",
+      "answer": "P(s=1|x)=c·P(y=1|x)。",
+      "explanation": "c 是正例被标注的常数概率；不满足假设时不能直接使用该关系。",
+      "example": "若 c=0.5 且正类概率为 0.8，标注概率为 0.4。",
+      "tags": [
+        "正例与未标注样本学习",
+        "标注概率关系"
+      ],
+      "evidence": "source",
+      "reference": "https://cseweb.ucsd.edu/~elkan/posonly.pdf"
+    },
+    {
+      "id": "pulearn-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正例与未标注样本学习",
+      "knowledgePoint": "排序与概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在可靠正例、SCAR、正例被标注概率 c>0 的精确概率模型下，为什么 P(s=1|x) 可用于正类概率排序？",
+      "answer": "它等于正类概率乘以同一个正的常数，因此保持样本排序。",
+      "explanation": "保持排序不意味着无需校正即可解释为真实正类概率。",
+      "example": "两个样本的标注概率大小与正类概率大小一致。",
+      "tags": [
+        "正例与未标注样本学习",
+        "排序与概率"
+      ],
+      "evidence": "source",
+      "reference": "https://cseweb.ucsd.edu/~elkan/posonly.pdf"
+    }
+  ]
+}

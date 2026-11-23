@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "transformers-language-model-collation",
+    "title": "Transformers 4.51.3 源码：语言模型批次整理",
+    "url": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/data/data_collator.py",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "hfcoll-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型批次整理",
+      "knowledgePoint": "动态填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 DataCollatorWithPadding 默认如何处理同批不同长度的输入？",
+      "answer": "按 tokenizer 配置动态填充到该批最长序列的长度。",
+      "explanation": "可配置固定最大长度或填充到指定倍数。",
+      "example": "短文本批次不必统一填充到全数据集的最大长度。",
+      "tags": [
+        "语言模型批次整理",
+        "动态填充"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/data/data_collator.py"
+    },
+    {
+      "id": "hfcoll-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型批次整理",
+      "knowledgePoint": "掩码标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 DataCollatorForLanguageModeling 在 mlm=True 时，未选中掩码的 token 标签是什么？",
+      "answer": "标签设为 −100；被选中的位置保留原 token ID 作为预测目标。",
+      "explanation": "损失函数是否忽略 −100 取决于模型和损失配置。",
+      "example": "只在选中位置计算标准 MLM 损失。",
+      "tags": [
+        "语言模型批次整理",
+        "掩码标签"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/data/data_collator.py"
+    },
+    {
+      "id": "hfcoll-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型批次整理",
+      "knowledgePoint": "掩码比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DataCollatorForLanguageModeling 的 mlm_probability 控制什么？",
+      "answer": "控制符合条件的 token 被选为 MLM 预测目标的概率。",
+      "explanation": "它不是一定要替换成 mask token 的比例。",
+      "example": "默认概率为 0.15。",
+      "tags": [
+        "语言模型批次整理",
+        "掩码比例"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/data/data_collator.py"
+    },
+    {
+      "id": "hfcoll-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型批次整理",
+      "knowledgePoint": "特殊标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 MLM 整理器怎样使用 special_tokens_mask？",
+      "answer": "标记为特殊 token 的位置不参与随机选中掩码。",
+      "explanation": "如果未提供，整理器会尝试调用 tokenizer 生成该掩码。",
+      "example": "避免把特殊标记作为普通 MLM 目标。",
+      "tags": [
+        "语言模型批次整理",
+        "特殊标记"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/data/data_collator.py"
+    },
+    {
+      "id": "hfcoll-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型批次整理",
+      "knowledgePoint": "掩码令牌前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 使用 mlm=True 时，tokenizer 没有 mask token 会怎样？",
+      "answer": "初始化整理器时抛出 ValueError。",
+      "explanation": "做因果语言建模可使用适当的非 MLM 配置。",
+      "example": "检查 tokenizer 是否提供掩码令牌。",
+      "tags": [
+        "语言模型批次整理",
+        "掩码令牌前提"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/data/data_collator.py"
+    },
+    {
+      "id": "hfcoll-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型批次整理",
+      "knowledgePoint": "随机种子零",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 MLM 整理器将 seed=0 时，会按该选项建立独立随机数生成器吗？",
+      "answer": "该版本的调用路径用真值判断 seed，0 不会触发独立生成器初始化。",
+      "explanation": "这属于特定版本实现行为；应检查版本并自行控制随机状态。",
+      "example": "NumPy 模式下 seed=0 会继续使用全局随机状态。",
+      "tags": [
+        "语言模型批次整理",
+        "随机种子零"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/data/data_collator.py"
+    },
+    {
+      "id": "hfcoll-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型批次整理",
+      "knowledgePoint": "因果标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的语言模型整理器设置 mlm=False 时，会在整理阶段把标签整体错位一位吗？",
+      "answer": "不会；它复制 input_ids 为标签并将 padding token 标签设为 −100。",
+      "explanation": "下一 token 的错位通常由具体模型的损失实现处理，应核对模型代码。",
+      "example": "不要假设整理器已经把标签右移。",
+      "tags": [
+        "语言模型批次整理",
+        "因果标签"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/huggingface/transformers/v4.51.3/src/transformers/data/data_collator.py"
+    }
+  ]
+}

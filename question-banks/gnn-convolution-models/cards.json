@@ -1,0 +1,299 @@
+{
+  "source": {
+    "id": "gnn-convolution-models",
+    "title": "GCN、GraphSAGE、GAT 与 PyG 2.6.1",
+    "url": "https://arxiv.org/abs/1609.02907v4",
+    "type": "教材、论文与官方文档",
+    "note": "逐题依据所列资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "gnnmodels-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "GCN归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GCN 为什么对包含自环的邻接矩阵做度归一化？",
+      "answer": "归一化调整邻居消息的权重，避免简单求和完全随节点度数扩大。",
+      "explanation": "常见形式使用两端节点度数的平方根进行对称归一化。",
+      "example": "比较高连接度节点和低连接度节点的聚合尺度。",
+      "tags": [
+        "GCN归一化",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1609.02907v4"
+    },
+    {
+      "id": "gnnmodels-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "GCN边权",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 2.6.1 的 GCNConv 能否为边提供非 1 的权重？",
+      "answer": "可以，通过 edge_weight 为边提供标量权重，并参与相应归一化和消息计算。",
+      "explanation": "这与直接输入任意维度的边特征向量不同。",
+      "example": "给不同通信边设置不同权重。",
+      "tags": [
+        "GCN边权",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.GCNConv.html"
+    },
+    {
+      "id": "gnnmodels-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "GCN自环默认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 2.6.1 的 GCNConv 在 add_self_loops=None 时如何决定是否添加自环？",
+      "answer": "默认随 normalize 设置：normalize=True 时添加自环，False 时不添加。",
+      "explanation": "显式配置时仍需检查与归一化参数的兼容性。",
+      "example": "关闭归一化且保留默认自环设置时不会自动添加自环。",
+      "tags": [
+        "GCN自环默认",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.GCNConv.html"
+    },
+    {
+      "id": "gnnmodels-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "GCN缓存前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么图结构或边权经常变化时不宜直接使用 GCNConv(cached=True)？",
+      "answer": "该选项复用首次计算的归一化结果；后续图变化可能使缓存与当前输入不一致。",
+      "explanation": "文档将其用于适合复用同一图的传导学习场景。",
+      "example": "训练后替换边集合时重新计算而非沿用旧缓存。",
+      "tags": [
+        "GCN缓存前提",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.GCNConv.html"
+    },
+    {
+      "id": "gnnmodels-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "GraphSAGE归纳",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GraphSAGE 为什么能够为训练时未见过的节点生成表示？",
+      "answer": "它学习共享的邻居特征聚合函数，可应用到具有可用特征和邻域的新节点。",
+      "explanation": "是否有效仍取决于新节点和训练数据之间的关系。",
+      "example": "新设备接入图后根据自身与邻居特征生成表示。",
+      "tags": [
+        "GraphSAGE归纳",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1706.02216v4"
+    },
+    {
+      "id": "gnnmodels-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "SAGE均值聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 2.6.1 的 SAGEConv 默认如何聚合邻居特征？",
+      "answer": "默认对邻居特征求均值，再与根节点的变换特征结合。",
+      "explanation": "聚合方式可通过 aggr 配置。",
+      "example": "聚合邻居均值并加入目标节点自身的线性变换。",
+      "tags": [
+        "SAGE均值聚合",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.SAGEConv.html"
+    },
+    {
+      "id": "gnnmodels-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "SAGE根节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SAGEConv 设置 root_weight=False 后，是否保证节点自身信息绝不进入输出？",
+      "answer": "不保证；它关闭单独的根节点线性项，但若输入图包含自环，节点仍可能作为邻居传递自身特征。",
+      "explanation": "应同时检查图中的边和层配置。",
+      "example": "关闭根节点项但保留自环时，自身仍会参与邻居聚合。",
+      "tags": [
+        "SAGE根节点",
+        "图神经网络模型"
+      ],
+      "evidence": "application",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.SAGEConv.html"
+    },
+    {
+      "id": "gnnmodels-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "SAGE输出归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 2.6.1 的 SAGEConv 设置 normalize=True 会对输出做什么？",
+      "answer": "对每个输出节点特征向量做 L2 归一化。",
+      "explanation": "这不同于 GCN 中对邻接关系进行的度归一化。",
+      "example": "将非零节点输出缩放为单位 L2 范数。",
+      "tags": [
+        "SAGE输出归一化",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.SAGEConv.html"
+    },
+    {
+      "id": "gnnmodels-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "SAGE邻居预投影",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 2.6.1 的 SAGEConv 设置 project=True 时，邻居特征在聚合前会怎样处理？",
+      "answer": "先经过可学习的线性投影和非线性变换，再进行邻居聚合。",
+      "explanation": "该选项改变邻居消息的计算方式。",
+      "example": "聚合前先变换每个邻居的特征。",
+      "tags": [
+        "SAGE邻居预投影",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.SAGEConv.html"
+    },
+    {
+      "id": "gnnmodels-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "图注意力范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图注意力网络通常在哪些节点之间计算并归一化注意力？",
+      "answer": "对目标节点的邻域（通常含自身）计算注意力，并在该邻域内归一化。",
+      "explanation": "它使用图结构限制参与注意力的节点。",
+      "example": "目标节点只对其连接邻居计算权重。",
+      "tags": [
+        "图注意力范围",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1710.10903v3"
+    },
+    {
+      "id": "gnnmodels-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "图注意力多头",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 2.6.1 的 GATConv 中 concat=True 与 False 怎样合并多个注意力头？",
+      "answer": "True 拼接各头输出；False 对各头输出求平均。",
+      "explanation": "合并方式影响输出特征维度。",
+      "example": "每头输出 8 维、共 4 头时，拼接得到 32 维。",
+      "tags": [
+        "图注意力多头",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.GATConv.html"
+    },
+    {
+      "id": "gnnmodels-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "图注意力边特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 2.6.1 的 GATConv 设置 edge_dim 并提供边特征时，边特征可以影响什么？",
+      "answer": "边特征可以参与计算边的注意力系数。",
+      "explanation": "这需要层配置与传入边特征维度匹配。",
+      "example": "通信次数作为边特征参与邻居权重计算。",
+      "tags": [
+        "图注意力边特征",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.GATConv.html"
+    },
+    {
+      "id": "gnnmodels-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "图注意力dropout",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG GATConv 的 dropout 参数作用于什么？",
+      "answer": "训练时对归一化后的注意力系数应用 Dropout，使有效邻域带有随机性。",
+      "explanation": "训练时丢弃后的系数和不一定仍为 1。",
+      "example": "训练时随机丢弃部分邻居注意力连接。",
+      "tags": [
+        "图注意力dropout",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/2.6.1/generated/torch_geometric.nn.conv.GATConv.html"
+    },
+    {
+      "id": "gnnmodels-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "注意力解释边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图注意力权重高能否单独证明对应邻居造成了预测结果？",
+      "answer": "不能；权重描述模型聚合中的分配，不单独证明因果关系。",
+      "explanation": "解释仍需结合扰动实验及数据和模型背景。",
+      "example": "对高权重邻居做受控移除后再观察预测变化。",
+      "tags": [
+        "注意力解释边界",
+        "图神经网络模型"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1902.10186v2",
+      "referenceTitle": "Jain 与 Wallace：Attention is not Explanation",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "gnnmodels-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图神经网络模型",
+      "knowledgePoint": "传导与归纳评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图节点任务中的传导评估与归纳评估对未标注测试节点的可见性有什么典型区别？",
+      "answer": "传导设置可在训练时看到测试节点的图结构或特征但不能使用测试标签；归纳设置评估对训练时未见节点或图的泛化。",
+      "explanation": "评价必须说明训练时实际可见的信息。",
+      "example": "在未来才出现的设备上评估属于不同的归纳场景。",
+      "tags": [
+        "传导与归纳评估",
+        "图神经网络模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1706.02216v4"
+    }
+  ]
+}

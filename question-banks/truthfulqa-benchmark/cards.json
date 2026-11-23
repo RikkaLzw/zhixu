@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "truthfulqa-benchmark",
+    "title": "TruthfulQA 原论文 v1：真实性评测",
+    "url": "https://arxiv.org/pdf/2109.07958v1",
+    "type": "论文、协议规范与开源实现",
+    "note": "依据逐题引用的论文、规范或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "truthqa-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TruthfulQA 模型评测",
+      "knowledgePoint": "基准目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TruthfulQA 原论文主要希望测试语言模型的哪类错误？",
+      "answer": "它关注模型是否会生成模仿常见人类误解的虚假回答。",
+      "explanation": "题目经过针对性设计，不等同于随机抽样的所有问答任务。",
+      "example": "对流行但错误的说法进行提问。",
+      "tags": [
+        "TruthfulQA 模型评测",
+        "基准目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.07958v1"
+    },
+    {
+      "id": "truthqa-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TruthfulQA 模型评测",
+      "knowledgePoint": "题目规模",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TruthfulQA 原论文的测试集包含多少题，覆盖多少类主题？",
+      "answer": "包含 817 个问题，覆盖 38 个类别。",
+      "explanation": "这是原论文的测试集口径。",
+      "example": "类别涉及健康、历史等多个主题。",
+      "tags": [
+        "TruthfulQA 模型评测",
+        "题目规模"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.07958v1"
+    },
+    {
+      "id": "truthqa-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TruthfulQA 模型评测",
+      "knowledgePoint": "真实性与信息量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TruthfulQA 为什么同时评估 truthfulness 和 informativeness？",
+      "answer": "只避免虚假陈述可以通过不回答实现；信息量指标还考察回答是否提供与问题相关的信息。",
+      "explanation": "高真实性不自动意味着回答有帮助。",
+      "example": "“我不知道”可被判为真实，但通常不具信息量。",
+      "tags": [
+        "TruthfulQA 模型评测",
+        "真实性与信息量"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.07958v1"
+    },
+    {
+      "id": "truthqa-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TruthfulQA 模型评测",
+      "knowledgePoint": "零样本定位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TruthfulQA 原论文把这个测试集设计成什么提示设置的基准？",
+      "answer": "主要面向 zero-shot：不进行梯度更新，提示中不使用 TruthfulQA 的题目示例。",
+      "explanation": "论文的 true zero-shot 基线也不根据该基准样例调整提示或超参数。",
+      "example": "使用统一说明提示后直接回答测试问题。",
+      "tags": [
+        "TruthfulQA 模型评测",
+        "零样本定位"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.07958v1"
+    },
+    {
+      "id": "truthqa-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TruthfulQA 模型评测",
+      "knowledgePoint": "生成与选择题",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TruthfulQA 的生成任务和多项选择任务使用题目时有什么区别？",
+      "answer": "生成任务要求模型写出回答；选择题变体对同一问题的真假参考答案计算模型条件似然。",
+      "explanation": "两者的输出形式和评分方法不同。",
+      "example": "比较自由生成答案与候选答案的概率。",
+      "tags": [
+        "TruthfulQA 模型评测",
+        "生成与选择题"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.07958v1"
+    },
+    {
+      "id": "truthqa-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TruthfulQA 模型评测",
+      "knowledgePoint": "选择题分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TruthfulQA 原论文的多项选择真实性分数如何利用真假参考答案的似然？",
+      "answer": "对所有候选答案的似然归一化后，求真实答案所占的总概率质量。",
+      "explanation": "评分依赖给定候选集，并不直接验证自由生成的回答。",
+      "example": "多个真实候选的归一化概率相加。",
+      "tags": [
+        "TruthfulQA 模型评测",
+        "选择题分数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.07958v1"
+    },
+    {
+      "id": "truthqa-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TruthfulQA 模型评测",
+      "knowledgePoint": "评测器验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TruthfulQA 原论文验证 GPT-judge 对未见模型家族的泛化时，是否也把测试问题全部留出训练？",
+      "answer": "没有；论文为了评价这些固定问题，训练中仍包含所有问题，并按模型家族留出答案。",
+      "explanation": "对新模型家族的验证不等于对全新问题的验证。",
+      "example": "用其他模型家族的回答训练，再评估留出的家族。",
+      "tags": [
+        "TruthfulQA 模型评测",
+        "评测器验证"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.07958v1"
+    },
+    {
+      "id": "truthqa-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TruthfulQA 模型评测",
+      "knowledgePoint": "筛选偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TruthfulQA 原论文的 filtered 问题为什么可能对构题时使用的模型有选择偏差？",
+      "answer": "作者用 GPT-3-175B 测试并过滤掉大多数它能答对的问题，因此该部分针对该模型的弱点。",
+      "explanation": "论文还加入未经过目标模型筛选的问题。",
+      "example": "用某模型挑题后不能把其结果视为随机问答表现。",
+      "tags": [
+        "TruthfulQA 模型评测",
+        "筛选偏差"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.07958v1"
+    },
+    {
+      "id": "truthqa-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TruthfulQA 模型评测",
+      "knowledgePoint": "人类基线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TruthfulQA 原论文的人类生成任务基线是否完全不借助外部资料？",
+      "answer": "不是；一位研究生回答随机抽取的 250 题时被允许上网查资料。",
+      "explanation": "比较模型与人类结果时要保留样本及工具条件。",
+      "example": "人工查证能力与模型闭卷生成的条件不同。",
+      "tags": [
+        "TruthfulQA 模型评测",
+        "人类基线"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.07958v1"
+    }
+  ]
+}

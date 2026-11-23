@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "python-heapq-practice",
+    "title": "Python 3.14 文档：heapq 优先队列",
+    "url": "https://docs.python.org/3.14/library/heapq.html",
+    "type": "官方文档或教材",
+    "note": "依据 Python 3.14 heapq 官方文档自行整理；示例自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyheap-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python heapq 优先队列",
+      "knowledgePoint": "原地建堆",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 heapq.heapify(x) 如何处理已有列表？",
+      "answer": "它原地把列表调整为最小堆，返回值为 None。",
+      "explanation": "堆调整后仍由同一个列表保存数据。",
+      "example": "对已有数字列表调用 heapify 后从堆顶取最小值。",
+      "tags": [
+        "Python heapq 优先队列",
+        "原地建堆"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/heapq.html"
+    },
+    {
+      "id": "pyheap-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python heapq 优先队列",
+      "knowledgePoint": "堆与排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python heapq 的最小堆列表一定整体按升序排列吗？",
+      "answer": "不一定；堆只要求每个父节点不大于其子节点，堆顶是最小值。",
+      "explanation": "要得到完整排序结果，可反复弹出或另行排序。",
+      "example": "[1, 4, 2] 是一个最小堆但不是升序列表。",
+      "tags": [
+        "Python heapq 优先队列",
+        "堆与排序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/heapq.html"
+    },
+    {
+      "id": "pyheap-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python heapq 优先队列",
+      "knowledgePoint": "组合操作",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python heapq 的 heappushpop 与 heapreplace 在新值小于原堆顶时返回什么？",
+      "answer": "heappushpop 返回新值并保留原堆；heapreplace 返回原堆顶并把新值放入堆。",
+      "explanation": "后者要求原堆非空。",
+      "example": "堆为 [3, 7]、新值为 1 时，两者返回 1 和 3。",
+      "tags": [
+        "Python heapq 优先队列",
+        "组合操作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/heapq.html"
+    },
+    {
+      "id": "pyheap-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python heapq 优先队列",
+      "knowledgePoint": "空堆弹出",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python 的 heapq.heappop 从空列表弹出时会怎样？",
+      "answer": "它抛出 IndexError。",
+      "explanation": "调用方可先处理空堆情况。",
+      "example": "没有待处理任务时，不要直接从空堆取任务。",
+      "tags": [
+        "Python heapq 优先队列",
+        "空堆弹出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/heapq.html"
+    },
+    {
+      "id": "pyheap-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python heapq 优先队列",
+      "knowledgePoint": "最大堆接口",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python 3.14 新增的 heapify_max 与 heappop_max 分别做什么？",
+      "answer": "前者原地建立最大堆；后者弹出并返回最大元素。",
+      "explanation": "这些公开的最大堆接口从 Python 3.14 起提供。",
+      "example": "用最大堆先处理数值最大的任务。",
+      "tags": [
+        "Python heapq 优先队列",
+        "最大堆接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/heapq.html"
+    },
+    {
+      "id": "pyheap-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python heapq 优先队列",
+      "knowledgePoint": "有序序列归并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python heapq.merge 对输入和输出有什么约定？",
+      "answer": "默认要求各输入已按升序排列，并返回合并后的迭代器；reverse=True 时各输入应按降序排列。",
+      "explanation": "它不要求先把所有输入合成一个列表。",
+      "example": "把两个已升序的日志时间序列逐项合并。",
+      "tags": [
+        "Python heapq 优先队列",
+        "有序序列归并"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/heapq.html"
+    },
+    {
+      "id": "pyheap-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python heapq 优先队列",
+      "knowledgePoint": "同优先级与比较",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python heapq 用 (优先级, 任务对象) 存储不可比较的任务时，同优先级为什么可能报错？",
+      "answer": "元组比较在优先级相同时会继续比较任务对象；若对象不支持比较会抛出 TypeError。",
+      "explanation": "可增加单调计数作为中间字段，并作为同优先级的次序。",
+      "example": "使用 (priority, counter, task) 作为堆元素。",
+      "tags": [
+        "Python heapq 优先队列",
+        "同优先级与比较"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/heapq.html"
+    },
+    {
+      "id": "pyheap-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python heapq 优先队列",
+      "knowledgePoint": "最小若干项",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Python 的 heapq.nsmallest(n, iterable, key=...) 返回什么？",
+      "answer": "它返回按 key 比较后最小的 n 个元素组成的列表，结果按相应顺序排列。",
+      "explanation": "key 提取比较依据，结果仍是原元素。",
+      "example": "按耗时字段选出耗时最短的三个记录。",
+      "tags": [
+        "Python heapq 优先队列",
+        "最小若干项"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/heapq.html"
+    },
+    {
+      "id": "pyheap-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python heapq 优先队列",
+      "knowledgePoint": "变更优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不应直接修改 Python 堆中对象的排序键后就假定堆序仍然成立？",
+      "answer": "直接修改可能破坏堆不变量；可将旧条目标记为失效并插入新条目，或修改后重建堆。",
+      "explanation": "堆操作依赖元素之间保持原先比较关系。",
+      "example": "任务优先级变化后重新维护队列。",
+      "tags": [
+        "Python heapq 优先队列",
+        "变更优先级"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/heapq.html"
+    }
+  ]
+}

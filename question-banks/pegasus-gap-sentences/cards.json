@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "pegasus-gap-sentences",
+    "title": "PEGASUS 原论文 v2：摘要式预训练",
+    "url": "https://arxiv.org/pdf/1912.08777v2",
+    "type": "固定版本研究论文",
+    "note": "逐题依据所列资料自行整理；例子为自编，版本与适用条件见题目。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "pegasus-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PEGASUS 摘要预训练",
+      "knowledgePoint": "缺句生成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEGASUS 的基础 Gap Sentences Generation 预训练目标是什么？",
+      "answer": "从文档中选择并遮盖完整句子，让解码器根据其余文本生成这些句子。",
+      "explanation": "所选句子被拼成一个目标序列，形成类似摘要的自监督任务。",
+      "example": "用剩余句子预测文档中被选出的重要句子。",
+      "tags": [
+        "PEGASUS 摘要预训练",
+        "缺句生成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1912.08777v2"
+    },
+    {
+      "id": "pegasus-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PEGASUS 摘要预训练",
+      "knowledgePoint": "模型结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEGASUS 原论文的基础模型采用什么 Transformer 结构？",
+      "answer": "采用编码器—解码器结构。",
+      "explanation": "编码器处理损坏的文档，解码器生成预训练目标。",
+      "example": "先编码剩余文档，再生成缺失句子。",
+      "tags": [
+        "PEGASUS 摘要预训练",
+        "模型结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1912.08777v2"
+    },
+    {
+      "id": "pegasus-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PEGASUS 摘要预训练",
+      "knowledgePoint": "重要句选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEGASUS 原论文的独立重要句选择如何估计句子的重要性？",
+      "answer": "用句子与文档其余部分之间的 ROUGE-1 F1 作为重要性代理。",
+      "explanation": "它再选择评分最高的句子作为缺句。",
+      "example": "比较每句话与其他句子的词汇重合度。",
+      "tags": [
+        "PEGASUS 摘要预训练",
+        "重要句选择"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1912.08777v2"
+    },
+    {
+      "id": "pegasus-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PEGASUS 摘要预训练",
+      "knowledgePoint": "独立与顺序选择",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PEGASUS 的顺序重要句选择与独立选择有什么区别？",
+      "answer": "顺序选择逐步更新已选句子集合；独立选择分别给各句评分再取最高分。",
+      "explanation": "顺序方式考虑当前选择与已选集合的关系。",
+      "example": "先选择一句，再重新评估下一句。",
+      "tags": [
+        "PEGASUS 摘要预训练",
+        "独立与顺序选择"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1912.08777v2"
+    },
+    {
+      "id": "pegasus-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PEGASUS 摘要预训练",
+      "knowledgePoint": "缺句比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEGASUS 的 gap sentences ratio（GSR）表示什么？",
+      "answer": "表示所选缺句数量与文档句子总数之比。",
+      "explanation": "它不是被遮盖 token 数量占 token 总数的比例。",
+      "example": "10 句文档选择 3 句时 GSR 为 0.3。",
+      "tags": [
+        "PEGASUS 摘要预训练",
+        "缺句比例"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1912.08777v2"
+    },
+    {
+      "id": "pegasus-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PEGASUS 摘要预训练",
+      "knowledgePoint": "目标序列范围",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PEGASUS 基础缺句生成与 BART 去噪重建在目标文本上有什么区别？",
+      "answer": "PEGASUS 生成被选出的缺句；BART 去噪目标通常重建完整原文。",
+      "explanation": "两者都可使用编码器—解码器，但目标序列范围不同。",
+      "example": "比较只生成抽取句子和重建整篇文档。",
+      "tags": [
+        "PEGASUS 摘要预训练",
+        "目标序列范围"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1912.08777v2"
+    },
+    {
+      "id": "pegasus-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PEGASUS 摘要预训练",
+      "knowledgePoint": "保留部分句子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEGASUS 论文的较大模型预训练为什么保留部分选中句子不遮盖？",
+      "answer": "为了鼓励模型复制输入中的内容。",
+      "explanation": "这是该实验配置的调整，并非所有缺句都会在输入中保留。",
+      "example": "一部分选中句子保持原样，其内容仍在生成目标中。",
+      "tags": [
+        "PEGASUS 摘要预训练",
+        "保留部分句子"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1912.08777v2"
+    },
+    {
+      "id": "pegasus-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PEGASUS 摘要预训练",
+      "knowledgePoint": "MLM 配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PEGASUS 论文最终的大模型预训练是否一定同时使用掩码语言模型目标？",
+      "answer": "不使用；论文最终的大模型配置采用缺句生成而不加入 MLM。",
+      "explanation": "论文也实验了 MLM 单独或与缺句生成联合训练。",
+      "example": "区分论文中的联合目标实验与最终模型配置。",
+      "tags": [
+        "PEGASUS 摘要预训练",
+        "MLM 配置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1912.08777v2"
+    }
+  ]
+}

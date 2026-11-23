@@ -1,0 +1,78 @@
+{
+  "source": {
+    "id": "company-interview-evaluation",
+    "title": "美团公开面经：对抗训练评估",
+    "url": "https://www.nowcoder.com/discuss/889681",
+    "type": "公开面经合集",
+    "note": "公司、岗位、轮次及经历为分享者自述；有些资料由合集转载。逐题记录面经来源和独立技术依据，标注主题启发的题目并非原帖逐题提出。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "companypractice-eval-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "安全模型评估",
+      "knowledgePoint": "对抗训练与测试样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "评估对抗训练效果时，为什么要在独立测试样本上构造并评估对抗样本？",
+      "answer": "训练中反复使用的样本及攻击可能影响模型拟合；独立测试样本有助于衡量对未见样本的稳健性。",
+      "explanation": "应保留测试集用于最终评估，并说明攻击方式、扰动约束和模型访问条件。",
+      "example": "分别在同一测试集上比较训练前后模型遭受同一种攻击时的准确率。",
+      "tags": [
+        "对抗训练与测试样本",
+        "安全模型评估",
+        "公开面经",
+        "美团"
+      ],
+      "evidence": "application",
+      "referenceId": "company-meituan",
+      "reference": "https://www.nowcoder.com/discuss/889681",
+      "referenceTitle": "美团安全实习面经（个人自述，合集收录）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "adversarial-robustness-interview",
+          "title": "Towards Deep Learning Models Resistant to Adversarial Attacks",
+          "url": "https://arxiv.org/abs/1706.06083",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypractice-eval-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "安全模型评估",
+      "knowledgePoint": "对抗评估威胁模型",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "一种对抗攻击的成功率下降，能否证明模型对所有攻击都稳健？",
+      "answer": "不能；结论只适用于所测试的攻击、扰动范围、数据和访问条件，其他攻击或更强优化可能得到不同结果。",
+      "explanation": "报告具体威胁模型和攻击配置，并根据应用场景增加多种合理攻击和独立评估。",
+      "example": "同时记录扰动范数上限、攻击迭代次数与白盒或黑盒条件。",
+      "tags": [
+        "对抗评估威胁模型",
+        "安全模型评估",
+        "公开面经",
+        "美团"
+      ],
+      "evidence": "application",
+      "referenceId": "company-meituan",
+      "reference": "https://www.nowcoder.com/discuss/889681",
+      "referenceTitle": "美团安全实习面经（个人自述，合集收录）；主题启发",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "adversarial-robustness-interview",
+          "title": "Towards Deep Learning Models Resistant to Adversarial Attacks",
+          "url": "https://arxiv.org/abs/1706.06083",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

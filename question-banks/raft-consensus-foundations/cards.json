@@ -1,0 +1,354 @@
+{
+  "source": {
+    "id": "raft-consensus-foundations",
+    "title": "Raft 论文：分布式共识与日志复制",
+    "url": "https://raft.github.io/raft.pdf",
+    "type": "论文与官方技术文档",
+    "note": "根据逐题引用的论文或官方文档自行整理；例子为自编，具体方法和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "raftbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "复制状态机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 要让多个副本执行命令时保持一致，通常需要保证什么？",
+      "answer": "让各副本按相同顺序应用相同的已提交日志命令，并使用确定性状态机。",
+      "explanation": "论文讨论的是复制状态机；输入和状态机行为的确定性是前提。",
+      "example": "多个副本按同一顺序处理账户更新。",
+      "tags": [
+        "复制状态机",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "节点角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 的服务器在任一时刻通常处于哪三种角色之一？",
+      "answer": "Follower、Candidate 或 Leader。",
+      "explanation": "角色会随选举和任期变化。",
+      "example": "Follower 超时后转为 Candidate 发起选举。",
+      "tags": [
+        "节点角色",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "任期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 的 term（任期）有什么作用？",
+      "answer": "它为选举和领导者活动提供单调递增的逻辑编号，用于识别过时的信息。",
+      "explanation": "一个任期可能因选票分裂而没有选出领导者。",
+      "example": "节点收到更高任期的消息后更新自己的任期。",
+      "tags": [
+        "任期",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "选举安全",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 的选举安全性质对同一任期的领导者数量有什么保证？",
+      "answer": "同一个任期最多选出一个领导者。",
+      "explanation": "不同任期可以有不同领导者；网络隔离期间旧领导者的本地状态可能尚未更新。",
+      "example": "多数票的交集阻止两个候选人在同一任期都获胜。",
+      "tags": [
+        "选举安全",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "单次投票",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 服务器在同一任期最多给多少个候选者投票？",
+      "answer": "最多给一个候选者投票，按照先到且符合条件的请求决定。",
+      "explanation": "是否投票还受候选者日志新旧程度等规则限制。",
+      "example": "同一任期拒绝另一个候选人的投票请求。",
+      "tags": [
+        "单次投票",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "心跳与选举",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 领导者发送空的 AppendEntries 心跳有什么作用？",
+      "answer": "它向跟随者表明领导者仍在工作，减少不必要的选举超时。",
+      "explanation": "消息丢失或网络分区仍可能触发新选举。",
+      "example": "空闲期间周期性向跟随者发送心跳。",
+      "tags": [
+        "心跳与选举",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "随机超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 为什么使用随机化的选举超时？",
+      "answer": "它让候选节点不容易同时发起选举，从而降低反复出现票数分裂的概率。",
+      "explanation": "随机超时提高活性，不是同任期至多一个领导者的安全保证本身。",
+      "example": "两个节点等待不同的超时时间。",
+      "tags": [
+        "随机超时",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "选票分裂",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 一轮选举中无人获得多数票时通常怎么办？",
+      "answer": "候选者等待选举超时，增加任期并发起新一轮选举。",
+      "explanation": "网络持续故障时不保证立即选出领导者。",
+      "example": "三个候选者各获得一票后重新选举。",
+      "tags": [
+        "选票分裂",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "多数派交集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么固定成员 Raft 集群中的任意两个多数派一定有交集？",
+      "answer": "两个集合都超过集群半数，因此至少共享一个成员。",
+      "explanation": "该性质用于说明选举和日志安全；成员变更需额外处理。",
+      "example": "五节点集群中任意两个三节点多数派有重叠。",
+      "tags": [
+        "多数派交集",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "提交与复制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 领导者把日志条目追加到本地后，该条目是否立即提交？",
+      "answer": "不一定；当前任期条目通常需要复制到多数派后才能由领导者确认提交。",
+      "explanation": "被追加但未提交的条目可能因后续领导者变更而被覆盖。",
+      "example": "本地收到写请求后等待多数副本确认。",
+      "tags": [
+        "提交与复制",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "日志匹配检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft AppendEntries 为什么携带前一条日志的索引和任期？",
+      "answer": "跟随者用它们检查前缀是否匹配，只有匹配时才接受后续日志。",
+      "explanation": "检查失败时领导者会调整位置并重试。",
+      "example": "跟随者缺少指定前一条记录时拒绝追加。",
+      "tags": [
+        "日志匹配检查",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "日志匹配性质",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 的日志匹配性质如何约束两个日志中同索引、同任期的条目？",
+      "answer": "如果两个日志在同一索引含有同一任期的条目，则到该索引为止的前缀相同。",
+      "explanation": "这是 Raft 日志匹配性质，不是任意日志系统的通用性质。",
+      "example": "确认索引与任期都相同后推断此前的前缀一致。",
+      "tags": [
+        "日志匹配性质",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "冲突日志修复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 跟随者在同一索引上发现与领导者任期不同的冲突条目时，如何修复？",
+      "answer": "删除该冲突条目及其之后的条目，再接收领导者的后续条目。",
+      "explanation": "领导者通过前缀一致性检查定位可继续复制的位置。",
+      "example": "新领导者覆盖旧领导者留下的未提交尾部。",
+      "tags": [
+        "冲突日志修复",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "候选日志新旧",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 投票时如何比较候选者与投票者的日志新旧？",
+      "answer": "先比较末条日志的任期；任期相同时再比较末条索引。",
+      "explanation": "候选者日志至少同样新，才满足投票的日志条件。",
+      "example": "末条任期较高的日志比任期较低但更长的日志更新。",
+      "tags": [
+        "候选日志新旧",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "旧任期提交",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 领导者能否仅凭旧任期条目已存在于多数副本，直接按计数规则判定它已提交？",
+      "answer": "不能；论文只通过多数计数直接提交当前任期条目，之前条目可随之间接提交。",
+      "explanation": "这是防止领导者变更时旧条目仍可能被覆盖的安全规则。",
+      "example": "新任期条目提交后，其之前的日志也随之提交。",
+      "tags": [
+        "旧任期提交",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "快照压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 日志快照中的最后包含索引和任期有什么用途？",
+      "answer": "它们记录快照覆盖的最后一条日志位置，并帮助后续日志的匹配检查。",
+      "explanation": "快照保存的是状态机在某个已提交位置的状态。",
+      "example": "安装快照后继续检查该位置之后的追加请求。",
+      "tags": [
+        "快照压缩",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "重试与重复执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "仅使用 Raft 复制日志，是否自动保证客户端重试的同一命令只执行一次？",
+      "answer": "不一定；论文建议客户端提供唯一序列号，并由状态机记录已处理请求及响应。",
+      "explanation": "客户端收不到响应时可能重试已经执行过的请求。",
+      "example": "扣款请求的响应丢失后重试同一请求编号。",
+      "tags": [
+        "重试与重复执行",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    },
+    {
+      "id": "raftbase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式系统与 Raft",
+      "knowledgePoint": "只读请求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Raft 的旧领导者为何不能在未确认领导权时直接保证只读结果是线性一致的？",
+      "answer": "它可能已被隔离，其他节点已经选出新领导者并提交了更新。",
+      "explanation": "论文提出读前与多数派交换心跳等方式确认领导权。",
+      "example": "网络分区中的旧领导者可能返回过期状态。",
+      "tags": [
+        "只读请求",
+        "分布式系统与 Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://raft.github.io/raft.pdf"
+    }
+  ]
+}

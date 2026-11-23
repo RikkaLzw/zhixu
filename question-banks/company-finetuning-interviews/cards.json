@@ -1,0 +1,111 @@
+{
+  "source": {
+    "id": "company-finetuning-interviews",
+    "title": "大厂公开面经：微调与混合精度",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "合集转载的个人复盘，公司、岗位和经历未经企业确认；答案依据论文核验。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "finetuneint-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型面经",
+      "knowledgePoint": "LoRA缩放系数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 LoRA 中 α 和秩 r 如何影响低秩更新的缩放？",
+      "answer": "原始 LoRA 使用 α/r 缩放低秩分支；固定 r 时，α 改变低秩更新的尺度。",
+      "explanation": "r 也决定低秩矩阵的维度；不同实现或变体的缩放方式可能不同。",
+      "example": "当 α=16、r=8 时，低秩分支乘以 2。",
+      "tags": [
+        "LoRA缩放系数",
+        "大模型面经",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-baidu",
+      "referenceTitle": "百度公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "llm-paper-ref",
+          "title": "LoRA 原论文：低秩适配与缩放",
+          "url": "https://arxiv.org/pdf/2106.09685",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "finetuneint-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型面经",
+      "knowledgePoint": "LoRA参数量计算",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "对形状为 d_out×d_in 的单个线性权重使用秩 r 的 LoRA，不计偏置需要多少低秩参数？",
+      "answer": "两个矩阵分别含 d_out×r 和 r×d_in 个参数，合计 r(d_out+d_in)。",
+      "explanation": "这里只计算这一层的低秩矩阵，不包含基座权重、其他适配层或额外可训练参数。",
+      "example": "对 4096×4096 的权重取 r=8，低秩矩阵共 65,536 个参数。",
+      "tags": [
+        "LoRA参数量计算",
+        "大模型面经",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-baidu",
+      "referenceTitle": "百度公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "llm-paper-ref",
+          "title": "LoRA 原论文：低秩适配与缩放",
+          "url": "https://arxiv.org/pdf/2106.09685",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "finetuneint-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型面经",
+      "knowledgePoint": "FP32主权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始混合精度训练方案为什么保留 FP32 主权重来更新参数？",
+      "answer": "以 FP32 累积参数更新，可减少低精度表示导致的小更新被舍入丢失。",
+      "explanation": "论文同时讨论低精度运算和损失缩放；具体框架的权重及优化器实现可能不同。",
+      "example": "先用 FP32 主权重完成优化器更新，再提供低精度权重参与计算。",
+      "tags": [
+        "FP32主权重",
+        "大模型面经",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900311%E3%80%91%E8%85%BE%E8%AE%AFWXG%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-tencent",
+      "referenceTitle": "腾讯公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "training-paper-ref",
+          "title": "Mixed Precision Training 原论文",
+          "url": "https://arxiv.org/abs/1710.03740",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "deberta-disentangled-attention",
+    "title": "DeBERTa 原论文：解耦注意力与掩码解码",
+    "url": "https://arxiv.org/pdf/2006.03654v6",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "deberta-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DeBERTa 解耦注意力",
+      "knowledgePoint": "内容与位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeBERTa 的解耦注意力如何表示词的内容和位置？",
+      "answer": "用分开的表示编码内容和位置，并在注意力分数中利用内容与相对位置的关系。",
+      "explanation": "这不同于只在输入层把内容和绝对位置嵌入相加。",
+      "example": "同一词在不同相对位置可参与不同的注意力计算。",
+      "tags": [
+        "DeBERTa 解耦注意力",
+        "内容与位置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.03654v6"
+    },
+    {
+      "id": "deberta-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DeBERTa 解耦注意力",
+      "knowledgePoint": "注意力分数项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeBERTa 原实现中的解耦注意力分数由哪三类交互项组成？",
+      "answer": "内容到内容、内容到位置、位置到内容三项。",
+      "explanation": "位置项使用相对位置信息。",
+      "example": "论文用 c2c、c2p 和 p2c 解释这三项。",
+      "tags": [
+        "DeBERTa 解耦注意力",
+        "注意力分数项"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.03654v6"
+    },
+    {
+      "id": "deberta-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DeBERTa 解耦注意力",
+      "knowledgePoint": "省略位置交互",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeBERTa 原论文为什么在实现中省略位置到位置项？",
+      "answer": "论文认为在使用相对位置嵌入时，这一项不提供太多额外信息。",
+      "explanation": "这是原实现的设计选择，不是所有位置编码方法的通用规则。",
+      "example": "原实现保留另外三类交互项。",
+      "tags": [
+        "DeBERTa 解耦注意力",
+        "省略位置交互"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.03654v6"
+    },
+    {
+      "id": "deberta-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DeBERTa 解耦注意力",
+      "knowledgePoint": "增强掩码解码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeBERTa 原论文的增强掩码解码器何时引入绝对位置信息？",
+      "answer": "在 Transformer 层之后、预测被掩码词的解码阶段引入。",
+      "explanation": "它为层内使用的相对位置信息提供补充。",
+      "example": "模型预测掩码词时可同时利用上下文和绝对位置。",
+      "tags": [
+        "DeBERTa 解耦注意力",
+        "增强掩码解码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.03654v6"
+    }
+  ]
+}

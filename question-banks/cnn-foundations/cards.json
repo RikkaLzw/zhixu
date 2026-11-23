@@ -1,0 +1,278 @@
+{
+  "source": {
+    "id": "cnn-foundations",
+    "title": "动手学深度学习：卷积与池化基础",
+    "url": "https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html",
+    "type": "教材与技术文档",
+    "note": "逐题根据所列教材或技术文档自行整理；例子用于说明适用条件。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "cnnbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "卷积局部连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "卷积层的局部连接指什么？",
+      "answer": "一个输出位置通常只直接依赖输入中的一个局部区域。",
+      "explanation": "多层组合后，一个输出可能间接依赖更大范围。",
+      "example": "3×3 卷积核每次处理一个局部图像区域。",
+      "tags": [
+        "卷积局部连接",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html"
+    },
+    {
+      "id": "cnnbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "卷积权重共享",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "卷积层的权重共享是什么意思？",
+      "answer": "同一个卷积核在不同空间位置重复使用同一组参数。",
+      "explanation": "共享发生在空间位置之间，不表示所有输出通道共用同一卷积核。",
+      "example": "同一滤波器扫描图像的左上角和右下角。",
+      "tags": [
+        "卷积权重共享",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html"
+    },
+    {
+      "id": "cnnbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "互相关与卷积",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "深度学习框架中常说的二维卷积通常与数学卷积有什么区别？",
+      "answer": "常见实现实际计算互相关：卷积核不先翻转，而是直接与输入局部区域逐元素相乘并求和。",
+      "explanation": "这是术语约定；具体算子行为仍以框架文档为准。",
+      "example": "一个不对称核可区分是否先进行翻转。",
+      "tags": [
+        "互相关与卷积",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html"
+    },
+    {
+      "id": "cnnbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "卷积填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二维卷积中的填充通常是做什么？",
+      "answer": "在输入的空间边界添加额外元素，使卷积核能覆盖边缘并改变输出尺寸。",
+      "explanation": "常见的是零填充，具体填充值和方式取决于实现。",
+      "example": "在图像四周补零后再做卷积。",
+      "tags": [
+        "卷积填充",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html"
+    },
+    {
+      "id": "cnnbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "卷积步幅",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "卷积的步幅控制什么？",
+      "answer": "它控制卷积核在输入空间上相邻计算位置之间移动的距离。",
+      "explanation": "其他条件固定时，增大步幅通常会减少输出的空间位置。",
+      "example": "水平步幅为 2 时，每次向右移动两个位置。",
+      "tags": [
+        "卷积步幅",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html"
+    },
+    {
+      "id": "cnnbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "边缘与填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么卷积处理中常考虑边界填充？",
+      "answer": "不填充时，边缘位置可参与的局部窗口较少，输出空间尺寸也可能缩小。",
+      "explanation": "是否填充应结合模型设计和边界含义决定。",
+      "example": "连续多个 3×3 卷积会逐层缩小未填充的特征图。",
+      "tags": [
+        "边缘与填充",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html"
+    },
+    {
+      "id": "cnnbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "多输入通道卷积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多输入通道卷积如何计算一个输出通道？",
+      "answer": "对各输入通道分别计算对应核的结果，再把这些结果相加；若有偏置，再加上该输出通道的偏置。",
+      "explanation": "每个输出通道可有自己的核组。",
+      "example": "RGB 输入的三个通道分别参与一个输出特征图的计算。",
+      "tags": [
+        "多输入通道卷积",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/channels.html"
+    },
+    {
+      "id": "cnnbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "输出通道与卷积核组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通多通道卷积中，输出通道数由什么决定？",
+      "answer": "由该层学习的输出卷积核组数量决定。",
+      "explanation": "每组核处理所有输入通道并产生一个输出通道。",
+      "example": "设置 16 个输出通道会产生 16 张输出特征图。",
+      "tags": [
+        "输出通道与卷积核组",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/channels.html"
+    },
+    {
+      "id": "cnnbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "一乘一卷积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "1×1 卷积怎样在每个空间位置处理多通道输入？",
+      "answer": "它在每个位置对各输入通道做可学习的线性组合，形成输出通道。",
+      "explanation": "单个 1×1 卷积核不直接混合相邻空间位置。",
+      "example": "用 1×1 卷积改变特征图的通道数。",
+      "tags": [
+        "一乘一卷积",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/channels.html"
+    },
+    {
+      "id": "cnnbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "卷积参数与图像大小",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "固定核大小及输入、输出通道数时，普通卷积的参数量是否随输入图像宽高增加？",
+      "answer": "不会；同一组核参数在空间位置上共享，但计算量和输出大小可能随图像变大而增加。",
+      "explanation": "此结论针对同一个普通卷积层，不包括额外位置相关参数。",
+      "example": "相同卷积层可处理不同宽高的图像。",
+      "tags": [
+        "卷积参数与图像大小",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/channels.html"
+    },
+    {
+      "id": "cnnbase-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "最大与平均池化",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "最大池化与平均池化在一个窗口内各保留什么？",
+      "answer": "最大池化取窗口最大值；平均池化取窗口内数值的平均值。",
+      "explanation": "边界与填充如何计入平均值由具体实现决定。",
+      "example": "对一个 2×2 区域分别取最大值和均值。",
+      "tags": [
+        "最大与平均池化",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/pooling.html"
+    },
+    {
+      "id": "cnnbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "池化是否训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准最大池化或平均池化窗口中有需要学习的卷积核权重吗？",
+      "answer": "没有；它按固定的最大值或平均值规则聚合窗口。",
+      "explanation": "窗口大小和步幅是配置参数，而不是通过梯度学习的权重。",
+      "example": "把最大池化换成可训练卷积会改变参数量。",
+      "tags": [
+        "池化是否训练",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/pooling.html"
+    },
+    {
+      "id": "cnnbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "池化与通道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准二维池化通常会合并不同通道吗？",
+      "answer": "通常不会；相同的池化规则分别作用于各通道的空间窗口。",
+      "explanation": "输出通道数通常与输入通道数相同。",
+      "example": "分别对 RGB 三个通道做空间池化。",
+      "tags": [
+        "池化与通道",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/pooling.html"
+    },
+    {
+      "id": "cnnbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "无填充卷积尺寸",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "步幅为 1 且没有填充时，大于 1 的卷积核通常怎样影响空间尺寸？",
+      "answer": "只计算完全落在输入内的窗口，因此输出的对应空间尺寸通常小于输入。",
+      "explanation": "若输入尺寸不足以容纳卷积核，具体行为由实现决定。",
+      "example": "3×3 核作用于足够大的图像时，输出宽高各少 2。",
+      "tags": [
+        "无填充卷积尺寸",
+        "卷积与池化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "stix-analysis-objects",
+    "title": "STIX 2.1 情报对象的语义",
+    "url": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html",
+    "type": "官方技术标准",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "stixobj-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报对象",
+      "knowledgePoint": "活动与入侵集合",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 Campaign 与 Intrusion Set 有什么区别？",
+      "answer": "Campaign 描述在一段时间针对特定目标、具有目标的一组攻击活动；Intrusion Set 将被认为同一组织协调的行为和资源归组，可能涵盖多个 Campaign。",
+      "explanation": "归因可以不确定，不能把集合自动等同于已知真实身份。",
+      "example": "按一次攻击波次建立 Campaign，再关联相关 Intrusion Set。",
+      "tags": [
+        "活动与入侵集合",
+        "威胁情报对象"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"
+    },
+    {
+      "id": "stixobj-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报对象",
+      "knowledgePoint": "分析结果对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 Malware Analysis 对象描述什么？",
+      "answer": "它记录对某个恶意软件实例或家族进行的一次静态或动态分析的元数据与结果。",
+      "explanation": "它与描述恶意软件本身的 Malware 对象用途不同。",
+      "example": "记录一次沙箱分析的产品、时间及结果。",
+      "tags": [
+        "分析结果对象",
+        "威胁情报对象"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"
+    },
+    {
+      "id": "stixobj-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报对象",
+      "knowledgePoint": "分组与打包",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 Grouping 与 Bundle 是否都表示对象共享情报上下文？",
+      "answer": "不是；Grouping 明确声明引用对象具有共同上下文，Bundle 只是容纳对象的容器。",
+      "explanation": "同处一个 Bundle 不自动代表对象彼此相关。",
+      "example": "把若干对象打包传输时不据此推断它们属于同一事件。",
+      "tags": [
+        "分组与打包",
+        "威胁情报对象"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"
+    },
+    {
+      "id": "stixobj-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报对象",
+      "knowledgePoint": "情报意见",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 Opinion 表示什么？",
+      "answer": "它表达对其他实体创建的 STIX 对象中信息正确性的主观评估，例如同意或不同意。",
+      "explanation": "意见不是独立事实证明，可能需要附解释与分析者信息。",
+      "example": "分析人员对外部指标给出不同意的意见。",
+      "tags": [
+        "情报意见",
+        "威胁情报对象"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"
+    },
+    {
+      "id": "stixobj-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报对象",
+      "knowledgePoint": "STIX目击依据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 Sighting 可以怎样关联支持目击判断的原始观测？",
+      "answer": "可以通过 observed_data_refs 引用相应的 Observed Data 对象。",
+      "explanation": "目击判断和导致该判断的原始观测应分别保留。",
+      "example": "目击恶意指标时关联记录网络连接的 Observed Data。",
+      "tags": [
+        "STIX目击依据",
+        "威胁情报对象"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "source": {
+    "id": "company-distributed-training",
+    "title": "大厂公开面经：分布式训练与稀疏模型",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900315%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "根据逐题依据自行编写中文问答，示例为自编；公开面经为个人复盘，公司经历未经企业确认。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "distint-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "ZeRO阶段",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "DeepSpeed ZeRO 的 1、2、3 阶段逐步分片哪些训练状态？",
+      "answer": "阶段 1 分片优化器状态；阶段 2 再分片梯度；阶段 3 进一步分片模型参数。",
+      "explanation": "这是数据并行进程间的分片；实际显存还受激活、通信缓冲和配置影响。",
+      "example": "对照训练状态选择所需的 ZeRO 阶段。",
+      "tags": [
+        "ZeRO阶段",
+        "分布式训练",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900315%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "training-paper-ref",
+          "title": "DeepSpeed：ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "company-tencent",
+          "title": "腾讯公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900324%E3%80%91%E8%85%BE%E8%AE%AFPCG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "distint-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "ZeRO参数收集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ZeRO-3 参数已分片时，前向或反向计算如何访问需要的参数？",
+      "answer": "DeepSpeed 在相关计算期间自动收集所需参数，并在适当时候重新分片。",
+      "explanation": "额外访问分片参数需要遵循框架提供的协调接口。",
+      "example": "模型层前向执行时收集该层需要的权重。",
+      "tags": [
+        "ZeRO参数收集",
+        "分布式训练",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900315%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-ant",
+      "referenceTitle": "蚂蚁公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "training-paper-ref",
+          "title": "DeepSpeed：ZeRO",
+          "url": "https://www.deepspeed.ai/tutorials/zero/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "distint-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稀疏模型",
+      "knowledgePoint": "Switch专家路由",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Switch Transformer 的路由器怎样为每个 token 选择专家？",
+      "answer": "它依据路由分数把每个 token 送到一个选中的前馈专家。",
+      "explanation": "这是 Switch 的 top-1 设置；容量不足时部分 token 可能不经过专家计算，其他 MoE 可选择多个专家。",
+      "example": "不同 token 可能交由不同专家处理。",
+      "tags": [
+        "Switch专家路由",
+        "稀疏模型",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900324%E3%80%91%E8%85%BE%E8%AE%AFPCG%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-tencent",
+      "referenceTitle": "腾讯公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "training-paper-ref",
+          "title": "Switch Transformers 论文",
+          "url": "https://arxiv.org/abs/2101.03961",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "distint-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稀疏模型",
+      "knowledgePoint": "MoE负载均衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "稀疏 MoE 为什么常加入专家负载均衡机制？",
+      "answer": "如果大量 token 集中到少数专家，会造成容量溢出或资源利用不均。",
+      "explanation": "具体损失函数和处理溢出 token 的策略取决于模型实现。",
+      "example": "监控各专家接收的 token 数并调整路由训练。",
+      "tags": [
+        "MoE负载均衡",
+        "稀疏模型",
+        "公开面经",
+        "腾讯",
+        "阿里"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900324%E3%80%91%E8%85%BE%E8%AE%AFPCG%E4%B8%80%E9%9D%A2.md",
+      "referenceId": "company-tencent",
+      "referenceTitle": "腾讯公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "training-paper-ref",
+          "title": "Switch Transformers 论文",
+          "url": "https://arxiv.org/abs/2101.03961",
+          "type": "研究论文",
+          "evidence": "source"
+        },
+        {
+          "id": "company-alibaba",
+          "title": "阿里公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900303%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

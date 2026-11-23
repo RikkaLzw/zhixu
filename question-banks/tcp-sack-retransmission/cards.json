@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "tcp-sack-retransmission",
+    "title": "RFC 2018 与 RFC 6298：TCP 确认与重传计时",
+    "url": "https://www.rfc-editor.org/rfc/rfc2018.html",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；具体实现和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "tcpretx-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 确认与重传计时",
+      "knowledgePoint": "选择确认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP SACK 的主要用途是什么？",
+      "answer": "接收方用 SACK 告诉发送方哪些不连续的数据块已经收到，帮助发送方识别缺口。",
+      "explanation": "这对一次丢失多个段的情况尤其有用。",
+      "example": "收到后面的数据但中间缺一段时可报告已收到的区间。",
+      "tags": [
+        "TCP 确认与重传计时",
+        "选择确认"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2018.html"
+    },
+    {
+      "id": "tcpretx-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 确认与重传计时",
+      "knowledgePoint": "SACK许可",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "根据 RFC 2018，TCP 连接何时通告 SACK-permitted 选项？",
+      "answer": "它在 SYN 段中通告，表示对端建立连接后可以向本端发送 SACK 选项。",
+      "explanation": "收到该许可的一方才可向许可发送者发送 SACK。",
+      "example": "双方可在握手报文中分别通告各自能力。",
+      "tags": [
+        "TCP 确认与重传计时",
+        "SACK许可"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2018.html"
+    },
+    {
+      "id": "tcpretx-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 确认与重传计时",
+      "knowledgePoint": "已确认数据保留",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 发送方能否仅因收到某段的 SACK 就立即丢弃其重传副本？",
+      "answer": "不能仅凭 SACK 丢弃；接收方可能撤回已 SACK 的数据，应等累计 ACK 越过该数据。",
+      "explanation": "RFC 2018 将 SACK 定义为提示性信息。",
+      "example": "接收缓存压力下可能丢弃之前报告的乱序数据。",
+      "tags": [
+        "TCP 确认与重传计时",
+        "已确认数据保留"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2018.html"
+    },
+    {
+      "id": "tcpretx-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 确认与重传计时",
+      "knowledgePoint": "RTT与超时估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6298 的 TCP 重传超时估计为什么既考虑平滑 RTT，也考虑 RTT 变化？",
+      "answer": "RTO 使用平滑 RTT 加上与 RTT 波动有关的余量，降低正常时延波动造成的过早重传。",
+      "explanation": "RFC 6298 规定了具体更新公式和建议下限。",
+      "example": "链路时延波动较大时，仅使用平均往返时间容易过早超时。",
+      "tags": [
+        "TCP 确认与重传计时",
+        "RTT与超时估计"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html"
+    },
+    {
+      "id": "tcpretx-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 确认与重传计时",
+      "knowledgePoint": "Karn算法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "没有消除重传歧义的时间戳时，Karn 算法为何不从重传段的确认计算 RTT？",
+      "answer": "收到的确认可能对应原始发送，也可能对应重传，无法确定该次 RTT 的起点。",
+      "explanation": "TCP 时间戳选项可在满足协议条件时消除这种歧义。",
+      "example": "原报文的 ACK 延迟到重传之后才到达。",
+      "tags": [
+        "TCP 确认与重传计时",
+        "Karn算法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html"
+    },
+    {
+      "id": "tcpretx-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 确认与重传计时",
+      "knowledgePoint": "超时退避",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 RFC 6298，TCP 重传计时器到期后怎样调整 RTO？",
+      "answer": "将当前 RTO 加倍，必要时可受规范允许的上限约束。",
+      "explanation": "获得新的有效 RTT 测量后，RTO 可重新按估计计算。",
+      "example": "连续超时会使重传等待间隔变长。",
+      "tags": [
+        "TCP 确认与重传计时",
+        "超时退避"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6298.html"
+    }
+  ]
+}

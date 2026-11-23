@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "ner-token-labeling",
+    "title": "Transformers 4.51.3 与 seqeval：实体标注和评估",
+    "url": "https://huggingface.co/docs/transformers/v4.51.3/en/tasks/token_classification",
+    "type": "教材与官方技术资料",
+    "note": "逐题依据所列资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "ner-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "词索引映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "快速分词器的 word_ids 如何帮助把按词标签映射到子词？",
+      "answer": "它为每个子词给出所属原词的索引，同一词拆出的多个子词可以对应同一索引。",
+      "explanation": "特殊 token 的索引通常为 None。",
+      "example": "一个词拆成两片时，两片的 word_id 相同。",
+      "tags": [
+        "词索引映射",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/tasks/token_classification"
+    },
+    {
+      "id": "ner-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "预切词输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 分词器的 is_split_into_words=True 用于什么输入？",
+      "answer": "用于告知分词器输入已按词切分，使其处理词列表并支持词与子词的对应。",
+      "explanation": "它不表示每个输入词一定只产生一个子词。",
+      "example": "将已按词标注的句子列表交给分词器。",
+      "tags": [
+        "预切词输入",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/tasks/token_classification"
+    },
+    {
+      "id": "ner-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "首子词监督",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Hugging Face token 分类教程如何处理一个词拆出的后续子词标签？",
+      "answer": "只给该词的首个子词赋予原词标签，将后续子词标签设为 -100。",
+      "explanation": "这是教程使用的一种对齐约定，并非唯一可用方案。",
+      "example": "两片子词分别得到原标签和 -100。",
+      "tags": [
+        "首子词监督",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/tasks/token_classification"
+    },
+    {
+      "id": "ner-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "注意力与损失掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "序列标注中 attention_mask 与 labels 的 -100 分别控制什么？",
+      "answer": "attention_mask 控制模型关注哪些输入位置；默认 PyTorch 交叉熵中标签 -100 的位置不参与损失。",
+      "explanation": "一个有效输入 token 也可以被设为不计算标签损失。",
+      "example": "保留后续子词供模型编码，但忽略其监督标签。",
+      "tags": [
+        "注意力与损失掩码",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/tasks/token_classification"
+    },
+    {
+      "id": "ner-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "动态批次填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DataCollatorForTokenClassification 如何处理不同长度样本的输入和标签？",
+      "answer": "它按配置填充批次输入，并用 label_pad_token_id 填充标签；该参数默认是 -100。",
+      "explanation": "这样模型输入和标签在批次中保持对齐。",
+      "example": "短句的填充标签不会计入默认交叉熵损失。",
+      "tags": [
+        "动态批次填充",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/data_collator#transformers.DataCollatorForTokenClassification"
+    },
+    {
+      "id": "ner-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "评估过滤位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Hugging Face token 分类教程为何在计算 seqeval 指标前过滤真实标签为 -100 的位置？",
+      "answer": "这些位置不参与该示例的监督，应从预测和真实标签中同时移除后再评估。",
+      "explanation": "必须使用同一个位置掩码处理两侧。",
+      "example": "去掉特殊 token 和被忽略的后续子词。",
+      "tags": [
+        "评估过滤位置",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/tasks/token_classification"
+    },
+    {
+      "id": "ner-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "标签映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "token 分类模型输出每个位置的类别 ID 后，如何得到可读的实体标签？",
+      "answer": "使用模型配置中的 id2label 将预测 ID 映射回标签名称。",
+      "explanation": "标签映射需要与训练时的类别定义一致。",
+      "example": "把类别编号映射回 B-PER。",
+      "tags": [
+        "标签映射",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/tasks/token_classification"
+    },
+    {
+      "id": "ner-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "相邻同类实体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BIO 标注中，两个相邻且同类型但不同实体如何区分？",
+      "answer": "第二个实体应使用新的 B-类型 开始，而不是把它的首 token 标为 I-类型。",
+      "explanation": "B 标记实体边界，不只表示类型变化。",
+      "example": "相邻人名分别以 B-PER 开始。",
+      "tags": [
+        "相邻同类实体",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval/blob/6fc76acf89a0b7905d04e98ec517c0488cd25bce/README.md"
+    },
+    {
+      "id": "ner-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "非法IOB2起始",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在严格 IOB2 中，为什么序列开头直接使用 I-PER 不符合约定？",
+      "answer": "I-PER 表示延续同类实体，序列开头没有前面的实体可延续，应以 B-PER 开始。",
+      "explanation": "不同标注方案和宽松评估器对非法序列可能处理不同。",
+      "example": "单独出现的人名首词标记为 B-PER。",
+      "tags": [
+        "非法IOB2起始",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval/blob/6fc76acf89a0b7905d04e98ec517c0488cd25bce/README.md"
+    },
+    {
+      "id": "ner-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "严格与默认评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "seqeval 的默认模式与 strict IOB2 模式对非法 IOB2 序列可能有什么区别？",
+      "answer": "默认模式可兼容 conlleval 式处理；strict 模式按指定方案检查，结果可能不同。",
+      "explanation": "比较结果时应说明评估模式与标注方案。",
+      "example": "句首 I-NP 在两种模式下可能得到不同评分。",
+      "tags": [
+        "严格与默认评估",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval/blob/6fc76acf89a0b7905d04e98ec517c0488cd25bce/README.md"
+    },
+    {
+      "id": "ner-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "实体匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "命名实体识别按实体片段计算精确率和召回率时，什么样的预测才是正确实体？",
+      "answer": "预测实体的边界和类型需要与真实实体匹配。",
+      "explanation": "只命中实体的一部分通常不能算作完整实体命中。",
+      "example": "把完整人名的前半部分单独标出，不算完整实体命中。",
+      "tags": [
+        "实体匹配",
+        "实体识别与序列标注"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/chakki-works/seqeval/blob/6fc76acf89a0b7905d04e98ec517c0488cd25bce/README.md"
+    },
+    {
+      "id": "ner-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "嵌套实体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单层、每个 token 只允许一个标签的 BIO 表示能完整表达重叠或嵌套实体吗？",
+      "answer": "通常不能；共享 token 的多个实体需要额外的表示或标注层。",
+      "explanation": "BIO 单层标签只记录该位置的一种标签。",
+      "example": "一个组织名内部同时包含地名时需要表示重叠关系。",
+      "tags": [
+        "嵌套实体",
+        "实体识别与序列标注"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/chakki-works/seqeval/blob/6fc76acf89a0b7905d04e98ec517c0488cd25bce/README.md"
+    },
+    {
+      "id": "ner-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实体识别与序列标注",
+      "knowledgePoint": "截断的标注",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对序列标注样本启用长度截断时，为什么要检查实体标签的覆盖？",
+      "answer": "被截掉的文本和对应标签不会进入该次模型输入，尾部实体可能丢失或不完整。",
+      "explanation": "长文本可采用合适分段，并检查实体边界。",
+      "example": "实体出现在最大长度之后时，该次输入无法预测它。",
+      "tags": [
+        "截断的标注",
+        "实体识别与序列标注"
+      ],
+      "evidence": "application",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/tasks/token_classification"
+    }
+  ]
+}

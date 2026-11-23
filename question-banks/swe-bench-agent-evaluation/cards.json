@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "swe-bench-agent-evaluation",
+    "title": "SWE-bench 原论文：软件工程任务评测",
+    "url": "https://arxiv.org/pdf/2310.06770v3",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据逐题引用的论文或教材自行整理；例子为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "swebase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "任务目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 原论文要求系统针对 GitHub issue 生成什么？",
+      "answer": "生成能应用到给定代码库、用于解决该 issue 的代码补丁。",
+      "explanation": "问题可以是缺陷报告或功能请求。",
+      "example": "读取问题描述并修改仓库中的相关代码。",
+      "tags": [
+        "任务目标",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "代码快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 原论文为什么为任务使用参考 PR 之前的基础提交？",
+      "answer": "它提供修复前的代码状态，避免把参考解决方案直接包含在初始代码中。",
+      "explanation": "实例以特定 base commit 标识代码版本。",
+      "example": "从原 PR 的基础提交开始生成修复。",
+      "tags": [
+        "代码快照",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "任务来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 原论文如何把自然语言问题与参考修复关联？",
+      "answer": "从合并的 GitHub PR 中筛选能关联 issue 且包含测试修改的记录。",
+      "explanation": "这是该论文的任务构建流程。",
+      "example": "将一个缺陷报告与修复它的合并 PR 配对。",
+      "tags": [
+        "任务来源",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "测试筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 原论文为什么要求候选任务至少有一个 fail-to-pass 测试？",
+      "answer": "该测试在修复前失败、应用参考修复后通过，为验证问题被解决提供信号。",
+      "explanation": "测试信号的质量仍受测试覆盖和环境影响。",
+      "example": "新增测试复现缺陷并在参考补丁后通过。",
+      "tags": [
+        "测试筛选",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "回归测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 中的 pass-to-pass 测试主要检查什么？",
+      "answer": "它们在修复前通过，并在应用修复后仍应通过，用于检查已有行为是否退化。",
+      "explanation": "通过这些测试不能保证没有任何其他回归。",
+      "example": "修复一个接口后重跑原本通过的相关测试。",
+      "tags": [
+        "回归测试",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "补丁应用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 原论文中，生成的补丁能够成功应用是否足以算作解决问题？",
+      "answer": "不足够；应用后还需通过该任务的相关测试。",
+      "explanation": "补丁无法应用时也不能执行正常的后续评估。",
+      "example": "补丁格式正确但断言测试失败。",
+      "tags": [
+        "补丁应用",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "解决比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 原论文的 resolved rate 统计什么？",
+      "answer": "统计被判定解决的任务占评估任务总数的比例。",
+      "explanation": "判定依赖指定的补丁应用和测试流程。",
+      "example": "100 个任务中通过流程的任务占比。",
+      "tags": [
+        "解决比例",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "替代方案",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 的生成补丁必须与参考补丁文本完全一致才能通过吗？",
+      "answer": "不必；不同实现只要满足该评测的补丁应用与测试条件也可能通过。",
+      "explanation": "测试通过不等于该补丁一定是最佳工程方案。",
+      "example": "使用不同实现修复同一缺陷。",
+      "tags": [
+        "替代方案",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "环境复现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么评估 SWE-bench 补丁时需要匹配任务的代码版本与依赖环境？",
+      "answer": "不同版本或依赖可能使补丁无法应用，或改变测试结果。",
+      "explanation": "应记录基础提交、依赖和评估环境。",
+      "example": "在指定仓库版本安装依赖后运行测试。",
+      "tags": [
+        "环境复现",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "Oracle检索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 原论文的 oracle 文件检索使用了什么额外信息？",
+      "answer": "它提供参考补丁实际修改过的文件。",
+      "explanation": "真实解决问题时通常无法预先知道这些文件。",
+      "example": "用参考修复位置分析模型在理想定位下的表现。",
+      "tags": [
+        "Oracle检索",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "Oracle上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 的 oracle 文件集合一定包含理解问题所需的全部上下文吗？",
+      "answer": "不一定；被修改文件之外的调用代码或依赖也可能是必要上下文。",
+      "explanation": "论文将其作为分析设置，而非完整的现实输入。",
+      "example": "修复文件需要结合未修改的调用方理解。",
+      "tags": [
+        "Oracle上下文",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    },
+    {
+      "id": "swebase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件工程 Agent 评测",
+      "knowledgePoint": "语言范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SWE-bench 原论文中的评测任务覆盖什么编程语言仓库？",
+      "answer": "原始评测任务来自 Python 仓库。",
+      "explanation": "后续基准变体或版本的范围需要单独确认。",
+      "example": "不将原始结果直接推广到其他语言仓库。",
+      "tags": [
+        "语言范围",
+        "软件工程 Agent 评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.06770v3"
+    }
+  ]
+}

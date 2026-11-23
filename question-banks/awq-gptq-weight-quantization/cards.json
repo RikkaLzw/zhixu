@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "awq-gptq-weight-quantization",
+    "title": "AWQ 与 GPTQ 原论文：大模型权重量化",
+    "url": "https://arxiv.org/pdf/2306.00978v2",
+    "type": "原论文与固定版本源码或官方说明",
+    "note": "根据逐题所列原论文、官方说明或固定版本源码自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "llmquant-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "激活感知",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWQ 为什么在权重量化时关注输入激活的大小？",
+      "answer": "较大输入激活对应的权重通道对输出更敏感，保护这些通道有助于减小量化误差。",
+      "explanation": "这是论文的激活感知思路，并不表示只量化激活。",
+      "example": "经常出现较大激活的通道可能需要更谨慎的量化。",
+      "tags": [
+        "大模型权重量化",
+        "激活感知"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.00978v2"
+    },
+    {
+      "id": "llmquant-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "显著权重保护",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWQ 最终采用什么方法保护重要权重通道？",
+      "answer": "它在量化前对通道进行缩放，以降低重要通道的相对量化误差。",
+      "explanation": "论文用少量权重保留 FP16 作观察实验，但最终缩放方法不要求固定保留 1% 权重为 FP16。",
+      "example": "通过缩放保护通道而不是引入不规则混合精度。",
+      "tags": [
+        "大模型权重量化",
+        "显著权重保护"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.00978v2"
+    },
+    {
+      "id": "llmquant-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "等价缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在线性层的精确计算中，将输入通道对应的权重乘 s、输入除以 s，有什么作用？",
+      "answer": "两种缩放相互抵消，因此未量化时的线性层输出保持不变。",
+      "explanation": "AWQ 利用这种等价变换，再对缩放后的权重进行量化。",
+      "example": "s 为非零向量时，W·diag(s) 与 diag(s)⁻¹·X 的乘积仍为 WX。",
+      "tags": [
+        "大模型权重量化",
+        "等价缩放"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.00978v2"
+    },
+    {
+      "id": "llmquant-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "缩放搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWQ 怎样选择每输入通道的缩放系数？",
+      "answer": "它利用校准样本的激活统计构造候选缩放，并搜索使量化后层输出误差较小的配置。",
+      "explanation": "论文使用网格搜索，不通过反向传播训练权重。",
+      "example": "对候选缩放比较量化前后的层输出。",
+      "tags": [
+        "大模型权重量化",
+        "缩放搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.00978v2"
+    },
+    {
+      "id": "llmquant-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "缩放权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AWQ 的重要通道缩放系数越大，整体量化误差一定越小吗？",
+      "answer": "不一定；较大的缩放可能改变共享量化尺度，增加其他通道的误差。",
+      "explanation": "需要兼顾重要和非重要通道的误差。",
+      "example": "过度放大少数通道可能损害整体输出。",
+      "tags": [
+        "大模型权重量化",
+        "缩放权衡"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.00978v2"
+    },
+    {
+      "id": "llmquant-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "速度条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "低位权重量化减少权重存储，是否必然让大模型推理更快？",
+      "answer": "不必然；速度还取决于硬件、量化内核、解量化开销和工作负载。",
+      "explanation": "AWQ 论文另设计高效内核来实现实际加速。",
+      "example": "不支持低位计算的后端可能抵消部分带宽收益。",
+      "tags": [
+        "大模型权重量化",
+        "速度条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.00978v2"
+    },
+    {
+      "id": "llmquant-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "GPTQ目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GPTQ 原论文对单个线性层使用什么量化目标？",
+      "answer": "在校准输入上减小量化层输出与原始全精度层输出的平方误差。",
+      "explanation": "目标按层处理，校准输入来自一小批样本。",
+      "example": "比较量化前后同一层对相同输入的输出。",
+      "tags": [
+        "大模型权重量化",
+        "GPTQ目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.17323v2"
+    },
+    {
+      "id": "llmquant-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "误差补偿",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GPTQ 在量化部分权重后，为什么调整尚未量化的权重？",
+      "answer": "它利用近似二阶信息补偿已量化权重引入的误差，尽量维持层输出。",
+      "explanation": "这是训练后量化过程中的局部调整。",
+      "example": "量化某列后修正其余列，以降低输出偏差。",
+      "tags": [
+        "大模型权重量化",
+        "误差补偿"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.17323v2"
+    },
+    {
+      "id": "llmquant-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "共享顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GPTQ 为什么让权重矩阵各行按相同列顺序量化？",
+      "answer": "相同顺序使各行可共享由层输入决定的逆 Hessian 更新，降低计算开销。",
+      "explanation": "论文发现对大层，固定顺序的误差通常接近原始逐行贪心方法。",
+      "example": "多行共同使用同一列顺序处理。",
+      "tags": [
+        "大模型权重量化",
+        "共享顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.17323v2"
+    },
+    {
+      "id": "llmquant-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "分块延迟更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GPTQ 的 lazy batch-updates 为什么有助于加快量化？",
+      "answer": "它把一组列的更新累积后再批量处理，减少频繁访存带来的瓶颈。",
+      "explanation": "论文指出该策略不降低理论计算量，但可改善硬件利用率。",
+      "example": "先处理一个列块，再集中更新后续权重。",
+      "tags": [
+        "大模型权重量化",
+        "分块延迟更新"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.17323v2"
+    },
+    {
+      "id": "llmquant-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "数值稳定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GPTQ 使用 Cholesky 重构主要为了解决什么问题？",
+      "answer": "它减少反复更新逆 Hessian 时累积的数值误差，并便于利用优化过的矩阵运算。",
+      "explanation": "论文同时讨论对 Hessian 加阻尼以改善数值稳定性。",
+      "example": "大矩阵的多次逆更新可能导致不稳定。",
+      "tags": [
+        "大模型权重量化",
+        "数值稳定"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.17323v2"
+    },
+    {
+      "id": "llmquant-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型权重量化",
+      "knowledgePoint": "训练后量化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GPTQ 原论文的方法是否要求重新训练整个预训练模型？",
+      "answer": "不要求；它是利用校准输入对已有模型进行的训练后量化方法。",
+      "explanation": "量化过程中仍会调整尚未量化的权重以补偿误差。",
+      "example": "不做完整反向传播训练，也可以对单层进行量化。",
+      "tags": [
+        "大模型权重量化",
+        "训练后量化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.17323v2"
+    }
+  ]
+}

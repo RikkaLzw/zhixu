@@ -1,0 +1,235 @@
+{
+  "source": {
+    "id": "agent-coordination-search",
+    "title": "MetaGPT / LATS：智能体协调与搜索",
+    "url": "https://arxiv.org/abs/2308.00352",
+    "type": "研究论文",
+    "note": "逐题依据论文整理；快手公开面经中的 Agent 框架为部分卡片的主题启发。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "agentcoord-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协调与搜索",
+      "knowledgePoint": "多智能体SOP",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MetaGPT 中的标准操作流程（SOP）如何组织多个智能体的工作？",
+      "answer": "它规定角色职责、任务顺序和中间交付物，使复杂任务分解后能够衔接。",
+      "explanation": "论文中的软件开发示例将需求、设计和实现等阶段连接起来。",
+      "example": "先形成需求文档，再供架构角色设计接口。",
+      "tags": [
+        "多智能体SOP",
+        "Agent",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2308.00352",
+      "referenceTitle": "MetaGPT 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；Agent 框架主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentcoord-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协调与搜索",
+      "knowledgePoint": "结构化交接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多智能体交接使用约定的结构化输出有什么作用？",
+      "answer": "它让后续角色更容易找到所需字段，并按约定检查或处理交付内容。",
+      "explanation": "遵循格式并不能保证内容真实或完整，仍需验证。",
+      "example": "设计角色按约定提供模块和接口列表。",
+      "tags": [
+        "结构化交接",
+        "Agent",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2308.00352",
+      "referenceTitle": "MetaGPT 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；Agent 框架主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentcoord-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协调与搜索",
+      "knowledgePoint": "共享消息池与订阅",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MetaGPT 论文中的共享消息池与订阅机制怎样协作？",
+      "answer": "角色将消息发布到共享池，各角色再按自身职责订阅所需的信息。",
+      "explanation": "订阅有助于减少无关信息干扰，还需要确保必要依赖能被接收。",
+      "example": "工程角色读取产品和架构角色发布的结果。",
+      "tags": [
+        "共享消息池与订阅",
+        "Agent",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2308.00352",
+      "referenceTitle": "MetaGPT 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；Agent 框架主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentcoord-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协调与搜索",
+      "knowledgePoint": "可执行反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MetaGPT 论文中的可执行反馈怎样帮助改进代码？",
+      "answer": "运行生成的代码并将执行错误反馈给智能体，供其修正后再次尝试。",
+      "explanation": "一次运行成功只能说明通过了该次执行，不能证明所有输入都正确。",
+      "example": "根据运行错误定位并修改代码。",
+      "tags": [
+        "可执行反馈",
+        "Agent",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2308.00352",
+      "referenceTitle": "MetaGPT 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；Agent 框架主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentcoord-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协调与搜索",
+      "knowledgePoint": "LATS环境反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LATS 如何把外部环境反馈用于语言智能体的树搜索？",
+      "answer": "它让候选动作与环境交互，将返回的观察纳入后续状态评估和搜索。",
+      "explanation": "反馈质量和环境是否支持安全重复试验会影响实际效果。",
+      "example": "搜索过程中根据工具返回结果评价下一步。",
+      "tags": [
+        "LATS环境反馈",
+        "Agent",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2310.04406",
+      "referenceTitle": "LATS 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；Agent 框架主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentcoord-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协调与搜索",
+      "knowledgePoint": "探索与利用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "树搜索中的探索与利用分别偏向什么？",
+      "answer": "探索关注访问较少的候选分支；利用偏向当前估计价值较高的分支。",
+      "explanation": "LATS 使用 UCT 平衡这两者。",
+      "example": "既尝试未充分访问的方案，也继续检查已有希望的方案。",
+      "tags": [
+        "探索与利用",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.04406",
+      "referenceTitle": "LATS 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentcoord-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协调与搜索",
+      "knowledgePoint": "模拟与评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LATS 中的节点评估与模拟到终止状态有什么区别？",
+      "answer": "节点评估估计当前状态的价值；模拟继续扩展轨迹以获得终止时的反馈。",
+      "explanation": "最终反馈的含义由具体环境和任务定义。",
+      "example": "先估计当前步骤，再继续执行到任务结束。",
+      "tags": [
+        "模拟与评估",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.04406",
+      "referenceTitle": "LATS 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentcoord-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多智能体协调与搜索",
+      "knowledgePoint": "搜索价值回传",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LATS 树搜索中的价值回传主要更新什么？",
+      "answer": "它根据一次轨迹结果更新该路径上节点的访问统计和价值估计。",
+      "explanation": "这里的回传用于指导后续搜索，不等同于训练神经网络时更新模型参数。",
+      "example": "某条轨迹失败后调整沿途节点的搜索价值。",
+      "tags": [
+        "搜索价值回传",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.04406",
+      "referenceTitle": "LATS 原论文",
+      "referenceType": "研究论文"
+    }
+  ]
+}

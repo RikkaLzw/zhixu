@@ -1,0 +1,76 @@
+{
+  "source": {
+    "id": "company-rag-interviews",
+    "title": "大厂公开面经：检索与生成考点（个人自述）",
+    "url": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+    "type": "公开面经（个人自述）",
+    "note": "公司、岗位及经历为发帖人自述；考点参考原帖，答案另据技术资料核对。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "companyrag-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大厂面经",
+      "knowledgePoint": "忠实度与事实性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAG 回答忠于检索上下文，能否保证事实正确？",
+      "answer": "不能；答案可能忠实复述了过期或错误的资料，还需独立核实来源事实。",
+      "explanation": "Ragas 忠实度衡量回答声明是否受上下文支持。",
+      "example": "回答准确复述了一篇错误公告，但结论仍然错误。",
+      "tags": [
+        "忠实度与事实性",
+        "大厂面经",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+      "referenceTitle": "字节公开面经（作者自述）",
+      "referenceId": "company-bytedance",
+      "supportingReferences": [
+        {
+          "id": "ragas-faithfulness",
+          "title": "Ragas：Faithfulness",
+          "url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyrag-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大厂面经",
+      "knowledgePoint": "召回与排序诊断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用户没有找到预期资料时，为什么要区分资料未被索引和排序过低？",
+      "answer": "前者需要检查采集和索引覆盖；后者需要检查查询、检索与排序。",
+      "explanation": "先确认目标资料是否存在于可检索语料，再定位检索流程。",
+      "example": "公告未入库和公告排在第 100 位需要不同修复。",
+      "tags": [
+        "召回与排序诊断",
+        "大厂面经",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.nowcoder.com/feed/main/detail/bf38563e18af48269c0e710993d3f06e",
+      "referenceTitle": "腾讯公开面经（作者自述）",
+      "referenceId": "company-tencent",
+      "supportingReferences": [
+        {
+          "id": "langsmith-rag-eval",
+          "title": "LangSmith：Evaluate a RAG application",
+          "url": "https://docs.langchain.com/langsmith/evaluate-rag-tutorial",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

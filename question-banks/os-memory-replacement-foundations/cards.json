@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "os-memory-replacement-foundations",
+    "title": "OSTEP：内存局部性与页面替换",
+    "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf",
+    "type": "教材",
+    "note": "依据逐题引用的教材、手册或标准自行整理，示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "vmpolicy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "缓存命中",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "缓存命中与未命中分别指什么？",
+      "answer": "命中表示所需数据已在缓存中；未命中表示需要从其他位置取得或进一步处理。",
+      "explanation": "不同层次的缓存对象和未命中代价不同。",
+      "example": "虚拟内存页已驻留或需要从后备存储载入。",
+      "tags": [
+        "缓存命中",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "时间局部性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "程序访问中的时间局部性是什么意思？",
+      "answer": "最近访问过的数据或指令在不久后可能再次被访问。",
+      "explanation": "这是常见经验规律，并非对所有访问都成立。",
+      "example": "循环反复访问同一个变量。",
+      "tags": [
+        "时间局部性",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "空间局部性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "程序访问中的空间局部性是什么意思？",
+      "answer": "访问某位置后，附近位置也可能在不久后被访问。",
+      "explanation": "缓存和预取可利用这一访问模式。",
+      "example": "顺序遍历数组的相邻元素。",
+      "tags": [
+        "空间局部性",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "页面替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "物理内存不足且需要载入新页面时，页面替换策略决定什么？",
+      "answer": "它决定选择哪个驻留页面作为替换目标。",
+      "explanation": "具体系统还需考虑页面是否可以回收以及写回成本。",
+      "example": "选择一个较少使用的页面释放页框。",
+      "tags": [
+        "页面替换",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "FIFO页面替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIFO 页面替换在需要淘汰页面时通常选择什么？",
+      "answer": "它选择最早进入内存的驻留页面。",
+      "explanation": "它不直接考虑页面最近是否被访问。",
+      "example": "最早载入的页面先被换出。",
+      "tags": [
+        "FIFO页面替换",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "LRU页面替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LRU 页面替换在需要淘汰页面时通常选择什么？",
+      "answer": "它选择最长时间没有被访问的驻留页面。",
+      "explanation": "这利用时间局部性预测近期未使用页面较不可能很快再用。",
+      "example": "保留最近访问的页面并淘汰最久未用页面。",
+      "tags": [
+        "LRU页面替换",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "LRU非最优",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LRU 页面替换是否对所有访问序列都是最优的？",
+      "answer": "不是；它只根据历史估计未来访问，某些序列会比理论最优策略产生更多缺页。",
+      "explanation": "未来访问顺序不同会改变最优选择。",
+      "example": "循环访问超过缓存容量的页面序列。",
+      "tags": [
+        "LRU非最优",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "最优替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "理论上的最优页面替换策略会淘汰哪个页面？",
+      "answer": "淘汰下一次使用时间最远的页面；不会再使用的页面可优先淘汰。",
+      "explanation": "它需要未来访问知识，通常用于比较基准。",
+      "example": "给定完整访问序列时模拟最优缺页数。",
+      "tags": [
+        "最优替换",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "Belady异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "页面替换中的 Belady 异常指什么？",
+      "answer": "对某些策略和访问序列，增加可用页框反而可能增加缺页次数。",
+      "explanation": "FIFO 可能出现这一现象。",
+      "example": "比较同一访问序列在不同 FIFO 页框数下的缺页。",
+      "tags": [
+        "Belady异常",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "Clock引用位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "简化的 Clock 页面替换如何利用引用位？",
+      "answer": "扫描页面时给近期使用过的页面第二次机会并清除引用位，选择未引用的页面淘汰。",
+      "explanation": "它是近似近期使用信息的一种方法。",
+      "example": "指针循环扫描驻留页。",
+      "tags": [
+        "Clock引用位",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "脏页写回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "淘汰有后备存储的脏页时为什么可能比淘汰干净页更昂贵？",
+      "answer": "脏页修改可能需要先写回后备存储，而有有效后备副本的干净页通常可直接丢弃。",
+      "explanation": "具体处理取决于映射、后备存储和系统实现。",
+      "example": "换出修改过的匿名页面时执行写入。",
+      "tags": [
+        "脏页写回",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    },
+    {
+      "id": "vmpolicy-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "内存局部性与页面替换",
+      "knowledgePoint": "内存抖动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "虚拟内存中的抖动 thrashing 通常指什么？",
+      "answer": "活跃工作集超出可用物理内存时，系统频繁换入换出页面，导致进展很慢。",
+      "explanation": "减少活跃工作集或增加可用内存可能缓解。",
+      "example": "多个进程不断为彼此的页面腾出空间。",
+      "tags": [
+        "内存抖动",
+        "内存局部性与页面替换"
+      ],
+      "evidence": "source",
+      "reference": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys-policy.pdf"
+    }
+  ]
+}

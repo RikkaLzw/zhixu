@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "scipy-shapiro-normality",
+    "title": "SciPy 1.15.3 文档：Shapiro–Wilk 正态性检验",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.shapiro.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "shapiro-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正态性检验",
+      "knowledgePoint": "原假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Shapiro–Wilk 检验的原假设是什么？",
+      "answer": "样本来自正态分布。",
+      "explanation": "未拒绝原假设并不等于证明总体一定正态。",
+      "example": "分析样本分布时可结合图形和业务背景。",
+      "tags": [
+        "正态性检验",
+        "原假设"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.shapiro.html"
+    },
+    {
+      "id": "shapiro-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正态性检验",
+      "knowledgePoint": "大样本限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 文档对超过 5000 个样本的 Shapiro–Wilk 检验有什么提醒？",
+      "answer": "W 统计量仍准确，但 p 值可能不准确。",
+      "explanation": "实际分析应结合其他诊断方法。",
+      "example": "大样本时不要只依赖该 p 值作结论。",
+      "tags": [
+        "正态性检验",
+        "大样本限制"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.shapiro.html"
+    },
+    {
+      "id": "shapiro-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正态性检验",
+      "knowledgePoint": "最少样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 shapiro 至少需要多少个样本值？",
+      "answer": "至少需要 3 个样本值。",
+      "explanation": "使用 nan_policy=\"omit\" 后有效数据仍需达到最少数量，否则结果可能无效。",
+      "example": "只有两个有效数据点时不能按常规计算。",
+      "tags": [
+        "正态性检验",
+        "最少样本"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.shapiro.html"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "version": 21,
+  "note": "拆分组合题及合并模型复评场景前的内容快照，用于保护学习进度、用户编辑和个人来源。",
+  "cards": [
+    {
+      "id": "ai4sec-034",
+      "category": "operations",
+      "question": "安全知识库问答如何检查答案可靠性？",
+      "answer": "分别检查资料是否被正确检索、答案是否与资料一致、引用是否支持结论，以及资料不足时是否明确说明。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "knowledgeArea": "07",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-034"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "isof-012",
+      "category": "detection",
+      "question": "异常检测中为什么要持续复核正常行为变化？",
+      "answer": "业务、采集设备或用户行为改变后，原来的常态可能过时。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "knowledgeArea": "11",
+      "level": "进阶",
+      "tags": [
+        "漂移",
+        "监控"
+      ],
+      "explanation": "监测告警量和人工确认情况，再决定是否调整训练窗口或阈值。",
+      "example": "业务迁移后外联频率整体升高，先确认变更再更新模型。",
+      "sources": [
+        {
+          "id": "isolation-forest",
+          "title": "scikit-learn Isolation Forest 官方文档",
+          "url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.IsolationForest.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "isof-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

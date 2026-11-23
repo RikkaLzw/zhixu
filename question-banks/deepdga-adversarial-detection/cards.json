@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "deepdga-adversarial-detection",
+    "title": "DeepDGA 原论文 v1：对抗域名生成与检测",
+    "url": "https://arxiv.org/pdf/1610.01969v1",
+    "type": "固定版本研究论文",
+    "note": "逐题依据所列资料自行整理；例子为自编，版本与适用条件见题目。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "deepdga-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "DeepDGA 域名检测",
+      "knowledgePoint": "研究输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepDGA 论文主要基于域名的哪类信息进行检测？",
+      "answer": "主要基于单个域名字符串，而不依赖额外的网络上下文。",
+      "explanation": "域名字符本身不能包含全部访问行为和资产背景。",
+      "example": "仅用域名文本为分类器提供输入。",
+      "tags": [
+        "DeepDGA 域名检测",
+        "研究输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1610.01969v1"
+    },
+    {
+      "id": "deepdga-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DeepDGA 域名检测",
+      "knowledgePoint": "自编码预训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepDGA 论文如何初始化后续生成与判别模型的基础网络？",
+      "answer": "先用 Alexa Top 1M 域名训练字符级自编码器。",
+      "explanation": "该列表是论文中的正常域名数据来源，不能保证其中每个域名在所有时间都安全。",
+      "example": "以域名字符序列训练编码器和解码器。",
+      "tags": [
+        "DeepDGA 域名检测",
+        "自编码预训练"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1610.01969v1"
+    },
+    {
+      "id": "deepdga-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DeepDGA 域名检测",
+      "knowledgePoint": "生成器组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepDGA 对抗训练阶段如何复用预训练的解码器？",
+      "answer": "冻结原自编码器权重，让可训练生成层把随机输入映射到域名嵌入，再交给解码器。",
+      "explanation": "生成器试图产生难以被判别器区分的域名。",
+      "example": "随机输入经生成层和解码器得到字符分布。",
+      "tags": [
+        "DeepDGA 域名检测",
+        "生成器组成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1610.01969v1"
+    },
+    {
+      "id": "deepdga-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DeepDGA 域名检测",
+      "knowledgePoint": "判别器组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepDGA 对抗训练阶段如何复用预训练的编码器？",
+      "answer": "冻结原编码器并在其嵌入上增加逻辑回归层进行判别。",
+      "explanation": "判别器区分论文中的正常域名和生成域名。",
+      "example": "用域名字符编码结果产生分类分数。",
+      "tags": [
+        "DeepDGA 域名检测",
+        "判别器组成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1610.01969v1"
+    },
+    {
+      "id": "deepdga-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DeepDGA 域名检测",
+      "knowledgePoint": "历史样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepDGA 论文为什么让判别器训练时使用部分历史生成域名？",
+      "answer": "让判别器保留对先前生成样本的区分能力，减少生成器退化到单一模式的风险。",
+      "explanation": "论文采用采样历史样本的正则方式，并不保证完全避免模式坍塌。",
+      "example": "混合当前轮和早期轮次的生成域名。",
+      "tags": [
+        "DeepDGA 域名检测",
+        "历史样本"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1610.01969v1"
+    },
+    {
+      "id": "deepdga-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DeepDGA 域名检测",
+      "knowledgePoint": "模型迁移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepDGA 论文观察到针对神经判别器生成的域名对另一类模型有什么影响？",
+      "answer": "在论文实验中，它们也使使用人工特征的随机森林更难区分。",
+      "explanation": "这是特定模型和数据上的迁移现象，不保证对所有检测器成立。",
+      "example": "用独立分类器检查生成样本的迁移效果。",
+      "tags": [
+        "DeepDGA 域名检测",
+        "模型迁移"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1610.01969v1"
+    },
+    {
+      "id": "deepdga-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "DeepDGA 域名检测",
+      "knowledgePoint": "生成与真实",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DeepDGA 生成了一个看似正常的域名，能否单凭字符串证明它已被注册或用于攻击？",
+      "answer": "不能；生成的字符串与域名实际注册及网络活动是不同证据。",
+      "explanation": "验证实际风险需要查询可靠的注册、解析或行为上下文。",
+      "example": "对生成字符串单独核验是否存在解析记录。",
+      "tags": [
+        "DeepDGA 域名检测",
+        "生成与真实"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/1610.01969v1"
+    }
+  ]
+}

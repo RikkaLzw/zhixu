@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "software-testing-foundations",
+    "title": "软件测试基础：测试金字塔与覆盖率",
+    "url": "https://martinfowler.com/articles/practical-test-pyramid.html",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；计算和场景示例为自编，具体前提见题目。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "testfund-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "单元与集成测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单元测试与集成测试在关注点上通常有什么区别？",
+      "answer": "单元测试侧重较小代码单元的行为；集成测试侧重组件与真实依赖或接口之间能否协作。",
+      "explanation": "团队对“单元”的具体边界可能不同；两种测试可以互补。",
+      "example": "分别测试订单金额计算，以及订单服务与数据库读写。",
+      "tags": [
+        "单元与集成测试",
+        "软件测试与质量"
+      ],
+      "evidence": "source",
+      "reference": "https://martinfowler.com/articles/practical-test-pyramid.html"
+    },
+    {
+      "id": "testfund-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "端到端测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "端到端测试通常验证什么？",
+      "answer": "从用户或外部入口出发，验证多个真实组件协作完成一条完整业务流程。",
+      "explanation": "它能发现跨组件问题，但搭建、运行和故障定位的成本往往更高。",
+      "example": "在测试环境提交订单，验证页面、服务和持久化结果。",
+      "tags": [
+        "端到端测试",
+        "软件测试与质量"
+      ],
+      "evidence": "source",
+      "reference": "https://martinfowler.com/articles/practical-test-pyramid.html"
+    },
+    {
+      "id": "testfund-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "测试金字塔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "测试金字塔对不同范围测试的数量有什么常见建议？",
+      "answer": "通常保留较多快速、范围较小的测试，并用较少的集成和端到端测试验证组件协作与关键流程。",
+      "explanation": "比例应根据系统风险和反馈成本调整，不是固定数量规则。",
+      "example": "价格计算有多组单元测试，支付下单保留少量完整流程测试。",
+      "tags": [
+        "测试金字塔",
+        "软件测试与质量"
+      ],
+      "evidence": "source",
+      "reference": "https://martinfowler.com/articles/practical-test-pyramid.html"
+    },
+    {
+      "id": "testfund-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "测试替身作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "测试替身（test double）在自动化测试中通常起什么作用？",
+      "answer": "它在测试中代替某个真实协作者，使测试可控制输入或观察交互。",
+      "explanation": "替身不能单独证明真实外部依赖、网络配置或数据库集成正确。",
+      "example": "用可控的邮件发送替身检查通知逻辑。",
+      "tags": [
+        "测试替身作用",
+        "软件测试与质量"
+      ],
+      "evidence": "source",
+      "reference": "https://martinfowler.com/articles/practical-test-pyramid.html"
+    },
+    {
+      "id": "testfund-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "Stub与Mock",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "测试中的 stub 和 mock 常分别关注什么？",
+      "answer": "stub 通常提供预设响应；mock 通常用于验证与依赖的预期交互。",
+      "explanation": "不同框架的术语可能混用，一个对象也可同时承担多种角色。",
+      "example": "stub 返回固定汇率；mock 检查支付接口是否以正确金额调用。",
+      "tags": [
+        "Stub与Mock",
+        "软件测试与质量"
+      ],
+      "evidence": "source",
+      "reference": "https://martinfowler.com/articles/practical-test-pyramid.html"
+    },
+    {
+      "id": "testfund-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "契约测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "服务之间的契约测试主要验证什么？",
+      "answer": "验证消费者与提供者对接口请求、响应或消息格式等约定是否兼容。",
+      "explanation": "契约的具体覆盖范围由参与方定义，不能替代所有业务或端到端测试。",
+      "example": "检查消费者需要的订单字段能否由提供者按约定返回。",
+      "tags": [
+        "契约测试",
+        "软件测试与质量"
+      ],
+      "evidence": "source",
+      "reference": "https://martinfowler.com/articles/practical-test-pyramid.html"
+    },
+    {
+      "id": "testfund-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "不稳定测试",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "同一代码与测试在未修改时有时通过、有时失败，这类现象通常称为什么？",
+      "answer": "不稳定测试（flaky test）。",
+      "explanation": "常见原因包括时间依赖、并发时序、共享状态和外部服务；应定位原因而非仅重跑。",
+      "example": "测试依赖固定 sleep 等待异步操作，机器负载变化时可能超时。",
+      "tags": [
+        "不稳定测试",
+        "软件测试与质量"
+      ],
+      "evidence": "source",
+      "reference": "https://martinfowler.com/articles/practical-test-pyramid.html"
+    },
+    {
+      "id": "testfund-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "测试数据隔离",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "自动化测试之间为什么应避免共享可变状态？",
+      "answer": "一个测试的写入可能改变另一个测试的结果，使执行顺序影响结果。",
+      "explanation": "隔离数据、清理资源或为每个测试创建独立环境可降低相互干扰。",
+      "example": "两个测试共用并修改同一份订单记录时可能互相影响。",
+      "tags": [
+        "测试数据隔离",
+        "软件测试与质量"
+      ],
+      "evidence": "application",
+      "reference": "https://martinfowler.com/articles/practical-test-pyramid.html"
+    },
+    {
+      "id": "testfund-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "行与分支覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "代码的行覆盖率达到 100%，是否就能断定所有条件分支都执行过？",
+      "answer": "不能；一行条件判断可能只走过其中一个分支。",
+      "explanation": "分支覆盖关注可能的控制流转移，仍不能保证结果正确或覆盖所有输入。",
+      "example": "if 条件为真时执行了所有代码行，条件为假的路径仍可能没测到。",
+      "tags": [
+        "行与分支覆盖",
+        "软件测试与质量"
+      ],
+      "evidence": "source",
+      "reference": "https://coverage.readthedocs.io/en/7.6.12/branch.html"
+    },
+    {
+      "id": "testfund-010",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "覆盖率与断言",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "一个测试执行到了某段代码并计入覆盖率，是否就能证明这段代码的结果正确？",
+      "answer": "不能；覆盖率只记录执行情况，仍需有效断言和有代表性的测试输入。",
+      "explanation": "还可能存在未覆盖的边界条件和错误路径。",
+      "example": "只调用价格计算函数而不检查返回值，仍可能增加行覆盖率。",
+      "tags": [
+        "覆盖率与断言",
+        "软件测试与质量"
+      ],
+      "evidence": "application",
+      "reference": "https://coverage.readthedocs.io/en/7.6.12/branch.html"
+    },
+    {
+      "id": "testfund-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试与质量",
+      "knowledgePoint": "回归测试目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "修复缺陷后增加一个能复现原问题的自动化测试，主要有什么价值？",
+      "answer": "它可在未来修改重新引入同类问题时提供提示。",
+      "explanation": "测试应在修复前能暴露问题，修复后验证预期行为。",
+      "example": "修复空购物车计算错误后，保留空购物车用例。",
+      "tags": [
+        "回归测试目的",
+        "软件测试与质量"
+      ],
+      "evidence": "application",
+      "reference": "https://martinfowler.com/articles/practical-test-pyramid.html"
+    }
+  ]
+}

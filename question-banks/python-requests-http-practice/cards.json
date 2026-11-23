@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "python-requests-http-practice",
+    "title": "Requests 2.32.5：HTTP 请求与会话",
+    "url": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/quickstart.rst",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyreq-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "JSON与HTTP状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 的 Response.json() 成功，能否证明 HTTP 请求成功？",
+      "answer": "不能；即使 4xx 或 5xx 响应也可能包含有效 JSON。",
+      "explanation": "需要另行检查预期状态码或调用 raise_for_status()。",
+      "example": "HTTP 500 的错误详情也可能是 JSON。",
+      "tags": [
+        "Python Requests 请求",
+        "JSON与HTTP状态"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/quickstart.rst"
+    },
+    {
+      "id": "pyreq-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "状态异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 的 Response.raise_for_status() 在 4xx 或 5xx 时通常怎样？",
+      "answer": "抛出 requests.exceptions.HTTPError。",
+      "explanation": "检查状态码仍可按应用协议处理其他非预期响应。",
+      "example": "请求后调用 raise_for_status()，捕获 HTTPError。",
+      "tags": [
+        "Python Requests 请求",
+        "状态异常"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/quickstart.rst"
+    },
+    {
+      "id": "pyreq-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "JSON解析失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 2.32.5 的 Response.json() 遇到无效或空 JSON 内容会怎样？",
+      "answer": "抛出 requests.exceptions.JSONDecodeError。",
+      "explanation": "HTTP 204 响应通常没有内容，应按接口协议处理。",
+      "example": "空响应不应无条件调用 json()。",
+      "tags": [
+        "Python Requests 请求",
+        "JSON解析失败"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/quickstart.rst"
+    },
+    {
+      "id": "pyreq-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "默认超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 默认是否自动设置请求超时？",
+      "answer": "默认不设置；不显式指定 timeout 时请求可能等待很久。",
+      "explanation": "网络请求应按场景设置合理的超时策略。",
+      "example": "requests.get(url, timeout=5)。",
+      "tags": [
+        "Python Requests 请求",
+        "默认超时"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/quickstart.rst"
+    },
+    {
+      "id": "pyreq-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "连接读取超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 的 timeout=(3, 10) 分别控制什么？",
+      "answer": "分别设置连接超时 3 秒和读取超时 10 秒。",
+      "explanation": "读取超时主要限制等待相邻数据到来的时间，而非整个下载的期限。",
+      "example": "为连接和服务器响应设置不同等待时间。",
+      "tags": [
+        "Python Requests 请求",
+        "连接读取超时"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/advanced.rst"
+    },
+    {
+      "id": "pyreq-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "超时非总时限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 的 timeout 参数能否保证整个请求在该秒数内完成？",
+      "answer": "不能；连接和读取超时都不是整个请求的绝对墙钟时限。",
+      "explanation": "例如多个 IP 依次尝试连接、服务器持续发送数据时总耗时可能更长。",
+      "example": "下载大文件时另行设计总时限。",
+      "tags": [
+        "Python Requests 请求",
+        "超时非总时限"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/advanced.rst"
+    },
+    {
+      "id": "pyreq-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "会话状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 的 Session 对多次请求有哪些常见作用？",
+      "answer": "可持久化会话级参数和 Cookie，并通过连接池复用连接。",
+      "explanation": "连接能否复用取决于服务器和连接状态等条件。",
+      "example": "同一 Session 连续访问同一主机。",
+      "tags": [
+        "Python Requests 请求",
+        "会话状态"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/advanced.rst"
+    },
+    {
+      "id": "pyreq-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "会话请求覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests Session 的字典型默认参数与单次请求同名参数如何合并？",
+      "answer": "单次请求的同名键覆盖会话级值；其他键通常保留。",
+      "explanation": "会话支持 headers 等字典型参数。",
+      "example": "会话设置通用请求头，单次请求覆盖其中一个。",
+      "tags": [
+        "Python Requests 请求",
+        "会话请求覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/advanced.rst"
+    },
+    {
+      "id": "pyreq-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "方法级Cookie",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Requests 的 Session.get 中通过 cookies 参数传入 Cookie，会自动保存到会话供后续请求使用吗？",
+      "answer": "不会；该方法级 Cookie 只用于本次请求。",
+      "explanation": "服务器设置的 Cookie 则可由会话保存并按规则发送。",
+      "example": "临时指定的 Cookie 不会自动成为下一次请求的默认值。",
+      "tags": [
+        "Python Requests 请求",
+        "方法级Cookie"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/advanced.rst"
+    },
+    {
+      "id": "pyreq-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "流式下载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 设置 stream=True 后，返回时响应体是否一定已全部下载？",
+      "answer": "不一定；通常先取得响应头，响应体可随后按需读取。",
+      "explanation": "可以用 iter_content 分块消费数据。",
+      "example": "下载大文件时逐块写入而非一次读入内存。",
+      "tags": [
+        "Python Requests 请求",
+        "流式下载"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/advanced.rst"
+    },
+    {
+      "id": "pyreq-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "流响应释放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 Requests stream=True 但没有读完整个响应体时，怎样确保资源被释放？",
+      "answer": "调用 Response.close()，或使用 with 管理响应。",
+      "explanation": "完整消费响应体有助于连接返回池中复用；关闭未读响应可能关闭该连接。",
+      "example": "with requests.get(url, stream=True) as r: ...",
+      "tags": [
+        "Python Requests 请求",
+        "流响应释放"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/advanced.rst"
+    },
+    {
+      "id": "pyreq-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "准备会话请求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 中 Request.prepare() 与 Session.prepare_request() 在会话状态上有什么区别？",
+      "answer": "前者不应用 Session 状态；后者会合并会话级状态，例如 Cookie。",
+      "explanation": "准备后可在发送前检查或调整请求。",
+      "example": "需要保留 Session Cookie 时用 session.prepare_request(req)。",
+      "tags": [
+        "Python Requests 请求",
+        "准备会话请求"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/advanced.rst"
+    },
+    {
+      "id": "pyreq-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python Requests 请求",
+      "knowledgePoint": "重定向记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Requests 的 Response.history 表示什么？",
+      "answer": "它按时间先后保存最终响应之前的重定向响应。",
+      "explanation": "未发生重定向时通常为空列表。",
+      "example": "检查最终地址前经过了哪些跳转。",
+      "tags": [
+        "Python Requests 请求",
+        "重定向记录"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/psf/requests/v2.32.5/docs/user/quickstart.rst"
+    }
+  ]
+}

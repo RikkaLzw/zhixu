@@ -1,0 +1,108 @@
+{
+  "source": {
+    "id": "tokenization-pipeline-details",
+    "title": "Hugging Face Tokenizers：分词处理流程",
+    "url": "https://huggingface.co/docs/tokenizers/v0.22.2/en/pipeline",
+    "type": "教材与技术文档",
+    "note": "逐题根据所列教材或技术文档自行整理；例子用于说明适用条件。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "tokpipe-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词处理流程",
+      "knowledgePoint": "分词规范化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分词流水线中的文本规范化通常做什么？",
+      "answer": "它按配置调整原始文本的形式，例如 Unicode 规范化、转小写或去除某些重音。",
+      "explanation": "具体操作取决于分词器；不应假定所有分词器都转小写。",
+      "example": "某个分词器在编码前统一大小写。",
+      "tags": [
+        "分词规范化",
+        "分词处理流程"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.22.2/en/pipeline"
+    },
+    {
+      "id": "tokpipe-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词处理流程",
+      "knowledgePoint": "预分词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "预分词在子词模型之前起什么作用？",
+      "answer": "它先把文本切成较小片段，随后子词模型在这些片段上进行分词。",
+      "explanation": "切分边界由预分词器决定，可能影响最终 token。",
+      "example": "先按空白和标点切开，再对片段做子词编码。",
+      "tags": [
+        "预分词",
+        "分词处理流程"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.22.2/en/pipeline"
+    },
+    {
+      "id": "tokpipe-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词处理流程",
+      "knowledgePoint": "分词模型与词表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分词流水线中的模型阶段主要负责什么？",
+      "answer": "它利用词表和相应分词规则，将预分词后的片段映射为 token 及其编号。",
+      "explanation": "模型可以采用不同的子词算法。",
+      "example": "对预分词片段应用已训练的 WordPiece 规则。",
+      "tags": [
+        "分词模型与词表",
+        "分词处理流程"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.22.2/en/pipeline"
+    },
+    {
+      "id": "tokpipe-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词处理流程",
+      "knowledgePoint": "分词后处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分词后的 post-processing 常用来做什么？",
+      "answer": "它可按目标模型的输入格式添加特殊 token 或组织序列对。",
+      "explanation": "具体添加哪些标记取决于配置和模型。",
+      "example": "为 BERT 单句输入添加 [CLS] 和 [SEP]。",
+      "tags": [
+        "分词后处理",
+        "分词处理流程"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/tokenizers/v0.22.2/en/pipeline"
+    },
+    {
+      "id": "tokpipe-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分词处理流程",
+      "knowledgePoint": "字符偏移映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "快速分词器的 offset mapping 有助于解决什么问题？",
+      "answer": "它把 token 与原始文本中的字符位置联系起来，便于将 token 预测映射回文本片段。",
+      "explanation": "特殊 token 或规范化可能需要按具体实现处理。",
+      "example": "将问答模型预测的答案 token 定位到原始上下文。",
+      "tags": [
+        "字符偏移映射",
+        "分词处理流程"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/tasks/question_answering",
+      "referenceTitle": "Transformers 5.23：抽取式问答的偏移映射"
+    }
+  ]
+}

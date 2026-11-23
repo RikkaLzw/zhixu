@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "detr-object-detection",
+    "title": "DETR 原论文 v3：集合预测目标检测",
+    "url": "https://arxiv.org/pdf/2005.12872v3",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "detr-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DETR 目标检测",
+      "knowledgePoint": "集合预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DETR 原论文把目标检测建模成什么问题？",
+      "answer": "直接预测一组目标，并用集合损失训练预测与真实目标的一一匹配。",
+      "explanation": "输出集合的顺序不应决定检测目标。",
+      "example": "图像中两个物体的预测顺序互换不应改变对应集合。",
+      "tags": [
+        "DETR 目标检测",
+        "集合预测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.12872v3"
+    },
+    {
+      "id": "detr-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DETR 目标检测",
+      "knowledgePoint": "对象查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DETR 中的 object queries 起什么作用？",
+      "answer": "它们是固定数量的可学习位置向量，供解码器形成不同的目标预测槽位。",
+      "explanation": "预测槽位数量是模型配置的一部分。",
+      "example": "每个查询对应一个可输出类别和边界框的预测槽位。",
+      "tags": [
+        "DETR 目标检测",
+        "对象查询"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.12872v3"
+    },
+    {
+      "id": "detr-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DETR 目标检测",
+      "knowledgePoint": "二分匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DETR 训练时如何将预测与真实目标分配到一起？",
+      "answer": "使用匈牙利算法求解二分匹配，使真实目标与预测一一对应。",
+      "explanation": "匹配代价同时考虑类别和边界框。",
+      "example": "两个真实框会分配给不同的预测槽位。",
+      "tags": [
+        "DETR 目标检测",
+        "二分匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.12872v3"
+    },
+    {
+      "id": "detr-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DETR 目标检测",
+      "knowledgePoint": "无目标类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DETR 中未匹配真实目标的预测槽位如何训练分类？",
+      "answer": "将其分类目标设为特殊的“无目标”类别。",
+      "explanation": "固定数量的预测槽位通常多于单张图中的真实目标数。",
+      "example": "未分配到物体的槽位应学习输出 no object。",
+      "tags": [
+        "DETR 目标检测",
+        "无目标类别"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.12872v3"
+    },
+    {
+      "id": "detr-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DETR 目标检测",
+      "knowledgePoint": "边界框损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DETR 原论文的边界框损失由哪两部分组合？",
+      "answer": "L1 坐标损失与广义 IoU 损失的加权组合。",
+      "explanation": "两项从不同角度衡量预测框与真实框的差异。",
+      "example": "坐标接近并不一定意味着框的重叠度完全相同。",
+      "tags": [
+        "DETR 目标检测",
+        "边界框损失"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.12872v3"
+    },
+    {
+      "id": "detr-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DETR 目标检测",
+      "knowledgePoint": "免锚框与 NMS",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 DETR 通过集合预测去掉了传统检测流程中的哪些常见组件？",
+      "answer": "不需要预定义锚框，也不依赖非极大值抑制来去除重复预测。",
+      "explanation": "这是原论文描述的模型设计，不代表所有 Transformer 检测器都一样。",
+      "example": "推理时直接从固定预测集合中过滤无目标类别。",
+      "tags": [
+        "DETR 目标检测",
+        "免锚框与 NMS"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.12872v3"
+    },
+    {
+      "id": "detr-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DETR 目标检测",
+      "knowledgePoint": "图像到序列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 DETR 如何把 CNN 特征送入 Transformer 编码器？",
+      "answer": "将空间特征展平成序列并加入位置编码。",
+      "explanation": "位置编码有助于保留空间位置信息。",
+      "example": "二维特征图上的位置变成编码器中的序列位置。",
+      "tags": [
+        "DETR 目标检测",
+        "图像到序列"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.12872v3"
+    },
+    {
+      "id": "detr-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DETR 目标检测",
+      "knowledgePoint": "并行解码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 DETR 解码对象预测时，是否像自回归语言模型那样逐个生成？",
+      "answer": "不是；各对象查询在解码层中并行产生预测。",
+      "explanation": "解码器中的注意力仍可建模对象预测之间的关系。",
+      "example": "多个预测槽位可在一次前向处理中同时输出。",
+      "tags": [
+        "DETR 目标检测",
+        "并行解码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.12872v3"
+    }
+  ]
+}

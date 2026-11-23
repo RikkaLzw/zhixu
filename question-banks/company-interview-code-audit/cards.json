@@ -1,0 +1,125 @@
+{
+  "source": {
+    "id": "company-interview-code-audit",
+    "title": "小米公开面经：应用安全测试与代码审计",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x38-%E5%B0%8F%E7%B1%B3-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+    "type": "公开面经合集",
+    "note": "公司、岗位、轮次及经历为分享者自述；有些资料由合集转载。逐题记录面经来源和独立技术依据，标注主题启发的题目并非原帖逐题提出。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "companypractice-code-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "应用安全测试",
+      "knowledgePoint": "SAST DAST IAST",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "SAST、DAST 和 IAST 通常从哪些不同位置发现应用安全问题？",
+      "answer": "SAST 分析代码或构建产物；DAST 从外部向运行中的应用发送测试请求；IAST 在应用运行时结合内部插桩观察行为。",
+      "explanation": "三类方法覆盖范围和误报、漏报各不相同，效果还取决于语言支持、运行路径和测试输入。",
+      "example": "在 CI 中检查源码，并在测试环境运行带插桩的应用与外部测试。",
+      "tags": [
+        "SAST DAST IAST",
+        "应用安全测试",
+        "公开面经",
+        "小米"
+      ],
+      "evidence": "application",
+      "referenceId": "company-xiaomi",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x38-%E5%B0%8F%E7%B1%B3-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "小米安全工程师一面（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "owasp-sast-interview",
+          "title": "OWASP：Static Application Security Testing",
+          "url": "https://owasp.org/www-project-devsecops-guideline/latest/02a-Static-Application-Security-Testing",
+          "type": "技术指南",
+          "evidence": "source"
+        },
+        {
+          "id": "owasp-dast-interview",
+          "title": "OWASP：Dynamic Application Security Testing",
+          "url": "https://owasp.org/www-project-devsecops-guideline/latest/02b-Dynamic-Application-Security-Testing",
+          "type": "技术指南",
+          "evidence": "source"
+        },
+        {
+          "id": "owasp-iast-interview",
+          "title": "OWASP：Interactive Application Security Testing",
+          "url": "https://owasp.org/www-project-devsecops-guideline/latest/02c-Interactive-Application-Security-Testing",
+          "type": "技术指南",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypractice-code-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "应用安全测试",
+      "knowledgePoint": "传递依赖与SCA",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "软件成分分析（SCA）为什么需要检查传递依赖，而不只检查直接声明的库？",
+      "answer": "直接依赖还可能引入其他包，存在漏洞或版本风险的组件不一定直接出现在项目清单中。",
+      "explanation": "解析结果取决于生态、清单或锁文件，以及工具能否获取实际构建依赖；不能假定扫描结果必然完整。",
+      "example": "检查应用依赖 A，A 又依赖 B 时，B 的版本和依赖路径。",
+      "tags": [
+        "传递依赖与SCA",
+        "应用安全测试",
+        "公开面经",
+        "小米"
+      ],
+      "evidence": "application",
+      "referenceId": "company-xiaomi",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x38-%E5%B0%8F%E7%B1%B3-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "小米安全工程师一面（合集收录，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "dependency-graph-interview",
+          "title": "GitHub：Dependency graph",
+          "url": "https://docs.github.com/en/code-security/concepts/supply-chain-security/dependency-graph",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypractice-code-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "代码审计",
+      "knowledgePoint": "CodeQL路径解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeQL 的路径查询能帮助审计人员查看什么？",
+      "answer": "它可以展示从定义的 source 到 sink 的信息流路径及中间节点，辅助检查可疑数据传播。",
+      "explanation": "具体路径受查询、语言和库建模影响；报告路径仍需结合可达条件和实际代码验证。",
+      "example": "查看请求参数经封装函数传播到数据库调用的路径。",
+      "tags": [
+        "CodeQL路径解释",
+        "代码审计",
+        "公开面经",
+        "小米"
+      ],
+      "evidence": "application",
+      "referenceId": "company-xiaomi",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x38-%E5%B0%8F%E7%B1%B3-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "小米安全工程师一面（合集收录，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "codeql-path-interview",
+          "title": "CodeQL：Creating path queries",
+          "url": "https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

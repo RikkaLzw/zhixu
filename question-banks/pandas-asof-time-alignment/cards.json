@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "pandas-asof-time-alignment",
+    "title": "pandas 2.2.3 文档：时间近邻合并",
+    "url": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge_asof.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pdasof-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 时间对齐",
+      "knowledgePoint": "合并用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 2.2.3 的 merge_asof 主要按什么方式合并？",
+      "answer": "为左表每行按键的距离在右表选择至多一个匹配行，类似按近邻键的左连接。",
+      "explanation": "匹配方向和容差决定可选的右表行。",
+      "example": "把事件时间对齐到此前最近的状态记录。",
+      "tags": [
+        "Pandas 时间对齐",
+        "合并用途"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge_asof.html"
+    },
+    {
+      "id": "pdasof-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 时间对齐",
+      "knowledgePoint": "排序前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge_asof 对左右表的连接键顺序有什么要求？",
+      "answer": "两侧都必须按用于距离匹配的连接键升序排序。",
+      "explanation": "其他分组字段不代替对该键的排序。",
+      "example": "按时间排序后再对齐两张事件表。",
+      "tags": [
+        "Pandas 时间对齐",
+        "排序前提"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge_asof.html"
+    },
+    {
+      "id": "pdasof-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 时间对齐",
+      "knowledgePoint": "三个方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge_asof 默认允许精确匹配时，backward、forward、nearest 分别如何选取右侧键？",
+      "answer": "分别选择不大于左键的最后一项、不小于左键的第一项、绝对距离最近的一项。",
+      "explanation": "默认方向为 backward；allow_exact_matches 控制是否允许相等。",
+      "example": "nearest 可能选到事件之后的记录。",
+      "tags": [
+        "Pandas 时间对齐",
+        "三个方向"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge_asof.html"
+    },
+    {
+      "id": "pdasof-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 时间对齐",
+      "knowledgePoint": "分组匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge_asof 的 by 参数有什么作用？",
+      "answer": "先要求指定分组键相等，再在组内按距离寻找匹配。",
+      "explanation": "可避免不同实体的时间记录相互关联。",
+      "example": "按主机分组后匹配该主机最近的事件。",
+      "tags": [
+        "Pandas 时间对齐",
+        "分组匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge_asof.html"
+    },
+    {
+      "id": "pdasof-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 时间对齐",
+      "knowledgePoint": "匹配容差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge_asof 的 tolerance 限制什么？",
+      "answer": "限制左右连接键的最大允许距离；超过容差时不产生右侧匹配。",
+      "explanation": "容差类型需与连接键兼容。",
+      "example": "时间对齐时只接受 5 秒以内的记录。",
+      "tags": [
+        "Pandas 时间对齐",
+        "匹配容差"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge_asof.html"
+    },
+    {
+      "id": "pdasof-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 时间对齐",
+      "knowledgePoint": "排除相等",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge_asof 的 allow_exact_matches=False 对相同连接键有什么影响？",
+      "answer": "不允许左右连接键完全相等的行匹配。",
+      "explanation": "后向和前向搜索对应严格小于或严格大于。",
+      "example": "只使用严格早于事件的状态。",
+      "tags": [
+        "Pandas 时间对齐",
+        "排除相等"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge_asof.html"
+    },
+    {
+      "id": "pdasof-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Pandas 时间对齐",
+      "knowledgePoint": "未来信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "将 pandas merge_asof 用于构造预测特征时，为什么要小心 direction=\"nearest\"？",
+      "answer": "最近的记录可能位于预测时刻之后，造成未来信息进入特征。",
+      "explanation": "应按任务的可用时间和数据延迟约束选择匹配方式。",
+      "example": "线上只知道当前以前的状态时优先检查后向匹配。",
+      "tags": [
+        "Pandas 时间对齐",
+        "未来信息"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.merge_asof.html"
+    }
+  ]
+}

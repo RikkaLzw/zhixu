@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "python-json-serialization",
+    "title": "Python 3.14 文档：JSON 编解码",
+    "url": "https://docs.python.org/3.14/library/json.html",
+    "type": "论文、官方文档或数据集说明",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyjson-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python JSON 编解码",
+      "knowledgePoint": "字符串与文件接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python json 的 dump、load 与 dumps、loads 分别面向什么输入或输出？",
+      "answer": "dump 向文件写入 JSON，load 从文件读取；dumps 返回 JSON 字符串，loads 从字符串等输入解析。",
+      "explanation": "编码与解码都可能因不支持的数据或格式错误而失败。",
+      "example": "用文本模式打开文件并写入一个 JSON 文档。",
+      "tags": [
+        "Python JSON 编解码",
+        "字符串与文件接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/json.html"
+    },
+    {
+      "id": "pyjson-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python JSON 编解码",
+      "knowledgePoint": "非ASCII输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python json.dumps 的 ensure_ascii=False 对中文输出有什么作用？",
+      "answer": "允许非 ASCII 字符直接出现在输出字符串中。",
+      "explanation": "引号、反斜杠和控制字符仍按 JSON 规则转义。",
+      "example": "将中文直接写入 UTF-8 JSON 文本。",
+      "tags": [
+        "Python JSON 编解码",
+        "非ASCII输出"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/json.html"
+    },
+    {
+      "id": "pyjson-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python JSON 编解码",
+      "knowledgePoint": "非法浮点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python json.dumps 默认如何处理 NaN 或无穷大，怎样拒绝这些非标准 JSON 数值？",
+      "answer": "默认输出 NaN、Infinity 等；设置 allow_nan=False 时抛出 ValueError。",
+      "explanation": "严格 JSON 交换时应处理或拒绝这些值。",
+      "example": "序列化前检查非有限浮点数。",
+      "tags": [
+        "Python JSON 编解码",
+        "非法浮点"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/json.html"
+    },
+    {
+      "id": "pyjson-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python JSON 编解码",
+      "knowledgePoint": "字典键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 字典以非字符串键进行 JSON 往返后，键一定保持原类型吗？",
+      "answer": "不一定；JSON 对象键是字符串，受支持的非字符串键会转成字符串。",
+      "explanation": "因此 loads(dumps(x)) 可能不等于原字典。",
+      "example": "整数键 1 会变为字符串键 \"1\"。",
+      "tags": [
+        "Python JSON 编解码",
+        "字典键"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/json.html"
+    },
+    {
+      "id": "pyjson-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python JSON 编解码",
+      "knowledgePoint": "重复键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python json.loads 默认解析含重复名称的 JSON 对象时，通常保留哪个值？",
+      "answer": "默认保留该名称最后一次出现的值。",
+      "explanation": "如需识别重复名称，可通过 object_pairs_hook 自行处理。",
+      "example": "解析 {\"x\": 1, \"x\": 2} 默认得到 x 为 2。",
+      "tags": [
+        "Python JSON 编解码",
+        "重复键"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/json.html"
+    },
+    {
+      "id": "pyjson-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python JSON 编解码",
+      "knowledgePoint": "多对象写入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能假设连续对同一文件调用多次 json.dump 会得到一个有效 JSON 文档？",
+      "answer": "JSON 不是带对象边界的流协议；连续写入多个顶层对象通常不是单个有效 JSON。",
+      "explanation": "可用数组，或明确采用逐行 JSON 等格式。",
+      "example": "记录多个对象时定义清晰的分隔与解析规则。",
+      "tags": [
+        "Python JSON 编解码",
+        "多对象写入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/json.html"
+    },
+    {
+      "id": "pyjson-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python JSON 编解码",
+      "knowledgePoint": "精确小数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python json.loads 怎样把 JSON 小数解析为 decimal.Decimal？",
+      "answer": "设置 parse_float=decimal.Decimal。",
+      "explanation": "该回调接收原始数字字符串；其他数值类型可使用相应参数。",
+      "example": "避免先转成二进制浮点再构造 Decimal。",
+      "tags": [
+        "Python JSON 编解码",
+        "精确小数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/json.html"
+    },
+    {
+      "id": "pyjson-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python JSON 编解码",
+      "knowledgePoint": "未知对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python json.dumps 遇到默认不支持的对象时，常怎样自定义序列化？",
+      "answer": "提供 default 回调或自定义 JSONEncoder，将对象转换成可编码类型。",
+      "explanation": "回调仍需处理无法转换的类型。",
+      "example": "把自定义对象转换成包含基本类型的字典。",
+      "tags": [
+        "Python JSON 编解码",
+        "未知对象"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/json.html"
+    }
+  ]
+}

@@ -1,0 +1,354 @@
+{
+  "source": {
+    "id": "tls-protocol-foundations",
+    "title": "TLS 1.3 与服务身份：RFC 8446、9525",
+    "url": "https://www.rfc-editor.org/rfc/rfc8446.html#section-2",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材、标准或固定版本文档自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "tlsbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "握手作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 握手主要完成什么？",
+      "answer": "协商协议和密码参数、建立共享密钥材料，并按所选机制认证通信端。",
+      "explanation": "是否认证客户端取决于配置与握手方式。",
+      "example": "HTTPS 客户端与服务器在传输应用数据前建立 TLS。",
+      "tags": [
+        "握手作用",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-2"
+    },
+    {
+      "id": "tlsbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "记录层保护",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 记录层如何保护应用数据？",
+      "answer": "它用握手建立的密钥对记录进行认证加密，提供机密性和完整性保护。",
+      "explanation": "保护适用于记录内容，并不隐去所有网络元数据。",
+      "example": "加密传输 HTTP 请求内容。",
+      "tags": [
+        "记录层保护",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-5"
+    },
+    {
+      "id": "tlsbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "密码套件内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 密码套件主要指定哪些算法？",
+      "answer": "它指定记录层使用的 AEAD 算法及 HKDF 使用的哈希算法。",
+      "explanation": "密钥交换组与签名算法通过其他握手参数协商。",
+      "example": "TLS_AES_128_GCM_SHA256 指定 AES-GCM 与 SHA-256。",
+      "tags": [
+        "密码套件内容",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-1.2"
+    },
+    {
+      "id": "tlsbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "ClientHello作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 的 ClientHello 通常向服务器提供哪些协商信息？",
+      "answer": "它提供支持的版本和密码套件等选项，并可包含密钥交换参数与扩展。",
+      "explanation": "实际扩展取决于客户端支持和所用握手模式。",
+      "example": "客户端提供支持的 TLS 版本与密钥共享。",
+      "tags": [
+        "ClientHello作用",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-4.1.2"
+    },
+    {
+      "id": "tlsbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "ServerHello作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 的 ServerHello 对密码协商有什么作用？",
+      "answer": "服务器用它表示选定的版本、密码套件和适用的密钥交换参数。",
+      "explanation": "所选项需满足协议协商规则。",
+      "example": "服务器从客户端提供的密码套件中选定一个。",
+      "tags": [
+        "ServerHello作用",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-4.1.3"
+    },
+    {
+      "id": "tlsbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "握手加密范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 完整握手中，ServerHello 之后的握手消息通常如何保护？",
+      "answer": "它们使用握手流量密钥加密。",
+      "explanation": "ClientHello 和 ServerHello 不属于这一加密范围；具体扩展还可能采用其他保护机制。",
+      "example": "被动观察者通常不能直接读取后续 Certificate 消息。",
+      "tags": [
+        "握手加密范围",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-2"
+    },
+    {
+      "id": "tlsbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "证书与私钥",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 证书认证中的 CertificateVerify 消息证明什么？",
+      "answer": "它用与证书公钥对应的私钥对握手摘要签名，证明端点持有该私钥并绑定握手。",
+      "explanation": "接收方仍需验证证书链和服务身份。",
+      "example": "客户端验证服务端的 CertificateVerify 签名。",
+      "tags": [
+        "证书与私钥",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-4.4.3"
+    },
+    {
+      "id": "tlsbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "Finished消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 的 Finished 消息主要验证什么？",
+      "answer": "它通过握手记录上的消息认证码提供握手完整性和密钥确认。",
+      "explanation": "Finished 的验证失败会使握手无法正常完成。",
+      "example": "客户端校验服务端 Finished。",
+      "tags": [
+        "Finished消息",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-4.4.4"
+    },
+    {
+      "id": "tlsbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "服务器与客户端认证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 证书认证中，服务器是否总会要求客户端提供证书？",
+      "answer": "不会；客户端证书认证是可选的，需要服务器请求并由客户端按协议响应。",
+      "explanation": "常见 HTTPS 部署只要求客户端验证服务器证书。",
+      "example": "双向 TLS 才会配置客户端证书认证。",
+      "tags": [
+        "服务器与客户端认证",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-4.3.2"
+    },
+    {
+      "id": "tlsbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "服务身份验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按照 RFC 9525 验证服务的 DNS 身份时，应该核对证书中的哪个扩展？",
+      "answer": "核对 subjectAltName 中相应的 DNS-ID，并将其与参考身份匹配。",
+      "explanation": "证书链有效与服务名称匹配是不同检查；RFC 9525 不允许用主题 Common Name 识别服务。",
+      "example": "访问 api.example 时核对证书的 DNS 名称。",
+      "tags": [
+        "服务身份验证",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9525.html#section-6.3"
+    },
+    {
+      "id": "tlsbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "前向保密",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 使用证书认证和临时 Diffie–Hellman 密钥交换时，1-RTT 数据的前向保密主要限制哪类后果？",
+      "answer": "长期认证私钥日后泄露时，过去 1-RTT 数据不应仅因此就能被解密。",
+      "explanation": "这依赖临时密钥和会话密钥未被泄露等条件；0-RTT 数据不具备同样的前向保密。",
+      "example": "使用 ECDHE 的已完成会话保护历史流量。",
+      "tags": [
+        "前向保密",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#appendix-E.1"
+    },
+    {
+      "id": "tlsbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "PSK与前向保密",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 只使用 PSK、不结合临时 (EC)DHE 时，应用数据具有前向保密吗？",
+      "answer": "不具有；结合临时 (EC)DHE 的 PSK 模式可提供相应的前向保密。",
+      "explanation": "0-RTT 数据另有更弱的安全属性。",
+      "example": "对比 psk_ke 与 psk_dhe_ke 模式。",
+      "tags": [
+        "PSK与前向保密",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-2.2"
+    },
+    {
+      "id": "tlsbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "会话恢复PSK",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 会话恢复中，预共享密钥（PSK）通常来自哪里？",
+      "answer": "可由先前连接建立后服务器提供的会话票据及相关密钥材料导出。",
+      "explanation": "TLS 1.3 也支持外部提供的 PSK。",
+      "example": "客户端使用先前会话得到的票据恢复连接。",
+      "tags": [
+        "会话恢复PSK",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-2.2"
+    },
+    {
+      "id": "tlsbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "零往返数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 的 0-RTT 数据允许客户端在什么时候发送应用数据？",
+      "answer": "在恢复或使用合适 PSK 时，客户端可以在握手完全结束前发送早期数据。",
+      "explanation": "服务器可以拒绝早期数据。",
+      "example": "客户端在等待服务端响应前发送早期请求。",
+      "tags": [
+        "零往返数据",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-2.3"
+    },
+    {
+      "id": "tlsbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "零往返重放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 的 0-RTT 数据为什么需要考虑重放风险？",
+      "answer": "协议不保证早期数据在不同连接之间不被重放，应用需结合操作语义和防护措施处理。",
+      "explanation": "普通 1-RTT 数据与 0-RTT 数据的重放属性不同。",
+      "example": "避免把可重复触发副作用的操作直接当作安全早期数据。",
+      "tags": [
+        "零往返重放",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-8"
+    },
+    {
+      "id": "tlsbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "重试请求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 1.3 的 HelloRetryRequest 常用于什么？",
+      "answer": "服务器可要求客户端修改 ClientHello，例如提供服务器支持的另一组密钥共享。",
+      "explanation": "这会增加一次往返，客户端随后发送更新的 ClientHello。",
+      "example": "客户端未提供服务端可接受的密钥共享组。",
+      "tags": [
+        "重试请求",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8446.html#section-2.1"
+    },
+    {
+      "id": "tlsbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "SNI用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 的 Server Name Indication（SNI）主要帮助服务器做什么？",
+      "answer": "让客户端在握手中指明目标服务器名称，便于同一地址上的服务器选择相应配置。",
+      "explanation": "未使用 ECH 等保护时，该名称可能暴露给网络观察者。",
+      "example": "一个 IP 托管多个 HTTPS 站点。",
+      "tags": [
+        "SNI用途",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6066.html#section-3"
+    },
+    {
+      "id": "tlsbase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TLS 与服务身份",
+      "knowledgePoint": "ALPN用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TLS 的 ALPN 扩展主要用于协商什么？",
+      "answer": "客户端和服务器在 TLS 握手中协商要使用的应用层协议。",
+      "explanation": "它不替代应用协议本身的语义。",
+      "example": "协商 HTTP/2 或 HTTP/1.1。",
+      "tags": [
+        "ALPN用途",
+        "TLS 与服务身份"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc7301.html#section-3"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "tau2-dual-control-evaluation",
+    "title": "τ²-bench 论文 v1：双控制对话评测",
+    "url": "https://arxiv.org/abs/2506.07982v1",
+    "type": "官方文档、教材或论文",
+    "note": "依据逐题列出的资料自行整理；面经主题延伸注明非原题。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "tau2-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "双控制对话智能体评测",
+      "knowledgePoint": "双控制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ²-bench 的电信场景中，“双控制”指哪两方能够采取环境动作？",
+      "answer": "智能体和模拟用户都可以通过各自的工具观察或改变共享环境状态。",
+      "explanation": "模拟用户还可以通过自然语言与智能体沟通。",
+      "example": "智能体查账户，用户在模拟手机上切换飞行模式。",
+      "tags": [
+        "Agent 评测",
+        "双控制"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2506.07982v1"
+    },
+    {
+      "id": "tau2-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "双控制对话智能体评测",
+      "knowledgePoint": "信息边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ²-bench 中能否假定智能体与模拟用户都直接看到完整环境状态？",
+      "answer": "不能；论文用部分可观测模型描述，两方通过消息和各自工具获得观察。",
+      "explanation": "工具可用范围和观察内容决定各方能看到什么。",
+      "example": "智能体询问用户手机状态，而非直接读取所有用户侧信息。",
+      "tags": [
+        "Agent 评测",
+        "信息边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2506.07982v1"
+    },
+    {
+      "id": "tau2-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "双控制对话智能体评测",
+      "knowledgePoint": "任务组件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ²-bench 的原子子任务用哪三类函数描述？",
+      "answer": "初始化函数设置起始状态，解法函数执行解决步骤，断言函数检查目标条件。",
+      "explanation": "解法调用受限于智能体或用户可用的工具。",
+      "example": "先设飞行模式，再切换，最后检查服务连接。",
+      "tags": [
+        "Agent 评测",
+        "任务组件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2506.07982v1"
+    },
+    {
+      "id": "tau2-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "双控制对话智能体评测",
+      "knowledgePoint": "组合任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ²-bench 组合任务时，为什么从同一互斥子任务组最多选择一个子任务？",
+      "answer": "同组子任务可能互斥或互为替代，限制选择可避免构造相互冲突的任务。",
+      "explanation": "再把选中的初始化、解法和断言组合起来。",
+      "example": "同一设置不能同时初始化为互斥状态。",
+      "tags": [
+        "Agent 评测",
+        "组合任务"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2506.07982v1"
+    },
+    {
+      "id": "tau2-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "双控制对话智能体评测",
+      "knowledgePoint": "任务校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ²-bench 的程序化任务生成如何检查组合任务可由预设解法解决？",
+      "answer": "先应用初始化，再应用解法函数，检查所有断言是否满足，并检查完整解法的必要性。",
+      "explanation": "该验证依赖模拟环境、工具实现和断言的正确性。",
+      "example": "初始化断网并执行修复步骤后检查连接状态。",
+      "tags": [
+        "Agent 评测",
+        "任务校验"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2506.07982v1"
+    },
+    {
+      "id": "tau2-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "双控制对话智能体评测",
+      "knowledgePoint": "评测条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ²-bench 论文的电信任务主要使用什么判定任务成功？",
+      "answer": "使用针对最终环境状态的预定义断言函数。",
+      "explanation": "其他领域或任务可以配置数据库、消息或动作匹配等评测条件。",
+      "example": "检查模拟用户设备的服务是否恢复。",
+      "tags": [
+        "Agent 评测",
+        "评测条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2506.07982v1"
+    },
+    {
+      "id": "tau2-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "双控制对话智能体评测",
+      "knowledgePoint": "用户人格",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ²-bench 电信任务中的 Easy 和 Hard persona 主要改变什么？",
+      "answer": "它们描述模拟用户的领域熟悉程度，分别对应较熟悉和技术知识较少的用户。",
+      "explanation": "这是模拟设定，不等于覆盖了真实用户的全部行为差异。",
+      "example": "同样的问题可能需要向不同用户提供不同程度的指导。",
+      "tags": [
+        "Agent 评测",
+        "用户人格"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2506.07982v1"
+    },
+    {
+      "id": "tau2-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "双控制对话智能体评测",
+      "knowledgePoint": "无用户对照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ²-bench 的 no-user 模式如何帮助分析智能体失败？",
+      "answer": "让智能体控制全部工具，与双控制模式比较，以考察需要沟通协调时增加的困难。",
+      "explanation": "对照改变了交互方式，结果仍依赖模型和任务设定。",
+      "example": "比较自主调用工具与指导用户操作的任务成功率。",
+      "tags": [
+        "Agent 评测",
+        "无用户对照"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2506.07982v1"
+    },
+    {
+      "id": "tau2-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "双控制对话智能体评测",
+      "knowledgePoint": "评测子集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ²-bench 论文的电信场景中，完整组合任务与报告用子集分别有多少项？",
+      "answer": "论文从 2285 个组合任务中抽取 114 个，平衡不同意图和子任务数。",
+      "explanation": "具体数量对应论文 v1 的任务构建方式。",
+      "example": "报告结果时说明使用的是 114 项子集。",
+      "tags": [
+        "Agent 评测",
+        "评测子集"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2506.07982v1"
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "python-sqlite3-database",
+    "title": "Python 3.14 文档：sqlite3 数据库接口",
+    "url": "https://docs.python.org/3.14/library/sqlite3.html",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pysqlite-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "内存数据库",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python sqlite3.connect(\":memory:\") 创建什么数据库？",
+      "answer": "创建一个驻留在内存中的 SQLite 数据库。",
+      "explanation": "连接关闭后，该普通内存数据库的数据不再保留。",
+      "example": "测试中可使用 :memory: 避免创建数据库文件。",
+      "tags": [
+        "Python SQLite 接口",
+        "内存数据库"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "单语句执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 sqlite3.Cursor.execute 能一次执行多个 SQL 语句吗？",
+      "answer": "不能；sql 必须是单条语句，否则抛出 ProgrammingError。",
+      "explanation": "需要执行 SQL 脚本时可使用 executescript，并注意其事务规则。",
+      "example": "execute(\"SELECT 1; SELECT 2\") 会报错。",
+      "tags": [
+        "Python SQLite 接口",
+        "单语句执行"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "批量执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python sqlite3 的 executemany 适合执行什么操作？",
+      "answer": "对参数迭代器中的每组参数重复执行同一条参数化 DML 语句。",
+      "explanation": "它不是将不同 SQL 语句拼成一个脚本。",
+      "example": "executemany(\"INSERT INTO t VALUES(?)\", rows) 批量插入。",
+      "tags": [
+        "Python SQLite 接口",
+        "批量执行"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "命名参数类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 sqlite3 使用命名占位符时，应传入什么类型的参数？",
+      "answer": "传入按占位符名称映射值的字典；传序列会抛出 ProgrammingError。",
+      "explanation": "问号占位符通常使用与之对应的序列。",
+      "example": "execute(\"SELECT :x\", {\"x\": 3})。",
+      "tags": [
+        "Python SQLite 接口",
+        "命名参数类型"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "逐行读取结束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python sqlite3 的 fetchone 与 fetchall 在没有剩余结果时分别返回什么？",
+      "answer": "fetchone 返回 None；fetchall 返回空列表。",
+      "explanation": "两者的结束标记类型不同。",
+      "example": "读取完结果后，可用 fetchone() is None 判断结束。",
+      "tags": [
+        "Python SQLite 接口",
+        "逐行读取结束"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "行工厂范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "修改 Python sqlite3.Connection.row_factory 后，已有游标会自动使用新工厂吗？",
+      "answer": "不会；连接的 row_factory 影响之后创建的游标，已有游标保持原设置。",
+      "explanation": "游标自身也有 row_factory 属性。",
+      "example": "先设置连接的行工厂，再创建游标。",
+      "tags": [
+        "Python SQLite 接口",
+        "行工厂范围"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "Row 访问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "将 Python sqlite3 的 row_factory 设置为 sqlite3.Row 后，结果行可如何访问？",
+      "answer": "既可按位置索引，也可按列名访问；列名访问不区分大小写。",
+      "explanation": "默认行工厂通常返回元组。",
+      "example": "查询别名为 name 时，可用 row[0] 或 row[\"NAME\"]。",
+      "tags": [
+        "Python SQLite 接口",
+        "Row 访问"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "事务模式 False",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 sqlite3 使用 autocommit=False 时，commit 或 rollback 后会怎样？",
+      "answer": "完成当前事务后，模块会隐式开启新的事务。",
+      "explanation": "这属于 Python DB-API 风格的事务控制。",
+      "example": "提交一批写入后，可继续在新事务中执行操作。",
+      "tags": [
+        "Python SQLite 接口",
+        "事务模式 False"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "事务模式 True",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 sqlite3 连接设置 autocommit=True 时，commit 和 rollback 方法有何作用？",
+      "answer": "这两个方法不产生事务控制效果。",
+      "explanation": "该设置使用 SQLite 的自动提交模式。",
+      "example": "自动提交模式下不能依赖 rollback 撤销已提交语句。",
+      "tags": [
+        "Python SQLite 接口",
+        "事务模式 True"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "连接上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python sqlite3 连接作为 with 上下文管理器时，退出 with 会自动关闭连接吗？",
+      "answer": "不会；它用于按事务状态提交或回滚，连接仍需显式关闭。",
+      "explanation": "具体事务处理还取决于 autocommit 设置和是否有未提交事务。",
+      "example": "with con: 结束后仍可调用 con.close()。",
+      "tags": [
+        "Python SQLite 接口",
+        "连接上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "脚本预提交",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 sqlite3 在 LEGACY_TRANSACTION_CONTROL 下执行 executescript 时，已有待提交事务怎样处理？",
+      "answer": "先隐式提交该事务，再执行脚本。",
+      "explanation": "脚本本身所需的事务控制应在脚本中显式安排。",
+      "example": "不能指望之后的脚本回滚撤销此前被预先提交的写入。",
+      "tags": [
+        "Python SQLite 接口",
+        "脚本预提交"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "跨线程使用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python sqlite3 设置 check_same_thread=False 是否自动解决多个线程的写入协调？",
+      "answer": "不会；它允许跨线程访问连接，写操作仍可能需要应用侧串行化。",
+      "explanation": "默认 True 时，其他线程使用连接会抛出 ProgrammingError。",
+      "example": "共享连接前应设计锁或单独的写入队列。",
+      "tags": [
+        "Python SQLite 接口",
+        "跨线程使用"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    },
+    {
+      "id": "pysqlite-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python SQLite 接口",
+      "knowledgePoint": "最近插入行号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python sqlite3 的 lastrowid 在 executemany 之后会更新为最后一行吗？",
+      "answer": "不会；文档说明 executemany 不更新该属性。",
+      "explanation": "它通常在成功的单条 INSERT 或 REPLACE 的 execute 后更新。",
+      "example": "批量插入不应依赖 lastrowid 得到最后一个批次行号。",
+      "tags": [
+        "Python SQLite 接口",
+        "最近插入行号"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/sqlite3.html"
+    }
+  ]
+}

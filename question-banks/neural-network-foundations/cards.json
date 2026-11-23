@@ -1,0 +1,285 @@
+{
+  "source": {
+    "id": "neural-network-foundations",
+    "title": "神经网络激活、残差与自动微分",
+    "url": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html",
+    "type": "教材、论文与官方文档",
+    "note": "逐题根据教材或指定版本文档整理；面经主题启发仅为延伸练习，经历为作者自述。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "nncore-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "非线性激活",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多层前馈网络为什么通常需要非线性激活函数？",
+      "answer": "如果各层都只是仿射变换，多层组合仍等价于一个仿射变换，难以表达一般非线性关系。",
+      "explanation": "非线性激活使网络能表示更复杂的函数。",
+      "example": "在两层线性层之间加入 ReLU。",
+      "tags": [
+        "非线性激活",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html#hidden-layers",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nncore-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "ReLU定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReLU 对正数和负数输入分别如何处理？",
+      "answer": "ReLU 输出 max(0, x)：保留正数，把负数置为零。",
+      "explanation": "它逐元素作用于输入。",
+      "example": "输入 -2 输出 0，输入 3 输出 3。",
+      "tags": [
+        "ReLU定义",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html#relu-function",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nncore-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "ReLU导数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReLU 在正区间、负区间和零点的普通导数分别是什么？",
+      "answer": "正区间导数为 1，负区间导数为 0；零点没有普通导数。",
+      "explanation": "深度学习实现需要为零点选定计算约定。",
+      "example": "输入严格为负时，局部导数为零。",
+      "tags": [
+        "ReLU导数",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html#relu-function",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nncore-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "LeakyReLU负区间",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Leaky ReLU 的正负区间与普通 ReLU 的区别主要在哪里？",
+      "answer": "当负斜率大于零时，Leaky ReLU 在负区间保留非零斜率，而普通 ReLU 的负区间输出为零。",
+      "explanation": "具体负斜率由实现参数指定。",
+      "example": "负斜率为 0.01 时，负输入仍有小幅负输出。",
+      "tags": [
+        "LeakyReLU负区间",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.LeakyReLU.html",
+      "referenceTitle": "PyTorch 2.15 官方文档"
+    },
+    {
+      "id": "nncore-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "Sigmoid饱和",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigmoid 输入的绝对值很大时，为什么梯度可能变得很小？",
+      "answer": "输出趋近 0 或 1 时，Sigmoid 的局部导数趋近零。",
+      "explanation": "多层链式传播可能进一步减小梯度。",
+      "example": "很大的正输入让输出接近 1，局部梯度接近 0。",
+      "tags": [
+        "Sigmoid饱和",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html#sigmoid-function",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nncore-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "Tanh范围",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "对有限实数输入，tanh 与 Sigmoid 的输出范围有什么区别？",
+      "answer": "tanh 输出在 (-1, 1)，Sigmoid 输出在 (0, 1)。",
+      "explanation": "tanh 的输出以零为中心。",
+      "example": "输入为零时 tanh 输出零，而 Sigmoid 输出 0.5。",
+      "tags": [
+        "Tanh范围",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_multilayer-perceptrons/mlp.html#tanh-function",
+      "referenceTitle": "动手学深度学习"
+    },
+    {
+      "id": "nncore-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "GELU负值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 GELU 会像 ReLU 一样把所有负输入都变成零吗？",
+      "answer": "不会；GELU(x)=xΦ(x)，有限负输入通常对应负输出。",
+      "explanation": "Φ 是标准正态分布的累积分布函数。",
+      "example": "负输入经 GELU 后可保留小幅负值。",
+      "tags": [
+        "GELU负值",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.GELU.html",
+      "referenceTitle": "PyTorch 2.15 官方文档"
+    },
+    {
+      "id": "nncore-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "残差梯度直通",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于 y=x+F(x) 的恒等残差单元，为什么反向传播有一项梯度不经过 F 的导数？",
+      "answer": "x 通过恒等分支直接影响 y，因此梯度包含直接传回的分支贡献。",
+      "explanation": "这是简化单元的性质，不保证整个网络绝不会出现梯度问题。",
+      "example": "F 分支梯度较小时，仍要考虑恒等分支的贡献。",
+      "tags": [
+        "残差梯度直通",
+        "深度学习",
+        "公开面经",
+        "格灵深瞳"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1603.05027v3#S2",
+      "referenceTitle": "残差网络恒等映射论文",
+      "supportingReferences": [
+        {
+          "id": "company-deepglint",
+          "title": "格灵深瞳算法实习一面（2019 届作者自述）；ResNet 主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "nncore-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "残差形状匹配",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "残差单元相加前若输入与输出的通道或空间尺寸不同，可以怎样处理？",
+      "answer": "可以用合适的投影调整跳连分支的形状，使两分支能够相加。",
+      "explanation": "原始 ResNet 使用过带适当步幅的 1×1 卷积投影。",
+      "example": "下采样时同时调整跳连的通道数和空间尺寸。",
+      "tags": [
+        "残差形状匹配",
+        "深度学习",
+        "公开面经",
+        "格灵深瞳"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1512.03385v1#S3.SS1",
+      "referenceTitle": "ResNet 原论文",
+      "supportingReferences": [
+        {
+          "id": "company-deepglint",
+          "title": "格灵深瞳算法实习一面（2019 届作者自述）；ResNet 主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "nncore-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "深层退化与过拟合",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "深层普通网络的退化现象与过拟合有什么区别？",
+      "answer": "退化表现为加深网络后训练误差反而升高；过拟合通常表现为训练集效果明显好于验证集。",
+      "explanation": "过拟合通常指训练表现较好而泛化表现较差。",
+      "example": "比较较浅和更深网络的训练误差。",
+      "tags": [
+        "深层退化与过拟合",
+        "深度学习",
+        "公开面经",
+        "格灵深瞳"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1512.03385v1#S1",
+      "referenceTitle": "ResNet 原论文",
+      "supportingReferences": [
+        {
+          "id": "company-deepglint",
+          "title": "格灵深瞳算法实习一面（2019 届作者自述）；ResNet 主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "nncore-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "评估模式与梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 中调用 model.eval() 是否会自动关闭梯度记录？",
+      "answer": "不会；eval() 切换有训练和评估差异的模块行为，关闭梯度记录需另用 no_grad 等机制。",
+      "explanation": "两者控制不同方面，常在验证时配合使用。",
+      "example": "评估 BatchNorm 的同时用 no_grad 减少反向图记录。",
+      "tags": [
+        "评估模式与梯度",
+        "深度学习"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/notes/autograd.html#evaluation-mode-nn-module-eval",
+      "referenceTitle": "PyTorch 2.15 官方文档"
+    },
+    {
+      "id": "nncore-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "分支梯度汇总",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一个变量通过多条计算路径影响损失时，反向传播如何得到它的总梯度？",
+      "answer": "把各路径对该变量的梯度贡献相加。",
+      "explanation": "每条路径的贡献仍按链式法则计算。",
+      "example": "参数同时影响预测损失和正则项时，两部分梯度相加。",
+      "tags": [
+        "分支梯度汇总",
+        "深度学习"
+      ],
+      "evidence": "application",
+      "reference": "https://d2l.ai/chapter_multilayer-perceptrons/backprop.html#backpropagation",
+      "referenceTitle": "动手学深度学习"
+    }
+  ]
+}

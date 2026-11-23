@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "hyde-retrieval-details",
+    "title": "HyDE 原论文 v1：假设文档检索细节",
+    "url": "https://arxiv.org/abs/2212.10496v1",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题所列论文或固定版本资料自行整理，示例为自编。在线文档按 2026-11-21 查看内容。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "hydecore-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HyDE 稠密检索",
+      "knowledgePoint": "零样本训练边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HyDE 论文的 fully zero-shot 设定是否使用测试语料训练检索编码器？",
+      "answer": "不使用；论文假设构建编码器时不能访问测试时语料，也不使用相关性标注。",
+      "explanation": "测试时仍要把目标语料编码并建立索引，供检索使用。",
+      "example": "预先训练编码器，测试时再对新语料建立向量索引。",
+      "tags": [
+        "HyDE 稠密检索",
+        "零样本训练边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2212.10496v1"
+    },
+    {
+      "id": "hydecore-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HyDE 稠密检索",
+      "knowledgePoint": "编码空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HyDE 论文如何让假设文档与真实语料文档具有可比较的向量？",
+      "answer": "用同一个文档编码器将假设文档和语料文档映射到同一向量空间。",
+      "explanation": "检索时再比较生成向量与语料向量。",
+      "example": "用 Contriever 分别编码假设段落和真实段落。",
+      "tags": [
+        "HyDE 稠密检索",
+        "编码空间"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2212.10496v1"
+    },
+    {
+      "id": "hydecore-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HyDE 稠密检索",
+      "knowledgePoint": "多文档聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HyDE 原论文采样多个假设文档时，如何得到一个查询向量？",
+      "answer": "分别编码这些假设文档，再对向量取平均。",
+      "explanation": "论文也讨论将原始查询作为额外候选加入平均。",
+      "example": "生成多段假设文本并平均其嵌入。",
+      "tags": [
+        "HyDE 稠密检索",
+        "多文档聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2212.10496v1"
+    },
+    {
+      "id": "hydecore-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HyDE 稠密检索",
+      "knowledgePoint": "模糊查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HyDE 原论文在平均多个假设文档向量时，对查询歧义作了什么简化假设？",
+      "answer": "假设查询对应的向量分布是单峰，即查询不存在歧义。",
+      "explanation": "论文把有歧义查询和多样性的处理留给后续研究。",
+      "example": "一个缩写有多个含义时需谨慎解释单一平均向量。",
+      "tags": [
+        "HyDE 稠密检索",
+        "模糊查询"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2212.10496v1"
+    }
+  ]
+}

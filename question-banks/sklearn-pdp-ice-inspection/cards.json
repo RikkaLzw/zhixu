@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "sklearn-pdp-ice-inspection",
+    "title": "scikit-learn 1.7.2：PDP 与 ICE 解释",
+    "url": "https://scikit-learn.org/1.7/modules/partial_dependence.html",
+    "type": "官方文档、教材或论文",
+    "note": "依据逐题列出的资料自行整理；面经主题延伸注明非原题。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skpdp-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "部分依赖与个体效应",
+      "knowledgePoint": "PDP 含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "部分依赖图（PDP）通常展示模型输出如何随选定特征变化？",
+      "answer": "在一组背景样本上改变选定特征并对模型输出求平均，观察平均响应的变化。",
+      "explanation": "计算方式和背景数据选择会影响结果。",
+      "example": "观察风险分数随登录次数取值的平均变化。",
+      "tags": [
+        "模型解释",
+        "PDP 含义"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/partial_dependence.html"
+    },
+    {
+      "id": "skpdp-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "部分依赖与个体效应",
+      "knowledgePoint": "ICE 含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "个体条件期望（ICE）曲线与部分依赖图的主要区别是什么？",
+      "answer": "ICE 分别展示每个样本的响应曲线；PDP 汇总这些响应的平均趋势。",
+      "explanation": "个体曲线有助于发现平均曲线隐藏的差异。",
+      "example": "不同主机的同一特征变化曲线可能不同。",
+      "tags": [
+        "模型解释",
+        "ICE 含义"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/partial_dependence.html"
+    },
+    {
+      "id": "skpdp-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "部分依赖与个体效应",
+      "knowledgePoint": "特征交互",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PDP 曲线较平坦能否单独证明选定特征对每个样本都没有影响？",
+      "answer": "不能；不同样本的响应方向或幅度可能不同，平均后相互抵消。",
+      "explanation": "可结合 ICE 曲线检查不同个体的响应。",
+      "example": "一组样本升高、另一组样本降低时平均变化可能很小。",
+      "tags": [
+        "模型解释",
+        "特征交互"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/partial_dependence.html"
+    },
+    {
+      "id": "skpdp-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "部分依赖与个体效应",
+      "knowledgePoint": "相关特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "特征高度相关时，为什么解释 PDP 或 ICE 需要谨慎？",
+      "answer": "替换目标特征而保留其他特征可能构造出很少出现或不合理的组合。",
+      "explanation": "在这些组合上的模型输出不一定可靠。",
+      "example": "固定年龄相关特征的同时把年龄替换成不相容数值。",
+      "tags": [
+        "模型解释",
+        "相关特征"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/partial_dependence.html"
+    },
+    {
+      "id": "skpdp-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "部分依赖与个体效应",
+      "knowledgePoint": "因果边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PDP 显示模型预测随某特征升高而变化，能否单独证明改变该特征会导致真实结果变化？",
+      "answer": "不能；PDP 描述模型在所构造输入上的响应，不直接确立因果效应。",
+      "explanation": "因果结论需要额外的设计和假设。",
+      "example": "模型中的登录次数趋势不能独自证明干预效果。",
+      "tags": [
+        "模型解释",
+        "因果边界"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/partial_dependence.html"
+    },
+    {
+      "id": "skpdp-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "部分依赖与个体效应",
+      "knowledgePoint": "递归背景",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 recursion 与 brute 在使用 X 的背景特征值方面有什么区别？",
+      "answer": "brute 使用 X 中的补充特征值；recursion 的背景权重来自支持该方法的树训练过程。",
+      "explanation": "两者仍使用 X 或指定值构造评估网格，结果可能不同。",
+      "example": "背景样本分布改变时，brute 的平均响应也可能改变。",
+      "tags": [
+        "模型解释",
+        "递归背景"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/partial_dependence.html"
+    },
+    {
+      "id": "skpdp-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "部分依赖与个体效应",
+      "knowledgePoint": "ICE 方法限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 计算 ICE（kind=\"individual\"）能使用 method=\"recursion\" 吗？",
+      "answer": "不能；个体曲线需要使用 brute 方法。",
+      "explanation": "recursion 只支持特定树模型的平均部分依赖。",
+      "example": "设置 kind=\"individual\" 时选择 method=\"brute\"。",
+      "tags": [
+        "模型解释",
+        "ICE 方法限制"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.inspection.partial_dependence.html"
+    },
+    {
+      "id": "skpdp-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "部分依赖与个体效应",
+      "knowledgePoint": "样本权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 的 partial_dependence 使用默认 method=\"auto\" 并指定 sample_weight 时，怎样计算平均结果？",
+      "answer": "它按样本权重计算平均响应，并选择 brute 方法。",
+      "explanation": "显式指定 recursion 并传入权重会报错；kind=\"individual\" 的个体曲线本身不使用该权重。",
+      "example": "让重要背景样本在平均值中占更大比重。",
+      "tags": [
+        "模型解释",
+        "样本权重"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.inspection.partial_dependence.html"
+    },
+    {
+      "id": "skpdp-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "部分依赖与个体效应",
+      "knowledgePoint": "自定义网格",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 的 partial_dependence 为某特征指定 custom_values 时，如何选择该特征的计算点？",
+      "answer": "使用给出的取值，而不是由 percentiles 与 grid_resolution 自动构造该特征的网格。",
+      "explanation": "自定义值仅覆盖对应指定的特征。",
+      "example": "直接指定在 0、1、2 三个取值处计算。",
+      "tags": [
+        "模型解释",
+        "自定义网格"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.inspection.partial_dependence.html"
+    }
+  ]
+}

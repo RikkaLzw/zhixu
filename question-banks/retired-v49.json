@@ -1,0 +1,35 @@
+{
+  "version": 49,
+  "note": "明确事件关联前提之前的旧卡快照，用于迁移时保护用户编辑、来源和学习记录。",
+  "cards": [
+    {
+      "id": "eval-014",
+      "category": "foundations",
+      "question": "面对同一天的大量相似攻击流，怎样避免高估有效发现？",
+      "answer": "除了逐流计分，还应按攻击活动或事件聚合结果。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "17",
+      "level": "实践",
+      "tags": [
+        "事件级评估",
+        "相似样本"
+      ],
+      "explanation": "发现同一事件的一千条相似流，与发现一千个独立事件不是同一回事。",
+      "example": "同时报告按流召回率和按攻击活动统计的事件召回率。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-014"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

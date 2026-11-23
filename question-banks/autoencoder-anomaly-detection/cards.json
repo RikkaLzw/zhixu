@@ -1,0 +1,50 @@
+{
+  "source": {
+    "id": "autoencoder-anomaly-detection",
+    "title": "TensorFlow 教程：自编码器异常检测",
+    "url": "https://www.tensorflow.org/tutorials/generative/autoencoder",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题引用的教材、论文或固定版本文档自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "aedetect-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "重构式异常检测",
+      "knowledgePoint": "重构异常分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用自编码器进行异常检测时，常怎样从输入和重构结果得到分数？",
+      "answer": "计算两者的差异，例如每个样本的平均绝对误差或均方误差。",
+      "explanation": "分数定义和预处理应在训练与评估中保持一致。",
+      "example": "将重构误差较大的记录排在前面。",
+      "tags": [
+        "重构式异常检测",
+        "重构异常分数"
+      ],
+      "evidence": "source",
+      "reference": "https://www.tensorflow.org/tutorials/generative/autoencoder"
+    },
+    {
+      "id": "aedetect-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "重构式异常检测",
+      "knowledgePoint": "正常样本训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "重构式异常检测常用正常样本训练自编码器，其基本假设是什么？",
+      "answer": "模型较能重构与训练分布相似的数据，某些异常可能产生更大误差。",
+      "explanation": "这是需要通过验证检验的假设，不是对所有异常的保证。",
+      "example": "用已知正常流量训练后评估新流量。",
+      "tags": [
+        "重构式异常检测",
+        "正常样本训练"
+      ],
+      "evidence": "source",
+      "reference": "https://www.tensorflow.org/tutorials/generative/autoencoder"
+    }
+  ]
+}

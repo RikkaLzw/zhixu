@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "dqn-experience-replay",
+    "title": "Mnih 等 2015：深度 Q 网络",
+    "url": "https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "dqnbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DQN 与经验回放",
+      "knowledgePoint": "动作价值输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DQN 在离散动作任务中，神经网络通常为每个合法动作输出什么？",
+      "answer": "输出当前状态或状态表示下该动作的估计 Q 值。",
+      "explanation": "贪心决策可选择估计值最高的动作。",
+      "example": "游戏中不同按键各有一个动作价值输出。",
+      "tags": [
+        "DQN 与经验回放",
+        "动作价值输出"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf"
+    },
+    {
+      "id": "dqnbase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DQN 与经验回放",
+      "knowledgePoint": "回放内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DQN 的经验回放通常保存哪些基本转移信息？",
+      "answer": "保存状态、动作、奖励和下一状态，并保留终止信息以构造目标。",
+      "explanation": "经验可跨多个回合汇总到有限大小的回放缓冲区。",
+      "example": "每一步游戏交互都可形成一条转移记录。",
+      "tags": [
+        "DQN 与经验回放",
+        "回放内容"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf"
+    },
+    {
+      "id": "dqnbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DQN 与经验回放",
+      "knowledgePoint": "回放去相关",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DQN 为什么从回放缓冲区随机抽取小批次，而非只使用连续时刻的样本？",
+      "answer": "随机抽样可减弱连续经验之间的相关性，使更新数据更分散。",
+      "explanation": "这不能保证所有采样结果严格独立同分布。",
+      "example": "一个小批次可包含来自不同回合的转移。",
+      "tags": [
+        "DQN 与经验回放",
+        "回放去相关"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf"
+    },
+    {
+      "id": "dqnbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DQN 与经验回放",
+      "knowledgePoint": "经验重复利用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DQN 的经验回放如何提高交互样本的利用率？",
+      "answer": "同一条历史转移在被淘汰前可能参与多次参数更新。",
+      "explanation": "回放容量和采样方式会影响被重复使用的机会。",
+      "example": "某个较早的转移可在后续多个批次中被抽到。",
+      "tags": [
+        "DQN 与经验回放",
+        "经验重复利用"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf"
+    },
+    {
+      "id": "dqnbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DQN 与经验回放",
+      "knowledgePoint": "目标网络作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DQN 为什么用单独的目标网络计算自举目标？",
+      "answer": "目标网络在一段更新期间保持较旧参数，使学习目标变化较慢。",
+      "explanation": "这有助于稳定训练，但不保证一定收敛。",
+      "example": "在线网络连续更新时，目标网络暂时保持不变。",
+      "tags": [
+        "DQN 与经验回放",
+        "目标网络作用"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf"
+    },
+    {
+      "id": "dqnbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DQN 与经验回放",
+      "knowledgePoint": "目标网络更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mnih 等 2015 DQN 论文如何更新目标网络参数？",
+      "answer": "每隔固定数量的更新，将在线 Q 网络参数复制到目标网络。",
+      "explanation": "两次复制之间目标网络参数保持固定。",
+      "example": "周期 C 决定目标网络同步频率。",
+      "tags": [
+        "DQN 与经验回放",
+        "目标网络更新"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf"
+    },
+    {
+      "id": "dqnbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DQN 与经验回放",
+      "knowledgePoint": "帧堆叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DQN 在 Atari 实验中为什么把多帧画面组合为状态输入？",
+      "answer": "连续画面能够提供运动变化线索，单帧往往不能表达物体运动方向。",
+      "explanation": "帧堆叠并不保证完全观测环境的全部状态。",
+      "example": "球在不同帧中的位置可帮助判断运动方向。",
+      "tags": [
+        "DQN 与经验回放",
+        "帧堆叠"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf"
+    },
+    {
+      "id": "dqnbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DQN 与经验回放",
+      "knowledgePoint": "奖励裁剪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DQN Atari 实验将正负奖励裁剪为 1 和 -1，会带来什么信息损失？",
+      "answer": "不同绝对大小的同号奖励会变得无法区分。",
+      "explanation": "裁剪可限制训练目标尺度，但会改变奖励幅值信息。",
+      "example": "原始奖励 +10 和 +100 都变成 +1。",
+      "tags": [
+        "DQN 与经验回放",
+        "奖励裁剪"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf"
+    }
+  ]
+}

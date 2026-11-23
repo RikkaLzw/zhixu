@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "istqb-test-design-fundamentals",
+    "title": "ISTQB CTFL 4.0.1：测试设计基础",
+    "url": "https://istqb.org/?sdm_process_download=1&download_id=3345",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "testdesign-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试设计",
+      "knowledgePoint": "黑盒与白盒",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "黑盒测试设计与白盒测试设计依据的信息有什么区别？",
+      "answer": "黑盒依据规定行为设计，白盒依据内部结构与处理逻辑设计。",
+      "explanation": "两者可互补，黑盒测试不要求参考实现细节。",
+      "example": "按接口规格测试输入输出属于黑盒设计。",
+      "tags": [
+        "软件测试设计",
+        "黑盒与白盒"
+      ],
+      "evidence": "source",
+      "reference": "https://istqb.org/?sdm_process_download=1&download_id=3345"
+    },
+    {
+      "id": "testdesign-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试设计",
+      "knowledgePoint": "等价类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "等价类划分的基本思想是什么？",
+      "answer": "将预计会被同样处理的取值划分为不同组，再为各组选择代表值测试。",
+      "explanation": "等价关系是测试设计的假设，实际划分需要结合规格。",
+      "example": "整数区间的有效值和两侧无效值可分别划分。",
+      "tags": [
+        "软件测试设计",
+        "等价类"
+      ],
+      "evidence": "source",
+      "reference": "https://istqb.org/?sdm_process_download=1&download_id=3345"
+    },
+    {
+      "id": "testdesign-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试设计",
+      "knowledgePoint": "边界值分析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "边界值分析为什么常用于有序输入范围？",
+      "answer": "边界及其相邻值容易暴露比较符号或范围界限实现错误。",
+      "explanation": "边界值分析基于有序的等价类。",
+      "example": "范围 1 至 10 可检查 0、1、2、9、10、11。",
+      "tags": [
+        "软件测试设计",
+        "边界值分析"
+      ],
+      "evidence": "source",
+      "reference": "https://istqb.org/?sdm_process_download=1&download_id=3345"
+    },
+    {
+      "id": "testdesign-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件测试设计",
+      "knowledgePoint": "每个选择覆盖",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "多输入参数达到 ISTQB 所说的 Each Choice 覆盖，是否意味着测试了所有等价类组合？",
+      "answer": "不意味着；它只要求每组划分中的每个分区至少出现一次。",
+      "explanation": "组合覆盖需要额外的测试设计。",
+      "example": "两个参数各有两类时，两条测试可覆盖每类，但未必覆盖四种组合。",
+      "tags": [
+        "软件测试设计",
+        "每个选择覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://istqb.org/?sdm_process_download=1&download_id=3345"
+    },
+    {
+      "id": "testdesign-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试设计",
+      "knowledgePoint": "决策表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "决策表测试适合检查什么类型的业务规则？",
+      "answer": "适合检查多个条件的不同组合对应哪些结果或动作。",
+      "explanation": "表格可帮助发现遗漏的组合和要求中的矛盾。",
+      "example": "根据会员状态与金额决定是否免运费。",
+      "tags": [
+        "软件测试设计",
+        "决策表"
+      ],
+      "evidence": "source",
+      "reference": "https://istqb.org/?sdm_process_download=1&download_id=3345"
+    },
+    {
+      "id": "testdesign-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件测试设计",
+      "knowledgePoint": "决策规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ISTQB 决策表中的一列决策规则通常描述什么？",
+      "answer": "描述一组条件组合及其对应动作。",
+      "explanation": "不可行的组合可从测试范围中排除。",
+      "example": "会员为真、金额不足时收取运费是一条规则。",
+      "tags": [
+        "软件测试设计",
+        "决策规则"
+      ],
+      "evidence": "source",
+      "reference": "https://istqb.org/?sdm_process_download=1&download_id=3345"
+    },
+    {
+      "id": "testdesign-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "软件测试设计",
+      "knowledgePoint": "状态迁移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "状态迁移测试如何设计测试用例？",
+      "answer": "根据当前状态、事件和条件，构造事件序列并检查状态与动作。",
+      "explanation": "同一个事件可能因当前状态不同而产生不同结果。",
+      "example": "账户多次输入错误密码后进入锁定状态。",
+      "tags": [
+        "软件测试设计",
+        "状态迁移"
+      ],
+      "evidence": "source",
+      "reference": "https://istqb.org/?sdm_process_download=1&download_id=3345"
+    },
+    {
+      "id": "testdesign-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "软件测试设计",
+      "knowledgePoint": "状态与迁移覆盖",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "测试已经覆盖所有状态，能否推出覆盖所有有效状态迁移？",
+      "answer": "不能；可能访问了每个状态，但遗漏了某些状态之间的迁移。",
+      "explanation": "应分别定义和衡量状态覆盖与迁移覆盖。",
+      "example": "两个状态间有多条不同事件触发的迁移时，访问两状态不等于走完各条迁移。",
+      "tags": [
+        "软件测试设计",
+        "状态与迁移覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://istqb.org/?sdm_process_download=1&download_id=3345"
+    }
+  ]
+}

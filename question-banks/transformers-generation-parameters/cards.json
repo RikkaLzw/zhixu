@@ -1,0 +1,278 @@
+{
+  "source": {
+    "id": "transformers-generation-parameters",
+    "title": "Transformers 4.51.3：生成与解码配置",
+    "url": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation",
+    "type": "论文与官方技术文档",
+    "note": "根据逐题引用的论文或官方文档自行整理；例子为自编，具体方法和适用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "genconfig-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "长度参数优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 同时设置 max_length 和 max_new_tokens 时，哪个参数优先？",
+      "answer": "max_new_tokens 优先，决定允许生成的新 token 数。",
+      "explanation": "max_length 是总长度上限，通常包含解码器输入长度。",
+      "example": "输入较长时仍限制最多生成 100 个新 token。",
+      "tags": [
+        "长度参数优先级",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    },
+    {
+      "id": "genconfig-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "最小生成长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 min_new_tokens 主要限制什么？",
+      "answer": "它在达到指定新生成 token 数之前抑制结束 token。",
+      "explanation": "其他停止条件或错误仍可能提前结束生成。",
+      "example": "要求生成至少若干 token 后再允许 EOS。",
+      "tags": [
+        "最小生成长度",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    },
+    {
+      "id": "genconfig-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "采样开关",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 do_sample=False 时，temperature、top-k 和 top-p 采样设置会参与普通贪心解码吗？",
+      "answer": "不会；这些参数用于采样模式，非默认设置还可能触发配置警告。",
+      "explanation": "其他 logits 处理器仍可能影响可选 token。",
+      "example": "想使用 top-p 时启用 do_sample。",
+      "tags": [
+        "采样开关",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/generation/configuration_utils.py"
+    },
+    {
+      "id": "genconfig-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "束搜索与采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 设置 num_beams>1 且 do_sample=True 时采用哪类生成？",
+      "answer": "采用束搜索采样（beam-search multinomial sampling）。",
+      "explanation": "关闭采样时对应普通束搜索。",
+      "example": "在保留多个候选的同时进行采样。",
+      "tags": [
+        "束搜索与采样",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/generation/configuration_utils.py"
+    },
+    {
+      "id": "genconfig-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "返回序列上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 中使用束搜索时，num_return_sequences 与 num_beams 有什么约束？",
+      "answer": "返回序列数量不能大于束数。",
+      "explanation": "单束采样可以返回多个序列；普通贪心解码只支持返回一个。",
+      "example": "四束搜索最多返回四个候选。",
+      "tags": [
+        "返回序列上限",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/generation/configuration_utils.py"
+    },
+    {
+      "id": "genconfig-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "束搜索停止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的束搜索 early_stopping=True 何时停止？",
+      "answer": "当已有 num_beams 个完整候选时停止搜索。",
+      "explanation": "False 使用启发式判断；\"never\" 使用更严格的束搜索停止条件。",
+      "example": "找到指定数目的完成序列后停止。",
+      "tags": [
+        "束搜索停止",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    },
+    {
+      "id": "genconfig-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "长度惩罚",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的束搜索 length_penalty 如何参与序列评分？",
+      "answer": "它将序列长度的指定次幂用于除序列得分；对负的对数似然得分，正值通常更偏向较长序列。",
+      "explanation": "它只影响相应的束搜索评分，不能保证输出固定长度。",
+      "example": "比较不同长度的已完成候选。",
+      "tags": [
+        "长度惩罚",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    },
+    {
+      "id": "genconfig-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "重复片段约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 no_repeat_ngram_size=N（N>0）主要限制什么？",
+      "answer": "它阻止同一生成序列中再次形成已出现过的 N-gram。",
+      "explanation": "对 decoder-only 模型，提示词也参与 n-gram 检查；约束不能保证语义不重复。",
+      "example": "设置为 2 时避免重复出现相同的二元 token 片段。",
+      "tags": [
+        "重复片段约束",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    },
+    {
+      "id": "genconfig-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "重复惩罚边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 使用 repetition_penalty>1 时，能保证生成结果没有重复 token 吗？",
+      "answer": "不能；它调整已出现 token 的分数，但没有完全禁止这些 token。",
+      "explanation": "该设置可能影响模型重复必要名称或术语的能力。",
+      "example": "惩罚重复词与硬性禁止重复是不同设置。",
+      "tags": [
+        "重复惩罚边界",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/generation/configuration_utils.py"
+    },
+    {
+      "id": "genconfig-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "最大时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 max_time 到期时，生成会立即中断当前计算步骤吗？",
+      "answer": "不一定；文档说明会先完成当前计算轮次，再停止生成。",
+      "explanation": "实际耗时可能超过配置的秒数。",
+      "example": "为生成设置时间预算但允许当前轮次结束。",
+      "tags": [
+        "最大时间",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    },
+    {
+      "id": "genconfig-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "强制结束标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 forced_eos_token_id 在达到最大长度时有什么作用？",
+      "answer": "它指定达到最大长度时应强制生成的结束 token。",
+      "explanation": "这与模型在较早位置自然生成 EOS 是两回事。",
+      "example": "生成到长度上限时使用指定 EOS。",
+      "tags": [
+        "强制结束标记",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    },
+    {
+      "id": "genconfig-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "禁止词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 bad_words_ids 与 suppress_tokens 在限制单位上有什么区别？",
+      "answer": "bad_words_ids 可限制指定的 token 序列；suppress_tokens 限制单个指定 token。",
+      "explanation": "两者都按 token ID 工作，需要与使用的分词器对应。",
+      "example": "禁止一个多 token 短语或单个 token。",
+      "tags": [
+        "禁止词",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    },
+    {
+      "id": "genconfig-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "输出分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 output_logits 和 output_scores 返回的信息有什么区别？",
+      "answer": "output_logits 请求未处理的预测 logits；output_scores 请求生成过程中的预测分数。",
+      "explanation": "需启用 return_dict_in_generate 才能返回这些额外输出。",
+      "example": "比较处理前分数与生成时使用的分数。",
+      "tags": [
+        "输出分数",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    },
+    {
+      "id": "genconfig-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成与解码配置",
+      "knowledgePoint": "结束文本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 stop_strings 主要用于什么？",
+      "answer": "当生成内容与指定停止字符串匹配时，触发停止生成。",
+      "explanation": "需要结合相应分词器判断生成文本中的匹配。",
+      "example": "遇到约定的结束标记时停止。",
+      "tags": [
+        "结束文本",
+        "生成与解码配置"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/text_generation"
+    }
+  ]
+}

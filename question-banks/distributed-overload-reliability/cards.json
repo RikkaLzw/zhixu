@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "distributed-overload-reliability",
+    "title": "Google SRE 与 AWS Builder Library：服务过载与可靠性",
+    "url": "https://sre.google/sre-book/addressing-cascading-failures/",
+    "type": "官方技术文档与系统手册",
+    "note": "依据题目所列版本文档与手册自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "overload-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分布式服务过载与可靠性",
+      "knowledgePoint": "级联故障",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分布式系统中的级联故障通常如何扩散？",
+      "answer": "部分组件故障增加其他组件负载或故障概率，可能通过反馈进一步扩大故障范围。",
+      "explanation": "具体扩散路径依赖负载均衡和系统依赖关系。",
+      "example": "一个副本失效后，其余副本过载并陆续失效。",
+      "tags": [
+        "分布式服务过载与可靠性",
+        "级联故障"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/addressing-cascading-failures/"
+    },
+    {
+      "id": "overload-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式服务过载与可靠性",
+      "knowledgePoint": "长队列代价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "服务长期过载时，持续增长的请求队列通常带来什么代价？",
+      "answer": "排队等待使延迟上升，并消耗更多内存；请求可能在处理前已经失去价值。",
+      "explanation": "队列增长不能凭空增加服务处理能力。",
+      "example": "请求到达速率长期超过处理速率。",
+      "tags": [
+        "分布式服务过载与可靠性",
+        "长队列代价"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/addressing-cascading-failures/"
+    },
+    {
+      "id": "overload-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式服务过载与可靠性",
+      "knowledgePoint": "过载快速拒绝",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "过载时服务为什么可能选择快速拒绝部分请求？",
+      "answer": "尽早低成本拒绝可保护有限资源，使部分被接受的请求仍有机会完成。",
+      "explanation": "拒绝策略需要结合业务优先级和客户端行为设计。",
+      "example": "超出处理容量时返回明确失败。",
+      "tags": [
+        "分布式服务过载与可靠性",
+        "过载快速拒绝"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/addressing-cascading-failures/"
+    },
+    {
+      "id": "overload-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式服务过载与可靠性",
+      "knowledgePoint": "优雅降级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "服务过载时的优雅降级通常是什么意思？",
+      "answer": "以较低资源成本提供受限或较低质量的功能，保留核心服务。",
+      "explanation": "降级内容应根据业务需求提前设计。",
+      "example": "暂时关闭个性化推荐，保留基础搜索。",
+      "tags": [
+        "分布式服务过载与可靠性",
+        "优雅降级"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/addressing-cascading-failures/"
+    },
+    {
+      "id": "overload-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式服务过载与可靠性",
+      "knowledgePoint": "截止后浪费",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么服务端继续处理已经超过客户端截止时间的请求可能浪费资源？",
+      "answer": "客户端可能已不再等待结果，服务端仍消耗容量完成无法利用的工作。",
+      "explanation": "取消传播与服务端检查截止时间有助于减少此类浪费。",
+      "example": "客户等待超时后，后台仍继续计算。",
+      "tags": [
+        "分布式服务过载与可靠性",
+        "截止后浪费"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/addressing-cascading-failures/"
+    },
+    {
+      "id": "overload-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式服务过载与可靠性",
+      "knowledgePoint": "健康检查连锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么过载时健康检查失败可能放大故障？",
+      "answer": "节点被移出负载均衡后，剩余节点承担更多流量，也可能因过载失败。",
+      "explanation": "健康检查和摘除策略需要考虑服务负载及剩余容量。",
+      "example": "多个服务副本在高峰中依次被摘除。",
+      "tags": [
+        "分布式服务过载与可靠性",
+        "健康检查连锁"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/addressing-cascading-failures/"
+    },
+    {
+      "id": "overload-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式服务过载与可靠性",
+      "knowledgePoint": "超时覆盖范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么配置远程调用超时时要核对它是否包含 DNS 查询与 TLS 握手？",
+      "answer": "某些超时只覆盖部分阶段，其他阶段仍可能使总等待时间超过预期。",
+      "explanation": "具体覆盖范围由客户端实现和配置决定。",
+      "example": "连接超时设置不一定覆盖域名解析。",
+      "tags": [
+        "分布式服务过载与可靠性",
+        "超时覆盖范围"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+    },
+    {
+      "id": "overload-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式服务过载与可靠性",
+      "knowledgePoint": "令牌桶限制重试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "令牌桶怎样帮助限制客户端重试造成的额外负载？",
+      "answer": "有令牌时允许重试，令牌耗尽后以受限速率补充和重试。",
+      "explanation": "桶容量和补充速率共同影响突发重试量。",
+      "example": "允许短时重试突发，随后限制重试速率。",
+      "tags": [
+        "分布式服务过载与可靠性",
+        "令牌桶限制重试"
+      ],
+      "evidence": "source",
+      "reference": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/"
+    },
+    {
+      "id": "overload-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式服务过载与可靠性",
+      "knowledgePoint": "固定速率限流局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定速率限流为什么不一定足以阻止已经发生的过载故障？",
+      "answer": "固定阈值未必反映当前健康节点数量和实际处理能力。",
+      "explanation": "故障期间可用容量可能低于原先正常时的阈值。",
+      "example": "部分副本失效后原先的限流阈值过高。",
+      "tags": [
+        "分布式服务过载与可靠性",
+        "固定速率限流局限"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/addressing-cascading-failures/"
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "codeql-flow",
+    "title": "CodeQL 数据流分析官方指南",
+    "url": "https://codeql.github.com/docs/writing-codeql-queries/about-data-flow-analysis/",
+    "type": "官方文档与标准",
+    "note": "根据所列资料自行编写并用简体中文整理，示例为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "cflow-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "代码表示",
+      "knowledgePoint": "AST与数据流图",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "代码的抽象语法树与数据流图分别描述什么？",
+      "answer": "抽象语法树描述代码的语法结构，数据流图描述程序中值可能如何传播。",
+      "explanation": "两种图的节点并非一一对应。",
+      "example": "if 语句属于语法与控制结构，不一定是携带值的数据流节点。",
+      "tags": [
+        "AST与数据流图",
+        "代码漏洞检测",
+        "数据流"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/about-data-flow-analysis/"
+    },
+    {
+      "id": "cflow-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "代码表示",
+      "knowledgePoint": "数据流图节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeQL 数据流图中的节点通常代表什么？",
+      "answer": "它们代表运行时能够承载或产生值的程序元素。",
+      "explanation": "有些数据流节点不直接对应一个语法树节点。",
+      "example": "变量引用或表达式的值可对应数据流节点。",
+      "tags": [
+        "数据流图节点",
+        "代码漏洞检测",
+        "数据流"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/about-data-flow-analysis/"
+    },
+    {
+      "id": "cflow-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "代码表示",
+      "knowledgePoint": "数据流图边",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据流图中的有向边表示什么？",
+      "answer": "它表示数据可能从一个程序元素传播到另一个程序元素。",
+      "explanation": "一条静态分析边是潜在流动关系，不自动证明某次运行发生过。",
+      "example": "赋值语句可形成从右侧表达式到变量的数据流。",
+      "tags": [
+        "数据流图边",
+        "代码漏洞检测",
+        "数据流"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/about-data-flow-analysis/"
+    },
+    {
+      "id": "cflow-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "数据流分析",
+      "knowledgePoint": "局部与全局数据流",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "CodeQL 局部数据流和全局数据流的范围有什么区别？",
+      "answer": "局部数据流主要在单个函数内分析；全局数据流还考虑跨函数等传播。",
+      "explanation": "全局分析通常需要更多计算资源，并依赖调用关系建模。",
+      "example": "跨函数传递的不可信输入可能需要全局分析。",
+      "tags": [
+        "局部与全局数据流",
+        "代码漏洞检测",
+        "数据流"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/about-data-flow-analysis/"
+    },
+    {
+      "id": "cflow-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点分析",
+      "knowledgePoint": "值流与污点流",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "CodeQL 的普通值流与污点跟踪有什么区别？",
+      "answer": "普通值流关注值被保留的传播；污点跟踪还可追踪值经过变换后仍受原输入影响的传播。",
+      "explanation": "污点跟踪会根据规则加入额外传播步骤。",
+      "example": "输入经过字符串拼接后虽改变值，仍可能受到原输入影响。",
+      "tags": [
+        "值流与污点流",
+        "代码漏洞检测",
+        "数据流"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/about-data-flow-analysis/"
+    },
+    {
+      "id": "cflow-006",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "污点分析",
+      "knowledgePoint": "污点源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在安全数据流分析中，source 通常代表什么？",
+      "answer": "它代表需要追踪的输入来源，例如不可信用户输入。",
+      "explanation": "source 的定义取决于要检测的漏洞和分析模型。",
+      "example": "将 HTTP 请求参数作为潜在污点源。",
+      "tags": [
+        "污点源",
+        "代码漏洞检测",
+        "数据流"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/codeql-language-guides/analyzing-data-flow-in-python/"
+    },
+    {
+      "id": "cflow-007",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "污点分析",
+      "knowledgePoint": "污点汇",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在安全数据流分析中，sink 通常代表什么？",
+      "answer": "它代表需要检查数据是否到达的敏感使用位置。",
+      "explanation": "同一函数是否构成风险取决于数据内容和调用上下文。",
+      "example": "把未经安全处理的输入传给命令执行接口可作为候选汇点。",
+      "tags": [
+        "污点汇",
+        "代码漏洞检测",
+        "数据流"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/codeql-language-guides/analyzing-data-flow-in-python/"
+    },
+    {
+      "id": "cflow-008",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "数据流分析",
+      "knowledgePoint": "静态路径含义",
+      "questionType": "安全场景",
+      "origin": "自行整理",
+      "question": "静态分析找到 source 到 sink 的数据流路径后，为什么仍要检查可达条件？",
+      "answer": "静态路径表示可能存在传播，但实际运行是否满足分支与调用条件还需验证。",
+      "explanation": "分析可能因近似建模产生误报，也可能遗漏复杂流。",
+      "example": "回查调用条件和输入校验后再确认疑似注入。",
+      "tags": [
+        "静态路径含义",
+        "代码漏洞检测",
+        "数据流"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/about-data-flow-analysis/"
+    },
+    {
+      "id": "cflow-009",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "数据流分析",
+      "knowledgePoint": "库建模盲区",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "数据流分析为什么要关注外部库的建模？",
+      "answer": "当库实现不可用或调用关系无法准确确定时，分析可能缺少必要的传播边。",
+      "explanation": "缺失传播模型会影响路径的完整性。",
+      "example": "输入经过未建模的库转换后，静态路径可能中断。",
+      "tags": [
+        "库建模盲区",
+        "代码漏洞检测",
+        "数据流"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/about-data-flow-analysis/"
+    }
+  ]
+}

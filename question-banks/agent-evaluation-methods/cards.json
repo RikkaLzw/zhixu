@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "agent-evaluation-methods",
+    "title": "LangSmith：Agent 评估与执行轨迹",
+    "url": "https://docs.langchain.com/langsmith/evaluation-concepts",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题链接的资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "agenteval-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent评估",
+      "knowledgePoint": "离线与在线评估",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Agent 的离线评估与在线评估通常分别使用什么数据？",
+      "answer": "离线评估通常使用整理好的测试样本；在线评估通常检查实际运行产生的请求和轨迹。",
+      "explanation": "离线样本可以有参考答案，也可以没有。",
+      "example": "上线前用固定样本回归，上线后抽查实际请求。",
+      "tags": [
+        "离线与在线评估",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    },
+    {
+      "id": "agenteval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent评估",
+      "knowledgePoint": "参考答案评估",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "有参考答案和无参考答案的评估，主要区别是什么？",
+      "answer": "前者可以对照预期输出；后者依据不需要标准答案的规则或评价标准检查结果。",
+      "explanation": "无参考评估不能自动证明答案事实正确。",
+      "example": "用格式规则检查输出，或用人工答案比较正确性。",
+      "tags": [
+        "参考答案评估",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    },
+    {
+      "id": "agenteval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent评估",
+      "knowledgePoint": "成对评估",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "成对评估与单个输出的绝对评分有什么区别？",
+      "answer": "成对评估直接比较两个输出；绝对评分按标准分别给单个输出打分。",
+      "explanation": "成对比较的结果仍取决于评价标准和评估者。",
+      "example": "比较两个事件摘要哪一个更完整。",
+      "tags": [
+        "成对评估",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    },
+    {
+      "id": "agenteval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent评估",
+      "knowledgePoint": "代码与模型评估器",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "代码规则评估器和大模型评估器适合检查什么不同类型的结果？",
+      "answer": "代码规则适合可明确判定的条件；大模型评估器可按语言标准评价较开放的输出。",
+      "explanation": "大模型评估结果需要人工校验，规则也只能覆盖所写条件。",
+      "example": "用代码验证 JSON 结构，用模型辅助评估摘要清晰度。",
+      "tags": [
+        "代码与模型评估器",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    },
+    {
+      "id": "agenteval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent评估",
+      "knowledgePoint": "轨迹顺序约束",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Agent 轨迹评估中，严格序列匹配与只检查工具集合有什么区别？",
+      "answer": "严格匹配要求工具调用顺序也符合预期；集合检查可允许不同顺序。",
+      "explanation": "选择取决于任务是否要求特定执行顺序。",
+      "example": "两个独立查询允许换序，依赖写入的步骤则需考虑先后。",
+      "tags": [
+        "轨迹顺序约束",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-approaches"
+    },
+    {
+      "id": "agenteval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent评估",
+      "knowledgePoint": "执行单元与轨迹",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "LangSmith 中 run 与 trace 分别代表什么？",
+      "answer": "run 是一次工作单元，如工具或模型调用；trace 汇集一次操作中的相关 runs。",
+      "explanation": "一个 trace 可以包含嵌套的多个运行步骤。",
+      "example": "一次用户请求的模型调用和工具调用属于同一 trace。",
+      "tags": [
+        "执行单元与轨迹",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/observability-concepts"
+    },
+    {
+      "id": "agenteval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent评估",
+      "knowledgePoint": "轨迹与会话",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "LangSmith 中 trace 与 thread 的组织范围有什么区别？",
+      "answer": "trace 记录一次操作的执行过程；thread 将多轮交互的相关 traces 组织起来。",
+      "explanation": "不同系统对这些术语的命名可能不同。",
+      "example": "多轮调查会话中的每一轮可对应一个 trace。",
+      "tags": [
+        "轨迹与会话",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/observability-concepts"
+    },
+    {
+      "id": "agenteval-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent评估",
+      "knowledgePoint": "在线样本回归",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么可以把线上发现的 Agent 失败样本加入离线评估集？",
+      "answer": "它能把真实失败转成可重复运行的回归样本，用于检查后续修改是否解决问题。",
+      "explanation": "采集和使用样本时应遵循相应的数据权限与隐私要求。",
+      "example": "把工具误调用案例脱敏后加入评估集。",
+      "tags": [
+        "在线样本回归",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/langsmith/evaluation-concepts"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "pe-import-analysis",
+    "title": "Microsoft PE 格式：导入、导出与证书目录",
+    "url": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format",
+    "type": "技术文档与标准",
+    "note": "根据逐题注明的技术资料自行整理，示例为自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "pedeep-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "PE 静态结构",
+      "knowledgePoint": "PE签名位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PE 映像中，文件偏移 0x3c 处的值用于定位什么？",
+      "answer": "它给出 PE 签名在文件中的偏移位置。",
+      "explanation": "解析时应检查偏移和后续结构是否在文件边界内。",
+      "example": "读取该偏移后核对四字节 PE 签名。",
+      "tags": [
+        "PE签名位置",
+        "PE 静态结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format"
+    },
+    {
+      "id": "pedeep-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "PE 静态结构",
+      "knowledgePoint": "PE签名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PE 映像的四字节签名是什么？",
+      "answer": "依次为十六进制字节 50、45、00、00，即字母 P、E 后接两个零字节。",
+      "explanation": "该签名位于 DOS stub 中记录的偏移处。",
+      "example": "十六进制字节为 50 45 00 00。",
+      "tags": [
+        "PE签名",
+        "PE 静态结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format"
+    },
+    {
+      "id": "pedeep-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "PE 静态结构",
+      "knowledgePoint": "导入与导出",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PE 的导入表与导出表分别描述什么？",
+      "answer": "导入信息描述映像引用的外部符号；导出信息描述可供其他映像使用的符号。",
+      "explanation": "具体符号可按名称或序号访问。",
+      "example": "程序导入 DLL 函数，DLL 则可导出自己的函数。",
+      "tags": [
+        "导入与导出",
+        "PE 静态结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format"
+    },
+    {
+      "id": "pedeep-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "PE 静态结构",
+      "knowledgePoint": "按序号导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PE 导入项按序号导入时，一定能从该项获得函数名吗？",
+      "answer": "不一定；按序号导入使用序号标识符号，并不依赖名称。",
+      "explanation": "静态特征提取应区分名称和序号导入。",
+      "example": "导入项仅记录某 DLL 的 ordinal。",
+      "tags": [
+        "按序号导入",
+        "PE 静态结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format"
+    },
+    {
+      "id": "pedeep-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "PE 静态结构",
+      "knowledgePoint": "导入地址表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PE 导入地址表在映像绑定后通常保存什么？",
+      "answer": "绑定过程中，相关表项会被导入符号的实际虚拟地址覆盖。",
+      "explanation": "未绑定时其内容与导入查找表相同；具体装载过程依环境而定。",
+      "example": "加载器解析 DLL 函数后更新 IAT 项。",
+      "tags": [
+        "导入地址表",
+        "PE 静态结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format"
+    },
+    {
+      "id": "pedeep-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "PE 静态结构",
+      "knowledgePoint": "证书目录偏移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PE 数据目录中 Certificate Table 的地址字段为什么不能按普通 RVA 解释？",
+      "answer": "它是文件偏移，因为证书表不会作为映像的一部分装入内存。",
+      "explanation": "其他目录字段通常使用 RVA，解析器需单独处理这一例外。",
+      "example": "按文件偏移定位属性证书表。",
+      "tags": [
+        "证书目录偏移",
+        "PE 静态结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format"
+    },
+    {
+      "id": "pedeep-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "PE 静态结构",
+      "knowledgePoint": "基址重定位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PE 的基址重定位信息在什么情况下可能需要由加载器处理？",
+      "answer": "当映像不能加载到首选映像基址时，加载器可能需要依据重定位信息调整地址。",
+      "explanation": "是否可重定位取决于映像和运行环境。",
+      "example": "加载地址变化后修正需要调整的地址。",
+      "tags": [
+        "基址重定位",
+        "PE 静态结构"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/win32/debug/pe-format"
+    },
+    {
+      "id": "pedeep-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "PE 静态结构",
+      "knowledgePoint": "静态恶意软件特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "恶意软件静态检测可以使用哪些输入？",
+      "answer": "可以使用文件结构、导入函数、字节统计和字符串等不依赖实际运行的特征。",
+      "explanation": "EMBER 的特征提取实现包含节、导入、字节直方图和字符串等信息。",
+      "example": "先提取 PE 导入和字节统计，再用于分类实验。",
+      "tags": [
+        "静态恶意软件特征",
+        "PE 静态结构"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/elastic/ember/blob/master/ember/features.py"
+    }
+  ]
+}

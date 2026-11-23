@@ -1,0 +1,154 @@
+{
+  "source": {
+    "id": "aflnet-protocol-state-fuzzing",
+    "title": "AFLNet 固定提交：协议状态反馈与消息序列",
+    "url": "https://github.com/aflnet/aflnet/blob/96032f86d0005dfeeb41ea7b31103f1d1ff8f168/README.md",
+    "type": "固定提交项目文档",
+    "note": "根据项目固定提交说明自行整理；示例为自编。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "aflnet-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "AFLNet 协议模糊测试",
+      "knowledgePoint": "输入种子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLNet 项目说明使用什么作为网络协议测试的初始种子？",
+      "answer": "使用客户端与服务器真实交互中记录的请求消息序列。",
+      "explanation": "序列包含达到后续协议状态所需的上下文。",
+      "example": "从一次测试会话中提取有序请求。",
+      "tags": [
+        "AFLNet 协议模糊测试",
+        "输入种子"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/aflnet/aflnet/blob/96032f86d0005dfeeb41ea7b31103f1d1ff8f168/README.md"
+    },
+    {
+      "id": "aflnet-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLNet 协议模糊测试",
+      "knowledgePoint": "双重反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLNet 的状态感知测试使用哪两类反馈指导探索？",
+      "answer": "使用代码覆盖反馈和协议状态反馈。",
+      "explanation": "它保留能够扩展代码覆盖或状态空间的输入变体。",
+      "example": "比较新消息序列是否到达新代码或新状态。",
+      "tags": [
+        "AFLNet 协议模糊测试",
+        "双重反馈"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/aflnet/aflnet/blob/96032f86d0005dfeeb41ea7b31103f1d1ff8f168/README.md"
+    },
+    {
+      "id": "aflnet-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLNet 协议模糊测试",
+      "knowledgePoint": "状态信号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLNet 项目说明利用服务器的什么信息识别消息序列触及的状态？",
+      "answer": "利用服务器响应码作为状态信号。",
+      "explanation": "响应码是对内部状态的近似，不一定能区分所有实际内部状态。",
+      "example": "多个不同内部状态都返回相同成功码时可能被合并观察。",
+      "tags": [
+        "AFLNet 协议模糊测试",
+        "状态信号"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/aflnet/aflnet/blob/96032f86d0005dfeeb41ea7b31103f1d1ff8f168/README.md"
+    },
+    {
+      "id": "aflnet-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLNet 协议模糊测试",
+      "knowledgePoint": "语法前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 AFLNet 项目说明，运行其变异式协议测试是否必须先提供完整协议语法？",
+      "answer": "不必须；它可以从已记录的消息交换种子开始变异。",
+      "explanation": "种子仍需适合目标服务器和协议交互。",
+      "example": "先用已有会话请求序列作为测试输入。",
+      "tags": [
+        "AFLNet 协议模糊测试",
+        "语法前提"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/aflnet/aflnet/blob/96032f86d0005dfeeb41ea7b31103f1d1ff8f168/README.md"
+    },
+    {
+      "id": "aflnet-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLNet 协议模糊测试",
+      "knowledgePoint": "状态模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLNet 未启用 -E 状态感知模式时，是否仍能按请求序列与服务器交互？",
+      "answer": "可以；它仍管理请求边界并等待响应，但不利用响应码构建状态机来指导探索。",
+      "explanation": "此处描述固定提交项目说明中的行为。",
+      "example": "以非状态感知模式重放多条请求。",
+      "tags": [
+        "AFLNet 协议模糊测试",
+        "状态模式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/aflnet/aflnet/blob/96032f86d0005dfeeb41ea7b31103f1d1ff8f168/README.md"
+    },
+    {
+      "id": "aflnet-006",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "AFLNet 协议模糊测试",
+      "knowledgePoint": "选择策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLNet 的 -q 与 -s 参数分别选择哪类策略？",
+      "answer": "-q 选择状态选择算法，-s 选择种子选择算法。",
+      "explanation": "两项策略作用对象不同。",
+      "example": "分别调整探索状态与对应种子的选择方式。",
+      "tags": [
+        "AFLNet 协议模糊测试",
+        "选择策略"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/aflnet/aflnet/blob/96032f86d0005dfeeb41ea7b31103f1d1ff8f168/README.md"
+    },
+    {
+      "id": "aflnet-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLNet 协议模糊测试",
+      "knowledgePoint": "区域变异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLNet 的 -R 选项用于启用什么？",
+      "answer": "启用区域级变异操作。",
+      "explanation": "区域对应消息序列中由工具识别的局部范围。",
+      "example": "对请求序列中的一个区域施加变异。",
+      "tags": [
+        "AFLNet 协议模糊测试",
+        "区域变异"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/aflnet/aflnet/blob/96032f86d0005dfeeb41ea7b31103f1d1ff8f168/README.md",
+      "supportingReferences": [
+        {
+          "id": "aflnet-region-header",
+          "title": "AFLNet 固定提交：区域数据结构",
+          "url": "https://github.com/aflnet/aflnet/blob/96032f86d0005dfeeb41ea7b31103f1d1ff8f168/aflnet.h",
+          "type": "固定提交源码",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

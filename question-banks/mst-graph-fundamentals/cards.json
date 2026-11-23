@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "mst-graph-fundamentals",
+    "title": "最小生成树：Prim 与 Kruskal",
+    "url": "https://algs4.cs.princeton.edu/43mst/",
+    "type": "Princeton Algorithms 教材",
+    "note": "依据逐题引用的资料自行整理；示例为自编，涉及实现行为时以题目所述版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "mstcs-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "最小生成树",
+      "knowledgePoint": "生成树定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "连通无向加权图的最小生成树优化的是什么？",
+      "answer": "它在覆盖所有顶点的生成树中，使所选边权之和最小。",
+      "explanation": "生成树需要连通且无环；边权可表示成本、距离或其他权重。",
+      "example": "为所有园区选择总费用最小的一组连接线。",
+      "tags": [
+        "最小生成树",
+        "生成树定义"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/43mst/"
+    },
+    {
+      "id": "mstcs-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "最小生成树",
+      "knowledgePoint": "生成树边数",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "含 V 个顶点的连通图，其任意生成树有多少条边？",
+      "answer": "恰好有 V-1 条边。",
+      "explanation": "这里假定 V 至少为 1；边数是树的基本性质。",
+      "example": "5 个顶点的生成树有 4 条边。",
+      "tags": [
+        "最小生成树",
+        "生成树边数"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/43mst/"
+    },
+    {
+      "id": "mstcs-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最小生成树",
+      "knowledgePoint": "最短路径区别",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "最小生成树一定同时给出某个起点到所有顶点的最短路径吗？",
+      "answer": "不一定；最小生成树最小化全部选中边的总权重，最短路径树关注从指定起点到各点的路径长度。",
+      "explanation": "两个优化目标不同，即使所有边权为正也可能得到不同的边。",
+      "example": "无向边 AB=2、BC=2、AC=3：最小生成树用 AB、BC，但 A 到 C 的最短路是直接走 AC。",
+      "tags": [
+        "最小生成树",
+        "最短路径区别"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/43mst/"
+    },
+    {
+      "id": "mstcs-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最小生成树",
+      "knowledgePoint": "Prim 策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Prim 算法在连通无向加权图中通常如何扩展当前生成树？",
+      "answer": "从任一顶点开始，反复选择一条连接树内顶点与树外顶点的最小权重边，把新顶点加入树。",
+      "explanation": "每一步关注当前树形成的割，并不要求始终选择全图最轻边。",
+      "example": "已选集合为 {A,B} 时，只比较从该集合连向未选顶点的候选边。",
+      "tags": [
+        "最小生成树",
+        "Prim 策略"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/43mst/"
+    },
+    {
+      "id": "mstcs-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最小生成树",
+      "knowledgePoint": "Kruskal 策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kruskal 算法通常按什么顺序考虑无向加权图的边？",
+      "answer": "按边权从小到大考虑，选择不会使已选边形成环的边，直到得到所需的生成树或森林。",
+      "explanation": "并查集可用于判断两个端点是否已经连通。",
+      "example": "先处理权重为 1 的边，再处理权重为 2 的边。",
+      "tags": [
+        "最小生成树",
+        "Kruskal 策略"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/43mst/"
+    },
+    {
+      "id": "mstcs-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最小生成树",
+      "knowledgePoint": "权重并列与唯一性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "连通无向加权图中存在相同权重的边时，最小生成树一定唯一吗？",
+      "answer": "不一定；可能存在多棵总权重相同的最小生成树。",
+      "explanation": "如果所有边权互不相同，则最小生成树唯一；权重相同并不必然导致不唯一。",
+      "example": "三角形三条边权均为 1，任取两条都得到一棵最小生成树。",
+      "tags": [
+        "最小生成树",
+        "权重并列与唯一性"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/43mst/"
+    },
+    {
+      "id": "mstcs-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最小生成树",
+      "knowledgePoint": "负边权",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "最小生成树问题是否要求边权非负？",
+      "answer": "不要求；标准最小生成树算法也可以处理零权或负权边。",
+      "explanation": "这与某些单源最短路径算法对负边的限制是不同的问题。",
+      "example": "边权为 -2、1、4 的连通三角形仍有最小生成树。",
+      "tags": [
+        "最小生成树",
+        "负边权"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/43mst/"
+    },
+    {
+      "id": "mstcs-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最小生成树",
+      "knowledgePoint": "割性质",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "在连通无向加权图中，若一个割上最轻的跨割边严格小于其他跨割边，它与最小生成树有什么关系？",
+      "answer": "这条唯一最轻的跨割边属于每棵最小生成树。",
+      "explanation": "这是最小生成树割性质的一个常用形式；若最轻边并列，则不能据此断言每条并列边都出现在每棵树中。",
+      "example": "某割的跨边权重为 1、2、3 时，权重为 1 的边必在所有最小生成树中。",
+      "tags": [
+        "最小生成树",
+        "割性质"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/43mst/"
+    }
+  ]
+}

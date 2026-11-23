@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "qdrant-client-retrieval-practice",
+    "title": "Qdrant Python client 1.15.1：本地向量检索与过滤",
+    "url": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/qdrant_client.py",
+    "type": "固定版本客户端源码",
+    "note": "依据逐题所列固定版本资料自行整理；示例为自编，适用条件见题目。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "qdrant-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "本地模式",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 的 :memory: 模式是否需要单独启动 Qdrant 服务？",
+      "answer": "不需要；它使用客户端的内存本地模式。",
+      "explanation": "本地模式适合小规模实验，其实现与独立服务的部署行为并不完全相同。",
+      "example": "QdrantClient(\":memory:\") 在进程内创建临时实例。",
+      "tags": [
+        "Qdrant 向量检索",
+        "本地模式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/qdrant_client.py"
+    },
+    {
+      "id": "qdrant-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "向量维度",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 创建集合时，VectorParams(size=3, distance=Distance.COSINE) 的 size=3 限制什么？",
+      "answer": "它将该向量字段的维度设为 3，插入的对应稠密向量应符合这个维度。",
+      "explanation": "distance 另外指定向量的比较方式。",
+      "example": "一个三维向量可用于 size=3 的字段。",
+      "tags": [
+        "Qdrant 向量检索",
+        "向量维度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/http/models/models.py#L3284"
+    },
+    {
+      "id": "qdrant-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "点结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 的 PointStruct 通常包含哪些核心信息？",
+      "answer": "包含点 ID 和向量，并可附带 payload 元数据。",
+      "explanation": "payload 可保存来源、时间或其他需要过滤的字段。",
+      "example": "为一个文档块保存整数 ID、向量和文档来源。",
+      "tags": [
+        "Qdrant 向量检索",
+        "点结构"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/http/models/models.py#L1884"
+    },
+    {
+      "id": "qdrant-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "部分更新元数据",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 的 set_payload 如何处理同一层未指定的 payload 键？",
+      "answer": "保留未指定的键；指定的键若已存在则更新其值。",
+      "explanation": "这与用 overwrite_payload 替换整个 payload 的操作不同。",
+      "example": "只更新 version 时，原有 source 字段仍可保留。",
+      "tags": [
+        "Qdrant 向量检索",
+        "部分更新元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/qdrant_client.py"
+    },
+    {
+      "id": "qdrant-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "筛选与条件",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 的 Filter 中 must、should 和 must_not 分别表达什么？",
+      "answer": "must 中条件都要满足；should 中至少一个满足；must_not 中条件都不能满足。",
+      "explanation": "多个字段同时指定时需共同满足其相应约束。",
+      "example": "要求类型为报告且来源不是草稿。",
+      "tags": [
+        "Qdrant 向量检索",
+        "筛选与条件"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/http/models/models.py#L822"
+    },
+    {
+      "id": "qdrant-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "字段精确匹配",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 中怎样表达 payload 某字段等于指定值的筛选条件？",
+      "answer": "可使用 FieldCondition 的 key 指定字段，并用 MatchValue(value=...) 指定精确匹配值。",
+      "explanation": "具体匹配类型取决于字段及提供的值。",
+      "example": "用 key=\"source\"、MatchValue(value=\"advisory\") 筛选公告。",
+      "tags": [
+        "Qdrant 向量检索",
+        "字段精确匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/http/models/models.py#L798"
+    },
+    {
+      "id": "qdrant-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "相似检索参数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 的 query_points 中，query 为浮点向量且 query_filter 已指定时做什么？",
+      "answer": "按指定向量进行近邻查询，并只考虑满足过滤条件的点。",
+      "explanation": "过滤条件可以限制来源或时间，避免返回不适用的文档。",
+      "example": "只在某产品公告中搜索与查询向量相近的片段。",
+      "tags": [
+        "Qdrant 向量检索",
+        "相似检索参数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/qdrant_client.py"
+    },
+    {
+      "id": "qdrant-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "查询返回向量",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 的 query_points 默认会在结果中包含存储的向量吗？",
+      "answer": "默认不会；可通过 with_vectors 参数请求返回。",
+      "explanation": "该方法默认会返回 payload，也可以用 with_payload 调整。",
+      "example": "需要复核向量值时设置 with_vectors=True。",
+      "tags": [
+        "Qdrant 向量检索",
+        "查询返回向量"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/qdrant_client.py"
+    },
+    {
+      "id": "qdrant-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "滚动与相似查询",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 的 scroll 是否按查询向量的相似度排序？",
+      "answer": "不会；scroll 用于遍历满足条件的点，默认按 ID 升序返回，不执行相似度计算。",
+      "explanation": "如设置 order_by 则按指定 payload 字段排序。",
+      "example": "批量检查某来源的已入库文档时使用 scroll。",
+      "tags": [
+        "Qdrant 向量检索",
+        "滚动与相似查询"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/qdrant_client.py"
+    },
+    {
+      "id": "qdrant-011",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "分页结束",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 的 scroll 返回的 next_page_offset 为 None 表示什么？",
+      "answer": "表示没有下一页可继续遍历。",
+      "explanation": "有下一页时可把返回的偏移传入后续 scroll 请求。",
+      "example": "重复遍历直到偏移为 None。",
+      "tags": [
+        "Qdrant 向量检索",
+        "分页结束"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/qdrant_client.py"
+    },
+    {
+      "id": "qdrant-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Qdrant 向量检索",
+      "knowledgePoint": "命名向量查询",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Qdrant Python client 1.15.1 对配置了多个命名向量的集合，query_points 的 using 参数用于什么？",
+      "answer": "指定本次查询使用的向量字段名。",
+      "explanation": "不同命名向量可对应不同模型或维度，应使用与字段相匹配的查询向量。",
+      "example": "对 text 向量字段设置 using=\"text\"。",
+      "tags": [
+        "Qdrant 向量检索",
+        "命名向量查询"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/qdrant/qdrant-client/blob/v1.15.1/qdrant_client/qdrant_client.py"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "gnu-elf-inspection-practice",
+    "title": "GNU Binutils 2.45 文档：ELF 检查与反汇编",
+    "url": "https://sourceware.org/binutils/docs-2.45/binutils/readelf.html",
+    "type": "官方文档或教材",
+    "note": "依据 GNU Binutils 2.45 官方手册自行整理；本地用 GNU Binutils 2.46 对自编 ELF 验证。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "elfcli-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "ELF 命令行检查",
+      "knowledgePoint": "文件头",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU readelf -h 对 ELF 文件显示哪类信息？",
+      "answer": "它显示 ELF 文件头，包括文件类型、目标机器和入口地址等。",
+      "explanation": "输出字段依文件类型而异。",
+      "example": "用 readelf -h 查看可执行文件的目标架构。",
+      "tags": [
+        "ELF 命令行检查",
+        "文件头"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs-2.45/binutils/readelf.html"
+    },
+    {
+      "id": "elfcli-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 命令行检查",
+      "knowledgePoint": "程序头与节头",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "GNU readelf 的 -l 与 -S 分别显示什么？",
+      "answer": "-l 显示程序头（段）信息；-S 显示节头信息。",
+      "explanation": "段和节服务于不同的装载与链接分析视角。",
+      "example": "用 -l 查看装载段，用 -S 查看 .text 等节。",
+      "tags": [
+        "ELF 命令行检查",
+        "程序头与节头"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs-2.45/binutils/readelf.html"
+    },
+    {
+      "id": "elfcli-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "ELF 命令行检查",
+      "knowledgePoint": "动态段",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU readelf -d 常用于查看 ELF 文件中的什么信息？",
+      "answer": "它显示动态段条目，例如声明的共享库依赖。",
+      "explanation": "具体条目取决于 ELF 是否具有动态段。",
+      "example": "查看输出中的 NEEDED 条目。",
+      "tags": [
+        "ELF 命令行检查",
+        "动态段"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs-2.45/binutils/readelf.html"
+    },
+    {
+      "id": "elfcli-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ELF 命令行检查",
+      "knowledgePoint": "反汇编范围",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "GNU objdump 的 -d 与 -D 反汇编范围有什么区别？",
+      "answer": "-d 主要反汇编预期包含指令的节；-D 还反汇编其他非空、非 BSS 节。",
+      "explanation": "把数据解释为指令不代表其实际会被执行。",
+      "example": "-D 可能把只读数据节的字节也显示为指令。",
+      "tags": [
+        "ELF 命令行检查",
+        "反汇编范围"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs-2.45/binutils/objdump.html"
+    },
+    {
+      "id": "elfcli-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "ELF 命令行检查",
+      "knowledgePoint": "源代码混排",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU objdump -S 何时可能把源代码和反汇编结果混排显示？",
+      "answer": "当可用的调试信息和源代码允许时，它尝试交错显示源代码与反汇编。",
+      "explanation": "缺少调试信息或对应源文件时不保证显示源代码。",
+      "example": "对带调试信息的自编程序使用 objdump -S。",
+      "tags": [
+        "ELF 命令行检查",
+        "源代码混排"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/binutils/docs-2.45/binutils/objdump.html"
+    }
+  ]
+}

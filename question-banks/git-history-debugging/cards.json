@@ -1,0 +1,316 @@
+{
+  "source": {
+    "id": "git-history-debugging",
+    "title": "Git 文档：历史、撤销与排查",
+    "url": "https://git-scm.com/docs/git-revert/2.50.0",
+    "type": "官方文档",
+    "note": "依据逐题列出的官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "githistory-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "撤销已提交修改",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 的 revert 通常怎样撤销一次已经提交的修改？",
+      "answer": "它创建一个新的提交来反向应用指定提交引入的修改。",
+      "explanation": "原提交仍留在历史中；反向应用时也可能产生冲突。",
+      "example": "用新提交撤销已共享分支中的错误修改。",
+      "tags": [
+        "Git 历史与排查",
+        "撤销已提交修改"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-revert/2.50.0"
+    },
+    {
+      "id": "githistory-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "撤销暂不提交",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git revert --no-commit 与默认 revert 的主要区别是什么？",
+      "answer": "它将反向修改应用到暂存区和工作区，但不自动创建提交。",
+      "explanation": "可以检查或合并多个撤销结果后自行提交。",
+      "example": "先检查撤销结果，再决定如何提交。",
+      "tags": [
+        "Git 历史与排查",
+        "撤销暂不提交"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-revert/2.50.0"
+    },
+    {
+      "id": "githistory-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "撤销合并提交",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "撤销 Git 合并提交时，revert 的 -m 参数用于指定什么？",
+      "answer": "指定作为主线的父提交编号，以该父提交为参照反向应用合并结果。",
+      "explanation": "父提交编号从 1 开始；撤销合并后再次合并仍受历史关系影响。",
+      "example": "git revert -m 1 某合并提交。",
+      "tags": [
+        "Git 历史与排查",
+        "撤销合并提交"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-revert/2.50.0"
+    },
+    {
+      "id": "githistory-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "挑选提交",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git cherry-pick 通常用于什么？",
+      "answer": "把指定提交引入的修改应用到当前分支，通常生成新的提交。",
+      "explanation": "修改无法干净应用时需要处理冲突。",
+      "example": "把另一分支中的修复移植到维护分支。",
+      "tags": [
+        "Git 历史与排查",
+        "挑选提交"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-cherry-pick/2.50.0"
+    },
+    {
+      "id": "githistory-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "挑选冲突处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git cherry-pick 发生冲突后，continue 与 abort 分别做什么？",
+      "answer": "解决冲突并暂存后可用 --continue 继续；--abort 取消操作并返回序列开始前的状态。",
+      "explanation": "处理前应先检查当前状态和冲突文件。",
+      "example": "确认冲突解决后执行 git cherry-pick --continue。",
+      "tags": [
+        "Git 历史与排查",
+        "挑选冲突处理"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-cherry-pick/2.50.0"
+    },
+    {
+      "id": "githistory-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "引用日志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git reflog 主要记录什么，有什么常见用途？",
+      "answer": "它记录本地引用位置的变化，可用于查找分支或 HEAD 先前指向的提交。",
+      "explanation": "记录可能过期，不能保证永久保留或在其他克隆中存在。",
+      "example": "查找一次本地重置前的 HEAD。",
+      "tags": [
+        "Git 历史与排查",
+        "引用日志"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-reflog/2.50.0"
+    },
+    {
+      "id": "githistory-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "HEAD历史与父提交",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 的 HEAD@{1} 和 HEAD^ 分别指什么？",
+      "answer": "HEAD@{1} 指本地 HEAD 引用日志中的前一个位置；HEAD^ 指当前提交的第一父提交。",
+      "explanation": "切换分支或重置后，两者可以不同；前者要求有相应引用日志。",
+      "example": "切换分支后比较上一个位置和当前提交的父提交。",
+      "tags": [
+        "Git 历史与排查",
+        "HEAD历史与父提交"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/gitrevisions/2.42.0"
+    },
+    {
+      "id": "githistory-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "查看图形历史",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git log --oneline --graph --decorate 常用于查看什么？",
+      "answer": "以简洁提交信息和文本图展示提交关系，并显示可用的引用名称。",
+      "explanation": "日志中出现哪些提交仍由所选范围和其他选项决定。",
+      "example": "快速查看当前分支的合并历史。",
+      "tags": [
+        "Git 历史与排查",
+        "查看图形历史"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-log/2.51.0"
+    },
+    {
+      "id": "githistory-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "逐行追溯局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git blame 文件的逐行结果能否证明列出的作者就是该行代码最初的作者？",
+      "answer": "不能；它报告所选版本中各行最后一次修改的归属，重排、复制和选项等都会影响结果。",
+      "explanation": "排查历史时还应结合提交内容及上下文。",
+      "example": "某行经过格式化后可能归属于格式化提交。",
+      "tags": [
+        "Git 历史与排查",
+        "逐行追溯局限"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-blame/2.50.0"
+    },
+    {
+      "id": "githistory-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "二分查找提交",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git bisect 常用于定位什么问题？",
+      "answer": "它在已知旧版本与新版本之间反复选择提交并测试，以缩小导致行为变化的范围。",
+      "explanation": "结果依赖测试标记可靠及历史中的变化方式；跳过版本会限制定位精度。",
+      "example": "寻找首次出现稳定回归的提交。",
+      "tags": [
+        "Git 历史与排查",
+        "二分查找提交"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-bisect/2.50.0"
+    },
+    {
+      "id": "githistory-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "结束二分排查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "完成 Git bisect 后，git bisect reset 默认有什么作用？",
+      "answer": "清理二分排查状态，并返回开始排查前检出的状态。",
+      "explanation": "指定提交参数时可返回到另一个提交。",
+      "example": "结束问题定位后回到原分支。",
+      "tags": [
+        "Git 历史与排查",
+        "结束二分排查"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-bisect/2.50.0"
+    },
+    {
+      "id": "githistory-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "祖先关系判断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git merge-base --is-ancestor A B 的退出状态 0 表示什么？",
+      "answer": "表示提交 A 是提交 B 的祖先；状态 1 表示不是，其他非零值可能表示错误。",
+      "explanation": "提交本身也可视为自身的祖先。",
+      "example": "脚本判断修复提交是否已进入目标分支。",
+      "tags": [
+        "Git 历史与排查",
+        "祖先关系判断"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-merge-base/2.43.0"
+    },
+    {
+      "id": "githistory-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "标签类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 的附注标签和轻量标签有什么区别？",
+      "answer": "附注标签是包含标签者、日期和说明等信息的标签对象；轻量标签直接引用对象。",
+      "explanation": "附注标签可选择签名；并非所有附注标签都已签名。",
+      "example": "为发布版本创建带说明的标签。",
+      "tags": [
+        "Git 历史与排查",
+        "标签类型"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-tag/2.46.0"
+    },
+    {
+      "id": "githistory-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "差异比较端点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "存在唯一合并基点时，git diff A..B 与 git diff A...B 的比较起点有什么区别？",
+      "answer": "前者比较 A 与 B；后者比较二者的合并基点与 B。",
+      "explanation": "这是 git diff 的端点语义，不能直接套用 git log 的提交范围解释。",
+      "example": "检查一个功能分支相对共同祖先的改动。",
+      "tags": [
+        "Git 历史与排查",
+        "差异比较端点"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-diff/2.49.0"
+    },
+    {
+      "id": "githistory-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "查看格式问题",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "git diff --check 常用于检查什么？",
+      "answer": "它检查差异中引入的空白错误和冲突标记，并在发现问题时返回非零状态。",
+      "explanation": "空白错误的判定受 Git 配置影响。",
+      "example": "提交前检查尾随空格或残留冲突标记。",
+      "tags": [
+        "Git 历史与排查",
+        "查看格式问题"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-diff/2.49.0"
+    },
+    {
+      "id": "githistory-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Git 历史与排查",
+      "knowledgePoint": "远程追踪分支",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Git 中的 origin/main 是否总是实时代表远程服务器当前的 main？",
+      "answer": "不一定；它是本地远程跟踪引用，通常由 fetch 等操作更新。",
+      "explanation": "远端在上次获取后可能已经发生变化。",
+      "example": "刷新远程引用后再比较本地分支。",
+      "tags": [
+        "Git 历史与排查",
+        "远程追踪分支"
+      ],
+      "evidence": "source",
+      "reference": "https://git-scm.com/docs/git-fetch/2.48.0"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "source": {
+    "id": "tensor-memory-layout",
+    "title": "PyTorch 2.15 张量内存布局",
+    "url": "https://docs.pytorch.org/docs/2.15/generated/torch.Tensor.contiguous.html",
+    "type": "官方技术文档",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "tensorlayout-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量内存布局",
+      "knowledgePoint": "contiguous返回值",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "PyTorch 2.15 中 Tensor.contiguous() 对已经符合指定内存格式的张量做什么？",
+      "answer": "它直接返回原张量；否则返回包含相同数据、符合指定内存格式的张量。",
+      "explanation": "默认格式为 contiguous_format；调用不表示每次都会复制。",
+      "example": "张量已连续时，调用 contiguous() 返回该张量。",
+      "tags": [
+        "contiguous返回值",
+        "张量内存布局",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.Tensor.contiguous.html",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "tensorlayout-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量内存布局",
+      "knowledgePoint": "view与reshape",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PyTorch 2.15 的 view() 与 reshape() 在共享存储方面有什么区别？",
+      "answer": "view() 要求目标形状与原布局兼容并共享数据；reshape() 在可行时返回视图，否则可能复制。",
+      "explanation": "不能依赖 reshape() 总是复制或总是共享。",
+      "example": "转置后改变形状时，先检查布局兼容性。",
+      "tags": [
+        "view与reshape",
+        "张量内存布局"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.Tensor.view.html"
+    },
+    {
+      "id": "tensorlayout-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量内存布局",
+      "knowledgePoint": "张量stride",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 张量的 stride 表示什么？",
+      "answer": "它表示沿某个维度移动一个元素时，在底层存储中跨过的元素数。",
+      "explanation": "stride 描述布局；形状相同的张量也可能有不同 stride。",
+      "example": "形状为 2×5 的连续张量可有 stride (5, 1)。",
+      "tags": [
+        "张量stride",
+        "张量内存布局"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/generated/torch.Tensor.stride.html"
+    }
+  ]
+}

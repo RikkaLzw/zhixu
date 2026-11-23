@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "geval-llm-evaluation",
+    "title": "G-Eval 原论文 v3：生成文本的模型评审",
+    "url": "https://arxiv.org/pdf/2303.16634v3",
+    "type": "固定版本研究论文",
+    "note": "依据逐题所列固定版本资料自行整理；示例为自编，适用条件见题目。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "geval-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "G-Eval 大模型评审",
+      "knowledgePoint": "评价对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "G-Eval 原论文主要用大模型评估什么？",
+      "answer": "评估自然语言生成文本的质量，并在摘要和对话生成任务上进行实验。",
+      "explanation": "论文考查其评分与人工评价的一致程度。",
+      "example": "按连贯性标准评价一段摘要。",
+      "tags": [
+        "G-Eval 大模型评审",
+        "评价对象"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.16634v3"
+    },
+    {
+      "id": "geval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "G-Eval 大模型评审",
+      "knowledgePoint": "评估步骤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "G-Eval 原论文如何得到某个评价标准的细化评估步骤？",
+      "answer": "把任务说明和评价标准提供给大模型，要求它生成一组评估步骤。",
+      "explanation": "这些步骤随后与待评价文本和上下文一起用于评分。",
+      "example": "先按摘要连贯性标准生成检查步骤。",
+      "tags": [
+        "G-Eval 大模型评审",
+        "评估步骤"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.16634v3"
+    },
+    {
+      "id": "geval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "G-Eval 大模型评审",
+      "knowledgePoint": "表单评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "G-Eval 的 form-filling 评分方式要求评审模型输出什么？",
+      "answer": "依据给定评价维度填写对应的评分，而不是仅计算待评文本本身的生成概率。",
+      "explanation": "评分依据与尺度应在提示中说明。",
+      "example": "要求评审填写 1 至 5 的连贯性分数。",
+      "tags": [
+        "G-Eval 大模型评审",
+        "表单评分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.16634v3"
+    },
+    {
+      "id": "geval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "G-Eval 大模型评审",
+      "knowledgePoint": "概率加权评分",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "G-Eval 论文如何利用离散评分的概率得到更细的分数？",
+      "answer": "将各候选评分与其归一化概率相乘并求和。",
+      "explanation": "这可得到非整数结果，减少单次整数评分造成的并列。",
+      "example": "1 分和 5 分的概率分别为 0.25、0.75 时，加权分为 4。",
+      "tags": [
+        "G-Eval 大模型评审",
+        "概率加权评分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.16634v3"
+    },
+    {
+      "id": "geval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "G-Eval 大模型评审",
+      "knowledgePoint": "概率不可用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "G-Eval 原论文在当时使用 GPT-4 无法获得 token 概率时，怎样近似评分分布？",
+      "answer": "对同一评估采样多次，用多次评分的频率估计分布。",
+      "explanation": "论文中的实验设置为 20 次采样；不能推断所有模型接口都使用同一方法。",
+      "example": "对同一答案重复生成评审分数并统计频率。",
+      "tags": [
+        "G-Eval 大模型评审",
+        "概率不可用"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.16634v3"
+    },
+    {
+      "id": "geval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "G-Eval 大模型评审",
+      "knowledgePoint": "评分偏好风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "G-Eval 论文指出模型评审可能对哪类文本存在偏好？",
+      "answer": "可能偏好大模型生成的文本，而不完全遵循人工评价偏好。",
+      "explanation": "这会影响把评审分数直接作为优化奖励时的可靠性。",
+      "example": "用人工标注对照不同来源文本的评分偏差。",
+      "tags": [
+        "G-Eval 大模型评审",
+        "评分偏好风险"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.16634v3"
+    }
+  ]
+}

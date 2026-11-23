@@ -1,0 +1,92 @@
+{
+  "source": {
+    "id": "langgraph-resume",
+    "title": "LangGraph：中断与状态恢复",
+    "url": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+    "type": "官方技术文档",
+    "note": "依据所引原文自行整理成中文问答，例子为自编。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "resume-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "状态恢复",
+      "knowledgePoint": "线程标识",
+      "questionType": "概念与原理",
+      "question": "LangGraph 恢复已中断执行时，thread_id 起什么作用？",
+      "answer": "它标识要读取的线程状态；恢复时应使用中断时相同的 thread_id。",
+      "explanation": "换用另一个标识会定位到另一个线程，而不是原来的检查点。",
+      "example": "把审批结果提交回原任务的线程。",
+      "tags": [
+        "线程标识",
+        "状态恢复"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+      "origin": "自行整理",
+      "referenceTitle": "LangGraph：Interrupts"
+    },
+    {
+      "id": "resume-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "状态恢复",
+      "knowledgePoint": "恢复节点重启",
+      "questionType": "易错点",
+      "question": "LangGraph 节点中的 interrupt 恢复后从哪里继续运行？",
+      "answer": "包含 interrupt 的节点从节点开头重新运行，interrupt 之前的代码也会再次执行。",
+      "explanation": "节点中的外部副作用需要据此设计，避免重复执行。",
+      "example": "恢复审批后，暂停前的日志查询可能再次运行。",
+      "tags": [
+        "恢复节点重启",
+        "状态恢复"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+      "origin": "自行整理",
+      "referenceTitle": "LangGraph：Interrupts"
+    },
+    {
+      "id": "resume-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "状态恢复",
+      "knowledgePoint": "恢复值",
+      "questionType": "概念与原理",
+      "question": "LangGraph 的 Command(resume=...) 如何把外部输入交回中断点？",
+      "answer": "resume 中的值会成为对应 interrupt() 调用的返回值。",
+      "explanation": "恢复时仍需定位到原来的线程和检查点。",
+      "example": "将人工审批结果作为 interrupt 的返回值。",
+      "tags": [
+        "恢复值",
+        "状态恢复"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+      "origin": "自行整理",
+      "referenceTitle": "LangGraph：Interrupts"
+    },
+    {
+      "id": "resume-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "持久化",
+      "knowledgePoint": "内存检查点",
+      "questionType": "易错点",
+      "question": "LangGraph 的 InMemorySaver 能在进程重启后保留检查点吗？",
+      "answer": "不能；它把检查点保存在内存中，进程重启后会丢失。",
+      "explanation": "需要跨进程恢复时应使用持久化的检查点存储。",
+      "example": "长期审批任务使用数据库支持的 checkpointer。",
+      "tags": [
+        "内存检查点",
+        "持久化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langgraph/persistence",
+      "origin": "自行整理",
+      "referenceTitle": "LangGraph：Persistence"
+    }
+  ]
+}

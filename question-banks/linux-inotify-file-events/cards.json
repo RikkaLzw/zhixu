@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "linux-inotify-file-events",
+    "title": "Linux inotify 手册：文件变化事件",
+    "url": "https://man7.org/linux/man-pages/man7/inotify.7.html",
+    "type": "论文、官方文档或数据集说明",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "inotify-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件事件通知",
+      "knowledgePoint": "监视机制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux inotify 用什么方式向程序提供受监视文件的事件？",
+      "answer": "程序为文件或目录设置 watch，并从 inotify 文件描述符读取事件记录。",
+      "explanation": "每个 watch 有 watch descriptor，事件中包含对应标识。",
+      "example": "监视配置目录中的文件变化。",
+      "tags": [
+        "Linux 文件事件通知",
+        "监视机制"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    },
+    {
+      "id": "inotify-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件事件通知",
+      "knowledgePoint": "目录递归",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "监视一个 Linux 目录的 inotify watch 会自动递归监视其子目录吗？",
+      "answer": "不会；需要为要监视的子目录分别建立 watch。",
+      "explanation": "新建或移入子目录时还要处理建立 watch 前可能发生的变化。",
+      "example": "为现有目录树逐层建立监视。",
+      "tags": [
+        "Linux 文件事件通知",
+        "目录递归"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    },
+    {
+      "id": "inotify-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件事件通知",
+      "knowledgePoint": "重命名关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux inotify 如何关联一次重命名产生的 IN_MOVED_FROM 与 IN_MOVED_TO 事件？",
+      "answer": "相关事件可通过相同的非零 cookie 关联。",
+      "explanation": "事件不保证在一次 read 中同时出现；移出或移入监视范围时一侧可能缺失。",
+      "example": "关联同一 inotify 实例监视目录间的文件移动。",
+      "tags": [
+        "Linux 文件事件通知",
+        "重命名关联"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    },
+    {
+      "id": "inotify-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件事件通知",
+      "knowledgePoint": "队列溢出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux inotify 报告 IN_Q_OVERFLOW 表示什么？",
+      "answer": "事件队列发生溢出，部分事件可能丢失。",
+      "explanation": "应用应考虑重新扫描并重建状态，而不能假设仅靠增量事件仍完整。",
+      "example": "观察到溢出后重新核对目录内容。",
+      "tags": [
+        "Linux 文件事件通知",
+        "队列溢出"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    },
+    {
+      "id": "inotify-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件事件通知",
+      "knowledgePoint": "事件合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能用 inotify 事件数量精确统计文件操作次数？",
+      "answer": "相同的相邻未读取事件可能被内核合并成一条。",
+      "explanation": "事件通知适合触发状态检查，不是严格操作计数器。",
+      "example": "连续修改后收到的事件数量可能少于实际操作次数。",
+      "tags": [
+        "Linux 文件事件通知",
+        "事件合并"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    },
+    {
+      "id": "inotify-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件事件通知",
+      "knowledgePoint": "监视失效",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux inotify 的 IN_IGNORED 事件通常表示什么？",
+      "answer": "一个 watch 被显式移除，或因被监视对象删除、文件系统卸载等原因自动移除。",
+      "explanation": "收到后应更新程序中保存的 watch 状态。",
+      "example": "被监视文件删除后检查 watch 是否还存在。",
+      "tags": [
+        "Linux 文件事件通知",
+        "监视失效"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    },
+    {
+      "id": "inotify-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件事件通知",
+      "knowledgePoint": "网络文件系统",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "inotify 能保证捕获网络文件系统上由远程机器引起的所有变化吗？",
+      "answer": "不能；inotify 不捕获网络文件系统上发生的远程事件。",
+      "explanation": "需要根据环境使用轮询等其他机制补充。",
+      "example": "远程主机更新共享文件后，本机 watch 可能没有通知。",
+      "tags": [
+        "Linux 文件事件通知",
+        "网络文件系统"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    },
+    {
+      "id": "inotify-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件事件通知",
+      "knowledgePoint": "内存映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "inotify 能否完整报告通过 mmap 修改文件内容引起的变化？",
+      "answer": "不能；手册指出经 mmap、msync 和 munmap 的访问及修改不会由该接口报告。",
+      "explanation": "不要用事件流证明文件内容从未改变。",
+      "example": "监视程序还需考虑内存映射写入。",
+      "tags": [
+        "Linux 文件事件通知",
+        "内存映射"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    },
+    {
+      "id": "inotify-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件事件通知",
+      "knowledgePoint": "事件路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "inotify 监视目录时，事件的 name 字段通常表示什么？",
+      "answer": "表示受影响条目在被监视目录中的文件名，而不是完整绝对路径。",
+      "explanation": "处理事件前目录或文件名可能已变化。",
+      "example": "结合 watch 对应目录和 name 解释一个创建事件。",
+      "tags": [
+        "Linux 文件事件通知",
+        "事件路径"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/inotify.7.html"
+    }
+  ]
+}

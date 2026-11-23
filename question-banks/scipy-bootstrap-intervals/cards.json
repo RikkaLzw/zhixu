@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "scipy-bootstrap-intervals",
+    "title": "SciPy 1.15.3：bootstrap 置信区间",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.bootstrap.html",
+    "type": "论文、固定版本文档与源码",
+    "note": "根据逐题引用的资料自行整理；示例为自编，具体版本见题干。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "bootapi-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Bootstrap 置信区间接口",
+      "knowledgePoint": "默认区间方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 stats.bootstrap 默认使用哪种置信区间方法？",
+      "answer": "默认使用偏差校正加速法 BCa。",
+      "explanation": "也可显式选择 percentile 或 basic；不同方法可能给出不同区间。",
+      "example": "报告重采样区间时记录使用的方法。",
+      "tags": [
+        "Bootstrap 置信区间接口",
+        "默认区间方法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.bootstrap.html"
+    },
+    {
+      "id": "bootapi-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Bootstrap 置信区间接口",
+      "knowledgePoint": "结果组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy bootstrap 的结果中怎样读取置信区间和重采样分布？",
+      "answer": "confidence_interval 保存区间端点，bootstrap_distribution 保存重采样统计量。",
+      "explanation": "结果还提供 bootstrap 分布的标准误。",
+      "example": "可分别读取 confidence_interval.low 与 high。",
+      "tags": [
+        "Bootstrap 置信区间接口",
+        "结果组成"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.bootstrap.html"
+    },
+    {
+      "id": "bootapi-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bootstrap 置信区间接口",
+      "knowledgePoint": "单侧区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy bootstrap 的 alternative=\"less\" 与 \"greater\" 分别生成哪一侧无限的区间？",
+      "answer": "less 的下界为负无穷；greater 的上界为正无穷。",
+      "explanation": "另一个有限端点取决于置信水平与区间方法。",
+      "example": "单侧上界问题可使用 less。",
+      "tags": [
+        "Bootstrap 置信区间接口",
+        "单侧区间"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.bootstrap.html"
+    },
+    {
+      "id": "bootapi-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Bootstrap 置信区间接口",
+      "knowledgePoint": "复用采样结果",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "SciPy bootstrap 如何复用并按需扩展之前生成的重采样分布？",
+      "answer": "传入之前的 bootstrap_result；n_resamples=0 时不增加重采样，正数时追加新的重采样结果。",
+      "explanation": "可复用已有分布调整置信水平；改变方法时仍可能需要额外的非重采样计算。",
+      "example": "已有 999 次，n_resamples=1000 时合计 1999 次。",
+      "tags": [
+        "Bootstrap 置信区间接口",
+        "复用采样结果"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.bootstrap.html"
+    },
+    {
+      "id": "bootapi-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bootstrap 置信区间接口",
+      "knowledgePoint": "退化BCa",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 的 BCa bootstrap 遇到退化分布时，区间结果可能怎样？",
+      "answer": "可能发出 DegenerateDataWarning，并得到 NaN 区间端点。",
+      "explanation": "全部观测相同是可能导致退化的例子；应检查数据和方法。",
+      "example": "一组完全相同的值可能使 BCa 区间无法计算。",
+      "tags": [
+        "Bootstrap 置信区间接口",
+        "退化BCa"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.bootstrap.html"
+    },
+    {
+      "id": "bootapi-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bootstrap 置信区间接口",
+      "knowledgePoint": "向量化统计量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy bootstrap 的 vectorized=True 对 statistic 函数有什么要求？",
+      "answer": "统计量函数需要接收 axis 参数，并沿该轴计算统计量。",
+      "explanation": "vectorized=False 时不会向统计量传入 axis。",
+      "example": "NumPy mean 可以沿指定轴计算多个样本的均值。",
+      "tags": [
+        "Bootstrap 置信区间接口",
+        "向量化统计量"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.bootstrap.html"
+    },
+    {
+      "id": "bootapi-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bootstrap 置信区间接口",
+      "knowledgePoint": "标准误口径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy bootstrap 返回的 standard_error 怎样由重采样结果计算？",
+      "answer": "它是 bootstrap 统计量分布的样本标准差。",
+      "explanation": "这是重采样标准误估计，不是原始数据的标准差。",
+      "example": "重采样得到的一组均值用于估计均值的标准误。",
+      "tags": [
+        "Bootstrap 置信区间接口",
+        "标准误口径"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.bootstrap.html"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "source": {
+    "id": "scipy-robust-dispersion-practice",
+    "title": "SciPy 1.15.3 文档：稳健离散程度",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.median_abs_deviation.html",
+    "type": "官方文档、标准或固定版本论文",
+    "note": "依据逐题引用的资料自行整理，示例自编；具体行为以指定版本和前提为准。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "robuststat-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稳健离散程度",
+      "knowledgePoint": "四分位距",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "四分位距 IQR 通常如何由样本四分位数定义？",
+      "answer": "用第三四分位数减去第一四分位数。",
+      "explanation": "其结果描述中间一半观测的跨度，具体分位数插值方式会影响有限样本结果。",
+      "example": "比较两个数据集的中间取值范围。",
+      "tags": [
+        "稳健离散程度",
+        "四分位距"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.iqr.html"
+    },
+    {
+      "id": "robuststat-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稳健离散程度",
+      "knowledgePoint": "中位绝对偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "中位数绝对偏差 MAD 的默认计算方法是什么？",
+      "answer": "先求各值到样本中位数的绝对偏差，再取这些偏差的中位数。",
+      "explanation": "它衡量离散程度，不等于预测误差的平均绝对值。",
+      "example": "对 [1,2,2,4,100] 的默认 MAD 为 1。",
+      "tags": [
+        "稳健离散程度",
+        "中位绝对偏差"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.median_abs_deviation.html"
+    },
+    {
+      "id": "robuststat-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稳健离散程度",
+      "knowledgePoint": "稳健性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 IQR 和中位数绝对偏差常被用于含少量极端值的数据？",
+      "answer": "它们基于分位数或中位数，通常比标准差更不受少量极端值影响。",
+      "explanation": "稳健不表示结果不可能被数据分布或大量异常改变。",
+      "example": "用稳健尺度描述存在少数尖峰的指标。",
+      "tags": [
+        "稳健离散程度",
+        "稳健性"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.median_abs_deviation.html",
+      "supportingReferences": [
+        {
+          "id": "scipy-iqr-1-15-reference",
+          "title": "SciPy 1.15.3 文档：四分位距",
+          "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.iqr.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "robuststat-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稳健离散程度",
+      "knowledgePoint": "正态尺度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 median_abs_deviation 设置 scale=\"normal\" 有什么作用？",
+      "answer": "按正态分布的标定常数缩放 MAD，以便在正态假设下估计标准差尺度。",
+      "explanation": "它不会把输入数据变为正态分布。",
+      "example": "比较近似正态数据的稳健尺度与标准差。",
+      "tags": [
+        "稳健离散程度",
+        "正态尺度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.median_abs_deviation.html"
+    },
+    {
+      "id": "robuststat-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稳健离散程度",
+      "knowledgePoint": "缺失处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 iqr 设置 nan_policy=\"omit\" 如何处理 NaN？",
+      "answer": "计算时忽略 NaN；如果有效数据不足，结果仍可能是 NaN。",
+      "explanation": "默认策略是 propagate，NaN 会传播到对应结果。",
+      "example": "计算含缺失值列的四分位距。",
+      "tags": [
+        "稳健离散程度",
+        "缺失处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.iqr.html"
+    }
+  ]
+}

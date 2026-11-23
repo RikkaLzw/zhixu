@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "rewoo-agent-planning",
+    "title": "ReWOO 原论文 v1：先规划与工具证据",
+    "url": "https://arxiv.org/pdf/2305.18323v1",
+    "type": "教材、论文与官方技术文档",
+    "note": "逐题根据所列教材、论文或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "rewoo-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具规划与证据",
+      "knowledgePoint": "三个模块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReWOO 原论文把工具增强任务分为哪三个模块？",
+      "answer": "Planner 生成计划，Worker 执行工具并收集证据，Solver 综合计划和证据生成答案。",
+      "explanation": "模块是论文的工作流设计，不要求三个模块使用不同模型。",
+      "example": "先规划查询，再取回证据，最后回答。",
+      "tags": [
+        "工具规划与证据",
+        "三个模块"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.18323v1"
+    },
+    {
+      "id": "rewoo-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具规划与证据",
+      "knowledgePoint": "规划时机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReWOO 的 Planner 在什么时候生成相互依赖的工具计划？",
+      "answer": "它在收到工具观察结果之前，先生成整组计划及证据变量。",
+      "explanation": "这依赖规划器对任务步骤的预判。",
+      "example": "先列出检索与后续查询，再执行工具。",
+      "tags": [
+        "工具规划与证据",
+        "规划时机"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.18323v1"
+    },
+    {
+      "id": "rewoo-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具规划与证据",
+      "knowledgePoint": "观察与计划",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReWOO 与 ReAct 在观察工具结果后的规划方式上有什么区别？",
+      "answer": "ReAct 常交替推理、行动和观察；ReWOO 先规划，再由 Worker 执行计划并收集证据。",
+      "explanation": "具体系统可以在原始方法外增加重新规划机制。",
+      "example": "ReAct 观察一次查询后再决定下一动作。",
+      "tags": [
+        "工具规划与证据",
+        "观察与计划"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.18323v1"
+    },
+    {
+      "id": "rewoo-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具规划与证据",
+      "knowledgePoint": "固定计划风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么预先生成的工具计划可能不适合意外的工具结果？",
+      "answer": "后续步骤可能建立在错误或缺失的中间结果上，需要错误处理或重新规划。",
+      "explanation": "原始流程的效率收益不保证计划对所有动态环境都正确。",
+      "example": "第一步查询无结果时，后续查询参数可能不成立。",
+      "tags": [
+        "工具规划与证据",
+        "固定计划风险"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2305.18323v1"
+    },
+    {
+      "id": "rewoo-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具规划与证据",
+      "knowledgePoint": "提示重复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReWOO 论文认为先规划再取证可以减少哪类输入开销？",
+      "answer": "可减少逐步调用时重复发送完整提示和先前轨迹所造成的输入 token 开销。",
+      "explanation": "总成本还取决于工具及可能的模型调用。",
+      "example": "不必为每一个工具步骤重新发送同一组示例。",
+      "tags": [
+        "工具规划与证据",
+        "提示重复"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.18323v1"
+    },
+    {
+      "id": "rewoo-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具规划与证据",
+      "knowledgePoint": "证据可靠性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReWOO 的 Solver 获得工具证据后，能否把证据中的所有内容直接当作正确事实？",
+      "answer": "不能；工具结果可能错误、不完整或过期，仍需结合来源和任务核验。",
+      "explanation": "论文提示 Solver 谨慎使用计划与证据。",
+      "example": "检索到互相冲突的页面时先核对来源。",
+      "tags": [
+        "工具规划与证据",
+        "证据可靠性"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2305.18323v1"
+    }
+  ]
+}

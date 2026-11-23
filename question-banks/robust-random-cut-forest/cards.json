@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "robust-random-cut-forest",
+    "title": "Guha 等 2016：鲁棒随机切分森林",
+    "url": "https://proceedings.mlr.press/v48/guha16.pdf",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "rrcfpaper-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "鲁棒随机切分森林",
+      "knowledgePoint": "随机切分森林",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "鲁棒随机切分森林 RRCF 由什么组成？",
+      "answer": "由多棵独立构造的鲁棒随机切分树组成。",
+      "explanation": "论文用树集合概括数据流，并研究异常评分。",
+      "example": "多棵树可从不同随机切分中提供信息。",
+      "tags": [
+        "鲁棒随机切分森林",
+        "随机切分森林"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v48/guha16.pdf"
+    },
+    {
+      "id": "rrcfpaper-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "鲁棒随机切分森林",
+      "knowledgePoint": "切分维度概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RRCF 原论文怎样为一个点集选择随机切分维度？",
+      "answer": "按各维度在该点集中的取值跨度占总跨度的比例选择。",
+      "explanation": "这与直接对所有维度等概率选择不同。",
+      "example": "某维跨度更大时，其被选作切分维度的概率更高。",
+      "tags": [
+        "鲁棒随机切分森林",
+        "切分维度概率"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v48/guha16.pdf"
+    },
+    {
+      "id": "rrcfpaper-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "鲁棒随机切分森林",
+      "knowledgePoint": "切分位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RRCF 选定切分维度后，如何选取切分值？",
+      "answer": "在该维度的最小值与最大值之间均匀随机选择。",
+      "explanation": "切分把点集划成两部分并递归构造子树。",
+      "example": "特征范围为 0 到 10 时，在该范围中随机选阈值。",
+      "tags": [
+        "鲁棒随机切分森林",
+        "切分位置"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v48/guha16.pdf"
+    },
+    {
+      "id": "rrcfpaper-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "鲁棒随机切分森林",
+      "knowledgePoint": "点集更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RRCF 原论文为什么适合研究动态数据流？",
+      "answer": "其随机树结构支持插入和删除点，并维护与更新后样本相应的随机树分布。",
+      "explanation": "实际在线检测还需决定保留哪些历史样本。",
+      "example": "流窗口滑动时可移除旧点并插入新点。",
+      "tags": [
+        "鲁棒随机切分森林",
+        "点集更新"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v48/guha16.pdf"
+    },
+    {
+      "id": "rrcfpaper-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "鲁棒随机切分森林",
+      "knowledgePoint": "异常遮蔽",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RRCF 论文中的 outlier masking 为什么会发生？",
+      "answer": "异常点附近出现重复或近似重复点时，单点位移分数可能变小，异常相互掩盖。",
+      "explanation": "因此仅按单个点被移除后的影响衡量异常可能不足。",
+      "example": "两个彼此接近但远离正常簇的点可能互相遮蔽。",
+      "tags": [
+        "鲁棒随机切分森林",
+        "异常遮蔽"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v48/guha16.pdf"
+    },
+    {
+      "id": "rrcfpaper-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "鲁棒随机切分森林",
+      "knowledgePoint": "协同位移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RRCF 的 collusive displacement 为什么考虑包含目标点的一组点？",
+      "answer": "它通过考察一组可能相互遮蔽的点对其余数据的影响，增强对重复和近重复异常的处理。",
+      "explanation": "论文将较大的协同位移视为异常线索。",
+      "example": "远离正常簇的多个近似重复点可作为一组评估影响。",
+      "tags": [
+        "鲁棒随机切分森林",
+        "协同位移"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v48/guha16.pdf"
+    }
+  ]
+}

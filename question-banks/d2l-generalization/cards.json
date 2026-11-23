@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "d2l-generalization",
+    "title": "动手学深度学习：模型泛化与暂退法",
+    "url": "https://zh.d2l.ai/chapter_multilayer-perceptrons/underfit-overfit.html",
+    "type": "官方文档与标准",
+    "note": "基于中文教材自行整理；请在分发时核对《动手学深度学习》相应许可。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "generalize-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型诊断",
+      "knowledgePoint": "过拟合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么是模型过拟合？",
+      "answer": "模型对训练数据拟合得很好，但在未见数据上的表现明显较差。",
+      "explanation": "训练集表现好本身不足以证明模型能泛化。",
+      "example": "训练损失持续下降而验证损失明显升高。",
+      "tags": [
+        "过拟合",
+        "深度学习",
+        "泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/underfit-overfit.html"
+    },
+    {
+      "id": "generalize-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型诊断",
+      "knowledgePoint": "欠拟合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么现象常提示模型欠拟合？",
+      "answer": "训练和验证表现都较差，模型未能充分捕捉数据中的规律。",
+      "explanation": "原因可能是模型表达能力不足或训练没有充分完成。",
+      "example": "训练误差和验证误差都很高且彼此接近。",
+      "tags": [
+        "欠拟合",
+        "深度学习",
+        "泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/underfit-overfit.html"
+    },
+    {
+      "id": "generalize-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型诊断",
+      "knowledgePoint": "泛化误差",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "泛化误差与训练误差有什么区别？",
+      "answer": "训练误差是在训练样本上测得的误差；泛化误差描述模型对目标分布新样本的期望误差。",
+      "explanation": "实际中只能用合适的独立样本估计泛化误差。",
+      "example": "在未用于训练和选择模型的测试集上估计未来表现。",
+      "tags": [
+        "泛化误差",
+        "深度学习",
+        "泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/underfit-overfit.html"
+    },
+    {
+      "id": "generalize-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型选择",
+      "knowledgePoint": "交叉验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "K 折交叉验证通常怎样使用数据？",
+      "answer": "将数据分成 K 折，轮流用一折验证、其余折训练，并汇总各轮结果。",
+      "explanation": "预处理和重采样应在每轮训练折内部拟合或执行。",
+      "example": "五折交叉验证训练并验证五次。",
+      "tags": [
+        "交叉验证",
+        "深度学习",
+        "泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/underfit-overfit.html"
+    },
+    {
+      "id": "generalize-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型选择",
+      "knowledgePoint": "反复使用测试集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么反复依据测试集结果修改模型会损害最终评估？",
+      "answer": "模型选择过程会逐渐适应测试集，使它不再是独立的最终评估。",
+      "explanation": "模型和超参数选择应使用验证数据或适当的交叉验证。",
+      "example": "多次调参后再把同一测试分数称为独立最终结果不可靠。",
+      "tags": [
+        "反复使用测试集",
+        "深度学习",
+        "泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/underfit-overfit.html"
+    },
+    {
+      "id": "generalize-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "正则化",
+      "knowledgePoint": "Dropout训练行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 Dropout 在训练时如何处理中间激活？",
+      "answer": "它按设定概率随机将部分激活置零。",
+      "explanation": "这是一种随机正则化方法，不等同于永久删除网络参数。",
+      "example": "某训练批次中随机屏蔽部分隐藏层输出。",
+      "tags": [
+        "Dropout训练行为",
+        "深度学习",
+        "泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/dropout.html"
+    },
+    {
+      "id": "generalize-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正则化",
+      "knowledgePoint": "倒置Dropout缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "倒置 Dropout 为什么在训练时缩放保留下来的激活？",
+      "answer": "在丢弃概率小于 1 时，除以保留概率可使激活的期望与未丢弃时一致。",
+      "explanation": "这使常规评估时不需要再按保留概率缩放。",
+      "example": "丢弃概率为 0.2 时，保留值除以 0.8。",
+      "tags": [
+        "倒置Dropout缩放",
+        "深度学习",
+        "泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/dropout.html"
+    },
+    {
+      "id": "generalize-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "正则化",
+      "knowledgePoint": "Dropout评估行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用标准 Dropout 的模型在常规评估模式下怎样处理激活？",
+      "answer": "常规评估时不再随机丢弃激活。",
+      "explanation": "某些不确定性估计方法会有意在测试时启用 Dropout，属于特殊用法。",
+      "example": "PyTorch 模型评估前调用 eval()。",
+      "tags": [
+        "Dropout评估行为",
+        "深度学习",
+        "泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/dropout.html"
+    },
+    {
+      "id": "generalize-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "正则化",
+      "knowledgePoint": "Dropout与依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Dropout 为什么可能改善神经网络的泛化？",
+      "answer": "随机屏蔽激活可减少模型对特定中间单元组合的过度依赖。",
+      "explanation": "效果取决于任务和丢弃概率，并不保证总能提高性能。",
+      "example": "训练时不同批次使用不同的隐藏单元子集。",
+      "tags": [
+        "Dropout与依赖",
+        "深度学习",
+        "泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_multilayer-perceptrons/dropout.html"
+    }
+  ]
+}

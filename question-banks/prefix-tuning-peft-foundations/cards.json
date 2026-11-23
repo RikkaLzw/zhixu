@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "prefix-tuning-peft-foundations",
+    "title": "Prefix-Tuning 论文与 PEFT 0.17.1 源码",
+    "url": "https://arxiv.org/abs/2101.00190v1",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "prefixtune-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Prefix-Tuning 前缀微调",
+      "knowledgePoint": "冻结与训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Prefix-Tuning 训练时主要更新哪些参数？",
+      "answer": "冻结预训练语言模型参数，优化用于任务的连续前缀参数。",
+      "explanation": "这是一种参数高效适配方法。",
+      "example": "多个任务共享一个基础模型，各自保存前缀。",
+      "tags": [
+        "Prefix-Tuning 前缀微调",
+        "冻结与训练"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2101.00190v1"
+    },
+    {
+      "id": "prefixtune-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Prefix-Tuning 前缀微调",
+      "knowledgePoint": "虚拟令牌",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Prefix-Tuning 中的“虚拟 token”必须对应词表中的真实词吗？",
+      "answer": "不必；它们是可训练的连续表示，可作为注意力的前缀上下文。",
+      "explanation": "与手写的离散文本提示不同。",
+      "example": "学习任务前缀而不是挑选固定词语。",
+      "tags": [
+        "Prefix-Tuning 前缀微调",
+        "虚拟令牌"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2101.00190v1"
+    },
+    {
+      "id": "prefixtune-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Prefix-Tuning 前缀微调",
+      "knowledgePoint": "各层前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Prefix-Tuning 相比只优化输入嵌入，怎样干预 Transformer？",
+      "answer": "它为前缀位置优化各层的激活，供后续位置作为上下文使用。",
+      "explanation": "原论文将前缀表示为各层键值激活。",
+      "example": "为生成任务提供可训练的多层前缀。",
+      "tags": [
+        "Prefix-Tuning 前缀微调",
+        "各层前缀"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2101.00190v1"
+    },
+    {
+      "id": "prefixtune-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Prefix-Tuning 前缀微调",
+      "knowledgePoint": "MLP重参数化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Prefix-Tuning 原论文为什么在训练时使用 MLP 重参数化前缀？",
+      "answer": "论文发现直接优化前缀参数不稳定，使用 MLP 有助于优化。",
+      "explanation": "这是该论文的经验做法，效果依任务和配置而异。",
+      "example": "先由较小前缀表示经 MLP 生成多层激活。",
+      "tags": [
+        "Prefix-Tuning 前缀微调",
+        "MLP重参数化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2101.00190v1"
+    },
+    {
+      "id": "prefixtune-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Prefix-Tuning 前缀微调",
+      "knowledgePoint": "推理存储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Prefix-Tuning 论文的 MLP 重参数化训练结束后，必须为推理保留整套 MLP 参数吗？",
+      "answer": "不必；可只保存已经计算出的前缀参数。",
+      "explanation": "这是论文所述的推理存储方式。",
+      "example": "为每个任务保存最终连续前缀。",
+      "tags": [
+        "Prefix-Tuning 前缀微调",
+        "推理存储"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2101.00190v1"
+    },
+    {
+      "id": "prefixtune-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Prefix-Tuning 前缀微调",
+      "knowledgePoint": "虚拟长度",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PEFT 0.17.1 的 PrefixEncoder 中 num_virtual_tokens 控制什么？",
+      "answer": "控制前缀嵌入表中虚拟 token 的数量。",
+      "explanation": "它影响前缀序列长度。",
+      "example": "设置为 4 时前缀输入可包含四个虚拟位置。",
+      "tags": [
+        "Prefix-Tuning 前缀微调",
+        "虚拟长度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.1/src/peft/tuners/prefix_tuning/model.py"
+    },
+    {
+      "id": "prefixtune-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Prefix-Tuning 前缀微调",
+      "knowledgePoint": "投影配置",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PEFT 0.17.1 的 PrefixEncoder 在训练模式下开启 prefix_projection 会增加什么？",
+      "answer": "使用两层 MLP 将前缀嵌入映射到各层键值所需的维度。",
+      "explanation": "关闭时嵌入表直接输出目标维度。",
+      "example": "对较小嵌入维度执行线性—Tanh—线性映射。",
+      "tags": [
+        "Prefix-Tuning 前缀微调",
+        "投影配置"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.1/src/peft/tuners/prefix_tuning/model.py"
+    },
+    {
+      "id": "prefixtune-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Prefix-Tuning 前缀微调",
+      "knowledgePoint": "编码输出",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PEFT 0.17.1 的 PrefixEncoder 输出最后一维与层数、token_dim 有什么关系？",
+      "answer": "输出最后一维为 2 × num_layers × token_dim。",
+      "explanation": "2 对应键和值；这里描述编码器输出而非最终拆分后的缓存布局。",
+      "example": "3 层且 token_dim 为 8 时最后一维为 48。",
+      "tags": [
+        "Prefix-Tuning 前缀微调",
+        "编码输出"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/peft/blob/v0.17.1/src/peft/tuners/prefix_tuning/model.py"
+    }
+  ]
+}

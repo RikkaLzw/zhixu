@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "openssh-scp-sftp-practice",
+    "title": "OpenBSD 7.7 OpenSSH 手册：scp 与 sftp",
+    "url": "https://man.openbsd.org/OpenBSD-7.7/scp.1",
+    "type": "官方文档或教材",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以注明版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "scpbase-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 文件传输",
+      "knowledgePoint": "传输语法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scp 中 user@host:/path 表示本地路径还是远程路径？",
+      "answer": "它表示通过 SSH 连接指定主机和用户所访问的远程路径。",
+      "explanation": "路径可作为源，也可作为目标。",
+      "example": "scp ./data user@server:/tmp/。",
+      "tags": [
+        "OpenSSH",
+        "传输语法"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/OpenBSD-7.7/scp.1"
+    },
+    {
+      "id": "scpbase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 文件传输",
+      "knowledgePoint": "指定端口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenSSH 的 scp 怎样指定远程 SSH 端口，例如 2222？",
+      "answer": "使用大写 -P，例如 scp -P 2222 本地文件 user@host:/目标路径。",
+      "explanation": "小写 -p 用于保留文件属性。",
+      "example": "scp -P 2222 ./data user@server:/tmp/。",
+      "tags": [
+        "OpenSSH",
+        "指定端口"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/OpenBSD-7.7/scp.1"
+    },
+    {
+      "id": "scpbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 文件传输",
+      "knowledgePoint": "保留属性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenSSH scp 的小写 -p 在复制时尝试保留哪些属性？",
+      "answer": "保留原文件的修改时间、访问时间和文件模式位。",
+      "explanation": "能否完整保留还受远端文件系统和权限影响。",
+      "example": "scp -p user@server:/tmp/data ./data。",
+      "tags": [
+        "OpenSSH",
+        "保留属性"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/OpenBSD-7.7/scp.1"
+    },
+    {
+      "id": "scpbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 文件传输",
+      "knowledgePoint": "符号链接遍历",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenSSH scp -r 遍历目录树时如何处理遇到的符号链接？",
+      "answer": "它递归复制目录并跟随遍历时遇到的符号链接，因此复制范围可能超出原目录树。",
+      "explanation": "这是手册对该实现遍历符号链接的说明。",
+      "example": "子目录链接指向其他位置时，目标内容可能一并复制。",
+      "tags": [
+        "OpenSSH",
+        "符号链接遍历"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/OpenBSD-7.7/scp.1"
+    },
+    {
+      "id": "scpbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 文件传输",
+      "knowledgePoint": "默认协议",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenSSH 9.0 及之后的 scp 默认使用什么协议传输文件？",
+      "answer": "默认通过 SSH 使用 SFTP 协议；可用 -O 请求旧版 SCP 协议。",
+      "explanation": "旧版 SCP 协议仍可在需要兼容时显式选择。",
+      "example": "仅提供旧 SCP 接口的服务器可能需要 -O。",
+      "tags": [
+        "OpenSSH",
+        "默认协议"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/OpenBSD-7.7/scp.1"
+    },
+    {
+      "id": "scpbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 文件传输",
+      "knowledgePoint": "冒号歧义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 scp 复制名称含冒号的本地文件时，为什么常写成 ./文件名？",
+      "answer": "显式本地相对路径有助于避免 scp 将冒号前的部分误认为远程主机名。",
+      "explanation": "绝对路径也能表明这是本地路径。",
+      "example": "把本地 a:b 写成 ./a:b。",
+      "tags": [
+        "OpenSSH",
+        "冒号歧义"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/OpenBSD-7.7/scp.1"
+    },
+    {
+      "id": "scpbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 文件传输",
+      "knowledgePoint": "SFTP 交互目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "交互式 sftp 中的 pwd 与 lpwd 分别查看哪一侧的当前目录？",
+      "answer": "pwd 查看远端当前目录；lpwd 查看本地当前目录。",
+      "explanation": "命令在交互式 sftp 会话中执行。",
+      "example": "pwd 查看远端目录，lpwd 查看本地目录。",
+      "tags": [
+        "OpenSSH",
+        "SFTP 交互目录"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/OpenBSD-7.7/sftp.1"
+    },
+    {
+      "id": "scpbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 文件传输",
+      "knowledgePoint": "SFTP 上传下载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "交互式 sftp 中 get 和 put 分别用于哪个传输方向？",
+      "answer": "get 从远端下载到本地；put 从本地上传到远端。",
+      "explanation": "路径解析分别发生在源端与目标端。",
+      "example": "get report.txt 下载文件。",
+      "tags": [
+        "OpenSSH",
+        "SFTP 上传下载"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/OpenBSD-7.7/sftp.1"
+    }
+  ]
+}

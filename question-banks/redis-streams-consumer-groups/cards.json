@@ -1,0 +1,249 @@
+{
+  "source": {
+    "id": "redis-streams-consumer-groups",
+    "title": "Redis 文档：Streams 与消费组",
+    "url": "https://redis.io/docs/latest/develop/data-types/streams/",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "redisstream-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "流结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis Stream 的每条记录通常包含什么？",
+      "answer": "包含一个记录 ID 和一组字段—值对。",
+      "explanation": "Stream 是可追加且可按 ID 读取的数据结构。",
+      "example": "一条记录可保存事件类型和事件时间。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "流结构"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/streams/"
+    },
+    {
+      "id": "redisstream-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "自动 ID",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis XADD key * field value 中的 * 表示什么？",
+      "answer": "让 Redis 自动生成该条 Stream 记录的 ID。",
+      "explanation": "ID 可用于后续范围查询与消费进度。",
+      "example": "连续添加两条事件并记录各自的 ID。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "自动 ID"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/streams/"
+    },
+    {
+      "id": "redisstream-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "ID 顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 XADD 显式指定 ID 时，新 ID 与该流的 last-generated-id 有什么关系？",
+      "answer": "新 ID 必须严格大于 last-generated-id。",
+      "explanation": "普通删除记录不会让保留的 Stream 的 last-generated-id 自动回退。",
+      "example": "添加并删除 10-3 后，不能直接再次添加 ID 为 10-3 的记录。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "ID 顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/redis/redis/7.2.7/src/t_stream.c",
+      "supportingReferences": [
+        {
+          "id": "redis-xadd-doc",
+          "title": "Redis XADD 命令说明",
+          "url": "https://redis.io/docs/latest/commands/xadd/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "redisstream-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "范围读取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis XRANGE 通常用于什么？",
+      "answer": "按记录 ID 范围读取 Stream 中的记录。",
+      "explanation": "范围查询与消费组确认是不同操作。",
+      "example": "查看两个 ID 之间的历史事件。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "范围读取"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/data-types/streams/"
+    },
+    {
+      "id": "redisstream-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "消费组分工",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis Stream 消费组如何在组内多个消费者之间分配新消息？",
+      "answer": "同一消费组可把不同消息分配给不同消费者处理。",
+      "explanation": "不同消费组维护各自的消费状态。",
+      "example": "多个工作进程分担同一条流的任务。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "消费组分工"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/xreadgroup/"
+    },
+    {
+      "id": "redisstream-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "读取新消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 XREADGROUP 使用特殊 ID > 时，主要读取哪类消息？",
+      "answer": "读取该消费组中尚未交付给任何消费者的新消息。",
+      "explanation": "消费组和消费者名称都需在命令中指定。",
+      "example": "消费者用 > 获取组内下一批新记录。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "读取新消息"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/xreadgroup/"
+    },
+    {
+      "id": "redisstream-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "待确认列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis Stream 消费组的 PEL 保存什么？",
+      "answer": "保存已交付给消费者但尚未确认的消息 ID 等待处理信息。",
+      "explanation": "通常处理成功后应确认，避免持续处于待确认状态。",
+      "example": "消费者异常退出时可检查其待确认消息。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "待确认列表"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/xreadgroup/"
+    },
+    {
+      "id": "redisstream-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "确认消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 的 XACK 对消费组待确认消息做什么，是否删除 Stream 中的记录？",
+      "answer": "它从指定消费组的 PEL 中移除已确认消息；XACK 本身不删除流记录。",
+      "explanation": "是否清理流记录是另一个操作。",
+      "example": "确认后 XPENDING 数量减少，XRANGE 仍可读到记录。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "确认消息"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/xack/"
+    },
+    {
+      "id": "redisstream-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "待确认查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis XPENDING 的摘要形式通常报告哪些信息？",
+      "answer": "报告消费组的待确认消息总数、ID 范围以及各消费者的待确认数量。",
+      "explanation": "详细形式还可查看消息归属与投递信息。",
+      "example": "检查某个消费组是否存在积压。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "待确认查询"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/xpending/"
+    },
+    {
+      "id": "redisstream-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "重新读取待确认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 XREADGROUP 指定普通 ID（例如 0）时，读取哪一部分历史？",
+      "answer": "读取当前消费者自己的待确认消息，其 ID 要大于给定 ID。",
+      "explanation": "它不是用来读取组内其他消费者全部待确认消息。",
+      "example": "消费者重启后可从 0 检查自己的待确认记录。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "重新读取待确认"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/xreadgroup/"
+    },
+    {
+      "id": "redisstream-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "跳过确认跟踪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis 7.2 的 XREADGROUP 使用 NOACK 读取新消息时，会把这些消息放入 PEL 吗？",
+      "answer": "不会；这些消息不进入待确认列表。",
+      "explanation": "处理失败后不能依赖 PEL 恢复这批消息。",
+      "example": "允许偶发丢失的消费场景可按需要选择该选项。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "跳过确认跟踪"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/xreadgroup/"
+    },
+    {
+      "id": "redisstream-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis Streams 与消费组",
+      "knowledgePoint": "处理幂等",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Redis Stream 消费者即使使用确认机制，也常需要让业务处理具备幂等性？",
+      "answer": "消息处理完成后确认之前若发生故障，消息可能再次被处理。",
+      "explanation": "可按业务事件 ID 记录处理状态，并处理恢复与重试。",
+      "example": "对同一订单事件重复消费时避免重复扣款。",
+      "tags": [
+        "Redis Streams 与消费组",
+        "处理幂等"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/xack/"
+    }
+  ]
+}

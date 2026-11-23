@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "aflgo-directed-greybox",
+    "title": "AFLGo 原论文：定向灰盒模糊测试",
+    "url": "https://mboehme.github.io/paper/CCS17.pdf",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "aflgo-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLGo 定向模糊测试",
+      "knowledgePoint": "定向目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLGo 论文中的定向灰盒模糊测试主要追求什么？",
+      "answer": "引导生成的输入执行到指定的一组程序目标位置。",
+      "explanation": "目标可来自补丁修改位置或崩溃相关位置。",
+      "example": "优先探索一次代码修改附近的执行路径。",
+      "tags": [
+        "AFLGo 定向模糊测试",
+        "定向目标"
+      ],
+      "evidence": "source",
+      "reference": "https://mboehme.github.io/paper/CCS17.pdf"
+    },
+    {
+      "id": "aflgo-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLGo 定向模糊测试",
+      "knowledgePoint": "距离作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLGo 如何利用种子到目标位置的距离？",
+      "answer": "用距离衡量已有输入执行轨迹与目标位置的接近程度，并据此调整变异资源分配。",
+      "explanation": "距离是基于程序图的近似，不能保证一定能到达目标。",
+      "example": "距离较小的种子可能获得更多测试能量。",
+      "tags": [
+        "AFLGo 定向模糊测试",
+        "距离作用"
+      ],
+      "evidence": "source",
+      "reference": "https://mboehme.github.io/paper/CCS17.pdf"
+    },
+    {
+      "id": "aflgo-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLGo 定向模糊测试",
+      "knowledgePoint": "程序图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLGo 论文计算跨函数目标距离时利用哪两类程序图？",
+      "answer": "利用函数级调用图和函数内部的控制流图。",
+      "explanation": "距离可在插桩阶段预先计算。",
+      "example": "调用关系和基本块路径共同参与距离估计。",
+      "tags": [
+        "AFLGo 定向模糊测试",
+        "程序图"
+      ],
+      "evidence": "source",
+      "reference": "https://mboehme.github.io/paper/CCS17.pdf"
+    },
+    {
+      "id": "aflgo-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLGo 定向模糊测试",
+      "knowledgePoint": "种子距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLGo 运行时如何根据执行轨迹计算种子距离？",
+      "answer": "对执行轨迹中基本块的预计算目标距离取平均，得到该种子的距离。",
+      "explanation": "论文使用的种子距离是执行轨迹上距离的平均值。",
+      "example": "新输入执行后可根据经过的基本块计算距离。",
+      "tags": [
+        "AFLGo 定向模糊测试",
+        "种子距离"
+      ],
+      "evidence": "source",
+      "reference": "https://mboehme.github.io/paper/CCS17.pdf"
+    },
+    {
+      "id": "aflgo-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLGo 定向模糊测试",
+      "knowledgePoint": "退火调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLGo 的模拟退火式能量调度随时间怎样改变远近种子的资源倾向？",
+      "answer": "随着温度下降，较近种子相对较远种子获得的能量差异增大。",
+      "explanation": "初期更均衡的探索有助于避免过早集中。",
+      "example": "后期更倾向变异接近目标的输入。",
+      "tags": [
+        "AFLGo 定向模糊测试",
+        "退火调度"
+      ],
+      "evidence": "source",
+      "reference": "https://mboehme.github.io/paper/CCS17.pdf"
+    },
+    {
+      "id": "aflgo-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLGo 定向模糊测试",
+      "knowledgePoint": "补丁测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLGo 论文中的 patch testing 如何选择定向目标？",
+      "answer": "可把代码补丁中发生修改的位置作为目标，引导测试集中到改动附近。",
+      "explanation": "仍需准备可运行的目标程序和测试入口。",
+      "example": "新版本中修改过的基本块可成为目标。",
+      "tags": [
+        "AFLGo 定向模糊测试",
+        "补丁测试"
+      ],
+      "evidence": "source",
+      "reference": "https://mboehme.github.io/paper/CCS17.pdf"
+    }
+  ]
+}

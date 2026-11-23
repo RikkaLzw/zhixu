@@ -1,0 +1,392 @@
+{
+  "source": {
+    "id": "phishing-multimodal-methods",
+    "title": "PhishIntention 与多模态大模型：钓鱼页面分析",
+    "url": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf",
+    "type": "研究论文",
+    "note": "逐题依据所列论文自行整理；例子为自编，性能结论不默认推广到其他实验。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "phishmm-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "PhishIntention页面表示",
+      "knowledgePoint": "抽象页面布局",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 的抽象网页布局（AWL）表示什么？",
+      "answer": "它用带类型的矩形区域表示网页截图中视觉上显著的界面元素。",
+      "explanation": "布局描述来自截图，不等同于完整 DOM 结构。",
+      "example": "用不同框标记输入框和按钮的位置。",
+      "tags": [
+        "抽象页面布局",
+        "PhishIntention页面表示"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "PhishIntention页面表示",
+      "knowledgePoint": "布局元素类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 原论文的 AWL 使用哪些界面元素类型？",
+      "answer": "身份标志、输入框、按钮、文本标签和其他显著块。",
+      "explanation": "这些类别服务于论文的品牌和凭据意图分析。",
+      "example": "把登录按钮与页面正文块分为不同类型。",
+      "tags": [
+        "布局元素类型",
+        "PhishIntention页面表示"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "PhishIntention页面表示",
+      "knowledgePoint": "布局坐标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 论文怎样描述 AWL 中每个元素的区域？",
+      "answer": "记录矩形的位置、宽度、高度以及元素类型。",
+      "explanation": "位置和大小是相对于页面截图的视觉信息。",
+      "example": "用 x、y、w、h 及类型描述一个输入框。",
+      "tags": [
+        "布局坐标",
+        "PhishIntention页面表示"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "PhishIntention页面表示",
+      "knowledgePoint": "普通输入框",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "页面上出现输入框，能否直接认定它在收集登录凭据？",
+      "answer": "不能；输入框也可能用于搜索等其他用途。",
+      "explanation": "需要结合类型、邻近元素和页面上下文判断。",
+      "example": "搜索框不等于密码输入框。",
+      "tags": [
+        "普通输入框",
+        "PhishIntention页面表示"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PhishIntention页面表示",
+      "knowledgePoint": "凭据分类输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 的凭据页面分类器利用哪些视觉输入？",
+      "answer": "它将网页截图与表示不同界面类型的布局通道结合后输入分类器。",
+      "explanation": "空间布局为分类器提供额外的界面结构信息。",
+      "example": "同时使用截图像素与输入框位置。",
+      "tags": [
+        "凭据分类输入",
+        "PhishIntention页面表示"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PhishIntention页面表示",
+      "knowledgePoint": "布局掩码通道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 如何把一种 AWL 元素类型编码为额外图像通道？",
+      "answer": "将该类型元素覆盖的像素位置标为 1，其他位置标为 0。",
+      "explanation": "不同元素类型使用不同布局通道。",
+      "example": "按钮区域形成一个二值位置掩码。",
+      "tags": [
+        "布局掩码通道",
+        "PhishIntention页面表示"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PhishIntention品牌识别",
+      "knowledgePoint": "OCR辅助表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 的 OCR 辅助标志识别如何利用外观和文字形状？",
+      "answer": "它分别提取标志外观与 OCR 编码器的文字形状特征，再组合为标志表示。",
+      "explanation": "这样可补充外观相似但文字不同的标志信息。",
+      "example": "比较两个外形相似的文字标志。",
+      "tags": [
+        "OCR辅助表示",
+        "PhishIntention品牌识别"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PhishIntention品牌识别",
+      "knowledgePoint": "标志匹配相似度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 论文用什么相似度比较两个标志的嵌入？",
+      "answer": "使用标志嵌入之间的余弦相似度。",
+      "explanation": "相似度阈值需要结合验证数据选择。",
+      "example": "比较待检测标志与品牌参考标志。",
+      "tags": [
+        "标志匹配相似度",
+        "PhishIntention品牌识别"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PhishIntention页面交互",
+      "knowledgePoint": "候选交互排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 如何限制需要模拟点击的凭据页面候选元素数量？",
+      "answer": "根据元素位置模型的置信度选择排名靠前的最多 K 个候选。",
+      "explanation": "未进入候选的入口不会在该轮被点击验证。",
+      "example": "只检查评分最高的几个登录入口。",
+      "tags": [
+        "候选交互排序",
+        "PhishIntention页面交互"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PhishIntention页面交互",
+      "knowledgePoint": "交互深度边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 设置有限的凭据页面搜索深度有什么影响？",
+      "answer": "它限制递归访问页面的层数，也可能遗漏需要更深交互才能到达的页面。",
+      "explanation": "有限搜索范围是检测结果的重要条件。",
+      "example": "登录表单位于多次跳转之后。",
+      "tags": [
+        "交互深度边界",
+        "PhishIntention页面交互"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PhishIntention页面交互",
+      "knowledgePoint": "链接预检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PhishIntention 在视觉定位之外，如何利用页面文本辅助查找凭据入口？",
+      "answer": "论文先检查包含登录或注册相关文字的可点击元素。",
+      "explanation": "论文同时使用视觉模型处理启发式未找到的情况。",
+      "example": "先检查文本为 Login 的链接。",
+      "tags": [
+        "链接预检查",
+        "PhishIntention页面交互"
+      ],
+      "evidence": "source",
+      "reference": "https://www.usenix.org/system/files/sec22-liu-ruofan.pdf"
+    },
+    {
+      "id": "phishmm-013",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多模态钓鱼分析",
+      "knowledgePoint": "多模态输入种类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "2024 年多模态钓鱼网页研究比较了哪些品牌识别输入？",
+      "answer": "分别比较网页截图、提取的 HTML 信息，以及二者同时输入。",
+      "explanation": "不同输入组合的效果会随模型与数据变化。",
+      "example": "比较截图单独输入与截图加 HTML 输入。",
+      "tags": [
+        "多模态输入种类",
+        "多模态钓鱼分析"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2408.05941v1"
+    },
+    {
+      "id": "phishmm-014",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多模态钓鱼分析",
+      "knowledgePoint": "HTML预处理目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "2024 年多模态钓鱼网页研究为什么先从 HTML 提取标题、页脚等信息？",
+      "answer": "它试图保留可能有用的页面信息，同时减少输入 token 数量和成本。",
+      "explanation": "预处理也可能丢掉未被提取的线索。",
+      "example": "提取页面标题和导航文本后送入模型。",
+      "tags": [
+        "HTML预处理目的",
+        "多模态钓鱼分析"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2408.05941v1"
+    },
+    {
+      "id": "phishmm-016",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多模态钓鱼分析",
+      "knowledgePoint": "产品与品牌",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么钓鱼页面模型识别出产品名后，还可能需要映射到品牌？",
+      "answer": "网页突出显示的产品名可能不同于拥有该产品的品牌名称。",
+      "explanation": "映射关系和域名可能随时间变化，应有可靠依据。",
+      "example": "页面展示某款产品而不是企业名称。",
+      "tags": [
+        "产品与品牌",
+        "多模态钓鱼分析"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2408.05941v1"
+    },
+    {
+      "id": "phishmm-017",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多模态钓鱼分析",
+      "knowledgePoint": "模型自报置信度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多模态模型自行报告品牌识别置信度，能否直接视为已校准的正确概率？",
+      "answer": "不能；自报分数需要经过独立数据的校准和验证。",
+      "explanation": "输出格式要求模型给分，不会自动赋予该分数统计保证。",
+      "example": "模型给出 9.5 分仍需核实品牌。",
+      "tags": [
+        "模型自报置信度",
+        "多模态钓鱼分析"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2408.05941v1"
+    },
+    {
+      "id": "phishmm-018",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多模态钓鱼分析",
+      "knowledgePoint": "输入冲突",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同时提供截图和 HTML，是否保证品牌识别比单一模态更准确？",
+      "answer": "不保证；两种输入可能包含冲突或误导信息，模型也可能过度依赖其中一种。",
+      "explanation": "应在目标数据上分别评估各输入组合。",
+      "example": "HTML 中的其他品牌文字误导截图分析。",
+      "tags": [
+        "输入冲突",
+        "多模态钓鱼分析"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2408.05941v1"
+    },
+    {
+      "id": "phishmm-019",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多模态钓鱼分析",
+      "knowledgePoint": "模型请求失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分析钓鱼页面时，为什么要把多模态模型请求错误与“页面良性”区分？",
+      "answer": "请求可能因服务、输入大小或策略限制失败，错误没有提供有效的良恶判断。",
+      "explanation": "应记录失败原因并设计后续处理。",
+      "example": "输入过大导致模型拒绝请求。",
+      "tags": [
+        "模型请求失败",
+        "多模态钓鱼分析"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2408.05941v1"
+    },
+    {
+      "id": "phishmm-020",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多模态钓鱼分析",
+      "knowledgePoint": "页面隐匿与采集环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么爬虫的访问环境可能影响采集到的钓鱼页面内容？",
+      "answer": "一些页面会根据访问环境展示不同内容或阻止访问，因此爬虫看到的页面可能与真实用户看到的不同。",
+      "explanation": "研究检查了用户代理、交互和来源等条件的影响；结果依赖具体页面。",
+      "example": "针对自动化访问显示验证页面或空白内容。",
+      "tags": [
+        "页面隐匿与采集环境",
+        "多模态钓鱼分析"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2408.05941v1"
+    },
+    {
+      "id": "phishmm-021",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多模态钓鱼分析",
+      "knowledgePoint": "精确去重范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用 URL 或 HTML 的 SHA-256 去重时，为什么不能认为所有相似页面已被合并？",
+      "answer": "哈希主要用于精确重复检查；小幅内容改动通常会产生不同哈希，近重复可能因此被保留。",
+      "explanation": "哈希相同也不是内容一致性的绝对证明；跨模板或近重复检测需要其他方法。",
+      "example": "同一模板改一处文本后得到不同摘要。",
+      "tags": [
+        "精确去重范围",
+        "多模态钓鱼分析"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2408.05941v1"
+    },
+    {
+      "id": "phishmm-022",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多模态钓鱼分析",
+      "knowledgePoint": "不同输入的成本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多模态钓鱼分析为什么要记录截图和 HTML 的输入成本？",
+      "answer": "模型调用开销随输入内容及模型计费方式变化，组合输入可能增加 token 使用量。",
+      "explanation": "成本与准确性需要在同一部署条件下评估。",
+      "example": "比较纯截图与截图加 HTML 的单页成本。",
+      "tags": [
+        "不同输入的成本",
+        "多模态钓鱼分析"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2408.05941v1"
+    }
+  ]
+}

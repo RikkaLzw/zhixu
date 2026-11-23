@@ -1,0 +1,444 @@
+{
+  "source": {
+    "id": "ethernet-switching-vlan-foundations",
+    "title": "Cisco 与 Linux 6.12 文档：以太网交换和 VLAN",
+    "url": "https://www.cisco.com/c/en/us/support/docs/lan-switching/ethernet/12006-chapter22.html",
+    "type": "官方手册与教材",
+    "note": "根据逐题标注的手册、标准或教材自行整理，示例为自编；在线资料于 2026-11-21 和 2026-11-23 核验。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "ethvlan-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "交换机学习",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用动态学习的以太网交换机如何更新 MAC 地址表？",
+      "answer": "它根据收到帧的源 MAC 地址和入端口学习或更新位置。",
+      "explanation": "具体表项还可关联 VLAN，学习行为受端口配置影响。",
+      "example": "主机 A 从端口 1 发出帧后，交换机学习 A 的位置。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "交换机学习"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/6.12/networking/bridge.html"
+    },
+    {
+      "id": "ethvlan-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "已知单播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通二层交换机收到已知目标 MAC 的单播帧时如何决定转发端口？",
+      "answer": "它查表确定目标 MAC 对应的端口，并按 VLAN 和端口状态等规则转发。",
+      "explanation": "如果查到的目标端口就是入端口，普通透明网桥通常过滤该帧；特殊端口模式可能不同。",
+      "example": "目标 MAC 已学习在端口 2。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "已知单播"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/ethernet/12006-chapter22.html"
+    },
+    {
+      "id": "ethvlan-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "未知单播泛洪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通二层交换机查不到单播目标 MAC 时通常怎样处理？",
+      "answer": "它通常向同 VLAN 的其他可转发端口泛洪，不发回入端口。",
+      "explanation": "端口隔离、泛洪控制等配置可能改变这一行为。",
+      "example": "目标 MAC 尚未被学习时的第一帧。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "未知单播泛洪"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/ethernet/12006-chapter22.html"
+    },
+    {
+      "id": "ethvlan-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "动态表项老化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "交换机动态学习的 MAC 地址表项为什么设置老化时间？",
+      "answer": "在一段时间没有看到该源地址后可移除旧表项，避免长期保留过时位置。",
+      "explanation": "静态表项和具体老化规则由设备与配置决定。",
+      "example": "主机离开后旧端口记录最终过期。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "动态表项老化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/6.12/networking/bridge.html"
+    },
+    {
+      "id": "ethvlan-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "VLAN广播域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VLAN 在二层交换网络中起什么作用？",
+      "answer": "它把网络划分为逻辑上的独立广播域。",
+      "explanation": "不同 VLAN 之间通信通常需要三层转发及相应配置。",
+      "example": "访客和办公设备配置在不同 VLAN。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "VLAN广播域"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/ethernet/12006-chapter22.html"
+    },
+    {
+      "id": "ethvlan-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "接入与干道端口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "交换机接入端口与 VLAN 干道端口的常见区别是什么？",
+      "answer": "接入端口通常服务一个 VLAN；干道端口可在一条链路上承载多个 VLAN。",
+      "explanation": "实际允许的 VLAN 和标签处理取决于设备配置。",
+      "example": "两台交换机之间用干道连接。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "接入与干道端口"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/ethernet/12006-chapter22.html"
+    },
+    {
+      "id": "ethvlan-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "802.1Q标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "802.1Q 如何在以太网帧中携带 VLAN 信息？",
+      "answer": "它在原帧中加入 4 字节标签，其中包含 VLAN 标识字段。",
+      "explanation": "添加标签会改变帧，发送设备需重新计算帧校验序列。",
+      "example": "一条干道链路承载多个 VLAN 的帧。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "802.1Q标记"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/8021q/17056-741-4.html"
+    },
+    {
+      "id": "ethvlan-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "原生VLAN",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Cisco 文档描述的默认 802.1Q 干道行为中，原生 VLAN 的帧如何传输？",
+      "answer": "默认不加 802.1Q 标签；两端的原生 VLAN 配置需要匹配。",
+      "explanation": "设备可以提供不同的标记配置，不应把默认行为当成所有设备的固定规则。",
+      "example": "检查一条干道两端未标记帧的归属。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "原生VLAN"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/8021q/17056-741-4.html"
+    },
+    {
+      "id": "ethvlan-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "生成树作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "交换网络为什么使用生成树协议 STP？",
+      "answer": "它通过阻止部分端口转发来消除二层转发环路，同时保留冗余链路以便拓扑变化时使用。",
+      "explanation": "具体收敛和端口状态取决于使用的生成树协议及配置。",
+      "example": "主链路故障后备用路径可能恢复转发。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "生成树作用"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/ethernet/12006-chapter22.html"
+    },
+    {
+      "id": "ethvlan-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "ARP请求应答",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "典型以太网 IPv4 地址解析中，ARP 请求和应答通常怎样发送？",
+      "answer": "请求通常在本链路广播；拥有目标地址的主机通常向请求方单播应答。",
+      "explanation": "代理 ARP 等环境可能出现其他应答者。",
+      "example": "询问同一链路上某个 IPv4 地址对应的 MAC。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "ARP请求应答"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc826.txt"
+    },
+    {
+      "id": "ethvlan-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "根桥角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RSTP 生成树中的根桥承担什么角色？",
+      "answer": "根桥是该生成树拓扑的参考点，会发送包含根信息的 BPDU；它自身没有根端口，其他桥据此计算通往根的路径。",
+      "explanation": "Cisco 文档描述的生成树按 VLAN 计算。",
+      "example": "其他交换机沿根端口到达选定的根桥。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "RSTP",
+        "根桥"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/24062-146.html"
+    },
+    {
+      "id": "ethvlan-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "根端口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RSTP 中非根桥如何选择根端口？",
+      "answer": "它选择通往根桥路径成本最低、收到最优根信息的端口作为根端口；每台非根桥通常有一个根端口。",
+      "explanation": "出现成本相同的候选时还要按协议规定的其他字段打破平局。",
+      "example": "一台交换机通过两个邻居可达根桥时，优先选择通往根桥路径成本更低的端口。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "RSTP",
+        "根端口"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/24062-146.html"
+    },
+    {
+      "id": "ethvlan-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "指定端口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RSTP 中一个网段的 designated port（指定端口）有什么作用？",
+      "answer": "它是在该网段上通往根桥的转发端口，所在桥在该网段提供最优的根路径信息。",
+      "explanation": "每个网段通过生成树选出对应的指定端口，以避免形成二层环路。",
+      "example": "交换机在某段链路上发送通往根桥的最佳 BPDU。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "RSTP",
+        "指定端口"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/24062-146.html"
+    },
+    {
+      "id": "ethvlan-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "RSTP alternate 与 backup 端口",
+      "questionType": "对比分析",
+      "origin": "自行整理",
+      "question": "RSTP 的 alternate port 与 backup port 分别提供哪类冗余？",
+      "answer": "alternate port 从另一台桥收到更优 BPDU，可提供到根桥的备用路径；backup port 从同一台桥收到更优信息，为同一网段提供冗余连接。",
+      "explanation": "两者处于阻塞状态以避免环路，拓扑变化时可按协议重新参与转发。",
+      "example": "上行链路故障时，alternate port 可成为新的根端口。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "RSTP",
+        "alternate port",
+        "backup port"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/24062-146.html"
+    },
+    {
+      "id": "ethvlan-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "RSTP 端口状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RSTP 使用哪三种端口状态？",
+      "answer": "Discarding、Learning 和 Forwarding。",
+      "explanation": "Discarding 合并了传统 802.1D 中不转发数据的 Disabled、Blocking 和 Listening 状态。",
+      "example": "备用路径可处于 Discarding，恢复为活动路径后再进入 Forwarding。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "RSTP",
+        "端口状态"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/24062-146.html"
+    },
+    {
+      "id": "ethvlan-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "RSTP edge port",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RSTP 的 edge port 有什么快速转发规则，收到 BPDU 后又会怎样？",
+      "answer": "配置为 edge 的端口可直接进入 Forwarding；一旦收到 BPDU，它会失去 edge 属性并作为普通生成树端口处理。",
+      "explanation": "edge 端口通常连接终端设备，配置错误会破坏预期的环路保护。",
+      "example": "连接工作站的接入端口可配置为 edge；交换机间链路不应如此假设。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "RSTP",
+        "edge port"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/24062-146.html"
+    },
+    {
+      "id": "ethvlan-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "RSTP proposal/agreement",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RSTP 的 proposal/agreement 机制如何帮助端口快速进入转发状态？",
+      "answer": "指定端口发送 proposal 后，邻桥先同步并阻塞会形成环路的端口，再通过 agreement 确认，使链路可快速转发而不必等待传统转发延迟定时器。",
+      "explanation": "该机制主要用于点对点链路；具体同步条件由 RSTP 规则决定。",
+      "example": "新上行链路协商完成后，根端口可快速进入 Forwarding。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "RSTP",
+        "proposal",
+        "agreement"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/24062-146.html"
+    },
+    {
+      "id": "ethvlan-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "RSTP BPDU 周期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RSTP 桥接设备通常以什么方式发送 BPDU？",
+      "answer": "每台桥按 Hello-Time 周期发送包含当前信息的 BPDU，而不只是转发根桥发来的 BPDU。",
+      "explanation": "Cisco 文档中的默认 Hello-Time 为 2 秒；实际值可配置。",
+      "example": "邻桥连续错过多个 Hello 周期后，可更快判断直接邻居链路失效。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "RSTP",
+        "BPDU"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/spanning-tree-protocol/24062-146.html"
+    },
+    {
+      "id": "ethvlan-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "802.1Q VLAN ID 位宽",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "802.1Q 标签中的 VLAN Identifier 字段有多少位？",
+      "answer": "它是 12 位字段，可编码 0 到 4095 的数值；并非这些数值都可作为普通 VLAN 使用。",
+      "explanation": "0 和 4095 有特殊用途或保留规则，具体可用 VLAN 范围应遵循标准及设备配置。",
+      "example": "普通交换网络通常使用 VID 1 到 4094。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "802.1Q",
+        "VID"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisco.com/c/en/us/support/docs/lan-switching/8021q/17056-741-4.html"
+    },
+    {
+      "id": "ethvlan-021",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "Linux bridge VLAN filtering",
+      "questionType": "实践题",
+      "origin": "自行整理",
+      "question": "Linux bridge 的 vlan_filtering 配置控制什么行为？",
+      "answer": "它控制桥是否按 VLAN 标记和端口 VLAN 成员关系过滤转发；关闭时桥不按 VLAN ID 过滤带标签帧。",
+      "explanation": "Linux 6.12 文档中该功能默认关闭。",
+      "example": "启用后，端口只应转发其 VLAN 表中允许的流量。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "Linux bridge",
+        "VLAN filtering"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/6.12/networking/bridge.html"
+    },
+    {
+      "id": "ethvlan-022",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "Linux bridge PVID",
+      "questionType": "实践题",
+      "origin": "自行整理",
+      "question": "Linux bridge 的 PVID 会怎样处理接收的未标记帧？",
+      "answer": "它指定端口入口处要赋给未标记帧的 VLAN ID，使帧归入相应 VLAN。",
+      "explanation": "Linux 6.12 的默认 PVID 也应用于优先级标记帧；默认值可配置。",
+      "example": "在端口上设置 VID 20 为 PVID，未标记帧就按 VLAN 20 分类。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "Linux bridge",
+        "PVID"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/6.12/networking/bridge.html"
+    },
+    {
+      "id": "ethvlan-023",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "以太网交换与 VLAN",
+      "knowledgePoint": "Linux bridge VLAN untagged 出口",
+      "questionType": "实践题",
+      "origin": "自行整理",
+      "question": "Linux `bridge vlan` 的 untagged 标志作用于哪个方向？",
+      "answer": "它指定该 VLAN 的帧从该端口发出时不携带 VLAN 标签。",
+      "explanation": "它是出口标记行为；与入口处把未标记帧归入 VLAN 的 PVID 作用不同。",
+      "example": "接入端口可把内部 VLAN 20 的帧以未标记形式发给终端。",
+      "tags": [
+        "以太网交换与 VLAN",
+        "Linux bridge",
+        "untagged"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/bridge.8.html"
+    }
+  ]
+}

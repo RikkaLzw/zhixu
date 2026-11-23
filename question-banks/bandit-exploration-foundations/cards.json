@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "bandit-exploration-foundations",
+    "title": "Sutton 与 Barto 第 2 版：多臂老虎机与探索",
+    "url": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf",
+    "type": "教材、官方文档与固定版本源码",
+    "note": "依据逐题所列文档、教材或固定版本源码自行整理；示例为自编，使用条件见各卡。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "bandit-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多臂老虎机与探索",
+      "knowledgePoint": "基础任务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典 k 臂老虎机问题中，智能体每次选择动作后通常能观察到什么？",
+      "answer": "它观察所选动作产生的奖励，而非所有动作在该轮的奖励。",
+      "explanation": "目标是在多次选择中获得较高累计奖励。",
+      "example": "选择一种推荐方案后观察该方案的用户反馈。",
+      "tags": [
+        "多臂老虎机与探索",
+        "基础任务"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "bandit-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多臂老虎机与探索",
+      "knowledgePoint": "动作价值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典多臂老虎机的动作价值与序列决策中的动作价值有什么区别？",
+      "answer": "经典老虎机的动作价值是该动作的期望即时奖励；序列决策中的动作价值还考虑后续回报。",
+      "explanation": "经典老虎机模型没有跨多个状态推进的动作序列。",
+      "example": "单次推荐奖励的均值与多步策略的期望回报不同。",
+      "tags": [
+        "多臂老虎机与探索",
+        "动作价值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "bandit-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多臂老虎机与探索",
+      "knowledgePoint": "随机探索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 ε-greedy 如何在贪心选择和随机探索之间选择动作？",
+      "answer": "以 1−ε 的概率选当前估计价值最高的动作，以 ε 的概率从所有动作中均匀随机选一个。",
+      "explanation": "随机探索也可能选中贪心动作，因此贪心动作的总选择概率可能大于 1−ε。",
+      "example": "两个动作且唯一贪心动作时，探索分支仍有一半概率选中它。",
+      "tags": [
+        "多臂老虎机与探索",
+        "随机探索"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "bandit-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多臂老虎机与探索",
+      "knowledgePoint": "增量平均",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多臂老虎机中如何用新奖励增量更新样本平均，而不保存全部历史奖励？",
+      "answer": "第 n 次得到该动作奖励 R 时，用 Q ← Q + (R−Q)/n。",
+      "explanation": "该估计等于所选动作历史奖励的样本平均；n 是该动作累计选择次数。",
+      "example": "两次奖励为 2 和 4 时，第二次更新后平均值为 3。",
+      "tags": [
+        "多臂老虎机与探索",
+        "增量平均"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "bandit-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多臂老虎机与探索",
+      "knowledgePoint": "非平稳环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "奖励分布随时间变化时，为什么常用固定步长更新动作价值？",
+      "answer": "固定步长使较新的奖励获得更大权重，有助于跟踪变化。",
+      "explanation": "步长大小影响适应速度和估计波动。",
+      "example": "近期用户偏好变化后，新反馈逐渐改变估计。",
+      "tags": [
+        "多臂老虎机与探索",
+        "非平稳环境"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "bandit-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多臂老虎机与探索",
+      "knowledgePoint": "乐观初值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多臂老虎机中的乐观初始价值怎样鼓励早期探索？",
+      "answer": "未尝试动作的估计偏高，已尝试动作的估计被较低奖励修正后，其他动作更可能被选中。",
+      "explanation": "这种探索驱动主要来自初始阶段，不保证适应后续环境变化。",
+      "example": "多个候选初始值均设得高于典型奖励。",
+      "tags": [
+        "多臂老虎机与探索",
+        "乐观初值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    },
+    {
+      "id": "bandit-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多臂老虎机与探索",
+      "knowledgePoint": "UCB选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UCB 与 ε-greedy 在探索候选动作时有什么区别？",
+      "answer": "UCB 根据价值估计加不确定性奖励选动作；标准 ε-greedy 的探索分支从所有动作中均匀随机选。",
+      "explanation": "UCB 因而能优先关注较不确定或价值估计较高的候选。",
+      "example": "两个估计相近的动作中，较少尝试的动作可能被优先选择。",
+      "tags": [
+        "多臂老虎机与探索",
+        "UCB选择"
+      ],
+      "evidence": "source",
+      "reference": "https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf"
+    }
+  ]
+}

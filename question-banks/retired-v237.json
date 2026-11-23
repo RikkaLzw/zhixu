@@ -1,0 +1,611 @@
+{
+  "version": 237,
+  "note": "修改面试原理题和 PostgreSQL 外键空值边界前的卡片快照，用于更新未修改题目并保留个人记录。",
+  "cards": [
+    {
+      "id": "dbbase-014",
+      "category": "foundations",
+      "question": "外键约束主要用于维护什么关系？",
+      "answer": "它限制引用列的值与被引用表中的键相匹配，从而维护引用完整性。",
+      "createdAt": 0,
+      "topic": "database-fundamentals",
+      "knowledgeArea": "19",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "外键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "外键",
+        "数据库与 SQL 基础"
+      ],
+      "explanation": "外键是否允许空值还取决于列和约束配置。",
+      "example": "订单中的商品编号引用商品表。",
+      "sources": [
+        {
+          "id": "postgresql-database-foundations",
+          "title": "PostgreSQL 17：SQL、事务与索引基础",
+          "url": "https://www.postgresql.org/docs/17/ddl-constraints.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "dbbase-014"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "lora-004",
+      "category": "foundations",
+      "question": "原始 LoRA 论文为什么将其中一个低秩矩阵初始化为零？",
+      "answer": "这样两个矩阵的乘积在训练开始时为零，初始更新不会改变预训练权重的输出。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "LoRA初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "LoRA初始化",
+        "大模型",
+        "LoRA",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "explanation": "不同实现可能提供其他初始化方法。",
+      "example": "论文使用随机初始化的 A 与零初始化的 B。",
+      "sources": [
+        {
+          "id": "lora-adaptation",
+          "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+          "url": "https://arxiv.org/pdf/2106.09685",
+          "type": "官方文档与标准",
+          "evidence": "source",
+          "sourceCardId": "lora-004"
+        },
+        {
+          "id": "company-ant",
+          "title": "蚂蚁公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900315%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application",
+          "sourceCardId": "lora-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "nncore-010",
+      "category": "foundations",
+      "question": "ResNet 原论文讨论的深层网络退化现象与通常的过拟合有什么不同？",
+      "answer": "论文中的退化表现为加深普通网络后训练误差反而升高，不能简单归因于过拟合。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "神经网络基础",
+      "knowledgePoint": "深层退化与过拟合",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "深层退化与过拟合",
+        "深度学习",
+        "公开面经",
+        "格灵深瞳"
+      ],
+      "explanation": "过拟合通常指训练表现较好而泛化表现较差。",
+      "example": "比较较浅和更深网络的训练误差。",
+      "sources": [
+        {
+          "id": "neural-network-foundations",
+          "title": "ResNet 原论文",
+          "url": "https://arxiv.org/html/1512.03385v1#S1",
+          "type": "教材、论文与官方文档",
+          "evidence": "source",
+          "sourceCardId": "nncore-010"
+        },
+        {
+          "id": "company-deepglint",
+          "title": "格灵深瞳算法实习一面（2019 届作者自述）；ResNet 主题启发",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经",
+          "evidence": "application",
+          "sourceCardId": "nncore-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "sftdialogue-021",
+      "category": "foundations",
+      "question": "FLAN 原论文为什么对数据集大小和混合采样权重设置上限？",
+      "answer": "为了缓解数据集规模差异，使大型数据集不至于主导指令微调的数据分布。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "监督微调与对话数据",
+      "knowledgePoint": "FLAN数据采样上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "FLAN数据采样上限",
+        "大模型",
+        "监督微调",
+        "公开面经",
+        "腾讯"
+      ],
+      "explanation": "论文使用特定上限；合适的采样配比仍需针对任务评估。",
+      "example": "混合小型和大型指令数据时，限制大型数据集的采样权重。",
+      "sources": [
+        {
+          "id": "sft-dialogue-foundations",
+          "title": "FLAN 原论文：Training Details",
+          "url": "https://arxiv.org/html/2109.01652v5#S2.SS4",
+          "type": "官方技术文档与研究论文",
+          "evidence": "source",
+          "sourceCardId": "sftdialogue-021"
+        },
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经（合集转载，经历为分享者自述）；SFT 数据选择主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经",
+          "evidence": "application",
+          "sourceCardId": "sftdialogue-021"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "instructrl-001",
+      "category": "foundations",
+      "question": "InstructGPT 论文中的 SFT、奖励模型和 PPO 数据分别提供什么？",
+      "answer": "分别提供人工示范、同提示下的回答偏好排序，以及用于策略优化的提示。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "RLHF 奖励模型与 PPO",
+      "knowledgePoint": "数据角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "入门",
+      "tags": [
+        "RLHF 奖励模型与 PPO",
+        "数据角色"
+      ],
+      "explanation": "论文中 PPO 数据集本身没有人工标签。",
+      "example": "对新提示生成回答后由奖励模型评分。",
+      "sources": [
+        {
+          "id": "instructgpt-rlhf-training",
+          "title": "InstructGPT 原论文 v1：偏好奖励与 PPO 训练",
+          "url": "https://arxiv.org/pdf/2203.02155v1",
+          "type": "教材、研究论文与官方资料",
+          "evidence": "source",
+          "sourceCardId": "instructrl-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "specdec-001",
+      "category": "foundations",
+      "question": "原论文的无损投机采样保证了什么？",
+      "answer": "在理想数学条件下，采样得到的输出分布与仅用目标模型按相同采样规则生成的分布一致。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "输出分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "输出分布",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "explanation": "浮点数值和实际实现可能带来细微差异。",
+      "example": "草稿模型较小时仍可保持目标分布。",
+      "sources": [
+        {
+          "id": "speculative-decoding-foundations",
+          "title": "投机解码原论文：Fast Inference from Transformers",
+          "url": "https://arxiv.org/abs/2211.17192",
+          "type": "研究论文",
+          "evidence": "source",
+          "sourceCardId": "specdec-001"
+        },
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application",
+          "sourceCardId": "specdec-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "grag-009",
+      "category": "foundations",
+      "question": "GraphRAG 原论文如何根据实体关系构建可用于全局摘要的社区？",
+      "answer": "它在实体关系图上使用社区检测，将连接较紧密的实体组织成层次化社区。",
+      "createdAt": 0,
+      "topic": "rag-basics",
+      "knowledgeArea": "07",
+      "subtopic": "图检索增强",
+      "knowledgePoint": "社区检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "社区检测",
+        "GraphRAG",
+        "RAG"
+      ],
+      "explanation": "论文使用 Leiden 算法作为社区检测方法。",
+      "example": "相互关联较多的一组实体形成一个社区。",
+      "sources": [
+        {
+          "id": "graphrag-foundations",
+          "title": "From Local to Global: A Graph RAG Approach to Query-Focused Summarization（v1）：2.4",
+          "url": "https://arxiv.org/abs/2404.16130v1",
+          "type": "研究论文与官方文档",
+          "evidence": "source",
+          "sourceCardId": "grag-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "xaimodel-005",
+      "category": "foundations",
+      "question": "LIME 原论文如何权衡解释的简洁性与局部拟合？",
+      "answer": "目标函数同时考虑代理模型在邻域内的拟合损失和解释复杂度。",
+      "createdAt": 0,
+      "topic": "ml-basics",
+      "knowledgeArea": "03",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "解释复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "入门",
+      "tags": [
+        "解释复杂度",
+        "模型局部解释"
+      ],
+      "explanation": "解释过于简单可能遗漏局部行为，过于复杂又难以理解。",
+      "example": "限制线性解释使用的非零特征数。",
+      "sources": [
+        {
+          "id": "model-explanations-lime-shap",
+          "title": "LIME 与 SHAP 原论文：模型解释",
+          "url": "https://arxiv.org/abs/1602.04938",
+          "type": "教材、研究论文与官方源码",
+          "evidence": "source",
+          "sourceCardId": "xaimodel-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "hnswstudy-002",
+      "category": "foundations",
+      "question": "HNSW 论文如何为新插入元素选择其最高层级？",
+      "answer": "按指数衰减的概率分布随机选择最高层级。",
+      "createdAt": 0,
+      "topic": "rag-basics",
+      "knowledgeArea": "07",
+      "subtopic": "分层近邻图检索",
+      "knowledgePoint": "随机层级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "入门",
+      "tags": [
+        "分层近邻图检索",
+        "随机层级"
+      ],
+      "explanation": "较高层的元素通常更少。",
+      "example": "新元素可能只在底层，也可能出现在更高层。",
+      "sources": [
+        {
+          "id": "hnsw-graph-search",
+          "title": "HNSW 原论文 v4：分层近邻图检索",
+          "url": "https://arxiv.org/pdf/1603.09320v4",
+          "type": "论文、标准与技术文档",
+          "evidence": "source",
+          "sourceCardId": "hnswstudy-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "svdd-008",
+      "category": "detection",
+      "question": "为什么 Deep SVDD 论文不把中心作为可自由优化的变量？",
+      "answer": "网络和中心可能共同收敛到常量输出，形成没有区分信息的平凡解。",
+      "createdAt": 0,
+      "topic": "anomaly-detection",
+      "knowledgeArea": "11",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "自由中心风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "单类深度异常检测",
+        "自由中心风险"
+      ],
+      "explanation": "论文将中心固定以规避这一类塌缩。",
+      "example": "所有输入被映射到同一个可移动中心。",
+      "sources": [
+        {
+          "id": "deep-svdd-anomaly-detection",
+          "title": "Deep SVDD 原论文：单类深度异常检测",
+          "url": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf",
+          "type": "论文与固定版本技术文档",
+          "evidence": "source",
+          "sourceCardId": "svdd-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "chatafl-001",
+      "category": "vulnerabilities",
+      "question": "ChatAFL 原论文为什么关注有状态协议中的消息顺序？",
+      "answer": "协议实现可能需要先完成握手或其他前置消息，后续消息才能到达特定状态。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "knowledgeArea": "14",
+      "subtopic": "ChatAFL 协议模糊测试",
+      "knowledgePoint": "协议状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "ChatAFL 协议模糊测试",
+        "协议状态"
+      ],
+      "explanation": "单条消息的内容与其在序列中的位置都可能影响处理。",
+      "example": "服务可能要求先建立会话，再发送后续请求。",
+      "sources": [
+        {
+          "id": "chatafl-protocol-fuzzing",
+          "title": "ChatAFL 原论文：大模型辅助协议模糊测试",
+          "url": "https://www.ndss-symposium.org/wp-content/uploads/2024-556-paper.pdf",
+          "type": "原论文与官方文档",
+          "evidence": "source",
+          "sourceCardId": "chatafl-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "maevision-001",
+      "category": "foundations",
+      "question": "MAE 原论文通过什么任务进行图像自监督预训练？",
+      "answer": "随机遮盖图像块，根据可见图像块重建被遮盖区域的像素。",
+      "createdAt": 0,
+      "topic": "computer-vision",
+      "knowledgeArea": "18",
+      "subtopic": "图像掩码自编码",
+      "knowledgePoint": "MAE目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "入门",
+      "tags": [
+        "图像掩码自编码",
+        "MAE目标"
+      ],
+      "explanation": "预训练重建任务不要求图像分类标签。",
+      "example": "根据可见图像块预测缺失部分。",
+      "sources": [
+        {
+          "id": "masked-autoencoder-vision-foundations",
+          "title": "MAE 原论文 v3：图像掩码自编码",
+          "url": "https://arxiv.org/abs/2111.06377v3",
+          "type": "论文、官方文档与源码",
+          "evidence": "source",
+          "sourceCardId": "maevision-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ddpm-001",
+      "category": "foundations",
+      "question": "DDPM 原论文的前向扩散过程怎样处理训练数据？",
+      "answer": "按照方差日程逐步向数据加入高斯噪声，形成马尔可夫链。",
+      "createdAt": 0,
+      "topic": "multimodal-learning",
+      "knowledgeArea": "18",
+      "subtopic": "DDPM 扩散模型",
+      "knowledgePoint": "前向过程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "DDPM 扩散模型",
+        "前向过程"
+      ],
+      "explanation": "论文实现将前向噪声日程固定为超参数。",
+      "example": "把清晰图像逐渐扰动为接近噪声的状态。",
+      "sources": [
+        {
+          "id": "ddpm-diffusion-foundations",
+          "title": "DDPM 原论文 v2：扩散模型基础",
+          "url": "https://arxiv.org/pdf/2006.11239v2",
+          "type": "固定版本官方文档、源码或论文",
+          "evidence": "source",
+          "sourceCardId": "ddpm-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "mteb-001",
+      "category": "foundations",
+      "question": "MTEB 原论文为什么同时评估检索、聚类、分类和语义相似度等任务？",
+      "answer": "单一任务上的嵌入表现不一定能代表其他应用场景。",
+      "createdAt": 0,
+      "topic": "rag-basics",
+      "knowledgeArea": "07",
+      "subtopic": "MTEB 嵌入评估",
+      "knowledgePoint": "评估范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "MTEB 嵌入评估",
+        "评估范围"
+      ],
+      "explanation": "论文发现没有一个受测方法在所有任务上都占优。",
+      "example": "STS 表现较好不保证检索或聚类也最好。",
+      "sources": [
+        {
+          "id": "mteb-embedding-evaluation",
+          "title": "MTEB 原论文 v2：文本嵌入基准",
+          "url": "https://arxiv.org/pdf/2210.07316v2",
+          "type": "原论文与官方文档",
+          "evidence": "source",
+          "sourceCardId": "mteb-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "fbench-002",
+      "category": "vulnerabilities",
+      "question": "FuzzBench 2021 论文为什么使用独立的 Clang source-based coverage 度量覆盖？",
+      "answer": "不同 fuzzer 自带的覆盖统计和实现可能不同，统一独立度量有助于公平比较。",
+      "createdAt": 0,
+      "topic": "fuzzing",
+      "knowledgeArea": "14",
+      "subtopic": "FuzzBench 评估方法",
+      "knowledgePoint": "统一覆盖度量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "入门",
+      "tags": [
+        "FuzzBench 评估方法",
+        "统一覆盖度量"
+      ],
+      "explanation": "比较仍需控制目标版本、资源和其他实验配置。",
+      "example": "用相同的外部覆盖实现测量不同 fuzzer 的语料。",
+      "sources": [
+        {
+          "id": "fuzzbench-evaluation-methods",
+          "title": "FuzzBench 2021 论文：模糊测试评估方法",
+          "url": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf",
+          "type": "教材、研究论文与官方资料",
+          "evidence": "source",
+          "sourceCardId": "fbench-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cic-007",
+      "category": "detection",
+      "question": "CIC-IDS2017 的完整流统计为什么可能不适合早期检测？",
+      "answer": "完整流统计可能包含连接结束后才知道的包数、字节数或持续时间。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "knowledgeArea": "10",
+      "subtopic": "时间泄漏",
+      "knowledgePoint": "完整流统计与检测时机",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "level": "实践",
+      "tags": [
+        "时间泄漏",
+        "实时检测",
+        "持续时间"
+      ],
+      "explanation": "预测时间点应先于特征提取；否则会使用部署时尚不可见的信息。",
+      "example": "若要求连接开始 10 秒内预测，只计算前 10 秒已观测到的特征。",
+      "sources": [
+        {
+          "id": "cic-ids2017",
+          "title": "CIC-IDS2017 官方数据集",
+          "url": "https://www.unb.ca/cic/datasets/ids-2017.html",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "cic-007"
+        },
+        {
+          "id": "zeek-time-ref",
+          "title": "Zeek 连接日志字段定义",
+          "url": "https://docs.zeek.org/en/current/scripts/base/protocols/conn/main.zeek.html",
+          "type": "官方文档",
+          "evidence": "source",
+          "sourceCardId": "cic-007"
+        },
+        {
+          "id": "unsw-nb15",
+          "title": "UNSW-NB15 官方数据集",
+          "url": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+          "type": "官方数据集",
+          "evidence": "application",
+          "sourceCardId": "unsw-009"
+        },
+        {
+          "id": "zeek-logs",
+          "title": "Zeek 官方日志文档",
+          "url": "https://docs.zeek.org/en/current/scripts/base/protocols/conn/main.zeek.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "zeek-006"
+        }
+      ],
+      "alternateQuestions": [
+        "为什么安全模型训练前要检查特征是否在预测时可用？",
+        "为什么 Zeek 中的连接持续时间需要结合检测时机使用？"
+      ],
+      "otherExplanations": [
+        "训练时采用未来信息会造成离线效果与实时效果不一致。",
+        "如果系统要求连接进行中告警，应使用当前已经观察到的时长。"
+      ],
+      "otherExamples": [
+        "只用连接前 30 秒产生的统计，评估 30 秒内的检测任务。",
+        "训练实时模型时，仅取截止到预测时刻的连接统计。"
+      ]
+    }
+  ]
+}

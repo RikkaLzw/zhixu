@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "codeql-path-query-evidence",
+    "title": "CodeQL 官方指南：路径查询与证据",
+    "url": "https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/",
+    "type": "CodeQL 官方文档",
+    "note": "逐题依据所列资料自行整理；例子为自编，版本与适用条件见题目。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "qlpath-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "CodeQL 路径查询",
+      "knowledgePoint": "路径查询类型",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CodeQL 路径查询的元数据中应使用什么 kind？",
+      "answer": "使用 @kind path-problem。",
+      "explanation": "该元数据使结果按路径问题解释和展示。",
+      "example": "为数据流路径查询声明 path-problem。",
+      "tags": [
+        "CodeQL 路径查询",
+        "路径查询类型"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/"
+    },
+    {
+      "id": "qlpath-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeQL 路径查询",
+      "knowledgePoint": "路径边",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeQL 路径查询中的 edges 谓词主要定义什么？",
+      "answer": "定义路径图中的边关系，供结果路径计算使用。",
+      "explanation": "可以从标准数据流库的 PathGraph 模块导入相关谓词。",
+      "example": "用数据流边连接可达节点。",
+      "tags": [
+        "CodeQL 路径查询",
+        "路径边"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/"
+    },
+    {
+      "id": "qlpath-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeQL 路径查询",
+      "knowledgePoint": "路径图模块",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CodeQL 官方数据流示例中，导入 Flow::PathGraph 的目的是什么？",
+      "answer": "引入用于构建路径解释的图相关定义。",
+      "explanation": "示例中的 Flow 由具体的数据流配置生成。",
+      "example": "在查询中导入对应配置的 PathGraph。",
+      "tags": [
+        "CodeQL 路径查询",
+        "路径图模块"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/"
+    },
+    {
+      "id": "qlpath-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeQL 路径查询",
+      "knowledgePoint": "节点筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeQL 路径查询定义可选的 nodes 谓词后，哪些边会被选择？",
+      "answer": "只选择两端都属于 nodes 所定义集合的边。",
+      "explanation": "未定义 nodes 时使用 edges 的所有可能端点。",
+      "example": "限制路径图只显示关心的节点集合。",
+      "tags": [
+        "CodeQL 路径查询",
+        "节点筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/"
+    },
+    {
+      "id": "qlpath-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeQL 路径查询",
+      "knowledgePoint": "路径可达",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CodeQL 数据流路径示例中的 flowPath(source, sink) 检查什么？",
+      "answer": "检查配置中的源路径节点到汇路径节点是否存在数据流路径。",
+      "explanation": "结果受配置的源、汇及数据流模型影响。",
+      "example": "查询输入能否到达敏感操作。",
+      "tags": [
+        "CodeQL 路径查询",
+        "路径可达"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/"
+    },
+    {
+      "id": "qlpath-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CodeQL 路径查询",
+      "knowledgePoint": "选择列",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "CodeQL 路径查询的 select 子句中，第二列和第三列通常指定什么？",
+      "answer": "分别指定路径图中的 source 和 sink 节点。",
+      "explanation": "首列是结果位置，最后一列是告警消息。",
+      "example": "在结果中展示从输入节点到调用节点的路径。",
+      "tags": [
+        "CodeQL 路径查询",
+        "选择列"
+      ],
+      "evidence": "source",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/"
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "tau-bench-agent-reliability",
+    "title": "τ-bench 原论文 v1：工具交互与可靠性",
+    "url": "https://arxiv.org/pdf/2406.12045v1",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的固定版本资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "taubench-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "评测组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ-bench 原论文中的智能体需要与哪些对象交互？",
+      "answer": "它通过领域 API 工具访问数据库，并与语言模型模拟的用户对话。",
+      "explanation": "论文场景还提供智能体需要遵守的领域规则。",
+      "example": "模拟用户提出订单修改请求，智能体查阅并更新订单。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "评测组成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    },
+    {
+      "id": "taubench-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "模拟用户状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ-bench 的模拟用户是否能直接查看智能体与工具之间的调用历史？",
+      "answer": "不能；模拟用户依据任务指令和用户与智能体的对话历史回应。",
+      "explanation": "智能体可通过对话向用户解释其所需信息。",
+      "example": "用户不能自动看到智能体查询数据库的结果。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "模拟用户状态"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    },
+    {
+      "id": "taubench-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "规则约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ-bench 论文中的所有业务规则都由 API 自动强制检查吗？",
+      "answer": "不是；部分规则由 API 检查，其他规则仍需智能体自己遵守。",
+      "explanation": "这会影响仅检查最终状态的评估覆盖。",
+      "example": "有的业务条件需要智能体阅读领域规则判断。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "规则约束"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    },
+    {
+      "id": "taubench-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "任务成功",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ-bench 原论文如何综合判断一回合任务是否成功？",
+      "answer": "同时检查最终数据库是否达到目标状态，以及用户回答是否包含所需信息。",
+      "explanation": "论文将两个二元结果相乘得到该回合奖励。",
+      "example": "数据库改对但缺少必要答复时不能得满分。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "任务成功"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    },
+    {
+      "id": "taubench-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "最终状态局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ-bench 的目标数据库状态和必要回答都满足，是否保证全过程遵守业务规则？",
+      "answer": "不保证；例如可能在未按要求获得用户确认时就执行了写操作。",
+      "explanation": "论文指出最终状态检查并非充分的行为合规条件。",
+      "example": "结果正确仍需检查关键授权步骤。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "最终状态局限"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    },
+    {
+      "id": "taubench-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "可靠性指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ-bench 的 pass^k 与 pass@k 分别衡量什么？",
+      "answer": "pass^k 衡量同一任务 k 次独立同分布试验全部成功的概率；pass@k 衡量至少一次成功的概率。",
+      "explanation": "论文再对任务求平均。",
+      "example": "一个强调稳定完成，另一个强调多次尝试能找到解。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "可靠性指标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    },
+    {
+      "id": "taubench-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "有限试验估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ-bench 中某任务运行 n 次成功 c 次，n≥k 时如何估计 pass^k？",
+      "answer": "使用组合数 C(c,k)/C(n,k)；当 c<k 时取 0。",
+      "explanation": "论文假设同一任务的试验独立同分布。",
+      "example": "n=4、c=3、k=2 时估计值为 1/2。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "有限试验估计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    },
+    {
+      "id": "taubench-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "重复试验假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 τ-bench 的 pass^k 不能无条件解释为线上 k 次调用全部成功的概率？",
+      "answer": "该解释依赖试验独立同分布以及评测任务代表部署情形等条件。",
+      "explanation": "真实用户、服务状态和故障可能具有相关性。",
+      "example": "共享故障会让多次调用的成功结果相关。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "重复试验假设"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    },
+    {
+      "id": "taubench-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "按任务平均",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么多任务的 pass^k 通常不能用平均单次成功率的 k 次方代替？",
+      "answer": "不同任务的成功概率可能不同；论文对各任务的 k 次全成功概率求平均。",
+      "explanation": "先平均再乘方会忽略任务难度差异。",
+      "example": "两任务成功率分别为 0.9 和 0.1 时，平方后平均为 0.41。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "按任务平均"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    },
+    {
+      "id": "taubench-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具智能体可靠性评测",
+      "knowledgePoint": "仿真与真实",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "τ-bench 使用语言模型模拟用户，对现实评估有什么限制？",
+      "answer": "模拟用户便于批量测试，但其对话行为未必覆盖真实用户的全部习惯和需求。",
+      "explanation": "结论还受所选领域、任务和模拟器影响。",
+      "example": "部署前仍需用代表性真实场景验证。",
+      "tags": [
+        "工具智能体可靠性评测",
+        "仿真与真实"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2406.12045v1"
+    }
+  ]
+}

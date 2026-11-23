@@ -1,0 +1,230 @@
+{
+  "source": {
+    "id": "langchain-output-parsing",
+    "title": "langchain-core 1.8.4：输出解析与条件路由",
+    "url": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/output_parsers/json.py",
+    "type": "官方文档与固定版本源码",
+    "note": "依据逐题所列官方文档、源码或论文自行整理中文问答；例子为自编。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "lcparse-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "JSON与模型校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 中，JsonOutputParser 即使传入 pydantic_object，也会像 PydanticOutputParser 一样校验输出吗？",
+      "answer": "不会；该版本的 JsonOutputParser 解析 JSON 并可用模型生成格式说明，但不按该模型校验结果；PydanticOutputParser 会校验并返回模型实例。",
+      "explanation": "需要模式校验时，应选择带校验的解析器或自行校验。",
+      "example": "score 为非数字字符串时，普通 JSON 解析仍可能成功。",
+      "tags": [
+        "JSON与模型校验",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/output_parsers/pydantic.py",
+      "supportingReferences": [
+        {
+          "id": "langchain-core-json-parser-184",
+          "title": "langchain-core 1.8.4：JSON 输出解析实现",
+          "url": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/output_parsers/json.py",
+          "type": "固定版本官方源码",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "lcparse-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "解析与严格校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 langchain-core 1.8.4 的 JsonOutputParser 解析成功不能证明原始输出是完整的严格 JSON？",
+      "answer": "其默认解析工具会尝试修复部分不完整 JSON，例如补全缺失的结束括号。",
+      "explanation": "应用若要求严格完整格式，需要另行选择相应校验。",
+      "example": "缺少结束大括号的文本仍可能被解析成字典。",
+      "tags": [
+        "解析与严格校验",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/utils/json.py"
+    },
+    {
+      "id": "lcparse-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "Markdown JSON",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 JsonOutputParser 能否解析 Markdown 代码围栏内的 JSON？",
+      "answer": "可以；其解析工具会尝试从代码围栏中提取 JSON 内容。",
+      "explanation": "能解析代码围栏不代表保证满足业务模式。",
+      "example": "解析 ```json 围栏中的对象。",
+      "tags": [
+        "Markdown JSON",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/utils/json.py"
+    },
+    {
+      "id": "lcparse-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "多个候选输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 JsonOutputParser.parse_result 收到多个 Generation 时解析哪一个？",
+      "answer": "它使用结果列表中的第一个 Generation。",
+      "explanation": "需要综合多个候选时，调用方应显式分别处理。",
+      "example": "两个候选分别为不同对象时，默认只解析第一个。",
+      "tags": [
+        "多个候选输出",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/output_parsers/json.py"
+    },
+    {
+      "id": "lcparse-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "部分模式校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 PydanticOutputParser 在 partial=True 且当前结果尚未通过模型校验时通常返回什么？",
+      "answer": "返回 None；常规非部分解析遇到校验错误会抛出 OutputParserException。",
+      "explanation": "流式结果尚未具备必需字段时不应视为完整对象。",
+      "example": "必填 score 尚未出现时等待后续片段。",
+      "tags": [
+        "部分模式校验",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/output_parsers/pydantic.py"
+    },
+    {
+      "id": "lcparse-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "JSON流式结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 JsonOutputParser 在流式处理时可能产出什么？",
+      "answer": "它可随着片段累积逐步产出已解析的部分 JSON 结果。",
+      "explanation": "中间结果可能缺少后续字段，不能直接当作最终完整响应。",
+      "example": "先得到 name，后续片段再补充 score。",
+      "tags": [
+        "JSON流式结果",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/output_parsers/json.py"
+    },
+    {
+      "id": "lcparse-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "JSON流式差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 JsonOutputParser 在流式模式设置 diff=True 后输出什么？",
+      "answer": "输出描述前后解析结果差异的 JSON Patch 操作，而不是每次输出完整对象。",
+      "explanation": "消费者需要按差异操作更新自己的状态。",
+      "example": "字段出现时得到对应的 add 操作。",
+      "tags": [
+        "JSON流式差异",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/output_parsers/json.py"
+    },
+    {
+      "id": "lcparse-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "逗号列表引号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 CommaSeparatedListOutputParser 如何处理正常 CSV 引号内的逗号？",
+      "answer": "它按 CSV 规则读取，字段引号内的逗号可保留为同一项的一部分。",
+      "explanation": "这比简单地用字符串 split 逗号更适合带引号的输入。",
+      "example": "\"a,b\", c 被解析为两项 a,b 和 c。",
+      "tags": [
+        "逗号列表引号",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/output_parsers/list.py"
+    },
+    {
+      "id": "lcparse-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "JSON必需键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 的 parse_and_check_json_markdown 检查 expected_keys 时，是否同时验证这些值的类型？",
+      "answer": "不会；它检查结果是字典且包含指定键，值类型需要另行校验。",
+      "explanation": "存在某个键不代表其值符合业务规则。",
+      "example": "score 键存在但值为字符串时仍可能通过键检查。",
+      "tags": [
+        "JSON必需键",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/utils/json.py"
+    },
+    {
+      "id": "lcparse-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "条件路由",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 RunnableBranch 多个条件都为真时会执行哪些分支？",
+      "answer": "按顺序执行第一个满足条件的分支；没有条件满足时执行默认分支。",
+      "explanation": "这与将同一输入送到所有分支的 RunnableParallel 不同。",
+      "example": "先匹配到正数条件后，不再执行后续也为真的条件分支。",
+      "tags": [
+        "条件路由",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/branch.py"
+    },
+    {
+      "id": "lcparse-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 输出解析",
+      "knowledgePoint": "类型绑定与校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 Runnable.with_types 会在 invoke 时自动强制校验输入和输出类型吗？",
+      "answer": "不会；它绑定类型用于接口和模式描述，运行时校验仍需由组件或调用方提供。",
+      "explanation": "类型描述与数据校验是两个步骤。",
+      "example": "将输入类型标为 int 不会阻止简单透传 Runnable 接收字符串。",
+      "tags": [
+        "类型绑定与校验",
+        "LangChain 输出解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/base.py"
+    }
+  ]
+}

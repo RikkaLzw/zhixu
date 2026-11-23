@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "aflfast-power-schedules",
+    "title": "AFLFast 原论文：灰盒模糊测试能量调度",
+    "url": "https://mboehme.github.io/paper/CCS16.pdf",
+    "type": "教材、官方文档与原论文",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "aflfast-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLFast 能量调度",
+      "knowledgePoint": "高频路径问题",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLFast 为什么关注模糊测试中出现频率较低的路径？",
+      "answer": "许多生成输入反复执行少数高频路径，调整资源分配可减少重复探索。",
+      "explanation": "路径频率取决于目标和当前测试过程。",
+      "example": "很多无效文件都在同一个早期解析错误分支退出。",
+      "tags": [
+        "AFLFast 能量调度",
+        "高频路径问题"
+      ],
+      "evidence": "source",
+      "reference": "https://mboehme.github.io/paper/CCS16.pdf"
+    },
+    {
+      "id": "aflfast-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLFast 能量调度",
+      "knowledgePoint": "调度与次序",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "AFLFast 论文中的 power schedule 和 search strategy 分别决定什么？",
+      "answer": "power schedule 决定选中种子的能量；search strategy 决定种子被选择的顺序。",
+      "explanation": "两者共同影响有限时间内的探索过程。",
+      "example": "先选哪个种子与该种子变异多少次是不同决策。",
+      "tags": [
+        "AFLFast 能量调度",
+        "调度与次序"
+      ],
+      "evidence": "source",
+      "reference": "https://mboehme.github.io/paper/CCS16.pdf"
+    },
+    {
+      "id": "aflfast-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFLFast 能量调度",
+      "knowledgePoint": "FAST增长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFLFast 论文的指数调度如何随种子反复被选择而调整能量？",
+      "answer": "在路径频率等其他因素固定时，指数项随选择次数增长；总能量还受频率和上界约束。",
+      "explanation": "实际路径频率也可能变化，因此总能量不一定每次都增加。",
+      "example": "多次选中仍有探索价值的种子时增加变异次数。",
+      "tags": [
+        "AFLFast 能量调度",
+        "FAST增长"
+      ],
+      "evidence": "source",
+      "reference": "https://mboehme.github.io/paper/CCS16.pdf"
+    }
+  ]
+}

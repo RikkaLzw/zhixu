@@ -1,0 +1,45 @@
+{
+  "source": {
+    "id": "company-interview-network",
+    "title": "美团公开面经：网络代理",
+    "url": "https://www.nowcoder.com/discuss/496834610337169408",
+    "type": "公开面经合集",
+    "note": "公司、岗位、轮次及经历为分享者自述；有些资料由合集转载。逐题记录面经来源和独立技术依据，标注主题启发的题目并非原帖逐题提出。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "companypractice-net-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络代理",
+      "knowledgePoint": "正向与反向代理",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "正向代理和反向代理分别主要位于请求链路的哪一侧？",
+      "answer": "正向代理通常由客户端使用，代表客户端向目标发起请求；反向代理位于服务端入口，接收请求并转发给后端服务。",
+      "explanation": "两者的边界应结合部署和信任关系判断；反向代理可承担负载分发、缓存等功能。",
+      "example": "员工经正向代理访问外部网站；网站入口经反向代理转发给应用服务。",
+      "tags": [
+        "正向与反向代理",
+        "网络代理",
+        "公开面经",
+        "美团"
+      ],
+      "evidence": "application",
+      "referenceId": "company-meituan",
+      "reference": "https://www.nowcoder.com/discuss/496834610337169408",
+      "referenceTitle": "美团安全面经一面（个人自述，合集收录）",
+      "referenceType": "公开面经（个人自述）",
+      "supportingReferences": [
+        {
+          "id": "http-proxy-interview",
+          "title": "MDN：Proxy servers and tunneling",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Proxy_servers_and_tunneling",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

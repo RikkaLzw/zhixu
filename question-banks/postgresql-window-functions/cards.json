@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "postgresql-window-functions",
+    "title": "PostgreSQL 17：SQL 窗口函数",
+    "url": "https://www.postgresql.org/docs/17/tutorial-window.html",
+    "type": "标准、教材与官方技术文档",
+    "note": "根据逐题引用的标准、教材或官方文档自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sqlwin-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "窗口函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 窗口函数与普通 GROUP BY 聚合在输出行上有什么主要区别？",
+      "answer": "窗口函数在相关行上计算，但通常保留输入行的独立身份；分组聚合通常把每组压成一行。",
+      "explanation": "窗口函数可为每位员工附加其部门均值。",
+      "example": "同一部门的多位员工各自保留一行。",
+      "tags": [
+        "SQL 窗口函数",
+        "窗口函数"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-window.html"
+    },
+    {
+      "id": "sqlwin-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "分区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 窗口的 PARTITION BY 有什么作用？",
+      "answer": "它按表达式把输入行分成分区，窗口计算在当前行所在分区内进行。",
+      "explanation": "没有 PARTITION BY 时所有输入行属于同一分区。",
+      "example": "按部门分区后分别计算部门排名。",
+      "tags": [
+        "SQL 窗口函数",
+        "分区"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-window.html"
+    },
+    {
+      "id": "sqlwin-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "排序范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "窗口定义中的 ORDER BY 是否保证最终查询结果按同样顺序输出？",
+      "answer": "不保证；窗口排序控制窗口计算顺序，最终输出顺序需由查询外层 ORDER BY 指定。",
+      "explanation": "同一查询可以有不同的窗口排序。",
+      "example": "先按部门算排名，再按员工编号输出。",
+      "tags": [
+        "SQL 窗口函数",
+        "排序范围"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-window.html"
+    },
+    {
+      "id": "sqlwin-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "row_number",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 row_number() 如何编号？",
+      "answer": "它在每个分区内从 1 开始，按窗口顺序给每行编号。",
+      "explanation": "排序键相同时，如未提供打破并列的顺序，行号分配不保证稳定。",
+      "example": "按工资排序，同工资员工也有不同编号。",
+      "tags": [
+        "SQL 窗口函数",
+        "row_number"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-window.html"
+    },
+    {
+      "id": "sqlwin-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "并列排名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 rank() 与 dense_rank() 如何处理并列名次？",
+      "answer": "两者都给并列行相同名次；rank 在并列后可能跳号，dense_rank 不跳号。",
+      "explanation": "排名由窗口 ORDER BY 中的排序键决定。",
+      "example": "第一名有两人时，后续 rank 为 3、dense_rank 为 2。",
+      "tags": [
+        "SQL 窗口函数",
+        "并列排名"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-window.html"
+    },
+    {
+      "id": "sqlwin-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "前后行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 lag 和 lead 分别读取什么值？",
+      "answer": "lag 读取同一分区中当前行之前的值，lead 读取之后的值。",
+      "explanation": "偏移或默认值可指定；未指定时默认偏移为 1、越界返回 NULL。",
+      "example": "比较当天数值和前一条记录的数值。",
+      "tags": [
+        "SQL 窗口函数",
+        "前后行"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-window.html"
+    },
+    {
+      "id": "sqlwin-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "窗口默认范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 窗口指定 ORDER BY 而未指定 frame 时，默认 frame 包含哪些行？",
+      "answer": "从分区开头到当前行的最后一个排序并列行。",
+      "explanation": "因此默认累计聚合可能对排序键相同的行得到相同结果。",
+      "example": "两个工资相同的行可得到同样的累计和。",
+      "tags": [
+        "SQL 窗口函数",
+        "窗口默认范围"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-window.html"
+    },
+    {
+      "id": "sqlwin-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "last_value",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 PostgreSQL 的 last_value 在有窗口排序时不一定返回整个分区最后一行的值？",
+      "answer": "它读取当前窗口 frame 的最后一行，而默认 frame 通常只到当前行的最后一个并列行。",
+      "explanation": "需要整个分区末尾时可明确设置覆盖整个分区的 frame。",
+      "example": "按日期排序时，默认 last_value 可能返回当前日期的值。",
+      "tags": [
+        "SQL 窗口函数",
+        "last_value"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-window.html"
+    },
+    {
+      "id": "sqlwin-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "全分区聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 中窗口聚合希望覆盖整个分区时，如何避免默认累计 frame？",
+      "answer": "可以省略窗口 ORDER BY，或显式设置从 UNBOUNDED PRECEDING 到 UNBOUNDED FOLLOWING 的 frame。",
+      "explanation": "需要排序和全分区聚合时可选后者。",
+      "example": "每行显示整个部门的工资总和。",
+      "tags": [
+        "SQL 窗口函数",
+        "全分区聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-window.html"
+    },
+    {
+      "id": "sqlwin-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "先过滤后窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同层 SQL 的 WHERE 条件会在窗口函数处理之前还是之后筛行？",
+      "answer": "之前；被 WHERE 排除的行不会进入该层窗口函数的输入。",
+      "explanation": "分组查询的分组与 HAVING 结果也影响窗口输入。",
+      "example": "只保留今年记录后再计算年内排名。",
+      "tags": [
+        "SQL 窗口函数",
+        "先过滤后窗口"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-window.html"
+    },
+    {
+      "id": "sqlwin-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "窗口结果筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 中需要按窗口函数计算出的排名筛选结果时，常用什么方式？",
+      "answer": "先在子查询或公共表表达式中计算排名，再在外层 WHERE 筛选。",
+      "explanation": "同一查询层的 WHERE 不能直接使用窗口函数。",
+      "example": "先计算部门排名，再保留每部门前几名。",
+      "tags": [
+        "SQL 窗口函数",
+        "窗口结果筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-window.html"
+    },
+    {
+      "id": "sqlwin-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 窗口函数",
+      "knowledgePoint": "ntile",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 ntile(n) 如何划分窗口分区？",
+      "answer": "按窗口顺序把分区尽量均匀地划入最多 n 个非空编号桶，并返回当前行的桶号。",
+      "explanation": "桶大小不一定完全相同；行数少于 n 时不会出现 n 个非空桶。",
+      "example": "把十条记录按顺序划入三个桶。",
+      "tags": [
+        "SQL 窗口函数",
+        "ntile"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-window.html"
+    }
+  ]
+}

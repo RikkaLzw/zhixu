@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "gymnasium-episode-boundaries",
+    "title": "Gymnasium 1.1.1：环境交互与边界",
+    "url": "https://gymnasium.farama.org/v1.1.1/api/env/",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "gymapi-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "强化学习环境交互",
+      "knowledgePoint": "step返回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gymnasium 1.1.1 的环境 step(action) 返回哪五项？",
+      "answer": "返回 observation、reward、terminated、truncated 和 info。",
+      "explanation": "info 提供额外诊断信息，不能默认视为智能体的观测。",
+      "example": "执行一个动作后同时获得新观测和回合状态。",
+      "tags": [
+        "强化学习环境交互",
+        "step返回"
+      ],
+      "evidence": "source",
+      "reference": "https://gymnasium.farama.org/v1.1.1/api/env/"
+    },
+    {
+      "id": "gymapi-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "强化学习环境交互",
+      "knowledgePoint": "终止与截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gymnasium 的 terminated 与 truncated 分别表示什么？",
+      "answer": "terminated 表示到达任务定义的终止状态；truncated 表示外部条件提前结束回合。",
+      "explanation": "外部时间上限是常见截断原因；内在有限时域终点可属于终止。",
+      "example": "成功到达目标可为终止，外部时间到期可为截断。",
+      "tags": [
+        "强化学习环境交互",
+        "终止与截断"
+      ],
+      "evidence": "source",
+      "reference": "https://gymnasium.farama.org/v1.1.1/tutorials/gymnasium_basics/handling_time_limits/"
+    },
+    {
+      "id": "gymapi-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "强化学习环境交互",
+      "knowledgePoint": "回合重置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gymnasium 的 terminated 或 truncated 为 true 后，继续新回合前应做什么？",
+      "answer": "调用 reset，取得新回合的初始观测和 info。",
+      "explanation": "两个标志都用于判断本次交互是否需要结束。",
+      "example": "外部时间上限触发后重置环境。",
+      "tags": [
+        "强化学习环境交互",
+        "回合重置"
+      ],
+      "evidence": "source",
+      "reference": "https://gymnasium.farama.org/v1.1.1/api/env/"
+    },
+    {
+      "id": "gymapi-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习环境交互",
+      "knowledgePoint": "截断自举",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一条未到终止状态的轨迹仅因外部时间限制被截断时，价值学习是否应一律把后续价值设为零？",
+      "answer": "不应；通常应使用该截断处最终观测的价值进行自举。",
+      "explanation": "真正到达终止状态时才按相应任务的终止目标处理；应取得截断前的最终观测。",
+      "example": "时间限制截断不等于任务内的失败终点。",
+      "tags": [
+        "强化学习环境交互",
+        "截断自举"
+      ],
+      "evidence": "source",
+      "reference": "https://gymnasium.farama.org/v1.1.1/tutorials/gymnasium_basics/handling_time_limits/"
+    },
+    {
+      "id": "gymapi-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习环境交互",
+      "knowledgePoint": "标志同时为真",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gymnasium 的 terminated 和 truncated 一定互斥吗？",
+      "answer": "不一定；例如 TimeLimit 在环境终止的同一步也达到限制时，两者可以同时为 true。",
+      "explanation": "此时已经有终止信号，价值目标应按终止状态处理。",
+      "example": "一次成功动作恰好发生在外部步数上限。",
+      "tags": [
+        "强化学习环境交互",
+        "标志同时为真"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/Farama-Foundation/Gymnasium/blob/v1.1.1/gymnasium/wrappers/common.py"
+    },
+    {
+      "id": "gymapi-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "强化学习环境交互",
+      "knowledgePoint": "重置结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gymnasium 的 reset 通常返回什么？",
+      "answer": "返回初始 observation 和 info。",
+      "explanation": "它不是 step 的五项结果。",
+      "example": "obs, info = env.reset(seed=42)。",
+      "tags": [
+        "强化学习环境交互",
+        "重置结果"
+      ],
+      "evidence": "source",
+      "reference": "https://gymnasium.farama.org/v1.1.1/api/env/"
+    },
+    {
+      "id": "gymapi-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习环境交互",
+      "knowledgePoint": "环境随机数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gymnasium 环境已有随机数生成器后，reset(seed=None) 会重新播种它吗？",
+      "answer": "不会；它继续使用已有的生成器状态。",
+      "explanation": "传入整数 seed 才会重新初始化该环境的随机数生成器。",
+      "example": "通常初始化时指定一次种子，再用不带种子的 reset。",
+      "tags": [
+        "强化学习环境交互",
+        "环境随机数"
+      ],
+      "evidence": "source",
+      "reference": "https://gymnasium.farama.org/v1.1.1/api/env/"
+    },
+    {
+      "id": "gymapi-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习环境交互",
+      "knowledgePoint": "动作空间种子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Gymnasium 要复现 action_space.sample 的随机动作，应该给哪里设置种子？",
+      "answer": "为 action_space 单独调用 seed。",
+      "explanation": "环境的 reset(seed=...) 和动作空间采样的随机状态应分别考虑。",
+      "example": "env.action_space.seed(123)。",
+      "tags": [
+        "强化学习环境交互",
+        "动作空间种子"
+      ],
+      "evidence": "source",
+      "reference": "https://gymnasium.farama.org/v1.1.1/api/env/"
+    },
+    {
+      "id": "gymapi-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "强化学习环境交互",
+      "knowledgePoint": "有限时域观测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "任务本身具有有限时域时，为什么观察中通常需要包含剩余时间信息？",
+      "answer": "剩余时间可能影响未来回报；提供它有助于维持所定义状态的马尔可夫性质。",
+      "explanation": "这一条件针对任务内在时限，与外部截断不同。",
+      "example": "同一位置距离任务结束 1 步和 100 步的决策可能不同。",
+      "tags": [
+        "强化学习环境交互",
+        "有限时域观测"
+      ],
+      "evidence": "source",
+      "reference": "https://gymnasium.farama.org/v1.1.1/tutorials/gymnasium_basics/handling_time_limits/"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "sklearn-permutation-score",
+    "title": "scikit-learn 1.7.2：交叉验证置换检验",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.permutation_test_score.html",
+    "type": "教材、官方文档与固定版本源码",
+    "note": "依据逐题所列文档、教材或固定版本源码自行整理；示例为自编，使用条件见各卡。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skperm-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "交叉验证置换检验",
+      "knowledgePoint": "测试目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn permutation_test_score 主要检验什么？",
+      "answer": "它通过置换目标 y 构造参考分布，评估交叉验证分数与特征和目标独立的原假设是否相容。",
+      "explanation": "解释依赖数据和置换设计满足相应可交换性等条件。",
+      "example": "用标签置换评估模型是否利用了特征与标签的关联。",
+      "tags": [
+        "交叉验证置换检验",
+        "测试目标"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.permutation_test_score.html"
+    },
+    {
+      "id": "skperm-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "交叉验证置换检验",
+      "knowledgePoint": "输出结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "permutation_test_score 返回的 score、permutation_scores 和 pvalue 分别是什么？",
+      "answer": "分别是原始标签的交叉验证分数、各次置换后的分数，以及经验 p 值。",
+      "explanation": "每次置换都要重新计算交叉验证分数。",
+      "example": "对 99 次置换会得到 99 个置换分数。",
+      "tags": [
+        "交叉验证置换检验",
+        "输出结果"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.permutation_test_score.html"
+    },
+    {
+      "id": "skperm-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "交叉验证置换检验",
+      "knowledgePoint": "经验p值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 的 permutation_test_score 怎样由置换分数计算 p 值？",
+      "answer": "它用 (C+1)/(N+1)，其中 N 是置换次数，C 是不低于原始分数的置换分数个数。",
+      "explanation": "评分器按“越大越好”约定比较；最小 p 值为 1/(N+1)。",
+      "example": "99 次置换且没有分数达到原始分数时 p 值为 0.01。",
+      "tags": [
+        "交叉验证置换检验",
+        "经验p值"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.permutation_test_score.html"
+    },
+    {
+      "id": "skperm-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉验证置换检验",
+      "knowledgePoint": "大p值解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "permutation_test_score 得到较大的 p 值能否证明特征与目标独立？",
+      "answer": "不能；这也可能因为样本、模型或评分方式不足以检测已有依赖。",
+      "explanation": "统计检验未拒绝原假设不等于证明原假设成立。",
+      "example": "非线性关联可能没有被所选线性模型利用。",
+      "tags": [
+        "交叉验证置换检验",
+        "大p值解释"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.permutation_test_score.html"
+    },
+    {
+      "id": "skperm-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉验证置换检验",
+      "knowledgePoint": "组内置换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 默认未启用元数据路由时，permutation_test_score 的 groups 如何限制置换？",
+      "answer": "目标值仅在具有相同组标识的样本之间重新排列。",
+      "explanation": "使用分组交叉验证器时，同一 groups 也传给切分器。",
+      "example": "相同主机组内打乱标签，不跨主机交换。",
+      "tags": [
+        "交叉验证置换检验",
+        "组内置换"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.permutation_test_score.html"
+    },
+    {
+      "id": "skperm-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉验证置换检验",
+      "knowledgePoint": "组内单一标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如果每个组内所有标签都相同，组内置换能产生不同标签排列吗？",
+      "answer": "不能；在组内交换相同标签不会改变 y。",
+      "explanation": "此时该置换方案无法生成有区分度的标签置换参考分布。",
+      "example": "每台主机所有记录均为同一标签时，主机内打乱不改变标签。",
+      "tags": [
+        "交叉验证置换检验",
+        "组内单一标签"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_validation.py"
+    },
+    {
+      "id": "skperm-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉验证置换检验",
+      "knowledgePoint": "元数据路由边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 使用 GroupKFold 并启用元数据路由，只通过 params 传 groups，能保证标签仅在组内置换吗？",
+      "answer": "不能；该版本将 params 中的 groups 路由给 GroupKFold，但置换函数读取直接的 groups 参数，此时它为 None。",
+      "explanation": "启用路由时直接传 groups 会被拒绝；使用分组置换前应验证实际版本行为。",
+      "example": "组内标签固定的示例中，启用路由后仍可能出现跨组置换。",
+      "tags": [
+        "交叉验证置换检验",
+        "元数据路由边界"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_validation.py"
+    }
+  ]
+}

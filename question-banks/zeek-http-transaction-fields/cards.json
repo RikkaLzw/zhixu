@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "zeek-http-transaction-fields",
+    "title": "Zeek 7.2.1 源码：HTTP 请求响应记录",
+    "url": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/http/main.zeek",
+    "type": "固定版本文档、源码或论文",
+    "note": "依据逐题所列资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "zeekhttp-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Zeek HTTP 事务日志",
+      "knowledgePoint": "事务粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 的 http.log 主要按什么粒度记录 HTTP 信息？",
+      "answer": "按请求／响应事务记录相关元数据。",
+      "explanation": "一个连接可以包含多个事务。",
+      "example": "同一 TCP 连接上的两次 HTTP 请求可形成两条记录。",
+      "tags": [
+        "Zeek HTTP 事务日志",
+        "事务粒度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/http/main.zeek"
+    },
+    {
+      "id": "zeekhttp-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Zeek HTTP 事务日志",
+      "knowledgePoint": "事务深度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 的 HTTP trans_depth 字段描述什么？",
+      "answer": "它表示该请求／响应事务在连接中的管线深度。",
+      "explanation": "同一连接的多个请求可共享 uid，trans_depth 可辅助区分事务位置。",
+      "example": "同一连接的多个事务可有不同深度值。",
+      "tags": [
+        "Zeek HTTP 事务日志",
+        "事务深度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/http/main.zeek"
+    },
+    {
+      "id": "zeekhttp-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Zeek HTTP 事务日志",
+      "knowledgePoint": "实际URI",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 的 http.log 中 uri 一定是原样请求 URI 吗？",
+      "answer": "不一定；该版本基础脚本将 http_request 事件的 unescaped_URI 写入 uri。",
+      "explanation": "需要原始消息形式时应检查相关事件与采集方式。",
+      "example": "包含转义字符的 URI 可能与日志值不同。",
+      "tags": [
+        "Zeek HTTP 事务日志",
+        "实际URI"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/http/main.zeek"
+    },
+    {
+      "id": "zeekhttp-005",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Zeek HTTP 事务日志",
+      "knowledgePoint": "响应版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 的 HTTP 日志 version 字段记录请求版本还是响应版本？",
+      "answer": "基础脚本记录响应中的版本字段。",
+      "explanation": "需要逐消息版本信息时可查看请求和响应事件。",
+      "example": "请求尚未观察到响应时该可选字段可能缺失。",
+      "tags": [
+        "Zeek HTTP 事务日志",
+        "响应版本"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/http/main.zeek"
+    },
+    {
+      "id": "zeekhttp-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek HTTP 事务日志",
+      "knowledgePoint": "消息体大小",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Zeek HTTP 日志的 request_body_len 与 response_body_len 分别统计哪一方向的内容大小？",
+      "answer": "分别统计客户端到服务端和服务端到客户端的数据内容大小。",
+      "explanation": "源码注释将它们描述为未压缩内容大小；观测不完整时应谨慎解释。",
+      "example": "比较上传与下载方向的消息体大小。",
+      "tags": [
+        "Zeek HTTP 事务日志",
+        "消息体大小"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/http/main.zeek"
+    },
+    {
+      "id": "zeekhttp-007",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Zeek HTTP 事务日志",
+      "knowledgePoint": "中间状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 观察到 1xx 响应后又观察到最终响应时，info_code 与 status_code 分别记录什么？",
+      "answer": "info_code 保留最近的 1xx 信息响应码，status_code 记录随后观察到的最终响应码。",
+      "explanation": "字段均为可选，缺失响应时不应假定一定存在。",
+      "example": "先收到 100，再收到 200。",
+      "tags": [
+        "Zeek HTTP 事务日志",
+        "中间状态"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/http/main.zeek"
+    },
+    {
+      "id": "zeekhttp-008",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Zeek HTTP 事务日志",
+      "knowledgePoint": "Basic认证口令",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 基础 HTTP 脚本默认会记录 Basic 认证密码吗？",
+      "answer": "默认不会；default_capture_password 默认为 F。",
+      "explanation": "配置或脚本可改变该行为，应检查实际部署。",
+      "example": "审计 HTTP 日志中的认证字段及隐私配置。",
+      "tags": [
+        "Zeek HTTP 事务日志",
+        "Basic认证口令"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/http/main.zeek"
+    }
+  ]
+}

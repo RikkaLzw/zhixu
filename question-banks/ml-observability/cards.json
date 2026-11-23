@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "ml-observability",
+    "title": "Evidently 与 Google ML、SRE 监控资料",
+    "url": "https://www.evidentlyai.com/ml-in-production/data-drift",
+    "type": "技术文档",
+    "note": "依据逐题注明的资料及对应版本整理，示例为自行编写。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "observability-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "数据与概念漂移",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "按常见机器学习口径，数据漂移与概念漂移有什么区别？",
+      "answer": "数据漂移是输入特征分布变化；概念漂移是输入与目标之间的关系变化。",
+      "explanation": "术语在不同资料中可能有不同用法，两者也可能同时发生。",
+      "example": "设备类型占比改变是输入分布变化；同一特征对应的真实风险变化涉及概念漂移。",
+      "tags": [
+        "数据与概念漂移",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://www.evidentlyai.com/ml-in-production/concept-drift"
+    },
+    {
+      "id": "observability-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "漂移与质量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "监测到输入分布漂移是否足以证明模型效果下降？",
+      "answer": "不足以证明；分布变化可能影响质量，也可能不影响，需要结合标签和业务评估。",
+      "explanation": "漂移信号可用于触发调查，不等同于误报率或召回率。",
+      "example": "新业务流量增加但人工核验后的检测质量保持稳定。",
+      "tags": [
+        "漂移与质量",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://www.evidentlyai.com/ml-in-production/data-drift"
+    },
+    {
+      "id": "observability-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "预测分布漂移",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "预测分布漂移与输入数据漂移分别监测什么？",
+      "answer": "前者监测模型输出分布的变化，后者监测输入特征分布的变化。",
+      "explanation": "两者都可以在缺少即时标签时提供线索，但不能单独证明效果变化。",
+      "example": "预测高风险比例上升，同时检查输入流量是否变化。",
+      "tags": [
+        "预测分布漂移",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://www.evidentlyai.com/ml-in-production/data-drift"
+    },
+    {
+      "id": "observability-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "模型年龄监控",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么上线模型要监控模型年龄？",
+      "answer": "如果训练或更新流水线停滞，实际服务的模型可能长时间没有更新。",
+      "explanation": "模型年龄本身不直接等于质量，应结合业务和效果监控。",
+      "example": "周期性重训任务失败后，模型年龄持续增加。",
+      "tags": [
+        "模型年龄监控",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "observability-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "分组质量监控",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么线上模型效果要按业务切片检查？",
+      "answer": "总体指标可能掩盖特定人群、资产类型或场景中的明显退化。",
+      "explanation": "切片需要足够样本并结合具体风险解释。",
+      "example": "总体效果稳定，但某类主机上的误报显著增加。",
+      "tags": [
+        "分组质量监控",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "observability-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "SLI与SLO",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "服务监控中的 SLI 和 SLO 分别是什么？",
+      "answer": "SLI 是服务水平的量化指标；SLO 是针对该指标设定的目标值。",
+      "explanation": "指标、目标及统计时间窗口应一起定义。",
+      "example": "请求成功率是 SLI，30 天内达到 99.9% 是对应 SLO。",
+      "tags": [
+        "SLI与SLO",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/sre-book/service-level-objectives/"
+    },
+    {
+      "id": "observability-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "错误预算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基于成功率目标的错误预算表示什么？",
+      "answer": "它表示在目标统计窗口内，为满足 SLO 所允许的不良事件比例或数量。",
+      "explanation": "预算不等于单次故障持续时间，计算需明确请求量和窗口。",
+      "example": "成功率 SLO 为 99.9% 时，允许的不良比例为 0.1%。",
+      "tags": [
+        "错误预算",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/workbook/alerting-on-slos/"
+    },
+    {
+      "id": "observability-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型监控",
+      "knowledgePoint": "预算消耗速率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SLO 告警中的 burn rate 衡量什么？",
+      "answer": "它衡量当前错误消耗相对于允许错误预算的速度。",
+      "explanation": "短时间的高消耗和长期的缓慢消耗可能需要不同告警窗口。",
+      "example": "持续以允许速率的两倍消耗，预算会更快耗尽。",
+      "tags": [
+        "预算消耗速率",
+        "模型监控"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/workbook/alerting-on-slos/"
+    }
+  ]
+}

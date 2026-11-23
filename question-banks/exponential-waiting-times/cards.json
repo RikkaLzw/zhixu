@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "exponential-waiting-times",
+    "title": "ProbabilityCourse 与 NIST：指数分布与等待时间",
+    "url": "https://www.probabilitycourse.com/chapter4/4_2_2_exponential.php",
+    "type": "教材、官方文档与原论文",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "expwait-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "指数分布与等待时间",
+      "knowledgePoint": "密度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "参数为 λ>0 的指数分布在 x≥0 时的概率密度是什么？",
+      "answer": "f(x)=λe^(-λx)；在负数处密度为零。",
+      "explanation": "λ 是速率参数，随机变量常表示非负等待时间。",
+      "example": "λ=2 时，密度为 2e^(-2x)。",
+      "tags": [
+        "指数分布与等待时间",
+        "密度"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter4/4_2_2_exponential.php"
+    },
+    {
+      "id": "expwait-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "指数分布与等待时间",
+      "knowledgePoint": "尾概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "若 X 服从速率为 λ 的指数分布，t≥0 时 P(X>t) 是多少？",
+      "answer": "P(X>t)=e^(-λt)。",
+      "explanation": "它表示等待时间超过 t 的概率。",
+      "example": "λ=2、t=1 时尾概率为 e^(-2)。",
+      "tags": [
+        "指数分布与等待时间",
+        "尾概率"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter4/4_2_2_exponential.php"
+    },
+    {
+      "id": "expwait-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "指数分布与等待时间",
+      "knowledgePoint": "均值方差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "速率为 λ>0 的指数分布的均值和方差分别是多少？",
+      "answer": "均值为 1/λ，方差为 1/λ²。",
+      "explanation": "λ 增大时平均等待时间缩短。",
+      "example": "λ=2 时均值为 0.5，方差为 0.25。",
+      "tags": [
+        "指数分布与等待时间",
+        "均值方差"
+      ],
+      "evidence": "source",
+      "reference": "https://www.itl.nist.gov/div898/handbook/apr/section1/apr161.htm"
+    },
+    {
+      "id": "expwait-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指数分布与等待时间",
+      "knowledgePoint": "无记忆性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "指数等待时间的无记忆性指什么？",
+      "answer": "对 s,t≥0，P(X>s+t | X>s)=P(X>t)。",
+      "explanation": "已经等待 s 后，剩余等待时间的分布仍与原等待时间相同。",
+      "example": "事件尚未发生时，未来再等待超过 t 的概率不依赖已等时长。",
+      "tags": [
+        "指数分布与等待时间",
+        "无记忆性"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter4/4_2_2_exponential.php"
+    },
+    {
+      "id": "expwait-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指数分布与等待时间",
+      "knowledgePoint": "泊松到达间隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "齐次泊松过程中，相邻事件的到达间隔服从什么分布？",
+      "answer": "相邻到达间隔相互独立，并服从与泊松过程速率相同的指数分布。",
+      "explanation": "这里要求齐次泊松过程的假设成立。",
+      "example": "速率为每小时 2 次时，间隔的指数速率为每小时 2。",
+      "tags": [
+        "指数分布与等待时间",
+        "泊松到达间隔"
+      ],
+      "evidence": "source",
+      "reference": "https://www.probabilitycourse.com/chapter11/11_1_2_basic_concepts_of_the_poisson_process.php"
+    },
+    {
+      "id": "expwait-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指数分布与等待时间",
+      "knowledgePoint": "恒定风险率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "速率为 λ 的指数寿命模型，其风险率 h(t) 随时间如何变化？",
+      "answer": "风险率恒为 λ。",
+      "explanation": "这体现了该模型的无记忆性质。",
+      "example": "已运行较久本身不会改变模型的瞬时故障率。",
+      "tags": [
+        "指数分布与等待时间",
+        "恒定风险率"
+      ],
+      "evidence": "source",
+      "reference": "https://www.itl.nist.gov/div898/handbook/apr/section1/apr161.htm"
+    },
+    {
+      "id": "expwait-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "指数分布与等待时间",
+      "knowledgePoint": "SciPy速率尺度",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 用 expon 表示速率为 λ、位置为 0 的指数分布，应如何设置 scale？",
+      "answer": "设置 scale=1/λ。",
+      "explanation": "SciPy 的 scale 是尺度，不是速率。",
+      "example": "λ=2 时使用 expon(scale=0.5)。",
+      "tags": [
+        "指数分布与等待时间",
+        "SciPy速率尺度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.expon.html"
+    }
+  ]
+}

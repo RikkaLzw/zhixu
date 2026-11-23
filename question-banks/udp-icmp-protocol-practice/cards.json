@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "udp-icmp-protocol-practice",
+    "title": "RFC 768、792、1191 与 8085：UDP 和 ICMP",
+    "url": "https://www.rfc-editor.org/rfc/rfc768.html",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "udpicmp-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "UDP 与 ICMP 协议细节",
+      "knowledgePoint": "UDP长度字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 UDP 长度字段包含 UDP 首部吗？",
+      "answer": "包含；长度按字节计算，覆盖 UDP 首部和数据，最小值为 8。",
+      "explanation": "本题讨论普通 UDP 长度字段，不讨论 IPv6 jumbogram 的特殊编码。",
+      "example": "UDP 首部 8 字节、数据 12 字节时，长度字段为 20。",
+      "tags": [
+        "UDP 与 ICMP 协议细节",
+        "UDP长度字段"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.html"
+    },
+    {
+      "id": "udpicmp-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "UDP 与 ICMP 协议细节",
+      "knowledgePoint": "UDP源端口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 768 中 UDP 源端口字段为 0 可以表示什么？",
+      "answer": "表示没有使用源端口字段。",
+      "explanation": "有意义的源端口通常可作为回复时的目标端口；该协议字段本身允许为 0。",
+      "example": "只需单向传送且无需回复时，协议格式允许不使用源端口。",
+      "tags": [
+        "UDP 与 ICMP 协议细节",
+        "UDP源端口"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.html"
+    },
+    {
+      "id": "udpicmp-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "UDP 与 ICMP 协议细节",
+      "knowledgePoint": "UDP校验伪首部",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 UDP 校验和为什么还计算 IP 地址等伪首部信息？",
+      "answer": "伪首部把源地址、目的地址、协议号和 UDP 长度纳入校验，有助于发现错误投递。",
+      "explanation": "伪首部用于计算校验和，并非 UDP 数据本身额外携带的一段载荷。",
+      "example": "地址或协议号出错时，校验可能失败。",
+      "tags": [
+        "UDP 与 ICMP 协议细节",
+        "UDP校验伪首部"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.html"
+    },
+    {
+      "id": "udpicmp-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "UDP 与 ICMP 协议细节",
+      "knowledgePoint": "IPv4零校验和",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 UDP 首部中传输的校验和字段全为 0 表示什么？",
+      "answer": "表示发送方未生成 UDP 校验和。",
+      "explanation": "如果计算出的校验和值为 0，RFC 768 要求在线路上发送全 1 来区分。",
+      "example": "抓包看到 IPv4 UDP 校验和为 0 时，不能将其当成已校验成功的证据。",
+      "tags": [
+        "UDP 与 ICMP 协议细节",
+        "IPv4零校验和"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.html"
+    },
+    {
+      "id": "udpicmp-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "UDP 与 ICMP 协议细节",
+      "knowledgePoint": "UDP拥塞控制",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "UDP 应用如果持续高速向网络发送数据，为什么仍要考虑拥塞控制？",
+      "answer": "UDP 自身不提供拥塞控制；应用或其使用的上层协议需要控制发送，避免加剧拥塞。",
+      "explanation": "重传同样会消耗网络资源，应计入整体发送控制。",
+      "example": "批量发送遥测数据时按反馈调整发送速率。",
+      "tags": [
+        "UDP 与 ICMP 协议细节",
+        "UDP拥塞控制"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8085.html"
+    },
+    {
+      "id": "udpicmp-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "UDP 与 ICMP 协议细节",
+      "knowledgePoint": "IP分片可靠性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一个 UDP 数据报被拆成多个 IP 分片后，任一必需分片丢失会带来什么影响？",
+      "answer": "接收端通常无法完整重组该 IP 数据报，因此不能把完整 UDP 数据报交给应用。",
+      "explanation": "分片越多，任一片丢失导致整个数据报失败的机会通常越高。",
+      "example": "尽量控制报文尺寸或使用支持路径 MTU 的策略。",
+      "tags": [
+        "UDP 与 ICMP 协议细节",
+        "IP分片可靠性"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8085.html"
+    },
+    {
+      "id": "udpicmp-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "UDP 与 ICMP 协议细节",
+      "knowledgePoint": "端口不可达",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "IPv4 ICMP Destination Unreachable 的 Port Unreachable 通常说明什么？",
+      "answer": "目标主机报告数据报所指向的端口不可达。",
+      "explanation": "这类反馈可能被设备过滤或丢失；没有收到反馈不能证明端口可用。",
+      "example": "探测关闭的 UDP 端口时有时会收到该错误。",
+      "tags": [
+        "UDP 与 ICMP 协议细节",
+        "端口不可达"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc792.html"
+    },
+    {
+      "id": "udpicmp-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "UDP 与 ICMP 协议细节",
+      "knowledgePoint": "TTL超时",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "IPv4 ICMP Time Exceeded 中传输途中 TTL 耗尽表示什么？",
+      "answer": "路由器丢弃了 TTL 已耗尽的数据报，并可能向发送方报告超时。",
+      "explanation": "是否收到 ICMP 还受网络设备策略等影响。",
+      "example": "traceroute 可利用不同 TTL 的探测和响应推测路径。",
+      "tags": [
+        "UDP 与 ICMP 协议细节",
+        "TTL超时"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc792.html"
+    },
+    {
+      "id": "udpicmp-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "UDP 与 ICMP 协议细节",
+      "knowledgePoint": "不可分片与路径MTU",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "IPv4 数据报设置 DF 且超过下一跳可用 MTU 时，路径 MTU 发现依赖什么反馈？",
+      "answer": "路由器无法转发时可丢弃报文并返回“需要分片但设置了 DF”的 ICMP 错误。",
+      "explanation": "RFC 1191 定义的机制利用反馈调整路径 MTU；反馈被过滤可能造成黑洞。",
+      "example": "握手成功但较大的数据包反复超时时，可检查路径 MTU。",
+      "tags": [
+        "UDP 与 ICMP 协议细节",
+        "不可分片与路径MTU"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1191.html"
+    }
+  ]
+}

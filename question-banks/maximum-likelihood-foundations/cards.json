@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "maximum-likelihood-foundations",
+    "title": "StatLect：最大似然估计基础",
+    "url": "https://www.statlect.com/fundamentals-of-statistics/maximum-likelihood",
+    "type": "统计教材",
+    "note": "依据逐题引用的资料自行整理；示例为自编，版本与前提见题目。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "mlecore-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "最大似然估计",
+      "knowledgePoint": "似然含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "观察数据固定时，似然函数把什么作为变量？",
+      "answer": "把模型参数作为变量，表示不同参数值对已观察数据的相对支持程度。",
+      "explanation": "它由模型的联合概率或密度视为参数函数得到。",
+      "example": "比较两种伯努利成功概率对同一组结果的似然。",
+      "tags": [
+        "最大似然估计",
+        "似然含义"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/fundamentals-of-statistics/maximum-likelihood"
+    },
+    {
+      "id": "mlecore-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "最大似然估计",
+      "knowledgePoint": "估计目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "最大似然估计选择什么参数值？",
+      "answer": "在允许的参数空间内选择使观察数据的似然最大的参数值。",
+      "explanation": "最大值是否存在、是否唯一取决于具体模型和参数空间。",
+      "example": "用观测到的伯努利结果估计成功概率。",
+      "tags": [
+        "最大似然估计",
+        "估计目标"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/fundamentals-of-statistics/maximum-likelihood"
+    },
+    {
+      "id": "mlecore-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "最大似然估计",
+      "knowledgePoint": "独立样本似然",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "独立观测的联合似然通常如何由单个观测的概率或密度构造？",
+      "answer": "将各个观测对应的概率或密度相乘。",
+      "explanation": "乘积形式依赖独立性；相关数据应使用合适的联合模型。",
+      "example": "独立抛币结果的联合似然是各次概率的乘积。",
+      "tags": [
+        "最大似然估计",
+        "独立样本似然"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/fundamentals-of-statistics/maximum-likelihood"
+    },
+    {
+      "id": "mlecore-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最大似然估计",
+      "knowledgePoint": "对数似然",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "正似然取自然对数后，最大化对数似然与最大化原似然的最优参数有什么关系？",
+      "answer": "最优参数相同，因为对数函数严格递增。",
+      "explanation": "乘积也会变成求和，便于数值计算。",
+      "example": "比较两个参数的正似然值与对数似然值。",
+      "tags": [
+        "最大似然估计",
+        "对数似然"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/fundamentals-of-statistics/maximum-likelihood"
+    },
+    {
+      "id": "mlecore-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最大似然估计",
+      "knowledgePoint": "非后验",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "参数的似然函数能否直接当作该参数的后验概率分布？",
+      "answer": "不能；后验分布还需结合先验并进行归一化。",
+      "explanation": "似然与后验都可描述参数，但它们的定义和含义不同。",
+      "example": "仅有观测数据似然时不能直接读取参数的后验概率。",
+      "tags": [
+        "最大似然估计",
+        "非后验"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/fundamentals-of-statistics/maximum-likelihood"
+    },
+    {
+      "id": "mlecore-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最大似然估计",
+      "knowledgePoint": "伯努利估计",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "n 次独立同分布伯努利观测中有 k 次成功，成功概率 p 在 [0,1] 上的最大似然估计是多少？",
+      "answer": "p 的最大似然估计为 k/n。",
+      "explanation": "这里 n>0，所有试验使用同一个成功概率；似然与 p^k(1−p)^(n−k) 成正比。",
+      "example": "10 次试验成功 7 次，估计成功概率为 0.7。",
+      "tags": [
+        "最大似然估计",
+        "伯努利估计"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/fundamentals-of-statistics/maximum-likelihood"
+    },
+    {
+      "id": "mlecore-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最大似然估计",
+      "knowledgePoint": "驻点限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对数似然的导数在某个参数值为零，是否足以证明它是最大似然估计？",
+      "answer": "不一定；该驻点可能是极小值或其他驻点，还要检查最大值及参数空间边界。",
+      "explanation": "有些最大值出现在边界，另一些模型可能没有有限最大值。",
+      "example": "比较驻点和参数空间端点的似然。",
+      "tags": [
+        "最大似然估计",
+        "驻点限制"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/fundamentals-of-statistics/maximum-likelihood"
+    },
+    {
+      "id": "mlecore-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最大似然估计",
+      "knowledgePoint": "方差估计",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "独立同分布正态样本的均值和方差均未知，且样本值不全相同时，方差最大似然估计的分母是 n 还是 n−1？",
+      "answer": "是 n，分子为各样本与样本均值之差的平方和。",
+      "explanation": "这里 n≥2，且参数空间要求方差为正；以 n−1 为分母的样本方差是常见的无偏估计。",
+      "example": "四个样本的离均差平方和除以 4 得到方差 MLE。",
+      "tags": [
+        "最大似然估计",
+        "方差估计"
+      ],
+      "evidence": "source",
+      "reference": "https://www.statlect.com/fundamentals-of-statistics/normal-distribution-maximum-likelihood"
+    }
+  ]
+}

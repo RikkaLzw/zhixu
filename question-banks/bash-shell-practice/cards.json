@@ -1,0 +1,487 @@
+{
+  "source": {
+    "id": "bash-shell-practice",
+    "title": "Bash 5.3 与 GNU 手册：Shell 操作",
+    "url": "https://tiswww.case.edu/php/chet/bash/bashref.html#Pipelines-1",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理；示例为自编，版本和前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "bashcore-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "单引号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 单引号中的字符会进行变量展开吗？",
+      "answer": "不会；单引号保留其中每个字符的字面值。",
+      "explanation": "单引号本身不能直接出现在同一段单引号内部。",
+      "example": "'$name' 保持为字面文本。",
+      "tags": [
+        "单引号",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Single-Quotes-1"
+    },
+    {
+      "id": "bashcore-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "双引号变量展开",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 双引号中的 $name 会被展开吗？",
+      "answer": "会；双引号保留变量展开，同时通常避免展开结果再次进行词拆分和文件名展开。",
+      "explanation": "双引号中的某些反斜杠和命令替换也有特殊规则。",
+      "example": "\"$name\" 可将含空格的变量值作为一个参数。",
+      "tags": [
+        "双引号变量展开",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Double-Quotes-1"
+    },
+    {
+      "id": "bashcore-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "未引用变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中把变量写成未加引号的 $value，为什么可能变成多个参数？",
+      "answer": "普通命令参数位置的展开结果可能发生词拆分和文件名展开。",
+      "explanation": "赋值及其他特殊语法位置的规则不同。",
+      "example": "值为 a b 时，未引用的展开可能产生两个参数。",
+      "tags": [
+        "未引用变量",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Word-Splitting-1"
+    },
+    {
+      "id": "bashcore-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "位置参数数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 脚本中的 $# 表示什么？",
+      "answer": "它表示当前位置参数的个数，不包括脚本名 $0。",
+      "explanation": "调用 shift 后该数量也可能变化。",
+      "example": "脚本接收两个参数时 $# 为 2。",
+      "tags": [
+        "位置参数数量",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Special-Parameters-1"
+    },
+    {
+      "id": "bashcore-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "位置参数转发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中 \"$@\" 用于转发参数时有什么特点？",
+      "answer": "它将每个位置参数分别展开为一个独立的词，并保留参数中的空格。",
+      "explanation": "与未加引号的展开不同，它适合原样传递参数。",
+      "example": "用 another_command \"$@\" 转发脚本参数。",
+      "tags": [
+        "位置参数转发",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Special-Parameters-1"
+    },
+    {
+      "id": "bashcore-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "前一状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中 $? 表示什么？",
+      "answer": "它表示最近执行的前台管道的退出状态。",
+      "explanation": "要保存某条命令的状态，应在执行其他命令前读取。",
+      "example": "运行命令后立即检查 $?。",
+      "tags": [
+        "前一状态",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Special-Parameters-1"
+    },
+    {
+      "id": "bashcore-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "命令替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 $(command) 表达式会产生什么值？",
+      "answer": "它执行命令并以其标准输出替换该表达式，末尾换行符会被删除。",
+      "explanation": "引用方式还会影响结果是否继续拆分或展开。",
+      "example": "result=$(date) 保存命令输出。",
+      "tags": [
+        "命令替换",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Command-Substitution-1"
+    },
+    {
+      "id": "bashcore-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "算术展开",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 $((expression)) 主要用于什么？",
+      "answer": "对算术表达式求值，并将结果替换到命令中。",
+      "explanation": "算术运算按 Bash 的整数运算规则执行。",
+      "example": "$((2 + 3)) 展开为 5。",
+      "tags": [
+        "算术展开",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Arithmetic-Expansion-1"
+    },
+    {
+      "id": "bashcore-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "管道默认状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 默认如何确定不带 ! 的前台管道的退出状态？",
+      "answer": "默认使用管道中最后一条命令的退出状态。",
+      "explanation": "启用 pipefail 后规则会改变。",
+      "example": "前一条命令失败而末尾命令成功时，默认管道可能返回 0。",
+      "tags": [
+        "管道默认状态",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Pipelines-1"
+    },
+    {
+      "id": "bashcore-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "pipefail状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 启用 pipefail 后，不带 ! 的管道退出状态如何确定？",
+      "answer": "若有命令失败，使用最右侧非零退出状态；若全部成功，状态为 0。",
+      "explanation": "这是按命令在管道中的位置，而不是按结束时间。",
+      "example": "set -o pipefail 后可检测管道前段失败。",
+      "tags": [
+        "pipefail状态",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Pipelines-1"
+    },
+    {
+      "id": "bashcore-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "管道子Shell",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Bash 中在管道末尾的 while 循环里修改变量，循环结束后变量可能没有改变？",
+      "answer": "管道的各段通常在子 shell 中执行，子 shell 的变量修改不会传回父 shell。",
+      "explanation": "启用 lastpipe 且满足相应条件时，最后一段可能在当前 shell 执行。",
+      "example": "printf ... | while read ...; do ...; done。",
+      "tags": [
+        "管道子Shell",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Pipelines-1"
+    },
+    {
+      "id": "bashcore-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "未匹配通配符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 默认设置下，文件名通配模式没有匹配项时会怎样？",
+      "answer": "该模式通常原样保留；启用 nullglob 或 failglob 可改变行为。",
+      "explanation": "适用规则还受 shell 选项影响。",
+      "example": "没有 .log 文件时，*.log 默认可能原样作为参数。",
+      "tags": [
+        "未匹配通配符",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Filename-Expansion-1"
+    },
+    {
+      "id": "bashcore-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "通配符隐藏文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 默认文件名展开中，模式 * 会匹配以点开头的文件名吗？",
+      "answer": "通常不会；可在模式开头显式写点，或使用相关 shell 选项改变规则。",
+      "explanation": "目录中 . 与 .. 等名称还有专门规则。",
+      "example": "使用 .* 匹配隐藏名称时仍需注意具体选项。",
+      "tags": [
+        "通配符隐藏文件",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Filename-Expansion-1"
+    },
+    {
+      "id": "bashcore-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "花括号展开",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 {a,b} 与文件名通配符展开有什么区别？",
+      "answer": "花括号展开生成列出的文本，不依赖这些文件是否存在。",
+      "explanation": "花括号展开在其他多种 shell 展开之前进行。",
+      "example": "echo file{1,2} 生成 file1 和 file2。",
+      "tags": [
+        "花括号展开",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Brace-Expansion-1"
+    },
+    {
+      "id": "bashcore-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "参数默认值与赋值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中变量未设置或为空时，${name:-default} 与 ${name:=default} 有什么区别？",
+      "answer": "两者都产生 default 的展开值；:= 还会将该值赋给 name，而 :- 不赋值。",
+      "explanation": "位置参数和特殊参数不能用 := 赋值；去掉冒号后的测试条件不同。",
+      "example": "用 ${port:-8080} 读取默认值，或用 ${port:=8080} 同时赋值。",
+      "tags": [
+        "参数默认值与赋值",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Shell-Parameter-Expansion-1"
+    },
+    {
+      "id": "bashcore-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "read反斜杠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 read -r 为什么常用于读取原始文本行？",
+      "answer": "-r 防止 read 把反斜杠当作转义或续行字符处理。",
+      "explanation": "若还需保留首尾空白，可同时考虑 IFS 的设置。",
+      "example": "IFS= read -r line 读取一行文本。",
+      "tags": [
+        "read反斜杠",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Bash-Builtin-Commands"
+    },
+    {
+      "id": "bashcore-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "双中括号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 [[ ... ]] 条件表达式中，词是否会像普通未引用参数那样进行词拆分和文件名展开？",
+      "answer": "不会；但仍会执行参数展开、算术展开等适用展开。",
+      "explanation": "[[ 是 Bash 条件语法，与普通外部命令调用不同。",
+      "example": "[[ -f $path ]] 可以检查含空格的路径。",
+      "tags": [
+        "双中括号",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Conditional-Constructs-1"
+    },
+    {
+      "id": "bashcore-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "文件测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 文件条件测试 -e 和 -f 的含义有什么区别？",
+      "answer": "-e 检查路径是否存在；-f 检查路径是否存在且指向普通文件。",
+      "explanation": "文件测试通常跟随符号链接，因此悬空链接另需处理。",
+      "example": "用 [[ -f \"$path\" ]] 排除目录。",
+      "tags": [
+        "文件测试",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Bash-Conditional-Expressions-1"
+    },
+    {
+      "id": "bashcore-019",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "source执行环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中 source script 与运行 bash script 对当前 shell 环境有什么区别？",
+      "answer": "source 在当前 shell 中执行脚本；运行 bash script 则在另一个 shell 进程中执行。",
+      "explanation": "被 source 的脚本可能改变当前 shell 的变量和工作目录。",
+      "example": "用 source 加载当前 shell 需要的变量。",
+      "tags": [
+        "source执行环境",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Bourne-Shell-Builtins-1"
+    },
+    {
+      "id": "bashcore-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "后台作业等待",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中在命令后加 & 再用 wait，分别有什么作用？",
+      "answer": "& 让命令异步运行；wait 等待指定作业或子进程结束并报告相应状态。",
+      "explanation": "不指定参数时 wait 的行为与指定进程或作业有所不同。",
+      "example": "启动后台任务后等待其完成。",
+      "tags": [
+        "后台作业等待",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Job-Control-Builtins-1"
+    },
+    {
+      "id": "bashcore-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "here文档引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 here-document 若把分隔词加引号，文档内容会执行变量展开吗？",
+      "answer": "不会；引用分隔词会关闭这里文档内容中的参数、命令和算术展开。",
+      "explanation": "未引用的分隔词则允许这些展开。",
+      "example": "cat <<'EOF' 可保留内容中的 $name 字面值。",
+      "tags": [
+        "here文档引用",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#Here-Documents"
+    },
+    {
+      "id": "bashcore-022",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "grep固定字符串",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU grep 的 -F 选项如何解释搜索模式？",
+      "answer": "把模式解释为固定字符串，而不是正则表达式。",
+      "explanation": "这适合直接搜索包含正则特殊字符的字面文本。",
+      "example": "grep -F 以字面方式搜索 a.b。",
+      "tags": [
+        "grep固定字符串",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "bashcore-023",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "grep反选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU grep 的 -v 选项有什么作用？",
+      "answer": "反转匹配选择，输出不匹配模式的行。",
+      "explanation": "它按行进行选择，具体输出仍受其他选项影响。",
+      "example": "grep -v 排除包含指定模式的行。",
+      "tags": [
+        "grep反选",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/grep.1.html"
+    },
+    {
+      "id": "bashcore-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "空字符分隔路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么处理任意文件名时常把 find -print0 与 xargs -0 配合？",
+      "answer": "两者使用 NUL 字符分隔文件名，避免空格和换行等字符被误当成分隔符。",
+      "explanation": "文件名本身不能包含 NUL。",
+      "example": "find 生成 NUL 分隔的路径供 xargs 处理。",
+      "tags": [
+        "空字符分隔路径",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/xargs.1.html"
+    },
+    {
+      "id": "bashcore-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Shell 与命令实践",
+      "knowledgePoint": "find批量执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU find 的 -exec command {} + 与逐个执行的常见区别是什么？",
+      "answer": "它尽可能把多个匹配路径合并为较少次数的命令调用。",
+      "explanation": "每个路径仍作为单独参数传递；命令参数大小受系统限制。",
+      "example": "find . -type f -exec wc -l {} +。",
+      "tags": [
+        "find批量执行",
+        "Shell 与命令实践"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    }
+  ]
+}

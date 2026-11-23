@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "option-critic-temporal-abstraction",
+    "title": "Option-Critic 论文 v2：分层技能与时间抽象",
+    "url": "https://arxiv.org/pdf/1609.05140v2",
+    "type": "固定版本论文、标准或官方文档",
+    "note": "根据逐题引用的资料自行整理，示例自编；行为以指定版本与前提为准。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "optcritic-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 时间抽象与技能",
+      "knowledgePoint": "时间抽象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "强化学习中的 option 与单步原始动作有什么区别？",
+      "answer": "option 表示可能跨多个时间步执行的策略，原始动作通常是一步的环境动作。",
+      "explanation": "持续时间可以随状态和终止规则变化。",
+      "example": "把一段导航行为封装为可选择的技能。",
+      "tags": [
+        "Agent 时间抽象与技能",
+        "时间抽象"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1609.05140v2"
+    },
+    {
+      "id": "optcritic-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 时间抽象与技能",
+      "knowledgePoint": "三要素",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Options 框架中的一个 Markov option 通常由哪三部分定义？",
+      "answer": "由启动状态集合、option 内部策略和终止函数组成。",
+      "explanation": "三者分别约束何时可启动、如何行动和何时结束。",
+      "example": "为一项导航技能定义可启动位置、行动策略和结束条件。",
+      "tags": [
+        "Agent 时间抽象与技能",
+        "三要素"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1609.05140v2"
+    },
+    {
+      "id": "optcritic-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 时间抽象与技能",
+      "knowledgePoint": "终止概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Options 框架中的终止函数 β(s) 表示什么？",
+      "answer": "表示 option 在状态 s 结束的概率，取值在 0 到 1 之间。",
+      "explanation": "该概率可以随状态变化，不要求所有 option 长度固定。",
+      "example": "到达目标附近后提高技能终止概率。",
+      "tags": [
+        "Agent 时间抽象与技能",
+        "终止概率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1609.05140v2"
+    },
+    {
+      "id": "optcritic-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 时间抽象与技能",
+      "knowledgePoint": "执行方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Option-Critic 论文使用的 call-and-return 模式如何执行 option？",
+      "answer": "按高层策略选定 option 后遵循其内部策略，直到该 option 终止，再重新选择。",
+      "explanation": "这不等于每个原始动作之后都无条件重选 option。",
+      "example": "执行一段导航技能后再选下一技能。",
+      "tags": [
+        "Agent 时间抽象与技能",
+        "执行方式"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1609.05140v2"
+    },
+    {
+      "id": "optcritic-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 时间抽象与技能",
+      "knowledgePoint": "训练对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Option-Critic 论文主要学习 option 的哪些部分？",
+      "answer": "学习 option 内部策略和终止函数，并结合 option 选择策略。",
+      "explanation": "论文的训练目标不要求为每个 option 手工提供额外奖励或子目标。",
+      "example": "从环境奖励中共同学习技能动作和结束规则。",
+      "tags": [
+        "Agent 时间抽象与技能",
+        "训练对象"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1609.05140v2"
+    },
+    {
+      "id": "optcritic-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 时间抽象与技能",
+      "knowledgePoint": "启动假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Option-Critic 论文推导时对 option 的启动集合做了什么简化？",
+      "answer": "假设所有 option 在所有状态都可启动。",
+      "explanation": "一般的 options 框架允许不同 option 有不同的启动集合。",
+      "example": "实际设计中可用前置条件限制技能选择。",
+      "tags": [
+        "Agent 时间抽象与技能",
+        "启动假设"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1609.05140v2"
+    }
+  ]
+}

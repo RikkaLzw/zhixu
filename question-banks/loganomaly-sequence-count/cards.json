@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "loganomaly-sequence-count",
+    "title": "LogAnomaly 原论文：日志顺序与数量异常",
+    "url": "https://www.ijcai.org/proceedings/2019/0658.pdf",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的原论文或官方文档自行整理；例子为自编，适用版本与条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "loganom-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "日志序列与数量异常",
+      "knowledgePoint": "检测目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogAnomaly 原论文同时建模日志的哪两类异常模式？",
+      "answer": "它建模模板出现顺序的异常和模板计数关系的异常。",
+      "explanation": "原论文主要研究系统运行日志，异常不自动等于安全攻击。",
+      "example": "既检查事件顺序，也检查事件出现次数关系。",
+      "tags": [
+        "检测目标",
+        "日志序列与数量异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ijcai.org/proceedings/2019/0658.pdf"
+    },
+    {
+      "id": "loganom-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志序列与数量异常",
+      "knowledgePoint": "语义动机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogAnomaly 为什么不只使用日志模板的离散编号表示事件？",
+      "answer": "不同编号的模板可能语义相近，编号本身不能表达这种关系。",
+      "explanation": "语义相近也不保证事件在所有安全上下文中等价。",
+      "example": "两个表述相似但编号不同的链路状态日志。",
+      "tags": [
+        "语义动机",
+        "日志序列与数量异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ijcai.org/proceedings/2019/0658.pdf"
+    },
+    {
+      "id": "loganom-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志序列与数量异常",
+      "knowledgePoint": "词汇关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogAnomaly 的 template2Vec 为什么利用同义词和反义词关系？",
+      "answer": "它希望表示模板中的语义关系，并区分上下文相似但意义相反的词。",
+      "explanation": "论文结合 WordNet 与人工补充的领域词汇关系。",
+      "example": "区分 up 和 down 对事件含义的影响。",
+      "tags": [
+        "词汇关系",
+        "日志序列与数量异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ijcai.org/proceedings/2019/0658.pdf"
+    },
+    {
+      "id": "loganom-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志序列与数量异常",
+      "knowledgePoint": "模板向量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogAnomaly 原论文如何从模板中的词向量构造模板向量？",
+      "answer": "对模板中的词向量做加权平均。",
+      "explanation": "向量表示不能完整保证模板含义一致。",
+      "example": "把模板中的多个词汇表示合成为事件表示。",
+      "tags": [
+        "模板向量",
+        "日志序列与数量异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ijcai.org/proceedings/2019/0658.pdf"
+    },
+    {
+      "id": "loganom-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志序列与数量异常",
+      "knowledgePoint": "序列输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogAnomaly 论文如何构造序列模式模型的输入？",
+      "answer": "将滑动窗口内的日志映射为按顺序排列的模板向量序列。",
+      "explanation": "窗口长度和事件排序会影响可用上下文。",
+      "example": "使用最近若干日志预测后续事件。",
+      "tags": [
+        "序列输入",
+        "日志序列与数量异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ijcai.org/proceedings/2019/0658.pdf"
+    },
+    {
+      "id": "loganom-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志序列与数量异常",
+      "knowledgePoint": "计数向量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogAnomaly 的计数向量中每个维度通常表示什么？",
+      "answer": "对应模板向量在指定日志窗口内出现的次数。",
+      "explanation": "计数向量本身不保留窗口内部的完整顺序。",
+      "example": "统计窗口中各类模板出现次数。",
+      "tags": [
+        "计数向量",
+        "日志序列与数量异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ijcai.org/proceedings/2019/0658.pdf"
+    },
+    {
+      "id": "loganom-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志序列与数量异常",
+      "knowledgePoint": "新模板处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogAnomaly 两次离线训练之间出现新模板时如何处理？",
+      "answer": "论文先提取临时模板并计算向量，再按相似度匹配已有模板向量。",
+      "explanation": "近似匹配依赖模板表示质量，可能把不同事件误合并。",
+      "example": "新表述与旧模板相似时暂按旧表示处理。",
+      "tags": [
+        "新模板处理",
+        "日志序列与数量异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ijcai.org/proceedings/2019/0658.pdf"
+    },
+    {
+      "id": "loganom-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志序列与数量异常",
+      "knowledgePoint": "数据评估单位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogAnomaly 论文在 BGL 与 HDFS 数据上评估时，异常标注的基本单位分别是什么？",
+      "answer": "BGL 按单条日志标注；HDFS 按日志所属的数据块（block）标注。",
+      "explanation": "不同单位下的指标不宜忽略数据粒度直接比较。",
+      "example": "报告结果时注明按日志还是按数据块计数。",
+      "tags": [
+        "数据评估单位",
+        "日志序列与数量异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ijcai.org/proceedings/2019/0658.pdf"
+    },
+    {
+      "id": "loganom-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志序列与数量异常",
+      "knowledgePoint": "时间切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogAnomaly 原论文如何按日志时间划分训练和测试数据？",
+      "answer": "按时间顺序以前 80% 的日志训练、后 20% 测试。",
+      "explanation": "这是论文实验切分，不代表对所有部署场景都充分。",
+      "example": "用较早日志建模并评估后续日志。",
+      "tags": [
+        "时间切分",
+        "日志序列与数量异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ijcai.org/proceedings/2019/0658.pdf"
+    }
+  ]
+}

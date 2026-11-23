@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "http-content-negotiation",
+    "title": "RFC 9110：HTTP 内容表示与协商",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "httpneg-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 内容协商",
+      "knowledgePoint": "媒体类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 的 Content-Type 通常描述表示数据的什么属性？",
+      "answer": "描述内容的媒体类型及适用参数。",
+      "explanation": "它帮助接收方理解解码内容后应如何处理数据。",
+      "example": "application/json 表示 JSON 媒体类型。",
+      "tags": [
+        "HTTP 内容协商",
+        "媒体类型"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3"
+    },
+    {
+      "id": "httpneg-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 内容协商",
+      "knowledgePoint": "内容编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 的 Content-Encoding 与 Content-Type 分别描述什么？",
+      "answer": "Content-Encoding 描述应用于表示的内容编码；Content-Type 描述解码后表示的媒体类型。",
+      "explanation": "gzip 等内容编码常用于压缩表示。",
+      "example": "Content-Type: application/json 配合 Content-Encoding: gzip。",
+      "tags": [
+        "HTTP 内容协商",
+        "内容编码"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-8.4"
+    },
+    {
+      "id": "httpneg-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 内容协商",
+      "knowledgePoint": "响应类型偏好",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "HTTP 请求中的 Accept 与 Content-Type 各表示什么？",
+      "answer": "Accept 表达期望的响应媒体类型；Content-Type 描述当前消息内容的媒体类型。",
+      "explanation": "两者分别描述接收偏好和已发送内容。",
+      "example": "请求可发送 JSON，同时通过 Accept 请求 JSON 响应。",
+      "tags": [
+        "HTTP 内容协商",
+        "响应类型偏好"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.1"
+    },
+    {
+      "id": "httpneg-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 内容协商",
+      "knowledgePoint": "编码偏好",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 请求的 Accept-Encoding 与响应的 Content-Encoding 如何配合？",
+      "answer": "前者表达可接受的响应内容编码；后者标明所选表示实际使用的内容编码。",
+      "explanation": "请求中的偏好不等于服务器一定选择某个编码。",
+      "example": "客户端接受 gzip，响应可使用 Content-Encoding: gzip。",
+      "tags": [
+        "HTTP 内容协商",
+        "编码偏好"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.3"
+    },
+    {
+      "id": "httpneg-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 内容协商",
+      "knowledgePoint": "语言偏好",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 请求的 Accept-Language 主要表达什么偏好？",
+      "answer": "表达客户端偏好的响应自然语言。",
+      "explanation": "它不等同于指定响应的媒体类型或字符编码。",
+      "example": "Accept-Language: zh-CN, en;q=0.8。",
+      "tags": [
+        "HTTP 内容协商",
+        "语言偏好"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.4"
+    },
+    {
+      "id": "httpneg-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 内容协商",
+      "knowledgePoint": "协商权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 9110 内容协商字段中的 q 值如何表示偏好？",
+      "answer": "q 值在 0 到 1 之间；越大表示相对偏好越高，省略时默认为 1。",
+      "explanation": "q=0 表示该选项不可接受。",
+      "example": "en;q=0.8 的权重低于未注明 q 的 zh-CN。",
+      "tags": [
+        "HTTP 内容协商",
+        "协商权重"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-12.4.2"
+    },
+    {
+      "id": "httpneg-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "HTTP 内容协商",
+      "knowledgePoint": "范围优先级",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "Accept: text/*;q=0.3, text/plain;q=0.7 中 text/plain 的权重是多少？",
+      "answer": "0.7；匹配同一媒体类型时，更具体的范围优先。",
+      "explanation": "不是简单选第一个通配范围。",
+      "example": "text/html 仍匹配 text/*，权重为 0.3。",
+      "tags": [
+        "HTTP 内容协商",
+        "范围优先级"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.1"
+    },
+    {
+      "id": "httpneg-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 内容协商",
+      "knowledgePoint": "不可接受的表示",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "HTTP 内容协商找不到客户端偏好的表示时，服务器是否一定返回 406？",
+      "answer": "不一定；服务器可以返回 406，也可以忽略协商偏好并返回表示。",
+      "explanation": "客户端仍需处理不同于偏好的响应。",
+      "example": "只接受某媒体类型的客户端仍应检查实际响应。",
+      "tags": [
+        "HTTP 内容协商",
+        "不可接受的表示"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-12.4.1"
+    }
+  ]
+}

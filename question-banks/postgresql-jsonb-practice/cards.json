@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "postgresql-jsonb-practice",
+    "title": "PostgreSQL 17 文档：JSON 数据查询与索引",
+    "url": "https://www.postgresql.org/docs/17/datatype-json.html",
+    "type": "官方文档与手册",
+    "note": "依据逐题链接自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgjson-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "JSON 与 JSONB",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中 json 与 jsonb 对原始格式和对象键顺序的保存有什么区别？",
+      "answer": "json 保存输入文本；jsonb 使用分解后的表示，不保留无关空白或对象键顺序。",
+      "explanation": "jsonb 通常便于处理和索引；选择应考虑是否需要保留原始文本格式。",
+      "example": "输入带空格的 JSON 对象后，json 可保留输入格式。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "JSON 与 JSONB"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/datatype-json.html"
+    },
+    {
+      "id": "pgjson-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "重复对象键",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 将含重复对象键的输入转为 jsonb 时保留哪个值？",
+      "answer": "只保留该键最后出现的值。",
+      "explanation": "json 类型会保留原始文本中的重复键。",
+      "example": "'{\"x\":1,\"x\":2}'::jsonb 的 x 值为 2。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "重复对象键"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/datatype-json.html"
+    },
+    {
+      "id": "pgjson-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "提取类型",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 对 jsonb 使用 -> 与 ->> 提取对象字段时，返回类型有什么区别？",
+      "answer": "-> 返回 jsonb 值；->> 返回 text。",
+      "explanation": "选择哪种形式取决于后续操作是否仍按 JSON 处理。",
+      "example": "提取数字字段后，->> 得到文本，需要时再显式转换。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "提取类型"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-json.html"
+    },
+    {
+      "id": "pgjson-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "不存在的字段",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 JSON 字段提取运算符遇到不存在的键时通常返回什么？",
+      "answer": "返回 SQL NULL，而不是因缺少该键报错。",
+      "explanation": "输入结构不匹配或数组下标不存在时，提取运算符也返回 NULL。",
+      "example": "'{\"a\":1}'::jsonb -> 'missing' 返回 SQL NULL。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "不存在的字段"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-json.html"
+    },
+    {
+      "id": "pgjson-005",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "数组下标",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 JSON 数组提取运算符怎样解释整数下标？",
+      "answer": "从 0 开始编号；负数从数组末尾倒数。",
+      "explanation": "这与 PostgreSQL 普通数组的常见下标习惯不同。",
+      "example": "'[10,20]'::jsonb -> -1 取得 20。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "数组下标"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-json.html"
+    },
+    {
+      "id": "pgjson-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "结构包含",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 jsonb @> 运算符检查什么？",
+      "answer": "检查左侧 JSONB 值是否包含右侧结构和内容。",
+      "explanation": "嵌套对象要匹配对应结构，不能把内部键当成顶层键。",
+      "example": "'{\"a\":1,\"b\":2}'::jsonb @> '{\"b\":2}'::jsonb 为真。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "结构包含"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/datatype-json.html"
+    },
+    {
+      "id": "pgjson-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "数组包含语义",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 jsonb 数组包含判断中，元素顺序和重复元素重要吗？",
+      "answer": "在 @> 的数组包含比较中，元素顺序无关，重复元素按一次处理。",
+      "explanation": "该规则是包含运算的语义，不表示数组本身丢失顺序。",
+      "example": "'[1,2,3]'::jsonb @> '[2,1,1]'::jsonb 为真。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "数组包含语义"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/datatype-json.html"
+    },
+    {
+      "id": "pgjson-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "顶层存在",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 jsonb ? 运算符会递归查找嵌套对象中的键吗？",
+      "answer": "不会；它检查顶层对象键或顶层数组中的字符串元素。",
+      "explanation": "可以先提取子对象，再对该子对象使用 ?。",
+      "example": "'{\"a\":{\"b\":1}}'::jsonb ? 'b' 为假。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "顶层存在"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/datatype-json.html"
+    },
+    {
+      "id": "pgjson-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "GIN 操作类",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 jsonb_path_ops GIN 索引能否支持 ? 键存在运算符？",
+      "answer": "不能；它支持 @>、@? 和 @@，默认 jsonb_ops 还支持键存在运算符。",
+      "explanation": "选择操作类应结合查询运算符；索引支持不保证规划器一定使用。",
+      "example": "需要 ? 查询的列可考虑默认 jsonb_ops GIN 索引。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "GIN 操作类"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/datatype-json.html"
+    },
+    {
+      "id": "pgjson-010",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "顶层合并",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的两个 JSONB 对象使用 || 合并时，重复键和嵌套对象如何处理？",
+      "answer": "重复顶层键取右侧值；合并不递归到嵌套对象。",
+      "explanation": "右侧整个嵌套值会替换左侧同键的嵌套值。",
+      "example": "'{\"a\":{\"x\":1}}'::jsonb || '{\"a\":{\"y\":2}}'::jsonb 只保留右侧 a 值。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "顶层合并"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-json.html"
+    },
+    {
+      "id": "pgjson-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "修改嵌套路径",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 使用 jsonb_set 创建缺失的最终路径元素时，前面的路径必须存在吗？",
+      "answer": "必须；如果前面的路径元素不存在，返回原 JSONB 值。",
+      "explanation": "create_if_missing 主要控制最后一个路径元素不存在时是否创建。",
+      "example": "更新 {a,b} 路径前，输入必须已有 a。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "修改嵌套路径"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-json.html"
+    },
+    {
+      "id": "pgjson-012",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "PostgreSQL JSON 数据",
+      "knowledgePoint": "数组展开",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 jsonb_array_elements 有什么作用？",
+      "answer": "把顶层 JSONB 数组展开为一组 JSONB 值。",
+      "explanation": "它返回多行，可与 FROM 中的表函数或横向连接配合。",
+      "example": "jsonb_array_elements('[1,2]'::jsonb) 产生两行。",
+      "tags": [
+        "PostgreSQL JSON 数据",
+        "数组展开"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-json.html"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "linux-file-descriptor-fundamentals",
+    "title": "Linux open 与 unlink 手册：文件描述符",
+    "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+    "type": "官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理，示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "filefd-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "描述符含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 文件描述符是什么？",
+      "answer": "它是进程用于引用一个打开文件描述项等内核对象的非负整数。",
+      "explanation": "描述符并不是文件路径本身。",
+      "example": "open 成功后返回一个可传给 read 的整数。",
+      "tags": [
+        "描述符含义",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/open.2.html"
+    },
+    {
+      "id": "filefd-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "打开文件描述项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的打开文件描述项通常保存哪些状态？",
+      "answer": "它保存文件偏移量和文件状态标志等信息；文件描述符引用该描述项。",
+      "explanation": "多个文件描述符可以引用同一描述项。",
+      "example": "重复描述符共享读取位置。",
+      "tags": [
+        "打开文件描述项",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/open.2.html"
+    },
+    {
+      "id": "filefd-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "dup与fork共享偏移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中 dup 复制或 fork 继承的文件描述符是否共享文件偏移量？",
+      "answer": "是；它们引用同一个打开文件描述项，因此共享偏移量和文件状态标志。",
+      "explanation": "分别调用 open 得到的描述符通常使用各自的打开文件描述项。",
+      "example": "父进程打开文件后，子进程读取会推进共享偏移。",
+      "tags": [
+        "dup与fork共享偏移",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/open.2.html"
+    },
+    {
+      "id": "filefd-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "独立打开偏移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对同一文件分别调用两次 open，得到的描述符通常共享文件偏移量吗？",
+      "answer": "通常不共享；每次 open 创建独立的打开文件描述项。",
+      "explanation": "文件内容仍指向同一文件。",
+      "example": "两次单独打开后可分别定位读取位置。",
+      "tags": [
+        "独立打开偏移",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/open.2.html"
+    },
+    {
+      "id": "filefd-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "删除打开文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中普通文件的最后一个硬链接被删除但仍有进程打开该文件时，文件会立即消失吗？",
+      "answer": "不会；文件至少在最后一个引用它的打开文件描述符关闭前仍然存在。",
+      "explanation": "其他引用也可能延长对象寿命；删除名称后不能再通过该名称打开。",
+      "example": "程序仍可读取已 unlink 的临时文件。",
+      "tags": [
+        "删除打开文件",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/unlink.2.html"
+    },
+    {
+      "id": "filefd-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "unlink符号链接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 unlink 对指向普通文件的符号链接执行时删除什么？",
+      "answer": "它删除符号链接本身，不删除链接目标。",
+      "explanation": "如果没有其他引用，链接对象本身会被释放。",
+      "example": "移除 shortcut 不等于删除目标文件。",
+      "tags": [
+        "unlink符号链接",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/unlink.2.html"
+    },
+    {
+      "id": "filefd-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "追加写入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux open 使用 O_APPEND 时，每次 write 对文件位置有什么处理？",
+      "answer": "写入前将偏移移到文件末尾，偏移调整与写入作为原子步骤。",
+      "explanation": "某些网络文件系统的模拟实现有并发追加限制。",
+      "example": "多进程追加日志时按追加模式写入。",
+      "tags": [
+        "追加写入",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/open.2.html"
+    },
+    {
+      "id": "filefd-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "排他创建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux open 同时使用 O_CREAT 和 O_EXCL 时，目标路径已存在会怎样？",
+      "answer": "调用失败并返回 EEXIST。",
+      "explanation": "这两个标志配合用于检查并创建，而不是先检查再创建。",
+      "example": "尝试创建唯一的临时文件名。",
+      "tags": [
+        "排他创建",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/open.2.html"
+    },
+    {
+      "id": "filefd-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "截断文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux open 以可写方式对已存在普通文件使用 O_TRUNC 会怎样？",
+      "answer": "成功打开时文件被截断为零长度。",
+      "explanation": "该行为针对符合手册条件的普通文件。",
+      "example": "重新创建一份输出文件。",
+      "tags": [
+        "截断文件",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/open.2.html"
+    },
+    {
+      "id": "filefd-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "执行时关闭",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux open 使用 O_CLOEXEC 的作用是什么？",
+      "answer": "为新描述符设置 close-on-exec 标志，使成功执行 execve 时关闭该描述符。",
+      "explanation": "它有助于避免并发创建进程时泄露描述符。",
+      "example": "子进程执行其他程序时不继承该文件。",
+      "tags": [
+        "执行时关闭",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/open.2.html"
+    },
+    {
+      "id": "filefd-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件描述符",
+      "knowledgePoint": "相对目录打开",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux openat 使用相对路径时，dirfd 参数通常决定什么？",
+      "answer": "它指定相对路径解析所用的目录；AT_FDCWD 则使用调用进程的当前工作目录。",
+      "explanation": "绝对路径通常忽略 dirfd。",
+      "example": "在已打开的目录下打开相对文件名。",
+      "tags": [
+        "相对目录打开",
+        "Linux 文件描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/open.2.html"
+    }
+  ]
+}

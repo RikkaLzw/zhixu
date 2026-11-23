@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "langchain-parent-document-retrieval",
+    "title": "LangChain 0.3.27：父文档检索",
+    "url": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/parent_document_retriever.py",
+    "type": "原论文或官方文档与源码",
+    "note": "依据逐题引用的固定版本、原论文或官方文档自行整理；示例为自编，具体版本及适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "lcparent-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "检索权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 的 ParentDocumentRetriever 为什么检索小片段却返回父文档？",
+      "answer": "它用较小片段进行向量检索，再返回更大的父文档，以兼顾匹配粒度和上下文。",
+      "explanation": "父文档可为原文档或较大的分块，具体取决于配置。",
+      "example": "用短段落检索，再把所属章节交给生成模型。",
+      "tags": [
+        "父子文档检索",
+        "检索权衡"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/parent_document_retriever.py"
+    },
+    {
+      "id": "lcparent-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "双存储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "默认 add_to_docstore=True 时，ParentDocumentRetriever 的子片段和父文档分别存入哪里？",
+      "answer": "子片段存入向量库；父文档按 ID 存入文档存储。",
+      "explanation": "子片段的元数据负责关联父文档 ID。",
+      "example": "检索向量命中后，再从文档存储取出父块。",
+      "tags": [
+        "父子文档检索",
+        "双存储"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/parent_document_retriever.py"
+    },
+    {
+      "id": "lcparent-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "父切分器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 的 ParentDocumentRetriever 不设置 parent_splitter 时，父文档是什么？",
+      "answer": "传入的原始文档就是父文档。",
+      "explanation": "设置 parent_splitter 后，一个原始文档可以产生多个父文档。",
+      "example": "整篇文章作为父文档，再切成用于索引的小片段。",
+      "tags": [
+        "父子文档检索",
+        "父切分器"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/parent_document_retriever.py"
+    },
+    {
+      "id": "lcparent-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "父ID元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ParentDocumentRetriever 默认把父 ID 保存到子片段元数据的哪个键？",
+      "answer": "默认键是 doc_id，可通过 id_key 配置。",
+      "explanation": "检索器使用该键从子片段关联到父文档。",
+      "example": "多个子片段的 doc_id 指向同一个父块。",
+      "tags": [
+        "父子文档检索",
+        "父ID元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_vector.py"
+    },
+    {
+      "id": "lcparent-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "ID 数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ParentDocumentRetriever 设置 parent_splitter 并显式传入 ids 时，ID 数量应匹配什么？",
+      "answer": "应匹配父切分后的文档数量。",
+      "explanation": "源码先执行父切分，再检查文档数和 ID 数是否一致。",
+      "example": "一个输入文档切成两个父块时需要两个 ID。",
+      "tags": [
+        "父子文档检索",
+        "ID 数量"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/parent_document_retriever.py"
+    },
+    {
+      "id": "lcparent-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "外部父文档",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ParentDocumentRetriever 的 add_to_docstore=False 有什么前提和作用？",
+      "answer": "必须提供父文档 ID；子片段仍写入向量库，但不会写入父文档存储。",
+      "explanation": "调用方需要保证这些 ID 在父文档存储中可用。",
+      "example": "为已经单独存储的父文档添加可检索子片段。",
+      "tags": [
+        "父子文档检索",
+        "外部父文档"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/parent_document_retriever.py"
+    },
+    {
+      "id": "lcparent-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "缺失父文档",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ParentDocumentRetriever 检索到子片段后，如果没有父 ID 或父文档不存在会怎样？",
+      "answer": "没有父 ID 的子片段被忽略，父存储中不存在的文档也不会出现在结果中。",
+      "explanation": "因此索引和文档存储不一致可能导致召回结果缺失。",
+      "example": "向量库有子片段但父文档被删除。",
+      "tags": [
+        "父子文档检索",
+        "缺失父文档"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_vector.py"
+    },
+    {
+      "id": "lcparent-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "父结果去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ParentDocumentRetriever 对多个命中同一父文档的子片段怎样处理结果顺序？",
+      "answer": "按子片段首次出现的顺序收集父 ID，并对父 ID 去重后取回父文档。",
+      "explanation": "返回顺序由首次出现的父 ID 决定，不是对子片段分数做新的父级聚合。",
+      "example": "两个子片段指向同一章节时只返回一次该章节。",
+      "tags": [
+        "父子文档检索",
+        "父结果去重"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_vector.py"
+    },
+    {
+      "id": "lcparent-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "k 的含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ParentDocumentRetriever 搜索时设置 k，为什么返回的父文档数可能少于 k？",
+      "answer": "k 控制向量库检索子片段的数量；多个子片段可能属于同一父文档，或父文档缺失。",
+      "explanation": "向量库自身也可能返回少于 k 个子片段。",
+      "example": "五个命中片段只对应两个父文档。",
+      "tags": [
+        "父子文档检索",
+        "k 的含义"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_vector.py"
+    },
+    {
+      "id": "lcparent-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "子元数据选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ParentDocumentRetriever 的 child_metadata_fields 有什么作用？",
+      "answer": "它指定保留在子片段中的元数据字段；父 ID 键仍会添加。",
+      "explanation": "不设置时保留切分后子片段原有的元数据。",
+      "example": "只把来源字段和父 ID 放入子片段。",
+      "tags": [
+        "父子文档检索",
+        "子元数据选择"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/parent_document_retriever.py"
+    },
+    {
+      "id": "lcparent-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "元数据缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 的 child_metadata_fields 指定了子片段不存在的字段时会怎样？",
+      "answer": "若产生了子片段，源码按键直接取值，因此会抛出 KeyError。",
+      "explanation": "应先统一元数据字段，或不把可能缺失的字段加入列表。",
+      "example": "要求保留 author，但文档没有该字段。",
+      "tags": [
+        "父子文档检索",
+        "元数据缺失"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/parent_document_retriever.py"
+    },
+    {
+      "id": "lcparent-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "父子文档检索",
+      "knowledgePoint": "双写失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ParentDocumentRetriever.add_documents 对向量库和父文档存储的写入顺序及回滚有什么特点？",
+      "answer": "它先写子片段到向量库，再写父文档；方法本身没有提供跨两者的回滚。",
+      "explanation": "父文档写入失败后需检查并处理可能留下的子片段。",
+      "example": "索引构建后检查父子存储的一致性。",
+      "tags": [
+        "父子文档检索",
+        "双写失败"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/parent_document_retriever.py"
+    }
+  ]
+}

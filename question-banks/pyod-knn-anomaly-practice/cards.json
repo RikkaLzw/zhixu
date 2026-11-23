@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "pyod-knn-anomaly-practice",
+    "title": "PyOD 2.0.5 源码：KNN 异常检测",
+    "url": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/knn.py",
+    "type": "固定版本源码",
+    "note": "依据 PyOD v2.0.5 的 KNN 与 BaseDetector 源码自行整理；数值行为还受近邻库与距离度量影响。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "pyodknn-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PyOD KNN 异常检测",
+      "knowledgePoint": "邻居距离评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 KNN 默认 method=\"largest\" 如何给样本计算异常分数？",
+      "answer": "它使用该样本到第 k 个近邻的距离作为异常分数，距离越大分数越高。",
+      "explanation": "k 由 n_neighbors 指定。",
+      "example": "远离训练样本簇的点可能有较高分数。",
+      "tags": [
+        "PyOD KNN 异常检测",
+        "邻居距离评分"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/knn.py"
+    },
+    {
+      "id": "pyodknn-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PyOD KNN 异常检测",
+      "knowledgePoint": "距离聚合",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 KNN 中 mean 和 median 评分方法有什么区别？",
+      "answer": "mean 使用 k 个邻居距离的均值；median 使用这些距离的中位数。",
+      "explanation": "二者使用相同邻居集合时聚合方式不同。",
+      "example": "距离为 1、2、9 时分别得到 4 和 2。",
+      "tags": [
+        "PyOD KNN 异常检测",
+        "距离聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/knn.py"
+    },
+    {
+      "id": "pyodknn-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PyOD KNN 异常检测",
+      "knowledgePoint": "训练分数与查询",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 KNN 为什么可能对训练样本得到不同的 decision_scores_ 和 decision_function(X_train)？",
+      "answer": "fit 的近邻查询不把样本自身作为邻居；重新传入训练样本查询时，距离为零的相同样本可进入近邻集合。",
+      "explanation": "重复向量和邻居并列时，具体近邻选择还受数据和实现影响。",
+      "example": "训练集点 0、1、3、10 在 k=2 时可观察到分数差异。",
+      "tags": [
+        "PyOD KNN 异常检测",
+        "训练分数与查询"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/knn.py"
+    },
+    {
+      "id": "pyodknn-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PyOD KNN 异常检测",
+      "knowledgePoint": "邻居数约束",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 KNN 拟合时为什么通常要求 n_neighbors 小于训练样本数？",
+      "answer": "训练近邻查询排除样本自身，需要有足够的其他训练样本提供 k 个邻居。",
+      "explanation": "实际错误由底层 scikit-learn 近邻查询给出。",
+      "example": "4 个训练样本可以要求 2 个其他邻居。",
+      "tags": [
+        "PyOD KNN 异常检测",
+        "邻居数约束"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/knn.py"
+    },
+    {
+      "id": "pyodknn-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PyOD KNN 异常检测",
+      "knowledgePoint": "阈值并列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 使用数值 contamination 生成训练标签时，阈值上的并列分数可能带来什么现象？",
+      "answer": "标签用分数严格大于阈值判断，因而并列分数可能使异常标签数少于按比例直觉预期的数量。",
+      "explanation": "阈值由训练分数的百分位数计算。",
+      "example": "所有训练分数均为 0 时不会仅为凑比例标出异常。",
+      "tags": [
+        "PyOD KNN 异常检测",
+        "阈值并列"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/base.py"
+    },
+    {
+      "id": "pyodknn-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "PyOD KNN 异常检测",
+      "knowledgePoint": "线性概率输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyOD 2.0.5 的 predict_proba(method=\"linear\") 输出为何不应直接视为经过验证的真实异常概率？",
+      "answer": "它按训练异常分数做最小—最大缩放并裁剪到 0 到 1；该变换本身不保证概率校准。",
+      "explanation": "真实概率解释需要独立的标签和校准验证。",
+      "example": "分数缩放为 0.9 不代表真实异常概率已被证明为 90%。",
+      "tags": [
+        "PyOD KNN 异常检测",
+        "线性概率输出"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/yzhao062/pyod/blob/v2.0.5/pyod/models/base.py"
+    }
+  ]
+}

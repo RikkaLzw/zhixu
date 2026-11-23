@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "linux-kcov-fuzzing",
+    "title": "Linux 6.12 文档：KCOV 覆盖反馈",
+    "url": "https://www.kernel.org/doc/html/v6.12/dev-tools/kcov.html",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题所列论文或固定版本资料自行整理，示例为自编。在线文档按 2026-11-21 查看内容。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "kcovbase-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Linux KCOV 覆盖采集",
+      "knowledgePoint": "用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux KCOV 为覆盖引导模糊测试提供什么信息？",
+      "answer": "提供内核执行覆盖信息，供模糊测试程序读取。",
+      "explanation": "覆盖采集依赖内核配置与编译插桩。",
+      "example": "采集一次系统调用触达的内核代码位置。",
+      "tags": [
+        "Linux KCOV 覆盖采集",
+        "用途"
+      ],
+      "evidence": "source",
+      "reference": "https://www.kernel.org/doc/html/v6.12/dev-tools/kcov.html"
+    },
+    {
+      "id": "kcovbase-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Linux KCOV 覆盖采集",
+      "knowledgePoint": "采集范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通 KCOV 覆盖采集按什么执行单位启用？",
+      "answer": "按任务或当前线程启用，可用于采集单次系统调用的覆盖。",
+      "explanation": "其他执行上下文的覆盖需要适当的远程采集机制。",
+      "example": "为测试线程启用后执行系统调用。",
+      "tags": [
+        "Linux KCOV 覆盖采集",
+        "采集范围"
+      ],
+      "evidence": "source",
+      "reference": "https://www.kernel.org/doc/html/v6.12/dev-tools/kcov.html"
+    },
+    {
+      "id": "kcovbase-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Linux KCOV 覆盖采集",
+      "knowledgePoint": "反馈稳定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KCOV 为什么默认不追求采集内核中所有可能的覆盖？",
+      "answer": "它更关注与系统调用输入相关、相对稳定的覆盖反馈。",
+      "explanation": "部分非确定性路径和普通中断上下文被排除。",
+      "example": "减少调度器自身波动对输入比较的干扰。",
+      "tags": [
+        "Linux KCOV 覆盖采集",
+        "反馈稳定性"
+      ],
+      "evidence": "source",
+      "reference": "https://www.kernel.org/doc/html/v6.12/dev-tools/kcov.html"
+    },
+    {
+      "id": "kcovbase-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Linux KCOV 覆盖采集",
+      "knowledgePoint": "比较操作数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 6.12 KCOV 除程序位置外还能采集哪类比较信息？",
+      "answer": "可采集比较操作数，前提是启用了相应配置并使用支持的编译器。",
+      "explanation": "这类反馈可帮助模糊器构造接近比较条件的输入。",
+      "example": "观察整数比较双方的值。",
+      "tags": [
+        "Linux KCOV 覆盖采集",
+        "比较操作数"
+      ],
+      "evidence": "source",
+      "reference": "https://www.kernel.org/doc/html/v6.12/dev-tools/kcov.html"
+    },
+    {
+      "id": "kcovbase-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Linux KCOV 覆盖采集",
+      "knowledgePoint": "模式互斥",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 6.12 的 KCOV 程序位置采集和比较操作数采集能否在同一次启用中同时使用？",
+      "answer": "不能；文档说明这两种采集模式互斥。",
+      "explanation": "可以按测试需求分别选择模式。",
+      "example": "选择 KCOV_TRACE_PC 或 KCOV_TRACE_CMP。",
+      "tags": [
+        "Linux KCOV 覆盖采集",
+        "模式互斥"
+      ],
+      "evidence": "source",
+      "reference": "https://www.kernel.org/doc/html/v6.12/dev-tools/kcov.html"
+    },
+    {
+      "id": "kcovbase-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Linux KCOV 覆盖采集",
+      "knowledgePoint": "远程覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KCOV 的远程覆盖机制可用于哪些额外执行上下文？",
+      "answer": "可用于已标注的后台内核任务或软中断等上下文。",
+      "explanation": "需要内核代码标注并使用对应的远程启用接口。",
+      "example": "跟踪由请求触发的异步内核工作。",
+      "tags": [
+        "Linux KCOV 覆盖采集",
+        "远程覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://www.kernel.org/doc/html/v6.12/dev-tools/kcov.html"
+    },
+    {
+      "id": "kcovbase-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Linux KCOV 覆盖采集",
+      "knowledgePoint": "线程退出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 KCOV 的线程退出时，覆盖采集状态如何处理？",
+      "answer": "该线程上的覆盖采集会自动关闭。",
+      "explanation": "重复执行测试时应按具体线程生命周期管理采集。",
+      "example": "子进程运行测试后退出。",
+      "tags": [
+        "Linux KCOV 覆盖采集",
+        "线程退出"
+      ],
+      "evidence": "source",
+      "reference": "https://www.kernel.org/doc/html/v6.12/dev-tools/kcov.html"
+    }
+  ]
+}

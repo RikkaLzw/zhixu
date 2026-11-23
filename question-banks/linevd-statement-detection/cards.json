@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "linevd-statement-detection",
+    "title": "LineVD 原论文：语句级图漏洞检测",
+    "url": "https://arxiv.org/pdf/2203.05181v2",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据逐题引用的论文、教材或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "linevd-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "任务粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 原论文把漏洞定位建模成什么机器学习任务？",
+      "answer": "把函数中的语句视为节点，并对节点进行是否与漏洞相关的二分类。",
+      "explanation": "它直接学习语句级预测，而非只给整个函数一个判断。",
+      "example": "为函数中的各语句输出可疑程度。",
+      "tags": [
+        "任务粒度",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "源代码编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 如何获得函数级和语句级的文本表示？",
+      "answer": "论文分别将整个函数和各条语句输入 CodeBERT，得到函数与语句的嵌入。",
+      "explanation": "函数嵌入并非简单地由语句嵌入聚合而成。",
+      "example": "一个函数和其中多条语句分别编码。",
+      "tags": [
+        "源代码编码",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "代码依赖图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 使用的程序依赖图（PDG）包含哪两类语句间关系？",
+      "answer": "包含数据依赖边和控制依赖边。",
+      "explanation": "这些边为语句分类提供上下文，而不仅是文本相邻关系。",
+      "example": "一个语句使用另一个语句生成的数据。",
+      "tags": [
+        "代码依赖图",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "邻居信息传播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 如何利用程序依赖图中的邻居信息？",
+      "answer": "它使用图注意力网络在依赖相连的语句节点之间传播信息。",
+      "explanation": "语句的最终表示因此可以包含邻域上下文。",
+      "example": "结合变量来源语句的信息判断当前语句。",
+      "tags": [
+        "邻居信息传播",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "函数语句联合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 的分类器为什么同时使用函数级和语句级信息？",
+      "answer": "它结合函数整体上下文与图网络得到的语句表示来预测语句。",
+      "explanation": "函数级和语句级信息是不同粒度的输入。",
+      "example": "在检查单行调用时同时考虑所在函数。",
+      "tags": [
+        "函数语句联合",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "函数输出门控",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 论文中函数级输出为非漏洞类时，对语句预测有什么影响？",
+      "answer": "论文通过函数与语句输出的逐元素乘法，使该情况下的语句输出也为非漏洞类。",
+      "explanation": "如果函数判断出错，这种约束也可能影响后续语句结果。",
+      "example": "函数级门控关闭时，语句级结果随之关闭。",
+      "tags": [
+        "函数输出门控",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "修复差异标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 原论文如何利用修复差异构造语句级候选标签？",
+      "answer": "论文将修复提交中删除的行及与新增行存在控制或数据依赖的相关行标作漏洞相关行。",
+      "explanation": "新增行相关依赖通过修复后代码图映射回修复前位置；这些是构造标签的假设。",
+      "example": "用修复前后差异定位待标注语句。",
+      "tags": [
+        "修复差异标签",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "注释行范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 论文的数据清理和代码图是否把注释行作为训练与预测节点？",
+      "answer": "没有；论文移除注释，注释行不用于图中的训练和预测。",
+      "explanation": "这描述的是论文的数据处理范围。",
+      "example": "统计被模型处理的语句时排除注释。",
+      "tags": [
+        "注释行范围",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "训练集平衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 原论文如何处理类别不平衡的训练数据？",
+      "answer": "在函数级对非漏洞样本欠采样，使训练集近似平衡；验证集和测试集保留原始不平衡比例。",
+      "explanation": "论文不直接在语句级独立抽样，以保留语句间上下文。",
+      "example": "训练时减少非漏洞函数，评估时保留原始比例。",
+      "tags": [
+        "训练集平衡",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "跨项目评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 的跨项目实验如何组织测试项目？",
+      "answer": "每次将一个项目作为测试集，其余项目用于训练和验证。",
+      "explanation": "这有助于观察对未见项目的迁移能力。",
+      "example": "在一个未参与训练的开源项目上评估。",
+      "tags": [
+        "跨项目评估",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "函数外上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 原论文的函数级输入对外部函数调用有什么上下文限制？",
+      "answer": "输入通常只有调用名称和参数，看不到被调用外部函数的内部实现。",
+      "explanation": "缺少跨函数实现信息可能限制对依赖关系的判断。",
+      "example": "函数调用外部库时，输入不包含该库的函数体。",
+      "tags": [
+        "函数外上下文",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    },
+    {
+      "id": "linevd-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语句级漏洞检测",
+      "knowledgePoint": "候选排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LineVD 为什么还报告前几个高置信度语句的排序指标？",
+      "answer": "这些指标衡量审计人员优先检查少量预测语句时，能否较早看到被标注为漏洞相关的行。",
+      "explanation": "排序指标与某个固定阈值下的分类指标关注点不同。",
+      "example": "优先查看置信度最高的五行。",
+      "tags": [
+        "候选排序",
+        "语句级漏洞检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2203.05181v2"
+    }
+  ]
+}

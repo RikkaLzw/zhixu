@@ -1,0 +1,166 @@
+{
+  "source": {
+    "id": "urlnet-detection",
+    "title": "URLNet 恶意网址表示与检测",
+    "url": "https://arxiv.org/abs/1802.03162",
+    "type": "研究论文",
+    "note": "依据 URLNet 原论文对词袋、字符表示及恶意网址黑名单局限的讨论整理；例子为自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "urlnet-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "URL 词法特征",
+      "knowledgePoint": "词袋与顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "把整个 URL 表示为词是否出现的词袋，会丢失什么顺序信息？",
+      "answer": "它不直接记录词或字符在 URL 中的先后顺序。",
+      "explanation": "词袋是一个可比较的基线，但 URL 中的顺序和组成部分可能提供额外信息。",
+      "example": "词相同但排列顺序不同的网址可能得到相同的词袋表示。",
+      "tags": [
+        "词袋与顺序",
+        "URL",
+        "恶意网址检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.03162",
+      "referenceTitle": "URLNet：Learning a URL Representation with Deep Learning for Malicious URL Detection",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "urlnet-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "URL 词法特征",
+      "knowledgePoint": "分段词袋",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分别为 URL 的域名和路径建立词袋，可以补充什么信息？",
+      "answer": "它可以区分同一词出现在域名还是路径，但仍不直接表示各部分内部的词序。",
+      "explanation": "具体分段应遵循 URL 解析规则，不能仅靠字符串位置猜测主机。",
+      "example": "分别统计主机名和路径中的词。",
+      "tags": [
+        "分段词袋",
+        "URL",
+        "恶意网址检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.03162",
+      "referenceTitle": "URLNet：Learning a URL Representation with Deep Learning for Malicious URL Detection",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "urlnet-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "URL 词法特征",
+      "knowledgePoint": "词表外URL词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定词表的 URL 词袋模型遇到训练时从未出现的新词，会有什么局限？",
+      "answer": "词表没有该词对应的特征，模型无法直接利用这个新词作为已知词特征。",
+      "explanation": "模型仍可能利用 URL 中其他已知词或统计特征，不能说整个 URL 都无法评分。",
+      "example": "新出现的域名片段不在训练词表中。",
+      "tags": [
+        "词表外URL词",
+        "URL",
+        "恶意网址检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.03162",
+      "referenceTitle": "URLNet：Learning a URL Representation with Deep Learning for Malicious URL Detection",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "urlnet-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "URL 词法特征",
+      "knowledgePoint": "稀有URL词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么仅出现极少次数的 URL 词可能难以提供稳定的分类信号？",
+      "answer": "训练样本太少时，该词与类别的关联难以可靠估计。",
+      "explanation": "具体影响取决于模型、正则化和数据分布；稀有并不等于恶意。",
+      "example": "某个域名片段在训练集只出现一次。",
+      "tags": [
+        "稀有URL词",
+        "URL",
+        "恶意网址检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.03162",
+      "referenceTitle": "URLNet：Learning a URL Representation with Deep Learning for Malicious URL Detection",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "urlnet-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "URL 词法特征",
+      "knowledgePoint": "字符构造新词表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "URLNet 怎样为测试中未见过的 URL 词构造表示？",
+      "answer": "它利用词内字符的表示生成词向量，使新词仍可使用已见字符及子词模式的信息。",
+      "explanation": "这种方法可以改善词表外表示，但不能保证所有新词都能被正确分类。",
+      "example": "新域名片段包含已见字符组合，但整个词不在训练词表。",
+      "tags": [
+        "字符构造新词表示",
+        "URL",
+        "恶意网址检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.03162",
+      "referenceTitle": "URLNet：Learning a URL Representation with Deep Learning for Malicious URL Detection",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "urlnet-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "URL 词法特征",
+      "knowledgePoint": "URL词表规模",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么按 URL 训练集中每个不同词创建词袋特征可能增加资源开销？",
+      "answer": "URL 中不同词数量可能很大，随着数据增加，特征维度和相关模型存储也可能增长。",
+      "explanation": "具体开销还取决于稀疏表示、特征筛选及模型实现。",
+      "example": "对更大语料重新构建词典后，词袋维度增加。",
+      "tags": [
+        "URL词表规模",
+        "URL",
+        "恶意网址检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.03162",
+      "referenceTitle": "URLNet：Learning a URL Representation with Deep Learning for Malicious URL Detection",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "urlnet-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "URL 词法特征",
+      "knowledgePoint": "黑名单未命中",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "网址没有命中已知恶意网址黑名单，能否证明它安全？",
+      "answer": "不能；黑名单无法穷尽所有恶意网址，新出现或尚未收录的网址可能漏检。",
+      "explanation": "未命中是证据不足的状态，不应自动当作已核实的正常标签。",
+      "example": "对未命中的新网址继续结合其他证据检查。",
+      "tags": [
+        "黑名单未命中",
+        "URL",
+        "恶意网址检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.03162",
+      "referenceTitle": "URLNet：Learning a URL Representation with Deep Learning for Malicious URL Detection",
+      "referenceType": "研究论文"
+    }
+  ]
+}

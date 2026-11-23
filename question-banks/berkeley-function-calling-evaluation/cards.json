@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "berkeley-function-calling-evaluation",
+    "title": "Berkeley Function Calling Leaderboard：函数调用评测",
+    "url": "https://gorilla.cs.berkeley.edu/blogs/13_bfcl_v3_multi_turn.html",
+    "type": "原论文与固定版本源码或官方说明",
+    "note": "根据逐题所列原论文、官方说明或固定版本源码自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "bfcl-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "基准目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL 主要评估语言模型的什么能力？",
+      "answer": "评估模型根据请求和函数描述生成合适函数调用的能力。",
+      "explanation": "评测覆盖函数选择、参数和多步交互等情况。",
+      "example": "根据用户要求选择工具并生成参数。",
+      "tags": [
+        "函数调用评测",
+        "基准目标"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html"
+    },
+    {
+      "id": "bfcl-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "多函数与并行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL v1 中 Multiple Function 和 Parallel Function 分别考查什么？",
+      "answer": "前者从多个候选函数中选择需要调用的函数；后者为一次请求生成多个函数调用。",
+      "explanation": "Parallel Multiple 组合了多候选函数和多次调用。",
+      "example": "选天气工具与同时查询多个城市属于不同考点。",
+      "tags": [
+        "函数调用评测",
+        "多函数与并行"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html"
+    },
+    {
+      "id": "bfcl-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "AST与执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL v1 的 AST 检查和可执行评测关注什么不同信息？",
+      "answer": "AST 检查生成调用的结构和参数；可执行评测进一步执行函数并检查结果。",
+      "explanation": "两类检查依赖各自数据和评分规则。",
+      "example": "形式正确的调用仍可能产生不符合预期的执行结果。",
+      "tags": [
+        "函数调用评测",
+        "AST与执行"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html"
+    },
+    {
+      "id": "bfcl-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "不相关函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL 的函数相关性检测中，若提供的函数均不适合用户请求，期望模型怎样做？",
+      "answer": "不调用这些不相关函数。",
+      "explanation": "该场景检查模型是否会虚构工具或参数。",
+      "example": "普通闲聊问题不应强行调用无关 API。",
+      "tags": [
+        "函数调用评测",
+        "不相关函数"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/8_berkeley_function_calling_leaderboard.html"
+    },
+    {
+      "id": "bfcl-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "多步与多轮",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL V3 的多步和多轮函数调用有什么区别？",
+      "answer": "多步指一轮内可能连续调用多个函数；多轮指用户与助手跨多个回合交互。",
+      "explanation": "一轮可以包含多个函数调用步骤。",
+      "example": "获取价格后下单是多步，用户后续补充条件是多轮。",
+      "tags": [
+        "函数调用评测",
+        "多步与多轮"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/13_bfcl_v3_multi_turn.html"
+    },
+    {
+      "id": "bfcl-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "缺少参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL V3 的 Missing Parameters 场景如何处理无法从请求或系统推断的必要参数？",
+      "answer": "模型应识别信息缺失并向用户请求澄清。",
+      "explanation": "不能把不可推断的必填值当作已知事实。",
+      "example": "缺少目的地时先询问目的地。",
+      "tags": [
+        "函数调用评测",
+        "缺少参数"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/13_bfcl_v3_multi_turn.html"
+    },
+    {
+      "id": "bfcl-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "缺少函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL V3 的 Missing Functions 场景希望模型识别什么？",
+      "answer": "初始工具列表不足以完成请求；模型指出缺失后，评测在后续回合提供相应函数。",
+      "explanation": "该场景关注工具能力边界的识别。",
+      "example": "现有工具只能查询，用户却要求执行缺少的更新操作。",
+      "tags": [
+        "函数调用评测",
+        "缺少函数"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/13_bfcl_v3_multi_turn.html"
+    },
+    {
+      "id": "bfcl-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "多轮通过条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL V3 多轮任务如何综合状态检查和响应检查？",
+      "answer": "每轮结束时都执行状态与响应两类检查，所有回合都通过才判该题正确。",
+      "explanation": "因步骤上限被强制终止的题目仍判错。",
+      "example": "最终状态正确不足以替代中间回合的检查。",
+      "tags": [
+        "函数调用评测",
+        "多轮通过条件"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/13_bfcl_v3_multi_turn.html"
+    },
+    {
+      "id": "bfcl-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "只读调用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL V3 为什么还要用响应检查补充状态检查？",
+      "answer": "只读函数可能不改变后端状态，单看状态无法确认必要的查询调用是否发生。",
+      "explanation": "响应检查对照人工标注的必要调用路径。",
+      "example": "查询天气的调用可能不修改任何后端对象。",
+      "tags": [
+        "函数调用评测",
+        "只读调用"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/13_bfcl_v3_multi_turn.html"
+    },
+    {
+      "id": "bfcl-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数调用评测",
+      "knowledgePoint": "路径子集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BFCL V3 的子集匹配响应评估为什么可能接受额外函数调用？",
+      "answer": "只要结果包含标注的必要调用路径，额外的探索或纠错调用不一定导致失败。",
+      "explanation": "还需同时通过相应状态检查等条件。",
+      "example": "列出目录后再创建目标文件可能比最短路径多一步。",
+      "tags": [
+        "函数调用评测",
+        "路径子集"
+      ],
+      "evidence": "source",
+      "reference": "https://gorilla.cs.berkeley.edu/blogs/13_bfcl_v3_multi_turn.html"
+    }
+  ]
+}

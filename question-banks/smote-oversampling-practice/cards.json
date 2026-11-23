@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "smote-oversampling-practice",
+    "title": "imbalanced-learn 0.14.2：SMOTE 过采样",
+    "url": "https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的固定版本或在线官方资料自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "smotepractice-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SMOTE 过采样",
+      "knowledgePoint": "生成方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基础 SMOTE 怎样根据少数类样本生成新样本？",
+      "answer": "它选择少数类样本及其同类近邻，在两者之间进行插值。",
+      "explanation": "合成样本不一定是真实观测；应在切分后仅对训练数据重采样。",
+      "example": "在两个少数类特征向量之间生成新向量。",
+      "tags": [
+        "SMOTE 过采样",
+        "生成方法"
+      ],
+      "evidence": "source",
+      "reference": "https://imbalanced-learn.org/stable/over_sampling.html"
+    },
+    {
+      "id": "smotepractice-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SMOTE 过采样",
+      "knowledgePoint": "近邻数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "imbalanced-learn 0.14.2 的 SMOTE 中 k_neighbors 控制什么？",
+      "answer": "控制用于生成合成样本的近邻数量，默认值为 5。",
+      "explanation": "指定整数 k 时，被过采样的类别需要足够样本以寻找近邻。",
+      "example": "少数类样本不足时调整 k 或改变处理策略。",
+      "tags": [
+        "SMOTE 过采样",
+        "近邻数量"
+      ],
+      "evidence": "source",
+      "reference": "https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html"
+    },
+    {
+      "id": "smotepractice-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SMOTE 过采样",
+      "knowledgePoint": "比例参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二分类 SMOTE 的浮点 sampling_strategy 表示什么？",
+      "answer": "它表示过采样后少数类样本数与多数类样本数的目标比例。",
+      "explanation": "它不是希望新增样本数量占原样本的比例。",
+      "example": "0.5 表示过采样后少数类数量为多数类的一半。",
+      "tags": [
+        "SMOTE 过采样",
+        "比例参数"
+      ],
+      "evidence": "source",
+      "reference": "https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html"
+    },
+    {
+      "id": "smotepractice-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SMOTE 过采样",
+      "knowledgePoint": "浮点参数限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "imbalanced-learn 的 SMOTE 能否在多分类问题中使用浮点 sampling_strategy？",
+      "answer": "不能；文档规定浮点策略仅用于二分类。",
+      "explanation": "多分类可使用字符串、字典或可调用策略。",
+      "example": "三个类别分别用字典指定目标数量。",
+      "tags": [
+        "SMOTE 过采样",
+        "浮点参数限制"
+      ],
+      "evidence": "source",
+      "reference": "https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html"
+    },
+    {
+      "id": "smotepractice-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SMOTE 过采样",
+      "knowledgePoint": "字典策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SMOTE 的字典形式 sampling_strategy 如何指定目标？",
+      "answer": "字典的键是要重采样的类别，值是该类别重采样后的目标样本数。",
+      "explanation": "目标数量不是仅新增的样本数。",
+      "example": "把类别 1 增加到指定总数。",
+      "tags": [
+        "SMOTE 过采样",
+        "字典策略"
+      ],
+      "evidence": "source",
+      "reference": "https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html"
+    },
+    {
+      "id": "smotepractice-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SMOTE 过采样",
+      "knowledgePoint": "默认策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "imbalanced-learn 的 SMOTE 中 sampling_strategy=\"auto\" 等价于什么？",
+      "answer": "等价于 \"not majority\"，对除多数类之外的类别进行过采样。",
+      "explanation": "目标数量由该策略及当前类别分布决定。",
+      "example": "对多分类中的非多数类补充样本。",
+      "tags": [
+        "SMOTE 过采样",
+        "默认策略"
+      ],
+      "evidence": "source",
+      "reference": "https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html"
+    },
+    {
+      "id": "smotepractice-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SMOTE 过采样",
+      "knowledgePoint": "类别特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SMOTENC 与 SMOTEN 分别适合哪类特征输入？",
+      "answer": "SMOTENC 面向数值与类别特征混合的数据；SMOTEN 面向仅含类别特征的数据。",
+      "explanation": "普通连续值插值不适合直接解释为类别。",
+      "example": "对混合数据显式标识类别特征。",
+      "tags": [
+        "SMOTE 过采样",
+        "类别特征"
+      ],
+      "evidence": "source",
+      "reference": "https://imbalanced-learn.org/stable/over_sampling.html"
+    },
+    {
+      "id": "smotepractice-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SMOTE 过采样",
+      "knowledgePoint": "生成风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 SMOTE 生成的合成样本仍需检查质量？",
+      "answer": "近邻插值可能连接异常点或跨越复杂类别边界，生成不符合实际分布的样本。",
+      "explanation": "采样策略应结合业务约束和独立评估选择。",
+      "example": "少数类离群点与正常样本之间产生不合理样本。",
+      "tags": [
+        "SMOTE 过采样",
+        "生成风险"
+      ],
+      "evidence": "source",
+      "reference": "https://imbalanced-learn.org/stable/over_sampling.html"
+    },
+    {
+      "id": "smotepractice-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SMOTE 过采样",
+      "knowledgePoint": "难样本策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基础 SMOTE 和 ADASYN 在选择生成位置时有什么区别？",
+      "answer": "基础 SMOTE 不按分类难度区分样本；ADASYN 更关注较难分类的少数类邻域。",
+      "explanation": "两者都可能受噪声或离群点影响。",
+      "example": "比较边界附近的合成样本分布。",
+      "tags": [
+        "SMOTE 过采样",
+        "难样本策略"
+      ],
+      "evidence": "source",
+      "reference": "https://imbalanced-learn.org/stable/over_sampling.html"
+    }
+  ]
+}

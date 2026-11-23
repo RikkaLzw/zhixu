@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "lanl-host-network-dataset",
+    "title": "LANL：企业主机与网络事件数据",
+    "url": "https://csr.lanl.gov/data/2017/",
+    "type": "教材与官方文档",
+    "note": "依据逐题所列资料自行整理中文问答；例子为自编。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "lanlset-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机与网络数据",
+      "knowledgePoint": "数据范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LANL Unified Host and Network 数据集大致覆盖什么数据与时间范围？",
+      "answer": "它包含约 90 天企业环境中的 Windows 主机事件和内部路由器网络事件。",
+      "explanation": "覆盖范围属于该机构采集的企业网络子集。",
+      "example": "按日期分析主机登录事件与网络流量。",
+      "tags": [
+        "数据范围",
+        "主机与网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://csr.lanl.gov/data/2017/"
+    },
+    {
+      "id": "lanlset-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机与网络数据",
+      "knowledgePoint": "去标识化关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LANL 数据去标识化后，主机事件与网络事件还能按身份关联吗？",
+      "answer": "可以；文档说明两类数据中去标识化后的身份彼此匹配。",
+      "explanation": "关联依然需要结合时间、字段含义和事件上下文。",
+      "example": "按一致的设备标识关联主机和网络记录。",
+      "tags": [
+        "去标识化关联",
+        "主机与网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://csr.lanl.gov/data/2017/"
+    },
+    {
+      "id": "lanlset-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机与网络数据",
+      "knowledgePoint": "服务合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LANL 数据集中部分服务器被合并会对设备级分析带来什么影响？",
+      "answer": "不同的冗余服务主机可能表现为同一标识，设备计数和行为分布需要考虑这一合并。",
+      "explanation": "文档提到目录服务、邮件服务与自动扫描系统等情况。",
+      "example": "不能把合并后的服务标识直接当作一台独立物理主机。",
+      "tags": [
+        "服务合并",
+        "主机与网络数据"
+      ],
+      "evidence": "application",
+      "reference": "https://csr.lanl.gov/data/2017/"
+    },
+    {
+      "id": "lanlset-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机与网络数据",
+      "knowledgePoint": "日志文件格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LANL 数据的网络事件与主机事件分别采用什么记录格式？",
+      "answer": "网络事件为逐行 CSV；主机事件为逐行 JSON。",
+      "explanation": "两种记录的字段结构和解析方式不同。",
+      "example": "网络流按 CSV 字段解析，主机事件逐行解析 JSON。",
+      "tags": [
+        "日志文件格式",
+        "主机与网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://csr.lanl.gov/data/2017/"
+    },
+    {
+      "id": "lanlset-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机与网络数据",
+      "knowledgePoint": "源设备不确定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LANL 网络事件的 SrcDevice 能否无条件当作已确认的连接发起方？",
+      "answer": "不能；文档将其定义为可能发起事件的设备。",
+      "explanation": "分析方向时应保留该不确定性。",
+      "example": "把 SrcDevice 记作可能的源端，再结合其他证据判断。",
+      "tags": [
+        "源设备不确定性",
+        "主机与网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://csr.lanl.gov/data/2017/"
+    },
+    {
+      "id": "lanlset-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机与网络数据",
+      "knowledgePoint": "双向流量计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LANL 网络事件的 SrcBytes 和 DstBytes 分别统计什么？",
+      "answer": "分别统计事件中 SrcDevice 和 DstDevice 发出的字节数。",
+      "explanation": "两个计数对应相反方向，不应简单当成同一方向的重复记录。",
+      "example": "源端发出 100 字节、目标端发出 300 字节时分别记录。",
+      "tags": [
+        "双向流量计数",
+        "主机与网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://csr.lanl.gov/data/2017/"
+    },
+    {
+      "id": "lanlset-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机与网络数据",
+      "knowledgePoint": "进程标识范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LANL 主机事件的 ProcessID 为什么不能独立作为跨主机、跨时间的全局唯一进程标识？",
+      "answer": "它仅在相应主机的当前运行进程范围内具有半唯一性，关联时还需结合主机和时间。",
+      "explanation": "进程结束后标识可能被复用。",
+      "example": "在同一主机的进程起止时间内关联该 PID。",
+      "tags": [
+        "进程标识范围",
+        "主机与网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://csr.lanl.gov/data/2017/"
+    },
+    {
+      "id": "lanlset-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机与网络数据",
+      "knowledgePoint": "父进程关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LANL 主机事件中如何利用 ParentProcessID 查找父进程启动事件？",
+      "answer": "在相应主机上查找此前 ProcessID 匹配的 4688 进程创建事件，并结合时间判断。",
+      "explanation": "父进程 ID 不是可跨主机或不限时间直接连接的全局键。",
+      "example": "子进程创建时查找先前匹配的父进程创建记录。",
+      "tags": [
+        "父进程关联",
+        "主机与网络数据"
+      ],
+      "evidence": "source",
+      "reference": "https://csr.lanl.gov/data/2017/"
+    }
+  ]
+}

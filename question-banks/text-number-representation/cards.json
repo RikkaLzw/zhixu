@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "text-number-representation",
+    "title": "Python 3.14 与 RFC 3629：文本编码和浮点表示",
+    "url": "https://docs.python.org/3.14/howto/unicode.html",
+    "type": "标准、教材与官方技术文档",
+    "note": "根据逐题引用的标准、教材或官方文档自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "reprbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文本编码与数值表示",
+      "knowledgePoint": "字符与编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Unicode 码点与 UTF-8 编码有什么区别？",
+      "answer": "码点是 Unicode 中的数字标识；UTF-8 是将码点编码成字节序列的一种方式。",
+      "explanation": "字符、码点与最终显示的字形并不总是一一对应。",
+      "example": "同一文本可用 UTF-8 或其他 Unicode 编码表示。",
+      "tags": [
+        "文本编码与数值表示",
+        "字符与编码"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/unicode.html"
+    },
+    {
+      "id": "reprbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文本编码与数值表示",
+      "knowledgePoint": "UTF8长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UTF-8 编码一个 Unicode 标量值通常使用多少个字节？",
+      "answer": "使用 1 到 4 个字节，具体取决于码点。",
+      "explanation": "不能把所有字符都当作固定的三个字节。",
+      "example": "ASCII 字符使用一个字节，部分汉字使用三个字节。",
+      "tags": [
+        "文本编码与数值表示",
+        "UTF8长度"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3629.html"
+    },
+    {
+      "id": "reprbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "文本编码与数值表示",
+      "knowledgePoint": "ASCII兼容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "合法的 ASCII 字节序列与 UTF-8 有什么关系？",
+      "answer": "ASCII 字符在 UTF-8 中使用相同的单字节编码。",
+      "explanation": "非 ASCII 字符需要多字节编码。",
+      "example": "英文单词 hello 的 ASCII 字节也是合法 UTF-8。",
+      "tags": [
+        "文本编码与数值表示",
+        "ASCII兼容"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3629.html"
+    },
+    {
+      "id": "reprbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本编码与数值表示",
+      "knowledgePoint": "字节长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UTF-8 文本的字节数是否总等于 Unicode 码点数？",
+      "answer": "不总是；非 ASCII 码点通常占用多个 UTF-8 字节。",
+      "explanation": "显示出来的字符数也可能与码点数不同。",
+      "example": "一个常见汉字通常是一个码点、三个 UTF-8 字节。",
+      "tags": [
+        "文本编码与数值表示",
+        "字节长度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/unicode.html"
+    },
+    {
+      "id": "reprbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本编码与数值表示",
+      "knowledgePoint": "编解码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "字符编码和解码分别做什么？",
+      "answer": "编码将文本转换为字节；解码按指定编码把字节转换为文本。",
+      "explanation": "发送方与接收方需要对编码方式达成一致。",
+      "example": "将字符串编码为 UTF-8 后写入文件。",
+      "tags": [
+        "文本编码与数值表示",
+        "编解码"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/unicode.html"
+    },
+    {
+      "id": "reprbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本编码与数值表示",
+      "knowledgePoint": "规范化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么视觉上相同的 Unicode 文本可能不能直接按码点逐个相等比较？",
+      "answer": "同一视觉字符可能由不同码点序列表示，例如预组合字符和字母加组合符号。",
+      "explanation": "需要时可使用明确的 Unicode 规范化形式后比较。",
+      "example": "é 可用单个预组合码点或 e 加组合重音表示。",
+      "tags": [
+        "文本编码与数值表示",
+        "规范化"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/howto/unicode.html"
+    },
+    {
+      "id": "reprbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本编码与数值表示",
+      "knowledgePoint": "浮点误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么常见二进制浮点数无法精确表示十进制 0.1？",
+      "answer": "0.1 的二进制展开无限循环，有限位数只能保存一个近似值。",
+      "explanation": "运算中的舍入也可能影响结果。",
+      "example": "Python 中 0.1 + 0.2 通常不严格等于 0.3。",
+      "tags": [
+        "文本编码与数值表示",
+        "浮点误差"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/tutorial/floatingpoint.html"
+    },
+    {
+      "id": "reprbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本编码与数值表示",
+      "knowledgePoint": "浮点比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较计算得到的近似浮点结果时，为什么有时使用容差比较？",
+      "answer": "不同运算路径的舍入误差可能使数学上相等的结果不完全相等；容差可按问题尺度判断接近程度。",
+      "explanation": "容差需要结合误差要求选择，不能无条件替代精确比较。",
+      "example": "使用 math.isclose 检查两个测量值是否接近。",
+      "tags": [
+        "文本编码与数值表示",
+        "浮点比较"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/tutorial/floatingpoint.html"
+    },
+    {
+      "id": "reprbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本编码与数值表示",
+      "knowledgePoint": "显示与存储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 显示浮点数 0.1 时输出简短的 0.1，是否表示其二进制存储恰好等于十进制 0.1？",
+      "answer": "不表示；显示时会选择较短的十进制表示，内部通常保存可恢复该浮点值的近似数。",
+      "explanation": "具体浮点表示取决于平台及类型。",
+      "example": "format(0.1, \".17f\") 可以显示更多近似细节。",
+      "tags": [
+        "文本编码与数值表示",
+        "显示与存储"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/tutorial/floatingpoint.html"
+    }
+  ]
+}

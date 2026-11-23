@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "pytorch-sdpa-attention-practice",
+    "title": "PyTorch 2.7：缩放点积注意力接口",
+    "url": "https://pytorch.org/docs/2.7/generated/torch.nn.functional.scaled_dot_product_attention.html",
+    "type": "原论文、官方文档与固定版本源码",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编，具体条件见各卡。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptsdp-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 注意力接口",
+      "knowledgePoint": "浮点掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 SDPA 的浮点 attn_mask 怎样作用于注意力计算？",
+      "answer": "它被加到缩放后的注意力分数上，然后再进行 softmax。",
+      "explanation": "将某位置加负无穷可排除该位置。",
+      "example": "用浮点偏置降低某些键位置的注意力分数。",
+      "tags": [
+        "PyTorch 注意力接口",
+        "浮点掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.functional.scaled_dot_product_attention.html"
+    },
+    {
+      "id": "ptsdp-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 注意力接口",
+      "knowledgePoint": "非方阵因果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 SDPA 的 is_causal=True 对非方阵查询与键如何对齐因果掩码？",
+      "answer": "文档规定使用左上角对齐的因果掩码。",
+      "explanation": "这不一定与增量解码时查询在整个缓存中的绝对位置一致，应依据实际位置选择掩码。",
+      "example": "查询长度为 1、键长度为 4 时，该掩码只允许第一个键位置。",
+      "tags": [
+        "PyTorch 注意力接口",
+        "非方阵因果"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.functional.scaled_dot_product_attention.html"
+    },
+    {
+      "id": "ptsdp-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 注意力接口",
+      "knowledgePoint": "掩码后端差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7.1 的所有 SDPA 后端都能同时接受 is_causal=True 和显式 attn_mask 吗？",
+      "answer": "不能这样假定；2.7 文档声明两者冲突，而同一 CPU 示例中 math 后端报错、Flash 后端可以执行。",
+      "explanation": "行为依输入和后端而异；应遵循文档并验证目标环境。",
+      "example": "相同形状的 CPU 输入切换后端可能改变是否报错。",
+      "tags": [
+        "PyTorch 注意力接口",
+        "掩码后端差异"
+      ],
+      "evidence": "application",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.functional.scaled_dot_product_attention.html"
+    },
+    {
+      "id": "ptsdp-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 注意力接口",
+      "knowledgePoint": "值维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 SDPA 的 value 最后一个特征维度必须等于 query 的特征维度吗？",
+      "answer": "不必须；value 可使用独立的 Ev 维度，输出最后一维也为 Ev。",
+      "explanation": "query 和 key 的点积维度需兼容；部分融合后端还有额外的形状限制。",
+      "example": "Q/K 维度为 2，V 维度为 1 的 CPU 算例可以运行。",
+      "tags": [
+        "PyTorch 注意力接口",
+        "值维度"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.functional.scaled_dot_product_attention.html"
+    },
+    {
+      "id": "ptsdp-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 注意力接口",
+      "knowledgePoint": "接口返回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 functional.scaled_dot_product_attention 直接返回注意力矩阵吗？",
+      "answer": "该接口返回注意力输出张量，而不是单独返回注意力权重矩阵。",
+      "explanation": "若需要权重，应选择支持返回权重的实现或自行计算。",
+      "example": "输出形状包含查询长度和 value 特征维度。",
+      "tags": [
+        "PyTorch 注意力接口",
+        "接口返回"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/docs/2.7/generated/torch.nn.functional.scaled_dot_product_attention.html"
+    }
+  ]
+}

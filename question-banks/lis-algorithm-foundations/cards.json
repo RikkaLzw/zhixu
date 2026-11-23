@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "lis-algorithm-foundations",
+    "title": "CP-Algorithms：最长递增子序列",
+    "url": "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "lisalg-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "最长递增子序列",
+      "knowledgePoint": "动态规划状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "求严格最长递增子序列的 O(n²) 动态规划中，dp[i] 通常表示什么？",
+      "answer": "表示以第 i 个元素结尾的最长严格递增子序列长度。",
+      "explanation": "只把当前元素接在下标更小且值更小的元素后面。",
+      "example": "对单个元素，dp 值至少为 1。",
+      "tags": [
+        "最长递增子序列",
+        "动态规划状态"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html"
+    },
+    {
+      "id": "lisalg-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最长递增子序列",
+      "knowledgePoint": "状态转移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "严格最长递增子序列的 dp[i] 如何从之前的位置转移？",
+      "answer": "在 j<i 且 a[j]<a[i] 的位置中取 dp[j]+1 的最大值；没有合适位置时为 1。",
+      "explanation": "状态必须以 a[i] 结尾。",
+      "example": "序列 [2,1,3] 在末尾的 dp 为 2。",
+      "tags": [
+        "最长递增子序列",
+        "状态转移"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html"
+    },
+    {
+      "id": "lisalg-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最长递增子序列",
+      "knowledgePoint": "末尾最小值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "O(n log n) 严格最长递增子序列算法中的 tails[k] 通常记录什么？",
+      "answer": "记录当前已处理前缀中，长度为 k+1 的严格递增子序列可能的最小末尾值。",
+      "explanation": "较小末尾值为后续追加元素提供更多机会。",
+      "example": "长度为 2 的候选末尾分别为 5 和 3 时保留 3。",
+      "tags": [
+        "最长递增子序列",
+        "末尾最小值"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html"
+    },
+    {
+      "id": "lisalg-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最长递增子序列",
+      "knowledgePoint": "二分替换",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "用 tails 和二分求严格最长递增子序列长度时，如何处理新元素 x？",
+      "answer": "替换 tails 中第一个大于或等于 x 的元素；若不存在则追加 x。",
+      "explanation": "该操作维护不同长度的最小可能末尾值。",
+      "example": "对 [1,3] 遇到 2，更新为 [1,2]。",
+      "tags": [
+        "最长递增子序列",
+        "二分替换"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html"
+    },
+    {
+      "id": "lisalg-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "最长递增子序列",
+      "knowledgePoint": "恢复序列",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "求最长递增子序列时，最终 tails 数组一定就是原数组中的一个有效子序列吗？",
+      "answer": "不一定；各位置可能来自不同候选子序列，恢复实际序列需额外记录前驱等信息。",
+      "explanation": "tails 的长度可给出最长长度，但其内容不必同时满足原下标顺序。",
+      "example": "输入 [2,3,1] 的 tails 为 [1,3]，但 1 出现在 3 之后。",
+      "tags": [
+        "最长递增子序列",
+        "恢复序列"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html"
+    }
+  ]
+}

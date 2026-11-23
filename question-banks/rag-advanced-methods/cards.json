@@ -1,0 +1,558 @@
+{
+  "source": {
+    "id": "rag-advanced-methods",
+    "title": "Self-RAG、CRAG、RAPTOR 与长上下文检索研究",
+    "url": "https://arxiv.org/abs/2310.11511v1",
+    "type": "研究论文",
+    "note": "根据原论文整理；实验结论保留论文的模型与任务条件，应用推论标为 application。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "ragadv-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-RAG",
+      "knowledgePoint": "反思标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-RAG 原论文怎样让生成模型表达检索和自评决定？",
+      "answer": "模型把反思标记作为扩展词表中的 token 生成，用于表示是否检索及对结果的评价。",
+      "explanation": "这些标记与普通文本一起作为自回归输出生成。",
+      "example": "生成检索标记决定是否调用外部检索器。",
+      "tags": [
+        "反思标记",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.11511v1",
+      "referenceTitle": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection，§3：反思标记"
+    },
+    {
+      "id": "ragadv-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-RAG",
+      "knowledgePoint": "检索相关性标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-RAG 的 ISREL 主要评价什么？",
+      "answer": "评价检索片段是否为解决输入问题提供有用信息。",
+      "explanation": "它评价片段与问题的相关性，而不是直接判断生成回答是否被支持。",
+      "example": "对每个候选片段判断相关或不相关。",
+      "tags": [
+        "检索相关性标记",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.11511v1",
+      "referenceTitle": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection，§3：检索相关性标记"
+    },
+    {
+      "id": "ragadv-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-RAG",
+      "knowledgePoint": "回答支持度标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-RAG 的 ISSUP 主要评价什么？",
+      "answer": "评价生成片段中的可核验陈述是否得到所引用检索片段支持。",
+      "explanation": "论文区分完全支持、部分支持和不支持。",
+      "example": "回答引用资料但加入资料未支持的事实时，支持度可能降低。",
+      "tags": [
+        "回答支持度标记",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.11511v1",
+      "referenceTitle": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection，§3：回答支持度标记"
+    },
+    {
+      "id": "ragadv-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-RAG",
+      "knowledgePoint": "回答有用性标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-RAG 的 ISUSE 标记评价什么？",
+      "answer": "它评价生成回答对输入的有用性，原论文使用 1 至 5 的等级。",
+      "explanation": "该评价与片段是否支持回答是不同维度。",
+      "example": "回答可能与问题相关，却缺少可靠证据。",
+      "tags": [
+        "回答有用性标记",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.11511v1",
+      "referenceTitle": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection，§3：回答有用性标记"
+    },
+    {
+      "id": "ragadv-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-RAG",
+      "knowledgePoint": "离线评价标注",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-RAG 训练生成模型前，评价模型如何参与构造训练数据？",
+      "answer": "评价模型离线为训练样本预测反思标记，再把这些标记插入生成模型的训练数据。",
+      "explanation": "训练后的生成模型可自行生成反思标记。",
+      "example": "为检索片段加入相关性标签后用于生成模型训练。",
+      "tags": [
+        "离线评价标注",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.11511v1",
+      "referenceTitle": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection，§3：离线评价标注"
+    },
+    {
+      "id": "ragadv-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-RAG",
+      "knowledgePoint": "分片生成候选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-RAG 检索到多篇片段后，如何产生可比较的候选回答片段？",
+      "answer": "它分别基于各检索片段生成候选，并结合反思标记评估候选。",
+      "explanation": "候选之间可按相关性、支持度和有用性等信号排序。",
+      "example": "两个检索结果分别产生候选，再选择得分较好的回答片段。",
+      "tags": [
+        "分片生成候选",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.11511v1",
+      "referenceTitle": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection，§3：分片生成候选"
+    },
+    {
+      "id": "ragadv-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-RAG",
+      "knowledgePoint": "可调反思权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-RAG 推理时为什么可以调整不同反思信号的权重？",
+      "answer": "候选片段评分可组合不同反思标记的概率，调整权重可改变偏好的评价维度。",
+      "explanation": "原论文使用片段级搜索，并非保证权重选择总能得到正确答案。",
+      "example": "提高支持度信号的权重以更重视资料支持。",
+      "tags": [
+        "可调反思权重",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2310.11511v1",
+      "referenceTitle": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection，§3：可调反思权重"
+    },
+    {
+      "id": "ragadv-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CRAG",
+      "knowledgePoint": "检索评价器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CRAG 原论文中的检索评价器对什么对象打相关性分数？",
+      "answer": "它分别评价输入问题与各检索文档的相关性。",
+      "explanation": "文档级分数用于后续判断检索结果的质量。",
+      "example": "对同一问题的多篇候选文档分别评分。",
+      "tags": [
+        "检索评价器",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.15884v3",
+      "referenceTitle": "Corrective Retrieval Augmented Generation，§4：检索评价器"
+    },
+    {
+      "id": "ragadv-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CRAG",
+      "knowledgePoint": "纠错触发条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CRAG 对非空检索结果如何用上下阈值区分 Correct、Incorrect 和 Ambiguous？",
+      "answer": "至少一篇得分高于上阈值时为 Correct；全部低于下阈值时为 Incorrect；其余情况为 Ambiguous。",
+      "explanation": "这一判断依赖评价器的分数与所选阈值。",
+      "example": "一篇高分文档可使整体检索结果进入 Correct 分支。",
+      "tags": [
+        "纠错触发条件",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.15884v3",
+      "referenceTitle": "Corrective Retrieval Augmented Generation，§4：纠错触发条件"
+    },
+    {
+      "id": "ragadv-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CRAG",
+      "knowledgePoint": "三种纠错分支",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CRAG 的 Correct、Incorrect 与 Ambiguous 分支分别使用什么知识？",
+      "answer": "Correct 使用精炼后的检索知识；Incorrect 转向网页搜索；Ambiguous 合并两者。",
+      "explanation": "这是原论文的纠错策略，不是所有 RAG 系统的必需结构。",
+      "example": "检索质量不确定时同时参考内部片段和外部搜索。",
+      "tags": [
+        "三种纠错分支",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.15884v3",
+      "referenceTitle": "Corrective Retrieval Augmented Generation，§4：三种纠错分支"
+    },
+    {
+      "id": "ragadv-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CRAG",
+      "knowledgePoint": "知识精炼过程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CRAG 的知识精炼怎样处理检索文档？",
+      "answer": "把文档拆成较小知识片段，过滤不相关片段，再将保留内容按序重组。",
+      "explanation": "目的是减少相关文档中仍存在的噪声。",
+      "example": "从一篇较长文档中保留与问题相关的几句内容。",
+      "tags": [
+        "知识精炼过程",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.15884v3",
+      "referenceTitle": "Corrective Retrieval Augmented Generation，§4：知识精炼过程"
+    },
+    {
+      "id": "ragadv-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CRAG",
+      "knowledgePoint": "片段级筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CRAG 如何为拆分后的知识片段选择是否保留？",
+      "answer": "原论文使用检索评价器计算各片段与问题的相关性分数，再过滤低相关内容。",
+      "explanation": "片段级筛选比只判断整篇文档更细。",
+      "example": "文档总体相关，但其中一个无关段落被滤除。",
+      "tags": [
+        "片段级筛选",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.15884v3",
+      "referenceTitle": "Corrective Retrieval Augmented Generation，§4：片段级筛选"
+    },
+    {
+      "id": "ragadv-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CRAG",
+      "knowledgePoint": "网页查询改写",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CRAG 原论文在使用网页搜索前如何处理输入问题？",
+      "answer": "将问题改写为更适合搜索引擎的关键词查询，再执行网页搜索。",
+      "explanation": "原论文使用模型完成改写。",
+      "example": "把完整问句改写成实体名称和关键属性的搜索词。",
+      "tags": [
+        "网页查询改写",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.15884v3",
+      "referenceTitle": "Corrective Retrieval Augmented Generation，§4：网页查询改写"
+    },
+    {
+      "id": "ragadv-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CRAG",
+      "knowledgePoint": "纠错分数的边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CRAG 评价器把文档判为相关，是否就证明其中事实准确？",
+      "answer": "不能；相关性分数用于路由和筛选，事实仍需核验来源与内容。",
+      "explanation": "网页搜索结果同样可能不可靠。",
+      "example": "一篇讨论同一漏洞的文章可能引用过时版本。",
+      "tags": [
+        "纠错分数的边界",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.15884v3",
+      "referenceTitle": "Corrective Retrieval Augmented Generation，§4：纠错分数的边界"
+    },
+    {
+      "id": "ragadv-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAPTOR",
+      "knowledgePoint": "树的叶子与摘要",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAPTOR 检索树的叶子节点和较高层节点通常分别表示什么？",
+      "answer": "叶子保存原始文本片段及其向量；较高层保存由片段组生成的摘要及其向量。",
+      "explanation": "树的不同层提供不同粒度的信息。",
+      "example": "叶子是原文段落，上层节点是多个段落的主题摘要。",
+      "tags": [
+        "树的叶子与摘要",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.18059v1",
+      "referenceTitle": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval，§3：树的叶子与摘要"
+    },
+    {
+      "id": "ragadv-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAPTOR",
+      "knowledgePoint": "递归构建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAPTOR 如何从文本片段构建多层检索树？",
+      "answer": "对片段向量聚类，汇总每个簇并重新编码摘要，递归重复这些步骤。",
+      "explanation": "递归持续到无法继续有效聚类为止。",
+      "example": "若干片段形成摘要，再由摘要构成更高层节点。",
+      "tags": [
+        "递归构建",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.18059v1",
+      "referenceTitle": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval，§3：递归构建"
+    },
+    {
+      "id": "ragadv-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAPTOR",
+      "knowledgePoint": "语义聚类与相邻片段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAPTOR 的片段聚类与只按原文相邻顺序分组有何区别？",
+      "answer": "它可依据语义相似性把相距较远但主题相关的片段归到一起。",
+      "explanation": "分组不只由原文中的相邻关系决定。",
+      "example": "文档不同章节中讨论同一组件的片段可能被归入同一簇。",
+      "tags": [
+        "语义聚类与相邻片段",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.18059v1",
+      "referenceTitle": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval，§3：语义聚类与相邻片段"
+    },
+    {
+      "id": "ragadv-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAPTOR",
+      "knowledgePoint": "软聚类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAPTOR 使用软聚类时，一个片段能属于多个簇吗？",
+      "answer": "可以；同一片段可能与多个主题相关，因此可参与多个簇。",
+      "explanation": "具体归属取决于聚类模型的概率和阈值。",
+      "example": "同时讨论两个主题的段落可出现在两个摘要的输入中。",
+      "tags": [
+        "软聚类",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.18059v1",
+      "referenceTitle": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval，§3：软聚类"
+    },
+    {
+      "id": "ragadv-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAPTOR",
+      "knowledgePoint": "降维与聚类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAPTOR 原论文为什么在高维文本向量聚类前使用 UMAP？",
+      "answer": "它先降低向量维度，以缓解高维空间中的距离度量困难。",
+      "explanation": "论文随后使用高斯混合模型进行聚类。",
+      "example": "把高维片段向量投影到较低维后再做聚类。",
+      "tags": [
+        "降维与聚类",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.18059v1",
+      "referenceTitle": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval，§3：降维与聚类"
+    },
+    {
+      "id": "ragadv-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAPTOR",
+      "knowledgePoint": "检索策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAPTOR 的树遍历与折叠树检索分别如何选择节点？",
+      "answer": "树遍历逐层选择并剪枝；折叠树检索把不同层节点放在一起比较相关性。",
+      "explanation": "两种方法都可从同一多层表示中选择上下文。",
+      "example": "折叠树可以同时选到原文片段和较高层摘要。",
+      "tags": [
+        "检索策略",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.18059v1",
+      "referenceTitle": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval，§3：检索策略"
+    },
+    {
+      "id": "ragadv-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAPTOR",
+      "knowledgePoint": "剪枝风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAPTOR 式树遍历过早剪掉某个父节点，可能带来什么风险？",
+      "answer": "其下层相关片段可能无法在后续层被访问，导致漏检。",
+      "explanation": "实际影响取决于遍历和候选选择策略。",
+      "example": "上层摘要与问题的匹配分数偏低，隐藏了相关叶子片段。",
+      "tags": [
+        "剪枝风险",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.18059v1",
+      "referenceTitle": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval，§3：剪枝风险"
+    },
+    {
+      "id": "ragadv-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAPTOR",
+      "knowledgePoint": "摘要误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAPTOR 中自动生成的树节点摘要能否直接视为无误的原始证据？",
+      "answer": "不能；摘要可能遗漏细节或引入错误，需要回查对应原文。",
+      "explanation": "原论文也讨论了生成摘要出现幻觉的情况。",
+      "example": "重要事实应保留到原文片段的追溯路径。",
+      "tags": [
+        "摘要误差",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.18059v1",
+      "referenceTitle": "RAPTOR: Recursive Abstractive Processing for Tree-Organized Retrieval，§3：摘要误差"
+    },
+    {
+      "id": "ragadv-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "长上下文评估",
+      "knowledgePoint": "位置控制实验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Lost in the Middle 论文怎样检查相关资料位置对多文档问答的影响？",
+      "answer": "保持问题和相关资料内容，调整含答案文档在上下文中的位置并比较回答表现。",
+      "explanation": "这种控制有助于隔离位置变化的影响。",
+      "example": "将同一含答案片段分别放在开头、中间和末尾。",
+      "tags": [
+        "位置控制实验",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2307.03172v3",
+      "referenceTitle": "Lost in the Middle: How Language Models Use Long Contexts，§2、§4—5：位置控制实验"
+    },
+    {
+      "id": "ragadv-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "长上下文评估",
+      "knowledgePoint": "中间信息利用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Lost in the Middle 在部分受测模型的长上下文实验中观察到什么位置趋势？",
+      "answer": "相关信息位于开头或结尾时表现较好，位于中间时可能下降。",
+      "explanation": "该经验结果依赖模型、任务与上下文长度，不应推广为所有模型的固定规律。",
+      "example": "在同一测试集上比较答案证据位于不同位置时的准确率。",
+      "tags": [
+        "中间信息利用",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2307.03172v3",
+      "referenceTitle": "Lost in the Middle: How Language Models Use Long Contexts，§2、§4—5：中间信息利用"
+    },
+    {
+      "id": "ragadv-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "长上下文评估",
+      "knowledgePoint": "检索数量与回答质量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Lost in the Middle 的检索问答实验中，增加检索文档数为何未必持续改善回答？",
+      "answer": "检索召回可能继续增加，而模型利用额外上下文的回答表现已趋于饱和。",
+      "explanation": "论文的结果针对其所测模型和数据，不代表所有系统都遵循相同曲线。",
+      "example": "比较不同 top-k 下的检索召回和最终回答准确率。",
+      "tags": [
+        "检索数量与回答质量",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2307.03172v3",
+      "referenceTitle": "Lost in the Middle: How Language Models Use Long Contexts，§2、§4—5：检索数量与回答质量"
+    },
+    {
+      "id": "ragadv-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "长上下文评估",
+      "knowledgePoint": "查询前置效果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Lost in the Middle 研究中，把查询同时放在上下文前后对哪些任务的影响不同？",
+      "answer": "它在合成键值检索任务中改善明显，但对多文档问答的趋势改变较小。",
+      "explanation": "实验提醒我们分别在目标任务上验证提示策略。",
+      "example": "同一提示技巧在合成检索和真实问答中可能表现不同。",
+      "tags": [
+        "查询前置效果",
+        "RAG",
+        "检索"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2307.03172v3",
+      "referenceTitle": "Lost in the Middle: How Language Models Use Long Contexts，§2、§4—5：查询前置效果"
+    }
+  ]
+}

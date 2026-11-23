@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "sigma-rule-authoring",
+    "title": "Sigma 2.1.0 日志来源与规则条件",
+    "url": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html",
+    "type": "官方技术文档与标准",
+    "note": "依据逐题链接的原始资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "siga-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "规则日志来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 logsource 主要指定什么？",
+      "answer": "它描述检测规则预期使用的日志来源或类型。",
+      "explanation": "category、product 和 service 可单独或组合使用。",
+      "example": "将进程创建规则关联到 Windows 的相应日志。",
+      "tags": [
+        "规则日志来源",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html"
+    },
+    {
+      "id": "siga-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "日志来源前提",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 logsource.definition 会被转换器自动执行吗？",
+      "answer": "不会；它用于说明日志来源需要的配置或其他前提。",
+      "explanation": "启用相应日志仍需在实际采集环境中完成。",
+      "example": "规则说明需启用脚本块日志。",
+      "tags": [
+        "日志来源前提",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html"
+    },
+    {
+      "id": "siga-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "条件集合组合",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 中 1 of selection* 与 all of selection* 有什么区别？",
+      "answer": "前者要求至少一个匹配的选择条件成立；后者要求所有匹配的选择条件成立。",
+      "explanation": "通配符只选择名称符合该模式的搜索标识符。",
+      "example": "在多个 selection 中选择任一命中或全部命中。",
+      "tags": [
+        "条件集合组合",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html"
+    },
+    {
+      "id": "siga-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "字符串通配符",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 字符串中的 ? 与 * 分别表示什么？",
+      "answer": "? 匹配一个字符；* 匹配任意长度的字符序列。",
+      "explanation": "需要匹配字面上的通配符时，应遵循规范进行转义。",
+      "example": "用问号匹配文件名中一个变化字符。",
+      "tags": [
+        "字符串通配符",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html"
+    },
+    {
+      "id": "siga-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "误报说明",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 falsepositives 字段会自动排除列出的正常行为吗？",
+      "answer": "不会；它列举已知可能产生误报的情况，实际过滤需由检测条件或部署策略实现。",
+      "explanation": "调整过滤条件后仍应检查可能漏掉的恶意行为。",
+      "example": "记录管理员正常维护可能触发该规则。",
+      "tags": [
+        "误报说明",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html"
+    },
+    {
+      "id": "siga-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "分析展示字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 fields 字段主要供什么使用？",
+      "answer": "它列出事件命中后可能有助于分析的展示字段。",
+      "explanation": "检测条件仍由 detection 部分定义。",
+      "example": "提示分析人员查看进程命令行字段。",
+      "tags": [
+        "分析展示字段",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html"
+    },
+    {
+      "id": "siga-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "规则成熟状态",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的 experimental 与 stable 状态有什么区别？",
+      "answer": "experimental 表示实验性规则，可能较嘈杂；stable 表示规则被认为相对稳定。",
+      "explanation": "状态不保证在每个环境都没有误报，部署前仍需验证。",
+      "example": "先在本地样本上评估实验性规则。",
+      "tags": [
+        "规则成熟状态",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html"
+    },
+    {
+      "id": "siga-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "检测规则",
+      "knowledgePoint": "空字符串与空值",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Sigma 2.1.0 的空字符串和 null 是否是同一个匹配条件？",
+      "answer": "不是；空字符串和 null 表示不同的值，应分别指定匹配条件。",
+      "explanation": "还需结合目标后端对缺失字段和空值的语义核验。",
+      "example": "分别检查空文本和显式 null 字段。",
+      "tags": [
+        "空字符串与空值",
+        "Sigma"
+      ],
+      "evidence": "source",
+      "reference": "https://sigmahq.io/sigma-specification/specification/sigma-rules-specification.html"
+    }
+  ]
+}

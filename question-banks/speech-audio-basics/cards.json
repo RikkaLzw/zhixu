@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "speech-audio-basics",
+    "title": "Hugging Face 音频与语音识别教程",
+    "url": "https://huggingface.co/learn/audio-course/en/chapter1/audio_data",
+    "type": "官方课程与技术文档",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "audio-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "音频表示",
+      "knowledgePoint": "采样率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数字音频的采样率表示什么？",
+      "answer": "它表示每秒采集的样本数，单位通常为赫兹（Hz）。",
+      "explanation": "采样率决定相邻样本的时间间隔。",
+      "example": "16 kHz 单声道音频每秒有 16000 个采样点。",
+      "tags": [
+        "采样率",
+        "音频表示"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter1/audio_data"
+    },
+    {
+      "id": "audio-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频表示",
+      "knowledgePoint": "波形与频谱图",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "音频波形与频谱图分别突出什么信息？",
+      "answer": "波形表示幅度随时间的变化；频谱图展示各频率成分随时间的变化。",
+      "explanation": "常用短时傅里叶变换计算频谱图。",
+      "example": "观察语音在时间上各频段的能量变化。",
+      "tags": [
+        "波形与频谱图",
+        "音频表示"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter1/audio_data"
+    },
+    {
+      "id": "audio-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "语音识别",
+      "knowledgePoint": "采样率匹配",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "为什么把音频输入预训练语音模型前需要检查采样率？",
+      "answer": "模型通常期望与其处理器或训练设置一致的采样率；不一致时应按要求重采样。",
+      "explanation": "只改采样率标签而不重采样，会错误解释时间尺度。",
+      "example": "将 8 kHz 数据重采样到模型要求的 16 kHz。",
+      "tags": [
+        "采样率匹配",
+        "语音识别"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/main/en/tasks/asr"
+    },
+    {
+      "id": "audio-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音评估",
+      "knowledgePoint": "词错误率",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "语音识别的词错误率 WER 如何计算？",
+      "answer": "WER 是词级替换、插入和删除次数之和，除以参考文本的词数。",
+      "explanation": "计算前应明确分词与文本规范化规则。",
+      "example": "参考为 6 个词且有 1 次替换、1 次删除时，WER 为 2/6。",
+      "tags": [
+        "词错误率",
+        "语音评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter5/evaluation"
+    },
+    {
+      "id": "audio-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音评估",
+      "knowledgePoint": "WER上界",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "词错误率 WER 能超过 100% 吗？",
+      "answer": "可以；插入错误可以使错误总数超过参考文本的词数。",
+      "explanation": "WER 衡量编辑错误相对参考长度的比例，并非受 1 限制的概率。",
+      "example": "参考文本很短而识别结果插入大量额外词。",
+      "tags": [
+        "WER上界",
+        "语音评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter5/evaluation"
+    }
+  ]
+}

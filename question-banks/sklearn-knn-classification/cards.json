@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "sklearn-knn-classification",
+    "title": "scikit-learn 1.7 文档：K 近邻分类器",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.neighbors.KNeighborsClassifier.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skknn-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "K 近邻分类接口",
+      "knowledgePoint": "基本预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KNeighborsClassifier 通常如何预测一个查询样本的类别？",
+      "answer": "查找 K 个近邻，并按配置的权重对其标签投票。",
+      "explanation": "距离度量和特征预处理会影响近邻。",
+      "example": "根据最相近的若干训练样本分类。",
+      "tags": [
+        "K 近邻分类接口",
+        "基本预测"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"
+    },
+    {
+      "id": "skknn-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "K 近邻分类接口",
+      "knowledgePoint": "加权方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KNeighborsClassifier 的 weights=\"uniform\" 与 \"distance\" 有什么区别？",
+      "answer": "前者对邻居等权；后者按距离的倒数加权，使较近邻居通常影响更大。",
+      "explanation": "零距离和自定义权重应按具体实现处理。",
+      "example": "距离更近的样本可获得更高投票权。",
+      "tags": [
+        "K 近邻分类接口",
+        "加权方式"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"
+    },
+    {
+      "id": "skknn-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "K 近邻分类接口",
+      "knowledgePoint": "Minkowski参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KNeighborsClassifier 使用 Minkowski 距离时，p=1 和 p=2 分别对应什么？",
+      "answer": "p=1 对应曼哈顿距离；p=2 对应欧氏距离。",
+      "explanation": "改变距离度量可能改变近邻集合。",
+      "example": "二维中两种距离度量的邻近关系不一定相同。",
+      "tags": [
+        "K 近邻分类接口",
+        "Minkowski参数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"
+    },
+    {
+      "id": "skknn-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "K 近邻分类接口",
+      "knowledgePoint": "平距顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KNeighborsClassifier 在第 K 和第 K+1 个邻居距离相同但标签不同的情况下，结果为什么可能受训练数据顺序影响？",
+      "answer": "等距离的边界邻居可能因输入顺序不同而被不同地选入投票。",
+      "explanation": "距离平局时应关注可复现性。",
+      "example": "改变样本排列可能改变被保留的边界邻居。",
+      "tags": [
+        "K 近邻分类接口",
+        "平距顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"
+    },
+    {
+      "id": "skknn-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "K 近邻分类接口",
+      "knowledgePoint": "自查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 KNeighborsClassifier.kneighbors(X=None) 会把每个已索引点自身作为自己的邻居吗？",
+      "answer": "不会；省略 X 时为索引中的各点查询，并排除该点自身。",
+      "explanation": "显式传入训练数据时应按接口实际行为处理。",
+      "example": "用于查看训练样本附近的其他样本。",
+      "tags": [
+        "K 近邻分类接口",
+        "自查询"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"
+    },
+    {
+      "id": "skknn-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "K 近邻分类接口",
+      "knowledgePoint": "返回距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KNeighborsClassifier.kneighbors 的 return_distance=False 会返回什么？",
+      "answer": "只返回邻居索引，不返回距离数组。",
+      "explanation": "默认会同时返回距离与索引。",
+      "example": "只需查找近邻编号时可关闭距离返回。",
+      "tags": [
+        "K 近邻分类接口",
+        "返回距离"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"
+    },
+    {
+      "id": "skknn-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "K 近邻分类接口",
+      "knowledgePoint": "邻居不足",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 KNeighborsClassifier 请求的邻居数超过可用训练样本数时，查询通常会怎样？",
+      "answer": "查询或预测会报错，不能返回所请求数量的邻居。",
+      "explanation": "省略查询 X 时还需排除样本自身。",
+      "example": "只有 3 条训练样本却请求 5 个近邻。",
+      "tags": [
+        "K 近邻分类接口",
+        "邻居不足"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"
+    }
+  ]
+}

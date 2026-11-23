@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "cse-cic-ids2018-dataset",
+    "title": "CSE-CIC-IDS2018 官方说明",
+    "url": "https://www.unb.ca/cic/datasets/ids-2018.html",
+    "type": "教材、官方文档与论文",
+    "note": "依据逐题引用的文档、教材或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "cic18-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "CSE-CIC-IDS2018 数据",
+      "knowledgePoint": "构建环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CSE-CIC-IDS2018 的网络数据主要来自什么环境？",
+      "answer": "来自模拟组织网络和指定攻击场景的测试环境。",
+      "explanation": "其规模和流量构成不能自动代表所有真实生产网络。",
+      "example": "用该数据训练后仍需验证跨环境表现。",
+      "tags": [
+        "CSE-CIC-IDS2018 数据",
+        "构建环境"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/ids-2018.html"
+    },
+    {
+      "id": "cic18-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "CSE-CIC-IDS2018 数据",
+      "knowledgePoint": "原始数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CSE-CIC-IDS2018 官方说明提供哪些主要类型的原始观测？",
+      "answer": "包括按日期和机器组织的网络抓包，以及 Windows 和 Ubuntu 事件日志。",
+      "explanation": "具体可用文件应以发布内容为准。",
+      "example": "需要重新提取网络特征时可查看原始 PCAP。",
+      "tags": [
+        "CSE-CIC-IDS2018 数据",
+        "原始数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/ids-2018.html"
+    },
+    {
+      "id": "cic18-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "CSE-CIC-IDS2018 数据",
+      "knowledgePoint": "流量特征来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CSE-CIC-IDS2018 官方 CSV 流量特征由什么工具提取？",
+      "answer": "由 CICFlowMeter-V3 从捕获网络流量中提取。",
+      "explanation": "重新用其他版本或配置提取时，字段含义和数值应单独核对。",
+      "example": "比较两次实验前应记录特征提取器及其版本。",
+      "tags": [
+        "CSE-CIC-IDS2018 数据",
+        "流量特征来源"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/ids-2018.html"
+    },
+    {
+      "id": "cic18-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CSE-CIC-IDS2018 数据",
+      "knowledgePoint": "背景与攻击配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CSE-CIC-IDS2018 文档中的 B-profile 与 M-profile 分别描述什么？",
+      "answer": "B-profile 概括网络实体的背景行为及统计特征；M-profile 描述攻击场景。",
+      "explanation": "两种配置分别用于生成背景行为和执行攻击。",
+      "example": "请求时间分布可以属于 B-profile，内部渗透步骤可以属于 M-profile。",
+      "tags": [
+        "CSE-CIC-IDS2018 数据",
+        "背景与攻击配置"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/ids-2018.html"
+    },
+    {
+      "id": "cic18-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CSE-CIC-IDS2018 数据",
+      "knowledgePoint": "攻击类别范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CSE-CIC-IDS2018 包含哪些类型的攻击场景示例？",
+      "answer": "包括暴力破解、僵尸网络、拒绝服务、Web 攻击和内部渗透等。",
+      "explanation": "这些示例不表示数据覆盖所有攻击方式。",
+      "example": "评估时应按具体攻击场景和样本组成说明结果。",
+      "tags": [
+        "CSE-CIC-IDS2018 数据",
+        "攻击类别范围"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/ids-2018.html"
+    }
+  ]
+}

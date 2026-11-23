@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "alce-citation-evaluation",
+    "title": "ALCE 原论文 v2：生成答案引用评估",
+    "url": "https://arxiv.org/pdf/2305.14627v2",
+    "type": "固定版本研究论文",
+    "note": "依据逐题所列固定版本资料自行整理；示例为自编，适用条件见题目。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "alce-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "ALCE 引用评估",
+      "knowledgePoint": "评估维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALCE 原论文从哪些主要方面评估带引用的生成回答？",
+      "answer": "从流畅性、回答正确性和引用质量三个方面评估。",
+      "explanation": "引用质量本身进一步考查支持的完整程度和无关引用。",
+      "example": "分别检查答案可读性、正确性和引用是否支持。",
+      "tags": [
+        "ALCE 引用评估",
+        "评估维度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.14627v2"
+    },
+    {
+      "id": "alce-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALCE 引用评估",
+      "knowledgePoint": "引用召回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALCE 论文中的 citation recall 主要按什么单位判断支持情况？",
+      "answer": "按生成回答中的陈述判断其引用集合是否共同支持该陈述，再对陈述求平均。",
+      "explanation": "论文实现以句子边界划分陈述，并用自然语言推断模型近似判断蕴含。",
+      "example": "三句中两句得到引用集合支持时，示例召回为 2/3。",
+      "tags": [
+        "ALCE 引用评估",
+        "引用召回"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.14627v2"
+    },
+    {
+      "id": "alce-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALCE 引用评估",
+      "knowledgePoint": "无引用的陈述",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 ALCE 论文的 citation recall 定义中，没有任何引用的陈述得多少支持分？",
+      "answer": "该陈述得 0 分。",
+      "explanation": "即使陈述实际上正确，指标也要求存在引用且引用内容能支持它。",
+      "example": "没有引用标号的事实句在该口径下得 0。",
+      "tags": [
+        "ALCE 引用评估",
+        "无引用的陈述"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.14627v2"
+    },
+    {
+      "id": "alce-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALCE 引用评估",
+      "knowledgePoint": "多引用联合支持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALCE 评估多篇引用支持同一陈述时，是否要求每篇都单独蕴含整个陈述才能得到引用召回？",
+      "answer": "不要求；论文把该陈述的引用段落拼接后，检查它们能否共同蕴含陈述。",
+      "explanation": "这允许一个陈述需要多篇材料提供联合证据。",
+      "example": "两篇文档分别提供陈述的不同事实，合并后共同支持。",
+      "tags": [
+        "ALCE 引用评估",
+        "多引用联合支持"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.14627v2"
+    },
+    {
+      "id": "alce-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ALCE 引用评估",
+      "knowledgePoint": "无关引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALCE 论文如何识别一条可能无关的引用？",
+      "answer": "若该引用单独不能支持陈述，且移除它后其余引用仍能支持陈述，就把它视为无关。",
+      "explanation": "论文的引用精确率计算还要求该陈述的整体引用集合能支持它。",
+      "example": "一个无关文档被附在本已充分支持的句子后。",
+      "tags": [
+        "ALCE 引用评估",
+        "无关引用"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.14627v2"
+    }
+  ]
+}

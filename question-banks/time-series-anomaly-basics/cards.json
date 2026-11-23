@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "time-series-anomaly-basics",
+    "title": "Forecasting: Principles and Practice：时间序列分解",
+    "url": "https://otexts.com/fpp3/decomposition.html#sec-components",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据逐题引用的论文、教材或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "tsabase-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "趋势与季节",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间序列中的趋势和季节性有什么区别？",
+      "answer": "趋势是长期上升或下降的变化；季节性是在固定周期上反复出现的模式。",
+      "explanation": "趋势不一定是直线，也可能改变方向。",
+      "example": "安全事件量长期增长，同时工作日高于周末。",
+      "tags": [
+        "趋势与季节",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/graphics.html#sec-tspatterns"
+    },
+    {
+      "id": "tsabase-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "季节与周期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间序列分析中，季节性和周期性波动的固定频率有什么区别？",
+      "answer": "季节性按固定周期反复出现；周期波动的持续时间通常不固定。",
+      "explanation": "这里的周期波动采用教材对 cycle 的定义。",
+      "example": "每周重复的登录高峰不同于持续时间不定的业务周期。",
+      "tags": [
+        "季节与周期",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/graphics.html#sec-tspatterns"
+    },
+    {
+      "id": "tsabase-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "自相关",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间序列的滞后自相关通常衡量什么？",
+      "answer": "它衡量序列当前值与滞后若干时间步的值之间的线性关系。",
+      "explanation": "不同滞后对应不同的自相关系数。",
+      "example": "比较每小时事件数与前一小时事件数。",
+      "tags": [
+        "自相关",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/graphics.html#sec-acf"
+    },
+    {
+      "id": "tsabase-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "季节滞后",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "存在季节性时，自相关函数在什么滞后位置可能出现较大值？",
+      "answer": "季节周期及其倍数对应的滞后位置可能出现较大自相关。",
+      "explanation": "实际数据中的趋势、噪声等也会影响自相关。",
+      "example": "每 24 小时重复的流量可能在滞后 24 小时附近表现相关。",
+      "tags": [
+        "季节滞后",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/graphics.html#sec-acf"
+    },
+    {
+      "id": "tsabase-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "加法分解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间序列的加法分解通常把观测表示为哪几个部分之和？",
+      "answer": "表示为趋势—周期项、季节项和剩余项之和。",
+      "explanation": "分解结果是基于方法和参数得到的估计。",
+      "example": "把访问量拆为长期变化、每周模式和剩余波动。",
+      "tags": [
+        "加法分解",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/decomposition.html#sec-components"
+    },
+    {
+      "id": "tsabase-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "加法乘法选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间序列的加法与乘法分解各适合哪种季节波动情况？",
+      "answer": "季节波动幅度大致固定时常考虑加法；波动幅度随序列水平成比例变化时常考虑乘法。",
+      "explanation": "选择仍需结合数据和模型诊断。",
+      "example": "业务量越高、每日波动也越大时考虑乘法形式。",
+      "tags": [
+        "加法乘法选择",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/decomposition.html#sec-components"
+    },
+    {
+      "id": "tsabase-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "季节调整",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "加法分解中的季节调整序列一定等同于平滑的趋势线吗？",
+      "answer": "不一定；去除季节项后仍包含趋势—周期项和剩余项，因而可能出现短期波动。",
+      "explanation": "它不一定像趋势线一样平滑。",
+      "example": "去除每周规律后仍可能观察到突发波动。",
+      "tags": [
+        "季节调整",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/decomposition.html#seasonally-adjusted-data"
+    },
+    {
+      "id": "tsabase-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "多重季节性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一条高频时间序列可以同时具有多个季节周期吗？",
+      "answer": "可以；例如小时级数据可能同时呈现日内和周内的重复模式。",
+      "explanation": "选择方法时应考虑需要表示的周期。",
+      "example": "网络流量同时受一天内时段和星期影响。",
+      "tags": [
+        "多重季节性",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/decomposition.html#sec-components"
+    },
+    {
+      "id": "tsabase-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "居中平均边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么固定长度的居中移动平均在时间序列首尾可能无法计算？",
+      "answer": "边界位置缺少窗口所需的更早或更晚观测。",
+      "explanation": "采用其他边界处理方法时，结果取决于具体方法。",
+      "example": "五点居中平均无法直接计算最前两个位置。",
+      "tags": [
+        "居中平均边界",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/decomposition.html#sec-moving-averages"
+    },
+    {
+      "id": "tsabase-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "经典季节假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典时间序列分解对季节模式通常做什么假设？",
+      "answer": "它通常假设季节模式在不同周期中保持不变。",
+      "explanation": "若季节模式随时间变化，经典分解可能无法充分刻画。",
+      "example": "假设每年对应月份的季节效应相同。",
+      "tags": [
+        "经典季节假设",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/decomposition.html#sec-classical-decomposition"
+    },
+    {
+      "id": "tsabase-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "STL季节变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STL 分解能否允许季节成分随时间缓慢变化？",
+      "answer": "可以；其季节成分的变化速度可通过平滑设置控制。",
+      "explanation": "具体参数名称和默认值依实现而异。",
+      "example": "工作日与周末的流量差异逐渐改变。",
+      "tags": [
+        "STL季节变化",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/decomposition.html#sec-stl"
+    },
+    {
+      "id": "tsabase-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "稳健STL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STL 的稳健分解选项主要如何降低少量异常观测的影响？",
+      "answer": "它降低异常观测对趋势和季节成分估计的影响，使异常更多体现在剩余项中。",
+      "explanation": "稳健分解并不自动判断异常是否属于安全攻击。",
+      "example": "个别流量尖峰不应主导季节基线。",
+      "tags": [
+        "稳健STL",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/decomposition.html#sec-stl"
+    },
+    {
+      "id": "tsabase-013",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时间序列与异常基线",
+      "knowledgePoint": "STL日历效应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STL 分解会自动处理所有日历效应吗？",
+      "answer": "不会；教材指出 STL 不会自动处理交易日或其他日历变化。",
+      "explanation": "需要时应在建模前或建模中单独考虑相关因素。",
+      "example": "月份天数不同可能影响月度事件总量。",
+      "tags": [
+        "STL日历效应",
+        "时间序列与异常基线"
+      ],
+      "evidence": "source",
+      "reference": "https://otexts.com/fpp3/decomposition.html#sec-stl"
+    }
+  ]
+}

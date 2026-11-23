@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "bodmas-benchmark",
+    "title": "BODMAS：恶意软件时间数据集",
+    "url": "https://whyisyoung.github.io/BODMAS/",
+    "type": "公开数据集与文档",
+    "note": "根据逐题所列资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "bodmas-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件数据集",
+      "knowledgePoint": "数据集提供内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BODMAS 数据集除 PE 特征向量外，还提供哪些与实验有关的资料？",
+      "answer": "它提供样本时间和家族等元数据，也提供按条件申请的恶意样本文件。",
+      "explanation": "官方说明不发布良性软件原始文件；样本使用条件需按数据集说明核对。",
+      "example": "用特征与时间元数据设计按时间的评估。",
+      "tags": [
+        "数据集提供内容",
+        "BODMAS"
+      ],
+      "evidence": "source",
+      "reference": "https://whyisyoung.github.io/BODMAS/"
+    },
+    {
+      "id": "bodmas-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件数据集",
+      "knowledgePoint": "特征与元数据行对齐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BODMAS 官方发布的特征向量与元数据如何对齐？",
+      "answer": "官方说明二者按时间升序排列，特征向量与元数据逐行对应。",
+      "explanation": "筛选或重排一方时，另一方也要同步处理，避免标签和时间错位。",
+      "example": "对样本索引排序时同步重排特征、标签与对应元数据行。",
+      "tags": [
+        "特征与元数据行对齐",
+        "BODMAS"
+      ],
+      "evidence": "source",
+      "reference": "https://whyisyoung.github.io/BODMAS/"
+    },
+    {
+      "id": "bodmas-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "恶意软件数据集",
+      "knowledgePoint": "原始特征缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 BODMAS 官方特征训练对数值尺度敏感的模型时，为什么要检查预处理？",
+      "answer": "官方说明特征值未归一化；某些模型可能需要根据训练集拟合并应用缩放。",
+      "explanation": "例如多层感知机可能受数值尺度影响，缩放参数不应从测试集拟合。",
+      "example": "训练集拟合缩放器，再转换后续样本。",
+      "tags": [
+        "原始特征缩放",
+        "BODMAS"
+      ],
+      "evidence": "source",
+      "reference": "https://whyisyoung.github.io/BODMAS/"
+    }
+  ]
+}

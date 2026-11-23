@@ -1,0 +1,51 @@
+{
+  "source": {
+    "id": "company-transformer-positions",
+    "title": "大厂公开面经合集：Transformer 位置编码",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "合集转载的个人复盘，公司、岗位和经历未经企业确认；答案另依据逐题引用的论文或技术文档核验。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "llmarch-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 位置编码",
+      "knowledgePoint": "RoPE相对位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoPE 如何让注意力分数包含位置关系？",
+      "answer": "它按绝对位置旋转查询和键向量，使两者的内积体现相对位置信息。",
+      "explanation": "具体旋转维度和长上下文扩展策略取决于模型实现。",
+      "example": "比较不同位置的查询与键时，其旋转差与相对位置有关。",
+      "tags": [
+        "RoPE相对位置",
+        "Transformer 位置编码",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "referenceId": "company-tencent",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "腾讯公开面经（合集转载，经历为分享者自述）",
+      "supportingReferences": [
+        {
+          "id": "llm-paper-ref",
+          "title": "相关论文：RoFormer",
+          "url": "https://arxiv.org/abs/2104.09864",
+          "type": "研究论文",
+          "evidence": "source"
+        },
+        {
+          "id": "company-alibaba",
+          "title": "阿里公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900321%E3%80%91%E9%98%BF%E9%87%8C%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

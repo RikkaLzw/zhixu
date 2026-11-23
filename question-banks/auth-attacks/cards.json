@@ -1,0 +1,59 @@
+{
+  "source": {
+    "id": "auth-attacks",
+    "title": "MITRE ATT&CK 凭据攻击行为",
+    "url": "https://attack.mitre.org/techniques/T1110/004/",
+    "type": "技术文档",
+    "note": "根据逐题标注的文档自行整理；示例为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "auththreat-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "身份威胁检测",
+      "knowledgePoint": "撞库与密码喷洒",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "凭据填充（credential stuffing）与密码喷洒的输入有什么区别？",
+      "answer": "凭据填充尝试已有的用户名与密码组合；密码喷洒用少量密码尝试多个账户。",
+      "explanation": "两种行为都可能涉及多个账户，需要结合认证来源与上下文调查。",
+      "example": "泄露的账号密码对被用于其他服务登录。",
+      "tags": [
+        "撞库与密码喷洒",
+        "身份威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1110/004/",
+      "supportingReferences": [
+        {
+          "id": "mitre-spray-ref",
+          "title": "MITRE ATT&CK：Password Spraying",
+          "url": "https://attack.mitre.org/techniques/T1110/003/",
+          "type": "官方知识库",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "auththreat-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "身份威胁检测",
+      "knowledgePoint": "喷洒采集盲区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么只监控 Windows 4625 不能保证发现所有密码喷洒？",
+      "answer": "不同认证协议或服务未必产生同一种 4625 登录失败事件。",
+      "explanation": "需要结合环境中的身份提供方和其他认证日志。",
+      "example": "对 Kerberos 或云认证记录补充覆盖。",
+      "tags": [
+        "喷洒采集盲区",
+        "身份威胁检测"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1110/003/"
+    }
+  ]
+}

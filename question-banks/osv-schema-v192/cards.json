@@ -1,0 +1,335 @@
+{
+  "source": {
+    "id": "osv-schema-v192",
+    "title": "OSV schema 1.9.2：漏洞与版本范围",
+    "url": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md",
+    "type": "官方技术文档与规范",
+    "note": "依据逐题引用的固定版本文档或规范自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "osvfmt-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "格式用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV schema 1.9.2 主要用于描述哪类安全信息？",
+      "answer": "它以结构化记录描述开源软件漏洞及其受影响的软件包和版本等信息。",
+      "explanation": "记录是否完整仍取决于发布者提供的数据。",
+      "example": "把漏洞记录用于依赖版本匹配。",
+      "tags": [
+        "格式用途",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "记录标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV schema 1.9.2 的 id 和 aliases 分别表示什么？",
+      "answer": "id 是当前记录的标识；aliases 列出其他数据库中描述同一漏洞的标识。",
+      "explanation": "别名不是任意相似漏洞或上下游漏洞的列表。",
+      "example": "将不同数据库中的同一漏洞记录关联。",
+      "tags": [
+        "记录标识",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "上游与别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV schema 1.9.2 为什么用 upstream 而不是 aliases 表示上游漏洞？",
+      "answer": "upstream 表示上下游关联；aliases 表示描述同一漏洞的等价标识，两者语义不同。",
+      "explanation": "上游关系具有方向性，不是对称的别名关系。",
+      "example": "发行版公告指向所包含的上游漏洞。",
+      "tags": [
+        "上游与别名",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "关联与别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV schema 1.9.2 的 related 与 aliases 在关系传递性上有什么区别？",
+      "answer": "aliases 被视为对称且传递；related 是对称但不传递的相关关系。",
+      "explanation": "相关漏洞不一定是同一个漏洞。",
+      "example": "两个相似但独立的问题可记录为 related。",
+      "tags": [
+        "关联与别名",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "更新时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV schema 1.9.2 的 modified 和 published 分别表示什么时间？",
+      "answer": "modified 是记录最近修改时间；published 是记录被视为发布的时间。",
+      "explanation": "时间使用 RFC 3339 UTC 格式。",
+      "example": "记录更新后 modified 可能晚于 published。",
+      "tags": [
+        "更新时间",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "撤回时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV schema 1.9.2 的 withdrawn 字段缺失时表示什么？",
+      "answer": "按记录格式，该条目没有被标记为撤回。",
+      "explanation": "缺失字段不证明记录内容一定准确或信息完整。",
+      "example": "消费记录时区分已撤回和未标记撤回的条目。",
+      "tags": [
+        "撤回时间",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "模式版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV 记录的 schema_version 字段用于什么？",
+      "answer": "它说明记录按哪个 OSV schema 版本导出，帮助消费者判断如何解析字段。",
+      "explanation": "未提供时规范按 1.0.0 理解；高于 1.0.0 的 schema 要求提供该字段。",
+      "example": "解析器结合版本处理新增字段。",
+      "tags": [
+        "模式版本",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "软件包身份",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV affected.package 的 ecosystem 与 name 为什么要一起使用？",
+      "answer": "ecosystem 定义软件包名称所属的生态，不同生态中的同名包可能是不同软件。",
+      "explanation": "package URL 等可提供额外的包标识上下文。",
+      "example": "区分 PyPI 与 npm 中同名的软件包。",
+      "tags": [
+        "软件包身份",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "精确版本与范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV 记录同时提供 affected.versions 和 affected.ranges 时，如何判断版本是否受影响？",
+      "answer": "版本出现在列举列表中，或者落在任一受影响范围中，都可视为受影响。",
+      "explanation": "判定还需先匹配相应的软件包。",
+      "example": "精确列举版本可补充范围覆盖的信息。",
+      "tags": [
+        "精确版本与范围",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "范围端点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV 版本事件中的 introduced、fixed 和 last_affected 如何处理边界版本？",
+      "answer": "introduced 指定的版本受影响；fixed 指定该范围内开始修复的版本；last_affected 指定最后一个已知受影响版本。",
+      "explanation": "fixed 和 last_affected 的边界含义不同；不同分支可能有各自的修复事件。",
+      "example": "对 SEMVER 范围，introduced 1.0.0、fixed 1.2.0 表示 1.2.0 已修复。",
+      "tags": [
+        "范围端点",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "起始版本零",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV 版本范围中的 introduced: \"0\" 是什么意思？",
+      "answer": "它表示排序上早于所有其他版本的起点，而不是要求软件存在名为 0 的发布版本。",
+      "explanation": "实际受影响范围仍需结合后续事件判断。",
+      "example": "用 0 表示受影响范围从已知版本之前开始。",
+      "tags": [
+        "起始版本零",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "范围类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV 的 SEMVER、ECOSYSTEM 和 GIT 范围类型分别使用什么版本顺序？",
+      "answer": "SEMVER 使用语义版本优先级；ECOSYSTEM 使用对应生态的版本规则；GIT 使用提交图中的祖先关系。",
+      "explanation": "不能把任意生态版本都按字符串字典序比较。",
+      "example": "依赖属于不同生态时选择对应的版本比较规则。",
+      "tags": [
+        "范围类型",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "Git范围仓库",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV 中 GIT 类型的受影响范围为什么需要 repo 字段？",
+      "answer": "它指定对应的 Git 仓库，便于根据提交图判断提交之间的祖先关系。",
+      "explanation": "Git 提交哈希不能靠字典序判断先后。",
+      "example": "在指定仓库中判断某提交是否属于受影响范围。",
+      "tags": [
+        "Git范围仓库",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "事件对象约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV schema 1.9.2 的单个 events 对象能同时包含 introduced 和 fixed 吗？",
+      "answer": "不能；每个事件对象只能包含一种事件类型。",
+      "explanation": "同一 events 数组中至少需要一个 introduced 事件。",
+      "example": "用两个对象分别记录引入和修复版本。",
+      "tags": [
+        "事件对象约束",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-015",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "fixed与last_affected",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV 的同一 events 数组可以同时包含 fixed 和 last_affected 事件吗？",
+      "answer": "不可以；该数组使用其中一种类型，而不是同时使用两者。",
+      "explanation": "在能够精确标明修复版本时，规范更推荐 fixed。",
+      "example": "分别记录受影响范围及其确定的修复版本。",
+      "tags": [
+        "fixed与last_affected",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-016",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "limit含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV 范围事件中的 limit 能否直接解释为修复版本？",
+      "answer": "不能；limit 限制正在描述的范围，fixed 才明确表示修复所在版本。",
+      "explanation": "特别是在多分支 Git 提交图中，两者可能导致不同的匹配结果。",
+      "example": "区分分支边界与实际修复提交。",
+      "tags": [
+        "limit含义",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    },
+    {
+      "id": "osvfmt-017",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "OSV 漏洞数据格式",
+      "knowledgePoint": "生态与数据库扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSV 的 ecosystem_specific 和 database_specific 字段主要有什么区别？",
+      "answer": "前者保存生态定义的补充信息；后者保存来源数据库定义的补充信息。",
+      "explanation": "这些字段的具体含义不由通用 schema 完全规定。",
+      "example": "生态记录受影响函数，聚合数据库记录自己的附加信息。",
+      "tags": [
+        "生态与数据库扩展",
+        "OSV 漏洞数据格式"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ossf/osv-schema/blob/091feabc002e5c0a038639a765cded0448eeb202/docs/schema.md"
+    }
+  ]
+}

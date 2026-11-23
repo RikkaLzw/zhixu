@@ -1,0 +1,335 @@
+{
+  "source": {
+    "id": "systemd-service-operations",
+    "title": "systemd 259 文档：服务管理与日志",
+    "url": "https://www.freedesktop.org/software/systemd/man/259/systemctl.html",
+    "type": "官方文档",
+    "note": "依据逐题列出的官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sysservice-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "启用与启动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemctl enable 服务与 systemctl start 服务的主要区别是什么？",
+      "answer": "enable 配置单元的启用关系，start 请求立即启动单元；默认 enable 不会同时启动。",
+      "explanation": "具体启用关系由单元安装信息等决定；enable --now 可同时请求启动。",
+      "example": "为服务配置启动关系后再单独启动。",
+      "tags": [
+        "Linux 服务与日志",
+        "启用与启动"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemctl.html"
+    },
+    {
+      "id": "sysservice-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "禁用与停止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemctl disable 服务会默认停止当前正在运行的服务吗？",
+      "answer": "不会；disable 移除相应启用链接，默认不停止当前运行的单元。",
+      "explanation": "可使用 --now 同时请求停止，其他触发方式也可能存在。",
+      "example": "禁用开机启动后服务仍可能正在运行。",
+      "tags": [
+        "Linux 服务与日志",
+        "禁用与停止"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemctl.html"
+    },
+    {
+      "id": "sysservice-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "重载的对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemctl reload 服务与 systemctl daemon-reload 重载的内容有什么区别？",
+      "answer": "reload 请求服务重载自身配置；daemon-reload 让 systemd 重新读取单元文件并重建依赖关系。",
+      "explanation": "服务必须支持相应的重载操作；后者本身不等于重启服务。",
+      "example": "修改服务单元文件后先执行 daemon-reload。",
+      "tags": [
+        "Linux 服务与日志",
+        "重载的对象"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemctl.html"
+    },
+    {
+      "id": "sysservice-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "条件重启",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemctl restart 与 try-restart 对未运行的服务有什么区别？",
+      "answer": "restart 会尝试启动未运行的服务；try-restart 对未运行的服务不做操作。",
+      "explanation": "运行中的单元会按相应命令请求停止并重新启动。",
+      "example": "只希望重启已经运行的服务时使用 try-restart。",
+      "tags": [
+        "Linux 服务与日志",
+        "条件重启"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemctl.html"
+    },
+    {
+      "id": "sysservice-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "运行与启用状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemctl is-active 与 is-enabled 分别查询什么？",
+      "answer": "is-active 查询单元是否处于活动状态；is-enabled 查询单元文件的启用状态。",
+      "explanation": "两者是独立维度，启用并不保证当前正在运行。",
+      "example": "服务可能已启用但暂时未运行。",
+      "tags": [
+        "Linux 服务与日志",
+        "运行与启用状态"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemctl.html"
+    },
+    {
+      "id": "sysservice-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "屏蔽服务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemctl mask 与 disable 在阻止启动方面有什么区别？",
+      "answer": "mask 屏蔽单元以阻止包括手动启动在内的激活；disable 主要移除启用关系。",
+      "explanation": "mask 不等于默认停止已运行单元；可用 unmask 撤销屏蔽。",
+      "example": "临时阻止某个服务被激活。",
+      "tags": [
+        "Linux 服务与日志",
+        "屏蔽服务"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemctl.html"
+    },
+    {
+      "id": "sysservice-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "单元与单元文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemctl list-units 与 list-unit-files 查看范围有什么区别？",
+      "answer": "list-units 列出管理器当前加载的单元；list-unit-files 列出已安装的单元文件及其启用状态。",
+      "explanation": "没有加载的单元不一定出现在 list-units 中。",
+      "example": "查询已安装但当前未加载的服务文件。",
+      "tags": [
+        "Linux 服务与日志",
+        "单元与单元文件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemctl.html"
+    },
+    {
+      "id": "sysservice-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "按服务查日志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "journalctl -u 服务名 通常用于什么？",
+      "answer": "筛选与指定 systemd 单元相关的日志记录。",
+      "explanation": "可与时间范围或当前启动周期等条件组合。",
+      "example": "用 journalctl -u demo.service 查看服务日志。",
+      "tags": [
+        "Linux 服务与日志",
+        "按服务查日志"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/journalctl.html"
+    },
+    {
+      "id": "sysservice-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "启动周期日志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "journalctl -b 和 journalctl -b -1 通常分别选择哪个启动周期的日志？",
+      "answer": "-b 默认选择当前启动周期；-b -1 选择上一个启动周期。",
+      "explanation": "上一次启动的日志需要仍保存在可访问的 journal 中。",
+      "example": "排查上一轮重启前的错误。",
+      "tags": [
+        "Linux 服务与日志",
+        "启动周期日志"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/journalctl.html"
+    },
+    {
+      "id": "sysservice-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "持续查看日志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "journalctl -f 的常见用途是什么？",
+      "answer": "持续等待并显示新追加的日志记录。",
+      "explanation": "可与 -u 等筛选条件组合。",
+      "example": "实时观察某服务输出的日志。",
+      "tags": [
+        "Linux 服务与日志",
+        "持续查看日志"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/journalctl.html"
+    },
+    {
+      "id": "sysservice-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "启动顺序依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemd 单元中写 After=数据库服务，是否会自动启动数据库服务？",
+      "answer": "不会；After= 只规定相关单元都参与操作时的顺序，不单独引入启动依赖。",
+      "explanation": "需要拉起另一个单元时可按需求配置 Wants= 或 Requires=。",
+      "example": "既希望启动数据库又希望它先启动时配置相应依赖及顺序。",
+      "tags": [
+        "Linux 服务与日志",
+        "启动顺序依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemd.unit.html"
+    },
+    {
+      "id": "sysservice-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "弱依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemd 的 Wants= 对被依赖单元启动失败有什么一般影响？",
+      "answer": "它会尝试拉起所列单元，但所列单元启动失败通常不会单独阻止本单元启动。",
+      "explanation": "Wants= 本身不规定启动顺序；自动附加依赖可能由单元类型产生。",
+      "example": "非关键的辅助服务失败时主服务继续启动。",
+      "tags": [
+        "Linux 服务与日志",
+        "弱依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemd.unit.html"
+    },
+    {
+      "id": "sysservice-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "强依赖条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "当 A 同时设置 Requires=B 和 After=B 时，B 启动失败通常如何影响 A？",
+      "answer": "B 启动失败时，A 不会启动。",
+      "explanation": "Requires= 不表示 B 在 A 运行期间永远保持活动；还需考虑单元条件和停止方式。",
+      "example": "依赖必须成功启动的服务后再启动应用。",
+      "tags": [
+        "Linux 服务与日志",
+        "强依赖条件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemd.unit.html"
+    },
+    {
+      "id": "sysservice-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "一次性服务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemd 的 Type=oneshot 服务通常在什么时候被认为完成启动？",
+      "answer": "通常在其启动命令完成并退出后，管理器再继续后续启动任务。",
+      "explanation": "是否在命令退出后仍显示为活动状态还取决于 RemainAfterExit=。",
+      "example": "在开机时执行一次初始化命令。",
+      "tags": [
+        "Linux 服务与日志",
+        "一次性服务"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemd.service.html"
+    },
+    {
+      "id": "sysservice-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "保留活动状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Type=oneshot 服务的 RemainAfterExit=yes 有什么作用？",
+      "answer": "服务的命令退出后，单元仍可保持活动状态。",
+      "explanation": "这不表示命令进程仍在运行。",
+      "example": "一次性防火墙规则加载后保持单元为 active。",
+      "tags": [
+        "Linux 服务与日志",
+        "保留活动状态"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemd.service.html"
+    },
+    {
+      "id": "sysservice-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "失败后重启",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "设置 Restart=on-failure 的 systemd 服务，管理员主动执行 stop 后会因此自动重启吗？",
+      "answer": "不会；由 systemd 的停止操作导致进程结束时，Restart= 不会因此重启服务。",
+      "explanation": "其他触发单元或外部操作仍可能再次启动它。",
+      "example": "正常停止一个配置了失败自动重启的服务。",
+      "tags": [
+        "Linux 服务与日志",
+        "失败后重启"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemd.service.html"
+    },
+    {
+      "id": "sysservice-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 服务与日志",
+      "knowledgePoint": "就绪通知",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "systemd 的 Type=notify 服务通常何时通知管理器自己已完成启动？",
+      "answer": "服务在初始化完成后通过 sd_notify 等方式发送 READY=1。",
+      "explanation": "服务程序需要实现相应通知，并遵守 NotifyAccess 等配置。",
+      "example": "完成监听端口初始化后发送就绪通知。",
+      "tags": [
+        "Linux 服务与日志",
+        "就绪通知"
+      ],
+      "evidence": "source",
+      "reference": "https://www.freedesktop.org/software/systemd/man/259/systemd.service.html"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "http-cache-validation-fundamentals",
+    "title": "RFC 9111 与 RFC 9110：HTTP 缓存和验证",
+    "url": "https://www.rfc-editor.org/rfc/rfc9111.html",
+    "type": "教材、协议标准与系统手册",
+    "note": "依据逐题引用的教材、标准或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "httpcache-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 缓存与条件请求",
+      "knowledgePoint": "Vary星号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 RFC 9111，已存储响应的 Vary: * 与后续请求能直接匹配吗？",
+      "answer": "不能；Vary 中包含 * 的存储响应总是匹配失败。",
+      "explanation": "缓存不能把它当成普通匹配项直接复用。",
+      "example": "后续请求需要向上游处理或验证。",
+      "tags": [
+        "HTTP 缓存与条件请求",
+        "Vary星号"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.1"
+    },
+    {
+      "id": "httpcache-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 缓存与条件请求",
+      "knowledgePoint": "新鲜与过期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 缓存中的 fresh 和 stale 响应有什么区别？",
+      "answer": "fresh 表示响应年龄小于其新鲜期；stale 表示已不再新鲜。",
+      "explanation": "是否可以使用过期响应还要看指令和协议条件。",
+      "example": "响应超过允许的新鲜期后通常需要重新验证。",
+      "tags": [
+        "HTTP 缓存与条件请求",
+        "新鲜与过期"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2"
+    },
+    {
+      "id": "httpcache-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 缓存与条件请求",
+      "knowledgePoint": "Age含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 响应头 Age 表示什么？",
+      "answer": "它是缓存估计的响应自源服务器生成或验证以来经过的秒数。",
+      "explanation": "该估计包含经过多级缓存驻留和网络传输的时间。",
+      "example": "Age: 30 表示估计年龄为 30 秒。",
+      "tags": [
+        "HTTP 缓存与条件请求",
+        "Age含义"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2.3"
+    },
+    {
+      "id": "httpcache-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 缓存与条件请求",
+      "knowledgePoint": "共享缓存寿命",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 响应同时包含 s-maxage 和 max-age 时，共享缓存优先用哪个计算新鲜期？",
+      "answer": "共享缓存优先使用 s-maxage；私有缓存不使用 s-maxage 覆盖 max-age。",
+      "explanation": "两种缓存的允许存储条件仍需单独满足。",
+      "example": "CDN 与浏览器可使用不同的新鲜期。",
+      "tags": [
+        "HTTP 缓存与条件请求",
+        "共享缓存寿命"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9111.html#section-4.2.1"
+    },
+    {
+      "id": "httpcache-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 缓存与条件请求",
+      "knowledgePoint": "过期必须验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "响应含 Cache-Control: must-revalidate 时，缓存过期后可以直接复用它吗？",
+      "answer": "不能；缓存必须先成功向源服务器重新验证，断开连接也不能忽略该要求。",
+      "explanation": "无法验证时缓存必须返回错误。",
+      "example": "过期的账单响应需要重新验证后才能复用。",
+      "tags": [
+        "HTTP 缓存与条件请求",
+        "过期必须验证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.2"
+    },
+    {
+      "id": "httpcache-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 缓存与条件请求",
+      "knowledgePoint": "时间条件请求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 的 Last-Modified 与 If-Modified-Since 如何用于缓存验证？",
+      "answer": "服务器可在响应中给出最后修改时间；客户端之后带上该时间，询问表示是否已修改。",
+      "explanation": "在适用的 GET 或 HEAD 条件请求中，未修改可返回 304。",
+      "example": "缓存过期后用保存的最后修改时间验证。",
+      "tags": [
+        "HTTP 缓存与条件请求",
+        "时间条件请求"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.3"
+    },
+    {
+      "id": "httpcache-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 缓存与条件请求",
+      "knowledgePoint": "验证条件优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 请求同时含 If-None-Match 和 If-Modified-Since 时，接收方应怎样处理后者？",
+      "answer": "接收方必须忽略 If-Modified-Since，使用 If-None-Match 评估对应条件。",
+      "explanation": "这让实体标签验证优先于较粗粒度的修改时间验证。",
+      "example": "请求同时提供 ETag 和上次修改时间时按 ETag 条件判断。",
+      "tags": [
+        "HTTP 缓存与条件请求",
+        "验证条件优先级"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-13.1.3"
+    },
+    {
+      "id": "httpcache-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 缓存与条件请求",
+      "knowledgePoint": "弱实体标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP ETag 前缀 W/ 表示什么？",
+      "answer": "它表示弱实体标签，只能用于弱比较，不适合需要强验证的场景。",
+      "explanation": "弱标签可表示语义等价但字节未必完全一致的表示。",
+      "example": "W/\"v1\" 与强标签 \"v1\" 的比较规则不同。",
+      "tags": [
+        "HTTP 缓存与条件请求",
+        "弱实体标签"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-8.8.3"
+    }
+  ]
+}

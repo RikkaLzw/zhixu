@@ -1,0 +1,382 @@
+{
+  "source": {
+    "id": "fuzz-coverage-and-oracles",
+    "title": "The Fuzzing Book / LLVM：覆盖反馈、测试判定与语料",
+    "url": "https://www.fuzzingbook.org/html/Coverage.html",
+    "type": "公开教材与官方文档",
+    "note": "依据逐题技术资料整理；蚂蚁公开面经只作为模糊测试主题启发。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fuzzstudy-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "测试预言机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "模糊测试中的测试预言机（oracle）有什么作用？",
+      "answer": "它根据可观察结果判断测试是否违反预期，而不只是生成和执行输入。",
+      "explanation": "预言机可以是断言、协议规则、参考实现或其他可验证性质。",
+      "example": "解析后检查长度字段与实际内容是否一致。",
+      "tags": [
+        "测试预言机",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Coverage.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材"
+    },
+    {
+      "id": "fuzzstudy-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "差分测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "差分测试如何帮助发现模糊输入引起的异常结果？",
+      "answer": "它对同一输入比较多个实现或版本的输出，差异可作为进一步调查的线索。",
+      "explanation": "发现差异不自动说明哪一方正确，还需对照规范和输入条件。",
+      "example": "比较两个解析器对同一合法文件的解析结果。",
+      "tags": [
+        "差分测试",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Coverage.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材"
+    },
+    {
+      "id": "fuzzstudy-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "语句与分支覆盖",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "语句覆盖和分支覆盖分别关注什么？",
+      "answer": "语句覆盖关注哪些语句被执行；分支覆盖关注条件判断的不同结果是否被执行。",
+      "explanation": "语句全覆盖也可能没有走过某个条件的另一条分支。",
+      "example": "无 else 的条件为真时可执行全部语句，却未测试条件为假。",
+      "tags": [
+        "语句与分支覆盖",
+        "模糊测试",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://www.fuzzingbook.org/html/Coverage.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全工程师公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fuzzstudy-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "黑盒与灰盒模糊测试",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "黑盒和覆盖引导的灰盒模糊测试在执行反馈上有什么区别？",
+      "answer": "黑盒方法不利用目标内部覆盖反馈；灰盒方法使用有限的内部反馈来选择或改进输入。",
+      "explanation": "灰盒不意味着已经掌握完整源码或程序语义。",
+      "example": "观察新覆盖后保留对应输入作为种子。",
+      "tags": [
+        "黑盒与灰盒模糊测试",
+        "模糊测试",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://www.fuzzingbook.org/html/GreyboxFuzzer.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全工程师公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fuzzstudy-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "最大输入长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -max_len 对生成输入有什么限制？",
+      "answer": "它限制生成的单个测试输入的最大长度；设为 0 时工具尝试根据语料推断合适值。",
+      "explanation": "过小的限制可能无法覆盖需要更长输入的逻辑。",
+      "example": "为需要较长数据的解析器调整输入长度上限。",
+      "tags": [
+        "最大输入长度",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html",
+      "referenceTitle": "LLVM libFuzzer 文档",
+      "referenceType": "官方文档"
+    },
+    {
+      "id": "fuzzstudy-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "覆盖统计与特征统计",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "libFuzzer 日志中的 cov 和 ft 分别概括什么？",
+      "answer": "cov 统计语料触达的代码块或边；ft 汇总边、计数器和值特征等多种反馈信号。",
+      "explanation": "两者口径不同，ft 增长不一定表示发现新的代码块。",
+      "example": "相同代码边产生不同计数或值特征。",
+      "tags": [
+        "覆盖统计与特征统计",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html",
+      "referenceTitle": "LLVM libFuzzer 文档",
+      "referenceType": "官方文档"
+    },
+    {
+      "id": "fuzzstudy-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "比较值反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用 libFuzzer 的 -use_value_profile=1 后，比较指令的值如何影响语料探索？",
+      "answer": "部分新观察到的比较值特征会被当作新的覆盖反馈，用于引导语料扩展。",
+      "explanation": "它可能增加运行开销和语料规模；比较指令跟踪也需启用。",
+      "example": "比较值变化被识别为新特征。",
+      "tags": [
+        "比较值反馈",
+        "模糊测试",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://llvm.org/docs/LibFuzzer.html",
+      "referenceTitle": "LLVM libFuzzer 文档",
+      "referenceType": "官方文档",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全工程师公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fuzzstudy-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "语法生成与变异",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "语法生成式模糊测试与基于已有输入的变异式测试有什么区别？",
+      "answer": "前者依据规则构造输入；后者从现有样本出发修改内容。",
+      "explanation": "实际测试可以把两种方法组合使用。",
+      "example": "按格式生成初始样本，再对其变异。",
+      "tags": [
+        "语法生成与变异",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Grammars.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材"
+    },
+    {
+      "id": "fuzzstudy-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "语法与语义有效性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "根据输入语法生成的测试数据一定满足全部语义约束吗？",
+      "answer": "不一定；语法可以保证满足所描述的结构规则，但跨字段关系或数值范围等语义约束仍可能失败。",
+      "explanation": "可通过额外约束检查或生成策略处理语义关系。",
+      "example": "格式正确的长度字段却与实际内容不一致。",
+      "tags": [
+        "语法与语义有效性",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Grammars.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材"
+    },
+    {
+      "id": "fuzzstudy-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "语法种子变异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么可以把语法生成的有效输入作为变异式模糊测试的种子？",
+      "answer": "这些输入有助于通过基本解析，再通过变异探索有效与无效输入的边界。",
+      "explanation": "变异后的输入不保证仍满足原语法。",
+      "example": "由文件格式规则生成样本，再改变其中字段。",
+      "tags": [
+        "语法种子变异",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Grammars.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材"
+    },
+    {
+      "id": "fuzzstudy-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "模糊测试功率调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "覆盖引导模糊测试的 power schedule 通常决定什么？",
+      "answer": "它决定对不同种子分配多少后续变异或执行资源。",
+      "explanation": "调度策略可以根据覆盖、路径频率或目标距离作出不同选择。",
+      "example": "给某些种子更多变异机会。",
+      "tags": [
+        "模糊测试功率调度",
+        "模糊测试",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://www.fuzzingbook.org/html/GreyboxFuzzer.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全工程师公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fuzzstudy-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "稀有路径与定向调度",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "以稀有路径为目标和以指定代码位置为目标的种子调度有什么区别？",
+      "answer": "前者倾向增加较少见路径的探索；后者倾向选择更接近指定目标位置的种子。",
+      "explanation": "策略效果取决于距离估计、程序与测试预算。",
+      "example": "一项任务扩大整体探索，另一项任务关注某个补丁附近。",
+      "tags": [
+        "稀有路径与定向调度",
+        "模糊测试",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "application",
+      "reference": "https://www.fuzzingbook.org/html/GreyboxFuzzer.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全工程师公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fuzzstudy-014",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "1-minimal 与最短",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在失败判定可复现且采用单元素删除时，1-minimal 缩减结果保证全局最短吗？",
+      "answer": "不保证；它只保证按所用单步删除方式继续删除任一元素时，不能保留所检查的失败条件。",
+      "explanation": "缩减结果依赖允许的操作和失败判定。",
+      "example": "逐字删减后无法再删一字，不代表不存在另一种更短输入。",
+      "tags": [
+        "1-minimal 与最短",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Reducer.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材"
+    },
+    {
+      "id": "fuzzstudy-015",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "结构约束与缩减",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么简单的逐字符删除可能难以缩减结构化崩溃输入？",
+      "answer": "删除可能破坏语法或其他约束，使剩余输入无法再到达原失败条件。",
+      "explanation": "基于语法树的缩减可以尝试保留结构，但仍需验证目标故障。",
+      "example": "删除括号导致解析失败，程序不再执行原路径。",
+      "tags": [
+        "结构约束与缩减",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Reducer.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材"
+    },
+    {
+      "id": "fuzzstudy-016",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试原理与实验",
+      "knowledgePoint": "缩减失败判定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么缩减崩溃输入时要明确需要保留的失败条件？",
+      "answer": "如果只判断是否发生任意崩溃，缩减后的输入可能触发另一个故障，而非原来的问题。",
+      "explanation": "可结合错误类型、堆栈及复现环境核查；堆栈也不是根因的绝对证明。",
+      "example": "比较缩减前后触发的异常和相关调用栈。",
+      "tags": [
+        "缩减失败判定",
+        "模糊测试"
+      ],
+      "evidence": "application",
+      "reference": "https://www.fuzzingbook.org/html/Reducer.html",
+      "referenceTitle": "The Fuzzing Book：模糊测试教程",
+      "referenceType": "公开教材"
+    }
+  ]
+}

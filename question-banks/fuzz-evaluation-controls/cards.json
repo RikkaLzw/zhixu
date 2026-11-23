@@ -1,0 +1,52 @@
+{
+  "source": {
+    "id": "fuzz-evaluation-controls",
+    "title": "OSS-Fuzz-gen：实验比较条件",
+    "url": "https://github.com/google/oss-fuzz-gen",
+    "type": "开源项目与技术文档",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fuzzeval-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试评估",
+      "knowledgePoint": "测试预算与覆盖比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较两个生成的 fuzz target 时，为什么要控制测试时间预算？",
+      "answer": "运行时间影响可执行的输入数量和覆盖探索，不同预算会干扰对目标效果的比较。",
+      "explanation": "也应记录目标版本、硬件和测试配置。",
+      "example": "在相同环境下分别运行两个目标相同的时间。",
+      "tags": [
+        "测试预算与覆盖比较",
+        "模糊测试评估",
+        "模糊测试"
+      ],
+      "evidence": "application",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzeval-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试评估",
+      "knowledgePoint": "覆盖范围与编译差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较 OSS-Fuzz-gen 新增覆盖时，为什么要检查各目标编译并链接的代码范围？",
+      "answer": "生成目标可能把原目标未包含的项目代码也编译进来，使覆盖增量受到比较范围影响。",
+      "explanation": "报告覆盖增量时要明确分母及被测代码范围。",
+      "example": "核对两个目标链接的项目模块后再解释新增行覆盖。",
+      "tags": [
+        "覆盖范围与编译差异",
+        "模糊测试评估",
+        "模糊测试"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/google/oss-fuzz-gen"
+    }
+  ]
+}

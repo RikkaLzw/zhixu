@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "gqa-attention-uptraining",
+    "title": "GQA 原论文 v1：分组查询注意力与转换",
+    "url": "https://arxiv.org/pdf/2305.13245v1",
+    "type": "论文、标准与技术文档",
+    "note": "逐题依据固定版本论文或规范自行整理，示例为自编；适用条件见卡片。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "gqastudy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分组查询注意力",
+      "knowledgePoint": "查询头",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GQA 中同组查询头共享键和值时，查询头本身是否必须相同？",
+      "answer": "不必；不同查询头各自形成查询，可以对共享的键和值计算不同注意力权重。",
+      "explanation": "共享的是对应组的键和值，而不是所有查询向量。",
+      "example": "同组两个查询头可能关注不同位置。",
+      "tags": [
+        "分组查询注意力",
+        "查询头"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.13245v1"
+    },
+    {
+      "id": "gqastudy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分组查询注意力",
+      "knowledgePoint": "分组数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在查询头均匀分组的 GQA 中，H 个查询头和 G 个键值头时，每组有多少个查询头？",
+      "answer": "每组有 H/G 个查询头；均匀分组要求 H 能被 G 整除。",
+      "explanation": "一个组共享一组键值头。",
+      "example": "8 个查询头、2 组时每组 4 个查询头。",
+      "tags": [
+        "分组查询注意力",
+        "分组数量"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.13245v1"
+    },
+    {
+      "id": "gqastudy-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分组查询注意力",
+      "knowledgePoint": "缓存比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在层数、上下文长度、头维度和存储精度相同的条件下，H 个键值头改为 G 个键值头会怎样影响该层 KV 缓存大小？",
+      "answer": "缓存大小变为原来的 G/H。",
+      "explanation": "这只比较键和值缓存，不包含其他模型权重或运行时开销。",
+      "example": "8 个键值头减少到 2 个时，该层缓存约为原来的四分之一。",
+      "tags": [
+        "分组查询注意力",
+        "缓存比例"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.13245v1"
+    },
+    {
+      "id": "gqastudy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分组查询注意力",
+      "knowledgePoint": "检查点转换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GQA 原论文如何从 MHA 检查点初始化每组的键值投影？",
+      "answer": "分别对分入该组的键投影和对应的值投影做均值池化。",
+      "explanation": "这是论文中的转换方法，并非所有 GQA 训练方案都必须这样做。",
+      "example": "将一组多个键头的投影权重取均值作为组键头的初始化。",
+      "tags": [
+        "分组查询注意力",
+        "检查点转换"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.13245v1"
+    },
+    {
+      "id": "gqastudy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分组查询注意力",
+      "knowledgePoint": "继续训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GQA 论文中转换已有 MHA 检查点后，为什么还进行额外预训练？",
+      "answer": "让转换后的模型适应共享键值头的新结构。",
+      "explanation": "论文在实验中比较了不同的继续训练预算。",
+      "example": "均值池化初始化后继续进行一段预训练。",
+      "tags": [
+        "分组查询注意力",
+        "继续训练"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.13245v1"
+    },
+    {
+      "id": "gqastudy-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分组查询注意力",
+      "knowledgePoint": "转换效果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "把 MHA 权重直接平均成 GQA 键值头，能否保证所有输入的输出与原模型完全相同？",
+      "answer": "不能；不同头的键值投影被合并后，原模型中各头的表示可能改变。",
+      "explanation": "继续训练可以帮助适应，但不保证逐输入完全等价。",
+      "example": "原来不同的键头取均值后不再分别存在。",
+      "tags": [
+        "分组查询注意力",
+        "转换效果"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2305.13245v1"
+    },
+    {
+      "id": "gqastudy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分组查询注意力",
+      "knowledgePoint": "带宽目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "自回归解码时减少键值头数量，为什么可能降低内存带宽压力？",
+      "answer": "每一步需要读取的历史键值缓存更小，从而可能减少缓存读取量。",
+      "explanation": "实际加速依赖实现、硬件和其他瓶颈。",
+      "example": "多个查询头复用同组历史键和值。",
+      "tags": [
+        "分组查询注意力",
+        "带宽目的"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.13245v1"
+    },
+    {
+      "id": "gqastudy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分组查询注意力",
+      "knowledgePoint": "速度条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GQA 降低了 KV 缓存量，是否保证任何任务和硬件上的总延迟都同比例下降？",
+      "answer": "不保证；实际延迟还受算子实现、计算、内存访问和批次等因素影响。",
+      "explanation": "缓存减少是容量与带宽方面的优势，不等于端到端延迟公式。",
+      "example": "短上下文任务可能主要受其他开销限制。",
+      "tags": [
+        "分组查询注意力",
+        "速度条件"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2305.13245v1"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "source": {
+    "id": "langchain-rag-apis",
+    "title": "LangChain 检索器与向量接口",
+    "url": "https://github.com/langchain-ai/langchain/tree/langchain-core%3D%3D1.8.4/libs/core",
+    "type": "官方技术文档与固定版本源码",
+    "note": "依据 langchain-core 1.8.4 源码与官方文档逐题整理；使用本地工具和合成向量验证代表性接口，未调用外部模型。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "lcragapi-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 检索接口",
+      "knowledgePoint": "查询与文档嵌入接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain Embeddings 的 embed_documents 与 embed_query 分别接收并返回什么？",
+      "answer": "前者接收文本列表并返回向量列表；后者接收一条查询文本并返回一个向量。",
+      "explanation": "该接口允许查询和文档使用不同的编码方式，具体取决于嵌入模型。",
+      "example": "先编码多个知识库片段，再编码用户查询。",
+      "tags": [
+        "查询与文档嵌入接口",
+        "LangChain",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/embeddings/embeddings.py#L8",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：Embeddings"
+    },
+    {
+      "id": "lcragapi-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 检索接口",
+      "knowledgePoint": "向量存储转检索器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 VectorStore.as_retriever 有什么作用？",
+      "answer": "它将向量存储包装为检索器，以便按配置的搜索方式接收查询并返回文档。",
+      "explanation": "可通过 search_type 与 search_kwargs 配置检索；不同后端支持的细节可能不同。",
+      "example": "retriever.invoke(\"查询\") 返回相关 Document 列表。",
+      "tags": [
+        "向量存储转检索器",
+        "LangChain",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/vectorstores/base.py#L906",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：VectorStore.as_retriever"
+    },
+    {
+      "id": "lcragapi-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 检索接口",
+      "knowledgePoint": "MMR 检索目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 向量检索中的 MMR 除查询相关性外还考虑什么？",
+      "answer": "它还考虑选出文档之间的多样性，以减少结果的重复。",
+      "explanation": "多样性与相关性之间的取舍由参数控制。",
+      "example": "从多篇内容相近的文档中选择更有差异的片段。",
+      "tags": [
+        "MMR 检索目标",
+        "LangChain",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/vectorstores/base.py#L658",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：最大边际相关搜索"
+    },
+    {
+      "id": "lcragapi-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 检索接口",
+      "knowledgePoint": "MMR候选与返回数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain MMR 检索中的 fetch_k 与 k 分别控制什么？",
+      "answer": "fetch_k 控制供 MMR 选择的候选文档数量，k 控制最终返回数量。",
+      "explanation": "可选候选不足时，返回数量也可能少于 k。",
+      "example": "先召回 20 条候选，再选择 4 条结果。",
+      "tags": [
+        "MMR候选与返回数量",
+        "LangChain",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/vectorstores/base.py#L658",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：最大边际相关搜索"
+    },
+    {
+      "id": "lcragapi-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 检索接口",
+      "knowledgePoint": "MMR多样性权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain MMR 的 lambda_mult 在 0 和 1 两端分别偏向什么？",
+      "answer": "0 对应最大多样性，1 对应最小多样性、更加偏重查询相似度。",
+      "explanation": "中间值在相关性和多样性之间取舍。",
+      "example": "候选内容高度重复时可尝试较小的 lambda_mult。",
+      "tags": [
+        "MMR多样性权重",
+        "LangChain",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/vectorstores/base.py#L658",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：最大边际相关搜索"
+    },
+    {
+      "id": "lcragapi-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 检索接口",
+      "knowledgePoint": "检索相关性阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 similarity_score_threshold 检索为什么可能返回少于 k 条文档？",
+      "answer": "它会按相关性分数阈值过滤候选；未达阈值的结果不返回。",
+      "explanation": "阈值过高可能返回空列表，应结合具体向量库与验证数据选择。",
+      "example": "即使 k=4，也可能只有 1 条通过阈值。",
+      "tags": [
+        "检索相关性阈值",
+        "LangChain",
+        "RAG"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/vectorstores/base.py#L512",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：相关性阈值"
+    },
+    {
+      "id": "lcragapi-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 检索接口",
+      "knowledgePoint": "检索分数口径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么使用 LangChain similarity_search_with_score 的结果前要核对向量库的分数定义？",
+      "answer": "不同向量库或距离度量可能返回不同含义和方向的分数。",
+      "explanation": "不能不经转换就把不同后端的分数当作统一概率或统一阈值。",
+      "example": "一种实现返回距离，另一种实现返回相似度。",
+      "tags": [
+        "检索分数口径",
+        "LangChain",
+        "RAG"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/vectorstores/base.py#L402",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：向量检索评分"
+    }
+  ]
+}

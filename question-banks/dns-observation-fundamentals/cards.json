@@ -1,0 +1,538 @@
+{
+  "source": {
+    "id": "dns-observation-fundamentals",
+    "title": "DNS 标准：解析与安全观测",
+    "url": "https://www.rfc-editor.org/rfc/rfc1035.html",
+    "type": "互联网标准",
+    "note": "逐题依据对应 RFC 整理；部分由公开面经主题启发，安全示例为自编。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "dnsdeep-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "DNS 查询字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 查询中的 QNAME 表示什么？",
+      "answer": "它表示本次查询要查找的域名。",
+      "explanation": "QTYPE 单独指明想查询的记录类型。",
+      "example": "查询 example.org 的 AAAA 记录。",
+      "tags": [
+        "DNS 查询字段",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "A 与 AAAA",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 的 A 记录和 AAAA 记录分别保存哪类地址？",
+      "answer": "A 记录保存 IPv4 地址；AAAA 记录保存 IPv6 地址。",
+      "explanation": "同一域名可以有一种或多种地址记录。",
+      "example": "分别检查服务器的 IPv4 与 IPv6 结果。",
+      "tags": [
+        "A 与 AAAA",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3596.html",
+      "referenceTitle": "RFC 3596：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "CNAME 别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 的 CNAME 记录描述什么关系？",
+      "answer": "它把一个别名指向另一个规范名称，解析可能继续查询目标名称。",
+      "explanation": "CNAME 是 DNS 名称关系，不是 HTTP 重定向响应。",
+      "example": "服务别名指向实际托管名称。",
+      "tags": [
+        "CNAME 别名",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "MX 记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 的 MX 记录主要用于说明什么？",
+      "answer": "它指出接收某域邮件的邮件交换服务器，并带有偏好值。",
+      "explanation": "该记录不证明邮件一定安全或发件身份可信。",
+      "example": "邮件发送方查询目标域的 MX 记录。",
+      "tags": [
+        "MX 记录",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "MX 偏好值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 DNS MX 记录中，多个邮件服务器的偏好值如何排序？",
+      "answer": "较小的偏好值具有更高的选择优先级；相同偏好值可有多个服务器。",
+      "explanation": "实际邮件投递还要处理服务器不可达等情况。",
+      "example": "偏好值 10 的服务器通常先于偏好值 20。",
+      "tags": [
+        "MX 偏好值",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "PTR 与反向解析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS PTR 反向解析通常用于建立什么映射？",
+      "answer": "它常把反向地址命名空间中的名称指向主机名，用于从 IP 地址查询名称。",
+      "explanation": "PTR 结果本身不能证明主机身份或行为可信。",
+      "example": "对 IPv4 地址进行反向 DNS 查询。",
+      "tags": [
+        "PTR 与反向解析",
+        "DNS"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "NXDOMAIN 与 NODATA",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "DNS 的 NXDOMAIN 和 NODATA 主要有什么区别？",
+      "answer": "NXDOMAIN 表示相关名称不存在；NODATA 表示名称存在但没有请求类型的数据。",
+      "explanation": "有 CNAME 时需结合别名链理解哪个名称不存在；NODATA 不是独立的 RCODE。",
+      "example": "查询现有域名未配置的 AAAA 记录。",
+      "tags": [
+        "NXDOMAIN 与 NODATA",
+        "DNS",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html",
+      "referenceTitle": "RFC 2308：DNS 协议与解析",
+      "referenceType": "互联网标准",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnsdeep-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "SERVFAIL 与 NXDOMAIN",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "DNS 返回 SERVFAIL 能否直接视为查询域名不存在？",
+      "answer": "不能；SERVFAIL 表示服务器无法完成处理，NXDOMAIN 才表示名称错误。",
+      "explanation": "失败可能来自上游、验证或服务器故障等原因。",
+      "example": "把解析失败和名称不存在分别统计。",
+      "tags": [
+        "SERVFAIL 与 NXDOMAIN",
+        "DNS",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnsdeep-009",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "DNS 缓存 TTL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 记录的 TTL 对缓存有什么作用？",
+      "answer": "它给出记录可缓存的最长时间，缓存实现可以设置更短的保留上限。",
+      "explanation": "TTL 不是域名信誉或恶意程度的直接证明。",
+      "example": "解析器在 TTL 到期前可能复用已有记录。",
+      "tags": [
+        "DNS 缓存 TTL",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2181.html",
+      "referenceTitle": "RFC 2181：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "零 TTL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 记录的 TTL 为 0 时，缓存通常怎样处理？",
+      "answer": "它可以用于当前事务，但不应作为可复用记录保留在缓存中。",
+      "explanation": "零 TTL 不代表该名称无法解析。",
+      "example": "某次查询获得 TTL 为零的地址记录。",
+      "tags": [
+        "零 TTL",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-011",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "DNS 负缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 负缓存保存的是什么？",
+      "answer": "它暂存名称不存在或没有所请求类型数据等否定结果。",
+      "explanation": "缓存期限和适用键取决于否定响应类型及相关规则。",
+      "example": "一段时间内重复查询不存在的名称可由缓存回答。",
+      "tags": [
+        "DNS 负缓存",
+        "DNS",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html",
+      "referenceTitle": "RFC 2308：DNS 协议与解析",
+      "referenceType": "互联网标准",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnsdeep-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "缓存与观测位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么递归解析器上游的 DNS 日志不一定记录每次客户端查询？",
+      "answer": "如果解析器用缓存回答客户端，就可能不再向上游发送同一次查询。",
+      "explanation": "比较多源日志时应说明采集位置与缓存策略。",
+      "example": "多台主机询问同一名称，上游只看到一次缓存未命中。",
+      "tags": [
+        "缓存与观测位置",
+        "DNS",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html",
+      "referenceTitle": "RFC 2308：DNS 协议与解析",
+      "referenceType": "互联网标准",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnsdeep-013",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "RD 与 RA",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 报文中的 RD 和 RA 标志分别表示什么？",
+      "answer": "RD 表示请求方希望递归解析；RA 表示服务器提供递归解析能力。",
+      "explanation": "服务器是否支持递归需看响应中的能力标志。",
+      "example": "客户端请求递归，服务器响应说明是否可用。",
+      "tags": [
+        "RD 与 RA",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-014",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "权威应答标志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 响应中的 AA 标志表示什么？",
+      "answer": "它表示响应服务器对问题中的名称具有权威性。",
+      "explanation": "标志本身并不能代替对响应真实性和采集环境的检查。",
+      "example": "比较权威服务器与递归缓存的响应。",
+      "tags": [
+        "权威应答标志",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-015",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "截断标志与 TCP",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS UDP 响应的 TC 标志表明截断时，客户端通常如何获取完整答案？",
+      "answer": "客户端通常会改用 TCP 重新查询，以尝试取得完整响应。",
+      "explanation": "TCP 查询也可能失败；不能把截断响应当作完整结果。",
+      "example": "较大的 DNS 响应先截断，再尝试 TCP 查询。",
+      "tags": [
+        "截断标志与 TCP",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc7766.html",
+      "referenceTitle": "RFC 7766：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-016",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "DNS TCP 使用",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "看到 TCP 上的 DNS 查询，能否认定前面必然发生 UDP 截断？",
+      "answer": "不能；DNS 客户端也可以直接使用 TCP 发起查询。",
+      "explanation": "仅凭传输协议无法判断是否存在异常或攻击。",
+      "example": "解析器直接选择 TCP 请求记录。",
+      "tags": [
+        "DNS TCP 使用",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc7766.html",
+      "referenceTitle": "RFC 7766：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-017",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "DoT 与 DoH",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS over TLS 和 DNS over HTTPS 分别通过什么方式传输 DNS？",
+      "answer": "DoT 在 TLS 连接上承载 DNS；DoH 将 DNS 查询和响应放入 HTTPS 消息。",
+      "explanation": "默认端口和部署方式可能不同，单靠端口不能完整识别协议。",
+      "example": "网络传感器未解密时无法直接读取查询内容。",
+      "tags": [
+        "DoT 与 DoH",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8484.html",
+      "referenceTitle": "RFC 8484：DNS 协议与解析",
+      "referenceType": "互联网标准",
+      "supportingReferences": [
+        {
+          "id": "rfc7858-dns-over-tls",
+          "title": "RFC 7858：DNS over TLS",
+          "url": "https://www.rfc-editor.org/rfc/rfc7858.html",
+          "type": "互联网标准",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "dnsdeep-018",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "DNS 事务标识",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么不能只用 DNS 消息 ID 在大量日志中唯一标识一次查询？",
+      "answer": "DNS ID 只有 16 位，可能在不同连接或时间重复；还需结合端点、传输和时间等上下文。",
+      "explanation": "ID 用于匹配查询与响应，但不是全局唯一编号。",
+      "example": "两个客户端在不同时间使用相同 ID 查询。",
+      "tags": [
+        "DNS 事务标识",
+        "DNS",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯云鼎实验室公开面经（合集收录，经历为分享者自述）；主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dnsdeep-019",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "ANY 查询边界",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "DNS 的 ANY 查询是否保证返回该名称的所有记录类型？",
+      "answer": "不保证；响应者可以按 RFC 8482 返回精简响应或部分记录集。",
+      "explanation": "需要特定记录类型时应分别查询并结合响应判断。",
+      "example": "ANY 结果没有 MX 记录不等于该名称一定无 MX。",
+      "tags": [
+        "ANY 查询边界",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8482.html",
+      "referenceTitle": "RFC 8482：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-020",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "DNS 权威与递归",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "递归解析器和权威 DNS 服务器的主要角色有什么区别？",
+      "answer": "递归解析器代表客户端查找答案并可缓存；权威服务器提供其管理区域的权威数据。",
+      "explanation": "同一部署可具备多种功能，具体配置决定职责。",
+      "example": "递归解析器向负责目标区域的服务器查询。",
+      "tags": [
+        "DNS 权威与递归",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html",
+      "referenceTitle": "RFC 2308：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-021",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "NS 记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 的 NS 记录用于指明什么？",
+      "answer": "它指出负责相应区域的权威名称服务器的域名。",
+      "explanation": "服务器地址可能需要通过其他记录进一步解析。",
+      "example": "子区域的委派信息包含名称服务器名称。",
+      "tags": [
+        "NS 记录",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    },
+    {
+      "id": "dnsdeep-022",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "DNS 与安全数据",
+      "knowledgePoint": "DNS 报文分区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 响应的 answer、authority 和 additional 区段通常分别承载什么？",
+      "answer": "answer 携带回答记录，authority 携带权威信息，additional 携带其他相关记录。",
+      "explanation": "具体内容取决于查询和响应类型，不能假定每个区段都非空。",
+      "example": "委派响应可能在 authority 中给出 NS 记录。",
+      "tags": [
+        "DNS 报文分区",
+        "DNS"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1035.html",
+      "referenceTitle": "RFC 1035：DNS 协议与解析",
+      "referenceType": "互联网标准"
+    }
+  ]
+}

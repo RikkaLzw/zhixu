@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "llmlingua-prompt-compression",
+    "title": "LLMLingua 原论文 v1：提示压缩",
+    "url": "https://arxiv.org/pdf/2310.05736v1",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "llmlingua-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LLMLingua 提示压缩",
+      "knowledgePoint": "小模型压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMLingua 原论文中小语言模型主要承担什么任务？",
+      "answer": "为提示内容计算信息量相关分数，并据此辅助压缩提示。",
+      "explanation": "目标大模型再使用压缩后的提示完成任务。",
+      "example": "可先用小模型压缩示例，再将结果发送给目标模型。",
+      "tags": [
+        "LLMLingua 提示压缩",
+        "小模型压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.05736v1"
+    },
+    {
+      "id": "llmlingua-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LLMLingua 提示压缩",
+      "knowledgePoint": "提示预算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMLingua 的预算控制器为什么对指令、示例和问题分配不同压缩预算？",
+      "answer": "它们对任务的作用和冗余程度不同，统一压缩可能更容易丢失关键信息。",
+      "explanation": "论文通常为指令和问题保留相对更多预算。",
+      "example": "多个相似示例可以比关键问题文本压缩得更多。",
+      "tags": [
+        "LLMLingua 提示压缩",
+        "提示预算"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.05736v1"
+    },
+    {
+      "id": "llmlingua-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LLMLingua 提示压缩",
+      "knowledgePoint": "示例级筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMLingua 的粗粒度示例筛选如何利用小模型的困惑度？",
+      "answer": "论文按示例的困惑度排序，并在预算约束下选择示例。",
+      "explanation": "这种分数只是压缩启发式，不等于该示例对任务的真实贡献。",
+      "example": "不同演示样本可能获得不同保留优先级。",
+      "tags": [
+        "LLMLingua 提示压缩",
+        "示例级筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.05736v1"
+    },
+    {
+      "id": "llmlingua-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LLMLingua 提示压缩",
+      "knowledgePoint": "迭代压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMLingua 为什么在 token 级压缩时分段迭代处理？",
+      "answer": "前面已压缩的内容会作为后续片段的上下文，帮助估计条件概率。",
+      "explanation": "这减少了一次性独立判断各 token 时忽略压缩上下文的偏差。",
+      "example": "先压缩第一段，再用其保留内容处理下一段。",
+      "tags": [
+        "LLMLingua 提示压缩",
+        "迭代压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.05736v1"
+    },
+    {
+      "id": "llmlingua-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LLMLingua 提示压缩",
+      "knowledgePoint": "分布对齐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMLingua 的分布对齐用什么方式缩小小压缩模型与目标模型之间的差异？",
+      "answer": "使用目标语言模型生成的数据对小模型做指令微调。",
+      "explanation": "其目标是让小模型的压缩判断更适合目标模型。",
+      "example": "目标模型为任务产生回答后，可用相关数据训练压缩模型。",
+      "tags": [
+        "LLMLingua 提示压缩",
+        "分布对齐"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.05736v1"
+    },
+    {
+      "id": "llmlingua-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LLMLingua 提示压缩",
+      "knowledgePoint": "黑盒目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMLingua 执行提示压缩时是否要求获得目标大模型的内部梯度？",
+      "answer": "不要求；压缩由小模型和提示处理过程完成，目标模型可以通过接口使用。",
+      "explanation": "论文的分布对齐可使用目标模型产生的数据。",
+      "example": "目标模型只提供生成接口时仍可研究提示压缩。",
+      "tags": [
+        "LLMLingua 提示压缩",
+        "黑盒目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.05736v1"
+    },
+    {
+      "id": "llmlingua-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LLMLingua 提示压缩",
+      "knowledgePoint": "压缩率口径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLMLingua 论文中保留率 τ 与 compression ratio 有什么关系？",
+      "answer": "τ 是压缩后 token 数除以原 token 数，compression ratio 为 1/τ。",
+      "explanation": "比较压缩率时应先确认不同资料采用的是保留率还是倍数。",
+      "example": "保留率 0.25 对应 4 倍压缩。",
+      "tags": [
+        "LLMLingua 提示压缩",
+        "压缩率口径"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.05736v1"
+    },
+    {
+      "id": "llmlingua-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LLMLingua 提示压缩",
+      "knowledgePoint": "信息损失",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "LLMLingua 压缩后的提示是否保证保留所有任务关键约束？",
+      "answer": "不保证；压缩可能删除对当前任务重要的细节，需要评估任务效果和关键约束。",
+      "explanation": "小模型困惑度与任务重要性并不必然一致。",
+      "example": "安全调查中的时间或资产标识被删去可能改变结论。",
+      "tags": [
+        "LLMLingua 提示压缩",
+        "信息损失"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2310.05736v1"
+    }
+  ]
+}

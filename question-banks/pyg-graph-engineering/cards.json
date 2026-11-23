@@ -1,0 +1,272 @@
+{
+  "source": {
+    "id": "pyg-graph-engineering",
+    "title": "PyTorch Geometric：图批处理与邻居采样",
+    "url": "https://pytorch-geometric.readthedocs.io/en/latest/advanced/batching.html",
+    "type": "官方技术文档",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "pygdeep-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图数据",
+      "knowledgePoint": "孤立节点与节点数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG Data 没有节点特征时，仅由 edge_index 推断节点数有什么风险？",
+      "answer": "它可能用最大节点索引加一推断，因而漏掉未出现在边中的孤立节点。",
+      "explanation": "已知真实节点总数时应显式设置 num_nodes。",
+      "example": "图中存在从未连边的主机时设置完整节点数。",
+      "tags": [
+        "孤立节点与节点数",
+        "图数据",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/generated/torch_geometric.data.Data.html"
+    },
+    {
+      "id": "pygdeep-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图数据",
+      "knowledgePoint": "无向边表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 用 edge_index 表示两个不同节点间的无向关系时，通常怎样表示两个方向？",
+      "answer": "通常分别记录正向和反向两条有向边，使消息可以双向传播。",
+      "explanation": "自环等特殊情况不适合简单按两倍计数。",
+      "example": "为主机 A 与 B 的无向连接记录 A→B 和 B→A。",
+      "tags": [
+        "无向边表示",
+        "图数据",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/notes/heterogeneous.html"
+    },
+    {
+      "id": "pygdeep-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图批处理",
+      "knowledgePoint": "图小批次的隔离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 将多张独立图组成小批次时，为什么消息不会自动跨图传播？",
+      "answer": "批处理将它们构造成互不相连的子图，没有添加跨图的边。",
+      "explanation": "模型若显式添加跨图关系，情况会不同。",
+      "example": "同时处理两个主机行为图而不连接它们。",
+      "tags": [
+        "图小批次的隔离",
+        "图批处理",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/advanced/batching.html"
+    },
+    {
+      "id": "pygdeep-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图批处理",
+      "knowledgePoint": "批处理边索引偏移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 批处理多个图时，为什么要对后续图的 edge_index 做节点偏移？",
+      "answer": "偏移使每张图的局部节点编号在合并后的节点集合中指向正确节点。",
+      "explanation": "否则不同图的局部编号会冲突。",
+      "example": "第二张图的节点编号加上第一张图的节点数。",
+      "tags": [
+        "批处理边索引偏移",
+        "图批处理",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/advanced/batching.html"
+    },
+    {
+      "id": "pygdeep-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图批处理",
+      "knowledgePoint": "批次节点归属",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 批处理图中的 batch 向量通常记录什么？",
+      "answer": "它为每个节点标明其所属的原始图。",
+      "explanation": "图级池化可据此分别聚合各图的节点表示。",
+      "example": "把同一批次中每台主机的节点聚合成各自表示。",
+      "tags": [
+        "批次节点归属",
+        "图批处理",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/get_started/introduction.html"
+    },
+    {
+      "id": "pygdeep-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图批处理",
+      "knowledgePoint": "含index属性的偏移陷阱",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "PyG 默认批处理时，为什么名称包含 index 的自定义属性需要检查？",
+      "answer": "默认规则可能把这类属性按节点数递增，即使该属性并不是节点索引。",
+      "explanation": "可检查批处理结果并按需要自定义 __inc__。",
+      "example": "名为 sample_index 的外部编号不应自动按节点数偏移。",
+      "tags": [
+        "含index属性的偏移陷阱",
+        "图批处理",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/advanced/batching.html"
+    },
+    {
+      "id": "pygdeep-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图采样",
+      "knowledgePoint": "邻居爆炸",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么大型图上的多层消息传递可能出现邻居爆炸？",
+      "answer": "每层都需要考虑更远一跳的邻居，依赖节点数可能随层数迅速增长。",
+      "explanation": "邻居采样可限制每跳数量，但不能消除所有增长。",
+      "example": "三层模型可能涉及种子节点的多跳邻域。",
+      "tags": [
+        "邻居爆炸",
+        "图采样",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/neighbor_loader.html"
+    },
+    {
+      "id": "pygdeep-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图采样",
+      "knowledgePoint": "邻居采样数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG NeighborLoader 的 num_neighbors 控制什么？",
+      "answer": "它指定每一跳为每个节点采样的邻居数量上限。",
+      "explanation": "邻居不足时实际采样数量可能更少。",
+      "example": "第一跳最多取 10 个邻居，第二跳最多取 5 个。",
+      "tags": [
+        "邻居采样数量",
+        "图采样",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/neighbor_loader.html"
+    },
+    {
+      "id": "pygdeep-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图采样",
+      "knowledgePoint": "采样种子节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG NeighborLoader 返回的小批次中，怎样识别本次用于预测的种子节点？",
+      "answer": "返回结果的前 batch_size 个节点对应本次种子节点。",
+      "explanation": "其余采样节点主要提供邻域信息，具体训练目标由任务定义。",
+      "example": "在示例训练中只对前 batch_size 个输出计算损失。",
+      "tags": [
+        "采样种子节点",
+        "图采样",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/neighbor_loader.html"
+    },
+    {
+      "id": "pygdeep-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图采样",
+      "knowledgePoint": "采样节点原始编号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG NeighborLoader 返回的 n_id 有什么用途？",
+      "answer": "它记录采样节点在原始图中的编号，可用于把局部编号映射回原图。",
+      "explanation": "采样子图的 edge_index 使用重新编号后的局部节点索引。",
+      "example": "把一条采样边的局部端点映射回原始主机节点。",
+      "tags": [
+        "采样节点原始编号",
+        "图采样",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/neighbor_loader.html"
+    },
+    {
+      "id": "pygdeep-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图采样",
+      "knowledgePoint": "采样跳数与模型层数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么为 L 层消息传递模型采样超过 L 跳邻居通常会浪费资源？",
+      "answer": "超出模型传播范围的更远节点无法影响该批种子节点的最终表示。",
+      "explanation": "采样方向与实际模型结构仍需一起检查。",
+      "example": "两层模型通常不需要仅为种子节点表示额外采样第四跳。",
+      "tags": [
+        "采样跳数与模型层数",
+        "图采样",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/tutorial/neighbor_loader.html"
+    },
+    {
+      "id": "pygdeep-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异构图",
+      "knowledgePoint": "异构关系类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG HeteroData 怎样标识一种边类型？",
+      "answer": "通常用源节点类型、关系类型和目标节点类型组成的三元组标识。",
+      "explanation": "不同节点或关系类型可以有不同的特征张量。",
+      "example": "用（主机，连接，IP）表示一类安全实体关系。",
+      "tags": [
+        "异构关系类型",
+        "异构图",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/notes/heterogeneous.html"
+    },
+    {
+      "id": "pygdeep-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异构图",
+      "knowledgePoint": "异构图反向关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyG 对异构图应用 ToUndirected 时，为什么需要检查边类型变化？",
+      "answer": "为加入反向边，它可能按需要创建新的反向边类型。",
+      "explanation": "反向关系在业务语义上应得到合理解释。",
+      "example": "主机连接 IP 的反向边不应自动解释为 IP 主动连接主机。",
+      "tags": [
+        "异构图反向关系",
+        "异构图",
+        "PyG"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch-geometric.readthedocs.io/en/latest/notes/heterogeneous.html"
+    }
+  ]
+}

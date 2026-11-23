@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "point-adjust-anomaly-evaluation",
+    "title": "Kim 等原论文 v2：时序异常点调整评估",
+    "url": "https://arxiv.org/pdf/2109.05257v2",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，版本及适用条件见各题。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "paeval-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "时间异常点调整评估",
+      "knowledgePoint": "点调整定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时序异常评估中的 point adjustment 通常如何处理已命中的真实异常区间？",
+      "answer": "若真实异常区间内至少一个点被预测为异常，就把该区间所有点的预测都调整为异常。",
+      "explanation": "该后处理需要真实区间标签；仅命中一点也可能被记成整段命中。",
+      "example": "真实异常连续 10 点，只命中其中 1 点时，调整后 10 点都被计为命中。",
+      "tags": [
+        "时间异常点调整评估",
+        "点调整定义"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.05257v2"
+    },
+    {
+      "id": "paeval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时间异常点调整评估",
+      "knowledgePoint": "线上与离线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 point adjustment 不能直接作为没有真实标签时的在线检测步骤？",
+      "answer": "它需要真实异常区间边界，在线系统通常事先不知道这些边界。",
+      "explanation": "它可以用于离线比较，但不能把调整后的点直接当作实时输出。",
+      "example": "事后标注用于统计，告警仍按实际检测时间记录。",
+      "tags": [
+        "时间异常点调整评估",
+        "线上与离线"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2109.05257v2"
+    },
+    {
+      "id": "paeval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时间异常点调整评估",
+      "knowledgePoint": "随机命中风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "独立随机分数在 point adjustment 下为什么也可能得到较高 F1？",
+      "answer": "当每个点独立且有相同非零概率越过阈值时，较长异常区间更容易被偶然命中；一旦命中，整段会被调整为预测异常。",
+      "explanation": "效果还取决于异常比例、阈值和区间长度，并非所有数据集都如此。",
+      "example": "用随机基线对照有助于识别指标虚高。",
+      "tags": [
+        "时间异常点调整评估",
+        "随机命中风险"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.05257v2"
+    },
+    {
+      "id": "paeval-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "时间异常点调整评估",
+      "knowledgePoint": "检测延迟",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "point adjustment 后的点级召回能否单独反映异常发生后的检测延迟？",
+      "answer": "不能；它会把首次命中之前的区间点也标为已检测。",
+      "explanation": "应另外报告首次告警相对真实起点的延迟。",
+      "example": "第 9 个点才报警，不等于第 1 个点就被实时发现。",
+      "tags": [
+        "时间异常点调整评估",
+        "检测延迟"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2109.05257v2"
+    },
+    {
+      "id": "paeval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时间异常点调整评估",
+      "knowledgePoint": "PA百分比K",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "论文提出的 PA%K 在什么情况下对某个真实异常区间执行点调整？",
+      "answer": "该区间中实际检测到的异常点比例严格超过阈值 K 时才调整。",
+      "explanation": "K=0 对应常规点调整；K=100% 不会因该规则额外调整。",
+      "example": "K=20% 时，恰好命中 20% 的区间不满足严格超过条件。",
+      "tags": [
+        "时间异常点调整评估",
+        "PA百分比K"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2109.05257v2"
+    }
+  ]
+}

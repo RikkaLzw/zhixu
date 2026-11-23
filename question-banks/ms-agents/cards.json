@@ -1,0 +1,181 @@
+{
+  "source": {
+    "id": "ms-agents",
+    "title": "Microsoft AI Agents for Beginners：智能体基础",
+    "url": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/01-intro-to-ai-agents/README.md",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "agents-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本组成",
+      "knowledgePoint": "智能体环境",
+      "questionType": "概念与原理",
+      "question": "智能体中的环境指什么？",
+      "answer": "环境是智能体感知和行动所处的外部系统或世界。",
+      "explanation": "环境状态可能随智能体行动或外部变化而改变。",
+      "example": "查询系统、日志库和工作流服务可以构成安全助手的环境。",
+      "tags": [
+        "智能体环境",
+        "Agent",
+        "智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/01-intro-to-ai-agents/README.md",
+      "origin": "自行整理"
+    },
+    {
+      "id": "agents-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本组成",
+      "knowledgePoint": "智能体工具",
+      "questionType": "概念与原理",
+      "question": "智能体使用工具的主要作用是什么？",
+      "answer": "工具让智能体获取外部信息或执行其系统允许的操作。",
+      "explanation": "能否实际调用某个工具取决于系统提供的工具和权限。",
+      "example": "通过查询工具读取一条日志记录。",
+      "tags": [
+        "智能体工具",
+        "Agent",
+        "智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/01-intro-to-ai-agents/README.md",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节大模型实习一面（作者自述）；Agent 与 function calling 主题启发",
+          "url": "https://www.nowcoder.com/feed/main/detail/44b2baec47c740c4b9bccb8a013abd56",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agents-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "基本组成",
+      "knowledgePoint": "短期记忆与长期记忆",
+      "questionType": "比较与选型",
+      "question": "智能体的短期记忆和长期记忆有什么区别？",
+      "answer": "短期记忆保存当前交互所需的上下文；长期记忆保存可跨会话取用的信息。",
+      "explanation": "两者可以使用不同的存储与检索机制。",
+      "example": "当前对话是短期上下文，历史用户偏好可存入长期存储。",
+      "tags": [
+        "短期记忆与长期记忆",
+        "Agent",
+        "智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/01-intro-to-ai-agents/README.md",
+      "origin": "自行整理"
+    },
+    {
+      "id": "agents-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "规划与执行",
+      "knowledgePoint": "目标驱动智能体",
+      "questionType": "概念与原理",
+      "question": "目标驱动智能体如何选择行为？",
+      "answer": "它围绕要达成的目标选择和组织行动步骤。",
+      "explanation": "目标本身不保证每一步执行正确，仍需要检查反馈。",
+      "example": "为整理报告先收集资料，再组织摘要。",
+      "tags": [
+        "目标驱动智能体",
+        "Agent",
+        "智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/01-intro-to-ai-agents/README.md",
+      "origin": "自行整理"
+    },
+    {
+      "id": "agents-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "规划与执行",
+      "knowledgePoint": "固定流程与动态规划",
+      "questionType": "比较与选型",
+      "question": "固定工作流与动态规划在步骤选择上有什么区别？",
+      "answer": "固定工作流按预设规则执行；动态规划可根据任务和反馈选择或调整步骤。",
+      "explanation": "可预测的简单任务不一定需要动态规划。",
+      "example": "字段校验用固定流程，开放式资料调查可按结果调整检索。",
+      "tags": [
+        "固定流程与动态规划",
+        "Agent",
+        "智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/01-intro-to-ai-agents/README.md",
+      "origin": "自行整理"
+    },
+    {
+      "id": "agents-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多智能体",
+      "knowledgePoint": "角色分工",
+      "questionType": "概念与原理",
+      "question": "多智能体系统中的角色分工有什么用途？",
+      "answer": "它把不同职责交给不同智能体或组件，使各自专注于相应子任务。",
+      "explanation": "分工仍需要结果汇总和通信机制。",
+      "example": "一个组件检索资料，另一个组件整理分析结果。",
+      "tags": [
+        "角色分工",
+        "Agent",
+        "智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/02-explore-agentic-frameworks/README.md",
+      "origin": "自行整理"
+    },
+    {
+      "id": "agents-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多智能体",
+      "knowledgePoint": "分层委派",
+      "questionType": "概念与原理",
+      "question": "分层智能体中的高层智能体通常负责什么？",
+      "answer": "它将较大任务拆成子任务，并协调下层智能体执行。",
+      "explanation": "最终结果仍需综合各子任务的输出。",
+      "example": "把一次资料整理拆为检索、筛选和归纳三个子任务。",
+      "tags": [
+        "分层委派",
+        "Agent",
+        "智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/01-intro-to-ai-agents/README.md",
+      "origin": "自行整理"
+    },
+    {
+      "id": "agents-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具调用",
+      "knowledgePoint": "工具可用范围",
+      "questionType": "概念与原理",
+      "question": "智能体能否调用任意外部工具？",
+      "answer": "不能；可调用范围由系统接入的工具及其权限配置决定。",
+      "explanation": "模型提出工具调用并不自动赋予系统执行权限。",
+      "example": "只接入只读查询工具时，智能体不能直接修改数据库。",
+      "tags": [
+        "工具可用范围",
+        "Agent",
+        "智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/01-intro-to-ai-agents/README.md",
+      "origin": "自行整理"
+    }
+  ]
+}

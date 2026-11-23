@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "agent-adversarial-game-search",
+    "title": "Berkeley CS188：博弈搜索与剪枝",
+    "url": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/minimax.html",
+    "type": "官方文档、教材或论文",
+    "note": "依据逐题列出的资料自行整理；面经主题延伸注明非原题。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "gamesearch-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体博弈搜索",
+      "knowledgePoint": "对手假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "双人零和博弈的 minimax 通常对对手的行动作什么假设？",
+      "answer": "假设对手也会选择对自己最有利、对当前玩家最不利的行动。",
+      "explanation": "这是一个用于规划的对手模型，不保证真实对手总按该模型行动。",
+      "example": "对手在可选步中选择让我方收益最低的步。",
+      "tags": [
+        "Agent 搜索",
+        "对手假设"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/minimax.html"
+    },
+    {
+      "id": "gamesearch-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体博弈搜索",
+      "knowledgePoint": "节点回传",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "minimax 搜索中 MAX 节点与 MIN 节点如何由子节点值得到自身值？",
+      "answer": "MAX 节点取子节点最大值；MIN 节点取子节点最小值。",
+      "explanation": "终局节点使用给定的效用值。",
+      "example": "两个子节点值为 3 和 5 时，MIN 节点值为 3。",
+      "tags": [
+        "Agent 搜索",
+        "节点回传"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/minimax.html"
+    },
+    {
+      "id": "gamesearch-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体博弈搜索",
+      "knowledgePoint": "节点视角",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一棵零和 minimax 树中的节点值通常统一使用谁的收益视角？",
+      "answer": "通常都表示 MAX 玩家的收益，MIN 层通过取最小值反映对手选择。",
+      "explanation": "不应在每层随意切换数值符号而不调整回传规则。",
+      "example": "MIN 层选择较小的 MAX 收益。",
+      "tags": [
+        "Agent 搜索",
+        "节点视角"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/minimax.html"
+    },
+    {
+      "id": "gamesearch-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体博弈搜索",
+      "knowledgePoint": "剪枝条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 alpha-beta 搜索中，MIN 节点已找到一个不高于祖先 MAX 已有下界的子值时，为什么可剪掉剩余子节点？",
+      "answer": "该 MIN 节点最终值不会高于已看到的子值，祖先 MAX 不会因它超过现有选择。",
+      "explanation": "剪枝依据已知界限，而不是猜测被剪分支的精确值。",
+      "example": "MAX 已有 3，另一个 MIN 已看到 2 时可停止展开该 MIN。",
+      "tags": [
+        "Agent 搜索",
+        "剪枝条件"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/minimax.html"
+    },
+    {
+      "id": "gamesearch-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体博弈搜索",
+      "knowledgePoint": "剪枝与结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "正确实现的 alpha-beta 剪枝会改变完整 minimax 搜索的根节点值吗？",
+      "answer": "不会；它跳过无法改变根节点决策的分支，保留相同的 minimax 值。",
+      "explanation": "相同价值的动作在不同遍历或平局规则下可能选到不同一个。",
+      "example": "普通 minimax 与 alpha-beta 都得到根值 3。",
+      "tags": [
+        "Agent 搜索",
+        "剪枝与结果"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/minimax.html"
+    },
+    {
+      "id": "gamesearch-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体博弈搜索",
+      "knowledgePoint": "展开顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "alpha-beta 剪枝中，子节点访问顺序会影响什么？",
+      "answer": "会影响何时发现足够的界限，因此影响被搜索的节点数量。",
+      "explanation": "正确实现下，它不改变完整 minimax 的根值。",
+      "example": "先搜索较好的候选可能更早产生剪枝。",
+      "tags": [
+        "Agent 搜索",
+        "展开顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/minimax.html"
+    },
+    {
+      "id": "gamesearch-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体博弈搜索",
+      "knowledgePoint": "深度限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "深度受限 minimax 在尚未到达终局时如何给截断节点赋值？",
+      "answer": "通常使用评估函数估计该状态的价值，再向上回传。",
+      "explanation": "估计可能有误，因此不能无条件保证得到完整搜索的最优行动。",
+      "example": "棋局搜索到预算深度后评估当前局面。",
+      "tags": [
+        "Agent 搜索",
+        "深度限制"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/minimax.html"
+    },
+    {
+      "id": "gamesearch-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体博弈搜索",
+      "knowledgePoint": "机会节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "expectimax 中的机会节点如何计算价值？",
+      "answer": "按各可能后继的概率加权求和，得到期望价值。",
+      "explanation": "概率应与建模的随机过程或对手行为相符。",
+      "example": "收益 4 和 0、概率分别为 0.25 和 0.75 时期望为 1。",
+      "tags": [
+        "Agent 搜索",
+        "机会节点"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/expectimax.html"
+    },
+    {
+      "id": "gamesearch-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体博弈搜索",
+      "knowledgePoint": "机会节点剪枝",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能把普通 minimax 的 alpha-beta 剪枝规则直接套到一般 expectimax 机会节点？",
+      "answer": "未检查的结果仍可能改变加权期望；需要额外的有限值界等条件才能安全剪枝。",
+      "explanation": "机会节点对后继求平均，而不是只取最大或最小。",
+      "example": "少见但高收益的未查看结果可能提高期望。",
+      "tags": [
+        "Agent 搜索",
+        "机会节点剪枝"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/games/expectimax.html"
+    }
+  ]
+}

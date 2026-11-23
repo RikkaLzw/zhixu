@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "sklearn-brier-score-practice",
+    "title": "scikit-learn 1.7 文档：Brier 分数接口",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.brier_score_loss.html",
+    "type": "官方文档或教材",
+    "note": "依据 scikit-learn 1.7 官方文档自行整理；与已有二分类 Brier 定义和校准局限卡互补。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "brierapi-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Brier 分数接口",
+      "knowledgePoint": "一维概率与字符串正类",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 brier_score_loss 使用一维概率且真实标签为字符串时，概率对应哪一类？",
+      "answer": "一维数组表示正类概率；字符串标签的正类应通过 pos_label 显式指定。",
+      "explanation": "接口不会自动推断字符串标签中的正类。",
+      "example": "令 pos_label=\"spam\" 对应 spam 的预测概率。",
+      "tags": [
+        "Brier 分数接口",
+        "一维概率与字符串正类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.brier_score_loss.html"
+    },
+    {
+      "id": "brierapi-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Brier 分数接口",
+      "knowledgePoint": "多分类列顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 brier_score_loss 接收二维类别概率时，概率列应怎样对应类别？",
+      "answer": "概率列应按类别标签排序对应，遵循 LabelBinarizer 的顺序。",
+      "explanation": "应核对模型输出列顺序，避免把概率分配给错误类别。",
+      "example": "类别标签按 a、b、c 排序时，列依次对应 a、b、c。",
+      "tags": [
+        "Brier 分数接口",
+        "多分类列顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.brier_score_loss.html"
+    },
+    {
+      "id": "brierapi-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Brier 分数接口",
+      "knowledgePoint": "默认分数缩放",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 brier_score_loss 默认 scale_by_half=\"auto\" 对二分类和多分类如何缩放？",
+      "answer": "二分类分数按 1/2 缩放到常用的 0–1 范围；多分类保留原始 0–2 范围。",
+      "explanation": "比较不同任务或实现的数值时需要核对缩放口径。",
+      "example": "同一多分类结果设置 True 会将未缩放值减半。",
+      "tags": [
+        "Brier 分数接口",
+        "默认分数缩放"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.brier_score_loss.html"
+    },
+    {
+      "id": "brierapi-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Brier 分数接口",
+      "knowledgePoint": "缺失类别",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的二维 Brier 概率输入中，评估样本未出现某类别时为什么可能需要提供 labels？",
+      "answer": "显式给出所有概率列对应的类别，避免仅从当前 y_true 推断类别造成维度或含义不匹配。",
+      "explanation": "类别顺序仍需与概率列的约定一致。",
+      "example": "三分类评估子集未出现类别 1 时指定 labels=[0,1,2]。",
+      "tags": [
+        "Brier 分数接口",
+        "缺失类别"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.brier_score_loss.html"
+    }
+  ]
+}

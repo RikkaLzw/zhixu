@@ -1,0 +1,766 @@
+{
+  "source": {
+    "id": "go-programming-foundations",
+    "title": "Go 语言规范与官方文档：语言基础和并发",
+    "url": "https://go.dev/ref/spec",
+    "type": "官方语言规范与标准库文档",
+    "note": "依据 Go 语言规范、Go 内存模型和标准库文档逐题整理。泛型问题适用于 Go 1.18 及以上；并发保证以引用的规范和 API 契约为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "goprog-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "包与模块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Go 的包和模块分别解决什么组织问题？",
+      "answer": "包由同一目录下具有相同 package 声明的源文件组成；模块是由 go.mod 描述、可版本化并可包含多个包的发布与依赖单元。",
+      "explanation": "一个模块通常包含多个目录和包，包名与模块路径也不是同一个概念。",
+      "example": "同一模块可以同时包含 app、internal/store 等多个包目录。",
+      "tags": [
+        "Go",
+        "包",
+        "模块"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Package_clause",
+      "supportingReferences": [
+        {
+          "id": "go-mod-reference",
+          "title": "Go Modules Reference：go.mod 文件",
+          "url": "https://go.dev/ref/mod#go-mod-file",
+          "type": "Go 官方模块文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "goprog-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "导出标识符",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Go 中标识符怎样从其他包导出？",
+      "answer": "标识符名称的首个 Unicode 字符是大写字母时，该名称可被其他包引用。",
+      "explanation": "是否导出由命名规则决定；包内的未导出标识符仍可在其包内使用。",
+      "example": "类型 User 可以从其他包访问，而类型 user 不能。",
+      "tags": [
+        "Go",
+        "导出标识符",
+        "可见性"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Exported_identifiers"
+    },
+    {
+      "id": "goprog-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "零值",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Go 变量声明时未显式赋值会得到什么值？",
+      "answer": "变量会得到其类型的零值，例如数值类型为 0、布尔类型为 false、字符串为空串，指针、切片、映射、通道、函数和接口类型为 nil。",
+      "explanation": "结构体的零值由各字段的零值组成；零值不一定等同于 nil。",
+      "example": "未初始化的 int 为 0，未初始化的指针为 nil。",
+      "tags": [
+        "Go",
+        "零值",
+        "变量声明"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#The_zero_value"
+    },
+    {
+      "id": "goprog-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "数组类型与赋值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Go 数组的长度是否属于数组类型的一部分？数组赋值通常是什么语义？",
+      "answer": "长度是数组类型的一部分；数组赋值会复制数组元素值。",
+      "explanation": "[3]int 与 [4]int 是不同类型；数组值不等同于指向共享元素的切片。",
+      "example": "将一个 [3]int 赋给另一个变量后，修改副本元素不会修改原数组。",
+      "tags": [
+        "Go",
+        "数组",
+        "值语义"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Array_types"
+    },
+    {
+      "id": "goprog-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "切片描述符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Go 切片可以怎样理解？",
+      "answer": "切片是对底层数组一段连续元素的描述，具有长度和容量；多个切片值可以引用同一个底层数组。",
+      "explanation": "切片本身不是独立复制的数组，改变共享范围内的元素可能被其他切片观察到。",
+      "example": "a := data[1:4] 创建一个指向 data 部分元素的切片。",
+      "tags": [
+        "Go",
+        "切片",
+        "底层数组"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Slice_types"
+    },
+    {
+      "id": "goprog-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "切片长度与容量",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Go 切片的 len 和 cap 分别表示什么？",
+      "answer": "len 表示切片当前可访问的元素数；cap 表示从切片起始位置到底层数组末尾可扩展的元素数。",
+      "explanation": "容量不是切片当前长度，也不保证 append 后一定继续使用同一数组。",
+      "example": "对 a[2:5]，长度为 3，容量取决于 a 从索引 2 到末尾的长度。",
+      "tags": [
+        "Go",
+        "切片",
+        "len",
+        "cap"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Slice_types"
+    },
+    {
+      "id": "goprog-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "append 与切片扩容",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "调用 Go 的 append 后，为什么通常应接收它返回的切片？",
+      "answer": "append 返回追加后的切片；容量不足时可能分配新的底层数组，并返回引用新数组的切片。",
+      "explanation": "即使容量足够，切片长度也已改变，因此应使用返回值继续操作。",
+      "example": "s = append(s, value) 可保留新的长度和底层数组引用。",
+      "tags": [
+        "Go",
+        "append",
+        "切片扩容"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Appending_to_and_copying_slices"
+    },
+    {
+      "id": "goprog-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "子切片共享存储",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "从切片创建子切片后，修改子切片中的元素会影响原切片吗？",
+      "answer": "如果两者对应同一底层数组的同一元素，修改会被双方观察到。",
+      "explanation": "切片表达式会引用原底层数组；追加操作是否改用新数组还取决于容量。",
+      "example": "b := a[1:3] 后修改 b[0] 会修改 a[1]。",
+      "tags": [
+        "Go",
+        "子切片",
+        "别名"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Slice_expressions"
+    },
+    {
+      "id": "goprog-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "nil 与空切片",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "nil 切片与长度为零的非 nil 切片有什么共同点和区别？",
+      "answer": "两者长度都可为零，也都能用于 append；nil 切片与 nil 相等，而通过 make 创建的空切片不是 nil。",
+      "explanation": "序列化、API 契约或显式 nil 检查可能使两者的区别变得重要。",
+      "example": "var a []int 与 b := make([]int, 0) 的 len 都是 0，但 a == nil、b != nil。",
+      "tags": [
+        "Go",
+        "nil 切片",
+        "空切片"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Slice_types"
+    },
+    {
+      "id": "goprog-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "nil 映射",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Go 的 nil map 可以读取和写入吗？",
+      "answer": "读取 nil map 会得到元素类型的零值；向 nil map 写入会导致运行时 panic。",
+      "explanation": "写入前需要先用 make 或映射字面量初始化。",
+      "example": "var m map[string]int; _ = m[\"x\"] 可以读取，但 m[\"x\"] = 1 会 panic。",
+      "tags": [
+        "Go",
+        "map",
+        "nil 映射"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Map_types"
+    },
+    {
+      "id": "goprog-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "映射逗号 ok 查询",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Go 如何区分 map 中不存在某个键和键存在但值为零值？",
+      "answer": "使用双结果形式 value, ok := m[key]；ok 为 true 表示键存在。",
+      "explanation": "只接收第一个结果时，不存在的键会返回元素类型的零值。",
+      "example": "n, ok := counts[\"unknown\"] 可区分不存在和计数为 0。",
+      "tags": [
+        "Go",
+        "map 查询",
+        "逗号 ok"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Index_expressions"
+    },
+    {
+      "id": "goprog-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "映射迭代顺序",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Go 程序可以依赖 map 每次按相同顺序遍历吗？",
+      "answer": "不可以；规范不保证映射迭代顺序，程序不应依赖固定顺序。",
+      "explanation": "需要稳定输出时，应显式提取键并排序。",
+      "example": "生成可复现的 JSON 前先对映射键排序。",
+      "tags": [
+        "Go",
+        "map",
+        "迭代顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#For_statements"
+    },
+    {
+      "id": "goprog-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "字符串与 UTF-8",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Go 字符串的长度和索引主要针对字符还是字节？",
+      "answer": "Go 字符串是不可变的字节序列，len 和索引按字节处理；UTF-8 是文本的常用编码约定，但字符串可以包含非有效 UTF-8 字节。",
+      "explanation": "若要按 Unicode 码点处理，应使用 rune 解码；若要按用户感知字符处理，还需考虑字素簇。",
+      "example": "对多字节 UTF-8 文本，len(s) 可大于其中 Unicode 码点数量。",
+      "tags": [
+        "Go",
+        "字符串",
+        "UTF-8"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#String_types"
+    },
+    {
+      "id": "goprog-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "range 字符串结果",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Go 使用 range 遍历字符串时，每轮通常返回什么？",
+      "answer": "每轮返回 UTF-8 编码中该码点起始字节的索引，以及解码得到的 rune；遇到无效 UTF-8 序列时会产生 RuneError。",
+      "explanation": "返回的索引是字节偏移，不是 rune 序号。",
+      "example": "遍历含中文字符的字符串时，后续索引通常会跳过多个字节。",
+      "tags": [
+        "Go",
+        "range",
+        "字符串遍历"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#For_statements"
+    },
+    {
+      "id": "goprog-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 语言基础",
+      "knowledgePoint": "rune 与用户感知字符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Go 中一个 rune 是否必然等于一个用户看到的字符？",
+      "answer": "不必然；rune 是 int32 的别名，通常表示一个 Unicode 码点，而一个用户感知的字素簇可能由多个码点组成。",
+      "explanation": "组合附加符号或表情序列可能由多个码点共同呈现。",
+      "example": "一个带组合重音的显示字符可能由基础字母和组合符号两个 rune 构成。",
+      "tags": [
+        "Go",
+        "rune",
+        "Unicode"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Rune_literals",
+      "supportingReferences": [
+        {
+          "id": "go-unicode-package",
+          "title": "Go unicode 包文档",
+          "url": "https://pkg.go.dev/unicode",
+          "type": "Go 标准库文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "goprog-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 类型与接口",
+      "knowledgePoint": "接口隐式实现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Go 类型如何实现一个接口？",
+      "answer": "类型的方法集满足接口要求时即可实现接口，不需要显式声明 implements。",
+      "explanation": "实现关系由方法集决定；接口值可以统一持有不同具体类型的值。",
+      "example": "任何实现 Read 方法且签名匹配的类型都可以满足 io.Reader。",
+      "tags": [
+        "Go",
+        "接口",
+        "隐式实现"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Interface_types"
+    },
+    {
+      "id": "goprog-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 类型与接口",
+      "knowledgePoint": "接口值与 nil",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Go 中一个接口变量只有在什么情况下才等于 nil？",
+      "answer": "接口既没有动态类型，也没有动态值时才等于 nil；接口一旦保存了具体类型，就不再是 nil，即使该类型值本身是 nil。",
+      "explanation": "常见的 typed nil 问题来自把 nil 指针赋给接口后再比较接口与 nil。",
+      "example": "var p *T = nil; var x any = p，此时 x != nil。",
+      "tags": [
+        "Go",
+        "接口",
+        "nil",
+        "typed nil"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Interface_types"
+    },
+    {
+      "id": "goprog-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 类型与接口",
+      "knowledgePoint": "类型断言",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Go 的类型断言在目标类型不匹配时会发生什么？",
+      "answer": "单结果断言会 panic；使用 value, ok := x.(T) 的形式则在失败时令 ok 为 false，不会因此 panic。",
+      "explanation": "类型断言只适用于接口值，目标类型可以是具体类型或接口类型。",
+      "example": "s, ok := value.(string) 可安全地检查动态类型。",
+      "tags": [
+        "Go",
+        "类型断言",
+        "接口"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Type_assertions"
+    },
+    {
+      "id": "goprog-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 类型与接口",
+      "knowledgePoint": "方法集与指针接收者",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Go 中 T 与 *T 的方法集是否一定相同？",
+      "answer": "不一定；T 的方法集包含接收者为 T 的方法，*T 的方法集包含接收者为 T 或 *T 的方法。",
+      "explanation": "因此某个类型值能否满足接口，可能取决于接口变量中存放的是 T 还是 *T。",
+      "example": "只有指针接收者实现接口方法时，通常是 *T 满足接口而 T 不满足。",
+      "tags": [
+        "Go",
+        "方法集",
+        "指针接收者"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Method_sets"
+    },
+    {
+      "id": "goprog-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 类型与接口",
+      "knowledgePoint": "泛型约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Go 泛型中的约束主要规定什么？",
+      "answer": "约束限定类型参数可接受的类型集合，以及这些类型参数支持哪些操作。",
+      "explanation": "Go 1.18 起支持类型参数；约束通常由接口类型表达，可包含方法要求或类型集合。",
+      "example": "一个数值约束可以只允许支持加法的若干数值类型。",
+      "tags": [
+        "Go",
+        "泛型",
+        "类型约束"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Type_parameter_declarations"
+    },
+    {
+      "id": "goprog-021",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 类型与接口",
+      "knowledgePoint": "类型转换与类型断言",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Go 的类型转换和类型断言有什么区别？",
+      "answer": "类型转换按语言规定把一个值转换为另一种兼容类型；类型断言则检查接口值的动态类型或其实现的接口。",
+      "explanation": "类型断言不能替代数值转换，数值转换也不检查接口的动态类型。",
+      "example": "int64(n) 是类型转换；x.(string) 是对接口值进行类型断言。",
+      "tags": [
+        "Go",
+        "类型转换",
+        "类型断言"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Conversions"
+    },
+    {
+      "id": "goprog-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 错误处理",
+      "knowledgePoint": "errors.Is 错误链",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Go 的 errors.Is 与直接比较错误变量有什么不同？",
+      "answer": "errors.Is 会检查错误本身及其包装链中是否存在目标错误；直接比较只比较当前错误值，通常不能匹配被包装的错误。",
+      "explanation": "使用 fmt.Errorf 的 %w 可以建立可供 errors.Is 检查的错误包装关系。",
+      "example": "errors.Is(fmt.Errorf(\"读取失败: %w\", os.ErrNotExist), os.ErrNotExist) 为 true。",
+      "tags": [
+        "Go",
+        "错误处理",
+        "errors.Is",
+        "错误包装"
+      ],
+      "evidence": "source",
+      "reference": "https://pkg.go.dev/errors#Is"
+    },
+    {
+      "id": "goprog-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 错误处理",
+      "knowledgePoint": "errors.As 错误类型提取",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Go 的 errors.As 主要用于什么？",
+      "answer": "它沿错误包装链查找可赋值给目标类型的错误，并在找到时将其赋给目标变量。",
+      "explanation": "目标参数必须是指向适当类型变量的非 nil 指针。",
+      "example": "用 errors.As 检查错误链中是否包含特定的自定义错误类型。",
+      "tags": [
+        "Go",
+        "错误处理",
+        "errors.As",
+        "错误包装"
+      ],
+      "evidence": "source",
+      "reference": "https://pkg.go.dev/errors#As"
+    },
+    {
+      "id": "goprog-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 错误处理",
+      "knowledgePoint": "defer 参数求值与执行顺序",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "多个 defer 语句何时执行，执行顺序是什么？",
+      "answer": "函数即将返回或因 panic 展开时执行；同一函数中的 defer 按后注册先执行的后进先出顺序运行。",
+      "explanation": "延迟调用的函数值及参数通常在执行 defer 语句时求值，而不是等到函数返回时才求值。",
+      "example": "defer f(x) 会先保存当时的 x 值，再在函数退出时调用 f。",
+      "tags": [
+        "Go",
+        "defer",
+        "资源清理"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Defer_statements"
+    },
+    {
+      "id": "goprog-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 错误处理",
+      "knowledgePoint": "panic 与 recover",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Go 中 recover 在什么条件下能停止当前 panic 的展开？",
+      "answer": "recover 必须由同一 goroutine 中直接由 defer 调用的函数执行，才能停止该 goroutine 当前 panic 的展开。",
+      "explanation": "在普通调用链中间调用 recover，或在另一个 goroutine 中调用，都不能恢复当前 panic。",
+      "example": "在请求处理函数注册的延迟函数中 recover，可把该 goroutine 的 panic 转为受控错误处理。",
+      "tags": [
+        "Go",
+        "panic",
+        "recover",
+        "defer"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Handling_panics"
+    },
+    {
+      "id": "goprog-026",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "goroutine 启动与同步",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Go 的 go 语句会等待新 goroutine 完成吗？",
+      "answer": "不会；go 语句启动一个独立执行的 goroutine 后立即继续，调用方需使用通道、WaitGroup 等机制等待或协调结果。",
+      "explanation": "规范没有规定 goroutine 与操作系统线程一一对应；调度细节由实现管理。",
+      "example": "主 goroutine 直接返回时，不能仅凭已启动另一个 goroutine 就认为它的工作已完成。",
+      "tags": [
+        "Go",
+        "goroutine",
+        "并发同步"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Go_statements"
+    },
+    {
+      "id": "goprog-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "无缓冲通道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "无缓冲 channel 的发送操作通常何时解除阻塞？",
+      "answer": "发送方会等待，直到有接收方准备接收对应值；接收方也会等待，直到有发送方提供值。",
+      "explanation": "无缓冲通道既传递值，也可用于在发送方和接收方之间建立同步关系。",
+      "example": "工作 goroutine 向无缓冲结果通道发送时，会等到调用方接收结果。",
+      "tags": [
+        "Go",
+        "channel",
+        "无缓冲通道"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Channel_types",
+      "supportingReferences": [
+        {
+          "id": "go-memory-model",
+          "title": "Go 内存模型：通道通信",
+          "url": "https://go.dev/ref/mem",
+          "type": "Go 官方内存模型",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "goprog-028",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "带缓冲通道阻塞条件",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "带缓冲 channel 的发送方在什么情况下会阻塞？",
+      "answer": "缓冲区已满且没有接收方取走元素时，新的发送会阻塞；缓冲区有空位时，发送可以先把值放入缓冲区。",
+      "explanation": "缓冲容量会影响发送和接收的同步时机，但不会让通道变成无同步约束的共享队列。",
+      "example": "容量为 2 的通道在已放入两个未接收值后，第三次发送需要等待。",
+      "tags": [
+        "Go",
+        "channel",
+        "缓冲通道"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Channel_types"
+    },
+    {
+      "id": "goprog-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "关闭通道后的接收",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "从已关闭的 Go channel 接收数据会怎样？",
+      "answer": "缓冲区中已有的值仍可依次接收；缓冲值耗尽后，接收会立即得到元素类型零值，双结果接收的 ok 为 false。",
+      "explanation": "单结果接收无法区分关闭后得到的零值和通道中实际发送的零值。",
+      "example": "v, ok := <-ch 中的 ok 为 false 表示通道已关闭且没有更多缓存值。",
+      "tags": [
+        "Go",
+        "channel",
+        "关闭通道",
+        "接收"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Receive_operator"
+    },
+    {
+      "id": "goprog-030",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "关闭通道的发送端责任",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "关闭 Go channel 后，接收和发送分别有什么规则？",
+      "answer": "关闭后仍可接收缓冲值，但再次关闭或继续发送都会导致 panic；通常由负责发送的一方在确认不再发送时关闭通道。",
+      "explanation": "接收方不应仅因暂时没有数据就关闭通道。",
+      "example": "生产者完成所有发送后关闭结果通道，消费者用 range 接收至结束。",
+      "tags": [
+        "Go",
+        "channel",
+        "close",
+        "生产者消费者"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Close"
+    },
+    {
+      "id": "goprog-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "select 多个就绪分支",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Go 的 select 中有多个通信分支同时就绪时会发生什么？",
+      "answer": "规范规定从就绪分支中以伪随机方式选择一个执行；不能依赖源码排列顺序获得优先级。",
+      "explanation": "如果没有分支就绪且没有 default，select 会阻塞；nil 通道对应的通信分支不会就绪。",
+      "example": "需要优先级时应显式写控制逻辑，而不是把高优先级通道放在 select 第一项。",
+      "tags": [
+        "Go",
+        "select",
+        "channel"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/ref/spec#Select_statements"
+    },
+    {
+      "id": "goprog-032",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "Mutex 同步关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Go 的 sync.Mutex 除互斥外还提供什么并发保证？",
+      "answer": "成功的 Unlock 与之后成功的 Lock 之间建立内存同步关系，使临界区中的写入可由随后获得同一锁的 goroutine 观察到。",
+      "explanation": "互斥锁只保护遵守同一锁协议的访问；无关的未同步共享访问仍可能构成数据竞争。",
+      "example": "写入共享配置后 Unlock，另一个 goroutine Lock 成功后读取配置。",
+      "tags": [
+        "Go",
+        "sync.Mutex",
+        "内存模型",
+        "happens-before"
+      ],
+      "evidence": "source",
+      "reference": "https://pkg.go.dev/sync#Mutex",
+      "supportingReferences": [
+        {
+          "id": "go-memory-model",
+          "title": "Go 内存模型：锁",
+          "url": "https://go.dev/ref/mem",
+          "type": "Go 官方内存模型",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "goprog-033",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "WaitGroup 完成同步",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "sync.WaitGroup 中 Done 与 Wait 如何配合？",
+      "answer": "每项并发任务完成时调用 Done 递减计数；Wait 在计数归零前阻塞，等待其解除阻塞的 Done 与 Wait 返回之间建立同步关系。",
+      "explanation": "调用 Add 增加计数应与 Wait 的生命周期正确协调，避免任务尚未计入就开始等待。",
+      "example": "启动多个 goroutine 前对任务数 Add，任务末尾 defer Done，主 goroutine 调用 Wait。",
+      "tags": [
+        "Go",
+        "sync.WaitGroup",
+        "并发同步"
+      ],
+      "evidence": "source",
+      "reference": "https://pkg.go.dev/sync#WaitGroup"
+    },
+    {
+      "id": "goprog-034",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "context 取消传播",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Go 服务中的 context.Context 通常如何用于取消子任务？",
+      "answer": "把父 context 传给子任务；调用 WithCancel、WithTimeout 或 WithDeadline 返回的取消函数后，派生 context 的 Done 通道会关闭，协作式任务可据此停止。",
+      "explanation": "取消不会强制终止 goroutine，任务代码需要主动检查 Done 或 Err；调用方应及时调用返回的取消函数释放相关资源。",
+      "example": "请求结束时取消请求 context，并让并行查询监听 ctx.Done()。",
+      "tags": [
+        "Go",
+        "context",
+        "取消传播",
+        "超时"
+      ],
+      "evidence": "source",
+      "reference": "https://pkg.go.dev/context#Context",
+      "supportingReferences": [
+        {
+          "id": "go-context-withcancel",
+          "title": "Go context.WithCancel 文档",
+          "url": "https://pkg.go.dev/context#WithCancel",
+          "type": "Go 标准库文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "goprog-035",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Go 并发",
+      "knowledgePoint": "竞态检测器范围",
+      "questionType": "工具与实践",
+      "origin": "自行整理",
+      "question": "Go 的 race detector 能否证明程序不存在数据竞争？",
+      "answer": "不能；它在执行过程中检测实际运行路径上的数据竞争，未执行到的路径不会因此得到证明。",
+      "explanation": "应结合不同测试、负载和 -race 构建运行；检测器也不能替代同步设计审查。",
+      "example": "go test -race ./... 可在测试执行期间发现部分竞争访问。",
+      "tags": [
+        "Go",
+        "竞态检测",
+        "go test -race"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/doc/articles/race_detector"
+    }
+  ]
+}

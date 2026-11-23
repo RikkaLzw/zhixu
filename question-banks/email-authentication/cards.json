@@ -1,0 +1,278 @@
+{
+  "source": {
+    "id": "email-authentication",
+    "title": "IETF 邮件认证标准：SPF、DKIM、DMARC",
+    "url": "https://www.rfc-editor.org/rfc/rfc7208.html",
+    "type": "技术文档与标准",
+    "note": "根据逐题注明的技术资料自行整理，示例为自编。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "mailauth-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "SPF用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SPF 主要检查邮件发送方的什么？",
+      "answer": "它检查连接的发送主机 IP 是否被相关域名的 SPF 策略授权。",
+      "explanation": "检查结果针对特定 SMTP 身份，不能独立证明邮件内容安全。",
+      "example": "接收方根据域名发布的 SPF 记录检查发送 IP。",
+      "tags": [
+        "SPF用途",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc7208.html"
+    },
+    {
+      "id": "mailauth-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "SPF身份",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "SPF 校验的 MAIL FROM 身份与邮件可见 From 头有什么区别？",
+      "answer": "MAIL FROM 是 SMTP 信封身份；可见 From 是邮件头中的作者地址，两者不必相同。",
+      "explanation": "即使 SPF 通过，也需另行检查与可见 From 的对齐。",
+      "example": "转发邮件时信封域名与显示的作者域名可能不同。",
+      "tags": [
+        "SPF身份",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc7208.html"
+    },
+    {
+      "id": "mailauth-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "SPF失败与软失败",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "SPF 的 fail 与 softfail 在授权判断上有什么区别？",
+      "answer": "fail 表示未授权；softfail 表示发送主机可能未授权，但发布者给出的判断较弱。",
+      "explanation": "接收系统如何处置还取决于本地策略。",
+      "example": "同一邮件可被标注软失败而不是直接拒绝。",
+      "tags": [
+        "SPF失败与软失败",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc7208.html"
+    },
+    {
+      "id": "mailauth-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "SPF临时与永久错误",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "SPF 的 temperror 与 permerror 有什么区别？",
+      "answer": "temperror 表示临时处理错误；permerror 表示策略记录等存在无法正确处理的永久性错误。",
+      "explanation": "临时错误不应直接当作已确认的欺骗。",
+      "example": "暂时的 DNS 故障与格式错误的策略记录需要不同排查。",
+      "tags": [
+        "SPF临时与永久错误",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc7208.html"
+    },
+    {
+      "id": "mailauth-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "SPF转发限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么合法邮件转发也可能导致 SPF 失败？",
+      "answer": "转发后的连接可能来自未被原信封域名授权的转发服务器 IP。",
+      "explanation": "实际结果取决于转发方式和信封地址处理。",
+      "example": "邮件经中间服务器转发后重新接受 SPF 检查。",
+      "tags": [
+        "SPF转发限制",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc7208.html"
+    },
+    {
+      "id": "mailauth-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "DKIM签名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DKIM 用什么方式关联邮件与签名域？",
+      "answer": "签名方用私钥对规范化后的指定邮件内容签名，接收方用对应公钥验证。",
+      "explanation": "验证涵盖的具体头字段和正文范围由签名及规范化方式决定。",
+      "example": "邮件服务器为发出的消息附加 DKIM-Signature。",
+      "tags": [
+        "DKIM签名",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6376.html"
+    },
+    {
+      "id": "mailauth-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "DKIM选择器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DKIM 的 selector 主要帮助接收方做什么？",
+      "answer": "它与签名域一起确定从 DNS 查找哪条公钥记录。",
+      "explanation": "同一域可使用多个选择器管理不同密钥。",
+      "example": "签名携带的选择器用于查找对应 DNS 公钥。",
+      "tags": [
+        "DKIM选择器",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6376.html"
+    },
+    {
+      "id": "mailauth-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "DKIM签名域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DKIM-Signature 的 d= 标记表示什么？",
+      "answer": "它表示承担签名责任的域名。",
+      "explanation": "签名域不一定与可见 From 域相同，DMARC 会检查对齐。",
+      "example": "第三方邮件服务使用自己的域进行 DKIM 签名。",
+      "tags": [
+        "DKIM签名域",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6376.html"
+    },
+    {
+      "id": "mailauth-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "DKIM覆盖范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DKIM 验证通过是否表示邮件的所有头字段都受签名保护？",
+      "answer": "不一定；签名只覆盖指定的头字段，正文覆盖也应按签名设置理解。",
+      "explanation": "未覆盖的内容不能仅凭 DKIM 通过视为完整受保护。",
+      "example": "邮件中某个未签名的头字段可能不在校验范围内。",
+      "tags": [
+        "DKIM覆盖范围",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6376.html"
+    },
+    {
+      "id": "mailauth-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "DMARC通过条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DMARC RFC 9989 中，什么情况下认证可以通过？",
+      "answer": "至少有一项 SPF 或 DKIM 验证通过，且其认证域与可见 From 的作者域对齐。",
+      "explanation": "两种机制不必同时通过；仍须满足规范中的消息格式和处理条件。",
+      "example": "SPF 失败但有效 DKIM 签名域与作者域对齐时可通过。",
+      "tags": [
+        "DMARC通过条件",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9989.html"
+    },
+    {
+      "id": "mailauth-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "DMARC域对齐",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "DMARC 的严格对齐与宽松对齐有什么区别？",
+      "answer": "严格对齐要求认证域与作者域完全相同；宽松对齐要求两者具有相同组织域。",
+      "explanation": "组织域的确定应遵循所用 DMARC 规范。",
+      "example": "mail.example.com 与 news.example.com 可宽松对齐。",
+      "tags": [
+        "DMARC域对齐",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9989.html"
+    },
+    {
+      "id": "mailauth-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "DMARC策略",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "DMARC 的 p=none、quarantine 和 reject 分别表达什么处理偏好？",
+      "answer": "none 不要求因 DMARC 失败改变处理；quarantine 请求隔离；reject 请求拒收。",
+      "explanation": "接收方仍结合自身政策决定处理，实际部署还需考虑合法邮件流。",
+      "example": "先用 none 观察认证结果，再评估是否加强策略。",
+      "tags": [
+        "DMARC策略",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9989.html"
+    },
+    {
+      "id": "mailauth-013",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "认证不等于安全",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "邮件通过 DMARC 能否证明它不是钓鱼邮件？",
+      "answer": "不能；域认证通过仍可能来自被攻陷的合法账户，或使用相似域名和欺骗性显示名。",
+      "explanation": "还应结合邮件内容、链接、发送行为与上下文判断。",
+      "example": "攻击者使用自己控制的相似域名发送通过认证的邮件。",
+      "tags": [
+        "认证不等于安全",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9989.html"
+    },
+    {
+      "id": "mailauth-014",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "邮件认证",
+      "knowledgePoint": "认证结果可信边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么分析 Authentication-Results 邮件头时要确认添加它的可信边界？",
+      "answer": "外部发送者可能伪造同名头字段，只有可信接收系统产生的结果才可作为可靠依据。",
+      "explanation": "邮件网关应按本地策略处理外部已有的认证结果头。",
+      "example": "丢弃不可信来源伪造的通过结果，再使用网关自己的验证结果。",
+      "tags": [
+        "认证结果可信边界",
+        "邮件认证"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc8601.html"
+    }
+  ]
+}

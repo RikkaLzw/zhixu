@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "loggpt-sequence-detection",
+    "title": "LogGPT 原论文 v1：日志序列异常检测",
+    "url": "https://arxiv.org/abs/2309.14482v1",
+    "type": "官方文档或论文",
+    "note": "依据逐题标注的固定版本或在线官方资料自行整理；示例为自编，在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "loggpt-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "LogGPT 日志异常检测",
+      "knowledgePoint": "模型结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogGPT 原论文采用什么模型结构表示日志序列上下文？",
+      "answer": "采用基于 Transformer 解码器的 GPT-2 结构。",
+      "explanation": "论文把日志解析为键序列，并用正常前缀训练下一键预测。",
+      "example": "把日志键映射到序列模型的输入表示。",
+      "tags": [
+        "LogGPT 日志异常检测",
+        "模型结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.14482v1"
+    },
+    {
+      "id": "loggpt-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "LogGPT 日志异常检测",
+      "knowledgePoint": "强化学习动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogGPT 原论文的强化学习阶段将什么定义为动作？",
+      "answer": "从模型预测概率最高的 K 个日志键中采样一个日志键。",
+      "explanation": "动作空间与当前模型的预测分布有关。",
+      "example": "从 Top-K 候选中采样生成下一事件。",
+      "tags": [
+        "LogGPT 日志异常检测",
+        "强化学习动作"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.14482v1"
+    },
+    {
+      "id": "loggpt-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "LogGPT 日志异常检测",
+      "knowledgePoint": "奖励依据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogGPT 的 Top-K 奖励怎样根据真实下一日志键计算？",
+      "answer": "真实下一键在预测 Top-K 中时奖励为 1，否则为 −1。",
+      "explanation": "奖励检查候选集合是否包含真实键，而不是只检查采样动作。",
+      "example": "真实键未进入候选集合时给负奖励。",
+      "tags": [
+        "LogGPT 日志异常检测",
+        "奖励依据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.14482v1"
+    },
+    {
+      "id": "loggpt-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "LogGPT 日志异常检测",
+      "knowledgePoint": "状态演进",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogGPT 强化学习阶段的状态如何随生成过程变化？",
+      "answer": "从给定真实前缀开始，并逐步拼接模型生成的日志键。",
+      "explanation": "生成状态可能与真实日志后续内容不同。",
+      "example": "生成一个键后将其加入下一步上下文。",
+      "tags": [
+        "LogGPT 日志异常检测",
+        "状态演进"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.14482v1"
+    },
+    {
+      "id": "loggpt-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "LogGPT 日志异常检测",
+      "knowledgePoint": "优化方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LogGPT 原论文用什么方法更新强化学习阶段的策略？",
+      "answer": "论文采用 PPO 更新日志生成模型的策略参数。",
+      "explanation": "论文结论依赖具体数据与训练设置。",
+      "example": "用奖励信号微调预训练日志模型。",
+      "tags": [
+        "LogGPT 日志异常检测",
+        "优化方法"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.14482v1"
+    }
+  ]
+}

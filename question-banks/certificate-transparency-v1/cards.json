@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "certificate-transparency-v1",
+    "title": "RFC 6962：证书透明度 v1",
+    "url": "https://www.rfc-editor.org/rfc/rfc6962.html",
+    "type": "官方文档或教材",
+    "note": "依据 RFC 6962 的 CT v1 自行整理；不把 v1 细节泛化到所有协议版本。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "ctv1-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "证书透明度 v1",
+      "knowledgePoint": "公开日志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6962 的证书透明度日志为何使用公开可审计的追加式结构？",
+      "answer": "它让观察者能够检查已记录的证书或预证书，以发现可疑或错误签发。",
+      "explanation": "公开日志提供审计材料，本身不证明每张证书都被正确签发。",
+      "example": "域名所有者监测出现的相关证书记录。",
+      "tags": [
+        "证书透明度 v1",
+        "公开日志"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6962.html"
+    },
+    {
+      "id": "ctv1-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "证书透明度 v1",
+      "knowledgePoint": "SCT 与最大合并延迟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6962 v1 的 SCT 和最大合并延迟（MMD）对日志收录作出什么承诺？",
+      "answer": "日志承诺在签发 SCT 后的 MMD 时限内，将相应证书或预证书条目纳入 Merkle 树。",
+      "explanation": "SCT 是签名承诺，单独持有它不等同于已验证收录证明。",
+      "example": "客户端收到 SCT 后可由审计方检查日志收录。",
+      "tags": [
+        "证书透明度 v1",
+        "SCT 与最大合并延迟"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6962.html"
+    },
+    {
+      "id": "ctv1-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "证书透明度 v1",
+      "knowledgePoint": "签名树头",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6962 v1 的签名树头 STH 概括了日志树的哪些信息？",
+      "answer": "它签名覆盖时间戳、树大小和 Merkle 根哈希等信息。",
+      "explanation": "树大小表示该树中的条目数量。",
+      "example": "客户端验证签名后使用树头核对证明。",
+      "tags": [
+        "证书透明度 v1",
+        "签名树头"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6962.html"
+    },
+    {
+      "id": "ctv1-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "证书透明度 v1",
+      "knowledgePoint": "收录证明",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6962 v1 的 Merkle 审计路径可用于验证什么？",
+      "answer": "结合条目、叶索引和可信树头，可验证条目属于对应大小的日志树。",
+      "explanation": "验证结果针对所检查的树头。",
+      "example": "用审计路径核对某证书条目是否在已签名树中。",
+      "tags": [
+        "证书透明度 v1",
+        "收录证明"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6962.html"
+    },
+    {
+      "id": "ctv1-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "证书透明度 v1",
+      "knowledgePoint": "一致性证明",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6962 v1 的 Merkle 一致性证明用于验证两个树头之间什么性质？",
+      "answer": "它验证较大的树相对于较小的树具有仅追加的关系，即旧树叶序列是新树的前缀。",
+      "explanation": "还需核验所比较树头及证明。",
+      "example": "观察者比较日志两个时间点的签名树头。",
+      "tags": [
+        "证书透明度 v1",
+        "一致性证明"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6962.html"
+    },
+    {
+      "id": "ctv1-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "证书透明度 v1",
+      "knowledgePoint": "预证书 poison",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 6962 v1 的预证书为什么加入关键的 poison 扩展？",
+      "answer": "该扩展使预证书不能被标准 X.509v3 客户端当作普通有效证书验证。",
+      "explanation": "预证书用于在最终证书签发前向日志提交。",
+      "example": "CA 提交预证书后将获得的 SCT 纳入后续流程。",
+      "tags": [
+        "证书透明度 v1",
+        "预证书 poison"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6962.html"
+    }
+  ]
+}

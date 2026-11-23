@@ -4,6 +4,7 @@ import { Alert, Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'r
 import { getCategory } from '../categories';
 import { ActionButton, IconButton } from '../components/ui';
 import { formatInterval, getNextDue, getStudyQueue, scheduleCard, StudyScope } from '../lib/scheduler';
+import { cardLevel, studyLevelLabel } from '../levels';
 import { colors } from '../theme';
 import { Rating, StudyCard, StudyData } from '../types';
 
@@ -64,13 +65,17 @@ export function StudyScreen({ data, now, scope, onReview, onClose }: {
   const cardCategory = getCategory(current.category);
   const progress = data.progress[current.id];
   const stage = !progress ? '新知识' : progress.stage === 'learning' ? '短期巩固' : '长期复习';
+  const title = scope.category ? getCategory(scope.category).label
+    : scope.sourceId || scope.topic || scope.query ? '筛选学习'
+    : scope.studySet === 'research' ? '研究拓展'
+    : scope.level ? `${studyLevelLabel(scope.level)}阶段` : '今日学习';
 
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
         <IconButton icon="close" label="结束学习" onPress={onClose} />
         <View style={styles.topCenter}>
-          <Text style={styles.topTitle}>{scope.category ? getCategory(scope.category).label : scope.sourceId || scope.topic || scope.query ? '筛选学习' : '今日学习'}</Text>
+          <Text style={styles.topTitle}>{title}</Text>
           <Text style={styles.topSubtitle}>已完成 {completed} 次 · 待学习 {queue.length} 张</Text>
         </View>
         <View style={styles.topSpacer} />
@@ -82,7 +87,7 @@ export function StudyScreen({ data, now, scope, onReview, onClose }: {
             <View style={[styles.categoryTag, { backgroundColor: cardCategory.background }]}>
               <Text style={[styles.categoryTagText, { color: cardCategory.color }]}>{cardCategory.label}</Text>
             </View>
-            <Text style={styles.stage}>{stage}</Text>
+            <Text style={styles.stage}>{studyLevelLabel(cardLevel(current))} · {stage}</Text>
           </View>
           <Text style={styles.cardEyebrow}>问题</Text>
           <Text style={styles.question}>{current.question}</Text>
@@ -124,6 +129,7 @@ export function StudyScreen({ data, now, scope, onReview, onClose }: {
               {current.sources && current.sources.length > 0 && (
                 <View style={styles.sources}>
                   <Text style={styles.detailTitle}>参考来源</Text>
+                  {current.origin && <Text style={styles.sourceText}>整理方式：{current.origin}</Text>}
                   {current.sources.map((source) => (
                     <Pressable
                       key={`${source.id}-${source.sourceCardId}`}

@@ -1,0 +1,438 @@
+{
+  "source": {
+    "id": "sklearn-metrics-validation",
+    "title": "scikit-learn 常用评估与交叉验证接口",
+    "url": "https://scikit-learn.org/1.7/modules/model_evaluation.html",
+    "type": "官方技术文档",
+    "note": "依据 scikit-learn 1.7 官方文档整理，代表性示例以 scikit-learn 1.7.2 验证。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skmetric-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PR评估",
+      "knowledgePoint": "PR阈值顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 precision_recall_curve 返回的 thresholds 按什么顺序排列？",
+      "answer": "它包含升序排列的不重复分数阈值。",
+      "explanation": "精确率和召回率数组额外包含一个不对应阈值的绘图端点。",
+      "example": "相同得分样本共享同一个阈值点。",
+      "tags": [
+        "PR阈值顺序",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.precision_recall_curve.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.precision_recall_curve"
+    },
+    {
+      "id": "skmetric-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PR评估",
+      "knowledgePoint": "平均精确率计算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 average_precision_score 如何汇总不同召回水平的精确率？",
+      "answer": "它按召回率的增量对对应精确率加权求和。",
+      "explanation": "该计算不采用 PR 曲线相邻点的线性插值梯形面积。",
+      "example": "真实标签 [0, 0, 1, 1]、分数 [0.1, 0.4, 0.35, 0.8] 时，AP 约为 0.833，梯形面积约为 0.792。",
+      "tags": [
+        "平均精确率计算",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.average_precision_score.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.average_precision_score"
+    },
+    {
+      "id": "skmetric-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类指标",
+      "knowledgePoint": "精确率零除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 中没有任何预测正例时，默认 precision_score 如何处理未定义的精确率？",
+      "answer": "默认返回 0，并发出 UndefinedMetricWarning。",
+      "explanation": "可通过 zero_division 控制该情况的输出。",
+      "example": "真实标签有正例但模型全部预测为负时，精确率分母为零。",
+      "tags": [
+        "精确率零除",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.precision_score.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.precision_score"
+    },
+    {
+      "id": "skmetric-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类指标",
+      "knowledgePoint": "未定义值平均",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 precision_score 设 zero_division=np.nan 后，多类别平均如何处理未定义的类别值？",
+      "answer": "未定义的类别精确率会以 NaN 表示，并在平均时排除。",
+      "explanation": "这会改变平均指标的有效类别集合，应同时查看各类别结果。",
+      "example": "某类没有预测样本时，该类精确率可设为 NaN。",
+      "tags": [
+        "未定义值平均",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.precision_score.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.precision_score"
+    },
+    {
+      "id": "skmetric-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类指标",
+      "knowledgePoint": "F1未定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的二分类 F1 在 TP、FP、FN 都为 0 时默认怎样处理？",
+      "answer": "此时 F1 未定义；默认返回 0 并发出警告。",
+      "explanation": "zero_division 参数可改变处理方式。",
+      "example": "真实和预测标签都只有负类时，正类 F1 的分母为零。",
+      "tags": [
+        "F1未定义",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.f1_score.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.f1_score"
+    },
+    {
+      "id": "skmetric-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类指标",
+      "knowledgePoint": "多标签样本平均",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 在多标签 F1 中使用 average=\"samples\" 时，如何计算平均值？",
+      "answer": "先分别计算每个样本的 F1，再对样本结果求平均。",
+      "explanation": "它与先汇总所有类别计数的微平均不同。",
+      "example": "每个样本可同时有多个真实标签与预测标签。",
+      "tags": [
+        "多标签样本平均",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.f1_score.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.f1_score"
+    },
+    {
+      "id": "skmetric-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类指标",
+      "knowledgePoint": "单标签指标等价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单标签多分类且包含全部类别时，微平均 F1、加权召回率与准确率有什么关系？",
+      "answer": "三者相等。",
+      "explanation": "每个样本恰有一个真实类别和一个预测类别时，这些指标都反映正确预测的比例。",
+      "example": "四个样本中三个预测正确时，两者都为 0.75。",
+      "tags": [
+        "单标签指标等价",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.f1_score.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.f1_score",
+      "supportingReferences": [
+        {
+          "id": "sklearn-recall-17",
+          "title": "scikit-learn 1.7：recall_score",
+          "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.recall_score.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "skmetric-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "混淆矩阵",
+      "knowledgePoint": "混淆矩阵归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn confusion_matrix 的 normalize=\"true\"、\"pred\" 和 \"all\" 分别按什么归一化？",
+      "answer": "分别按真实类别行、预测类别列和整个矩阵归一化。",
+      "explanation": "分母所代表的样本集合不同，读数含义也不同。",
+      "example": "按真实类别归一化可查看每个真实类别的预测分布。",
+      "tags": [
+        "混淆矩阵归一化",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.confusion_matrix.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.confusion_matrix"
+    },
+    {
+      "id": "skmetric-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "混淆矩阵",
+      "knowledgePoint": "类别显示顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn confusion_matrix 的 labels 参数可以怎样影响矩阵？",
+      "answer": "它可指定类别的顺序，也可选择只展示部分指定类别的子矩阵。",
+      "explanation": "选择子集时，矩阵不再描述全部类别的完整混淆情况。",
+      "example": "labels=[1, 0] 会把类别 1 排在类别 0 之前。",
+      "tags": [
+        "类别显示顺序",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.confusion_matrix.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.confusion_matrix"
+    },
+    {
+      "id": "skmetric-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类指标",
+      "knowledgePoint": "报告字典精度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn classification_report 设置 output_dict=True 后，digits 还控制返回数值的四舍五入吗？",
+      "answer": "不控制；返回字典中的数值不按 digits 进行四舍五入。",
+      "explanation": "digits 控制文本报告的显示精度。",
+      "example": "需要程序处理精确数值时可使用字典输出。",
+      "tags": [
+        "报告字典精度",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.classification_report.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.classification_report"
+    },
+    {
+      "id": "skmetric-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "混淆矩阵",
+      "knowledgePoint": "逐类混淆矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn multilabel_confusion_matrix 默认与 samplewise=True 分别按什么单位计算？",
+      "answer": "默认对每个类别计算一个二分类混淆矩阵；samplewise=True 时对每个样本计算一个矩阵。",
+      "explanation": "逐样本计算适用于多标签输入。",
+      "example": "三个标签、两个样本时，两种输出分别包含三个或两个 2×2 矩阵。",
+      "tags": [
+        "逐类混淆矩阵",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.multilabel_confusion_matrix.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.multilabel_confusion_matrix"
+    },
+    {
+      "id": "skmetric-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ROC评估",
+      "knowledgePoint": "多分类AUC输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的多分类 roc_auc_score 对概率矩阵每行有什么要求？",
+      "answer": "每行各类别概率之和应为 1。",
+      "explanation": "多分类时还需选择支持的 multi_class 方式，并确保概率列与类别顺序一致。",
+      "example": "三分类的每个样本提供三个类别概率。",
+      "tags": [
+        "多分类AUC输入",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.roc_auc_score.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.roc_auc_score"
+    },
+    {
+      "id": "skmetric-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类指标",
+      "knowledgePoint": "对数损失裁剪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 log_loss 为什么会对预测概率进行数值裁剪？",
+      "answer": "它将概率限制在浮点类型机器精度允许的范围内，避免直接计算 log(0)。",
+      "explanation": "裁剪边界取决于预测数组的数据类型。",
+      "example": "真实类别的预测概率为 0 时，裁剪使损失保持有限。",
+      "tags": [
+        "对数损失裁剪",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.log_loss.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.metrics.log_loss"
+    },
+    {
+      "id": "skmetric-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉验证",
+      "knowledgePoint": "默认交叉验证类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 cross_val_score 使用整数 cv 且评估普通二分类器时，通常采用什么划分器？",
+      "answer": "通常采用 StratifiedKFold；默认划分器不打乱数据。",
+      "explanation": "回归及其他情况通常使用 KFold；具体取决于估计器与目标类型。",
+      "example": "cv=5 的普通二分类评估使用五折分层。",
+      "tags": [
+        "默认交叉验证类型",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.cross_val_score.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.model_selection.cross_val_score"
+    },
+    {
+      "id": "skmetric-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉验证",
+      "knowledgePoint": "负损失评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 scikit-learn 的交叉验证评分名称会使用 neg_mean_squared_error？",
+      "answer": "评分接口按“越大越好”比较结果，因此用均方误差的相反数作为评分。",
+      "explanation": "得到的负分数取相反数后才是对应的均方误差。",
+      "example": "评分为 -2.5 时，对应均方误差为 2.5。",
+      "tags": [
+        "负损失评分",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.cross_val_score.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.model_selection.cross_val_score",
+      "supportingReferences": [
+        {
+          "id": "sklearn-scoring-17",
+          "title": "scikit-learn 1.7：Scoring parameter",
+          "url": "https://scikit-learn.org/1.7/modules/model_evaluation.html#scoring-parameter",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "skmetric-019",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "交叉验证",
+      "knowledgePoint": "折内测试覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一次 KFold 和 GroupKFold 划分中，样本和组分别怎样进入测试折？",
+      "answer": "KFold 中每个样本恰好进入一个测试折；GroupKFold 中每个组恰好进入一个测试折。",
+      "explanation": "GroupKFold 还要求同一折的训练集与测试集不共享组。",
+      "example": "按主机分组时，同一主机的记录不会在同一折同时进入训练和测试。",
+      "tags": [
+        "折内测试覆盖",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.KFold.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.model_selection.KFold",
+      "supportingReferences": [
+        {
+          "id": "sklearn-groupkfold-17",
+          "title": "scikit-learn 1.7：GroupKFold",
+          "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GroupKFold.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "skmetric-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉验证",
+      "knowledgePoint": "时间切分间隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn TimeSeriesSplit 的 gap 参数控制什么？",
+      "answer": "它在每个测试折之前，从训练折末尾排除指定数量的样本。",
+      "explanation": "gap 以样本数量表示，不自动代表固定的时间长度。",
+      "example": "gap=2 可在训练末尾和测试开头之间留出两条记录。",
+      "tags": [
+        "时间切分间隔",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.TimeSeriesSplit.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.model_selection.TimeSeriesSplit"
+    },
+    {
+      "id": "skmetric-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉验证",
+      "knowledgePoint": "时间训练上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn TimeSeriesSplit 的 max_train_size 用于什么？",
+      "answer": "它限制每个训练折可使用的最大样本数。",
+      "explanation": "达到上限后，训练窗口不再无限向过去扩展。",
+      "example": "设置 max_train_size=100 可让每折最多使用 100 个训练样本。",
+      "tags": [
+        "时间训练上限",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.TimeSeriesSplit.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.model_selection.TimeSeriesSplit"
+    },
+    {
+      "id": "skmetric-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "交叉验证",
+      "knowledgePoint": "时间切分排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TimeSeriesSplit 会根据时间戳自动为输入排序吗？",
+      "answer": "不会；它按输入索引顺序划分，调用者需要事先确保顺序符合时间要求。",
+      "explanation": "若相邻样本间隔不等，相同样本数的测试折也可能覆盖不同时间长度。",
+      "example": "先按事件时间排序，再调用 split。",
+      "tags": [
+        "时间切分排序",
+        "scikit-learn",
+        "模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.TimeSeriesSplit.html",
+      "referenceTitle": "scikit-learn 1.7：sklearn.model_selection.TimeSeriesSplit"
+    }
+  ]
+}

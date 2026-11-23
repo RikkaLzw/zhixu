@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "incident-forensics",
+    "title": "NIST 事件响应、日志与取证指南",
+    "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf",
+    "type": "技术文档",
+    "note": "依据逐题注明的资料及对应版本整理，示例为自行编写。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "irresponse-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "应急与证据",
+      "knowledgePoint": "响应恢复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 的 Recover 职能主要做什么？",
+      "answer": "恢复受安全事件影响的资产和业务运行。",
+      "explanation": "恢复步骤应结合组织的计划、验证与沟通要求。",
+      "example": "修复受影响系统后逐步恢复服务。",
+      "tags": [
+        "响应恢复",
+        "应急与证据"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "irresponse-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "应急与证据",
+      "knowledgePoint": "持续改进时机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 认为事件经验必须等恢复结束后才共享吗？",
+      "answer": "不必；发现有用经验时可以及时共享并用于持续改进。",
+      "explanation": "事件各阶段都可能产生改进线索。",
+      "example": "调查中发现日志缺口后及时改进采集。",
+      "tags": [
+        "持续改进时机",
+        "应急与证据"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "irresponse-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "应急与证据",
+      "knowledgePoint": "证据交接记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "取证中的证据保管链（chain of custody）记录什么？",
+      "answer": "记录证据在收集、移交、保管和处理过程中的责任人与操作。",
+      "explanation": "它有助于说明证据如何被控制和追踪。",
+      "example": "登记谁在何时接收并移交磁盘镜像。",
+      "tags": [
+        "证据交接记录",
+        "应急与证据"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+    },
+    {
+      "id": "irresponse-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "应急与证据",
+      "knowledgePoint": "易失性数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么采集取证数据时要考虑数据的易失性？",
+      "answer": "某些数据会随时间、断电或操作而消失，采集顺序需要权衡其丢失风险。",
+      "explanation": "是否先采集还要考虑对系统的影响和现场处置要求。",
+      "example": "关机前评估是否需要采集内存中的运行状态。",
+      "tags": [
+        "易失性数据",
+        "应急与证据"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+    },
+    {
+      "id": "irresponse-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "应急与证据",
+      "knowledgePoint": "证据完整性核验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么可以计算证据副本的密码学哈希？",
+      "answer": "对原件和副本计算并比较哈希，有助于发现复制或保存过程中发生的内容变化。",
+      "explanation": "应使用符合当前组织要求的算法，并妥善保护记录。",
+      "example": "采集时记录镜像哈希，后续再计算核对。",
+      "tags": [
+        "证据完整性核验",
+        "应急与证据"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-86.pdf"
+    },
+    {
+      "id": "irresponse-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "应急与证据",
+      "knowledgePoint": "日志时间同步",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么跨主机关联日志要关注时钟同步？",
+      "answer": "主机时钟偏差会扭曲事件先后关系，使跨源时间线不可靠。",
+      "explanation": "统一时区格式不能代替校准实际时钟。",
+      "example": "两台主机的时钟相差数分钟时，事件顺序可能看起来颠倒。",
+      "tags": [
+        "日志时间同步",
+        "应急与证据"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-92.pdf"
+    },
+    {
+      "id": "irresponse-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "应急与证据",
+      "knowledgePoint": "日志保留与保全",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NIST SP 800-92 中日志 retention 与 preservation 有什么区别？",
+      "answer": "retention 是按常规策略归档日志；preservation 是为特定需要保留原本会被丢弃的相关日志。",
+      "explanation": "保全期限和操作应遵循组织政策及适用要求。",
+      "example": "事件调查时额外保全相关时间段的日志。",
+      "tags": [
+        "日志保留与保全",
+        "应急与证据"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-92.pdf"
+    }
+  ]
+}

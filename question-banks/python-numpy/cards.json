@@ -1,0 +1,252 @@
+{
+  "source": {
+    "id": "python-numpy",
+    "title": "Python 教程与 NumPy 广播文档",
+    "url": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pydata-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 容器",
+      "knowledgePoint": "列表与元组",
+      "questionType": "比较与选型",
+      "question": "Python 列表与元组在可变性上有什么区别？",
+      "answer": "列表可以原地增删或替换元素；元组本身不能原地修改。",
+      "explanation": "元组内仍可包含可变对象，因此元组内容不一定深度不可变。",
+      "example": "把列表第一个元素改为新值是允许的。",
+      "tags": [
+        "列表与元组",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3/tutorial/datastructures.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 容器",
+      "knowledgePoint": "字典键",
+      "questionType": "概念与原理",
+      "question": "Python 字典的键需要满足什么基本条件？",
+      "answer": "键必须可哈希，并应在作为键期间保持其哈希值和相等性行为稳定。",
+      "explanation": "列表是可变且不可哈希的，不能直接作为普通字典键。",
+      "example": "字符串或由不可变可哈希元素组成的元组可用作键。",
+      "tags": [
+        "字典键",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3/tutorial/datastructures.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 容器",
+      "knowledgePoint": "集合去重",
+      "questionType": "概念与原理",
+      "question": "Python 集合适合处理什么样的成员关系？",
+      "answer": "集合保存互不相同的可哈希元素，适合去重和成员关系判断。",
+      "explanation": "集合的用途不依赖把它当成有序列表。",
+      "example": "对一批重复标签建立集合可得到不重复标签。",
+      "tags": [
+        "集合去重",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3/tutorial/datastructures.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 容器",
+      "knowledgePoint": "列表推导式",
+      "questionType": "概念与原理",
+      "question": "列表推导式适合用来做什么？",
+      "answer": "它用于根据可迭代对象构造新列表，并可附带筛选条件。",
+      "explanation": "复杂逻辑可以改用普通循环提高可读性。",
+      "example": "从数字列表中构造所有偶数的平方列表。",
+      "tags": [
+        "列表推导式",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3/tutorial/datastructures.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 异常",
+      "knowledgePoint": "异常类型匹配",
+      "questionType": "代码与配置",
+      "question": "Python 的 except 子句如何选择要处理的异常？",
+      "answer": "它按异常类型匹配，匹配到的处理分支执行对应代码。",
+      "explanation": "通常应捕获预期异常类型，避免掩盖其他错误。",
+      "example": "解析数值时单独处理 ValueError。",
+      "tags": [
+        "异常类型匹配",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3/tutorial/errors.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 异常",
+      "knowledgePoint": "异常 else 子句",
+      "questionType": "代码与配置",
+      "question": "Python try 语句中的 else 什么时候执行？",
+      "answer": "当 try 子句没有引发异常时执行。",
+      "explanation": "把不需要保护的后续代码放在 else 中，可避免误捕获它产生的异常。",
+      "example": "文件打开成功后在 else 中处理已打开的文件。",
+      "tags": [
+        "异常 else 子句",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3/tutorial/errors.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 异常",
+      "knowledgePoint": "异常 finally 子句",
+      "questionType": "代码与配置",
+      "question": "Python 的 finally 子句常用于什么？",
+      "answer": "用于在退出 try 结构时执行清理操作，无论是否发生异常。",
+      "explanation": "即使异常随后继续传播，finally 通常也会先执行。",
+      "example": "在 finally 中释放已获取的资源。",
+      "tags": [
+        "异常 finally 子句",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3/tutorial/errors.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "NumPy 广播",
+      "knowledgePoint": "广播兼容规则",
+      "questionType": "代码与配置",
+      "question": "NumPy 广播判断两个轴兼容的规则是什么？",
+      "answer": "对应轴的长度相等，或其中一个长度为 1 时兼容。",
+      "explanation": "所有对齐轴都兼容时，两数组才能按该规则广播。",
+      "example": "长度为 1 的轴可与长度为 5 的对应轴广播。",
+      "tags": [
+        "广播兼容规则",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "NumPy 广播",
+      "knowledgePoint": "广播对齐顺序",
+      "questionType": "代码与配置",
+      "question": "NumPy 比较两个数组形状时从哪一侧开始对齐？",
+      "answer": "从最右侧的轴开始逐轴向左比较。",
+      "explanation": "轴数不足的数组在左侧按长度为 1 的缺失轴处理。",
+      "example": "形状 (4,) 可与 (3,4) 按末轴对齐。",
+      "tags": [
+        "广播对齐顺序",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 广播",
+      "knowledgePoint": "广播结果形状",
+      "questionType": "计算与推导",
+      "question": "形状为 (3,1) 和 (1,4) 的数组相加后结果形状是什么？",
+      "answer": "结果形状是 (3,4)。",
+      "explanation": "两个长度为 1 的轴分别扩展到另一数组对应轴的长度。",
+      "example": "三个行值与四个列值组合成一个 3×4 结果。",
+      "tags": [
+        "广播结果形状",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-011",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "NumPy 广播",
+      "knowledgePoint": "广播失败",
+      "questionType": "故障排查",
+      "question": "NumPy 中形状 (3,2) 和 (3,) 为什么不能直接逐元素相加？",
+      "answer": "从右侧对齐后，长度 2 与 3 既不相等也都不是 1，因此不能广播。",
+      "explanation": "如果意图每行加一个值，可将后一数组调整为 (3,1)。",
+      "example": "对三行分别加三个偏置时使用列向量形状。",
+      "tags": [
+        "广播失败",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "pydata-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "NumPy 广播",
+      "knowledgePoint": "广播与内存",
+      "questionType": "概念与原理",
+      "question": "NumPy 的广播一定会复制小数组中的数据吗？",
+      "answer": "不一定；广播通常通过重复使用原值完成，而非实际复制被扩展的输入。",
+      "explanation": "结果数组仍可能很大，因此广播并不保证低内存开销。",
+      "example": "列向量与行向量广播生成大矩阵时需要估算结果大小。",
+      "tags": [
+        "广播与内存",
+        "Python",
+        "数据处理"
+      ],
+      "evidence": "source",
+      "reference": "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+      "origin": "自行整理"
+    }
+  ]
+}

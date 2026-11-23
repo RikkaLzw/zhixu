@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "path-traversal-code-analysis",
+    "title": "CWE-22、Python 3.13 与 Linux 手册：路径穿越",
+    "url": "https://cwe.mitre.org/data/definitions/22.html",
+    "type": "论文、官方文档与系统手册",
+    "note": "依据逐题所列固定版本论文或官方资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "pathsec-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "绝对路径覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 POSIX 路径语义下，用 pathlib 将 /safe/base 与 /etc/passwd 拼接会得到什么？",
+      "answer": "得到 /etc/passwd；后面的绝对路径会替换前面的路径。",
+      "explanation": "直接拼接不可信路径不能保证结果仍在指定目录下。",
+      "example": "Path(\"/safe/base\") / \"/etc/passwd\"。",
+      "tags": [
+        "路径穿越与文件访问",
+        "绝对路径覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/pathlib.html"
+    },
+    {
+      "id": "pathsec-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "字符前缀误判",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么用 os.path.commonprefix 判断路径是否位于某目录下可能出错？",
+      "answer": "它逐字符比较字符串，可能把同名前缀的兄弟目录误当作目标目录。",
+      "explanation": "commonpath 按路径组件比较，但仍需考虑符号链接和访问时竞争。",
+      "example": "/srv/data 与 /srv/dataevil 的字符前缀为 /srv/data。",
+      "tags": [
+        "路径穿越与文件访问",
+        "字符前缀误判"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/os.path.html"
+    },
+    {
+      "id": "pathsec-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "词法相对路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 PurePath.is_relative_to 会解析符号链接或特殊处理 .. 吗？",
+      "answer": "不会；它是词法比较，不访问文件系统，也不特殊处理 ..。",
+      "explanation": "不能单独用它确认解析后的路径一定留在受限目录。",
+      "example": "/srv/data/../secret 在词法上仍可能以 /srv/data 为前缀。",
+      "tags": [
+        "路径穿越与文件访问",
+        "词法相对路径"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/pathlib.html"
+    },
+    {
+      "id": "pathsec-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "解析符号链接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python Path.resolve() 与单纯字符串规范化相比，额外处理什么？",
+      "answer": "它会构造绝对路径并解析符号链接，同时消去 ..。",
+      "explanation": "strict 等参数与文件存在状态会影响失败行为。",
+      "example": "解析指向其他目录的链接后检查实际目标。",
+      "tags": [
+        "路径穿越与文件访问",
+        "解析符号链接"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/pathlib.html"
+    },
+    {
+      "id": "pathsec-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "检查使用竞争",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么先解析并验证路径，再过一段时间打开该路径仍可能发生竞争？",
+      "answer": "攻击者可能在检查与打开之间改变符号链接或目录项。",
+      "explanation": "可考虑使用操作系统提供的基于目录描述符和解析约束的接口。",
+      "example": "验证后链接目标被替换。",
+      "tags": [
+        "路径穿越与文件访问",
+        "检查使用竞争"
+      ],
+      "evidence": "application",
+      "reference": "https://man7.org/linux/man-pages/man2/openat2.2.html"
+    },
+    {
+      "id": "pathsec-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "BENEATH限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux openat2 的 RESOLVE_BENEATH 主要限制什么？",
+      "answer": "它不允许路径解析成功越出 dirfd 所指目录范围。",
+      "explanation": "某些竞争条件下可能返回错误；应按接口处理失败。",
+      "example": "通过受限目录描述符打开相对路径。",
+      "tags": [
+        "路径穿越与文件访问",
+        "BENEATH限制"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/openat2.2.html"
+    },
+    {
+      "id": "pathsec-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "符号链接限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux openat2 的 RESOLVE_NO_SYMLINKS 与 O_NOFOLLOW 在作用范围上有什么区别？",
+      "answer": "前者影响解析过程的所有路径组件；O_NOFOLLOW 主要影响最后一个组件。",
+      "explanation": "O_PATH 与 O_NOFOLLOW 等组合还有获取链接本身的特殊情况。",
+      "example": "中间目录是符号链接时两者行为可能不同。",
+      "tags": [
+        "路径穿越与文件访问",
+        "符号链接限制"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/openat2.2.html"
+    },
+    {
+      "id": "pathsec-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "ZIP成员清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 ZipFile.extract 对成员名中的绝对路径前缀和 .. 组件如何处理？",
+      "answer": "文档说明会去除绝对路径前缀和成员名中的 .. 组件。",
+      "explanation": "处理不可信压缩包仍需检查其他风险和调用环境。",
+      "example": "成员名 ../report.txt 被清理后再提取。",
+      "tags": [
+        "路径穿越与文件访问",
+        "ZIP成员清理"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/zipfile.html"
+    },
+    {
+      "id": "pathsec-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "ZIP Path边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.13 的 zipfile.Path 会自动清理 ZIP 成员名以防止路径穿越吗？",
+      "answer": "不会；调用方负责校验或清理成员名。",
+      "explanation": "它与 ZipFile.extract 的成员名处理不同。",
+      "example": "遍历 ZIP 后自行写入文件时检查每个目标路径。",
+      "tags": [
+        "路径穿越与文件访问",
+        "ZIP Path边界"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/zipfile.html"
+    },
+    {
+      "id": "pathsec-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "路径穿越与文件访问",
+      "knowledgePoint": "解码次序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CWE-22 为什么建议在验证路径之前按应用规则解码并规范化输入？",
+      "answer": "否则后续解码可能产生验证时未识别的危险路径组件。",
+      "explanation": "还应避免对同一输入意外重复解码。",
+      "example": "编码后的上级目录标记在解码后变成 ..。",
+      "tags": [
+        "路径穿越与文件访问",
+        "解码次序"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/22.html"
+    }
+  ]
+}

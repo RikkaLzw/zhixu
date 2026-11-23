@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "torchvision-image-preprocessing",
+    "title": "torchvision 0.22 图像预处理接口",
+    "url": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.ToTensor.html",
+    "type": "研究综述、互联网草案或官方文档",
+    "note": "按逐题引用资料自行整理；安全场景示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "visprep-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "图像布局",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 ToTensor 将 uint8 NumPy 图像从 H×W×C 转成什么布局？",
+      "answer": "将 H×W×C 的 NumPy 图像转换成 C×H×W 的张量。",
+      "explanation": "对于 uint8 输入，ToTensor 还会将像素值缩放到 [0, 1]。",
+      "example": "把 HWC 颜色图像转成模型所需张量。",
+      "tags": [
+        "图像布局",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.ToTensor.html"
+    },
+    {
+      "id": "visprep-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "浮点图像缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 ToTensor 会对 float32 NumPy 图像自动除以 255 吗？",
+      "answer": "不会；文档说明不属于所列缩放条件的输入不会自动缩放。",
+      "explanation": "应检查浮点图像原始取值范围。",
+      "example": "值为 255.0 的浮点图像不会因此自动变成 1.0。",
+      "tags": [
+        "浮点图像缩放",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.ToTensor.html"
+    },
+    {
+      "id": "visprep-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "PILToTensor",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 PILToTensor 与 ToTensor 对常见 uint8 PIL 图像有何区别？",
+      "answer": "PILToTensor 保留数据类型且不缩放数值；ToTensor 转成浮点张量并将数值缩放到 [0, 1]。",
+      "explanation": "转换后都应核对输出布局和范围。",
+      "example": "将灰度图转换为 uint8 或归一化浮点张量。",
+      "tags": [
+        "PILToTensor",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.PILToTensor.html"
+    },
+    {
+      "id": "visprep-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "语义分割标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 torchvision 0.22 文档不建议用 ToTensor 处理分割任务的目标掩码？",
+      "answer": "它可能把 uint8 像素值缩放，改变原本表示类别的标签值。",
+      "explanation": "目标掩码需要保留任务所要求的类别编码。",
+      "example": "掩码中存储的类别 ID 不应被当作图像强度归一化。",
+      "tags": [
+        "语义分割标签",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.ToTensor.html"
+    },
+    {
+      "id": "visprep-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "逐通道标准化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 Normalize 如何处理每个通道？",
+      "answer": "对每个通道按 (输入 − 对应均值) / 对应标准差计算。",
+      "explanation": "均值和标准差的通道顺序应与输入一致。",
+      "example": "按训练时约定的 RGB 均值与标准差处理图像。",
+      "tags": [
+        "逐通道标准化",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.Normalize.html"
+    },
+    {
+      "id": "visprep-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "标准化原地操作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 Normalize 默认会原地修改输入张量吗？",
+      "answer": "不会；默认 inplace=False，返回变换后的结果。",
+      "explanation": "设置 inplace=True 时行为不同。",
+      "example": "需要保留原图张量时使用默认配置。",
+      "tags": [
+        "标准化原地操作",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.Normalize.html"
+    },
+    {
+      "id": "visprep-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "整数Resize",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在普通 eager 模式中，torchvision 0.22 的 Resize 接收整数 size 且未设置 max_size 时，如何确定输出大小？",
+      "answer": "将图像较短边缩放到该值，另一边按比例缩放。",
+      "explanation": "输出不一定是正方形，尺寸可能受取整影响。",
+      "example": "把 200×400 图像短边缩放到 100。",
+      "tags": [
+        "整数Resize",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.Resize.html"
+    },
+    {
+      "id": "visprep-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "二元Resize",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 Resize 接收 (height, width) 时，输出大小怎样确定？",
+      "answer": "输出会调整到指定的高和宽。",
+      "explanation": "指定比例与原图不同时可能改变宽高比。",
+      "example": "将图像调整为固定的 224×224。",
+      "tags": [
+        "二元Resize",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.Resize.html"
+    },
+    {
+      "id": "visprep-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "Resize最大边",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 Resize 设置 max_size 时，较短边一定等于整数 size 吗？",
+      "answer": "不一定；为了限制较长边，max_size 可以覆盖 size，使较短边更小。",
+      "explanation": "该参数适用于整数 size 的规定场景。",
+      "example": "缩放极宽图像时限制长边。",
+      "tags": [
+        "Resize最大边",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.Resize.html"
+    },
+    {
+      "id": "visprep-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "中心裁剪填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 CenterCrop 目标尺寸大于输入某一边时会怎样？",
+      "answer": "它先以 0 填充不足的边，再进行中心裁剪。",
+      "explanation": "结果尺寸仍按配置生成。",
+      "example": "把较小图像裁成固定尺寸时会补零。",
+      "tags": [
+        "中心裁剪填充",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.CenterCrop.html"
+    },
+    {
+      "id": "visprep-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "水平翻转概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 RandomHorizontalFlip(p) 中 p 控制什么？",
+      "answer": "它控制执行水平翻转的概率，默认值为 0.5。",
+      "explanation": "随机变换可能使每次训练输入不同。",
+      "example": "p=1 时每次都水平翻转。",
+      "tags": [
+        "水平翻转概率",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.RandomHorizontalFlip.html"
+    },
+    {
+      "id": "visprep-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "变换组合顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 Compose 如何应用传入的变换序列？",
+      "answer": "它按列表顺序依次应用变换，前一步输出作为后一步输入。",
+      "explanation": "顺序可能改变数据类型和变换结果。",
+      "example": "先 ToTensor 再对张量 Normalize。",
+      "tags": [
+        "变换组合顺序",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.Compose.html"
+    },
+    {
+      "id": "visprep-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图像预处理",
+      "knowledgePoint": "ToTensor脚本限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 ToTensor 支持直接通过 TorchScript 脚本化吗？",
+      "answer": "文档说明该变换不支持 TorchScript。",
+      "explanation": "部署时应选择支持脚本化的变换方式并验证。",
+      "example": "检查图像预处理能否随模型导出。",
+      "tags": [
+        "ToTensor脚本限制",
+        "图像预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/generated/torchvision.transforms.ToTensor.html"
+    }
+  ]
+}

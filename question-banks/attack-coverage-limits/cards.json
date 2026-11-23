@@ -1,0 +1,52 @@
+{
+  "source": {
+    "id": "attack-coverage-limits",
+    "title": "MITRE ATT&CK：战术顺序与覆盖限制",
+    "url": "https://attack.mitre.org/resources/faq/",
+    "type": "官方知识库",
+    "note": "题目依据公开资料自行整理；安全场景的使用仍应结合部署条件。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "attacklim-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK映射",
+      "knowledgePoint": "ATT&CK 战术的顺序",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "ATT&CK 战术是否规定攻击者必须按固定顺序经过每个阶段？",
+      "answer": "不是；ATT&CK 战术不规定固定顺序，一次入侵也不一定涉及全部战术。",
+      "explanation": "ATT&CK 与按阶段组织的 Cyber Kill Chain 可以互补使用。",
+      "example": "报告只涉及其中部分战术时，不补造缺失阶段。",
+      "tags": [
+        "ATT&CK 战术的顺序",
+        "ATT&CK映射",
+        "ATT&CK"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/resources/faq/"
+    },
+    {
+      "id": "attacklim-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "情报覆盖",
+      "knowledgePoint": "ATT&CK 收录边界",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "某个威胁团伙没有被 ATT&CK 收录，能否证明该团伙不存在？",
+      "answer": "不能；ATT&CK 主要依据公开威胁报告整理，知识库可能没有覆盖所有团伙。",
+      "explanation": "没有收录只说明在该知识库中未找到相应条目。",
+      "example": "查不到团伙条目时继续核对其他可信报告。",
+      "tags": [
+        "ATT&CK 收录边界",
+        "情报覆盖",
+        "ATT&CK"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/resources/faq/"
+    }
+  ]
+}

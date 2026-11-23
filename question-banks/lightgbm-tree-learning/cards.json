@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "lightgbm-tree-learning",
+    "title": "LightGBM 原论文与 4.6 文档：树学习",
+    "url": "https://lightgbm.readthedocs.io/en/v4.6.0/Features.html",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "lgbtree-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 树学习",
+      "knowledgePoint": "叶优先生长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 的 leaf-wise 生长通常怎样选择下一次分裂的位置？",
+      "answer": "选择当前能带来最大损失下降的叶子进行分裂。",
+      "explanation": "不同分支的深度可能不相同。",
+      "example": "一侧分支若仍有更大增益，可继续优先分裂。",
+      "tags": [
+        "LightGBM 树学习",
+        "叶优先生长"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/Features.html"
+    },
+    {
+      "id": "lgbtree-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 树学习",
+      "knowledgePoint": "深度限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 设置正的 max_depth 后，树是否改为逐层生长？",
+      "answer": "不会；它仍采用叶优先生长，只是增加深度限制。",
+      "explanation": "限制深度可帮助控制小数据集上的过拟合。",
+      "example": "max_depth=4 限制树深度，但不要求每层同时扩展。",
+      "tags": [
+        "LightGBM 树学习",
+        "深度限制"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/Features.html"
+    },
+    {
+      "id": "lgbtree-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 树学习",
+      "knowledgePoint": "直方图减法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 怎样利用直方图减法减少兄弟叶子的统计计算？",
+      "answer": "先计算父节点和一个子节点的直方图，再通过相减得到另一个子节点的直方图。",
+      "explanation": "文档描述可优先构造样本较少子节点的直方图。",
+      "example": "父直方图减去左子直方图，得到右子的统计。",
+      "tags": [
+        "LightGBM 树学习",
+        "直方图减法"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/Features.html"
+    },
+    {
+      "id": "lgbtree-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 树学习",
+      "knowledgePoint": "梯度单侧采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 原论文的 GOSS 如何选择参与估计的数据？",
+      "answer": "保留梯度绝对值较大的样本，并随机采样一部分小梯度样本。",
+      "explanation": "对采样的小梯度样本加权，以减轻采样对分裂增益估计的影响。",
+      "example": "GOSS 不是简单地丢掉全部小梯度样本。",
+      "tags": [
+        "LightGBM 树学习",
+        "梯度单侧采样"
+      ],
+      "evidence": "source",
+      "reference": "https://papers.nips.cc/paper_files/paper/2017/file/6449f44a102fde848669bdd9eb6b76fa-Paper.pdf"
+    },
+    {
+      "id": "lgbtree-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 树学习",
+      "knowledgePoint": "互斥特征捆绑",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 原论文的 EFB 利用稀疏特征的什么性质？",
+      "answer": "将很少同时取非零值的特征捆绑，以减少有效特征数。",
+      "explanation": "严格互斥的 one-hot 特征是一个典型例子。",
+      "example": "某类别的多个互斥指示列可成为捆绑候选。",
+      "tags": [
+        "LightGBM 树学习",
+        "互斥特征捆绑"
+      ],
+      "evidence": "source",
+      "reference": "https://papers.nips.cc/paper_files/paper/2017/file/6449f44a102fde848669bdd9eb6b76fa-Paper.pdf"
+    },
+    {
+      "id": "lgbtree-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 树学习",
+      "knowledgePoint": "叶子上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 的 num_leaves 控制什么？",
+      "answer": "控制每棵基础树的最大叶子数。",
+      "explanation": "它不是整个集成模型的树数量。",
+      "example": "num_leaves=8 限制每棵树最多 8 个叶子。",
+      "tags": [
+        "LightGBM 树学习",
+        "叶子上限"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/Parameters.html"
+    },
+    {
+      "id": "lgbtree-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 树学习",
+      "knowledgePoint": "随机行采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 的普通 bagging 中，仅把 bagging_fraction 设为小于 1 就一定启用行采样吗？",
+      "answer": "不一定；还需要将 bagging_freq 设为非零。",
+      "explanation": "这是普通 bagging 的条件；平衡采样等配置另有规则。",
+      "example": "bagging_fraction=0.8、bagging_freq=0 时不启用普通 bagging。",
+      "tags": [
+        "LightGBM 树学习",
+        "随机行采样"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/Parameters.html"
+    },
+    {
+      "id": "lgbtree-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LightGBM 树学习",
+      "knowledgePoint": "零值与缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LightGBM 4.6 的 zero_as_missing=True 会怎样处理零值？",
+      "answer": "将零视为缺失值，包括稀疏矩阵中未显式存储的值。",
+      "explanation": "默认该参数为 False；是否适合取决于数据中零的含义。",
+      "example": "若零表示真实计数，应谨慎启用该选项。",
+      "tags": [
+        "LightGBM 树学习",
+        "零值与缺失"
+      ],
+      "evidence": "source",
+      "reference": "https://lightgbm.readthedocs.io/en/v4.6.0/Parameters.html"
+    }
+  ]
+}

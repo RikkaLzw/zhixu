@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "soc-benchmark-design",
+    "title": "SOC-bench 论文：蓝队智能体评测设计",
+    "url": "https://arxiv.org/pdf/2603.28998v1",
+    "type": "论文与官方技术文档",
+    "note": "根据逐题引用的论文或官方文档自行整理；例子为自编，具体方法和适用条件见各卡。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "socbench-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "安全智能体评测",
+      "knowledgePoint": "研究状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC-bench 论文提出的是已验证运行的基准，还是基准的概念设计？",
+      "answer": "论文提出设计原则和基准的概念设计，不能据此声称已有经过实测的完整基准结果。",
+      "explanation": "以下卡片描述该论文提出的设计，不代表实际部署结果。",
+      "example": "阅读论文时区分任务草案与已发布的数据集。",
+      "tags": [
+        "研究状态",
+        "安全智能体评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2603.28998v1"
+    },
+    {
+      "id": "socbench-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "安全智能体评测",
+      "knowledgePoint": "任务范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC-bench 论文的概念设计主要评估哪一类安全工作？",
+      "answer": "评估多智能体在勒索软件事件响应中的多个蓝队任务与协调能力。",
+      "explanation": "作者设计的场景与攻击类型有限。",
+      "example": "把早期发现、取证和遏制作为关联任务。",
+      "tags": [
+        "任务范围",
+        "安全智能体评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2603.28998v1"
+    },
+    {
+      "id": "socbench-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "安全智能体评测",
+      "knowledgePoint": "信息可见范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC-bench 设计中，执行任务的智能体为什么不能直接查看完整攻击真相？",
+      "answer": "设计要求智能体只依据 SOC 可见的遥测和资料作判断；事后真相用于评分。",
+      "explanation": "它模拟实际调查时信息不完整的条件。",
+      "example": "只提供当前阶段能看到的告警和日志。",
+      "tags": [
+        "信息可见范围",
+        "安全智能体评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2603.28998v1"
+    },
+    {
+      "id": "socbench-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "安全智能体评测",
+      "knowledgePoint": "跨任务提示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC-bench 设计为什么不预先提供任务间依赖关系提示？",
+      "answer": "作者希望智能体自行发现并利用跨任务的数据或控制依赖。",
+      "explanation": "这是一项评测设计选择，任务难度会受可用信息影响。",
+      "example": "自行判断取证结果是否需要传给遏制任务。",
+      "tags": [
+        "跨任务提示",
+        "安全智能体评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2603.28998v1"
+    },
+    {
+      "id": "socbench-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "安全智能体评测",
+      "knowledgePoint": "结果评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC-bench 的 DP3 提议如何处理与人工流程不同的解题步骤？",
+      "answer": "按预先规定的结果评分，不因步骤与人工流程不同而直接扣分。",
+      "explanation": "这是论文的结果导向设计；其他评测仍可单独审查过程和安全性。",
+      "example": "允许不同查询顺序，只对指定输出评分。",
+      "tags": [
+        "结果评分",
+        "安全智能体评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2603.28998v1"
+    },
+    {
+      "id": "socbench-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "安全智能体评测",
+      "knowledgePoint": "不完美遥测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC-bench 设计为什么考虑告警误报、漏报和延迟？",
+      "answer": "作者认为真实 SOC 的检测与遥测并不完美，评测应反映这些限制。",
+      "explanation": "缺失数据会影响智能体可以支持的结论。",
+      "example": "在事件某个阶段保留可能延迟到达的日志。",
+      "tags": [
+        "不完美遥测",
+        "安全智能体评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2603.28998v1"
+    },
+    {
+      "id": "socbench-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "安全智能体评测",
+      "knowledgePoint": "评估范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SOC-bench 的 Task Fox 按时间窗口评分，是否直接衡量系统的实际运行耗时？",
+      "answer": "不是；论文明确说明该任务不评分系统的实时运行性能，而按时间窗口评价。",
+      "explanation": "识别较早阶段的事件与测量计算耗时是不同指标。",
+      "example": "另行测量智能体完成一次调查所需秒数。",
+      "tags": [
+        "评估范围",
+        "安全智能体评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2603.28998v1"
+    }
+  ]
+}

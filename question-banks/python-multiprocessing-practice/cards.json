@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "python-multiprocessing-practice",
+    "title": "Python 3.14 文档：多进程与进程池",
+    "url": "https://docs.python.org/3.14/library/multiprocessing.html",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pymproc-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "默认启动方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 在支持文件描述符传递且有可用临时目录的 Linux 上，multiprocessing 默认使用什么启动方式？",
+      "answer": "默认使用 forkserver。",
+      "explanation": "不同平台及临时目录条件下默认值可能不同。",
+      "example": "不要假设新版本 Linux 默认仍为 fork。",
+      "tags": [
+        "Python 多进程实践",
+        "默认启动方式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "forkserver",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "multiprocessing 的 forkserver 如何创建工作进程？",
+      "answer": "先启动一个服务器进程，后续由它根据请求 fork 新进程。",
+      "explanation": "这种方式避免子进程继承父进程中不必要的资源。",
+      "example": "支持该方式的平台上可显式获取 forkserver 上下文。",
+      "tags": [
+        "Python 多进程实践",
+        "forkserver"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "入口保护",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么使用 spawn 或 forkserver 的 Python 程序通常需要 if __name__ == \"__main__\" 保护入口？",
+      "answer": "子进程会导入主模块；入口保护避免导入时再次启动进程。",
+      "explanation": "进程目标还需满足可导入和序列化等要求。",
+      "example": "在入口保护内创建进程并调用 start。",
+      "tags": [
+        "Python 多进程实践",
+        "入口保护"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "上下文隔离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python multiprocessing.get_context(\"spawn\") 有什么用途？",
+      "answer": "取得指定启动方式的上下文，可由它创建对应的进程和同步对象。",
+      "explanation": "不同上下文创建的部分对象可能不兼容。",
+      "example": "库可让调用者选择所需的上下文。",
+      "tags": [
+        "Python 多进程实践",
+        "上下文隔离"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "进程超时等待",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python multiprocessing.Process.join(timeout) 返回后如何判断子进程是否仍在运行？",
+      "answer": "检查 is_alive()；join 返回 None，不能仅凭返回值判断是否超时。",
+      "explanation": "等待结束可能因为进程已退出，也可能因为超时。",
+      "example": "join(1) 后再检查 is_alive()。",
+      "tags": [
+        "Python 多进程实践",
+        "进程超时等待"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "进程退出码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python multiprocessing.Process 的子进程尚未结束时，exitcode 的值是什么？",
+      "answer": "为 None；正常结束后通常为 0。",
+      "explanation": "非零值通常表示异常退出或其他退出原因。",
+      "example": "join 后读取子进程 exitcode。",
+      "tags": [
+        "Python 多进程实践",
+        "进程退出码"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "强制终止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Python multiprocessing.Process.terminate() 需要谨慎用于正在操作队列或锁的进程？",
+      "answer": "强制终止可能破坏队列或管道，或使其他进程等待其持有的锁。",
+      "explanation": "应优先设计可协调的退出与资源清理。",
+      "example": "工作进程正在写队列时直接终止可能影响后续读取。",
+      "tags": [
+        "Python 多进程实践",
+        "强制终止"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "共享值自增",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "multiprocessing.Value 默认带锁时，执行 value.value += 1 就一定是原子的复合操作吗？",
+      "answer": "不一定；读取和写入之间仍可能交错，应在整个读改写期间持有相应锁。",
+      "explanation": "单独保护访问不等于把多个操作合并成一个原子操作。",
+      "example": "使用 with value.get_lock(): 包围自增。",
+      "tags": [
+        "Python 多进程实践",
+        "共享值自增"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "池关闭",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python multiprocessing.Pool 的 close 与 terminate 如何处理尚未完成的任务？",
+      "answer": "close 停止接收新任务并让已提交任务完成；terminate 立即停止工作进程。",
+      "explanation": "调用 join 前需要先 close 或 terminate。",
+      "example": "等待已提交任务完成时可先 close 再 join。",
+      "tags": [
+        "Python 多进程实践",
+        "池关闭"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "上下文管理器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "离开 Python 3.14 的 with multiprocessing.Pool(...) 代码块时，Pool 的 __exit__ 调用什么？",
+      "answer": "调用 terminate()。",
+      "explanation": "若需要等待异步任务正常完成，应在退出前明确等待结果。",
+      "example": "在 with 块内调用 AsyncResult.get() 等待任务。",
+      "tags": [
+        "Python 多进程实践",
+        "上下文管理器"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "进程池返回顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python multiprocessing.Pool.imap 与 imap_unordered 在结果顺序上有什么区别？",
+      "answer": "imap 按输入顺序提供结果；imap_unordered 的结果顺序通常不保证与输入相同。",
+      "explanation": "只有一个工作进程时文档说明顺序有保证。",
+      "example": "用两个工作进程处理不同耗时任务时，unordered 可能先返回后提交的结果。",
+      "tags": [
+        "Python 多进程实践",
+        "进程池返回顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    },
+    {
+      "id": "pymproc-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 多进程实践",
+      "knowledgePoint": "队列回收死锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么子进程对 multiprocessing.Queue 的大对象 put 已返回后，父进程先 join 仍可能卡住？",
+      "answer": "put 后后台线程仍要把序列化数据刷入管道；若父进程未读取且管道已满，子进程可能无法结束。",
+      "explanation": "可先读取数据再等待子进程结束。",
+      "example": "父进程先 get 再 join。",
+      "tags": [
+        "Python 多进程实践",
+        "队列回收死锁"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/multiprocessing.html"
+    }
+  ]
+}

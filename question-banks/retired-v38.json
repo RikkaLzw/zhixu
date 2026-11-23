@@ -1,0 +1,35 @@
+{
+  "version": 38,
+  "note": "修正时间窗口旧卡答案前的主卡快照，用于迁移时保留用户修改与学习记录。",
+  "cards": [
+    {
+      "id": "suri-008",
+      "category": "operations",
+      "question": "用 EVE 数据做时间窗口特征时，为什么要确定时间字段含义？",
+      "answer": "必须明确使用事件发生时间、日志生成时间还是接收时间。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "knowledgeArea": "10",
+      "level": "进阶",
+      "tags": [
+        "事件时间",
+        "时序"
+      ],
+      "explanation": "乱序和采集延迟可能影响窗口统计和训练时的可用信息。",
+      "example": "评估实时检测时，仅使用预测时刻前已到达的日志。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

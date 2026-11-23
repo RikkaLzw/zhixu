@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "eql-security-event-sequences",
+    "title": "Elasticsearch 8.17：EQL 安全事件序列",
+    "url": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html",
+    "type": "论文与官方技术文档",
+    "note": "根据所引论文或固定版本官方文档自行整理；例子为自编，使用条件见各卡。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "eqlsec-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "事件查询形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Elasticsearch 8.17 的 EQL 单事件查询通常由哪两部分组成？",
+      "answer": "事件类别和匹配条件，用 where 连接。",
+      "explanation": "事件类别默认读取 ECS 的 event.category 字段，可通过 API 配置。",
+      "example": "process where process.name == \"cmd.exe\"。",
+      "tags": [
+        "EQL 安全事件关联",
+        "事件查询形式"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "序列顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL 的 sequence 主要匹配什么样的事件组合？",
+      "answer": "按时间先后满足各事件条件的有序事件序列。",
+      "explanation": "事件项按时间升序书写，最新事件位于最后。",
+      "example": "先出现文件事件，再出现进程事件。",
+      "tags": [
+        "EQL 安全事件关联",
+        "序列顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "时间跨度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL sequence 的 with maxspan 限制什么？",
+      "answer": "限制匹配序列从首个事件开始的总时间跨度。",
+      "explanation": "它不是单独约束每一对相邻事件的间隔。",
+      "example": "with maxspan=15m 要求序列在首事件起 15 分钟内完成。",
+      "tags": [
+        "EQL 安全事件关联",
+        "时间跨度"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "关联键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL sequence by 的关联键有什么作用？",
+      "answer": "要求序列中的匹配事件共享指定字段值。",
+      "explanation": "应选择具有业务意义且适当唯一的键。",
+      "example": "按同一 host.name 关联主机事件。",
+      "tags": [
+        "EQL 安全事件关联",
+        "关联键"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "不同字段关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL 序列中需要比较不同事件的不同字段时，可以怎样指定关联键？",
+      "answer": "在各事件项后分别使用 by，并按相同位置比较键值。",
+      "explanation": "各事件项的关联键数量和顺序需要对应。",
+      "example": "用文件事件的 file.path 关联进程事件的 process.executable。",
+      "tags": [
+        "EQL 安全事件关联",
+        "不同字段关联"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "缺失事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL 8.17 用什么语法表达受限时间内缺少某类事件？",
+      "answer": "使用 ![事件条件] 缺失事件项，并为序列指定 with maxspan。",
+      "explanation": "序列还必须至少包含一个正向事件项；缺失结果依赖日志完整性。",
+      "example": "登录后 5 秒内没有匹配的登出事件。",
+      "tags": [
+        "EQL 安全事件关联",
+        "缺失事件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "过期事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL sequence 的 until 子句有什么作用？",
+      "answer": "指定使尚未完成的匹配序列过期的事件。",
+      "explanation": "序列完成后才出现的过期事件不会撤销已完成的匹配。",
+      "example": "进程终止事件可结束此前按 PID 跟踪的未完成序列。",
+      "tags": [
+        "EQL 安全事件关联",
+        "过期事件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "重复条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL sequence 的 with runs 用于什么？",
+      "answer": "连续重复同一个事件条件指定的次数。",
+      "explanation": "Elasticsearch 8.17 文档要求 runs 在 1 到 100 之间。",
+      "example": "某类进程事件连续匹配三次。",
+      "tags": [
+        "EQL 安全事件关联",
+        "重复条件"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "无序样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL sample 与 sequence 在时间顺序上有什么区别？",
+      "answer": "sequence 按时间顺序匹配；sample 匹配共享关联键的事件组合，不要求时间顺序。",
+      "explanation": "sample 也不支持 sequence 的 maxspan、runs 或 until。",
+      "example": "按主机关联两类事件但不要求先后。",
+      "tags": [
+        "EQL 安全事件关联",
+        "无序样本"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "可选字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL 中将字段标记为 ?field 后，字段未映射时怎样处理？",
+      "answer": "将该可选字段视为 null，而不是因为字段不存在而报错。",
+      "explanation": "查询仍需结合 null 的语义判断结果。",
+      "example": "网络事件中的 ?user.id 未映射时为 null。",
+      "tags": [
+        "EQL 安全事件关联",
+        "可选字段"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    },
+    {
+      "id": "eqlsec-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EQL 安全事件关联",
+      "knowledgePoint": "序列匹配边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EQL 8.17 的 sequence 查询是否枚举每一种可能的事件组合？",
+      "answer": "不一定；其状态机在同一状态只保留一个待完成序列，较新的可覆盖较旧的。",
+      "explanation": "有 by 字段时按不同关联键维护各自的状态机。",
+      "example": "两条相同起始事件可能不会都组成返回结果。",
+      "tags": [
+        "EQL 安全事件关联",
+        "序列匹配边界"
+      ],
+      "evidence": "source",
+      "reference": "https://www.elastic.co/guide/en/elasticsearch/reference/8.17/eql-syntax.html"
+    }
+  ]
+}

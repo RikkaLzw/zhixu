@@ -1,0 +1,252 @@
+{
+  "source": {
+    "id": "pandas-data",
+    "title": "pandas 用户指南：分组、缺失值与合并",
+    "url": "https://pandas.pydata.org/docs/user_guide/groupby.html",
+    "type": "官方文档与标准",
+    "note": "根据所列资料自行编写并用简体中文整理，示例为自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pandas-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分组统计",
+      "knowledgePoint": "分组聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas 的 groupby 聚合通常会怎样改变数据粒度？",
+      "answer": "它按分组键分别计算汇总值，通常使多行缩减为每组一行或少量结果。",
+      "explanation": "聚合后的行数通常取决于组数，而不是原始样本数。",
+      "example": "按主机分组统计每台主机的连接次数。",
+      "tags": [
+        "分组聚合",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/groupby.html"
+    },
+    {
+      "id": "pandas-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分组统计",
+      "knowledgePoint": "聚合与变换",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "pandas 分组的 aggregation 与 transformation 有什么区别？",
+      "answer": "聚合通常产生每组的汇总结果；transform 返回与原数据相同索引的结果。",
+      "explanation": "transform 适合把组级统计对齐回每一行。",
+      "example": "将每条记录减去其所在组的均值。",
+      "tags": [
+        "聚合与变换",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/groupby.html"
+    },
+    {
+      "id": "pandas-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分组统计",
+      "knowledgePoint": "size与count",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "pandas 分组的 size() 与 count() 对缺失值的处理有什么区别？",
+      "answer": "size() 统计每组行数；count() 对各列统计非缺失值个数。",
+      "explanation": "某列有缺失时，其 count 可能小于该组 size。",
+      "example": "一组 10 行且某字段缺失 2 行时，该列 count 为 8。",
+      "tags": [
+        "size与count",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/groupby.html"
+    },
+    {
+      "id": "pandas-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分组统计",
+      "knowledgePoint": "缺失分组键",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "在 pandas 默认的 groupby 设置下，分组键缺失的行会怎样？",
+      "answer": "默认会排除缺失分组键；可以使用 dropna=False 将缺失键作为一组。",
+      "explanation": "统计样本覆盖率时应显式决定如何处理缺失键。",
+      "example": "传感器编号缺失的记录可能未出现在默认分组结果中。",
+      "tags": [
+        "缺失分组键",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/groupby.html"
+    },
+    {
+      "id": "pandas-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分组统计",
+      "knowledgePoint": "分组键排序",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "pandas groupby 的 sort=False 主要影响什么？",
+      "answer": "它关闭对分组键的默认排序，使组键通常按首次出现的顺序输出。",
+      "explanation": "组内原始行的相对顺序仍被保留。",
+      "example": "按 B、A 出现的键分组时可保持 B、A 的组顺序。",
+      "tags": [
+        "分组键排序",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/groupby.html"
+    },
+    {
+      "id": "pandas-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "缺失数据",
+      "knowledgePoint": "识别缺失值",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "为什么在 pandas 中应使用 isna() 判断缺失值？",
+      "answer": "因为 NaN、NaT 和 pd.NA 的相等比较行为不同，直接与其比较不可靠。",
+      "explanation": "isna() 能统一识别多种常见缺失标记。",
+      "example": "用列的 isna() 统计缺失记录数。",
+      "tags": [
+        "识别缺失值",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/missing_data.html"
+    },
+    {
+      "id": "pandas-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据",
+      "knowledgePoint": "可空整数类型",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "pandas 的可空整数类型 Int64 与普通 NumPy 整数类型的一个重要区别是什么？",
+      "answer": "Int64 可以用 pd.NA 表示缺失整数，而普通 NumPy 整数数组不能直接表示该缺失标记。",
+      "explanation": "具体转换还取决于输入和 pandas 版本。",
+      "example": "包含整数与缺失值的标签列可使用 Int64。",
+      "tags": [
+        "可空整数类型",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/missing_data.html"
+    },
+    {
+      "id": "pandas-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "缺失数据",
+      "knowledgePoint": "pd.NA逻辑值",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "为什么不能直接对 pd.NA 调用 bool() 来判断真假？",
+      "answer": "缺失值代表未知，其真值无法确定，因此 pandas 会抛出异常。",
+      "explanation": "先根据业务决定缺失值的处理方式。",
+      "example": "在条件判断前用 isna() 识别未知值。",
+      "tags": [
+        "pd.NA逻辑值",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/missing_data.html"
+    },
+    {
+      "id": "pandas-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "表连接",
+      "knowledgePoint": "内连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge 使用 inner 连接时保留哪些键？",
+      "answer": "它只保留左右两侧都能匹配到的键对应的行。",
+      "explanation": "重复键可能产生多行匹配结果。",
+      "example": "只保留同时存在于事件表和资产表的资产标识。",
+      "tags": [
+        "内连接",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/merging.html"
+    },
+    {
+      "id": "pandas-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "表连接",
+      "knowledgePoint": "左连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pandas merge 使用 left 连接时如何处理左表中未匹配的键？",
+      "answer": "它保留左表记录，并在右表对应列填入缺失值。",
+      "explanation": "左连接后仍需检查未匹配比例。",
+      "example": "事件表中的未知资产仍保留，但资产名称为空。",
+      "tags": [
+        "左连接",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/merging.html"
+    },
+    {
+      "id": "pandas-011",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "表连接",
+      "knowledgePoint": "多对多连接",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "为什么两张表按重复键合并可能造成行数意外增长？",
+      "answer": "同一键在两侧各有多行时，匹配结果会包含这些行的组合。",
+      "explanation": "应先检查键的唯一性和预期基数。",
+      "example": "左侧 2 行与右侧 3 行共享同一键时可产生 6 行。",
+      "tags": [
+        "多对多连接",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/merging.html"
+    },
+    {
+      "id": "pandas-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "表连接",
+      "knowledgePoint": "连接基数验证",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "pandas merge 的 validate 参数可用于什么？",
+      "answer": "它可以检查合并键是否符合预期的一对一、一对多或多对一等关系。",
+      "explanation": "验证基数有助于尽早发现错误关联。",
+      "example": "预计资产表每个资产只有一行时验证多对一连接。",
+      "tags": [
+        "连接基数验证",
+        "Python",
+        "Pandas"
+      ],
+      "evidence": "source",
+      "reference": "https://pandas.pydata.org/docs/user_guide/merging.html"
+    }
+  ]
+}

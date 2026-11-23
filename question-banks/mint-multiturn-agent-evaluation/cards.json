@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "mint-multiturn-agent-evaluation",
+    "title": "MINT 原论文 v3：多轮工具与反馈评测",
+    "url": "https://arxiv.org/pdf/2309.10691v3",
+    "type": "原论文",
+    "note": "根据论文中的固定评测设置自行整理；示例为自编。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "minteval-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多轮工具与反馈评测",
+      "knowledgePoint": "评测目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MINT 基准主要考查语言模型在多轮交互中的哪两类能力？",
+      "answer": "考查利用工具解决任务，以及利用自然语言反馈改进答案的能力。",
+      "explanation": "论文将问题求解过程组织成多轮，而不只看一次回答。",
+      "example": "模型先运行代码，再根据反馈修改答案。",
+      "tags": [
+        "多轮工具与反馈评测",
+        "评测目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.10691v3"
+    },
+    {
+      "id": "minteval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多轮工具与反馈评测",
+      "knowledgePoint": "交互动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MINT 论文的每一轮中，模型通常在执行工具和提交答案之间如何选择？",
+      "answer": "每轮选择执行 Python 代码获取工具反馈，或提交一个待验证的答案。",
+      "explanation": "论文使用标签区分代码执行与答案提交。",
+      "example": "模型可以先计算，再在后续轮次提交结果。",
+      "tags": [
+        "多轮工具与反馈评测",
+        "交互动作"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.10691v3"
+    },
+    {
+      "id": "minteval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多轮工具与反馈评测",
+      "knowledgePoint": "最少反馈用户",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MINT 的 lazy user 设置中，首次提交错误答案后提供什么反馈？",
+      "answer": "只返回答案错误的简短反馈，不提供详细的修改建议。",
+      "explanation": "该设置用作比较信息更丰富的自然语言反馈的基线。",
+      "example": "反馈可以是“Your answer is wrong.”。",
+      "tags": [
+        "多轮工具与反馈评测",
+        "最少反馈用户"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.10691v3"
+    },
+    {
+      "id": "minteval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多轮工具与反馈评测",
+      "knowledgePoint": "结束条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MINT 论文的 lazy user 设置何时结束一次任务交互？",
+      "answer": "答案正确、两次答案提交机会用完，或达到交互轮次上限时结束。",
+      "explanation": "工具执行和答案提交都会受到交互预算约束。",
+      "example": "正确答案可以在用尽全部轮次前结束任务。",
+      "tags": [
+        "多轮工具与反馈评测",
+        "结束条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.10691v3"
+    },
+    {
+      "id": "minteval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多轮工具与反馈评测",
+      "knowledgePoint": "多轮预算比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MINT 测量 SR_k 时，不同交互上限 k 是否直接截取同一条已有轨迹？",
+      "answer": "论文对每个 k 从头运行任务，并计算对应上限下的任务成功率。",
+      "explanation": "报告不同 k 的结果时，应同时说明模型、任务和交互设置。",
+      "example": "k=1 与 k=5 各自运行评测，而非仅从一条 k=5 轨迹截取。",
+      "tags": [
+        "多轮工具与反馈评测",
+        "多轮预算比较"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.10691v3"
+    },
+    {
+      "id": "minteval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多轮工具与反馈评测",
+      "knowledgePoint": "工具增益斜率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MINT 的 Δtools 如何概括不同交互轮次上限下的工具使用收益？",
+      "answer": "它对成功率与轮次上限的关系做最小二乘线性拟合，取斜率作为粗略的每轮改进率。",
+      "explanation": "论文指出这种关系未必线性，因此斜率应与绝对成功率及拟合程度一起看。",
+      "example": "额外轮次带来的收益不一定每次都相同。",
+      "tags": [
+        "多轮工具与反馈评测",
+        "工具增益斜率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.10691v3"
+    },
+    {
+      "id": "minteval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多轮工具与反馈评测",
+      "knowledgePoint": "模拟语言反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MINT 原论文用什么方式提供信息丰富的用户语言反馈？",
+      "answer": "使用 GPT-4 模拟用户给出自然语言反馈，并另行通过人工评估检查反馈质量。",
+      "explanation": "模拟反馈便于复现和扩展，但不能直接等同于真实用户的全部反馈。",
+      "example": "模型提交错误答案后，模拟用户可提出修改建议。",
+      "tags": [
+        "多轮工具与反馈评测",
+        "模拟语言反馈"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.10691v3"
+    },
+    {
+      "id": "minteval-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多轮工具与反馈评测",
+      "knowledgePoint": "反馈效果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MINT 论文中的 Δfeedback 表示什么？",
+      "answer": "在相同的五轮上限下，用模拟自然语言反馈的成功率减去基线成功率。",
+      "explanation": "该差值衡量所选评测设置中的变化，不能保证每个任务都因反馈受益。",
+      "example": "比较同一模型在两种反馈条件下的任务成功率。",
+      "tags": [
+        "多轮工具与反馈评测",
+        "反馈效果"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.10691v3"
+    },
+    {
+      "id": "minteval-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多轮工具与反馈评测",
+      "knowledgePoint": "测试集筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MINT 构建数据集时，为什么其结果不能直接代表原始数据集的整体难度？",
+      "answer": "论文先排除了 GPT-3.5 在两轮内完成的样本，再分层抽样，因此评测集侧重较难的多轮任务。",
+      "explanation": "筛选由特定模型和交互条件决定，也可能影响与其他模型的比较。",
+      "example": "容易一次回答的问题可能不会保留在最终评测子集中。",
+      "tags": [
+        "多轮工具与反馈评测",
+        "测试集筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.10691v3"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "linux-memory-mapping-fundamentals",
+    "title": "Linux man-pages：内存映射与保护",
+    "url": "https://man7.org/linux/man-pages/man2/mmap.2.html",
+    "type": "官方手册与教材",
+    "note": "根据逐题标注的手册、标准或教材自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "mmapbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "内存映射用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux mmap 成功后在进程中建立了什么？",
+      "answer": "它在调用进程的虚拟地址空间建立指定长度的映射，可映射文件或创建匿名映射。",
+      "explanation": "建立虚拟映射不等于应用已经处理完映射内容。",
+      "example": "把文件的一段映射到内存地址。",
+      "tags": [
+        "Linux 内存映射",
+        "内存映射用途"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    },
+    {
+      "id": "mmapbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "匿名映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux MAP_ANONYMOUS 创建的映射是否由文件支持，初始内容是什么？",
+      "answer": "它不由文件支持，内容初始化为零。",
+      "explanation": "调用时 offset 应为 0，便携代码将 fd 设为 -1。",
+      "example": "为私有匿名映射分配一段内存。",
+      "tags": [
+        "Linux 内存映射",
+        "匿名映射"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    },
+    {
+      "id": "mmapbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "映射偏移对齐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 文件映射的 mmap offset 有什么对齐要求？",
+      "answer": "offset 必须是系统页大小的整数倍。",
+      "explanation": "要访问非对齐位置，可以映射其前面的页边界并在映射内偏移。",
+      "example": "页大小为 4096 字节时从偏移 4096 建立映射。",
+      "tags": [
+        "Linux 内存映射",
+        "映射偏移对齐"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    },
+    {
+      "id": "mmapbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "关闭描述符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 文件 mmap 成功后立即关闭原文件描述符会使映射失效吗？",
+      "answer": "不会；映射可在文件描述符关闭后继续存在。",
+      "explanation": "需要单独使用 munmap 解除映射。",
+      "example": "映射成功后关闭 fd，再读取映射内数据。",
+      "tags": [
+        "Linux 内存映射",
+        "关闭描述符"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    },
+    {
+      "id": "mmapbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "解除映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux munmap 的主要作用是什么？",
+      "answer": "它移除指定地址范围内的映射，之后访问未重新映射的地址会造成无效内存访问。",
+      "explanation": "addr 必须按页大小对齐；进程终止时其映射也会被解除。",
+      "example": "使用完映射后调用 munmap。",
+      "tags": [
+        "Linux 内存映射",
+        "解除映射"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    },
+    {
+      "id": "mmapbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "失败返回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux mmap 失败时返回什么，如何取得错误原因？",
+      "answer": "返回 MAP_FAILED，并设置 errno。",
+      "explanation": "不能简单把返回值是否为 NULL 作为 mmap 的错误判断。",
+      "example": "调用后先检查返回值是否等于 MAP_FAILED。",
+      "tags": [
+        "Linux 内存映射",
+        "失败返回"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    },
+    {
+      "id": "mmapbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "内存保护",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux mprotect 对已映射页面做什么？",
+      "answer": "它修改指定范围页面的访问保护，例如允许读写或禁止访问。",
+      "explanation": "起始地址必须按页对齐；违反保护访问可触发 SIGSEGV。",
+      "example": "把代码页改为只读和可执行。",
+      "tags": [
+        "Linux 内存映射",
+        "内存保护"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mprotect.2.html"
+    },
+    {
+      "id": "mmapbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "同步映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 对文件映射调用 msync 并指定 MS_SYNC 的作用是什么？",
+      "answer": "它请求将映射区域的修改同步回文件并等待更新完成。",
+      "explanation": "应检查调用结果；同步时机和持久化要求还需结合文件系统及应用设计。",
+      "example": "更新共享映射后同步更改。",
+      "tags": [
+        "Linux 内存映射",
+        "同步映射"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/msync.2.html"
+    },
+    {
+      "id": "mmapbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "越过文件末尾",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 文件映射中访问完全位于文件末尾之外的页可能触发什么信号？",
+      "answer": "可能触发 SIGBUS。",
+      "explanation": "末尾不足一页时，该页剩余部分与完全越过文件末尾的页要区分。",
+      "example": "映射后文件被截短，再访问已越界的页。",
+      "tags": [
+        "Linux 内存映射",
+        "越过文件末尾"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    },
+    {
+      "id": "mmapbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "固定地址覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux mmap 使用 MAP_FIXED 时为何需要谨慎？",
+      "answer": "指定范围内已有映射可能被丢弃并替换。",
+      "explanation": "Linux 4.17 起的 MAP_FIXED_NOREPLACE 可在冲突时失败；旧内核兼容行为需检查返回地址。",
+      "example": "多线程进程中另一线程刚占用了目标范围。",
+      "tags": [
+        "Linux 内存映射",
+        "固定地址覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    },
+    {
+      "id": "mmapbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 内存映射",
+      "knowledgePoint": "私有映射外部写入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 建立 MAP_PRIVATE 文件映射后，其他写入对映射的可见性有何保证？",
+      "answer": "文档未规定文件在 mmap 后发生的修改是否在私有映射中可见。",
+      "explanation": "映射自身写入采用写时复制，不能依靠它与外部写入保持一致。",
+      "example": "映射后另一进程修改同一文件。",
+      "tags": [
+        "Linux 内存映射",
+        "私有映射外部写入"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    }
+  ]
+}

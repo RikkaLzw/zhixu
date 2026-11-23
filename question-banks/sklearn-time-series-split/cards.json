@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "sklearn-time-series-split",
+    "title": "scikit-learn 1.7 文档：时间序列切分",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.TimeSeriesSplit.html",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "sktimes-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时间序列交叉验证",
+      "knowledgePoint": "默认测试长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 TimeSeriesSplit 默认 test_size 如何按样本数和折数计算？",
+      "answer": "默认为样本数整除 (n_splits + 1)。",
+      "explanation": "可显式设置 test_size；还需保证数据量和 gap 等约束允许切分。",
+      "example": "12 个样本、3 折时每个默认测试折有 3 个样本。",
+      "tags": [
+        "时间序列交叉验证",
+        "默认测试长度"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.TimeSeriesSplit.html"
+    },
+    {
+      "id": "sktimes-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时间序列交叉验证",
+      "knowledgePoint": "测试持续时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TimeSeriesSplit 各测试折样本数相同，是否一定代表覆盖的实际时间长度相同？",
+      "answer": "不一定；样本时间间隔不均匀时，相同数量的样本可能跨越不同时间长度。",
+      "explanation": "文档说明等间隔采样有助于各折覆盖相同持续时间并比较指标。",
+      "example": "不规则安全日志需要检查各测试窗口的真实起止时间。",
+      "tags": [
+        "时间序列交叉验证",
+        "测试持续时间"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.TimeSeriesSplit.html"
+    },
+    {
+      "id": "sktimes-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时间序列交叉验证",
+      "knowledgePoint": "初始样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TimeSeriesSplit 能保证每个输入样本都出现在某个测试折中吗？",
+      "answer": "不能；最早的一部分样本通常只用于提供初始训练数据。",
+      "explanation": "其目的不是让每条数据都恰好当一次测试集。",
+      "example": "3 折划分中最早的数据可能从未进入测试折。",
+      "tags": [
+        "时间序列交叉验证",
+        "初始样本"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.TimeSeriesSplit.html"
+    },
+    {
+      "id": "sktimes-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时间序列交叉验证",
+      "knowledgePoint": "测试折关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 TimeSeriesSplit 在有效切分下，连续测试折之间通常怎样排列？",
+      "answer": "按输入顺序形成不重叠的连续测试区间。",
+      "explanation": "训练区间则在测试区间之前；每折指标仍可能因时间变化而不同。",
+      "example": "依次评估未来的几个连续窗口。",
+      "tags": [
+        "时间序列交叉验证",
+        "测试折关系"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.TimeSeriesSplit.html"
+    }
+  ]
+}

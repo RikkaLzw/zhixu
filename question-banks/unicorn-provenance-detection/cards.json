@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "unicorn-provenance-detection",
+    "title": "UNICORN 原论文 v1：溯源图异常检测",
+    "url": "https://arxiv.org/abs/2001.01525v1",
+    "type": "论文与官方技术文档",
+    "note": "根据所引论文或固定版本官方文档自行整理；例子为自编，使用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "unicorn-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "溯源图信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 使用的系统溯源图主要连接哪些对象？",
+      "answer": "连接进程、文件和套接字等系统实体及其信息流关系。",
+      "explanation": "图上的关系有助于理解事件的上下文和历史。",
+      "example": "进程读取文件后再写入另一文件。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "溯源图信息"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    },
+    {
+      "id": "unicorn-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "长时上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 为什么使用溯源图分析长时间跨度的行为？",
+      "answer": "图中的信息流关系可以连接时间上相隔较远但有依赖的事件。",
+      "explanation": "依赖关系质量受采集覆盖和正确性影响。",
+      "example": "较早读取的数据影响稍后的网络发送。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "长时上下文"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    },
+    {
+      "id": "unicorn-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "图直方图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 的图直方图中的元素主要描述什么？",
+      "answer": "描述结合节点和边标签、邻域结构及边时间顺序的图子结构。",
+      "explanation": "随着新边到达，流式计算会更新相关计数。",
+      "example": "把进程与相邻文件的交互模式编码为特征。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "图直方图"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    },
+    {
+      "id": "unicorn-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "图草图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 为什么把图直方图转换为固定长度的 sketch？",
+      "answer": "便于用有限大小的表示近似比较不断增长的图统计。",
+      "explanation": "草图保留的是近似相似性，不是原始完整图。",
+      "example": "比较正常执行与当前执行的图表示。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "图草图"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    },
+    {
+      "id": "unicorn-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "历史衰减",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 的时间加权机制如何处理与近期活动没有因果关联的旧特征？",
+      "answer": "逐渐降低这些旧直方图元素的影响。",
+      "explanation": "与近期活动仍有信息流关联的历史上下文可以继续发挥作用。",
+      "example": "长期无关联的旧活动权重逐步衰减。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "历史衰减"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    },
+    {
+      "id": "unicorn-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "演化模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 的训练模型为什么记录不同阶段的行为状态及其顺序？",
+      "answer": "正常系统行为会随启动、初始化和稳定运行等阶段变化。",
+      "explanation": "模型用聚类表示阶段，并利用时间顺序描述正常演化。",
+      "example": "系统启动期与稳定期的活动模式不同。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "演化模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    },
+    {
+      "id": "unicorn-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "告警依据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 论文的检测除了关注不属于正常簇的表示，还关注什么？",
+      "answer": "关注正常状态簇之间不符合已学习演化模式的转换。",
+      "explanation": "两类异常都需要结合实际运行上下文分析。",
+      "example": "状态之间出现训练中不允许的转换。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "告警依据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    },
+    {
+      "id": "unicorn-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "训练期安全假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 原论文对初始正常行为建模阶段作了什么安全假设？",
+      "answer": "假设初始建模期间没有攻击，并能充分观察正常运行。",
+      "explanation": "训练数据受到污染或覆盖不足时，检测效果可能变化。",
+      "example": "在建立基线前核查主机与采集系统。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "训练期安全假设"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    },
+    {
+      "id": "unicorn-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "部署时模型更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 为什么在部署检测期间不动态更新正常行为模型？",
+      "answer": "避免持续攻击逐渐被学习为正常行为，污染模型。",
+      "explanation": "冻结模型也需要应对真实业务变化造成的分布偏移。",
+      "example": "长期攻击期间不把可疑活动自动纳入基线。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "部署时模型更新"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    },
+    {
+      "id": "unicorn-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "UNICORN 主机溯源检测",
+      "knowledgePoint": "采集可信性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UNICORN 的检测为什么依赖可信的系统溯源采集？",
+      "answer": "模型分析建立在采集数据和相关系统组件正确的假设上。",
+      "explanation": "日志缺失或采集被篡改可能破坏图中的行为证据。",
+      "example": "采集器失效时应标记调查结果的覆盖限制。",
+      "tags": [
+        "UNICORN 主机溯源检测",
+        "采集可信性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2001.01525v1"
+    }
+  ]
+}

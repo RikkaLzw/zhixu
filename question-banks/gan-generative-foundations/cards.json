@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "gan-generative-foundations",
+    "title": "GAN 原论文 v1：生成对抗网络基础",
+    "url": "https://arxiv.org/abs/1406.2661v1",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ganbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成对抗网络基础",
+      "knowledgePoint": "生成器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 GAN 的生成器 G 通常把什么映射成生成样本？",
+      "answer": "把从先验分布采样的噪声向量映射到数据空间。",
+      "explanation": "映射由生成器参数控制。",
+      "example": "从随机向量生成一张图像。",
+      "tags": [
+        "生成对抗网络基础",
+        "生成器"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1406.2661v1"
+    },
+    {
+      "id": "ganbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成对抗网络基础",
+      "knowledgePoint": "判别器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 GAN 判别器 D(x) 学习区分哪两类样本？",
+      "answer": "区分来自训练数据分布的样本与来自生成器的样本。",
+      "explanation": "其输出可理解为样本来自数据而非生成器的估计概率。",
+      "example": "将真实图像与生成图像作为训练输入。",
+      "tags": [
+        "生成对抗网络基础",
+        "判别器"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1406.2661v1"
+    },
+    {
+      "id": "ganbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成对抗网络基础",
+      "knowledgePoint": "交替更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 GAN 的训练算法如何安排判别器和生成器的更新？",
+      "answer": "交替进行若干步判别器更新与一步生成器更新。",
+      "explanation": "论文将判别器更新步数 k 作为超参数。",
+      "example": "每更新一次生成器前先训练判别器。",
+      "tags": [
+        "生成对抗网络基础",
+        "交替更新"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1406.2661v1"
+    },
+    {
+      "id": "ganbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成对抗网络基础",
+      "knowledgePoint": "生成器目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GAN 训练中生成器希望判别器如何看待生成样本？",
+      "answer": "希望生成样本更难与真实数据区分，从而得到较高的真实样本判别分数。",
+      "explanation": "具体生成器损失可采用不同形式。",
+      "example": "生成图像逐渐接近真实图像分布。",
+      "tags": [
+        "生成对抗网络基础",
+        "生成器目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1406.2661v1"
+    },
+    {
+      "id": "ganbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成对抗网络基础",
+      "knowledgePoint": "平衡点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 GAN 理论中，生成分布与数据分布相等时最优判别器在其支持集上的输出是多少？",
+      "answer": "为 1/2。",
+      "explanation": "这是理论最优条件，不代表实际训练时判别器输出 1/2 就能证明生成质量。",
+      "example": "在理想平衡点无法区分两种分布。",
+      "tags": [
+        "生成对抗网络基础",
+        "平衡点"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1406.2661v1"
+    },
+    {
+      "id": "ganbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成对抗网络基础",
+      "knowledgePoint": "非饱和目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 GAN 论文为什么建议训练初期可最大化 log D(G(z))？",
+      "answer": "当判别器过于自信时，原始生成器目标可能饱和而梯度弱；该替代目标可提供更强梯度。",
+      "explanation": "两种目标在论文分析中具有相同固定点。",
+      "example": "生成样本初期很容易被判别器识别。",
+      "tags": [
+        "生成对抗网络基础",
+        "非饱和目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1406.2661v1"
+    },
+    {
+      "id": "ganbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成对抗网络基础",
+      "knowledgePoint": "收敛条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 GAN 的理论收敛分析是否保证有限模型和有限训练一定学到真实分布？",
+      "answer": "不保证；理论结果依赖足够容量及理想化优化等条件。",
+      "explanation": "实际训练仍需检查稳定性和生成质量。",
+      "example": "用样本覆盖和其他评估指标诊断训练。",
+      "tags": [
+        "生成对抗网络基础",
+        "收敛条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1406.2661v1"
+    }
+  ]
+}

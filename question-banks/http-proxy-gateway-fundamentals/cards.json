@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "http-proxy-gateway-fundamentals",
+    "title": "RFC 9110 与 Nginx 文档：HTTP 代理和网关",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "type": "标准、教材与技术手册",
+    "note": "依据逐题引用的标准、文档或手册自行整理；示例为自编。在线资料以 2026-11-22 查看内容为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "httpproxy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 代理与网关",
+      "knowledgePoint": "反向代理与重定向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "反向代理转发和 HTTP 重定向对客户端的行为有什么区别？",
+      "answer": "反向代理由中间服务器继续请求后端；重定向返回目标信息，由客户端决定是否发起新请求。",
+      "explanation": "代理转发通常不要求浏览器直接访问后端地址。",
+      "example": "入口转发到内部应用；302 响应提供 Location 供客户端跳转。",
+      "tags": [
+        "HTTP 代理与网关",
+        "反向代理与重定向"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-3.7"
+    },
+    {
+      "id": "httpproxy-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 代理与网关",
+      "knowledgePoint": "CONNECT隧道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP CONNECT 收到成功的 2xx 响应后，该请求通常建立了什么？",
+      "answer": "建立到请求目标的双向隧道，代理在两端之间转发字节。",
+      "explanation": "CONNECT 请求目标通常包含目标主机和端口。",
+      "example": "客户端通过 HTTP 代理为 HTTPS 目标建立隧道。",
+      "tags": [
+        "HTTP 代理与网关",
+        "CONNECT隧道"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.3.6"
+    },
+    {
+      "id": "httpproxy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 代理与网关",
+      "knowledgePoint": "隧道与TLS内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "客户端通过普通 CONNECT 隧道直接与目标建立 TLS 时，隧道代理能直接读取加密后的 HTTP 正文吗？",
+      "answer": "通常不能；TLS 的加密端点是客户端和目标服务器。",
+      "explanation": "代理仍可观察连接元数据；若另行部署受信任的 TLS 拦截，情况不同。",
+      "example": "代理转发 TLS 字节但不持有该 TLS 会话密钥。",
+      "tags": [
+        "HTTP 代理与网关",
+        "隧道与TLS内容"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-3.7"
+    },
+    {
+      "id": "httpproxy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 代理与网关",
+      "knowledgePoint": "代理TLS终止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTPS 在反向代理处终止后，代理到后端的连接会自动加密吗？",
+      "answer": "不会自动加密；是否使用 TLS 取决于代理到后端的协议与配置。",
+      "explanation": "客户端到代理与代理到后端是两段连接；代理终止 TLS 时能够读取明文。",
+      "example": "客户端到代理使用 HTTPS，代理到后端另行配置 HTTPS。",
+      "tags": [
+        "HTTP 代理与网关",
+        "代理TLS终止"
+      ],
+      "evidence": "application",
+      "reference": "https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass"
+    },
+    {
+      "id": "httpproxy-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "HTTP 代理与网关",
+      "knowledgePoint": "proxy_pass路径",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "Nginx 配置 location /api/ 和 proxy_pass http://127.0.0.1:8000/v1/ 时，请求 /api/users 通常转发为何路径？",
+      "answer": "在普通前缀 location 且未发生其他重写时，匹配的 /api/ 被替换为 /v1/，上游收到 /v1/users。",
+      "explanation": "proxy_pass 是否包含 URI 会影响路径替换；正则 location 和重写等情况另有规则。",
+      "example": "/api/users → /v1/users。",
+      "tags": [
+        "HTTP 代理与网关",
+        "proxy_pass路径"
+      ],
+      "evidence": "source",
+      "reference": "https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass"
+    },
+    {
+      "id": "httpproxy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 代理与网关",
+      "knowledgePoint": "客户端IP头可信性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "后端为什么不能直接信任任意客户端传来的 X-Forwarded-For 作为真实客户端地址？",
+      "answer": "客户端可能自行伪造该请求头；应只依据可信代理设置和验证后的转发链判断。",
+      "explanation": "可信代理的位置和清理或追加规则需要配合网络边界配置。",
+      "example": "直接暴露的后端收到伪造 X-Forwarded-For 时不能据此授权。",
+      "tags": [
+        "HTTP 代理与网关",
+        "客户端IP头可信性"
+      ],
+      "evidence": "source",
+      "reference": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Forwarded-For"
+    }
+  ]
+}

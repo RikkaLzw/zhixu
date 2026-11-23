@@ -1,0 +1,78 @@
+{
+  "source": {
+    "id": "company-interview-agent-design",
+    "title": "快手面经主题启发：Agent 设计",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "公司、岗位、轮次及经历为分享者自述；有些资料由合集转载。逐题记录面经来源和独立技术依据，标注主题启发的题目并非原帖逐题提出。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "companypractice-agent-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Agent 设计面经",
+      "knowledgePoint": "长任务上下文压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Agent 长任务压缩对话历史时，为什么要保留约束、已完成工作和未解决事项？",
+      "answer": "压缩会丢失细节；保留这些信息有助于后续步骤继续遵守要求，并避免重复或遗漏工作。",
+      "explanation": "摘要并非原文的无损替代，重要决定和证据仍应可追溯，并用实际任务检验摘要效果。",
+      "example": "压缩后仍记录不能修改的文件、已完成验证和待排查的错误。",
+      "tags": [
+        "长任务上下文压缩",
+        "Agent 设计面经",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "referenceId": "company-kuaishou",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "快手大模型应用一面（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "agent-context-interview",
+          "title": "Anthropic：Effective context engineering for AI agents",
+          "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+          "type": "技术文章",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypractice-agent-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Agent 设计面经",
+      "knowledgePoint": "检索内容的信任边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Agent 为什么不能把检索页面里的指令自动当作用户授权来执行？",
+      "answer": "网页和工具输出可能包含不可信指令，模型需要将外部内容作为待处理数据，并由系统权限和工具侧控制实际操作。",
+      "explanation": "面经只提到 Agent 框架中的困难；这里结合提示注入资料延伸，不声称原帖问过这一具体问题。",
+      "example": "页面声称要上传本地文件时，系统仍按用户授权与工具权限判断。",
+      "tags": [
+        "检索内容的信任边界",
+        "Agent 设计面经",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "referenceId": "company-kuaishou",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "快手大模型应用一面（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "owasp-prompt-injection-interview",
+          "title": "OWASP：LLM01 Prompt Injection",
+          "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+          "type": "技术指南",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

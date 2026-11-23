@@ -1,0 +1,392 @@
+{
+  "source": {
+    "id": "training-data-loader",
+    "title": "PyTorch 2.15：数据加载与实验状态",
+    "url": "https://docs.pytorch.org/docs/2.15/data.html",
+    "type": "官方技术文档",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "loader-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "按键访问与迭代数据集",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PyTorch 的 map-style 与 iterable-style 数据集如何提供样本？",
+      "answer": "map-style 数据集按键或索引访问样本；iterable-style 数据集通过迭代器依次产生样本。",
+      "explanation": "流式或随机读取代价高的数据可考虑 iterable-style。",
+      "example": "分别按索引读取文件样本和顺序读取实时日志。",
+      "tags": [
+        "按键访问与迭代数据集",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "多进程流式数据重复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 多工作进程加载 IterableDataset 时，为什么要为工作进程划分数据？",
+      "answer": "每个工作进程有数据集副本；如果副本都遍历同一数据流，样本可能重复。",
+      "explanation": "可利用 get_worker_info 等信息为各副本指定不同分片。",
+      "example": "让不同 worker 分别读取不同日志文件。",
+      "tags": [
+        "多进程流式数据重复",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "批处理整理函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用自动批处理时，PyTorch DataLoader 的 collate_fn 接收和返回什么？",
+      "answer": "它接收一组样本，并把它们整理成一个批次返回。",
+      "explanation": "自定义函数可按批次中的最长序列做 padding。",
+      "example": "把不同长度的日志序列补齐后组合成张量。",
+      "tags": [
+        "批处理整理函数",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "主进程数据加载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch DataLoader 的 num_workers=0 表示什么？",
+      "answer": "数据在主进程中加载，不启动数据加载子进程。",
+      "explanation": "这有助于简化调试，但吞吐量应在实际环境中测量。",
+      "example": "先用单进程定位数据读取错误。",
+      "tags": [
+        "主进程数据加载",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "流式数据与采样器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 PyTorch 的 IterableDataset 不能使用常规 sampler 或 batch_sampler？",
+      "answer": "迭代式数据集不以键或索引定义样本访问，读取顺序由其迭代逻辑控制。",
+      "explanation": "需要随机化或分片时应在迭代逻辑中实现。",
+      "example": "由流读取器决定各记录的输出次序。",
+      "tags": [
+        "流式数据与采样器",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "迭代数据集丢弃尾批",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 多进程加载 IterableDataset 且 drop_last=True 时，丢弃的是哪部分数据？",
+      "answer": "每个工作进程的数据集副本各自最后一个不完整批次都会被丢弃。",
+      "explanation": "因此丢弃的总样本数可能超过一个批次。",
+      "example": "两个 worker 各自剩余不足一个批次的记录都不参与训练。",
+      "tags": [
+        "迭代数据集丢弃尾批",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "锁页内存与GPU传输",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "DataLoader 设置 pin_memory=True 是否表示数据已经复制到 GPU？",
+      "answer": "不是；它将适用的主机张量放到锁页内存，可加快之后向 GPU 的传输。",
+      "explanation": "模型代码仍需把数据移动到目标设备。",
+      "example": "先获得锁页的 CPU 批次，再将其传到 CUDA 设备。",
+      "tags": [
+        "锁页内存与GPU传输",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "自定义批次锁页",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DataLoader 的自定义批次类型如何参与自动内存锁页？",
+      "answer": "可在自定义类型上实现 pin_memory()，由该方法处理内部需要锁页的张量。",
+      "explanation": "默认逻辑不认识任意自定义类型，可能直接原样返回。",
+      "example": "为自定义日志批次类提供锁页方法。",
+      "tags": [
+        "自定义批次锁页",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "数据预取量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch DataLoader 的 prefetch_factor 控制什么？",
+      "answer": "它控制每个工作进程预先加载的批次数量。",
+      "explanation": "总预取规模还与工作进程数量有关，内存占用需要实测。",
+      "example": "4 个 worker、预取系数为 2 时最多预取约 8 个批次。",
+      "tags": [
+        "数据预取量",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "工作进程随机种子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch DataLoader 多进程加载时，为什么仍要检查 NumPy 等其他库的随机种子？",
+      "answer": "PyTorch 会为 worker 设置自己的种子，但其他库的随机状态可能在 worker 中重复。",
+      "explanation": "可在 worker_init_fn 中按各 worker 的 PyTorch 种子初始化相关库。",
+      "example": "避免不同 worker 的随机增强产生完全相同的序列。",
+      "tags": [
+        "工作进程随机种子",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "自定义采样与shuffle",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "PyTorch DataLoader 显式指定 sampler 时，能否同时启用 shuffle=True？",
+      "answer": "不能；采样器已经负责样本顺序，sampler 和 shuffle=True 互斥。",
+      "explanation": "应在自定义采样器中实现期望的随机化方式。",
+      "example": "用自定义采样器时不再设置 shuffle=True。",
+      "tags": [
+        "自定义采样与shuffle",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练数据加载",
+      "knowledgePoint": "持续工作进程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch DataLoader 设置 persistent_workers=True 的主要作用是什么？",
+      "answer": "数据集遍历完成后继续保留工作进程及其数据集实例，以供后续迭代复用。",
+      "explanation": "工作进程保留状态时，需要留意数据集状态如何更新。",
+      "example": "跨训练轮次复用加载进程以减少反复启动开销。",
+      "tags": [
+        "持续工作进程",
+        "训练数据加载",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/data.html"
+    },
+    {
+      "id": "loader-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实验复现",
+      "knowledgePoint": "随机种子与跨平台复现",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "只设置相同随机种子，能保证 PyTorch 在不同版本或 CPU、GPU 上完全复现结果吗？",
+      "answer": "不能；不同版本、平台和设备上的结果仍可能不同。",
+      "explanation": "可进一步控制随机源和非确定性运算，并记录环境。",
+      "example": "比较 CPU 与 GPU 结果时记录设备及库版本。",
+      "tags": [
+        "随机种子与跨平台复现",
+        "实验复现",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/notes/randomness.html"
+    },
+    {
+      "id": "loader-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实验复现",
+      "knowledgePoint": "PyTorch与NumPy随机源",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "设置 torch.manual_seed 后，是否已同时设置 NumPy 所有随机数生成器的种子？",
+      "answer": "没有；依赖 NumPy 的全局随机源或独立 Generator 时，需要分别控制它们。",
+      "explanation": "Python random 等其他库也可能需要各自初始化。",
+      "example": "为数据增强所用的 NumPy Generator 设置种子。",
+      "tags": [
+        "PyTorch与NumPy随机源",
+        "实验复现",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/notes/randomness.html"
+    },
+    {
+      "id": "loader-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "实验复现",
+      "knowledgePoint": "确定性算法代价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 为复现选择确定性运算可能带来什么性能取舍？",
+      "answer": "确定性实现可能更慢，从而降低单次运行性能。",
+      "explanation": "是否可用以及具体开销取决于运算和环境。",
+      "example": "回归测试启用确定性设置后测量训练速度。",
+      "tags": [
+        "确定性算法代价",
+        "实验复现",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.15/notes/randomness.html"
+    },
+    {
+      "id": "loader-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练检查点",
+      "knowledgePoint": "模型状态字典",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 模型的 state_dict 除可学习参数外，还可能包含什么？",
+      "answer": "还包含已注册的持久缓冲区，例如 BatchNorm 的运行统计量。",
+      "explanation": "优化器也有自己的 state_dict，但它与模型状态字典是两个对象。",
+      "example": "保存模型时保留归一化层的运行均值。",
+      "tags": [
+        "模型状态字典",
+        "训练检查点",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html"
+    },
+    {
+      "id": "loader-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练检查点",
+      "knowledgePoint": "恢复训练与优化器状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么恢复训练的检查点通常还要保存优化器状态？",
+      "answer": "优化器状态包含训练中更新的缓存及参数组配置，仅恢复模型权重可能丢失这些信息。",
+      "explanation": "还应按需要保存训练步数、调度器和随机状态。",
+      "example": "恢复带动量的优化器时加载其 state_dict。",
+      "tags": [
+        "恢复训练与优化器状态",
+        "训练检查点",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html"
+    },
+    {
+      "id": "loader-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练检查点",
+      "knowledgePoint": "最佳权重快照",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么不能仅用 best_state = model.state_dict() 保留内存中最佳模型的独立快照？",
+      "answer": "返回的状态引用会随后续训练而变化；应及时序列化或深拷贝。",
+      "explanation": "否则后续更新可能覆盖想保留的最佳参数。",
+      "example": "验证集改善时复制状态，再继续训练。",
+      "tags": [
+        "最佳权重快照",
+        "训练检查点",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html"
+    },
+    {
+      "id": "loader-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练检查点",
+      "knowledgePoint": "模型状态加载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 load_state_dict 接收文件路径还是状态字典？",
+      "answer": "它接收已经反序列化的状态字典，而不是文件路径。",
+      "explanation": "先用合适的加载方式读取文件，再把状态字典交给模型。",
+      "example": "加载检查点后将其中的 model_state_dict 传入模型。",
+      "tags": [
+        "模型状态加载",
+        "训练检查点",
+        "PyTorch"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html"
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "toolsandbox-agent-evaluation",
+    "title": "ToolSandbox 原论文 v2：有状态工具与轨迹评估",
+    "url": "https://arxiv.org/pdf/2408.04682v2",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的固定版本资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "toolsbx-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "有状态工具",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 所说的有状态工具具有什么特点？",
+      "answer": "有状态工具会读取、依赖或修改环境中的状态。",
+      "explanation": "前一次操作可能改变后续调用的结果。",
+      "example": "工具开启网络后，后续查询才能成功。",
+      "tags": [
+        "有状态工具评测",
+        "有状态工具"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    },
+    {
+      "id": "toolsbx-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "状态依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 的 state dependency 场景主要考查什么？",
+      "answer": "考查智能体能否发现并处理工具执行所依赖的环境状态。",
+      "explanation": "某些依赖需要通过错误反馈或状态查询发现。",
+      "example": "服务未启用时先修改设置，再重试。",
+      "tags": [
+        "有状态工具评测",
+        "状态依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    },
+    {
+      "id": "toolsbx-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "多轮澄清",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 的多轮用户场景与单轮场景在初始信息上有什么区别？",
+      "answer": "多轮场景的初始请求可能含糊或缺信息，需要通过后续对话澄清。",
+      "explanation": "单轮场景的首条用户消息提供完成任务所需的信息。",
+      "example": "发送消息前询问缺失的接收人。",
+      "tags": [
+        "有状态工具评测",
+        "多轮澄清"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    },
+    {
+      "id": "toolsbx-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "里程碑与雷区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 中 milestone 和 minefield 分别用于描述什么？",
+      "answer": "milestone 描述任务需要发生的关键事件；minefield 描述不能发生的事件。",
+      "explanation": "它们可检查工具调用或环境状态等轨迹信号。",
+      "example": "创建所需记录是里程碑，调用被禁止的动作是雷区。",
+      "tags": [
+        "有状态工具评测",
+        "里程碑与雷区"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    },
+    {
+      "id": "toolsbx-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "里程碑顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 为什么把里程碑的时间依赖表示为有向无环图？",
+      "answer": "这样可以约束必要的先后顺序，同时允许没有依赖的步骤以不同顺序完成。",
+      "explanation": "评估时匹配到的里程碑顺序应符合该图的拓扑顺序。",
+      "example": "先确认资源存在，再修改资源；独立查询可交换顺序。",
+      "tags": [
+        "有状态工具评测",
+        "里程碑顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    },
+    {
+      "id": "toolsbx-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "轨迹匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 论文怎样将一条轨迹与里程碑图匹配？",
+      "answer": "在满足时间依赖的匹配中，选择平均里程碑相似度最高的匹配。",
+      "explanation": "每个里程碑使用适合其目标的相似度度量。",
+      "example": "不同但有效的工具调用顺序都可能得到匹配。",
+      "tags": [
+        "有状态工具评测",
+        "轨迹匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    },
+    {
+      "id": "toolsbx-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "雷区评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 原论文中检测到非零 minefield 匹配时，最终轨迹相似度如何处理？",
+      "answer": "最终相似度设为 0。",
+      "explanation": "这是论文所述的评分设计，不是所有智能体评估的通用规则。",
+      "example": "必要步骤部分完成但触发禁止事件时仍得零分。",
+      "tags": [
+        "有状态工具评测",
+        "雷区评分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    },
+    {
+      "id": "toolsbx-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "效率指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 的 milestone 相似度本身是否直接奖励更少的对话轮次？",
+      "answer": "不直接奖励；论文另用轮次数等指标考察效率。",
+      "explanation": "效率应结合任务完成情况一起解释。",
+      "example": "同分轨迹可以再比较交互轮数。",
+      "tags": [
+        "有状态工具评测",
+        "效率指标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    },
+    {
+      "id": "toolsbx-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "参数规范化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 所称 canonicalization 在工具调用中指什么？",
+      "answer": "把自然语言中的表述转换成工具要求的规范参数形式。",
+      "explanation": "某些转换还需要查询上下文或外部工具。",
+      "example": "把货币符号转换为 ISO 货币代码。",
+      "tags": [
+        "有状态工具评测",
+        "参数规范化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    },
+    {
+      "id": "toolsbx-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "有状态工具评测",
+      "knowledgePoint": "模拟用户误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolSandbox 论文指出语言模型模拟用户可能出现哪些问题？",
+      "answer": "可能编造任务信息，或在交互中偏离给定指令。",
+      "explanation": "因此评测时也需检查模拟用户本身的行为。",
+      "example": "模拟用户把未知信息当作已知事实。",
+      "tags": [
+        "有状态工具评测",
+        "模拟用户误差"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2408.04682v2"
+    }
+  ]
+}

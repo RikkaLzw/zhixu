@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "metagpt-role-collaboration",
+    "title": "MetaGPT 原论文 v2：角色与标准化协作",
+    "url": "https://arxiv.org/pdf/2308.00352v2",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "metagpt-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MetaGPT 多智能体协作",
+      "knowledgePoint": "输出模式与内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MetaGPT 论文中，Action 的输出 schema 与 instruct content 如何配合？",
+      "answer": "schema 定义预期输出结构；instruct content 是从动作输出中提取的结构化数据。",
+      "explanation": "提取的内容可封装为消息发布到共享环境。",
+      "example": "某动作按预定义字段提取模块设计，再将结构化结果交给其他角色。",
+      "tags": [
+        "MetaGPT 多智能体协作",
+        "输出模式与内容"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.00352v2"
+    },
+    {
+      "id": "metagpt-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MetaGPT 多智能体协作",
+      "knowledgePoint": "角色与动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MetaGPT 原论文中的 Role 与 Action 分别承担什么？",
+      "answer": "Role 封装专业能力和工作流；Action 执行具体子任务并生成输出。",
+      "explanation": "同一个角色可以按工作流执行多个动作。",
+      "example": "工程师角色执行编写代码等动作。",
+      "tags": [
+        "MetaGPT 多智能体协作",
+        "角色与动作"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.00352v2"
+    },
+    {
+      "id": "metagpt-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MetaGPT 多智能体协作",
+      "knowledgePoint": "共享环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MetaGPT 的 Environment 在多智能体协作中提供什么？",
+      "answer": "提供共享工作空间和通信渠道，使角色能访问相关消息与资源。",
+      "explanation": "共享环境与每个角色的具体动作职责不同。",
+      "example": "设计结果发布后，工程师角色可读取并使用。",
+      "tags": [
+        "MetaGPT 多智能体协作",
+        "共享环境"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.00352v2"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "source": {
+    "id": "mitre-attack-detection-strategies",
+    "title": "MITRE ATT&CK v18：检测策略与分析项",
+    "url": "https://attack.mitre.org/resources/updates/updates-october-2025/",
+    "type": "原论文或官方文档与源码",
+    "note": "依据逐题引用的固定版本、原论文或官方文档自行整理；示例为自编，具体版本及适用条件见各卡。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "attackdet-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "ATT&CK 检测策略",
+      "knowledgePoint": "框架变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MITRE ATT&CK v18 弃用的是 Data Sources 还是 Data Components？",
+      "answer": "v18 弃用 Data Sources；Data Components 经更新后继续存在。",
+      "explanation": "v18 同时引入 Detection Strategies 和 Analytics。",
+      "example": "更新 ATT&CK 覆盖映射时使用新的检测对象。",
+      "tags": [
+        "ATT&CK 检测策略",
+        "框架变化"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/resources/updates/updates-october-2025/"
+    },
+    {
+      "id": "attackdet-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK 检测策略",
+      "knowledgePoint": "分析项作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MITRE ATT&CK 的 Detection Strategy 与 Analytic 有什么关系？",
+      "answer": "Detection Strategy 描述检测某项技术的高层方法并组织 Analytic；Analytic 提供特定平台的检测逻辑和实现细节。",
+      "explanation": "具体落地仍需要对接本地日志与检测工具。",
+      "example": "同一策略分别列出 Windows 和 Linux 分析项。",
+      "tags": [
+        "ATT&CK 检测策略",
+        "分析项作用"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/analytics/",
+      "supportingReferences": [
+        {
+          "id": "mitre-strategy-index",
+          "title": "MITRE ATT&CK：Detection Strategies",
+          "url": "https://attack.mitre.org/detectionstrategies/",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "attackdet-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK 检测策略",
+      "knowledgePoint": "数据组件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MITRE ATT&CK 中 Data Component 表示什么？",
+      "answer": "它标识与检测某项技术或子技术相关的具体数据属性或值。",
+      "explanation": "Data Sources 被弃用并不意味着 Data Components 也被弃用。",
+      "example": "进程创建是可用于检测的数据组件示例。",
+      "tags": [
+        "ATT&CK 检测策略",
+        "数据组件"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/datacomponents/"
+    },
+    {
+      "id": "attackdet-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK 检测策略",
+      "knowledgePoint": "日志来源映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK 的 Analytic 页面中 Log Sources 表能帮助分析人员确认什么？",
+      "answer": "它列出相关数据组件及日志名称、通道等示例，帮助检查本地遥测覆盖。",
+      "explanation": "来源名称和字段仍需映射到部署环境中的实际日志。",
+      "example": "核对分析项是否有进程创建和网络连接日志。",
+      "tags": [
+        "ATT&CK 检测策略",
+        "日志来源映射"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/detectionstrategies/DET0002/#AN0002-log-sources"
+    },
+    {
+      "id": "attackdet-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ATT&CK 检测策略",
+      "knowledgePoint": "可变元素",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ATT&CK Analytic 的 Mutable Elements 可以包含哪些需要结合环境配置的内容？",
+      "answer": "可以包含分析中需调整的字段或参数，例如进程列表、关联时间窗口或端口列表。",
+      "explanation": "具体元素依 Analytic 而异。",
+      "example": "根据环境设置 TimeWindow 或 ProtocolPortList。",
+      "tags": [
+        "ATT&CK 检测策略",
+        "可变元素"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/detectionstrategies/DET0002/#AN0002-mutable-elements"
+    }
+  ]
+}

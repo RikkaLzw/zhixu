@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "rap-world-model-planning",
+    "title": "RAP 原论文 v2：世界模型与推理规划",
+    "url": "https://arxiv.org/pdf/2305.14992v2",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本与环境为准。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "rapplan-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAP 推理规划",
+      "knowledgePoint": "双重角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAP（Reasoning via Planning）原论文让语言模型承担哪两类角色？",
+      "answer": "作为推理代理采样候选动作，也作为世界模型预测每个动作后的状态。",
+      "explanation": "同一个语言模型可通过不同提示承担不同角色。",
+      "example": "先提出多个积木移动，再预测各移动后的布局。",
+      "tags": [
+        "RAP 推理规划",
+        "双重角色"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.14992v2"
+    },
+    {
+      "id": "rapplan-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAP 推理规划",
+      "knowledgePoint": "模拟边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAP 原论文中的内部轨迹模拟是否等于已经在真实外部环境执行动作？",
+      "answer": "不是；该方法可由语言模型预测状态和轨迹，真实环境结果仍需另行验证。",
+      "explanation": "世界模型的预测可能不准确。",
+      "example": "模型预测操作成功并不证明网页操作已发生。",
+      "tags": [
+        "RAP 推理规划",
+        "模拟边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.14992v2"
+    },
+    {
+      "id": "rapplan-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAP 推理规划",
+      "knowledgePoint": "奖励信号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAP 如何使用奖励信号指导搜索？",
+      "answer": "用奖励评估推理步骤的可行性或期望程度，并结合树搜索选择候选轨迹。",
+      "explanation": "奖励可以是模型自评或任务相关启发式，未必是真实正确性的保证。",
+      "example": "用目标状态匹配程度作为规划奖励。",
+      "tags": [
+        "RAP 推理规划",
+        "奖励信号"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.14992v2"
+    },
+    {
+      "id": "rapplan-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAP 推理规划",
+      "knowledgePoint": "置信度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RAP 论文在数学推理实例中如何估计世界模型答案的一致性？",
+      "answer": "对同一子问题采样多个答案，以最常见答案的比例作为置信度。",
+      "explanation": "采样一致也可能反复产生同一种错误。",
+      "example": "五次回答中四次相同，比例为 4/5。",
+      "tags": [
+        "RAP 推理规划",
+        "置信度"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2305.14992v2"
+    }
+  ]
+}

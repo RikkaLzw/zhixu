@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "zeek-dns-transaction-fields",
+    "title": "Zeek 7.2.1 源码：DNS 事务日志字段",
+    "url": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/dns/main.zeek",
+    "type": "固定版本源码",
+    "note": "依据逐题引用的资料自行整理；示例为自编，版本与前提见题目。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "zeekdns-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek DNS 事务字段",
+      "knowledgePoint": "往返时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 的 dns.log 中 rtt 表示什么时间差？",
+      "answer": "表示从看到查询请求到应答开始的时间差。",
+      "explanation": "该值反映采集点观察到的时间，未必等于完整应用端到端耗时。",
+      "example": "比较解析器请求与开始响应的时刻。",
+      "tags": [
+        "Zeek DNS 事务字段",
+        "往返时间"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/dns/main.zeek"
+    },
+    {
+      "id": "zeekdns-003",
+      "category": "detection",
+      "level": "实践",
+      "subtopic": "Zeek DNS 事务字段",
+      "knowledgePoint": "往返时间缺失",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 的 dns.log 没有 rtt，能否单独认定一定没有看到 DNS 响应？",
+      "answer": "不能；源码在计算得到零间隔时会移除 rtt，可能只观察到响应。",
+      "explanation": "日志缺失还应结合抓包范围和其他字段分析。",
+      "example": "响应进入监视范围而查询未被看到时，rtt 可能缺失。",
+      "tags": [
+        "Zeek DNS 事务字段",
+        "往返时间缺失"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/dns/main.zeek"
+    },
+    {
+      "id": "zeekdns-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek DNS 事务字段",
+      "knowledgePoint": "答案摘要",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 的 dns.log answers 是否保证包含资源记录的全部原始内容？",
+      "answer": "不保证；脚本将回复信息作为资源记录的摘要，某些记录类型的全部数据可能未包含。",
+      "explanation": "具体表示取决于记录类型及相应处理逻辑。",
+      "example": "分析复杂记录时回查原始 DNS 报文。",
+      "tags": [
+        "Zeek DNS 事务字段",
+        "答案摘要"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/dns/main.zeek"
+    },
+    {
+      "id": "zeekdns-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek DNS 事务字段",
+      "knowledgePoint": "缓存时间对应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 在记录非空 DNS 回复摘要时，TTLs 如何与 answers 对应？",
+      "answer": "脚本追加每个回复摘要时，也追加该资源记录的 TTL。",
+      "explanation": "两个向量按这些已记录回复的顺序对应。",
+      "example": "第一个记录的答案摘要对应第一个 TTL。",
+      "tags": [
+        "Zeek DNS 事务字段",
+        "缓存时间对应"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/dns/main.zeek"
+    },
+    {
+      "id": "zeekdns-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Zeek DNS 事务字段",
+      "knowledgePoint": "未匹配日志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 清理 DNS 连接状态时，会怎样处理仍未匹配的查询或响应？",
+      "answer": "脚本会写出仍在等待匹配的查询和响应记录。",
+      "explanation": "这意味着日志中可能出现不完整事务，不能只根据记录存在就断言请求和响应均被捕获。",
+      "example": "捕获丢包时仍可能看到仅含查询的信息。",
+      "tags": [
+        "Zeek DNS 事务字段",
+        "未匹配日志"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/dns/main.zeek"
+    },
+    {
+      "id": "zeekdns-007",
+      "category": "detection",
+      "level": "实践",
+      "subtopic": "Zeek DNS 事务字段",
+      "knowledgePoint": "拒绝字段边界",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "Zeek 7.2.1 的 dns.log rejected 为真，能否直接等同于 DNS 响应码一定是 REFUSED？",
+      "answer": "不能；源码有多个设置该字段的路径，包括响应码非零且问题数为零的情况。",
+      "explanation": "应同时检查 rcode 等字段，再解释拒绝原因。",
+      "example": "记录 rejected=true 时继续检查 rcode_name。",
+      "tags": [
+        "Zeek DNS 事务字段",
+        "拒绝字段边界"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/zeek/zeek/blob/v7.2.1/scripts/base/protocols/dns/main.zeek"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "alibi-position-bias",
+    "title": "ALiBi 原论文：线性位置偏置",
+    "url": "https://arxiv.org/pdf/2108.12409v2",
+    "type": "教材、论文与官方技术文档",
+    "note": "依据逐题引用的教材、论文或固定版本文档自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "alibibase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "注意力位置偏置",
+      "knowledgePoint": "位置注入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALiBi 原论文在哪里引入位置相关信息？",
+      "answer": "在各注意力头的查询与键得分上添加与相对距离相关的偏置。",
+      "explanation": "原论文的方法不向词嵌入额外相加位置向量。",
+      "example": "较远的历史位置得到更负的加性偏置。",
+      "tags": [
+        "注意力位置偏置",
+        "位置注入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.12409v2"
+    },
+    {
+      "id": "alibibase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "注意力位置偏置",
+      "knowledgePoint": "距离惩罚",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 ALiBi 原论文的因果注意力中，历史键距查询越远，其位置偏置通常怎样变化？",
+      "answer": "偏置随距离线性变得更负。",
+      "explanation": "这是对注意力得分的先验偏好，最终权重还取决于内容得分。",
+      "example": "距离增加时，相同内容得分的远位置受到更强惩罚。",
+      "tags": [
+        "注意力位置偏置",
+        "距离惩罚"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.12409v2"
+    },
+    {
+      "id": "alibibase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "注意力位置偏置",
+      "knowledgePoint": "斜率设置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALiBi 原论文的不同注意力头为何可具有不同距离惩罚强度？",
+      "answer": "每个头使用自己的固定斜率，斜率控制偏置随距离变化的速度。",
+      "explanation": "原论文在训练前设置斜率，并不训练这些斜率。",
+      "example": "较小斜率的头对远距离衰减较缓。",
+      "tags": [
+        "注意力位置偏置",
+        "斜率设置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.12409v2"
+    },
+    {
+      "id": "alibibase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力位置偏置",
+      "knowledgePoint": "位置与内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 ALiBi 后，距离更远的 token 是否必然比近处 token 获得更小的注意力权重？",
+      "answer": "不必然；偏置之外的查询与键内容得分也会影响最终 softmax。",
+      "explanation": "只有在其他得分相同等条件下，距离惩罚才单独决定相对倾向。",
+      "example": "远处 token 的内容匹配分数可能更高。",
+      "tags": [
+        "注意力位置偏置",
+        "位置与内容"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.12409v2"
+    },
+    {
+      "id": "alibibase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力位置偏置",
+      "knowledgePoint": "因果约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALiBi 的距离偏置能自动替代自回归语言模型的因果掩码吗？",
+      "answer": "不能；因果掩码仍用于阻止查询位置访问未来 token。",
+      "explanation": "距离偏置和因果访问约束承担不同作用。",
+      "example": "预测位置 i 时仍屏蔽 i 之后的键。",
+      "tags": [
+        "注意力位置偏置",
+        "因果约束"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.12409v2"
+    },
+    {
+      "id": "alibibase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力位置偏置",
+      "knowledgePoint": "长度外推",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALiBi 论文所说的长度外推指什么？",
+      "answer": "模型在验证或推理时处理超过训练序列长度的输入，并保持可接受的表现。",
+      "explanation": "能处理长输入不保证有效利用所有远距离信息。",
+      "example": "模型在更长上下文上继续测量困惑度。",
+      "tags": [
+        "注意力位置偏置",
+        "长度外推"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.12409v2"
+    },
+    {
+      "id": "alibibase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力位置偏置",
+      "knowledgePoint": "外推评估限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ALiBi 论文为什么提醒长序列困惑度改善不一定证明模型利用了远距离上下文？",
+      "answer": "较长的非重叠评估片段也会减少片段开头的短上下文预测比例。",
+      "explanation": "论文用滑动窗口进一步分析这种影响。",
+      "example": "更多 token 获得较完整的近期上下文也可能改善分数。",
+      "tags": [
+        "注意力位置偏置",
+        "外推评估限制"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2108.12409v2"
+    }
+  ]
+}

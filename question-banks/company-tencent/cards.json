@@ -1,0 +1,43 @@
+{
+  "source": {
+    "id": "company-tencent",
+    "title": "腾讯风控 Agent 岗公开面经（作者自述）",
+    "url": "https://www.nowcoder.com/feed/main/detail/bf38563e18af48269c0e710993d3f06e",
+    "type": "公开面经（个人自述）",
+    "note": "考点依据个人公开复盘整理；公司、岗位及经历为作者自述，答案另依据所列技术资料核验。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "tencent-interview-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体评测",
+      "knowledgePoint": "工具轨迹评测",
+      "questionType": "概念与原理",
+      "question": "为什么 Agent 评测不能只检查最终答案？",
+      "answer": "最终答案看似正确时，执行过程仍可能选错工具、使用错误参数或执行不必要的操作。",
+      "explanation": "可结合任务要求检查工具选择、参数和轨迹。",
+      "example": "查询制度时答案正确，但系统额外调用了办理接口。",
+      "tags": [
+        "工具轨迹评测",
+        "Agent",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://www.nowcoder.com/feed/main/detail/bf38563e18af48269c0e710993d3f06e",
+      "referenceTitle": "腾讯风控 Agent 岗公开面经（作者自述）",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "langsmith-evals-ref",
+          "title": "LangSmith：Evaluation concepts",
+          "url": "https://docs.langchain.com/langsmith/evaluation-concepts",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

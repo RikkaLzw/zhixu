@@ -3,15 +3,16 @@ import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text
 import { categories } from '../categories';
 import { ActionButton, IconButton } from '../components/ui';
 import { colors } from '../theme';
+import { cardLevel, studyLevels } from '../levels';
 import { normalizeTag } from '../tags';
 import { defaultTopic, topics } from '../topics';
-import { CategoryId, StudyCard, TopicId } from '../types';
+import { CategoryId, StudyCard, StudyCardDraft, StudyLevel, TopicId } from '../types';
 
 export function EditorScreen({ card, initialCategory, initialTopic, onSave, onClose }: {
   card?: StudyCard;
   initialCategory?: CategoryId;
   initialTopic?: TopicId;
-  onSave: (card: { id?: string; category: CategoryId; topic: TopicId; question: string; answer: string; explanation?: string; example?: string; tags: string[] }) => void;
+  onSave: (card: StudyCardDraft) => void;
   onClose: () => void;
 }) {
   const [question, setQuestion] = useState(card?.question ?? '');
@@ -20,6 +21,7 @@ export function EditorScreen({ card, initialCategory, initialTopic, onSave, onCl
   const [category, setCategory] = useState<CategoryId>(initialGroup);
   const [topic, setTopic] = useState<TopicId>(card?.topic ??
     (topics.some((item) => item.id === initialTopic && item.category === initialGroup) ? initialTopic! : defaultTopic(initialGroup)));
+  const [level, setLevel] = useState<StudyLevel>(card ? cardLevel(card) : '入门');
   const [explanation, setExplanation] = useState(card?.explanation ?? '');
   const [example, setExample] = useState(card?.example ?? '');
   const [tags, setTags] = useState((card?.tags ?? []).join('，'));
@@ -34,6 +36,7 @@ export function EditorScreen({ card, initialCategory, initialTopic, onSave, onCl
       id: card?.id,
       category,
       topic,
+      level,
       question,
       answer,
       explanation: explanation.trim() || undefined,
@@ -65,6 +68,16 @@ export function EditorScreen({ card, initialCategory, initialTopic, onSave, onCl
           {topics.filter((item) => item.category === category).map((item) => (
             <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={`选择主题：${item.label}`} onPress={() => setTopic(item.id)} style={[styles.category, topic === item.id && styles.categorySelected]}>
               <Text style={[styles.categoryText, topic === item.id && styles.categoryTextSelected]}>{item.label}</Text>
+            </Pressable>
+          ))}
+        </View>
+        <Text style={styles.label}>学习阶段</Text>
+        <View style={styles.categories}>
+          {studyLevels.map((item) => (
+            <Pressable key={item.id} accessibilityRole="button" accessibilityLabel={`卡片阶段：${item.label}`}
+              accessibilityState={{ selected: level === item.id }} onPress={() => setLevel(item.id)}
+              style={[styles.category, level === item.id && styles.categorySelected]}>
+              <Text style={[styles.categoryText, level === item.id && styles.categoryTextSelected]}>{item.label}</Text>
             </Pressable>
           ))}
         </View>

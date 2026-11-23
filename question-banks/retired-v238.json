@@ -1,0 +1,3917 @@
+{
+  "version": 238,
+  "note": "基础阶段校准前的主卡快照，用于保留用户自定义内容与学习进度。",
+  "cards": [
+    {
+      "id": "ai4sec-001",
+      "category": "foundations",
+      "question": "有监督分类与异常检测的常见目标有什么区别？",
+      "answer": "有监督分类利用标注样本学习类别；异常检测关注偏离参考数据的观测，还需结合上下文判断是否构成威胁。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "03",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-001"
+        },
+        {
+          "id": "sklearn-anomaly-ref",
+          "title": "scikit-learn：新颖性与异常检测",
+          "url": "https://scikit-learn.org/stable/modules/outlier_detection.html",
+          "type": "官方技术文档",
+          "evidence": "application",
+          "sourceCardId": "eval-017"
+        },
+        {
+          "id": "sklearn-supervised-ref",
+          "title": "scikit-learn：监督学习",
+          "url": "https://scikit-learn.org/stable/supervised_learning.html",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "eval-017"
+        }
+      ],
+      "subtopic": "模型任务",
+      "knowledgePoint": "监督分类与异常检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "explanation": "异常并不自动意味着恶意，检测方法和训练假设可能不同。",
+      "example": "分类器区分已标注攻击类别；异常模型筛选偏离常态的行为。",
+      "alternateQuestions": [
+        "有监督分类与异常检测在常见训练目标上有什么区别？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "监督分类与异常检测",
+        "模型任务",
+        "异常检测"
+      ]
+    },
+    {
+      "id": "ai4sec-005",
+      "category": "foundations",
+      "question": "为什么安全检测不能只看准确率？",
+      "answer": "正常样本远多于攻击样本时，全部预测为正常也可能得到很高的准确率，却无法发现攻击。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "03",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-005"
+        },
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "source",
+          "sourceCardId": "code-007"
+        },
+        {
+          "id": "code-metric-ref",
+          "title": "PrimeVul：漏洞检测评估",
+          "url": "https://arxiv.org/html/2403.18624",
+          "type": "研究论文",
+          "evidence": "source",
+          "sourceCardId": "code-007"
+        }
+      ],
+      "subtopic": "漏洞模型评估",
+      "knowledgePoint": "准确率的局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "explanation": "官方脚本报告准确率；实际应用还应依据标签和场景补充指标。",
+      "example": "增加精确率、召回率、混淆矩阵和每百个函数的可疑告警数。",
+      "alternateQuestions": [
+        "为什么 CodeXGLUE 原始任务的准确率不能单独描述审计效果？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "准确率",
+        "审计评估"
+      ]
+    },
+    {
+      "id": "ai4sec-009",
+      "category": "foundations",
+      "question": "安全分类数据中的类别不平衡是什么？",
+      "answer": "不同类别的样本数量明显不均衡，例如正常样本远多于攻击样本。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "03",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-009"
+        },
+        {
+          "id": "imbalanced-learning-ref",
+          "title": "imbalanced-learn：类别不平衡与数据泄漏",
+          "url": "https://imbalanced-learn.org/stable/common_pitfalls.html",
+          "type": "官方技术文档",
+          "evidence": "application",
+          "sourceCardId": "eval-018"
+        }
+      ],
+      "subtopic": "类别不平衡",
+      "knowledgePoint": "类别不平衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "explanation": "评估应考虑真实场景的类别比例及误报漏报。",
+      "example": "训练数据含大量正常流量与少量已标注攻击。",
+      "alternateQuestions": [
+        "安全分类数据中的类别不平衡是什么意思？"
+      ],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "类别不平衡",
+        "类别比例"
+      ]
+    },
+    {
+      "id": "ai4sec-017",
+      "category": "detection",
+      "question": "安全告警中的误报是什么？",
+      "answer": "误报是正常行为被系统判为目标威胁。误报过多会消耗分析人员时间并造成告警疲劳。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "knowledgeArea": "11",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-017"
+        },
+        {
+          "id": "nist-ids-basics",
+          "title": "NIST SP 800-94 入侵检测术语与方法",
+          "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf",
+          "type": "技术文档",
+          "evidence": "source",
+          "sourceCardId": "idsreview-002"
+        }
+      ],
+      "subtopic": "入侵检测基础",
+      "knowledgePoint": "误报定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "explanation": "NIST 将正常活动被错误识别为恶意活动称为 false positive。",
+      "example": "合法管理员操作触发了攻击告警。",
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "误报定义",
+        "入侵检测基础"
+      ]
+    },
+    {
+      "id": "ai4sec-018",
+      "category": "detection",
+      "question": "安全告警中的漏报是什么？",
+      "answer": "漏报是真实威胁未被系统识别。应分析漏报所属攻击类型、数据缺失和检测盲区。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "knowledgeArea": "11",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-018"
+        },
+        {
+          "id": "nist-ids-basics",
+          "title": "NIST SP 800-94 入侵检测术语与方法",
+          "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf",
+          "type": "技术文档",
+          "evidence": "source",
+          "sourceCardId": "idsreview-003"
+        }
+      ],
+      "subtopic": "入侵检测基础",
+      "knowledgePoint": "漏报定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "explanation": "NIST 将未能识别恶意活动称为 false negative。",
+      "example": "攻击发生但检测系统没有发出对应告警。",
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "level": "进阶",
+      "tags": [
+        "漏报定义",
+        "入侵检测基础"
+      ]
+    },
+    {
+      "id": "pydata-006",
+      "category": "foundations",
+      "question": "Python try 语句中的 else 什么时候执行？",
+      "answer": "当 try 子句没有引发异常时执行。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "Python 异常",
+      "knowledgePoint": "异常 else 子句",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "异常 else 子句",
+        "Python",
+        "数据处理"
+      ],
+      "explanation": "把不需要保护的后续代码放在 else 中，可避免误捕获它产生的异常。",
+      "example": "文件打开成功后在 else 中处理已打开的文件。",
+      "sources": [
+        {
+          "id": "python-numpy",
+          "title": "Python 教程与 NumPy 广播文档",
+          "url": "https://docs.python.org/3/tutorial/errors.html",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "pydata-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "companypy-001",
+      "category": "foundations",
+      "question": "Python 中可迭代对象与迭代器的主要区别是什么？",
+      "answer": "可迭代对象能通过 iter() 提供迭代器；迭代器可通过 next() 逐项取值并维护迭代状态。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "大厂面经",
+      "knowledgePoint": "可迭代对象与迭代器",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "可迭代对象与迭代器",
+        "大厂面经",
+        "公开面经",
+        "字节",
+        "Python"
+      ],
+      "explanation": "迭代器本身也是可迭代对象。",
+      "example": "列表是可迭代对象，iter(列表) 返回迭代器。",
+      "sources": [
+        {
+          "id": "company-bytedance",
+          "title": "字节公开面经（作者自述）",
+          "url": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+          "type": "公开面经（个人自述）",
+          "evidence": "application",
+          "sourceCardId": "companypy-001"
+        },
+        {
+          "id": "python-interview-doc",
+          "title": "Python 3.13 官方文档",
+          "url": "https://docs.python.org/3.13/tutorial/classes.html#iterators",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "companypy-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "companypy-002",
+      "category": "foundations",
+      "question": "Python 迭代器如何表示没有更多元素？",
+      "answer": "调用 next() 时抛出 StopIteration。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "大厂面经",
+      "knowledgePoint": "迭代结束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "迭代结束",
+        "大厂面经",
+        "公开面经",
+        "字节",
+        "Python"
+      ],
+      "explanation": "for 循环会处理该异常并结束迭代。",
+      "example": "消费完迭代器后再次调用 next()。",
+      "sources": [
+        {
+          "id": "company-bytedance",
+          "title": "字节公开面经（作者自述）",
+          "url": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+          "type": "公开面经（个人自述）",
+          "evidence": "application",
+          "sourceCardId": "companypy-002"
+        },
+        {
+          "id": "python-interview-doc",
+          "title": "Python 3.13 官方文档",
+          "url": "https://docs.python.org/3.13/tutorial/classes.html#iterators",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "companypy-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "companypractice-py-001",
+      "category": "foundations",
+      "question": "Python 的浅拷贝和深拷贝对嵌套可变对象有什么区别？",
+      "answer": "浅拷贝创建外层对象，通常仍引用其中的原有子对象；深拷贝递归复制子对象，并通过记忆表处理已复制的对象。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "Python 面经",
+      "knowledgePoint": "浅拷贝与深拷贝",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "浅拷贝与深拷贝",
+        "Python 面经",
+        "公开面经",
+        "快手",
+        "地平线"
+      ],
+      "explanation": "不同对象可自定义拷贝行为；不可变对象可能直接复用。",
+      "example": "复制包含子列表的列表后，修改子列表可观察两种方式的区别。",
+      "sources": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手安全实习一面（个人自述，合集收录）",
+          "url": "https://www.nowcoder.com/discuss/651317",
+          "type": "公开面经（个人自述）",
+          "evidence": "application",
+          "sourceCardId": "companypractice-py-001"
+        },
+        {
+          "id": "python-copy-interview",
+          "title": "Python：浅拷贝和深拷贝",
+          "url": "https://docs.python.org/3/library/copy.html",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "companypractice-py-001"
+        },
+        {
+          "id": "company-horizon",
+          "title": "地平线机器人智能驾驶算法实习一面（2019届，作者自述）",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972019%E5%B1%8A%E5%AE%9E%E4%B9%A0%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application",
+          "sourceCardId": "companypractice-py-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "pyconcurrent-001",
+      "category": "foundations",
+      "question": "Python 多线程与多进程在内存空间上有什么主要区别？",
+      "answer": "同一进程中的线程共享进程内存；不同进程通常有各自的地址空间。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "Python 并发",
+      "knowledgePoint": "线程与进程内存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "线程与进程内存",
+        "Python",
+        "公开面经",
+        "快手"
+      ],
+      "explanation": "进程也可通过共享内存、队列等机制交换数据。",
+      "example": "多个线程访问同一进程内的缓存。",
+      "sources": [
+        {
+          "id": "python-concurrency-fundamentals",
+          "title": "Python 3.13：threading",
+          "url": "https://docs.python.org/3.13/library/threading.html",
+          "type": "官方技术文档",
+          "evidence": "application",
+          "sourceCardId": "pyconcurrent-001"
+        },
+        {
+          "id": "company-kuaishou",
+          "title": "快手安全实习公开面经（合集收录，经历为分享者自述）；Python 并发主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x2f-%E5%BF%AB%E6%89%8B-%E5%AE%89%E5%85%A8%E5%AE%9E%E4%B9%A0%E7%94%9F",
+          "type": "公开面经合集",
+          "evidence": "application",
+          "sourceCardId": "pyconcurrent-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "npstudy-001",
+      "category": "foundations",
+      "question": "NumPy 数组的 shape、ndim 和 size 分别描述什么？",
+      "answer": "shape 给出各轴长度，ndim 是轴的数量，size 是元素总数。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "NumPy 数组",
+      "knowledgePoint": "数组形状与维数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "数组形状与维数",
+        "NumPy",
+        "数据工程"
+      ],
+      "explanation": "size 通常等于 shape 中各维长度的乘积。",
+      "example": "形状 (3, 4) 的数组有 2 个轴和 12 个元素。",
+      "sources": [
+        {
+          "id": "numpy-data-fundamentals",
+          "title": "NumPy 2.2：Quickstart",
+          "url": "https://numpy.org/doc/2.2/user/quickstart.html",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "npstudy-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "npstudy-002",
+      "category": "foundations",
+      "question": "NumPy 数组的 dtype 描述什么？",
+      "answer": "它描述数组元素使用的数据类型及相关表示信息。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "NumPy 数组",
+      "knowledgePoint": "数组元素类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "数组元素类型",
+        "NumPy",
+        "数据工程"
+      ],
+      "explanation": "普通数值数组的元素共享一个 dtype；object 类型的元素可引用不同 Python 对象。",
+      "example": "float32 数组的 dtype 指明元素为单精度浮点数。",
+      "sources": [
+        {
+          "id": "numpy-data-fundamentals",
+          "title": "NumPy 2.2：Data types",
+          "url": "https://numpy.org/doc/2.2/user/basics.types.html",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "npstudy-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "npstudy-011",
+      "category": "foundations",
+      "question": "NumPy reshape 中的一个 -1 维度有什么作用？",
+      "answer": "它让 NumPy 根据元素总数和其他维度自动推断该轴长度。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "数组形状",
+      "knowledgePoint": "自动推断形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "自动推断形状",
+        "NumPy",
+        "数据工程"
+      ],
+      "explanation": "新形状必须与原数组元素总数兼容，只能有一个待推断维度。",
+      "example": "把 12 个元素 reshape 为 (3, -1)，得到形状 (3, 4)。",
+      "sources": [
+        {
+          "id": "numpy-data-fundamentals",
+          "title": "NumPy 2.2：reshape",
+          "url": "https://numpy.org/doc/2.2/reference/generated/numpy.reshape.html",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "npstudy-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "npstudy-015",
+      "category": "foundations",
+      "question": "NumPy stack 与 concatenate 在轴上有什么主要区别？",
+      "answer": "stack 沿新建的轴组合形状相同的数组；concatenate 沿已有轴拼接。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "数组形状",
+      "knowledgePoint": "堆叠与拼接",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "堆叠与拼接",
+        "NumPy",
+        "数据工程"
+      ],
+      "explanation": "两者对输入形状的要求和结果维数不同。",
+      "example": "两个 (2, 3) 数组沿 axis=0 的 stack 得到 (2, 2, 3)。",
+      "sources": [
+        {
+          "id": "numpy-data-fundamentals",
+          "title": "NumPy 2.2：stack",
+          "url": "https://numpy.org/doc/2.2/reference/generated/numpy.stack.html",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "npstudy-015"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "npstudy-017",
+      "category": "foundations",
+      "question": "对二维 NumPy 数组，* 与 @ 分别执行什么运算？",
+      "answer": "* 按元素相乘；@ 执行矩阵乘法。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "数组运算",
+      "knowledgePoint": "逐元素与矩阵乘法",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "逐元素与矩阵乘法",
+        "NumPy",
+        "数据工程"
+      ],
+      "explanation": "逐元素乘法使用广播规则，矩阵乘法要求内层维度匹配。",
+      "example": "两个 2×2 数组的 A*B 与 A@B 通常不同。",
+      "sources": [
+        {
+          "id": "numpy-data-fundamentals",
+          "title": "NumPy 2.2：Quickstart",
+          "url": "https://numpy.org/doc/2.2/user/quickstart.html",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "npstudy-017"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "npstudy-022",
+      "category": "foundations",
+      "question": "NumPy 的 np.where(condition, x, y) 按什么规则构造输出？",
+      "answer": "条件为 True 的位置取 x 的值，其余位置取 y 的值。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "数组运算",
+      "knowledgePoint": "条件选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "条件选择",
+        "NumPy",
+        "数据工程"
+      ],
+      "explanation": "condition、x 和 y 必须可广播到共同形状。",
+      "example": "把负数替换为零，同时保留其他数值。",
+      "sources": [
+        {
+          "id": "numpy-data-fundamentals",
+          "title": "NumPy 2.2：where",
+          "url": "https://numpy.org/doc/2.2/reference/generated/numpy.where.html",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "npstudy-022"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "pyenv-001",
+      "category": "foundations",
+      "question": "Python 的 venv 主要用于什么？",
+      "answer": "创建具有独立解释器路径和软件包目录的虚拟环境。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "Python 虚拟环境与 pip",
+      "knowledgePoint": "环境隔离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "Python 虚拟环境与 pip",
+        "环境隔离"
+      ],
+      "explanation": "它默认不暴露系统 site-packages；可通过选项改变。",
+      "example": "为不同项目维护各自的依赖版本。",
+      "sources": [
+        {
+          "id": "python-venv-pip-practice",
+          "title": "Python 3.14 与 pip 文档：环境及依赖管理",
+          "url": "https://docs.python.org/3.14/library/venv.html",
+          "type": "论文、官方文档或数据集说明",
+          "evidence": "source",
+          "sourceCardId": "pyenv-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "pddate-005",
+      "category": "foundations",
+      "question": "pandas.to_datetime 的 format 参数主要用于什么？",
+      "answer": "指定日期时间字符串应按何种格式解析。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "Pandas 日期时间",
+      "knowledgePoint": "指定格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "Pandas 日期时间",
+        "指定格式"
+      ],
+      "explanation": "format=\"mixed\" 会逐项推断格式，应注意歧义风险。",
+      "example": "使用 %Y-%m-%d 解析固定格式日期。",
+      "sources": [
+        {
+          "id": "pandas-datetime-parsing",
+          "title": "pandas 2.2.3 文档：日期时间解析",
+          "url": "https://pandas.pydata.org/pandas-docs/version/2.2.3/reference/api/pandas.to_datetime.html",
+          "type": "固定版本论文、源码或官方文档",
+          "evidence": "source",
+          "sourceCardId": "pddate-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "supervised-001",
+      "category": "foundations",
+      "question": "决策树分类中的节点分裂通常依据什么选择？",
+      "answer": "它比较候选特征和阈值，选择能改善子节点纯度的分裂。",
+      "createdAt": 0,
+      "topic": "ml-basics",
+      "knowledgeArea": "03",
+      "subtopic": "监督学习",
+      "knowledgePoint": "决策树分裂",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "决策树分裂",
+        "监督学习"
+      ],
+      "explanation": "具体准则和搜索方式取决于算法与参数。",
+      "example": "按连接次数阈值将样本分成左右两组。",
+      "sources": [
+        {
+          "id": "sklearn-supervised",
+          "title": "scikit-learn 1.9.1 监督学习与集成文档",
+          "url": "https://scikit-learn.org/stable/modules/tree.html",
+          "type": "技术文档",
+          "evidence": "source",
+          "sourceCardId": "supervised-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "supervised-003",
+      "category": "foundations",
+      "question": "限制决策树最大深度主要用于控制什么？",
+      "answer": "它限制树的复杂度，有助于减轻对训练数据的过拟合。",
+      "createdAt": 0,
+      "topic": "ml-basics",
+      "knowledgeArea": "03",
+      "subtopic": "监督学习",
+      "knowledgePoint": "树深与泛化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "树深与泛化",
+        "监督学习"
+      ],
+      "explanation": "深度过小也可能导致欠拟合，需用验证数据选择。",
+      "example": "比较不同 max_depth 下的验证表现。",
+      "sources": [
+        {
+          "id": "sklearn-supervised",
+          "title": "scikit-learn 1.9.1 监督学习与集成文档",
+          "url": "https://scikit-learn.org/stable/modules/tree.html",
+          "type": "技术文档",
+          "evidence": "source",
+          "sourceCardId": "supervised-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "threshold-001",
+      "category": "foundations",
+      "question": "分类模型的分数输出与阈值决策分别解决什么问题？",
+      "answer": "分数用于表达模型对类别的预测；阈值将分数转换为具体的类别决定或行动。",
+      "createdAt": 0,
+      "topic": "ml-basics",
+      "knowledgeArea": "03",
+      "subtopic": "分类决策",
+      "knowledgePoint": "分类分数与决策",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "分类分数与决策",
+        "分类决策",
+        "阈值"
+      ],
+      "explanation": "阈值选择应考虑实际代价和目标。",
+      "example": "同一风险分数可在不同告警预算下对应不同处置。",
+      "sources": [
+        {
+          "id": "categorical-encoding",
+          "title": "scikit-learn：类别编码与分类阈值",
+          "url": "https://scikit-learn.org/stable/modules/classification_threshold.html",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "threshold-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "torchtrain-006",
+      "category": "foundations",
+      "question": "张量的 detach() 用于什么？",
+      "answer": "它返回一个与当前计算图分离的张量，使后续运算不通过原路径反向传播。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "自动微分",
+      "knowledgePoint": "detach",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "detach",
+        "PyTorch",
+        "神经网络"
+      ],
+      "explanation": "分离不等于复制数据；修改共享存储时需要小心。",
+      "example": "保存某次预测用于展示时先从计算图分离。",
+      "sources": [
+        {
+          "id": "pytorch-training",
+          "title": "PyTorch 教程：自动微分与训练优化",
+          "url": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "torchtrain-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "torchtrain-012",
+      "category": "foundations",
+      "question": "PyTorch 的 CrossEntropyLoss 通常接收什么分类模型输出？",
+      "answer": "通常接收未经过 softmax 的 logits。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "训练循环",
+      "knowledgePoint": "交叉熵输入",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "交叉熵输入",
+        "PyTorch",
+        "神经网络"
+      ],
+      "explanation": "该损失内部组合了对数 softmax 与负对数似然计算。",
+      "example": "多分类模型的线性输出直接传入 CrossEntropyLoss。",
+      "sources": [
+        {
+          "id": "pytorch-training",
+          "title": "PyTorch 教程：自动微分与训练优化",
+          "url": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "torchtrain-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "torchtrain-013",
+      "category": "foundations",
+      "question": "model.train() 与 model.eval() 会改变什么？",
+      "answer": "它们切换某些层的训练或评估行为，例如 Dropout 和 BatchNorm。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "训练循环",
+      "knowledgePoint": "训练评估模式",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "训练评估模式",
+        "PyTorch",
+        "神经网络"
+      ],
+      "explanation": "eval() 不会自动关闭梯度计算，需要时另用 no_grad()。",
+      "example": "验证前调用 model.eval()，回到训练时调用 model.train()。",
+      "sources": [
+        {
+          "id": "pytorch-training",
+          "title": "PyTorch 教程：自动微分与训练优化",
+          "url": "https://docs.pytorch.org/tutorials/beginner/basics/optimization_tutorial.html",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "torchtrain-013"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "generalize-003",
+      "category": "foundations",
+      "question": "泛化误差与训练误差有什么区别？",
+      "answer": "训练误差是在训练样本上测得的误差；泛化误差描述模型对目标分布新样本的期望误差。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "模型诊断",
+      "knowledgePoint": "泛化误差",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "泛化误差",
+        "深度学习",
+        "泛化"
+      ],
+      "explanation": "实际中只能用合适的独立样本估计泛化误差。",
+      "example": "在未用于训练和选择模型的测试集上估计未来表现。",
+      "sources": [
+        {
+          "id": "d2l-generalization",
+          "title": "动手学深度学习：模型泛化与暂退法",
+          "url": "https://zh.d2l.ai/chapter_multilayer-perceptrons/underfit-overfit.html",
+          "type": "官方文档与标准",
+          "evidence": "source",
+          "sourceCardId": "generalize-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "generalize-005",
+      "category": "foundations",
+      "question": "为什么反复依据测试集结果修改模型会损害最终评估？",
+      "answer": "模型选择过程会逐渐适应测试集，使它不再是独立的最终评估。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "模型选择",
+      "knowledgePoint": "反复使用测试集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "反复使用测试集",
+        "深度学习",
+        "泛化"
+      ],
+      "explanation": "模型和超参数选择应使用验证数据或适当的交叉验证。",
+      "example": "多次调参后再把同一测试分数称为独立最终结果不可靠。",
+      "sources": [
+        {
+          "id": "d2l-generalization",
+          "title": "动手学深度学习：模型泛化与暂退法",
+          "url": "https://zh.d2l.ai/chapter_multilayer-perceptrons/underfit-overfit.html",
+          "type": "官方文档与标准",
+          "evidence": "source",
+          "sourceCardId": "generalize-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cnnbase-001",
+      "category": "foundations",
+      "question": "卷积层的局部连接指什么？",
+      "answer": "一个输出位置通常只直接依赖输入中的一个局部区域。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "卷积局部连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "卷积局部连接",
+        "卷积与池化"
+      ],
+      "explanation": "多层组合后，一个输出可能间接依赖更大范围。",
+      "example": "3×3 卷积核每次处理一个局部图像区域。",
+      "sources": [
+        {
+          "id": "cnn-foundations",
+          "title": "动手学深度学习：卷积与池化基础",
+          "url": "https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html",
+          "type": "教材与技术文档",
+          "evidence": "source",
+          "sourceCardId": "cnnbase-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cnnbase-002",
+      "category": "foundations",
+      "question": "卷积层的权重共享是什么意思？",
+      "answer": "同一个卷积核在不同空间位置重复使用同一组参数。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "卷积权重共享",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "卷积权重共享",
+        "卷积与池化"
+      ],
+      "explanation": "共享发生在空间位置之间，不表示所有输出通道共用同一卷积核。",
+      "example": "同一滤波器扫描图像的左上角和右下角。",
+      "sources": [
+        {
+          "id": "cnn-foundations",
+          "title": "动手学深度学习：卷积与池化基础",
+          "url": "https://zh.d2l.ai/chapter_convolutional-neural-networks/conv-layer.html",
+          "type": "教材与技术文档",
+          "evidence": "source",
+          "sourceCardId": "cnnbase-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cnnbase-004",
+      "category": "foundations",
+      "question": "二维卷积中的填充通常是做什么？",
+      "answer": "在输入的空间边界添加额外元素，使卷积核能覆盖边缘并改变输出尺寸。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "卷积填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "卷积填充",
+        "卷积与池化"
+      ],
+      "explanation": "常见的是零填充，具体填充值和方式取决于实现。",
+      "example": "在图像四周补零后再做卷积。",
+      "sources": [
+        {
+          "id": "cnn-foundations",
+          "title": "动手学深度学习：卷积与池化基础",
+          "url": "https://zh.d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html",
+          "type": "教材与技术文档",
+          "evidence": "source",
+          "sourceCardId": "cnnbase-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cnnbase-005",
+      "category": "foundations",
+      "question": "卷积的步幅控制什么？",
+      "answer": "它控制卷积核在输入空间上相邻计算位置之间移动的距离。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "卷积步幅",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "卷积步幅",
+        "卷积与池化"
+      ],
+      "explanation": "其他条件固定时，增大步幅通常会减少输出的空间位置。",
+      "example": "水平步幅为 2 时，每次向右移动两个位置。",
+      "sources": [
+        {
+          "id": "cnn-foundations",
+          "title": "动手学深度学习：卷积与池化基础",
+          "url": "https://zh.d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html",
+          "type": "教材与技术文档",
+          "evidence": "source",
+          "sourceCardId": "cnnbase-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "cnnbase-011",
+      "category": "foundations",
+      "question": "最大池化与平均池化在一个窗口内各保留什么？",
+      "answer": "最大池化取窗口最大值；平均池化取窗口内数值的平均值。",
+      "createdAt": 0,
+      "topic": "deep-learning",
+      "knowledgeArea": "04",
+      "subtopic": "卷积与池化",
+      "knowledgePoint": "最大与平均池化",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "最大与平均池化",
+        "卷积与池化"
+      ],
+      "explanation": "边界与填充如何计入平均值由具体实现决定。",
+      "example": "对一个 2×2 区域分别取最大值和均值。",
+      "sources": [
+        {
+          "id": "cnn-foundations",
+          "title": "动手学深度学习：卷积与池化基础",
+          "url": "https://zh.d2l.ai/chapter_convolutional-neural-networks/pooling.html",
+          "type": "教材与技术文档",
+          "evidence": "source",
+          "sourceCardId": "cnnbase-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "nlp-005",
+      "category": "foundations",
+      "question": "编码器—解码器中的交叉注意力连接了什么？",
+      "answer": "解码器使用交叉注意力访问编码器对输入序列产生的表示。",
+      "createdAt": 0,
+      "topic": "nlp-transformer",
+      "knowledgeArea": "05",
+      "subtopic": "注意力",
+      "knowledgePoint": "交叉注意力",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "交叉注意力",
+        "NLP",
+        "Transformer"
+      ],
+      "explanation": "这使生成目标 token 时能够参考输入内容。",
+      "example": "翻译生成某个词时参考源句中的相关部分。",
+      "sources": [
+        {
+          "id": "hf-transformer",
+          "title": "Hugging Face LLM Course：Transformer 与 BPE",
+          "url": "https://huggingface.co/learn/llm-course/chapter1/4",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "nlp-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attn-003",
+      "category": "foundations",
+      "question": "注意力分数经过 softmax 后得到什么？",
+      "answer": "得到非负且在未被完全屏蔽的可见位置上和为 1 的权重。",
+      "createdAt": 0,
+      "topic": "nlp-transformer",
+      "knowledgeArea": "05",
+      "subtopic": "注意力",
+      "knowledgePoint": "注意力 Softmax",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "注意力 Softmax",
+        "Transformer",
+        "注意力"
+      ],
+      "explanation": "掩码通常在 softmax 前排除不可见位置。",
+      "example": "对一个查询的多个可见键分配一组权重。",
+      "sources": [
+        {
+          "id": "happy-attention",
+          "title": "Happy-LLM 第二章：Transformer 架构",
+          "url": "https://github.com/datawhalechina/happy-llm/blob/main/docs/chapter2/%E7%AC%AC%E4%BA%8C%E7%AB%A0%20Transformer%E6%9E%B6%E6%9E%84.md",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "attn-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attn-004",
+      "category": "foundations",
+      "question": "缩放点积注意力为什么把点积除以 √d_k？",
+      "answer": "它缓解键向量维度增大时点积分数幅度过大，从而降低 softmax 饱和及梯度过小的风险。",
+      "createdAt": 0,
+      "topic": "nlp-transformer",
+      "knowledgeArea": "05",
+      "subtopic": "注意力",
+      "knowledgePoint": "点积缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "点积缩放",
+        "Transformer",
+        "注意力",
+        "公开面经",
+        "阿里"
+      ],
+      "explanation": "d_k 是查询和键的特征维度。",
+      "example": "键维度增大时按其平方根缩放分数。",
+      "sources": [
+        {
+          "id": "happy-attention",
+          "title": "Happy-LLM 第二章：Transformer 架构",
+          "url": "https://github.com/datawhalechina/happy-llm/blob/main/docs/chapter2/%E7%AC%AC%E4%BA%8C%E7%AB%A0%20Transformer%E6%9E%B6%E6%9E%84.md",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "attn-004"
+        },
+        {
+          "id": "company-alibaba",
+          "title": "阿里公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900308%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application",
+          "sourceCardId": "attn-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attn-005",
+      "category": "foundations",
+      "question": "多头注意力的基本做法是什么？",
+      "answer": "用多组投影并行计算注意力，再合并各头结果并进行输出投影。",
+      "createdAt": 0,
+      "topic": "nlp-transformer",
+      "knowledgeArea": "05",
+      "subtopic": "注意力",
+      "knowledgePoint": "多头注意力",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "多头注意力",
+        "Transformer",
+        "注意力"
+      ],
+      "explanation": "不同头可以学习关注不同的关系，但并不保证每个头都具备明确可解释的功能。",
+      "example": "多个头分别处理同一序列的不同投影表示。",
+      "sources": [
+        {
+          "id": "happy-attention",
+          "title": "Happy-LLM 第二章：Transformer 架构",
+          "url": "https://github.com/datawhalechina/happy-llm/blob/main/docs/chapter2/%E7%AC%AC%E4%BA%8C%E7%AB%A0%20Transformer%E6%9E%B6%E6%9E%84.md",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "attn-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "generate-010",
+      "category": "foundations",
+      "question": "自回归生成中的 KV Cache 主要用于什么？",
+      "answer": "缓存先前 token 的注意力键和值，减少后续解码步骤中对它们的重复计算。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "推理优化",
+      "knowledgePoint": "KV Cache",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "KV Cache",
+        "大模型",
+        "生成"
+      ],
+      "explanation": "缓存会占用额外显存，大小与序列长度等因素有关。",
+      "example": "长回答生成时复用前文计算得到的键和值。",
+      "sources": [
+        {
+          "id": "hf-generation",
+          "title": "Hugging Face：语言模型架构与生成策略",
+          "url": "https://huggingface.co/docs/transformers/en/main_classes/text_generation",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "generate-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "lora-002",
+      "category": "foundations",
+      "question": "LoRA 中的低秩分解通常表示什么？",
+      "answer": "它用两个较小矩阵的乘积表示目标权重矩阵的更新量。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "低秩更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "低秩更新",
+        "大模型",
+        "LoRA"
+      ],
+      "explanation": "原始权重和更新量在前向计算时共同作用。",
+      "example": "以 BA 表示某层权重的增量 ΔW。",
+      "sources": [
+        {
+          "id": "lora-adaptation",
+          "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+          "url": "https://arxiv.org/pdf/2106.09685",
+          "type": "官方文档与标准",
+          "evidence": "source",
+          "sourceCardId": "lora-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "lora-003",
+      "category": "foundations",
+      "question": "LoRA 的秩 r 对适配参数有什么影响？",
+      "answer": "在其他配置不变时，增大 r 会增加低秩矩阵的参数量及更新的表示能力上限。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "LoRA秩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "LoRA秩",
+        "大模型",
+        "LoRA",
+        "公开面经",
+        "百度"
+      ],
+      "explanation": "更大的秩不保证在所有任务上效果更好。",
+      "example": "比较相同目标层上 r=4 与 r=16 的训练资源。",
+      "sources": [
+        {
+          "id": "lora-adaptation",
+          "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+          "url": "https://arxiv.org/pdf/2106.09685",
+          "type": "官方文档与标准",
+          "evidence": "source",
+          "sourceCardId": "lora-003"
+        },
+        {
+          "id": "company-baidu",
+          "title": "百度公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application",
+          "sourceCardId": "lora-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "lora-004",
+      "category": "foundations",
+      "question": "在原始 LoRA 配置中，为什么常把一个低秩矩阵初始化为零？",
+      "answer": "这样两个矩阵的乘积在训练开始时为零，初始更新不会改变预训练权重的输出。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "参数高效微调",
+      "knowledgePoint": "LoRA初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "LoRA初始化",
+        "大模型",
+        "LoRA",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "explanation": "不同实现可能提供其他初始化方法。",
+      "example": "论文使用随机初始化的 A 与零初始化的 B。",
+      "sources": [
+        {
+          "id": "lora-adaptation",
+          "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+          "url": "https://arxiv.org/pdf/2106.09685",
+          "type": "官方文档与标准",
+          "evidence": "source",
+          "sourceCardId": "lora-004"
+        },
+        {
+          "id": "company-ant",
+          "title": "蚂蚁公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%9A%82%E8%9A%81/%E3%80%900315%E3%80%91%E8%9A%82%E8%9A%81%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application",
+          "sourceCardId": "lora-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmmem-006",
+      "category": "foundations",
+      "question": "大模型权重量化通常以什么换取较小的权重存储？",
+      "answer": "它用较低位宽表示权重，通常需要权衡数值误差与模型效果。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "推理内存",
+      "knowledgePoint": "权重量化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "权重量化",
+        "推理内存"
+      ],
+      "explanation": "运行速度和总显存还取决于算子、硬件、缓存及其他开销。",
+      "example": "把部分线性层权重从高精度表示换成 8 位表示。",
+      "sources": [
+        {
+          "id": "llm-memory",
+          "title": "Transformers 5.23.0 缓存、量化与 PagedAttention 资料",
+          "url": "https://huggingface.co/docs/transformers/v5.23.0/en/quantization/overview",
+          "type": "技术文档与标准",
+          "evidence": "source",
+          "sourceCardId": "llmmem-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "llmmem-007",
+      "category": "foundations",
+      "question": "QLoRA 如何结合低位权重与 LoRA 进行适配？",
+      "answer": "它使用量化的冻结基座权重，并训练额外的低秩适配参数。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "推理内存",
+      "knowledgePoint": "QLoRA基本思想",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "QLoRA基本思想",
+        "推理内存"
+      ],
+      "explanation": "量化格式、计算精度和实现支持需要分别确认。",
+      "example": "在 4 位基座上训练 LoRA 适配器。",
+      "sources": [
+        {
+          "id": "llm-memory",
+          "title": "Transformers 5.23.0 缓存、量化与 PagedAttention 资料",
+          "url": "https://huggingface.co/docs/transformers/v5.23.0/en/quantization/bitsandbytes",
+          "type": "技术文档与标准",
+          "evidence": "source",
+          "sourceCardId": "llmmem-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "attnint-003",
+      "category": "foundations",
+      "question": "上下文学习（in-context learning）与监督微调在模型参数更新上有什么区别？",
+      "answer": "上下文学习在推理时利用提示和上下文（可含示例），不进行梯度更新；监督微调通过训练更新模型参数。",
+      "createdAt": 0,
+      "topic": "llm-training",
+      "knowledgeArea": "06",
+      "subtopic": "大模型面经",
+      "knowledgePoint": "上下文学习与微调",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "上下文学习与微调",
+        "大模型面经",
+        "公开面经",
+        "百度"
+      ],
+      "explanation": "两者可以结合，效果和成本应按任务评估。",
+      "example": "在提示中给几个示例，或用标注数据训练模型适配器。",
+      "sources": [
+        {
+          "id": "company-baidu",
+          "title": "百度公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application",
+          "sourceCardId": "attnint-003"
+        },
+        {
+          "id": "interview-paper-ref",
+          "title": "Language Models are Few-Shot Learners 原论文",
+          "url": "https://arxiv.org/abs/2005.14165",
+          "type": "研究论文",
+          "evidence": "source",
+          "sourceCardId": "attnint-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "rag-002",
+      "category": "operations",
+      "question": "为什么安全知识问答要分别评估检索与生成？",
+      "answer": "检索没有找到正确资料和模型误读已找到资料，是不同错误。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "knowledgeArea": "07",
+      "subtopic": "RAG 评估",
+      "knowledgePoint": "检索与生成分开评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "检索评估",
+        "生成评估",
+        "命中率",
+        "答案正确性"
+      ],
+      "explanation": "分开评估才能知道优先改进索引、查询还是生成步骤。",
+      "example": "先检查正确漏洞公告是否进入前几条，再检查答案是否忠于公告。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-002"
+        },
+        {
+          "id": "rag-review-doc",
+          "title": "LangSmith：Evaluate a RAG application",
+          "url": "https://docs.langchain.com/langsmith/evaluate-rag-tutorial",
+          "type": "技术文档",
+          "evidence": "source",
+          "sourceCardId": "rag-002"
+        },
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-006"
+        },
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-034"
+        }
+      ],
+      "alternateQuestions": [
+        "安全问答中的检索命中率能否代替答案正确率？"
+      ],
+      "otherExplanations": [
+        "检索质量与答案质量应分别测量。"
+      ],
+      "otherExamples": [
+        "公告在前五条中，但答案引用了另一个不适用的产品版本。"
+      ]
+    },
+    {
+      "id": "rag-004",
+      "category": "operations",
+      "question": "安全知识检索为什么常把关键词检索与向量检索结合？",
+      "answer": "精确编号和术语匹配与语义相似检索各有优势。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "knowledgeArea": "07",
+      "subtopic": "混合检索",
+      "knowledgePoint": "关键词与语义检索互补",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "混合检索",
+        "CVE"
+      ],
+      "explanation": "混合检索的具体权重需要在目标问题集上验证。",
+      "example": "用关键词匹配 CVE 编号，同时检索语义相近的漏洞描述。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-004"
+        },
+        {
+          "id": "rag-review-doc",
+          "title": "Elastic：Hybrid search",
+          "url": "https://www.elastic.co/what-is/hybrid-search",
+          "type": "技术文档",
+          "evidence": "source",
+          "sourceCardId": "rag-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "rag-008",
+      "category": "operations",
+      "question": "为什么安全 RAG 需要记录资料的发布时间与版本？",
+      "answer": "漏洞状态和修复建议会更新，旧资料可能不适用于当前问题。",
+      "createdAt": 0,
+      "topic": "security-rag",
+      "knowledgeArea": "07",
+      "subtopic": "安全知识时效",
+      "knowledgePoint": "来源时效与版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "时效性",
+        "版本"
+      ],
+      "explanation": "答案应能追踪所用资料和更新时间，并处理相互冲突的版本。",
+      "example": "同一漏洞存在更新公告时，显示当前引用的发布日期。",
+      "sources": [
+        {
+          "id": "security-rag",
+          "title": "RAG 原始论文与安全知识检索应用",
+          "url": "https://arxiv.org/abs/2005.11401",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "rag-008"
+        },
+        {
+          "id": "cisa-advisory-revisions-ref",
+          "title": "CISA：Log4j 漏洞通报与更新",
+          "url": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa21-356a",
+          "type": "官方安全公告",
+          "evidence": "source",
+          "sourceCardId": "rag-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "retrieve-009",
+      "category": "foundations",
+      "question": "重排器能否找回第一阶段完全没有召回的文档？",
+      "answer": "不能；常见的第二阶段重排只能重新排列已提供给它的候选。",
+      "createdAt": 0,
+      "topic": "rag-basics",
+      "knowledgeArea": "07",
+      "subtopic": "重排",
+      "knowledgePoint": "重排召回上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "重排召回上限",
+        "检索",
+        "RAG"
+      ],
+      "explanation": "若相关文档不在候选集中，应优先改进召回阶段。",
+      "example": "相关手册从未进入前 50 个候选时，仅修改重排顺序无效。",
+      "sources": [
+        {
+          "id": "langchain-retrieval",
+          "title": "LangChain 检索文档与 Pinecone 重排教程",
+          "url": "https://www.pinecone.io/learn/series/rag/rerankers/",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "retrieve-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ragmetric-002",
+      "category": "foundations",
+      "question": "检索评估中的 Precision@K 衡量什么？",
+      "answer": "它衡量前 K 个结果中相关结果所占的比例。",
+      "createdAt": 0,
+      "topic": "rag-basics",
+      "knowledgeArea": "07",
+      "subtopic": "检索评估",
+      "knowledgePoint": "Precision@K",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "Precision@K",
+        "检索评估"
+      ],
+      "explanation": "应明确相关性标注和结果不足 K 项时的实现口径。",
+      "example": "前 5 项中 2 项相关，Precision@5 为 2/5。",
+      "sources": [
+        {
+          "id": "ir-evaluation",
+          "title": "信息检索与 RAG 评估文档",
+          "url": "https://ir-measur.es/en/latest/measures.html",
+          "type": "技术文档",
+          "evidence": "source",
+          "sourceCardId": "ragmetric-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "faiss-010",
+      "category": "foundations",
+      "question": "向量检索中的元数据过滤有什么作用？",
+      "answer": "它用字段条件限定搜索结果的候选范围，只返回满足条件的记录。",
+      "createdAt": 0,
+      "topic": "rag-basics",
+      "knowledgeArea": "07",
+      "subtopic": "向量过滤",
+      "knowledgePoint": "元数据过滤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "元数据过滤",
+        "向量过滤"
+      ],
+      "explanation": "字段正确性和权限校验仍须由系统设计保证。",
+      "example": "只查询指定产品版本的文档片段。",
+      "sources": [
+        {
+          "id": "faiss-retrieval",
+          "title": "Faiss 向量索引、距离与元数据过滤",
+          "url": "https://docs.pinecone.io/guides/search/filter-by-metadata",
+          "type": "教材、论文与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "faiss-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "agents-005",
+      "category": "foundations",
+      "question": "固定工作流与动态规划在步骤选择上有什么区别？",
+      "answer": "固定工作流按预设规则执行；动态规划可根据任务和反馈选择或调整步骤。",
+      "createdAt": 0,
+      "topic": "agent-design",
+      "knowledgeArea": "08",
+      "subtopic": "规划与执行",
+      "knowledgePoint": "固定流程与动态规划",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "固定流程与动态规划",
+        "Agent",
+        "智能体"
+      ],
+      "explanation": "可预测的简单任务不一定需要动态规划。",
+      "example": "字段校验用固定流程，开放式资料调查可按结果调整检索。",
+      "sources": [
+        {
+          "id": "ms-agents",
+          "title": "Microsoft AI Agents for Beginners：智能体基础",
+          "url": "https://github.com/microsoft/ai-agents-for-beginners/blob/main/01-intro-to-ai-agents/README.md",
+          "type": "教材与官方文档",
+          "evidence": "source",
+          "sourceCardId": "agents-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "agentp-005",
+      "category": "foundations",
+      "question": "为什么实际 ReAct 工作流常设置步骤或调用次数上限？",
+      "answer": "反复搜索或选择动作可能无法收敛，上限可以限制耗时和资源消耗。",
+      "createdAt": 0,
+      "topic": "agent-design",
+      "knowledgeArea": "08",
+      "subtopic": "推理与行动",
+      "knowledgePoint": "ReAct 循环上限",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "ReAct 循环上限",
+        "推理与行动"
+      ],
+      "explanation": "达到上限应返回当前进度或失败状态，而不是假称任务完成。",
+      "example": "同一查询反复无有效结果时结束并报告缺口。",
+      "sources": [
+        {
+          "id": "agent-patterns",
+          "title": "Datawhale Hello-Agents：第四章 智能体经典范式构建",
+          "url": "https://github.com/datawhalechina/hello-agents/blob/main/docs/chapter4/Chapter4-Building-Classic-Agent-Paradigms.md",
+          "type": "中文教材",
+          "evidence": "application",
+          "sourceCardId": "agentp-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "reliable-001",
+      "category": "foundations",
+      "question": "为什么 Agent 的远程工具调用需要设置超时？",
+      "answer": "超时可限制等待时间，避免连接、线程等资源被长期占用。",
+      "createdAt": 0,
+      "topic": "agent-engineering",
+      "knowledgeArea": "09",
+      "subtopic": "远程调用",
+      "knowledgePoint": "调用超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "调用超时",
+        "远程调用"
+      ],
+      "explanation": "阈值应考虑下游延迟及任务时限，过短也可能使正常请求失败。",
+      "example": "外部检索接口迟迟不返回时终止等待。",
+      "sources": [
+        {
+          "id": "agent-reliability",
+          "title": "Agent 工具调用的超时、重试与容错",
+          "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+          "type": "教材、论文与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "reliable-001"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "reliable-002",
+      "category": "foundations",
+      "question": "外部写操作超时是否意味着操作没有执行？",
+      "answer": "不一定；服务端可能已经完成操作，只是响应丢失或未及时到达。",
+      "createdAt": 0,
+      "topic": "agent-engineering",
+      "knowledgeArea": "09",
+      "subtopic": "远程调用",
+      "knowledgePoint": "超时与副作用",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "超时与副作用",
+        "远程调用"
+      ],
+      "explanation": "应结合服务端状态查询和可靠的幂等机制处理未知结果。",
+      "example": "创建工单超时后先查询工单状态。",
+      "sources": [
+        {
+          "id": "agent-reliability",
+          "title": "Agent 工具调用的超时、重试与容错",
+          "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+          "type": "教材、论文与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "reliable-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "lcbase-020",
+      "category": "foundations",
+      "question": "对 LangChain 聊天模型调用 bind_tools 后，模型返回工具调用请求是否就执行了工具？",
+      "answer": "不一定；单独使用模型时，调用方需要执行请求并把结果返回，智能体循环可代为处理。",
+      "createdAt": 0,
+      "topic": "agent-engineering",
+      "knowledgeArea": "09",
+      "subtopic": "工具调用",
+      "knowledgePoint": "绑定工具与执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "绑定工具与执行",
+        "LangChain",
+        "Agent"
+      ],
+      "explanation": "绑定主要使模型获得工具定义并能提出调用请求。",
+      "example": "读取 AIMessage.tool_calls 后调用对应工具。",
+      "sources": [
+        {
+          "id": "langchain-fundamentals",
+          "title": "LangChain 官方文档：Models",
+          "url": "https://docs.langchain.com/oss/python/langchain/models",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "lcbase-020"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-009",
+      "category": "foundations",
+      "question": "TCP 数据段中的序号通常标识什么？",
+      "answer": "它标识该段第一个数据字节的序号；SYN 段的序号表示初始序号。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "序号含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "序号含义",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "TCP 对字节编号，而不是简单地给每条应用消息编号。",
+      "example": "从指定序号开始的多个字节形成一个数据段。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.1",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "tcpbase-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-011",
+      "category": "foundations",
+      "question": "TCP 的 ACK 确认号通常表示什么？",
+      "answer": "它表示接收方下一步期望按序接收的序号，累计确认此前的字节。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "累计确认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "累计确认",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "选择确认等扩展还可报告其他已收到的数据范围。",
+      "example": "ACK 为 101 时表示此前按序字节已收到。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.3.1",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "tcpbase-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-013",
+      "category": "foundations",
+      "question": "TCP 发送方等待确认超时后通常会做什么？",
+      "answer": "它会重传尚未确认的数据，并按相应算法调整重传计时和拥塞控制状态。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "重传超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "重传超时",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "重传超时并不单独证明某一具体原因。",
+      "example": "丢失的数据段未收到确认后被重新发送。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "tcpbase-013"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-015",
+      "category": "foundations",
+      "question": "TCP 校验和的主要用途是什么？",
+      "answer": "它用于检测传输中的数据或相关头部损坏；检测通过并不保证应用内容在语义上正确。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "校验和边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "校验和边界",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "校验和不能独立完成数据纠错。",
+      "example": "损坏的数据段可被丢弃并通过重传恢复。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.1",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "tcpbase-015"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-016",
+      "category": "foundations",
+      "question": "TCP 接收窗口主要用于控制什么？",
+      "answer": "它通告接收方当前允许的接收序号范围，帮助发送方避免超过接收端可接收的数据量。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "流量控制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "流量控制",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "窗口大小可随接收缓冲区状态变化。",
+      "example": "应用读取缓慢时接收窗口可能缩小。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "tcpbase-016"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-024",
+      "category": "foundations",
+      "question": "正常 TCP 关闭中，哪一端通常进入 TIME-WAIT？",
+      "answer": "通常是主动关闭的一端；同时关闭等情况需要按状态机具体分析。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "TIME_WAIT端点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "TIME_WAIT端点",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "不能把这一规则无条件用于所有异常关闭。",
+      "example": "客户端先发起关闭时通常由客户端进入 TIME-WAIT。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "tcpbase-024"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-025",
+      "category": "foundations",
+      "question": "TCP 的 TIME-WAIT 状态主要有什么作用？",
+      "answer": "它让连接关闭相关的最后确认可被重传，并使旧连接的迟到报文有时间失效。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "TIME_WAIT作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "TIME_WAIT作用",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "RFC 9293 的状态机规定该状态等待 2×MSL。",
+      "example": "最终 ACK 丢失时，对端重发 FIN 可再次得到确认。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "tcpbase-025"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-026",
+      "category": "foundations",
+      "question": "TCP RST 与 FIN 在连接终止上有什么主要区别？",
+      "answer": "FIN 用于正常关闭一个发送方向；RST 用于复位连接并中止当前连接状态。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "RST与FIN",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "RST与FIN",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "接收 RST 的具体应用错误表现依实现和状态而异。",
+      "example": "正常结束会话与复位异常连接使用不同控制标志。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "tcpbase-026"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-027",
+      "category": "foundations",
+      "question": "TCP 的 MSS 表示什么大小？",
+      "answer": "它表示接收端愿意接收的 TCP 数据段载荷上限，不包含 IP 和 TCP 头部。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "最大报文段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "最大报文段",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "实际可发送的载荷还受到路径和头部选项等因素影响。",
+      "example": "建连时双方可通过 MSS 选项通告各自接收能力。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.7.1",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "tcpbase-027"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-019",
+      "category": "foundations",
+      "question": "Shell 管道中的 | 通常把什么连接到什么？",
+      "answer": "它将前一个命令的标准输出连接到后一个命令的标准输入。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "管道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "管道",
+        "Linux 常用命令"
+      ],
+      "explanation": "标准错误默认不会自动进入该管道。",
+      "example": "把命令输出传给 grep 筛选。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Pipelines.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-019"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-020",
+      "category": "foundations",
+      "question": "Shell 重定向 > 和 >> 在写入普通文件时有什么区别？",
+      "answer": "> 通常覆盖或截断目标文件；>> 将输出追加到文件末尾。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "覆盖追加",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "覆盖追加",
+        "Linux 常用命令"
+      ],
+      "explanation": "两者都可以在文件不存在时创建文件。",
+      "example": "保存新日志与向已有日志追加内容。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Redirections.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-020"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-021",
+      "category": "foundations",
+      "question": "Shell 中 2>file 重定向哪个输出流？",
+      "answer": "它把标准错误输出重定向到指定文件。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "错误输出重定向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "错误输出重定向",
+        "Linux 常用命令"
+      ],
+      "explanation": "标准输出的文件描述符通常是 1。",
+      "example": "把错误信息单独保存到文件。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Redirections.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-021"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-023",
+      "category": "foundations",
+      "question": "Shell 的 cmd1 && cmd2 与 cmd1 || cmd2 分别在什么时候执行第二条命令？",
+      "answer": "&& 在前一命令成功时执行后者；|| 在前一命令失败时执行后者。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "命令条件执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "命令条件执行",
+        "Linux 常用命令"
+      ],
+      "explanation": "一般以退出状态 0 表示成功。",
+      "example": "构建成功后再运行下一步骤。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Lists.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-023"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-024",
+      "category": "foundations",
+      "question": "Shell 中退出状态 0 与非零值通常分别表示什么？",
+      "answer": "0 通常表示成功；非零值表示失败或其他程序定义的状态。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "退出状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "退出状态",
+        "Linux 常用命令"
+      ],
+      "explanation": "具体非零值含义由命令定义。",
+      "example": "grep 用不同状态区分匹配、无匹配和错误。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Exit-Status.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-024"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-030",
+      "category": "foundations",
+      "question": "ps 与 top 在查看进程时有什么常见区别？",
+      "answer": "ps 通常给出一次进程状态快照；top 通常持续刷新进程与资源信息。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "进程列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "进程列表",
+        "Linux 常用命令"
+      ],
+      "explanation": "具体显示字段取决于命令和选项。",
+      "example": "先用 ps 查进程，再用 top 观察变化。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://man7.org/linux/man-pages/man1/ps.1.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-030"
+        },
+        {
+          "id": "linux-top-man",
+          "title": "Linux man-pages：top(1)",
+          "url": "https://man7.org/linux/man-pages/man1/top.1.html",
+          "type": "官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-030"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-031",
+      "category": "foundations",
+      "question": "SIGTERM 和 SIGKILL 在终止进程时有什么主要区别？",
+      "answer": "SIGTERM 可以被进程捕获或处理；SIGKILL 不能被捕获、阻塞或忽略。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "终止信号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "终止信号",
+        "Linux 常用命令"
+      ],
+      "explanation": "进程的终止时间还受系统状态影响。",
+      "example": "先请求进程正常退出，再根据需要处理未退出的进程。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://man7.org/linux/man-pages/man7/signal.7.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-031"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-034",
+      "category": "foundations",
+      "question": "Bash 中 export 变量名的作用是什么？",
+      "answer": "它把变量标记为环境变量，使后续启动的子进程继承该变量。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "环境变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "环境变量",
+        "Linux 常用命令"
+      ],
+      "explanation": "子进程修改自己的环境通常不会反向修改父 shell。",
+      "example": "为后续命令提供配置值。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Bourne-Shell-Builtins.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-034"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "osbase-012",
+      "category": "foundations",
+      "question": "Linux 中 fork 成功后，在父进程和子进程中分别返回什么？",
+      "answer": "父进程得到子进程 PID，子进程得到 0。",
+      "createdAt": 0,
+      "topic": "operating-systems",
+      "knowledgeArea": "19",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "fork返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "fork返回值",
+        "操作系统基础"
+      ],
+      "explanation": "失败时父进程收到错误返回值且不会创建子进程。",
+      "example": "根据返回值区分父子进程执行分支。",
+      "sources": [
+        {
+          "id": "os-fundamentals",
+          "title": "操作系统基础：OSTEP 与 Linux 手册",
+          "url": "https://man7.org/linux/man-pages/man2/fork.2.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "osbase-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "osbase-015",
+      "category": "foundations",
+      "question": "成功调用 execve 后，是否会额外创建一个新进程？",
+      "answer": "不会；它用新程序映像替换当前进程的程序，进程标识不因此改变。",
+      "createdAt": 0,
+      "topic": "operating-systems",
+      "knowledgeArea": "19",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "exec与进程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "exec与进程",
+        "操作系统基础"
+      ],
+      "explanation": "成功的 execve 不会返回到原程序的调用位置。",
+      "example": "子进程 fork 后通过 execve 运行另一个程序。",
+      "sources": [
+        {
+          "id": "os-fundamentals",
+          "title": "操作系统基础：OSTEP 与 Linux 手册",
+          "url": "https://man7.org/linux/man-pages/man2/execve.2.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "osbase-015"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "osbase-016",
+      "category": "foundations",
+      "question": "Linux 中的僵尸进程通常是什么？",
+      "answer": "它是已经终止、但父进程尚未读取其终止状态的子进程记录。",
+      "createdAt": 0,
+      "topic": "operating-systems",
+      "knowledgeArea": "19",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "僵尸进程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "僵尸进程",
+        "操作系统基础"
+      ],
+      "explanation": "父进程通过 wait 等接口收取状态后可释放该记录。",
+      "example": "子进程退出后等待父进程回收。",
+      "sources": [
+        {
+          "id": "os-fundamentals",
+          "title": "操作系统基础：OSTEP 与 Linux 手册",
+          "url": "https://man7.org/linux/man-pages/man2/waitpid.2.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "osbase-016"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "dbbase-013",
+      "category": "foundations",
+      "question": "关系数据库中的主键通常有什么约束？",
+      "answer": "它用于唯一标识行；主键列的组合必须唯一且非空。",
+      "createdAt": 0,
+      "topic": "database-fundamentals",
+      "knowledgeArea": "19",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "主键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "主键",
+        "数据库与 SQL 基础"
+      ],
+      "explanation": "主键可以由多个列组成。",
+      "example": "用订单编号作为订单表主键。",
+      "sources": [
+        {
+          "id": "postgresql-database-foundations",
+          "title": "PostgreSQL 17：SQL、事务与索引基础",
+          "url": "https://www.postgresql.org/docs/17/ddl-constraints.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "dbbase-013"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "dbbase-016",
+      "category": "foundations",
+      "question": "SQL 中要判断一个值是否为 NULL，为什么通常使用 IS NULL 而不是 = NULL？",
+      "answer": "与 NULL 的普通相等比较结果为未知；IS NULL 专门测试是否为空值。",
+      "createdAt": 0,
+      "topic": "database-fundamentals",
+      "knowledgeArea": "19",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "空值比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "空值比较",
+        "数据库与 SQL 基础"
+      ],
+      "explanation": "WHERE 只保留条件为真的行。",
+      "example": "筛选尚未填写邮箱的记录。",
+      "sources": [
+        {
+          "id": "postgresql-database-foundations",
+          "title": "PostgreSQL 17：SQL、事务与索引基础",
+          "url": "https://www.postgresql.org/docs/17/functions-comparison.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "dbbase-016"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "dbbase-017",
+      "category": "foundations",
+      "question": "SQL 的 COUNT(*) 与 COUNT(列名) 如何处理 NULL？",
+      "answer": "COUNT(*) 统计行数；COUNT(列名) 统计该表达式非 NULL 的行数。",
+      "createdAt": 0,
+      "topic": "database-fundamentals",
+      "knowledgeArea": "19",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "计数与空值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "计数与空值",
+        "数据库与 SQL 基础"
+      ],
+      "explanation": "两者在列含空值时可能不同。",
+      "example": "统计总用户数与已填写邮箱的用户数。",
+      "sources": [
+        {
+          "id": "postgresql-database-foundations",
+          "title": "PostgreSQL 17：SQL、事务与索引基础",
+          "url": "https://www.postgresql.org/docs/17/functions-aggregate.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "dbbase-017"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "dbbase-018",
+      "category": "foundations",
+      "question": "SQL 的 INNER JOIN 与 LEFT JOIN 对左表未匹配的行如何处理？",
+      "answer": "INNER JOIN 不返回未匹配行；LEFT JOIN 保留左表未匹配行并在右表列填充 NULL。",
+      "createdAt": 0,
+      "topic": "database-fundamentals",
+      "knowledgeArea": "19",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "内连接外连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "内连接外连接",
+        "数据库与 SQL 基础"
+      ],
+      "explanation": "后续 WHERE 条件可能再次过滤这些行。",
+      "example": "列出所有用户及其可能存在的订单。",
+      "sources": [
+        {
+          "id": "postgresql-database-foundations",
+          "title": "PostgreSQL 17：SQL、事务与索引基础",
+          "url": "https://www.postgresql.org/docs/17/tutorial-join.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "dbbase-018"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-008",
+      "category": "foundations",
+      "question": "cat 与 less 查看文本时有什么主要区别？",
+      "answer": "cat 把内容输出到标准输出；less 以分页方式交互查看内容。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "查看长文本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "查看长文本",
+        "Linux 常用命令"
+      ],
+      "explanation": "less 适合浏览较长输出。",
+      "example": "用 less 查看长日志。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-008"
+        },
+        {
+          "id": "linux-less-man",
+          "title": "Linux man-pages：less(1)",
+          "url": "https://man7.org/linux/man-pages/man1/less.1.html",
+          "type": "官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-008"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-009",
+      "category": "foundations",
+      "question": "head -n 和 tail -n 通常分别查看什么？",
+      "answer": "head 查看开头若干行；tail 查看末尾若干行。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "查看头尾",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "查看头尾",
+        "Linux 常用命令"
+      ],
+      "explanation": "具体行数由 -n 参数指定。",
+      "example": "查看日志最后 20 行。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-009"
+        },
+        {
+          "id": "gnu-head",
+          "title": "GNU coreutils：head",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/head-invocation.html",
+          "type": "官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-011",
+      "category": "foundations",
+      "question": "GNU grep 的 -i 和 -n 分别有什么作用？",
+      "answer": "-i 忽略大小写；-n 在匹配输出前显示行号。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "grep选项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "grep选项",
+        "Linux 常用命令"
+      ],
+      "explanation": "两个选项可以一起使用。",
+      "example": "在日志中查找不区分大小写的 error 并显示行号。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/grep/manual/grep.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-012",
+      "category": "foundations",
+      "question": "GNU grep 的 -E 指定什么匹配方式？",
+      "answer": "它使用扩展正则表达式（ERE）解释模式。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "grep正则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "grep正则",
+        "Linux 常用命令"
+      ],
+      "explanation": "正则表达式不是普通的固定字符串；需要固定字符串匹配时可考虑 -F。",
+      "example": "使用扩展正则中的 | 表示备选。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/grep/manual/grep.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-015",
+      "category": "foundations",
+      "question": "find 的 -type f 常用于筛选什么？",
+      "answer": "筛选普通文件。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "find文件类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "find文件类型",
+        "Linux 常用命令"
+      ],
+      "explanation": "它与按文件名扩展名筛选是不同条件。",
+      "example": "在目录树中查找普通文件。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://man7.org/linux/man-pages/man1/find.1.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-015"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-016",
+      "category": "foundations",
+      "question": "GNU wc -l 实际统计什么？",
+      "answer": "统计输入中的换行符数量。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "换行计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "换行计数",
+        "Linux 常用命令"
+      ],
+      "explanation": "如果末尾一行没有换行符，该行不会增加换行符计数。",
+      "example": "比较末尾有无换行符的文本文件。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/wc-invocation.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-016"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-017",
+      "category": "foundations",
+      "question": "GNU sort 的默认排序与 sort -n 有什么常见区别？",
+      "answer": "默认按当前排序规则比较文本；-n 按数字值比较。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "数值排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "数值排序",
+        "Linux 常用命令"
+      ],
+      "explanation": "默认文本顺序受 locale 等环境影响。",
+      "example": "对 2 和 10 排序时选择数值排序。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/sort-invocation.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-017"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-018",
+      "category": "foundations",
+      "question": "为什么统计重复文本行时常先 sort 再使用 uniq -c？",
+      "answer": "uniq 只合并相邻的相同输入行；排序可把相同行集中。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "相邻去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "相邻去重",
+        "Linux 常用命令"
+      ],
+      "explanation": "排序依据应与希望合并的内容一致。",
+      "example": "汇总文本中每个不同名称的出现次数。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/uniq-invocation.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-018"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-025",
+      "category": "foundations",
+      "question": "Linux 目录的执行（x）权限通常控制什么？",
+      "answer": "它控制对该目录进行路径遍历和访问其中条目的能力。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "目录执行权限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "目录执行权限",
+        "Linux 常用命令"
+      ],
+      "explanation": "读取目录名称列表与遍历路径是不同权限。",
+      "example": "访问目录内已知文件名时需要相应目录的遍历权限。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://man7.org/linux/man-pages/man7/path_resolution.7.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-025"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-026",
+      "category": "foundations",
+      "question": "chmod 755 通常为文件所有者、所属组和其他用户分别设置什么权限？",
+      "answer": "所有者为 rwx，所属组和其他用户均为 r-x。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "八进制权限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "八进制权限",
+        "Linux 常用命令"
+      ],
+      "explanation": "权限是否允许实际操作还取决于文件类型及其他访问控制机制。",
+      "example": "把脚本设为所有者可写、其他用户可读可执行。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/chmod-invocation.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-026"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-027",
+      "category": "foundations",
+      "question": "chown user:group 文件通常用于改变什么？",
+      "answer": "改变文件的所有者和所属组。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "所有者和组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "所有者和组",
+        "Linux 常用命令"
+      ],
+      "explanation": "是否允许更改取决于权限和系统规则。",
+      "example": "调整服务数据目录的属主和属组。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/chown-invocation.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-027"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-028",
+      "category": "foundations",
+      "question": "硬链接和符号链接在指向对象上有什么主要区别？",
+      "answer": "硬链接是指向同一文件对象的另一个目录项；符号链接保存一个路径供后续解析。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "软硬链接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "软硬链接",
+        "Linux 常用命令"
+      ],
+      "explanation": "符号链接的目标可以不存在。",
+      "example": "移动或删除原路径后比较两类链接的行为。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/ln-invocation.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-028"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-029",
+      "category": "foundations",
+      "question": "df 和 du 查看磁盘时关注的对象有什么区别？",
+      "answer": "df 汇报文件系统的空间使用情况；du 汇总文件或目录占用的空间。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "磁盘用量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "磁盘用量",
+        "Linux 常用命令"
+      ],
+      "explanation": "它们统计范围不同，结果不必完全一致。",
+      "example": "用 df 看分区剩余空间，再用 du 查找较大的目录。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/df-invocation.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-029"
+        },
+        {
+          "id": "gnu-du",
+          "title": "GNU coreutils：du",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/du-invocation.html",
+          "type": "官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-029"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-032",
+      "category": "foundations",
+      "question": "Linux ss -ltnp 常用于查看什么？",
+      "answer": "它用于查看监听中的 TCP 套接字，并请求显示数字地址和进程信息。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "监听套接字",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "监听套接字",
+        "Linux 常用命令"
+      ],
+      "explanation": "能否看到完整进程信息取决于权限。",
+      "example": "检查某个 TCP 端口由哪个进程监听。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://man7.org/linux/man-pages/man8/ss.8.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-032"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-033",
+      "category": "foundations",
+      "question": "在使用 systemd 的系统上，systemctl status 服务名常用于什么？",
+      "answer": "用于查看指定单元的状态及相关的近期运行信息。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "服务状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "服务状态",
+        "Linux 常用命令"
+      ],
+      "explanation": "这需要系统使用 systemd，并受访问权限影响。",
+      "example": "检查某服务是否处于运行状态。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://www.freedesktop.org/software/systemd/man/latest/systemctl.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-033"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "linuxbase-035",
+      "category": "foundations",
+      "question": "man 命令通常用于什么？",
+      "answer": "它显示命令、系统调用或其他主题的本地手册页。",
+      "createdAt": 0,
+      "topic": "linux-systems",
+      "knowledgeArea": "19",
+      "subtopic": "Linux 常用命令",
+      "knowledgePoint": "本地帮助手册",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "本地帮助手册",
+        "Linux 常用命令"
+      ],
+      "explanation": "同名主题可能存在不同手册分区。",
+      "example": "阅读 man 7 signal 了解信号。",
+      "sources": [
+        {
+          "id": "linux-command-foundations",
+          "title": "GNU/Linux 常用命令、Bash 与系统手册",
+          "url": "https://man7.org/linux/man-pages/man1/man.1.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "source",
+          "sourceCardId": "linuxbase-035"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "dbbase-014",
+      "category": "foundations",
+      "question": "外键约束主要用于维护什么关系？",
+      "answer": "它维护引用完整性：单列外键的非空值必须匹配被引用表中的键；可空外键为 NULL 时可以不引用任何行。",
+      "createdAt": 0,
+      "topic": "database-fundamentals",
+      "knowledgeArea": "19",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "外键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "外键",
+        "数据库与 SQL 基础"
+      ],
+      "explanation": "这是 PostgreSQL 单列外键的规则；复合外键是否跳过检查还受 MATCH 类型影响。",
+      "example": "订单中的商品编号引用商品表。",
+      "sources": [
+        {
+          "id": "postgresql-database-foundations",
+          "title": "PostgreSQL 17：SQL、事务与索引基础",
+          "url": "https://www.postgresql.org/docs/17/ddl-constraints.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "dbbase-014"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "dbbase-019",
+      "category": "foundations",
+      "question": "SQL 的 WHERE 与 HAVING 在分组查询中分别筛选什么？",
+      "answer": "WHERE 在分组前筛选输入行；HAVING 对分组后的结果进行条件筛选。",
+      "createdAt": 0,
+      "topic": "database-fundamentals",
+      "knowledgeArea": "19",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "WHERE与HAVING",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "WHERE与HAVING",
+        "数据库与 SQL 基础"
+      ],
+      "explanation": "聚合条件通常放在 HAVING 中。",
+      "example": "先筛选日期，再筛选数量超过阈值的分组。",
+      "sources": [
+        {
+          "id": "postgresql-database-foundations",
+          "title": "PostgreSQL 17：SQL、事务与索引基础",
+          "url": "https://www.postgresql.org/docs/17/queries-table-expressions.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "dbbase-019"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "dbbase-020",
+      "category": "foundations",
+      "question": "数据库索引主要帮助解决什么问题？",
+      "answer": "它提供额外的数据访问结构，可加快某些条件查询或排序。",
+      "createdAt": 0,
+      "topic": "database-fundamentals",
+      "knowledgeArea": "19",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "索引作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "索引作用",
+        "数据库与 SQL 基础"
+      ],
+      "explanation": "索引也占用空间，并可能增加写入维护成本。",
+      "example": "为常用查询条件建立索引。",
+      "sources": [
+        {
+          "id": "postgresql-database-foundations",
+          "title": "PostgreSQL 17：SQL、事务与索引基础",
+          "url": "https://www.postgresql.org/docs/17/indexes-types.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "dbbase-020"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "dbbase-022",
+      "category": "foundations",
+      "question": "建立数据库索引后，查询是否一定会使用它？",
+      "answer": "不一定；优化器会根据条件、统计信息和估计成本选择执行计划。",
+      "createdAt": 0,
+      "topic": "database-fundamentals",
+      "knowledgeArea": "19",
+      "subtopic": "数据库与 SQL 基础",
+      "knowledgePoint": "索引不保证使用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "索引不保证使用",
+        "数据库与 SQL 基础"
+      ],
+      "explanation": "顺序扫描有时比索引扫描更合适。",
+      "example": "小表或返回大部分行时可能选择顺序扫描。",
+      "sources": [
+        {
+          "id": "postgresql-database-foundations",
+          "title": "PostgreSQL 17：SQL、事务与索引基础",
+          "url": "https://www.postgresql.org/docs/17/using-explain.html",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "dbbase-022"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "osbase-009",
+      "category": "foundations",
+      "question": "页表的主要作用是什么？",
+      "answer": "它保存虚拟页到物理页框等映射及相关状态和权限信息。",
+      "createdAt": 0,
+      "topic": "operating-systems",
+      "knowledgeArea": "19",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "页表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "页表",
+        "操作系统基础"
+      ],
+      "explanation": "具体页表结构和条目字段依硬件与系统实现而异。",
+      "example": "地址转换时查询虚拟页对应的位置。",
+      "sources": [
+        {
+          "id": "os-fundamentals",
+          "title": "操作系统基础：OSTEP 与 Linux 手册",
+          "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "osbase-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "osbase-010",
+      "category": "foundations",
+      "question": "TLB 在虚拟地址转换中承担什么作用？",
+      "answer": "它缓存近期的地址转换结果，减少重复查询页表的开销。",
+      "createdAt": 0,
+      "topic": "operating-systems",
+      "knowledgeArea": "19",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "TLB",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "TLB",
+        "操作系统基础"
+      ],
+      "explanation": "TLB 未命中时仍需进一步查找地址映射。",
+      "example": "频繁访问同一页可复用已缓存的转换。",
+      "sources": [
+        {
+          "id": "os-fundamentals",
+          "title": "操作系统基础：OSTEP 与 Linux 手册",
+          "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-tlbs.pdf",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "osbase-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "osbase-011",
+      "category": "foundations",
+      "question": "发生缺页异常是否一定意味着程序访问非法地址？",
+      "answer": "不一定；有效虚拟页尚未驻留时也可能触发缺页，系统可载入或建立映射后继续。",
+      "createdAt": 0,
+      "topic": "operating-systems",
+      "knowledgeArea": "19",
+      "subtopic": "操作系统基础",
+      "knowledgePoint": "缺页异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "缺页异常",
+        "操作系统基础",
+        "操作系统",
+        "虚拟内存"
+      ],
+      "explanation": "无效地址或权限错误则可能导致访问失败。",
+      "example": "首次访问按需分配的页面。",
+      "sources": [
+        {
+          "id": "os-fundamentals",
+          "title": "操作系统基础：OSTEP 与 Linux 手册",
+          "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-beyondphys.pdf",
+          "type": "教材与官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "osbase-011"
+        },
+        {
+          "id": "cross-domain-knowledge-expansion",
+          "title": "OSTEP：Paging Introduction",
+          "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/vm-paging.pdf",
+          "type": "公开课程教材",
+          "evidence": "source",
+          "sourceCardId": "xdom-132"
+        }
+      ],
+      "alternateQuestions": [
+        "缺页异常是否总表示程序访问了非法地址？"
+      ],
+      "otherExplanations": [
+        "访问权限违规或不存在映射则可能导致进程收到错误，而非成功恢复。"
+      ],
+      "otherExamples": [
+        "合法匿名映射首次访问时分配物理页并更新页表。"
+      ]
+    },
+    {
+      "id": "pysyntax-002",
+      "category": "foundations",
+      "question": "Python 函数定义中的 *args 与 **kwargs 分别收集什么？",
+      "answer": "*args 收集额外的位置参数形成元组；**kwargs 收集额外的关键字参数形成字典。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "函数参数",
+      "knowledgePoint": "可变参数收集",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "可变参数收集",
+        "Python",
+        "Python语法"
+      ],
+      "explanation": "args 和 kwargs 是约定名称，关键语法是星号。",
+      "example": "包装函数用 *args 和 **kwargs 接收不同调用参数。",
+      "sources": [
+        {
+          "id": "python-syntax-foundations",
+          "title": "Python 3.13：Arbitrary argument lists",
+          "url": "https://docs.python.org/3.13/tutorial/controlflow.html#arbitrary-argument-lists",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "pysyntax-002"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "pysyntax-003",
+      "category": "foundations",
+      "question": "Python 调用函数时，*序列 和 **映射 分别做什么？",
+      "answer": "前者将可迭代对象展开为位置参数；后者将映射展开为关键字参数。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "函数参数",
+      "knowledgePoint": "调用参数解包",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "调用参数解包",
+        "Python",
+        "Python语法"
+      ],
+      "explanation": "实际调用仍必须满足函数签名，重复或不匹配的参数会报错。",
+      "example": "调用 f(*values, **options)。",
+      "sources": [
+        {
+          "id": "python-syntax-foundations",
+          "title": "Python 3.13：Unpacking argument lists",
+          "url": "https://docs.python.org/3.13/tutorial/controlflow.html#unpacking-argument-lists",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "pysyntax-003"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "pysyntax-014",
+      "category": "foundations",
+      "question": "Python 的 with 语句如何帮助管理文件等资源？",
+      "answer": "成功进入上下文后，退出代码块时会调用上下文管理器的 __exit__，包括代码块抛出异常时。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "上下文管理",
+      "knowledgePoint": "上下文管理退出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "上下文管理退出",
+        "Python",
+        "Python语法"
+      ],
+      "explanation": "如果 __enter__ 本身失败，不能假定 __exit__ 一定被调用。",
+      "example": "with open(...) 在退出代码块时关闭文件。",
+      "sources": [
+        {
+          "id": "python-syntax-foundations",
+          "title": "Python 3.13：with statement",
+          "url": "https://docs.python.org/3.13/reference/compound_stmts.html#the-with-statement",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "pysyntax-014"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "pysyntax-016",
+      "category": "foundations",
+      "question": "Python 的类属性与实例属性在共享方式上有什么区别？",
+      "answer": "类属性通常由实例共享访问；实例属性保存在各自实例中。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "类与对象",
+      "knowledgePoint": "类属性与实例属性",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "类属性与实例属性",
+        "Python",
+        "Python语法"
+      ],
+      "explanation": "若类属性是可变对象，原地修改可能影响其他实例看到的内容。",
+      "example": "每个对象在 __init__ 中创建自己的列表。",
+      "sources": [
+        {
+          "id": "python-syntax-foundations",
+          "title": "Python 3.13：Class and instance variables",
+          "url": "https://docs.python.org/3.13/tutorial/classes.html#class-and-instance-variables",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "pysyntax-016"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "pysyntax-025",
+      "category": "foundations",
+      "question": "Python 模块中的 if __name__ == \"__main__\" 常用于什么？",
+      "answer": "它让特定代码在模块作为主程序运行时执行，而在普通导入时不执行。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "模块与工程",
+      "knowledgePoint": "模块入口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "模块入口",
+        "Python",
+        "Python语法"
+      ],
+      "explanation": "常用于命令行入口或示例代码。",
+      "example": "同一文件可被导入函数，也可直接运行入口。",
+      "sources": [
+        {
+          "id": "python-syntax-foundations",
+          "title": "Python 3.13：Modules as scripts",
+          "url": "https://docs.python.org/3.13/tutorial/modules.html#executing-modules-as-scripts",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "pysyntax-025"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "lcbase-018",
+      "category": "foundations",
+      "question": "LangChain 的 Document 与聊天消息通常用于什么不同场景？",
+      "answer": "Document 保存待检索的文本及元数据；聊天消息表示模型交互中的消息。",
+      "createdAt": 0,
+      "topic": "agent-engineering",
+      "knowledgeArea": "09",
+      "subtopic": "检索组件",
+      "knowledgePoint": "Document用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "Document用途",
+        "LangChain",
+        "Agent"
+      ],
+      "explanation": "两者不是必须互相替代的数据类型。",
+      "example": "把文档片段交给检索器，把用户问题作为消息交给模型。",
+      "sources": [
+        {
+          "id": "langchain-fundamentals",
+          "title": "LangChain Python reference：Document",
+          "url": "https://reference.langchain.com/python/langchain-core/documents/base/Document",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "lcbase-018"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "lcbase-022",
+      "category": "foundations",
+      "question": "LangChain 的 create_agent 在模型请求工具时通常负责什么？",
+      "answer": "它编排模型与工具之间的调用循环，把工具结果纳入后续处理。",
+      "createdAt": 0,
+      "topic": "agent-engineering",
+      "knowledgeArea": "09",
+      "subtopic": "工具调用",
+      "knowledgePoint": "智能体工具循环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "智能体工具循环",
+        "LangChain",
+        "Agent"
+      ],
+      "explanation": "工具的外部副作用和权限仍需由应用控制。",
+      "example": "模型请求查询工具后，由智能体执行并继续生成。",
+      "sources": [
+        {
+          "id": "langchain-fundamentals",
+          "title": "LangChain 官方文档：Overview",
+          "url": "https://docs.langchain.com/oss/python/langchain/overview",
+          "type": "官方技术文档",
+          "evidence": "source",
+          "sourceCardId": "lcbase-022"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "pyenv-006",
+      "category": "foundations",
+      "question": "为什么常用 python -m pip 而不是只写 pip 安装依赖？",
+      "answer": "它通过指定的 Python 解释器运行 pip，有助于把包装入预期环境。",
+      "createdAt": 0,
+      "topic": "python-data",
+      "knowledgeArea": "02",
+      "subtopic": "Python 虚拟环境与 pip",
+      "knowledgePoint": "指定解释器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "Python 虚拟环境与 pip",
+        "指定解释器"
+      ],
+      "explanation": "仍需确认使用的是目标解释器及其权限。",
+      "example": "用 env/bin/python -m pip install 安装项目依赖。",
+      "sources": [
+        {
+          "id": "python-venv-pip-practice",
+          "title": "Python 3.14 与 pip 文档：环境及依赖管理",
+          "url": "https://pip.pypa.io/en/stable/cli/pip_install/",
+          "type": "论文、官方文档或数据集说明",
+          "evidence": "source",
+          "sourceCardId": "pyenv-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-012",
+      "category": "foundations",
+      "question": "TCP 已确认某些数据，是否证明接收端应用已经处理这些数据？",
+      "answer": "不能；确认表明接收端 TCP 已接收对应数据，不证明应用已读取或业务处理成功。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "确认与应用消费",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "确认与应用消费",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "应用级成功需要相应的业务响应或确认。",
+      "example": "传输确认后，服务程序仍可能尚未处理请求。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "application",
+          "sourceCardId": "tcpbase-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "tcpbase-028",
+      "category": "foundations",
+      "question": "TCP 的可靠传输是否保证在网络永久中断时数据最终一定送达？",
+      "answer": "不保证；持续故障可能使连接超时或失败，应用需要处理错误。",
+      "createdAt": 0,
+      "topic": "computer-network",
+      "knowledgeArea": "19",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "可靠传输边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "level": "进阶",
+      "tags": [
+        "可靠传输边界",
+        "TCP 与 UDP 基础"
+      ],
+      "explanation": "TCP 提供检测、确认和重传机制，并非无限成功保证。",
+      "example": "连接中断时请求可能没有完成。",
+      "sources": [
+        {
+          "id": "tcp-ip-fundamentals",
+          "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+          "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+          "type": "协议标准与官方系统文档",
+          "evidence": "application",
+          "sourceCardId": "tcpbase-028"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

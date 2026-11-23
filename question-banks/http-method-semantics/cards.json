@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "http-method-semantics",
+    "title": "RFC 9110 与 RFC 5789：HTTP 方法语义",
+    "url": "https://www.rfc-editor.org/rfc/rfc9110.html",
+    "type": "教材、标准与官方文档",
+    "note": "依据逐题引用的教材、标准或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "httpmethod-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP 方法语义",
+      "knowledgePoint": "PUT与PATCH",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "HTTP PUT 与 PATCH 的请求内容在更新语义上有什么区别？",
+      "answer": "PUT 请求用内容创建或替换目标资源的状态；PATCH 内容描述对资源进行修改的指令。",
+      "explanation": "PATCH 的具体指令格式由媒体类型决定。",
+      "example": "使用支持的补丁格式修改资源的一个字段。",
+      "tags": [
+        "HTTP 方法语义",
+        "PUT与PATCH"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5789.html"
+    },
+    {
+      "id": "httpmethod-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 方法语义",
+      "knowledgePoint": "PATCH幂等性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP PATCH 方法本身保证所有请求都幂等吗？",
+      "answer": "不保证；具体 PATCH 请求可以设计成幂等，但方法本身不作此保证。",
+      "explanation": "重复追加操作可能产生重复效果。",
+      "example": "重复执行追加文本的补丁可能改变结果。",
+      "tags": [
+        "HTTP 方法语义",
+        "PATCH幂等性"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5789.html"
+    },
+    {
+      "id": "httpmethod-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 方法语义",
+      "knowledgePoint": "PATCH原子性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5789 要求服务器如何应用一个 PATCH 文档中的变更？",
+      "answer": "必须原子地应用整个变更集；无法全部成功时不得应用其中任何变更。",
+      "explanation": "该要求也防止客户端看到部分修改后的表示。",
+      "example": "多个修改中一项无法应用时不提交其余修改。",
+      "tags": [
+        "HTTP 方法语义",
+        "PATCH原子性"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5789.html"
+    },
+    {
+      "id": "httpmethod-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 方法语义",
+      "knowledgePoint": "支持的补丁格式",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "HTTP 响应中的 Accept-Patch 首部表示什么？",
+      "answer": "它列出目标资源支持的 PATCH 文档媒体类型。",
+      "explanation": "服务器可以在 OPTIONS 响应中提供该信息。",
+      "example": "Accept-Patch 列出 application/json-patch+json。",
+      "tags": [
+        "HTTP 方法语义",
+        "支持的补丁格式"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5789.html"
+    },
+    {
+      "id": "httpmethod-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 方法语义",
+      "knowledgePoint": "DELETE语义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP DELETE 是否保证服务器物理销毁与资源有关的所有数据？",
+      "answer": "不保证；DELETE 请求移除目标资源与当前功能的关联，底层信息和存储如何处理取决于实现。",
+      "explanation": "应用不能仅凭 DELETE 推断所有备份均被擦除。",
+      "example": "服务端可能取消 URI 映射而保留审计记录。",
+      "tags": [
+        "HTTP 方法语义",
+        "DELETE语义"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.3.5"
+    },
+    {
+      "id": "httpmethod-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 方法语义",
+      "knowledgePoint": "OPTIONS用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP OPTIONS 方法用于查询什么？",
+      "answer": "查询目标资源或服务器可用的通信选项和能力。",
+      "explanation": "请求目标为 * 时查询服务器整体能力，而非某个资源。",
+      "example": "客户端查询目标资源支持的交互方式。",
+      "tags": [
+        "HTTP 方法语义",
+        "OPTIONS用途"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.3.7"
+    },
+    {
+      "id": "httpmethod-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 方法语义",
+      "knowledgePoint": "幂等与响应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一个幂等 HTTP 请求重复执行时，响应状态码一定相同吗？",
+      "answer": "不一定；幂等描述多次请求的预期服务器效果，不要求响应完全相同。",
+      "explanation": "服务器也可以为每次请求单独记日志。",
+      "example": "删除资源后，再次删除可能返回不同状态。",
+      "tags": [
+        "HTTP 方法语义",
+        "幂等与响应"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2"
+    },
+    {
+      "id": "httpmethod-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HTTP 方法语义",
+      "knowledgePoint": "请求失败重试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP 客户端未收到响应时，为什么不能无条件自动重试非幂等请求？",
+      "answer": "原请求可能已执行；重试可能重复产生服务器端效果。",
+      "explanation": "若能确定请求实际幂等或原请求未被执行，可按协议判断是否重试。",
+      "example": "付款 POST 响应丢失后，重复请求可能重复创建交易。",
+      "tags": [
+        "HTTP 方法语义",
+        "请求失败重试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2"
+    }
+  ]
+}

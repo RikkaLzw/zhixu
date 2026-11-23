@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "zeek-notice-workflow",
+    "title": "Zeek Notice 框架：通知字段与处理",
+    "url": "https://docs.zeek.org/en/current/scripts/base/frameworks/notice/main.zeek.html",
+    "type": "教材、论文与官方技术文档",
+    "note": "根据 2026-11-21 查看时的 Zeek 官方文档整理；具体行为受版本和加载的策略脚本影响，未运行 Zeek。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "noticebase-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "告警通知与关联",
+      "knowledgePoint": "类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek Notice::Info 的 note 字段标识什么？",
+      "answer": "标识这条 notice 的类型。",
+      "explanation": "notice 类型由脚本或加载的扩展定义。",
+      "example": "使用特定类型区分不同检测通知。",
+      "tags": [
+        "告警通知与关联",
+        "类型"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/scripts/base/frameworks/notice/main.zeek.html"
+    },
+    {
+      "id": "noticebase-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "告警通知与关联",
+      "knowledgePoint": "消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek Notice::Info 的 msg 与 sub 分别是什么？",
+      "answer": "二者分别提供可读的主消息和补充子消息。",
+      "explanation": "这些文本是调查线索，不应单独作为威胁真假的证明。",
+      "example": "主消息说明触发事项，子消息补充上下文。",
+      "tags": [
+        "告警通知与关联",
+        "消息"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/scripts/base/frameworks/notice/main.zeek.html"
+    },
+    {
+      "id": "noticebase-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "告警通知与关联",
+      "knowledgePoint": "去重标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek notice 的 identifier 主要用于什么？",
+      "answer": "提供概念重复的通知标识；框架可结合 notice 类型和标识进行抑制。",
+      "explanation": "标识如何构造会影响哪些同类型重复通知被合并。",
+      "example": "同一主机反复下载同一文件时使用相同标识。",
+      "tags": [
+        "告警通知与关联",
+        "去重标识"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/scripts/base/frameworks/notice/main.zeek.html"
+    },
+    {
+      "id": "noticebase-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "告警通知与关联",
+      "knowledgePoint": "抑制时长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek notice 的 suppress_for 字段控制什么？",
+      "answer": "控制该唯一通知在多长时间内被抑制。",
+      "explanation": "抑制减少重复通知，并不意味着底层活动已停止。",
+      "example": "相同类型和标识的重复通知在配置时间内不再重复输出。",
+      "tags": [
+        "告警通知与关联",
+        "抑制时长"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/scripts/base/frameworks/notice/main.zeek.html"
+    },
+    {
+      "id": "noticebase-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "告警通知与关联",
+      "knowledgePoint": "默认抑制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 的默认 notice 抑制间隔设为 0secs 时，默认抑制如何变化？",
+      "answer": "默认不再为通知启动自动抑制；单条通知或特定类型仍可能被策略覆盖。",
+      "explanation": "实际行为应核对该通知的 suppress_for 和已加载策略。",
+      "example": "需要保留每次重复通知时调整抑制设置。",
+      "tags": [
+        "告警通知与关联",
+        "默认抑制"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/scripts/base/frameworks/notice/main.zeek.html"
+    },
+    {
+      "id": "noticebase-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "告警通知与关联",
+      "knowledgePoint": "动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 的 Notice::ACTION_LOG 与 Notice::ACTION_EMAIL 分别请求什么处理？",
+      "answer": "前者将 notice 发送到日志流；后者将 notice 发往配置的邮件地址。",
+      "explanation": "实际动作取决于 notice 策略与环境配置。",
+      "example": "同一类 notice 可以根据策略选择日志或邮件处理。",
+      "tags": [
+        "告警通知与关联",
+        "动作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/scripts/base/frameworks/notice/main.zeek.html"
+    },
+    {
+      "id": "noticebase-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "告警通知与关联",
+      "knowledgePoint": "策略钩子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Zeek 的 Notice::policy 钩子用于什么？",
+      "answer": "用于修改 notice 的处理方式。",
+      "explanation": "配置可按 notice 类型或上下文选择动作等策略。",
+      "example": "对某类通知设置不同的处理动作。",
+      "tags": [
+        "告警通知与关联",
+        "策略钩子"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.zeek.org/en/current/scripts/base/frameworks/notice/main.zeek.html"
+    }
+  ]
+}

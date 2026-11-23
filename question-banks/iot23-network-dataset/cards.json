@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "iot23-network-dataset",
+    "title": "Stratosphere Laboratory：IoT-23 流量数据集",
+    "url": "https://www.stratosphereips.org/datasets-iot23",
+    "type": "官方技术文档与数据集资料",
+    "note": "依据逐题引用的版本文档或数据集官方说明自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "iot23-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "场景组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 数据集的 23 个流量捕获场景包括什么？",
+      "answer": "包括 20 个恶意软件感染流量场景和 3 个良性物联网设备流量场景。",
+      "explanation": "场景是不同捕获，不等同于 23 个独立组织的生产数据。",
+      "example": "按场景检查流量和标签构成。",
+      "tags": [
+        "IoT-23 安全流量",
+        "场景组成"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    },
+    {
+      "id": "iot23-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "采集时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 数据集最初发布于何时，其流量捕获发生在哪段时间？",
+      "answer": "数据集于 2020 年首次发布，流量捕获时间为 2018 至 2019 年。",
+      "explanation": "评估当前环境时应考虑恶意软件和设备行为随时间变化。",
+      "example": "记录数据采集时间而不仅记录下载时间。",
+      "tags": [
+        "IoT-23 安全流量",
+        "采集时间"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    },
+    {
+      "id": "iot23-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "设备差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 的恶意场景与良性场景在设备来源上有什么重要差异？",
+      "answer": "恶意样本运行在 Raspberry Pi 上；良性流量来自三种其他真实物联网设备。",
+      "explanation": "设备差异可能成为模型区分标签的捷径。",
+      "example": "按设备或场景评估模型泛化。",
+      "tags": [
+        "IoT-23 安全流量",
+        "设备差异"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    },
+    {
+      "id": "iot23-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "数据包与轻量版",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 完整版和轻量版在数据包文件上有什么区别？",
+      "answer": "完整版包含原始 PCAP；轻量版不包含 PCAP，提供带标签的流记录等文件。",
+      "explanation": "能否重新解析数据包取决于所下载版本。",
+      "example": "需要检查载荷时选择包含原始 PCAP 的版本。",
+      "tags": [
+        "IoT-23 安全流量",
+        "数据包与轻量版"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    },
+    {
+      "id": "iot23-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "带标签流记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 的 conn.log.labeled 是怎样产生的？",
+      "answer": "先用 Zeek 分析原始 PCAP 得到连接日志，再在流记录中添加标签列。",
+      "explanation": "标签不是直接等同于原始数据包内容。",
+      "example": "从连接日志训练流量分类模型。",
+      "tags": [
+        "IoT-23 安全流量",
+        "带标签流记录"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    },
+    {
+      "id": "iot23-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "标注流程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 如何将分析结果转成每条流记录的标签？",
+      "answer": "分析人员先制定标注规则，Flaber 再根据连接日志字段匹配规则并附加标签。",
+      "explanation": "规则和人工分析的边界会影响标签含义。",
+      "example": "根据流量特征匹配预设规则。",
+      "tags": [
+        "IoT-23 安全流量",
+        "标注流程"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    },
+    {
+      "id": "iot23-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "良性标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 中 Benign 标签能否证明连接在所有条件下都绝对无害？",
+      "answer": "不能；其说明是分析中未发现可疑或恶意活动。",
+      "explanation": "标签依赖采集范围和当时的分析方法。",
+      "example": "对边界样本结合原始证据复核。",
+      "tags": [
+        "IoT-23 安全流量",
+        "良性标签"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    },
+    {
+      "id": "iot23-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "复合行为标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 的详细标签为什么可能用连字符组合多个行为名称？",
+      "answer": "一些流记录同时关联多种被识别的行为，数据集中有组合标签。",
+      "explanation": "组合标签应按数据集定义解析，不能随意当作单个独立家族名。",
+      "example": "C&C-HeartBeat-FileDownload 同时包含多个行为描述。",
+      "tags": [
+        "IoT-23 安全流量",
+        "复合行为标签"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    },
+    {
+      "id": "iot23-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "标签分布范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 官方给出的恶意场景标签分布表是否包含三个良性设备场景？",
+      "answer": "不包含；该表只统计 20 个恶意场景。",
+      "explanation": "不能把该表的类别比例直接当作整个数据集或生产网络的比例。",
+      "example": "汇总总体比例前补充良性场景的流量计数。",
+      "tags": [
+        "IoT-23 安全流量",
+        "标签分布范围"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    },
+    {
+      "id": "iot23-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT-23 安全流量",
+      "knowledgePoint": "文件下载标签线索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IoT-23 官方说明用哪些线索识别部分 FileDownload 标签？",
+      "answer": "使用较大的响应字节量，并通常结合可疑目的端口或已知 C&C 地址等上下文。",
+      "explanation": "若模型直接使用这些字段，评估时应注意它可能复现标注规则。",
+      "example": "在独立来源或不同标签机制的数据上验证。",
+      "tags": [
+        "IoT-23 安全流量",
+        "文件下载标签线索"
+      ],
+      "evidence": "source",
+      "reference": "https://www.stratosphereips.org/datasets-iot23"
+    }
+  ]
+}

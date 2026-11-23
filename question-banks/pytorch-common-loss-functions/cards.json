@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "pytorch-common-loss-functions",
+    "title": "PyTorch 2.7：常用损失函数",
+    "url": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.NLLLoss.html",
+    "type": "官方技术文档与数据集资料",
+    "note": "依据逐题引用的版本文档或数据集官方说明自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "torchloss-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 常用损失函数",
+      "knowledgePoint": "NLL 与交叉熵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 NLLLoss 应接收对数概率还是未经 softmax 的 logits？",
+      "answer": "应接收对数概率；可先对 logits 沿类别维计算 log_softmax。",
+      "explanation": "对类别索引目标，后者相当于结合 log_softmax 与 NLLLoss。",
+      "example": "用 log_softmax 输出配合 NLLLoss。",
+      "tags": [
+        "PyTorch 常用损失函数",
+        "NLL 与交叉熵"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.NLLLoss.html"
+    },
+    {
+      "id": "torchloss-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PyTorch 常用损失函数",
+      "knowledgePoint": "SmoothL1 零阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 SmoothL1Loss 将 beta 设为 0 时等价于什么？",
+      "answer": "等价于 L1Loss。",
+      "explanation": "不同 beta 会改变误差较小时的平方区域。",
+      "example": "对相同输入比较 beta=0 与绝对误差损失。",
+      "tags": [
+        "PyTorch 常用损失函数",
+        "SmoothL1 零阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.SmoothL1Loss.html"
+    },
+    {
+      "id": "torchloss-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 常用损失函数",
+      "knowledgePoint": "Huber 与 SmoothL1",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "当 delta=beta>0 时，PyTorch 的 HuberLoss 与 SmoothL1Loss 在数值上有什么关系？",
+      "answer": "HuberLoss 等于同阈值 SmoothL1Loss 乘以 delta；delta=1 时两者相等。",
+      "explanation": "比较时应使用相同的归约方式。",
+      "example": "阈值为 2 时比较逐元素损失。",
+      "tags": [
+        "PyTorch 常用损失函数",
+        "Huber 与 SmoothL1"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.HuberLoss.html"
+    },
+    {
+      "id": "torchloss-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 常用损失函数",
+      "knowledgePoint": "KL 输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 KLDivLoss 在默认设置和 log_target=True 时如何表示 input 与 target？",
+      "answer": "input 使用对数概率；target 默认使用概率，log_target=True 时使用对数概率。",
+      "explanation": "这里假定输入代表有效的概率分布。",
+      "example": "用 log_softmax 生成模型的对数概率。",
+      "tags": [
+        "PyTorch 常用损失函数",
+        "KL 输入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.KLDivLoss.html"
+    },
+    {
+      "id": "torchloss-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 常用损失函数",
+      "knowledgePoint": "KL 方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 KLDivLoss(input, target) 对有效概率分布计算哪个方向的 KL 散度？",
+      "answer": "它计算 target 分布相对于模型 input 分布的 KL，即 KL(target∥input)。",
+      "explanation": "函数把模型输出放在第一个参数，数学记号通常先写目标分布。",
+      "example": "比较真实分布与模型预测分布。",
+      "tags": [
+        "PyTorch 常用损失函数",
+        "KL 方向"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.KLDivLoss.html"
+    },
+    {
+      "id": "torchloss-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 常用损失函数",
+      "knowledgePoint": "KL 归约",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 KLDivLoss 中 batchmean 与 mean 如何归约？",
+      "answer": "batchmean 将逐元素损失求和后除以批大小；mean 对所有损失元素求平均。",
+      "explanation": "对于每个样本有多个类别的输入，两者通常不同。",
+      "example": "比较一批类别分布的平均 KL。",
+      "tags": [
+        "PyTorch 常用损失函数",
+        "KL 归约"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.KLDivLoss.html"
+    },
+    {
+      "id": "torchloss-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 常用损失函数",
+      "knowledgePoint": "三元距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 TripletMarginLoss 中 p 参数控制什么？",
+      "answer": "它指定计算样本对距离所用的 p 范数阶数。",
+      "explanation": "默认 p=2，即使用欧氏范数形式的距离。",
+      "example": "将默认距离与其他 p 范数设置比较。",
+      "tags": [
+        "PyTorch 常用损失函数",
+        "三元距离"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.TripletMarginLoss.html"
+    },
+    {
+      "id": "torchloss-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PyTorch 常用损失函数",
+      "knowledgePoint": "余弦标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 CosineEmbeddingLoss 对目标 1 和 -1 分别鼓励什么？",
+      "answer": "目标 1 鼓励两向量余弦相似度更高；目标 -1 在相似度超过 margin 时施加惩罚。",
+      "explanation": "负对的目标不是无条件地让相似度无限下降。",
+      "example": "同一语义的两段文本与不相关文本配对训练。",
+      "tags": [
+        "PyTorch 常用损失函数",
+        "余弦标签"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.CosineEmbeddingLoss.html"
+    }
+  ]
+}

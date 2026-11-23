@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "webshop-agent-benchmark",
+    "title": "WebShop 原论文 v1：网页购物智能体",
+    "url": "https://arxiv.org/pdf/2207.01206v1",
+    "type": "原论文与固定版本开源实现",
+    "note": "依据逐题引用的论文或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "webshop-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "WebShop 网页智能体评测",
+      "knowledgePoint": "任务目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebShop 原论文中的智能体需要完成什么任务？",
+      "answer": "它根据自然语言要求，在模拟购物网站中搜索、选择并购买符合条件的商品。",
+      "explanation": "任务常涉及商品属性、选项和价格约束。",
+      "example": "寻找指定颜色且价格在预算内的桌子。",
+      "tags": [
+        "WebShop 网页智能体评测",
+        "任务目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2207.01206v1"
+    },
+    {
+      "id": "webshop-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "WebShop 网页智能体评测",
+      "knowledgePoint": "动作可用性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebShop 中 search 与选择页面按钮两类动作在哪些页面可用？",
+      "answer": "search 用于搜索页面；其他页面使用选择相应文本按钮的动作。",
+      "explanation": "动作集合随当前页面状态变化。",
+      "example": "先输入查询，再点击结果或选择规格。",
+      "tags": [
+        "WebShop 网页智能体评测",
+        "动作可用性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2207.01206v1"
+    },
+    {
+      "id": "webshop-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "WebShop 网页智能体评测",
+      "knowledgePoint": "环境观察",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebShop 原论文的 HTML 模式与 simple 模式在页面表示上有什么区别？",
+      "answer": "HTML 模式呈现网页 HTML；simple 模式去除多余元数据，提供较简化的页面表示。",
+      "explanation": "论文的人类成绩使用 HTML 模式，模型训练和评估使用 simple 模式。",
+      "example": "人类在浏览器操作，模型读取简化文本。",
+      "tags": [
+        "WebShop 网页智能体评测",
+        "环境观察"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2207.01206v1"
+    },
+    {
+      "id": "webshop-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebShop 网页智能体评测",
+      "knowledgePoint": "自动奖励",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebShop 在购买结束时根据哪些主要条件计算任务奖励？",
+      "answer": "根据所选商品类型、目标属性、选项和价格条件计算奖励。",
+      "explanation": "奖励允许部分满足约束的结果得到部分分数。",
+      "example": "颜色正确但价格超预算会影响最终得分。",
+      "tags": [
+        "WebShop 网页智能体评测",
+        "自动奖励"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2207.01206v1"
+    },
+    {
+      "id": "webshop-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebShop 网页智能体评测",
+      "knowledgePoint": "得分与成功率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebShop 的 Task Score 和 Success Rate 分别汇总什么？",
+      "answer": "Task Score 是平均奖励乘以 100；Success Rate 是奖励恰为 1 的任务比例。",
+      "explanation": "平均得分高不等于每项要求都完全满足。",
+      "example": "部分满足要求可增加均分但不计入完全成功。",
+      "tags": [
+        "WebShop 网页智能体评测",
+        "得分与成功率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2207.01206v1"
+    },
+    {
+      "id": "webshop-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebShop 网页智能体评测",
+      "knowledgePoint": "目标商品非唯一",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebShop 中取得满分是否必须购买生成指令时所用的那个原始目标商品？",
+      "answer": "不必须；其他商品也可能满足全部评分条件并获得满分。",
+      "explanation": "评估关注给定的需求条件，而不是只认一个商品 ID。",
+      "example": "多件红色衬衫可能都满足同一购物要求。",
+      "tags": [
+        "WebShop 网页智能体评测",
+        "目标商品非唯一"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2207.01206v1"
+    },
+    {
+      "id": "webshop-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebShop 网页智能体评测",
+      "knowledgePoint": "检索瓶颈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebShop 原论文为什么强调根据需求重新组织搜索查询？",
+      "answer": "直接使用完整指令搜索时，相关商品可能不在展示的结果中；查询改写可能改善检索。",
+      "explanation": "页面探索之前，候选商品是否被检索到就影响任务完成。",
+      "example": "把冗长需求转换成描述产品类型的关键词。",
+      "tags": [
+        "WebShop 网页智能体评测",
+        "检索瓶颈"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2207.01206v1"
+    },
+    {
+      "id": "webshop-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebShop 网页智能体评测",
+      "knowledgePoint": "类型惩罚",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebShop 的奖励为何包含商品类型匹配项？",
+      "answer": "它减少不同类型商品仅因共享部分属性或选项而获得过高奖励。",
+      "explanation": "类型匹配由论文定义的文本匹配启发式计算。",
+      "example": "两个食品即使都符合“非转基因”，也可能属于不同类型。",
+      "tags": [
+        "WebShop 网页智能体评测",
+        "类型惩罚"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2207.01206v1"
+    },
+    {
+      "id": "webshop-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "WebShop 网页智能体评测",
+      "knowledgePoint": "模拟与迁移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "WebShop 使用真实商品数据，是否意味着在该环境表现好就能保证真实网站上同样成功？",
+      "answer": "不能；它是模拟网站，真实网站的界面、搜索和动态行为可能不同。",
+      "explanation": "论文还单独研究了从模拟环境到真实网站的迁移。",
+      "example": "相同购物意图在另一网站可能需要不同交互。",
+      "tags": [
+        "WebShop 网页智能体评测",
+        "模拟与迁移"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2207.01206v1"
+    }
+  ]
+}

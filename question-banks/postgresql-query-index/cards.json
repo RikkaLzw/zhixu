@@ -1,0 +1,430 @@
+{
+  "source": {
+    "id": "postgresql-query-index",
+    "title": "PostgreSQL 17：查询、连接与索引",
+    "url": "https://www.postgresql.org/docs/17/queries-table-expressions.html",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理；示例为自编，版本和前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sqlquery-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "交叉连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 CROSS JOIN 对两个表的行产生什么组合？",
+      "answer": "它产生笛卡尔积：左表每行与右表每行组合。",
+      "explanation": "若两表分别有 m 行和 n 行，结果有 m×n 行。",
+      "example": "把两种颜色与三个尺码组合。",
+      "tags": [
+        "交叉连接",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-table-expressions.html"
+    },
+    {
+      "id": "sqlquery-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "自连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的自连接是什么？",
+      "answer": "在同一查询中把同一张表作为两个或多个表引用连接，通常用不同别名区分。",
+      "explanation": "连接条件决定各引用中的行如何配对。",
+      "example": "用员工表连接自身以查找上级。",
+      "tags": [
+        "自连接",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-table-expressions.html"
+    },
+    {
+      "id": "sqlquery-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "外连接过滤位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LEFT JOIN 的右表条件放在 ON 中与放在 WHERE 中，为什么可能得到不同结果？",
+      "answer": "ON 参与匹配；WHERE 在外连接补出空值行之后筛选，可能排除原本保留的左表行。",
+      "explanation": "例如右表条件在空值行上为未知时，该行被 WHERE 排除。",
+      "example": "比较 ON r.active = true 与 WHERE r.active = true。",
+      "tags": [
+        "外连接过滤位置",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-table-expressions.html"
+    },
+    {
+      "id": "sqlquery-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "连接列 USING",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 JOIN USING (id) 相比 ON 左右 id 相等，输出列有什么常见区别？",
+      "answer": "USING 只输出一份对应的 id 连接列；ON 的结果通常包含左右两份列。",
+      "explanation": "这描述的是连接产生的输出列，最终 SELECT 仍可选择需要的列。",
+      "example": "连接两个都有 id 列的表。",
+      "tags": [
+        "连接列 USING",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-table-expressions.html"
+    },
+    {
+      "id": "sqlquery-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "DISTINCT行去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SELECT DISTINCT 对查询结果的哪些值去重？",
+      "answer": "它对所选输出列组成的整行去重。",
+      "explanation": "选择多列时，只有所有输出列相同的结果行才会合并。",
+      "example": "SELECT DISTINCT city, dept 保留不同城市和部门组合。",
+      "tags": [
+        "DISTINCT行去重",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-select-lists.html"
+    },
+    {
+      "id": "sqlquery-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "无GROUP BY的HAVING",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 查询使用 HAVING 但不使用 GROUP BY 时，如何对输入分组？",
+      "answer": "所有筛选后的行构成一个组，HAVING 决定该组是否通过；此阶段产生一行或零行。",
+      "explanation": "输出表达式仍需满足分组查询的规则。",
+      "example": "判断整张订单表的总金额是否超过阈值。",
+      "tags": [
+        "无GROUP BY的HAVING",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-table-expressions.html"
+    },
+    {
+      "id": "sqlquery-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "ORDER BY必要性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "没有 ORDER BY 的 SQL 查询，能否依赖结果行的返回顺序？",
+      "answer": "不能；未显式指定顺序时，返回顺序没有保证。",
+      "explanation": "执行计划或存储布局变化可能改变展示顺序。",
+      "example": "列表页要求固定顺序时应显式排序。",
+      "tags": [
+        "ORDER BY必要性",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-order.html"
+    },
+    {
+      "id": "sqlquery-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "PostgreSQL空值排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中未指定 NULLS 选项时，升序和降序如何放置 NULL？",
+      "answer": "ASC 默认 NULLS LAST，DESC 默认 NULLS FIRST。",
+      "explanation": "也可以显式指定 NULLS FIRST 或 NULLS LAST。",
+      "example": "按时间升序排序时默认把空时间放在最后。",
+      "tags": [
+        "PostgreSQL空值排序",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-order.html"
+    },
+    {
+      "id": "sqlquery-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "LIMIT稳定分页",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么用 LIMIT 和 OFFSET 分页时应使用能够唯一确定顺序的 ORDER BY？",
+      "answer": "否则每页取到的行子集可能不稳定，重复查询或不同计划可能得到不同结果。",
+      "explanation": "并发数据变动仍可能影响跨请求分页，需要结合应用需求处理。",
+      "example": "按创建时间及唯一 ID 排序后分页。",
+      "tags": [
+        "LIMIT稳定分页",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-limit.html"
+    },
+    {
+      "id": "sqlquery-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "OFFSET成本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中很大的 OFFSET 为什么可能使分页变慢？",
+      "answer": "被跳过的行仍需由服务器计算，偏移量大时可能增加工作量。",
+      "explanation": "实际开销取决于执行计划和数据。",
+      "example": "跳过大量记录后才读取一小页。",
+      "tags": [
+        "OFFSET成本",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-limit.html"
+    },
+    {
+      "id": "sqlquery-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "UNION与UNION ALL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 UNION 和 UNION ALL 如何处理重复结果行？",
+      "answer": "UNION 去除重复行；UNION ALL 保留重复行。",
+      "explanation": "两个输入必须具有兼容的输出列。",
+      "example": "合并两份名单时选择是否保留重复记录。",
+      "tags": [
+        "UNION与UNION ALL",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-union.html"
+    },
+    {
+      "id": "sqlquery-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "INTERSECT用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 INTERSECT 默认返回什么？",
+      "answer": "返回两个查询结果中都出现的行，并去除重复结果行。",
+      "explanation": "INTERSECT ALL 对重复行采用不同规则。",
+      "example": "找出同时出现在两份名单中的名称。",
+      "tags": [
+        "INTERSECT用途",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-union.html"
+    },
+    {
+      "id": "sqlquery-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "EXCEPT用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 EXCEPT 默认返回什么？",
+      "answer": "返回左侧查询结果中存在、但右侧结果中不存在的行，并去除重复结果行。",
+      "explanation": "两侧查询需要列数与对应数据类型兼容。",
+      "example": "找出第一份名单独有的名称。",
+      "tags": [
+        "EXCEPT用途",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-union.html"
+    },
+    {
+      "id": "sqlquery-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "EXISTS判断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 EXISTS 子查询根据什么判断真假？",
+      "answer": "只判断子查询是否至少返回一行，通常不关心该行的具体输出值。",
+      "explanation": "常见写法是 EXISTS (SELECT 1 ...)。",
+      "example": "检查是否存在与某用户关联的订单。",
+      "tags": [
+        "EXISTS判断",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-subquery.html"
+    },
+    {
+      "id": "sqlquery-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "NOT IN与NULL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 SQL 中 NOT IN 的子查询若包含 NULL，可能筛不出预期的行？",
+      "answer": "对未找到相等值的非空左值，结果可能变为未知而不是 TRUE，WHERE 会排除未知结果。",
+      "explanation": "根据语义可改用合适的 NOT EXISTS，或明确排除空值。",
+      "example": "子查询返回 2 和 NULL 时，1 NOT IN (2, NULL) 为未知。",
+      "tags": [
+        "NOT IN与NULL",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-subquery.html"
+    },
+    {
+      "id": "sqlquery-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "COALESCE回退",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 COALESCE(a, b, ...) 返回什么？",
+      "answer": "返回参数中第一个非 NULL 的值；若都为 NULL 则返回 NULL。",
+      "explanation": "各参数需要能转换为兼容的结果类型。",
+      "example": "用 COALESCE(nickname, username) 选择显示名。",
+      "tags": [
+        "COALESCE回退",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-conditional.html"
+    },
+    {
+      "id": "sqlquery-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "空输入SUM",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中，对零行输入求 SUM 时，结果是 0 吗？",
+      "answer": "不是；SUM 返回 NULL，若业务需要 0 可显式使用 COALESCE。",
+      "explanation": "COUNT 对零行输入返回 0。",
+      "example": "对空结果集计算 COALESCE(SUM(amount), 0)。",
+      "tags": [
+        "空输入SUM",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-aggregate.html"
+    },
+    {
+      "id": "sqlquery-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "ILIKE大小写",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中 ILIKE 与 LIKE 的主要区别是什么？",
+      "answer": "ILIKE 按活动区域设置进行不区分大小写的匹配；LIKE 通常区分大小写。",
+      "explanation": "ILIKE 是 PostgreSQL 扩展；PostgreSQL 17 的模式匹配不支持非确定性排序规则。",
+      "example": "使用 ILIKE 搜索大小写不同的名字。",
+      "tags": [
+        "ILIKE大小写",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-matching.html"
+    },
+    {
+      "id": "sqlquery-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "多列B树索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的多列 B-tree 索引，哪类条件通常最有利于缩小索引扫描范围？",
+      "answer": "前导列上的等值条件，加上第一个非等值列上的范围条件通常最有效。",
+      "explanation": "只约束后面的列也可能使用该索引，但不一定能显著缩小扫描范围。",
+      "example": "索引 (a,b,c) 上以 a=1 且 b>2 过滤。",
+      "tags": [
+        "多列B树索引",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/indexes-multicolumn.html"
+    },
+    {
+      "id": "sqlquery-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "部分索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的部分索引包含哪些行？",
+      "answer": "只包含满足索引定义中谓词的表行。",
+      "explanation": "查询能否使用它取决于优化器能否证明查询条件蕴含该谓词。",
+      "example": "只为尚未处理的任务建立索引。",
+      "tags": [
+        "部分索引",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/indexes-partial.html"
+    },
+    {
+      "id": "sqlquery-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "索引写入成本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么数据库索引可能降低写入性能？",
+      "answer": "插入、删除或更新受索引影响的数据时，数据库还需维护相关索引。",
+      "explanation": "应权衡查询收益、写入开销和存储成本。",
+      "example": "频繁更新被索引列的表。",
+      "tags": [
+        "索引写入成本",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/indexes-intro.html"
+    },
+    {
+      "id": "sqlquery-022",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 查询与索引",
+      "knowledgePoint": "UNION列兼容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 的 UNION、INTERSECT 和 EXCEPT 对两侧查询结果有什么兼容性要求？",
+      "answer": "两侧需要返回相同数量的列，对应列的数据类型也需兼容。",
+      "explanation": "对应列的顺序也影响如何匹配。",
+      "example": "合并两个各返回名称和时间的查询。",
+      "tags": [
+        "UNION列兼容",
+        "SQL 查询与索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-union.html"
+    }
+  ]
+}

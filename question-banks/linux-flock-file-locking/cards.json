@@ -1,0 +1,135 @@
+{
+  "source": {
+    "id": "linux-flock-file-locking",
+    "title": "Linux flock 手册：文件锁",
+    "url": "https://man7.org/linux/man-pages/man2/flock.2.html",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "flock-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件锁",
+      "knowledgePoint": "共享排他",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux flock 的共享锁和排他锁有什么区别？",
+      "answer": "同一文件可有多个共享锁；排他锁与其他共享或排他锁互斥。",
+      "explanation": "冲突请求默认可能阻塞。",
+      "example": "多个读者共享，写者请求排他锁。",
+      "tags": [
+        "Linux 文件锁",
+        "共享排他"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/flock.2.html"
+    },
+    {
+      "id": "flock-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件锁",
+      "knowledgePoint": "建议锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通本地 Linux 文件系统上的 flock 锁为何称为建议锁？",
+      "answer": "不配合使用锁的进程仍可能直接读写文件。",
+      "explanation": "网络文件系统或 SMB 的锁语义可能不同。",
+      "example": "所有协作进程都按约定获取锁。",
+      "tags": [
+        "Linux 文件锁",
+        "建议锁"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/flock.2.html"
+    },
+    {
+      "id": "flock-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件锁",
+      "knowledgePoint": "非阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux flock(2) 的 LOCK_NB 与 flock 命令的 -n 对锁冲突如何处理？",
+      "answer": "都不会等待：系统调用返回错误，命令以冲突状态退出。",
+      "explanation": "命令可通过 -E 调整冲突退出状态；默认是 1。",
+      "example": "尝试一次性获取排他锁。",
+      "tags": [
+        "Linux 文件锁",
+        "非阻塞"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/flock.2.html",
+      "supportingReferences": [
+        {
+          "id": "flock-command-man",
+          "title": "Linux flock 命令手册",
+          "url": "https://man7.org/linux/man-pages/man1/flock.1.html",
+          "type": "Linux 手册",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "flock-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件锁",
+      "knowledgePoint": "描述关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux flock 锁绑定到什么，复制描述符后通常何时释放？",
+      "answer": "锁关联到打开文件描述；显式解锁或所有引用该描述的副本关闭时释放。",
+      "explanation": "通过 dup 或 fork 复制的描述符引用同一把锁。",
+      "example": "父进程关闭描述符后，子进程持有的副本可能让锁继续存在。",
+      "tags": [
+        "Linux 文件锁",
+        "描述关联"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/flock.2.html"
+    },
+    {
+      "id": "flock-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件锁",
+      "knowledgePoint": "独立打开",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一进程对同一文件分别调用 open 获得的文件描述，flock 锁一定共享吗？",
+      "answer": "不一定；独立 open 得到不同的打开文件描述，锁请求可能互相冲突。",
+      "explanation": "与通过 dup 复制同一描述符不同。",
+      "example": "避免在同一进程中意外对自己持有的锁阻塞。",
+      "tags": [
+        "Linux 文件锁",
+        "独立打开"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/flock.2.html"
+    },
+    {
+      "id": "flock-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件锁",
+      "knowledgePoint": "命令共享锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux flock 命令默认获取哪种锁，-s 有什么作用？",
+      "answer": "默认获取排他锁；-s 请求共享锁。",
+      "explanation": "共享锁仍会与排他锁产生冲突。",
+      "example": "多个只读任务使用共享锁协调。",
+      "tags": [
+        "Linux 文件锁",
+        "命令共享锁"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/flock.1.html"
+    }
+  ]
+}

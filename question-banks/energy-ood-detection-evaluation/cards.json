@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "energy-ood-detection-evaluation",
+    "title": "能量分数论文 v2：分布外检测",
+    "url": "https://arxiv.org/pdf/2010.03759v2",
+    "type": "固定版本论文、标准或官方文档",
+    "note": "根据逐题引用的资料自行整理，示例自编；行为以指定版本与前提为准。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "energyood-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布外能量评分",
+      "knowledgePoint": "任务目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分布外检测通常要区分什么？",
+      "answer": "区分来自参考训练分布的输入与偏离该分布的输入。",
+      "explanation": "具体什么变化构成分布外，取决于任务和评测定义。",
+      "example": "筛选训练中未覆盖的输入供进一步检查。",
+      "tags": [
+        "分布外能量评分",
+        "任务目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03759v2"
+    },
+    {
+      "id": "energyood-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布外能量评分",
+      "knowledgePoint": "输入输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "能量分数论文怎样从多类分类器得到每个输入的自由能量？",
+      "answer": "对类别 logits 计算 E(x) = -T × log Σ exp(logit_i/T)，其中 T 为正温度。",
+      "explanation": "工程实现可用稳定的 logsumexp 减少溢出。",
+      "example": "把一个样本的各类别 logits 转为单个能量值。",
+      "tags": [
+        "分布外能量评分",
+        "输入输出"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03759v2"
+    },
+    {
+      "id": "energyood-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布外能量评分",
+      "knowledgePoint": "分数方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "能量分数论文按负能量设阈值时，什么方向更可能被判为分布外？",
+      "answer": "负能量低于阈值时判为分布外；等价地说，能量较高更倾向于分布外。",
+      "explanation": "阈值仍需根据验证条件确定，个别样本可能判断错误。",
+      "example": "将低负能量样本交给人工复核。",
+      "tags": [
+        "分布外能量评分",
+        "分数方向"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03759v2"
+    },
+    {
+      "id": "energyood-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布外能量评分",
+      "knowledgePoint": "不重训评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "能量分数能否用于已经训练好的分类器，而不重新训练模型？",
+      "answer": "可以；直接用分类器的 logits 计算能量作为分数。",
+      "explanation": "论文也研究了利用辅助分布外数据微调的方式。",
+      "example": "为现有分类器增加一个分布外评分基线。",
+      "tags": [
+        "分布外能量评分",
+        "不重训评分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03759v2"
+    },
+    {
+      "id": "energyood-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布外能量评分",
+      "knowledgePoint": "共同平移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "所有 logits 同时增加常数 c 时，softmax 和论文中的能量 E 分别怎样变化？",
+      "answer": "softmax 不变，能量减少 c。",
+      "explanation": "因此能量保留了被 softmax 归一化消去的一部分绝对尺度信息。",
+      "example": "比较对整组 logits 加 4 前后的分数。",
+      "tags": [
+        "分布外能量评分",
+        "共同平移"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03759v2"
+    },
+    {
+      "id": "energyood-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布外能量评分",
+      "knowledgePoint": "辅助异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "能量分数论文的 energy-bounded 微调怎样利用训练数据？",
+      "answer": "用分布内样本与辅助分布外样本的能量约束拉开两类能量范围。",
+      "explanation": "辅助异常数据未必覆盖所有未来分布外情况。",
+      "example": "利用单独的异常数据微调评分边界。",
+      "tags": [
+        "分布外能量评分",
+        "辅助异常"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03759v2"
+    },
+    {
+      "id": "energyood-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布外能量评分",
+      "knowledgePoint": "结果限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "能量分数是否可以直接当作已校准的分布外概率？",
+      "answer": "不能；它是一个依模型和温度计算的实数评分，不自动给出校准概率。",
+      "explanation": "真实部署仍需在目标数据上检查阈值、分布变化和误报。",
+      "example": "不同模型版本切换时重新评估分数。",
+      "tags": [
+        "分布外能量评分",
+        "结果限制"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2010.03759v2"
+    }
+  ]
+}

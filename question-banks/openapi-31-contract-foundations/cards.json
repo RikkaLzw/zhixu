@@ -1,0 +1,513 @@
+{
+  "source": {
+    "id": "openapi-31-contract-foundations",
+    "title": "OpenAPI Specification 3.1.1",
+    "url": "https://spec.openapis.org/oas/v3.1.1.html",
+    "type": "API 描述规范",
+    "note": "依据 OpenAPI Specification 3.1.1 自行整理；题目关注 HTTP API 契约描述，不将规范字段误作服务端运行时行为。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "openapi31-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "描述规范与运行时",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "OpenAPI 文档能描述 HTTP API 契约，但它本身会替服务端实现接口或强制执行校验吗？",
+      "answer": "不会；它提供机器可读的接口描述，服务端是否实现或校验仍由具体工具和应用决定。",
+      "explanation": "生成文档、客户端或服务端代码的工具可以消费该契约，但 OpenAPI 文件本身不是运行中的 API 服务。",
+      "example": "把一个 operation 写进 YAML 不会自动创建对应的 HTTP 路由。",
+      "tags": [
+        "OpenAPI",
+        "API 契约",
+        "规范"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "规范版本与 API 版本",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "OpenAPI 文档顶层的 `openapi` 与 `info.version` 分别表示什么？",
+      "answer": "`openapi` 表示所用 OpenAPI 规范版本；`info.version` 表示被描述 API 的版本字符串。",
+      "explanation": "两者属于不同版本维度，升级 API 版本不代表必须更换 OpenAPI 规范版本。",
+      "example": "一份文档可使用 OpenAPI 3.1.1 描述 API 版本 v2。",
+      "tags": [
+        "OpenAPI",
+        "规范版本",
+        "API 版本"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "Paths 与路径模板",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenAPI 文档中的 `paths` 字段主要描述什么？",
+      "answer": "它把 API 路径映射到路径项，并在路径项中列出该路径支持的 HTTP 操作。",
+      "explanation": "路径项还可声明该路径下多个操作共用的参数等信息。",
+      "example": "`/users/{userId}` 可在同一个 Path Item 中描述 GET 和 DELETE 操作。",
+      "tags": [
+        "OpenAPI",
+        "paths",
+        "HTTP 方法"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "路径参数约束",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "路径模板 `/users/{userId}` 中的 `userId` 在 OpenAPI 参数定义里有什么要求？",
+      "answer": "必须声明名称匹配且 `in` 为 `path` 的参数，并将 `required` 设为 `true`。",
+      "explanation": "路径模板变量总是必需的，不能声明为可选路径参数。",
+      "example": "参数对象应使用 `name: userId`、`in: path` 和 `required: true`。",
+      "tags": [
+        "OpenAPI",
+        "path parameter",
+        "参数约束"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "参数唯一性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenAPI 如何区分两个同名参数是否属于同一个参数？",
+      "answer": "参数由名称和位置 `in` 共同识别；同名的 query 与 header 参数是不同参数。",
+      "explanation": "对同一个 operation 来说，参数不能有相同的名称和位置组合。",
+      "example": "`id` 位于 path 与 query 时分别是两个参数，不能把两个 `in: query` 的 `id` 重复声明。",
+      "tags": [
+        "OpenAPI",
+        "参数",
+        "in"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "路径级与操作级参数",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "路径级参数与操作级参数同名且位置相同时，OpenAPI 如何处理？",
+      "answer": "操作级参数可以覆盖路径级的同一参数；操作级参数不能用来移除路径级参数。",
+      "explanation": "名称和位置共同用于判断是否为同一参数，其他路径级参数仍然适用。",
+      "example": "路径级声明 `tenantId` 后，GET 操作可覆盖它的描述或 schema，但不能让该参数消失。",
+      "tags": [
+        "OpenAPI",
+        "参数继承",
+        "Path Item"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "查询数组序列化默认值",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "OpenAPI 中 `in: query` 的数组参数默认使用什么 `style` 和 `explode` 行为？",
+      "answer": "默认 `style` 为 `form` 且 `explode` 为 `true`，数组元素通常以重复参数名序列化。",
+      "explanation": "显式设置 `style` 或 `explode` 会改变序列化形式，客户端和服务端应遵守同一契约。",
+      "example": "数组 `color=[blue,black]` 默认可编码为 `?color=blue&color=black`。",
+      "tags": [
+        "OpenAPI",
+        "query parameter",
+        "序列化"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "请求体媒体类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenAPI 的 Request Body Object 如何描述请求体的格式及内容结构？",
+      "answer": "通过 `content` 按媒体类型列出请求表示，并可在每种媒体类型下提供 Schema。",
+      "explanation": "媒体类型把传输表示与结构描述关联起来，例如 JSON 请求体使用 `application/json`。",
+      "example": "在 `content.application/json.schema` 中引用一个 `CreateUser` Schema。",
+      "tags": [
+        "OpenAPI",
+        "requestBody",
+        "媒体类型"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "响应描述字段",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "OpenAPI 的每个 Response Object 为什么必须提供 `description`？",
+      "answer": "规范要求每个响应对象包含一个描述该响应的 `description` 字段。",
+      "explanation": "即使响应体 Schema 已定义，描述字段仍是 Response Object 的必需内容。",
+      "example": "`'404': { description: 'User not found' }` 是有效的响应条目形式。",
+      "tags": [
+        "OpenAPI",
+        "responses",
+        "description"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "默认响应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenAPI Responses Object 中的 `default` 响应条目表示什么？",
+      "answer": "它描述未单独列出具体状态码或状态码范围时可返回的响应。",
+      "explanation": "`default` 是响应键的特殊写法，不代表 HTTP 200。",
+      "example": "定义 `default` 可统一描述其他未明确列出的错误响应。",
+      "tags": [
+        "OpenAPI",
+        "default response",
+        "HTTP 状态码"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "状态码范围响应",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenAPI 响应键 `2XX` 可以用来描述什么？",
+      "answer": "它可以描述未逐个列出的 2xx 成功状态码所对应的一类响应。",
+      "explanation": "规范允许用 `1XX` 到 `5XX` 形式的状态码范围；具体状态码条目优先于范围条目。",
+      "example": "同时定义 `200` 和 `2XX` 时，前者描述 200，范围条目描述其他匹配的 2xx 响应。",
+      "tags": [
+        "OpenAPI",
+        "响应范围",
+        "HTTP 状态码"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "Components 可复用定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "仅在 `components.schemas` 中定义一个 Schema，会自动为 API 增加端点或响应吗？",
+      "answer": "不会；Components 中的对象只在被其他字段引用时生效。",
+      "explanation": "Components 提供可复用定义的存放位置，本身不改变 API 的操作集合。",
+      "example": "定义 `User` Schema 后，还需在某个 request body 或 response 中引用它。",
+      "tags": [
+        "OpenAPI",
+        "components",
+        "Schema"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-013",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "operationId 唯一性",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "OpenAPI 的 `operationId` 有什么唯一性要求？",
+      "answer": "如果提供 `operationId`，它必须在整个 API 描述中的所有操作间唯一。",
+      "explanation": "代码生成器等工具可能把它用作稳定的操作名称，因此重复值会造成歧义。",
+      "example": "不同路径的两个 GET 操作不能都使用 `getItem` 作为 operationId。",
+      "tags": [
+        "OpenAPI",
+        "operationId",
+        "代码生成"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "Schema 对象与 JSON Schema",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenAPI 3.1.1 的 Schema Object 与 JSON Schema 有什么关系？",
+      "answer": "它基于 JSON Schema Draft 2020-12，并定义 OpenAPI 使用的基础方言和相关调整。",
+      "explanation": "不能把 OpenAPI 3.0 的有限 Schema 子集假设套用到 3.1.1。",
+      "example": "3.1.1 Schema 可使用 JSON Schema 的组合关键字表达约束。",
+      "tags": [
+        "OpenAPI 3.1",
+        "JSON Schema",
+        "Schema Object"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "可空类型表达",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "OpenAPI 3.1.1 中如何表示一个字符串字段也允许 JSON `null`？",
+      "answer": "可以把 Schema 的 `type` 写成 `['string', 'null']`；3.1.1 使用 JSON Schema 类型并集，而不是依赖 OpenAPI 3.0 的 `nullable` 字段。",
+      "explanation": "类型是否允许 null 会影响校验、代码生成和客户端类型，不应只用字段可选性代替。",
+      "example": "`type: [string, 'null']` 表示字段出现时可为字符串或 null。",
+      "tags": [
+        "OpenAPI 3.1",
+        "JSON null",
+        "类型"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "Schema 的 allOf",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "JSON Schema 语义下，`allOf` 组合的多个子 Schema 如何约束同一个实例？",
+      "answer": "实例必须同时满足 `allOf` 中的每一个子 Schema。",
+      "explanation": "`allOf` 是逻辑合取，不自动表示面向对象语言里的类继承。",
+      "example": "一个对象可通过 `allOf` 同时满足基础字段约束和额外字段约束。",
+      "tags": [
+        "OpenAPI",
+        "allOf",
+        "Schema 组合"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "Schema 的 oneOf 与 anyOf",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "JSON Schema 中 `oneOf` 与 `anyOf` 对匹配子 Schema 的数量要求有什么区别？",
+      "answer": "`oneOf` 要求恰好一个子 Schema 验证成功；`anyOf` 要求至少一个验证成功。",
+      "explanation": "当实例同时满足多个分支时，`oneOf` 会失败，而 `anyOf` 仍可通过。",
+      "example": "两个分支都匹配的输入不满足 `oneOf`，但满足 `anyOf`。",
+      "tags": [
+        "OpenAPI",
+        "oneOf",
+        "anyOf"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "readOnly 与 writeOnly",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "OpenAPI Schema 的 `readOnly` 与 `writeOnly` 分别表示什么方向的字段约束？",
+      "answer": "`readOnly` 表示字段主要用于响应，`writeOnly` 表示字段主要用于请求。",
+      "explanation": "这些标记描述字段在请求和响应 Schema 中的方向性，不会自动配置数据库或授权逻辑。",
+      "example": "用户响应中的创建时间可设为 readOnly，创建请求中的密码可设为 writeOnly。",
+      "tags": [
+        "OpenAPI",
+        "readOnly",
+        "writeOnly"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-019",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "安全方案声明与应用",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "在 `components.securitySchemes` 中声明 API Key 或 Bearer 方案后，所有操作就自动要求认证了吗？",
+      "answer": "不会；该字段只是声明可引用的安全方案，还需通过顶层或操作级 `security` 将其应用到操作。",
+      "explanation": "定义认证机制与要求某个操作使用该机制是两个不同步骤。",
+      "example": "声明名为 `BearerAuth` 的 scheme 后，仍需在操作的 security 中引用它。",
+      "tags": [
+        "OpenAPI",
+        "securitySchemes",
+        "认证"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "安全需求的 AND 与 OR",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "OpenAPI Security Requirement 数组中的多个对象与同一对象中的多个方案分别表示什么关系？",
+      "answer": "数组中的多个对象是可选方案之间的 OR；同一个对象中的多个方案必须同时满足，表示 AND。",
+      "explanation": "理解嵌套层次可避免把备选认证方式误配置成必须同时提供。",
+      "example": "`[{ApiKey: []}, {BearerAuth: []}]` 表示 API Key 或 Bearer 任一可用。",
+      "tags": [
+        "OpenAPI",
+        "security",
+        "AND",
+        "OR"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-021",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "操作级安全覆盖",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "某个操作需要使用不同于顶层 `security` 的要求时，应在哪里声明？",
+      "answer": "在该 Operation Object 上声明 `security`；操作级字段会覆盖顶层安全要求。",
+      "explanation": "操作级 `security: []` 可以表示该操作不应用安全要求，而不继承顶层列表。",
+      "example": "全局要求 BearerAuth 时，可将公开健康检查操作的 security 设为空数组。",
+      "tags": [
+        "OpenAPI",
+        "security",
+        "操作覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "可选匿名访问",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "OpenAPI 的 Security Requirement 列表中包含空对象 `{}` 表示什么？",
+      "answer": "它表示匿名访问是一个可接受的安全选项；与其他列表项并存时，认证可选。",
+      "explanation": "这与操作级 `security: []` 不同：空对象作为列表项添加一个匿名备选，空数组则不施加安全要求。",
+      "example": "`security: [{BearerAuth: []}, {}]` 表示可使用 BearerAuth，也可匿名访问。",
+      "tags": [
+        "OpenAPI",
+        "security",
+        "匿名访问"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "Bearer 格式提示",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "HTTP Bearer 安全方案的 `bearerFormat` 字段会强制定义令牌编码或校验方式吗？",
+      "answer": "不会；它是供文档或工具参考的可选提示，不改变 Bearer 认证的协议行为。",
+      "explanation": "令牌验证规则仍应由服务实现和相应协议约定决定。",
+      "example": "填写 `JWT` 可提示令牌格式，但不会自动验证签名或声明。",
+      "tags": [
+        "OpenAPI",
+        "Bearer",
+        "bearerFormat"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-024",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "服务器变量默认值",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "OpenAPI Server Object 的每个 Server Variable Object 为什么必须有 `default`？",
+      "answer": "规范要求默认值，以便未显式替换变量时仍能构成有效服务器 URL。",
+      "explanation": "`enum` 可以限制可选替换值，但 default 仍必须存在。",
+      "example": "服务器 URL `https://{env}.example.com` 应为 env 提供 default，例如 `api`。",
+      "tags": [
+        "OpenAPI",
+        "servers",
+        "变量"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    },
+    {
+      "id": "openapi31-025",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OpenAPI 3.1.1 契约基础",
+      "knowledgePoint": "操作标签用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OpenAPI operation 的 `tags` 主要用于什么？",
+      "answer": "它们提供操作的逻辑分组信息，常用于文档组织和工具展示。",
+      "explanation": "标签不会定义 HTTP 路径、访问控制或服务端业务逻辑。",
+      "example": "把多个用户相关操作都标为 `Users` 可让文档导航按资源分组。",
+      "tags": [
+        "OpenAPI",
+        "tags",
+        "文档组织"
+      ],
+      "evidence": "source",
+      "reference": "https://spec.openapis.org/oas/v3.1.1.html"
+    }
+  ]
+}

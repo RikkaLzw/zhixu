@@ -1,0 +1,283 @@
+{
+  "version": 20,
+  "note": "合并重复主卡前的内容快照，用于保留用户编辑、来源与学习记录。",
+  "cards": [
+    {
+      "id": "phish-004",
+      "category": "detection",
+      "question": "为什么钓鱼网址检测要按域名分组评估？",
+      "answer": "同一域名下的多个相似网址若跨训练和测试，会高估对新域名的泛化。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "knowledgeArea": "12",
+      "level": "进阶",
+      "tags": [
+        "域名分组",
+        "去重"
+      ],
+      "explanation": "分组规则应说明如何处理子域名、重定向和公共托管域。",
+      "example": "将同一可注册域名的样本分到同一集合，并单独检查公共托管服务。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-009",
+      "category": "detection",
+      "question": "为什么钓鱼网页的截图模型需要检查品牌和模板泄漏？",
+      "answer": "同一钓鱼模板或品牌页面跨集合时，模型可能记住外观而非识别新攻击。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "knowledgeArea": "12",
+      "level": "进阶",
+      "tags": [
+        "视觉检测",
+        "模板泄漏"
+      ],
+      "explanation": "可按模板、域名、时间或品牌分组评估。",
+      "example": "留出某些页面模板，检查模型在新模板上的误报与召回。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-009"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-010",
+      "category": "detection",
+      "question": "如何评估钓鱼网址模型的告警负担？",
+      "answer": "结合实际流量比例，报告误报量、精确率和发现钓鱼的召回率。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "knowledgeArea": "12",
+      "level": "实践",
+      "tags": [
+        "告警量",
+        "评估"
+      ],
+      "explanation": "实验集中的正负比例可能与真实访问流量不同。",
+      "example": "报告每十万次网址检查产生的误报数。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "phish-012",
+      "category": "detection",
+      "question": "如何分析钓鱼网址模型的误报？",
+      "answer": "回查网址结构、业务背景、训练来源和人工确认结果。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "knowledgeArea": "12",
+      "level": "实践",
+      "tags": [
+        "误报分析",
+        "钓鱼检测"
+      ],
+      "explanation": "短链接、登录页面或新注册域名本身不能单独证明钓鱼。",
+      "example": "检查合法企业登录页面为何被高分标记。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-012"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ember-010",
+      "category": "vulnerabilities",
+      "question": "静态恶意软件检测误报应如何分析？",
+      "answer": "结合文件来源、特征、模型分数和可信标注检查误判原因。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "knowledgeArea": "12",
+      "level": "实践",
+      "tags": [
+        "误报",
+        "样本分析"
+      ],
+      "explanation": "正常软件的打包方式或稀有结构可能与恶意样本相似。",
+      "example": "检查被误报的合法安装程序是否与训练中的恶意打包文件共享特征。",
+      "sources": [
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-006",
+      "category": "vulnerabilities",
+      "question": "对漏洞代码做词法基线时，应避免哪些标签捷径？",
+      "answer": "避免把漏洞编号、标签注释或事后修复说明放入模型输入。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "level": "实践",
+      "tags": [
+        "标签泄漏",
+        "代码特征",
+        "评测泄漏",
+        "提示词"
+      ],
+      "explanation": "这些信息可能直接透露答案，却不会出现在真实待审计代码中。",
+      "example": "比较仅代码输入与包含提交信息输入时的结果，排查标签泄漏。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-006"
+        },
+        {
+          "id": "llm4vuln",
+          "title": "LLM4Vuln 漏洞推理评估论文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "application",
+          "sourceCardId": "llmv-005"
+        }
+      ],
+      "alternateQuestions": [
+        "为什么漏洞描述与代码答案不能随意放进评测提示词？"
+      ],
+      "otherExplanations": [
+        "应明确评估目标：是利用公开情报审计，还是在未知答案条件下发现漏洞。"
+      ],
+      "otherExamples": [
+        "测试未知漏洞发现时，不提供该函数的修复说明或漏洞标签。"
+      ]
+    },
+    {
+      "id": "code-007",
+      "category": "vulnerabilities",
+      "question": "为什么 CodeXGLUE 原始任务的准确率不能单独描述审计效果？",
+      "answer": "准确率不能直接体现漏洞召回率、误报量和不同漏洞类型的表现。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "level": "进阶",
+      "tags": [
+        "准确率",
+        "审计评估"
+      ],
+      "explanation": "官方脚本报告准确率；实际应用还应依据标签和场景补充指标。",
+      "example": "增加精确率、召回率、混淆矩阵和每百个函数的可疑告警数。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "source",
+          "sourceCardId": "code-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "code-010",
+      "category": "vulnerabilities",
+      "question": "为什么按项目切分能补充代码漏洞模型的评估？",
+      "answer": "它可以检查模型在未见项目的代码风格和依赖环境下是否仍然有效。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "level": "进阶",
+      "tags": [
+        "跨项目",
+        "泛化"
+      ],
+      "explanation": "项目切分与官方随机划分回答不同的泛化问题。",
+      "example": "保留一个项目作为测试集，并报告各项目样本数量。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-010"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "copilot-004",
+      "category": "operations",
+      "question": "AI 事件摘要如何让分析人员快速回查证据？",
+      "answer": "对关键结论附带可定位的事件、资产或指标引用。",
+      "createdAt": 0,
+      "topic": "security-operations",
+      "knowledgeArea": "16",
+      "level": "实践",
+      "tags": [
+        "证据引用",
+        "可追溯"
+      ],
+      "explanation": "引用必须真正支持对应结论，而不仅是附上相关链接。",
+      "example": "摘要中的可疑外联结论指向相应连接事件和目的地址。",
+      "sources": [
+        {
+          "id": "security-copilot",
+          "title": "Microsoft Security Copilot 事件摘要",
+          "url": "https://learn.microsoft.com/en-us/microsoft-365/security/defender/security-copilot-m365d-incident-summary",
+          "type": "官方产品文档",
+          "evidence": "application",
+          "sourceCardId": "copilot-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

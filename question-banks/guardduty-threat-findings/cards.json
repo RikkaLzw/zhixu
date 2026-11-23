@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "guardduty-threat-findings",
+    "title": "Amazon GuardDuty 官方文档：威胁发现与数据覆盖",
+    "url": "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html",
+    "type": "官方文档与教材",
+    "note": "依据题目所列文档或教材自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "guardsec-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "GuardDuty 威胁检测",
+      "knowledgePoint": "检测方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Amazon GuardDuty 用哪些类型的信息辅助识别可疑活动？",
+      "answer": "它结合威胁情报源和机器学习模型等信息分析 AWS 数据源及日志。",
+      "explanation": "这不意味着每一条 finding 都由机器学习模型单独产生。",
+      "example": "结合恶意地址情报和环境活动分析潜在威胁。",
+      "tags": [
+        "GuardDuty 威胁检测",
+        "检测方法"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html"
+    },
+    {
+      "id": "guardsec-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "GuardDuty 威胁检测",
+      "knowledgePoint": "基础数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用 GuardDuty 后，文档列出的基础威胁检测数据包括哪些？",
+      "answer": "包括 CloudTrail 管理事件、EC2 的 VPC 流日志和 DNS 日志。",
+      "explanation": "这些基础数据由 GuardDuty 开始摄取分析；其他保护计划可能另需启用。",
+      "example": "分析异常 API 活动与网络通信。",
+      "tags": [
+        "GuardDuty 威胁检测",
+        "基础数据"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html"
+    },
+    {
+      "id": "guardsec-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "GuardDuty 威胁检测",
+      "knowledgePoint": "额外数据覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用 GuardDuty 是否意味着所有额外保护计划的数据源都已启用？",
+      "answer": "不意味着；部分保护计划需在支持的区域另行选择和启用。",
+      "explanation": "数据覆盖由具体计划和配置决定。",
+      "example": "评估 S3 数据事件或 Kubernetes 审计日志的覆盖。",
+      "tags": [
+        "GuardDuty 威胁检测",
+        "额外数据覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/guardduty/latest/ug/what-is-guardduty.html"
+    },
+    {
+      "id": "guardsec-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "GuardDuty 威胁检测",
+      "knowledgePoint": "模拟发现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GuardDuty 的 sample findings 是真实检测结果吗？",
+      "answer": "不是；它们包含虚构细节，用于帮助理解 finding，且标有 [SAMPLE] 前缀。",
+      "explanation": "样例可用于熟悉界面，不能当作真实攻击统计。",
+      "example": "在控制台生成示例后查看字段。",
+      "tags": [
+        "GuardDuty 威胁检测",
+        "模拟发现"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings.html"
+    },
+    {
+      "id": "guardsec-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "GuardDuty 威胁检测",
+      "knowledgePoint": "同类发现聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GuardDuty 发现同一安全问题的更多相关活动时，通常怎样处理已有 finding？",
+      "answer": "它可更新原 finding 的最新细节，而非每次都创建一条新 finding。",
+      "explanation": "具体何时聚合依 finding 类型而定。",
+      "example": "针对同一实例的多次 SSH 暴力尝试可能增加 Count。",
+      "tags": [
+        "GuardDuty 威胁检测",
+        "同类发现聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/guardduty/latest/ug/finding-aggregation.html"
+    }
+  ]
+}

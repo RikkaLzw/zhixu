@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "dinov2-visual-self-supervision",
+    "title": "DINOv2 原论文 v2：自监督视觉表征",
+    "url": "https://arxiv.org/pdf/2304.07193v2",
+    "type": "固定版本研究论文",
+    "note": "依据逐题所列固定版本资料自行整理；示例为自编，适用条件见题目。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "dinov2-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DINOv2 视觉自监督",
+      "knowledgePoint": "训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DINOv2 主要通过什么方式学习通用视觉特征？",
+      "answer": "利用大规模图像进行自监督训练，学习可迁移的图像级与图像块级表征。",
+      "explanation": "下游任务可以在提取的特征上训练简单预测头。",
+      "example": "使用预训练视觉特征支持图像分类或像素级任务。",
+      "tags": [
+        "DINOv2 视觉自监督",
+        "训练目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2304.07193v2"
+    },
+    {
+      "id": "dinov2-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DINOv2 视觉自监督",
+      "knowledgePoint": "教师与学生",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DINOv2 自监督训练中，教师网络参数通常怎样从学生网络得到？",
+      "answer": "通过学生参数的指数移动平均更新教师，而学生通过训练目标更新。",
+      "explanation": "这是论文自监督训练阶段的教师更新方式。",
+      "example": "每次优化后用动量更新教师参数。",
+      "tags": [
+        "DINOv2 视觉自监督",
+        "教师与学生"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2304.07193v2"
+    },
+    {
+      "id": "dinov2-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DINOv2 视觉自监督",
+      "knowledgePoint": "图像级目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DINOv2 的图像级 DINO 目标主要比较同一图像的什么信息？",
+      "answer": "比较不同裁剪视图中教师和学生分类标记所产生的预测分布。",
+      "explanation": "论文使用交叉熵让学生匹配教师给出的目标分布。",
+      "example": "同一图像的两个裁剪视图形成自监督训练信号。",
+      "tags": [
+        "DINOv2 视觉自监督",
+        "图像级目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2304.07193v2"
+    },
+    {
+      "id": "dinov2-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DINOv2 视觉自监督",
+      "knowledgePoint": "图像块目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DINOv2 的 iBOT 图像块目标如何处理学生和教师的输入掩码？",
+      "answer": "学生输入的一些图像块被掩码，教师侧对应图像块可见；学生学习匹配教师的块级目标。",
+      "explanation": "该目标作用于被掩码位置的图像块表示。",
+      "example": "根据可见图像区域预测被遮挡块的教师表示分布。",
+      "tags": [
+        "DINOv2 视觉自监督",
+        "图像块目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2304.07193v2"
+    },
+    {
+      "id": "dinov2-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DINOv2 视觉自监督",
+      "knowledgePoint": "输出头参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DINOv2 在图像级 DINO 目标与块级 iBOT 目标之间是否共享同一个输出头？",
+      "answer": "论文实验使用两个独立的输出头。",
+      "explanation": "论文指出其大规模消融中分开头部参数的表现更好。",
+      "example": "分别为分类标记与图像块配置投影头。",
+      "tags": [
+        "DINOv2 视觉自监督",
+        "输出头参数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2304.07193v2"
+    },
+    {
+      "id": "dinov2-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DINOv2 视觉自监督",
+      "knowledgePoint": "特征正则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DINOv2 使用的 KoLeo 正则项主要鼓励批内特征怎样分布？",
+      "answer": "鼓励特征在表示空间中更加分散。",
+      "explanation": "论文中的项使用每个向量与批内最近邻之间的距离。",
+      "example": "对归一化后的图像特征计算批内最近邻距离。",
+      "tags": [
+        "DINOv2 视觉自监督",
+        "特征正则"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2304.07193v2"
+    },
+    {
+      "id": "dinov2-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DINOv2 视觉自监督",
+      "knowledgePoint": "数据构建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DINOv2 的 LVD-142M 数据集构建如何利用已有精选图像？",
+      "answer": "先对大规模未精选图像去重，再检索与精选图像相近的图像，构建预训练集合。",
+      "explanation": "数据选择使用视觉相似度，不能等同于对全部图片人工分类标注。",
+      "example": "以一组精选数据为查询，从大池中检索相近图片。",
+      "tags": [
+        "DINOv2 视觉自监督",
+        "数据构建"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2304.07193v2"
+    },
+    {
+      "id": "dinov2-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DINOv2 视觉自监督",
+      "knowledgePoint": "小模型蒸馏",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DINOv2 论文训练较小模型时如何利用最大的 ViT-g？",
+      "answer": "把较大的 ViT-g 作为冻结教师，向较小学生模型蒸馏。",
+      "explanation": "论文保留学生的指数移动平均版本用于最终模型。",
+      "example": "将大视觉模型的表征转移给小视觉模型。",
+      "tags": [
+        "DINOv2 视觉自监督",
+        "小模型蒸馏"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2304.07193v2"
+    }
+  ]
+}

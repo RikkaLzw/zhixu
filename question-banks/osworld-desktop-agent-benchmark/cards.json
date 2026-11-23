@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "osworld-desktop-agent-benchmark",
+    "title": "OSWorld 原论文 v1：计算机操作智能体",
+    "url": "https://arxiv.org/pdf/2404.07972v1",
+    "type": "原论文与固定版本开源实现",
+    "note": "依据逐题引用的论文或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "osworld-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OSWorld 计算机操作评测",
+      "knowledgePoint": "环境类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSWorld 原论文提供什么类型的智能体评测环境？",
+      "answer": "它提供基于真实操作系统和桌面应用的可执行计算机环境。",
+      "explanation": "任务可涉及网页、文件操作和多个应用。",
+      "example": "智能体在虚拟桌面中编辑表格并保存文件。",
+      "tags": [
+        "OSWorld 计算机操作评测",
+        "环境类型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2404.07972v1"
+    },
+    {
+      "id": "osworld-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "OSWorld 计算机操作评测",
+      "knowledgePoint": "初始状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSWorld 使用虚拟机快照和任务配置有什么作用？",
+      "answer": "快照帮助恢复基础环境，任务配置再准备文件、应用和界面状态。",
+      "explanation": "受控初始状态有助于复现实验。",
+      "example": "重置后打开指定文档并调整窗口。",
+      "tags": [
+        "OSWorld 计算机操作评测",
+        "初始状态"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2404.07972v1"
+    },
+    {
+      "id": "osworld-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OSWorld 计算机操作评测",
+      "knowledgePoint": "动作表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSWorld 原论文中的 PyAutoGUI 动作可控制哪些常见桌面操作？",
+      "answer": "可表示鼠标移动、点击、拖动以及键盘输入和快捷键等操作。",
+      "explanation": "动作需要结合当前桌面状态正确定位目标。",
+      "example": "点击文件菜单并输入文件名。",
+      "tags": [
+        "OSWorld 计算机操作评测",
+        "动作表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2404.07972v1"
+    },
+    {
+      "id": "osworld-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OSWorld 计算机操作评测",
+      "knowledgePoint": "特殊动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSWorld 的 WAIT、FAIL 和 DONE 特殊动作分别表达什么？",
+      "answer": "WAIT 表示等待；FAIL 表示认为任务不可完成；DONE 表示认为任务已完成。",
+      "explanation": "智能体声明完成不自动等于通过评测；轨迹也可能因达到步骤上限而结束。",
+      "example": "保存后发送 DONE，再由评估器检查结果。",
+      "tags": [
+        "OSWorld 计算机操作评测",
+        "特殊动作"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2404.07972v1"
+    },
+    {
+      "id": "osworld-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "OSWorld 计算机操作评测",
+      "knowledgePoint": "基准范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "OSWorld 原论文 v1 的主要基准和额外 Windows 分析集各有多少任务？",
+      "answer": "主要 Ubuntu 基准有 369 项任务；论文另有 43 项 Windows 任务用于分析。",
+      "explanation": "这些数字是论文 v1 的数据口径。",
+      "example": "比较结果时确认采用的操作系统和任务集合。",
+      "tags": [
+        "OSWorld 计算机操作评测",
+        "基准范围"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2404.07972v1"
+    }
+  ]
+}

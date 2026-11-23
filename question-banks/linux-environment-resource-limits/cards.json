@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "linux-environment-resource-limits",
+    "title": "Linux 环境与资源限制手册",
+    "url": "https://man7.org/linux/man-pages/man7/environ.7.html",
+    "type": "Linux 与 GNU 官方手册",
+    "note": "逐题依据手册自行整理，示例自编；命令和实现行为以题中所述环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "linenv-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "进程环境与资源限制",
+      "knowledgePoint": "子进程环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 进程启动子进程时，环境变量通常如何传递？",
+      "answer": "子进程获得环境的副本；执行新程序时可传入该环境或显式指定另一份环境。",
+      "explanation": "子进程对自身环境的修改不会反向修改父进程的环境。",
+      "example": "子 shell 中修改变量不会自动改写父 shell 的值。",
+      "tags": [
+        "进程环境与资源限制",
+        "子进程环境"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/environ.7.html"
+    },
+    {
+      "id": "linenv-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "进程环境与资源限制",
+      "knowledgePoint": "局部命令环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 中 VAR=value command 对外部命令的环境有什么作用？",
+      "answer": "该赋值会加入这次命令启动时的环境。",
+      "explanation": "普通外部命令执行结束后，这个前缀赋值不必成为父 shell 的永久变量。",
+      "example": "LANG=C 命令 可只为该命令指定语言环境。",
+      "tags": [
+        "进程环境与资源限制",
+        "局部命令环境"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/bash.1.html"
+    },
+    {
+      "id": "linenv-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "进程环境与资源限制",
+      "knowledgePoint": "env清空",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU env -i command 主要用于什么？",
+      "answer": "在空环境中启动指定命令，除非同时显式添加环境变量。",
+      "explanation": "被调用程序可能需要 PATH、HOME 等变量；可使用命令的绝对路径。",
+      "example": "env -i /usr/bin/env 输出空环境。",
+      "tags": [
+        "进程环境与资源限制",
+        "env清空"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/env.1.html"
+    },
+    {
+      "id": "linenv-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "进程环境与资源限制",
+      "knowledgePoint": "env删除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU env -u NAME command 有什么作用？",
+      "answer": "从传给命令的环境中移除指定变量。",
+      "explanation": "该命令不会修改调用它的父 shell 环境。",
+      "example": "env -u DEBUG command 在子进程环境中去掉 DEBUG。",
+      "tags": [
+        "进程环境与资源限制",
+        "env删除"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/env.1.html"
+    },
+    {
+      "id": "linenv-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "进程环境与资源限制",
+      "knowledgePoint": "PATH查找",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "环境变量 PATH 对常见命令查找有什么作用？",
+      "answer": "它提供以冒号分隔的目录列表，供 shell 或程序搜索可执行文件。",
+      "explanation": "显式包含斜杠的命令路径不会按普通 PATH 目录搜索。",
+      "example": "PATH=/usr/bin:/bin 给出两个搜索目录。",
+      "tags": [
+        "进程环境与资源限制",
+        "PATH查找"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/environ.7.html"
+    },
+    {
+      "id": "linenv-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "进程环境与资源限制",
+      "knowledgePoint": "软硬限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的资源软限制与硬限制有什么区别？",
+      "answer": "内核按软限制执行控制，硬限制为软限制提供上限。",
+      "explanation": "无特权进程可在硬限制内调整软限制，也可降低硬限制。",
+      "example": "打开文件限制可分别有软值和硬值。",
+      "tags": [
+        "进程环境与资源限制",
+        "软硬限制"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/getrlimit.2.html"
+    },
+    {
+      "id": "linenv-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "进程环境与资源限制",
+      "knowledgePoint": "ulimit文件数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 ulimit -n 查看或设置的 Linux 文件描述符限制，精确定义是什么？",
+      "answer": "它对应 RLIMIT_NOFILE，数值是进程可分配的最大文件描述符编号加一。",
+      "explanation": "ulimit -Sn 查看软限制；达到限制时打开新文件等操作可能因 EMFILE 失败。",
+      "example": "限制为 1024 时，新分配的文件描述符编号必须小于 1024。",
+      "tags": [
+        "进程环境与资源限制",
+        "ulimit文件数"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/getrlimit.2.html"
+    },
+    {
+      "id": "linenv-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "进程环境与资源限制",
+      "knowledgePoint": "资源限制继承",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 进程的资源限制在 fork 和 execve 后如何处理？",
+      "answer": "fork 的子进程继承父进程的资源限制，execve 后限制仍被保留。",
+      "explanation": "修改当前 shell 的限制可以影响它随后启动的进程。",
+      "example": "在启动程序之前设置合适的软限制。",
+      "tags": [
+        "进程环境与资源限制",
+        "资源限制继承"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/getrlimit.2.html"
+    },
+    {
+      "id": "linenv-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "进程环境与资源限制",
+      "knowledgePoint": "软限制现有资源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 将某项软限制调低到当前资源占用之下，会立即强制释放已占资源吗？",
+      "answer": "不会；手册说明设置可成功，但通常会阻止继续增加该资源的使用。",
+      "explanation": "具体失败方式取决于所限制的资源。",
+      "example": "已打开的文件描述符不会因为调低上限而自动关闭。",
+      "tags": [
+        "进程环境与资源限制",
+        "软限制现有资源"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/getrlimit.2.html"
+    }
+  ]
+}

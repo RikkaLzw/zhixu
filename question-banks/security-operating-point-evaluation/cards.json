@@ -1,0 +1,556 @@
+{
+  "source": {
+    "id": "security-operating-point-evaluation",
+    "title": "安全模型工作点与标签质量评估",
+    "url": "https://www.usenix.org/system/files/sec22-arp.pdf",
+    "type": "研究论文与官方技术文档",
+    "note": "逐题对照安全评估论文与指定版本指标文档；面经仅作主题启发，经历为分享者自述。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "opseval-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "基率与告警精确率公式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "已知攻击比例 π、真正例率 TPR 和假正例率 FPR，告警精确率如何表示？",
+      "answer": "在告警概率非零时，精确率为 π·TPR / [π·TPR + (1−π)·FPR]。",
+      "explanation": "把实验结果用于生产估计时，还需判断两类条件下的检测率能否迁移。",
+      "example": "攻击比例较低时，结合误报率估计告警准确性。",
+      "tags": [
+        "基率与告警精确率公式",
+        "安全模型评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec22-arp.pdf",
+      "referenceTitle": "USENIX Security 2022：基率与评估",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯科恩实验室实习公开面经（合集收录，经历为分享者自述）；入侵检测误报主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "opseval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "预期告警率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在固定工作点下，如何用攻击比例、TPR 和 FPR 表示总体预期告警比例？",
+      "answer": "告警比例为 π·TPR + (1−π)·FPR，其中 π 是攻击比例。",
+      "explanation": "乘以待处理事件总量可得到相应条件下的预期告警数。",
+      "example": "评估一天的正常事件和攻击事件合计产生多少告警。",
+      "tags": [
+        "预期告警率",
+        "安全模型评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec22-arp.pdf",
+      "referenceTitle": "USENIX Security 2022：基率与评估",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯科恩实验室实习公开面经（合集收录，经历为分享者自述）；入侵检测误报主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "opseval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "类别比例与曲线",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "如果只改变类别比例，且各类别的分数分布保持不变，ROC 与 PR 曲线会怎样？",
+      "answer": "ROC 曲线保持不变；PR 曲线通常会随类别比例变化。",
+      "explanation": "在某些特殊工作点，例如没有误报时，精确率可能不变。",
+      "example": "将采样平衡的测试结果用于估计稀有攻击场景。",
+      "tags": [
+        "类别比例与曲线",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec22-arp.pdf",
+      "referenceTitle": "USENIX Security 2022：ROC 与 PR"
+    },
+    {
+      "id": "opseval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "低误报率分辨率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 N 条有真实标签的正常样本做不加权评估时，最小非零经验假正例率是多少？",
+      "answer": "最小非零值是 1/N，对应恰好 1 条正常样本被误报。",
+      "explanation": "这表示经验计数的分辨率，不表示总体误报率的置信上限。",
+      "example": "用 1000 条正常样本评估时，1 次误报对应 0.1%。",
+      "tags": [
+        "低误报率分辨率",
+        "安全模型评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.roc_curve.html",
+      "referenceTitle": "scikit-learn 1.7：ROC curve",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯科恩实验室实习公开面经（合集收录，经历为分享者自述）；入侵检测误报主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "opseval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "零误报置信上界",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "固定检测器在 N 个独立同分布正常样本上没有误报，能否认定总体误报率为零？",
+      "answer": "不能；当 N 较大时，单侧 95% 二项置信上界约为 3/N。",
+      "explanation": "该近似依赖固定模型和阈值及独立同分布样本；高度相关日志不能直接当作独立试验。",
+      "example": "1000 条独立正常样本均无误报时，上界约为 0.3%。",
+      "tags": [
+        "零误报置信上界",
+        "安全模型评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://en.wikipedia.org/wiki/Rule_of_three_(statistics)",
+      "referenceTitle": "Rule of three：零事件置信上界",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯科恩实验室实习公开面经（合集收录，经历为分享者自述）；入侵检测误报主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        },
+        {
+          "id": "binomial-confidence-ref",
+          "title": "SciPy 1.15.3：二项比例置信区间",
+          "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.binomtest.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "opseval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "总体AUC与低误报区间",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "ROC AUC 较高能否单独证明安全检测器在低误报率区间也表现良好？",
+      "answer": "不能；总体 AUC 汇总整个 ROC 区间，低误报率附近的工作点可能仍不理想。",
+      "explanation": "应另报告业务允许的假正例率范围内的召回率或部分 AUC。",
+      "example": "比较只允许极少误报的检测系统。",
+      "tags": [
+        "总体AUC与低误报区间",
+        "安全模型评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec22-arp.pdf",
+      "referenceTitle": "USENIX Security 2022：性能指标",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯科恩实验室实习公开面经（合集收录，经历为分享者自述）；入侵检测误报主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "opseval-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "标准化部分AUC",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的二分类 roc_auc_score 设置 max_fpr 后返回什么？",
+      "answer": "返回假正例率从 0 到 max_fpr 区间内的标准化部分 ROC AUC。",
+      "explanation": "这是标准化值，不应直接当作未经标准化的几何面积。",
+      "example": "分别报告 max_fpr=0.01 的部分 AUC 与总体 AUC。",
+      "tags": [
+        "标准化部分AUC",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.roc_auc_score.html",
+      "referenceTitle": "scikit-learn 1.7：roc_auc_score"
+    },
+    {
+      "id": "opseval-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "分数并列与阈值",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "多个样本的模型分数相同，单一确定性分数阈值能否只选中其中部分样本？",
+      "answer": "不能；采用相同分数比较规则时，这些样本会一起位于阈值同一侧。",
+      "explanation": "若要拆分并列样本，需要另行定义排序或平局处理规则。",
+      "example": "多个告警同分时，预期的精确告警数可能无法只靠阈值实现。",
+      "tags": [
+        "分数并列与阈值",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.roc_curve.html",
+      "referenceTitle": "scikit-learn 1.7：ROC curve"
+    },
+    {
+      "id": "opseval-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "ROC阈值起点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 roc_curve 为什么在阈值数组开头加入无穷大？",
+      "answer": "它表示始终预测负类的工作点，对应 FPR=0、TPR=0。",
+      "explanation": "这个特殊阈值是曲线端点，不是实际样本的模型分数。",
+      "example": "读取 ROC 阈值时检查第一个元素。",
+      "tags": [
+        "ROC阈值起点",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.roc_curve.html",
+      "referenceTitle": "scikit-learn 1.7：ROC curve"
+    },
+    {
+      "id": "opseval-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "ROC省略共线点",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 roc_curve 默认 drop_intermediate=True 会删除哪些点？",
+      "answer": "它会省略与相邻点共线的中间阈值点，不改变绘制的 ROC 形状或 AUC。",
+      "explanation": "如果要检查所有候选阈值，可关闭该选项。",
+      "example": "选择可部署阈值前保留全部 ROC 阈值。",
+      "tags": [
+        "ROC省略共线点",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.roc_curve.html",
+      "referenceTitle": "scikit-learn 1.7：ROC curve"
+    },
+    {
+      "id": "opseval-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "PR曲线全正起点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二分类 PR 曲线上“所有样本都预测为正”时的精确率和召回率分别是多少？",
+      "answer": "在测试集中存在正例时，召回率为 1，精确率等于该测试集的正例比例。",
+      "explanation": "测试集正例比例不一定等于生产环境攻击比例。",
+      "example": "把全部事件都当攻击时，精确率等于数据中的攻击占比。",
+      "tags": [
+        "PR曲线全正起点",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.precision_recall_curve.html",
+      "referenceTitle": "scikit-learn 1.7：precision_recall_curve"
+    },
+    {
+      "id": "opseval-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "PR曲线阈值端点",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 precision_recall_curve 返回的精确率与召回率数组，是否每个元素都有对应阈值？",
+      "answer": "不是；数组末尾的精确率 1、召回率 0 是绘图端点，不对应一个阈值。",
+      "explanation": "计算阈值索引时应注意输出数组长度不同。",
+      "example": "从曲线中选工作点时避免把最后的端点当成可用阈值。",
+      "tags": [
+        "PR曲线阈值端点",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.precision_recall_curve.html",
+      "referenceTitle": "scikit-learn 1.7：precision_recall_curve"
+    },
+    {
+      "id": "opseval-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "低误报评估",
+      "knowledgePoint": "无负例与假正例率",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "安全测试集中没有已确认的正常样本时，能否计算有意义的假正例率？",
+      "answer": "不能；假正例率以真实正常样本数为分母，分母为零时该指标未定义。",
+      "explanation": "应补充适合目标环境的正常样本并说明标签依据。",
+      "example": "只收集攻击流量无法验证误报率。",
+      "tags": [
+        "无负例与假正例率",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.roc_curve.html",
+      "referenceTitle": "scikit-learn 1.7：ROC curve"
+    },
+    {
+      "id": "opseval-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "告警复核抽样",
+      "knowledgePoint": "不等概率抽样权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全告警按不同概率抽样复核时，如何让被抽中的样本代表其采样概率下的总体？",
+      "answer": "若已知每个样本的非零纳入概率 p，可按 1/p 加权估计总体计数。",
+      "explanation": "这种设计依赖抽样概率正确记录，且复核标签足够可靠。",
+      "example": "某类告警以 20% 概率抽样时，每个被抽样告警的权重为 5。",
+      "tags": [
+        "不等概率抽样权重",
+        "安全模型评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://developers.google.com/machine-learning/guides/rules-of-ml#rule_30_importance_weight_sampled_data_dont_arbitrarily_drop_it",
+      "referenceTitle": "Google Rules of ML：Importance weighting",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯科恩实验室实习公开面经（合集收录，经历为分享者自述）；入侵检测误报主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "opseval-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "告警复核抽样",
+      "knowledgePoint": "零纳入概率",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "如果某类安全事件从未有机会被抽样复核，能否只靠逆概率加权估计其真实情况？",
+      "answer": "不能；其纳入概率为零，缺少该类标签的信息，权重也无法定义。",
+      "explanation": "需要调整抽样覆盖范围，或明确依赖其他数据和假设。",
+      "example": "从不抽查低分事件时，无法仅凭已复核告警估计所有漏报。",
+      "tags": [
+        "零纳入概率",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://en.wikipedia.org/wiki/Horvitz%E2%80%93Thompson_estimator",
+      "referenceTitle": "Horvitz–Thompson：纳入概率"
+    },
+    {
+      "id": "opseval-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "告警复核抽样",
+      "knowledgePoint": "稀有抽样与权重波动",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "用逆概率权重评估告警时，为什么极低抽样概率可能使估计不稳定？",
+      "answer": "少量被抽中的样本会获得很大权重，因此其标签变化可能显著影响估计。",
+      "explanation": "可检查分层覆盖与权重分布，并报告不确定性。",
+      "example": "少量低概率抽到的告警对总体估计占比很大。",
+      "tags": [
+        "稀有抽样与权重波动",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://en.wikipedia.org/wiki/Horvitz%E2%80%93Thompson_estimator",
+      "referenceTitle": "Horvitz–Thompson：加权估计"
+    },
+    {
+      "id": "opseval-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全标签质量",
+      "knowledgePoint": "引擎标签时间变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么构建恶意软件评估集时，应记录多引擎扫描标签的取得时间？",
+      "answer": "同一文件的引擎判定可能随时间更新或变化，不同时间的标签快照可能不同。",
+      "explanation": "标签时间还影响能否重现评估和判断预测时可用的信息。",
+      "example": "保存文件的扫描日期与标签快照。",
+      "tags": [
+        "引擎标签时间变化",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec20-zhu.pdf",
+      "referenceTitle": "USENIX Security 2020：反恶意软件标签动态"
+    },
+    {
+      "id": "opseval-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全标签质量",
+      "knowledgePoint": "多引擎结果相关",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "多个反恶意软件引擎给出相同判定，能否默认它们是相互独立的证据？",
+      "answer": "不能；研究发现部分引擎的标签变化高度相关。",
+      "explanation": "聚合投票时应考虑来源相关性，不能只按票数假定独立。",
+      "example": "多个引擎结果一致时仍检查其来源及其他证据。",
+      "tags": [
+        "多引擎结果相关",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec20-zhu.pdf",
+      "referenceTitle": "USENIX Security 2020：引擎相关性"
+    },
+    {
+      "id": "opseval-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全标签质量",
+      "knowledgePoint": "标签稳定与准确",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "多引擎聚合标签长期稳定，是否足以证明它与真实文件性质一致？",
+      "answer": "不够；稳定只说明判定较少变化，准确性仍需独立可信的核验。",
+      "explanation": "研究指出合适阈值可提高稳定性，但不自动保证标签正确。",
+      "example": "对长期稳定的聚合标签抽样做人工验证。",
+      "tags": [
+        "标签稳定与准确",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec20-zhu.pdf",
+      "referenceTitle": "USENIX Security 2020：标签聚合"
+    },
+    {
+      "id": "opseval-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全标签质量",
+      "knowledgePoint": "扫描引擎集合差异",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "比较两个文件的恶意引擎命中数时，为什么需要检查参与扫描的引擎集合？",
+      "answer": "参与扫描的引擎数量或成员不同，会影响命中数的可比性。",
+      "explanation": "即使改用比例，也不能因此假定引擎结果彼此独立或完全准确。",
+      "example": "两次扫描分别有 20 和 60 个引擎时核对覆盖情况。",
+      "tags": [
+        "扫描引擎集合差异",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec20-zhu.pdf",
+      "referenceTitle": "USENIX Security 2020：多引擎标注"
+    },
+    {
+      "id": "opseval-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全标签质量",
+      "knowledgePoint": "排除不确定测试样本",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "评估恶意软件检测器时，只保留多引擎高度一致的测试样本可能造成什么偏差？",
+      "answer": "这可能排除难以判定的样本，使测试集比实际待检测流量更容易。",
+      "explanation": "应说明筛选规则，并评估不确定样本的比例及处理方式。",
+      "example": "只用大量引擎均报毒的文件测试。",
+      "tags": [
+        "排除不确定测试样本",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec22-arp.pdf",
+      "referenceTitle": "USENIX Security 2022：选择性数据窥探"
+    },
+    {
+      "id": "opseval-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全评估数据",
+      "knowledgePoint": "动态分析幸存偏差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "只在成功运行于沙箱的样本上报告恶意软件模型效果，为什么可能产生幸存者偏差？",
+      "answer": "运行失败或无法处理的样本被排除，报告结果只反映可成功分析的子集。",
+      "explanation": "还应报告失败数量与原因，并明确模型对这些样本的处理。",
+      "example": "统计沙箱超时、崩溃和不支持样本的比例。",
+      "tags": [
+        "动态分析幸存偏差",
+        "安全模型评估"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec22-arp.pdf",
+      "referenceTitle": "USENIX Security 2022：Survivorship bias"
+    },
+    {
+      "id": "opseval-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "规则与模型协作",
+      "knowledgePoint": "模型增量发现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较新检测模型与既有规则时，什么是模型的增量发现？",
+      "answer": "在同一评估范围内，模型识别出而规则未识别出的已确认威胁。",
+      "explanation": "还应统计新增误报与成本，避免只比较总检出数。",
+      "example": "统计规则漏掉但模型检出的攻击事件。",
+      "tags": [
+        "模型增量发现",
+        "安全模型评估",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://www.usenix.org/system/files/sec22-arp.pdf",
+      "referenceTitle": "USENIX Security 2022：比较基线",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯科恩实验室实习公开面经（合集收录，经历为分享者自述）；入侵检测误报主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

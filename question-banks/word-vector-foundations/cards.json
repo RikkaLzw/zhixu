@@ -1,0 +1,609 @@
+{
+  "source": {
+    "id": "word-vector-foundations",
+    "title": "词向量基础：Word2Vec、GloVe 与 fastText",
+    "url": "https://arxiv.org/abs/1301.3781v3",
+    "type": "研究论文",
+    "note": "依据 Word2Vec、负采样、GloVe 与 fastText 原论文自行整理，并保留论文版本和实验前提。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "wordvec-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "CBOW与Skip-gram",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Word2Vec 的 CBOW 和 Skip-gram 分别利用什么预测什么？",
+      "answer": "CBOW 用周围上下文预测中心词；Skip-gram 用中心词预测周围上下文词。",
+      "explanation": "两者都利用局部上下文学习词的分布式表示。",
+      "example": "给定“猫 喝 牛奶”，中心词可以是“喝”。",
+      "tags": [
+        "CBOW与Skip-gram",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1301.3781v3",
+      "referenceTitle": "Efficient Estimation of Word Representations in Vector Space（v3）：第 3.1–3.2 节"
+    },
+    {
+      "id": "wordvec-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "CBOW词序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 CBOW 为什么称为词袋模型？",
+      "answer": "它聚合上下文词向量，原始投影表示不区分上下文词出现的顺序。",
+      "explanation": "论文中的投影对上下文向量取平均。",
+      "example": "相同上下文词换序时，词袋平均表示相同。",
+      "tags": [
+        "CBOW词序",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1301.3781v3",
+      "referenceTitle": "Efficient Estimation of Word Representations in Vector Space（v3）：第 3.1 节"
+    },
+    {
+      "id": "wordvec-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "双侧上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 CBOW 训练中可以使用中心词右侧的词吗？",
+      "answer": "可以；论文中的上下文包括中心词左右两侧的词。",
+      "explanation": "因此该训练任务并非只能利用左侧前缀的自回归预测。",
+      "example": "用“猫”和“牛奶”辅助预测中间的“喝”。",
+      "tags": [
+        "双侧上下文",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1301.3781v3",
+      "referenceTitle": "Efficient Estimation of Word Representations in Vector Space（v3）：第 3.1 节"
+    },
+    {
+      "id": "wordvec-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "Skip-gram训练对",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Skip-gram 如何从一个中心词及其窗口构造训练信号？",
+      "answer": "它将中心词与窗口中的上下文词组成预测对，并提高这些上下文词的得分或概率。",
+      "explanation": "窗口边界和采样策略影响实际构造的词对。",
+      "example": "中心词“喝”可分别与“猫”和“牛奶”组成训练对。",
+      "tags": [
+        "Skip-gram训练对",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 2 节"
+    },
+    {
+      "id": "wordvec-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "完整Softmax成本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Skip-gram 的完整 softmax 为什么在大词表上开销较高？",
+      "answer": "计算归一化分母需要考虑词表中所有候选词的分数。",
+      "explanation": "层次 softmax 和负采样是论文讨论的替代训练方式。",
+      "example": "词表扩大时，逐项计算全部候选的代价随之增加。",
+      "tags": [
+        "完整Softmax成本",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 2 节"
+    },
+    {
+      "id": "wordvec-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "输入输出词向量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 Skip-gram 与 GloVe 为同一个词如何区分输入词和上下文词的向量？",
+      "answer": "二者都分别学习词作为输入或目标词时的向量，以及作为上下文词时的向量。",
+      "explanation": "这两套表示用于计算目标词与上下文词之间的分数。",
+      "example": "同一个词可有中心词向量和上下文词向量。",
+      "tags": [
+        "输入输出词向量",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 2 节",
+      "supportingReferences": [
+        {
+          "id": "glove-wordvec-ref",
+          "title": "GloVe: Global Vectors for Word Representation：第 3 节",
+          "url": "https://aclanthology.org/D14-1162/",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "wordvec-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "负采样目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Skip-gram 的负采样训练如何使用正例与噪声样本？",
+      "answer": "它用逻辑分类目标提高观测到的词对得分，并压低采样噪声词与中心词的得分。",
+      "explanation": "每个正词对配合一定数量的负样本进行更新。",
+      "example": "中心词与真实窗口词为正对，另采样若干噪声词。",
+      "tags": [
+        "负采样目标",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 2.2 节"
+    },
+    {
+      "id": "wordvec-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "负采样与概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "负采样目标是否直接计算完整词表上归一化的 softmax 概率？",
+      "answer": "不是；它训练区分观测词对与采样噪声的二元目标。",
+      "explanation": "不能直接把单个负采样得分当成完整 softmax 概率。",
+      "example": "用少量噪声词计算损失，而不遍历整个词表。",
+      "tags": [
+        "负采样与概率",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 2.2 节"
+    },
+    {
+      "id": "wordvec-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "噪声样本含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Word2Vec 负采样抽到的词一定与中心词语义无关吗？",
+      "answer": "不一定；它是按噪声分布抽样的词，不代表人工确认的不相关关系。",
+      "explanation": "采样结果可能与实际语境或语义存在关联。",
+      "example": "采样词也可能在其他句子中与中心词共同出现。",
+      "tags": [
+        "噪声样本含义",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 2.2 节"
+    },
+    {
+      "id": "wordvec-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "噪声分布平滑",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Word2Vec 负采样论文使用词频的 3/4 次方后再归一化，其相对原始词频的作用是什么？",
+      "answer": "它降低高频词相对低频词的采样优势，使噪声分布更平缓。",
+      "explanation": "3/4 是论文实验选用的指数，不是所有实现都必须固定的值。",
+      "example": "词频比例为 16:1 时，3/4 次方后的未归一化比例为 8:1。",
+      "tags": [
+        "噪声分布平滑",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 2.2 节"
+    },
+    {
+      "id": "wordvec-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "高频词下采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Word2Vec 论文为什么对高频词做下采样？",
+      "answer": "减少训练中大量重复的高频词，加快训练，并在其实验中改善词向量质量。",
+      "explanation": "丢弃概率依赖词频；实验结论依赖具体语料和设置。",
+      "example": "对极高频的功能词随机跳过一部分出现位置。",
+      "tags": [
+        "高频词下采样",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 2.3 节"
+    },
+    {
+      "id": "wordvec-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "层次Softmax路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "层次 softmax 如何利用二叉树表示词概率？",
+      "answer": "把词放在叶节点，通过从根到目标词叶节点的一系列二元决策计算概率。",
+      "explanation": "训练目标词时只需处理其路径上的节点。",
+      "example": "一个词对应从根向左、再向右等路径。",
+      "tags": [
+        "层次Softmax路径",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 2.1 节"
+    },
+    {
+      "id": "wordvec-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "Huffman树效率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Word2Vec 使用 Huffman 树时，为什么高频词通常计算路径更短？",
+      "answer": "Huffman 编码为高频词分配较短编码，相应的根到叶路径较短。",
+      "explanation": "这能减少高频词训练时需要计算的节点数。",
+      "example": "高频词的路径可短于稀有词的路径。",
+      "tags": [
+        "Huffman树效率",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1301.3781v3",
+      "referenceTitle": "Efficient Estimation of Word Representations in Vector Space（v3）：第 2.1 节"
+    },
+    {
+      "id": "wordvec-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "随机上下文窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Skip-gram 如何让较远上下文词在训练中出现得较少？",
+      "answer": "论文为每个中心词随机选择窗口半径，使较远位置被纳入的概率较低。",
+      "explanation": "这是论文的具体采样设计，不是所有实现的强制规则。",
+      "example": "最大半径为 5 时，距离 1 的词比距离 5 的词更常进入窗口。",
+      "tags": [
+        "随机上下文窗口",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1301.3781v3",
+      "referenceTitle": "Efficient Estimation of Word Representations in Vector Space（v3）：第 3.2 节"
+    },
+    {
+      "id": "wordvec-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "窗口大小权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "扩大 Skip-gram 上下文窗口通常会怎样影响训练数据量？",
+      "answer": "通常会为每个中心词提供更多上下文预测对，从而增加计算量。",
+      "explanation": "得到的表示也可能随窗口定义和语料变化。",
+      "example": "在同一文本上扩大窗口，更多邻近词可参与训练。",
+      "tags": [
+        "窗口大小权衡",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1301.3781v3",
+      "referenceTitle": "Efficient Estimation of Word Representations in Vector Space（v3）：第 3.2 节"
+    },
+    {
+      "id": "wordvec-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "短语表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Word2Vec 短语扩展为什么要识别并合并一些多词短语？",
+      "answer": "有些短语的含义不能可靠地由各单词独立含义组合得到，因此可将其作为整体学习表示。",
+      "explanation": "论文根据共现统计发现候选短语。",
+      "example": "将 Air Canada 视作一个短语，而不只分别处理两个词。",
+      "tags": [
+        "短语表示",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1310.4546v1",
+      "referenceTitle": "Distributed Representations of Words and Phrases and their Compositionality（v1）：第 4 节"
+    },
+    {
+      "id": "wordvec-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Word2Vec",
+      "knowledgePoint": "词向量类比",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "词向量类比题常用什么操作寻找候选词？",
+      "answer": "构造词向量的差与和，再在词表中寻找接近该结果的向量。",
+      "explanation": "这种几何规律依赖训练语料和评测条件，并非所有关系都准确。",
+      "example": "用 king − man + woman 查找接近的词向量。",
+      "tags": [
+        "词向量类比",
+        "词向量",
+        "Word2Vec"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1301.3781v3",
+      "referenceTitle": "Efficient Estimation of Word Representations in Vector Space（v3）：第 1.1 节"
+    },
+    {
+      "id": "wordvec-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GloVe",
+      "knowledgePoint": "共现矩阵",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GloVe 的词共现矩阵 X 中，X_ij 表示什么？",
+      "answer": "它表示词 j 在词 i 的上下文中出现的共现统计量。",
+      "explanation": "统计方式取决于上下文窗口及是否使用距离权重。",
+      "example": "在选定窗口内累计目标词与上下文词的共同出现。",
+      "tags": [
+        "共现矩阵",
+        "词向量",
+        "GloVe"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/D14-1162/",
+      "referenceTitle": "GloVe: Global Vectors for Word Representation：第 3 节"
+    },
+    {
+      "id": "wordvec-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GloVe",
+      "knowledgePoint": "全局统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GloVe 与 Skip-gram 使用训练语料统计的方式有什么主要区别？",
+      "answer": "GloVe 基于预先汇总的全局词共现统计训练；Skip-gram 通常在局部上下文窗口中构造训练对。",
+      "explanation": "两者都从语料中的词和上下文关系学习表示。",
+      "example": "同一词对多次出现可在 GloVe 中汇总成共现值。",
+      "tags": [
+        "全局统计",
+        "词向量",
+        "GloVe"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/D14-1162/",
+      "referenceTitle": "GloVe: Global Vectors for Word Representation：第 2–3 节"
+    },
+    {
+      "id": "wordvec-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GloVe",
+      "knowledgePoint": "拟合对数共现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GloVe 目标函数用词向量和偏置去拟合什么量？",
+      "answer": "它用目标词与上下文词向量的内积加偏置，拟合两词共现值的对数。",
+      "explanation": "训练通过加权平方误差近似这种关系。",
+      "example": "共现较高的词对与其向量分数共同参与损失。",
+      "tags": [
+        "拟合对数共现",
+        "词向量",
+        "GloVe"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/D14-1162/",
+      "referenceTitle": "GloVe: Global Vectors for Word Representation：第 3 节"
+    },
+    {
+      "id": "wordvec-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GloVe",
+      "knowledgePoint": "加权函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GloVe 的加权函数为什么不让罕见和极高频共现无限主导损失？",
+      "answer": "它降低罕见共现项的权重，并限制极高频共现项的权重。",
+      "explanation": "论文使用随共现量增长并在阈值后封顶的函数。",
+      "example": "极罕见的偶然共现不会与大量可靠共现等权。",
+      "tags": [
+        "加权函数",
+        "词向量",
+        "GloVe"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/D14-1162/",
+      "referenceTitle": "GloVe: Global Vectors for Word Representation：第 3 节"
+    },
+    {
+      "id": "wordvec-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GloVe",
+      "knowledgePoint": "零共现处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GloVe 训练为什么可以跳过共现矩阵的零元素？",
+      "answer": "加权函数对零共现赋零权重，论文实现只需在非零共现项上训练。",
+      "explanation": "这也避免直接计算零的对数。",
+      "example": "某词对在统计窗口中从未共现时，不生成对应训练项。",
+      "tags": [
+        "零共现处理",
+        "词向量",
+        "GloVe"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/D14-1162/",
+      "referenceTitle": "GloVe: Global Vectors for Word Representation：第 3 节"
+    },
+    {
+      "id": "wordvec-024",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "fastText",
+      "knowledgePoint": "字符子词表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "fastText 子词 Skip-gram 如何构造训练词的表示？",
+      "answer": "它将词对应的字符 n-gram 向量及整个词的表示相加。",
+      "explanation": "共享的子词向量使具有相同片段的词共享参数。",
+      "example": "相近词形可以包含部分相同的字符 n-gram。",
+      "tags": [
+        "字符子词表示",
+        "词向量",
+        "fastText"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1607.04606v2",
+      "referenceTitle": "Enriching Word Vectors with Subword Information（v2）：第 3.2 节"
+    },
+    {
+      "id": "wordvec-025",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "fastText",
+      "knowledgePoint": "词表外词表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "fastText 子词模型怎样为未在训练词表中出现的词构造向量？",
+      "answer": "它可以提取该词的字符 n-gram，并组合对应的子词向量。",
+      "explanation": "词表外向量的质量仍取决于训练数据、子词和模型实现。",
+      "example": "用已学习的子词表示组成新词向量。",
+      "tags": [
+        "词表外词表示",
+        "词向量",
+        "fastText"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1607.04606v2",
+      "referenceTitle": "Enriching Word Vectors with Subword Information（v2）：第 3.2, 5.1 节"
+    },
+    {
+      "id": "wordvec-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "fastText",
+      "knowledgePoint": "词边界标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "fastText 为什么在提取字符 n-gram 前标记词的开始和结束？",
+      "answer": "边界标记帮助区分词首、词尾片段与词内部相同字符序列。",
+      "explanation": "论文使用特殊边界符号。",
+      "example": "词首的 <wh 与词内部的 wh 可以形成不同片段。",
+      "tags": [
+        "词边界标记",
+        "词向量",
+        "fastText"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1607.04606v2",
+      "referenceTitle": "Enriching Word Vectors with Subword Information（v2）：第 3.2 节"
+    },
+    {
+      "id": "wordvec-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "fastText",
+      "knowledgePoint": "子词长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "fastText 子词论文的主要实验采用多长的字符 n-gram？",
+      "answer": "论文主要实验提取长度为 3 到 6 的字符 n-gram。",
+      "explanation": "这是论文实验选择，其他设置和实现可以不同。",
+      "example": "一个词可以同时包含三元和四元字符片段。",
+      "tags": [
+        "子词长度",
+        "词向量",
+        "fastText"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1607.04606v2",
+      "referenceTitle": "Enriching Word Vectors with Subword Information（v2）：第 3.2 节"
+    },
+    {
+      "id": "wordvec-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "fastText",
+      "knowledgePoint": "子词哈希冲突",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "fastText 使用固定数量哈希桶存储字符 n-gram 时，为什么不同片段可能共享参数？",
+      "answer": "不同的 n-gram 可能被映射到同一个桶，从而使用同一桶的向量。",
+      "explanation": "哈希限制存储规模，但也可能引入碰撞。",
+      "example": "两个不同片段若哈希值对应同一桶，会共享该桶表示。",
+      "tags": [
+        "子词哈希冲突",
+        "词向量",
+        "fastText"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1607.04606v2",
+      "referenceTitle": "Enriching Word Vectors with Subword Information（v2）：第 3.2 节"
+    },
+    {
+      "id": "wordvec-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "fastText",
+      "knowledgePoint": "子词参数共享",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "fastText 的字符 n-gram 参数共享对罕见词有什么潜在帮助？",
+      "answer": "罕见词可复用其他词中共同出现的子词向量，缓解单词自身样本不足。",
+      "explanation": "收益依赖语言的词形结构及训练语料。",
+      "example": "共享词尾的罕见词可使用该词尾的已训练表示。",
+      "tags": [
+        "子词参数共享",
+        "词向量",
+        "fastText"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1607.04606v2",
+      "referenceTitle": "Enriching Word Vectors with Subword Information（v2）：第 3.2 节"
+    }
+  ]
+}

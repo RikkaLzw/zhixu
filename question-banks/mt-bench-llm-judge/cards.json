@@ -1,0 +1,50 @@
+{
+  "source": {
+    "id": "mt-bench-llm-judge",
+    "title": "MT-Bench 论文 v3：多轮对话与评审方式",
+    "url": "https://arxiv.org/pdf/2306.05685v3",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "mtjudge-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MT-Bench 与模型评审",
+      "knowledgePoint": "评测对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MT-bench 原论文主要评估聊天模型的哪些能力？",
+      "answer": "评估多轮对话与指令遵循能力，包含推理、数学等多类开放问题。",
+      "explanation": "原论文的测试集有 80 个多轮问题，分为 8 类。",
+      "example": "比较助手在后续追问中的表现。",
+      "tags": [
+        "MT-Bench 与模型评审",
+        "评测对象"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.05685v3"
+    },
+    {
+      "id": "mtjudge-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MT-Bench 与模型评审",
+      "knowledgePoint": "评判形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLM-as-a-judge 的成对比较与单答案评分有什么区别？",
+      "answer": "成对比较判断两个回答的优劣或平局；单答案评分对一个回答直接打分。",
+      "explanation": "两者在成本、可扩展性及评分稳定性方面有不同权衡。",
+      "example": "两个候选答案可交给评审模型进行成对比较。",
+      "tags": [
+        "MT-Bench 与模型评审",
+        "评判形式"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.05685v3"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "huffman-coding-foundations",
+    "title": "MIT 与 Princeton 算法教材：哈夫曼编码",
+    "url": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.2.2",
+    "type": "教材、标准与官方文档",
+    "note": "依据逐题引用的教材、标准或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "huff-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "哈夫曼编码",
+      "knowledgePoint": "前缀码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么是二进制前缀码？",
+      "answer": "任一码字都不是其他码字的前缀。",
+      "explanation": "这种性质使读到一个码字时可以确定符号边界。",
+      "example": "{0,10,11} 是前缀码，{0,01} 不是。",
+      "tags": [
+        "哈夫曼编码",
+        "前缀码"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/55compression/"
+    },
+    {
+      "id": "huff-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "哈夫曼编码",
+      "knowledgePoint": "变长编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "哈夫曼编码为什么使用长度不同的码字？",
+      "answer": "它按照符号频率构造变长码，使较常见符号通常可用较短码表示。",
+      "explanation": "最终平均长度还取决于整个频率分布。",
+      "example": "频繁出现的字符可以用更短的码字。",
+      "tags": [
+        "哈夫曼编码",
+        "变长编码"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.2.2"
+    },
+    {
+      "id": "huff-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "哈夫曼编码",
+      "knowledgePoint": "贪心合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "构造二叉哈夫曼树时，每一轮通常选择哪两个节点合并？",
+      "answer": "选择当前权重最小的两个节点，合并成权重为两者之和的父节点。",
+      "explanation": "反复合并直到剩下根节点。",
+      "example": "频数为 2 和 3 的节点先合成权重 5。",
+      "tags": [
+        "哈夫曼编码",
+        "贪心合并"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.2.2"
+    },
+    {
+      "id": "huff-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "哈夫曼编码",
+      "knowledgePoint": "编码与路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在二叉哈夫曼树中，如何得到某个符号的码字？",
+      "answer": "从根走到该符号对应叶节点，依次记录边上的 0／1 标记。",
+      "explanation": "左右边的 0／1 分配可以交换，只要编解码双方一致。",
+      "example": "根到叶路径的边标记为 1、0、1 时码字为 101。",
+      "tags": [
+        "哈夫曼编码",
+        "编码与路径"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.2.2"
+    },
+    {
+      "id": "huff-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "哈夫曼编码",
+      "knowledgePoint": "解码过程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用哈夫曼树解码比特流时，何时输出一个符号？",
+      "answer": "沿树按比特走到叶节点时输出对应符号，再从根开始处理后续比特。",
+      "explanation": "解码方需要知道所使用的编码树或等价码表。",
+      "example": "读到叶子后输出一个字符。",
+      "tags": [
+        "哈夫曼编码",
+        "解码过程"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/55compression/"
+    },
+    {
+      "id": "huff-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "哈夫曼编码",
+      "knowledgePoint": "最优范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "哈夫曼编码的最优性针对什么范围？",
+      "answer": "对给定符号权重，在每个符号使用独立整数位长码字的二叉前缀码中，最小化加权平均码长。",
+      "explanation": "这不意味着任何数据和文件格式都能被压缩得最小。",
+      "example": "改变输入频率后可重新构造不同码表。",
+      "tags": [
+        "哈夫曼编码",
+        "最优范围"
+      ],
+      "evidence": "source",
+      "reference": "https://computationstructures.org/notes/information/notes.html#TARGET_3.2.2.2"
+    },
+    {
+      "id": "huff-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "哈夫曼编码",
+      "knowledgePoint": "码表开销",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么使用哈夫曼编码后，小文件总大小仍可能增加？",
+      "answer": "实际格式可能需要存储编码树、长度等额外信息，开销可能超过数据位数的节省。",
+      "explanation": "压缩后的总大小不仅取决于编码数据本身。",
+      "example": "短文本的码表可能比节约的位数更大。",
+      "tags": [
+        "哈夫曼编码",
+        "码表开销"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/55compression/Huffman.java.html"
+    }
+  ]
+}

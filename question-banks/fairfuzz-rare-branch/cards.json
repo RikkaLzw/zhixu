@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "fairfuzz-rare-branch",
+    "title": "FairFuzz 原论文 v1：稀有分支与变异掩码",
+    "url": "https://arxiv.org/pdf/1709.07101v1",
+    "type": "教材、官方文档与原论文",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fairfuzz-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FairFuzz 稀有分支",
+      "knowledgePoint": "稀有分支",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FairFuzz 原论文如何识别需要优先探索的稀有分支？",
+      "answer": "跟踪命中各分支的输入数量，并按动态阈值选择命中次数少的分支。",
+      "explanation": "这里的稀有由当前测试过程中的观测决定。",
+      "example": "很少输入通过的深层解析条件可能被选为目标。",
+      "tags": [
+        "FairFuzz 稀有分支",
+        "稀有分支"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1709.07101v1"
+    },
+    {
+      "id": "fairfuzz-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FairFuzz 稀有分支",
+      "knowledgePoint": "输入筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FairFuzz 确定稀有分支后，怎样筛选待变异的种子？",
+      "answer": "优先选择能够命中这些稀有分支的输入。",
+      "explanation": "这样变异从已到达目标区域的输入出发。",
+      "example": "已通过稀有文件头检查的样本进入后续变异。",
+      "tags": [
+        "FairFuzz 稀有分支",
+        "输入筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1709.07101v1"
+    },
+    {
+      "id": "fairfuzz-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FairFuzz 稀有分支",
+      "knowledgePoint": "分支掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FairFuzz 的 branch mask 用于记录什么？",
+      "answer": "近似记录输入各位置可否被覆盖、删除或插入，同时仍能命中目标分支。",
+      "explanation": "它用于限制或引导后续变异位置。",
+      "example": "保留影响文件头校验的关键位置。",
+      "tags": [
+        "FairFuzz 稀有分支",
+        "分支掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1709.07101v1"
+    },
+    {
+      "id": "fairfuzz-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FairFuzz 稀有分支",
+      "knowledgePoint": "掩码估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FairFuzz 原论文如何估计某些位置能否变异而仍命中目标分支？",
+      "answer": "在确定性阶段尝试逐位置变更并观察变异输入是否仍命中目标分支。",
+      "explanation": "覆盖、删除和插入对应不同的试探操作。",
+      "example": "逐字节删除后检查目标分支是否仍被执行。",
+      "tags": [
+        "FairFuzz 稀有分支",
+        "掩码估计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1709.07101v1"
+    },
+    {
+      "id": "fairfuzz-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FairFuzz 稀有分支",
+      "knowledgePoint": "掩码局限",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "FairFuzz 的 branch mask 能否保证后续任意变异都保留目标分支？",
+      "answer": "不能；掩码由有限试探近似得到，不同具体变异或组合仍可能丢失目标分支。",
+      "explanation": "它旨在提高命中概率，而非提供绝对保证。",
+      "example": "某字节可被一种替换改变，其他替换仍可能使解析失败。",
+      "tags": [
+        "FairFuzz 稀有分支",
+        "掩码局限"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1709.07101v1"
+    },
+    {
+      "id": "fairfuzz-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FairFuzz 稀有分支",
+      "knowledgePoint": "调度与变异",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "FairFuzz 与 AFLFast 针对稀有程序行为的侧重点有什么不同？",
+      "answer": "AFLFast 着重调整种子调度和能量；FairFuzz 还通过分支掩码约束变异位置。",
+      "explanation": "两者均试图提高探索稀有行为的效率。",
+      "example": "保留深层分支所需的输入片段属于 FairFuzz 的变异思路。",
+      "tags": [
+        "FairFuzz 稀有分支",
+        "调度与变异"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1709.07101v1"
+    },
+    {
+      "id": "fairfuzz-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FairFuzz 稀有分支",
+      "knowledgePoint": "覆盖标识碰撞",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "FairFuzz 论文使用 AFL 风格的分支标识时，能否假定标识与真实分支总是一一对应？",
+      "answer": "不能；不同分支可能发生标识碰撞。",
+      "explanation": "碰撞会使覆盖反馈并非对真实分支的完全无误表示。",
+      "example": "两个不同代码位置可能被映射到同一覆盖标识。",
+      "tags": [
+        "FairFuzz 稀有分支",
+        "覆盖标识碰撞"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1709.07101v1"
+    }
+  ]
+}

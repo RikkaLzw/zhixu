@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "self-consistency-reasoning",
+    "title": "Self-Consistency 原论文 v4：多路径推理",
+    "url": "https://arxiv.org/abs/2203.11171v4",
+    "type": "论文与官方技术文档",
+    "note": "根据所引论文或固定版本官方文档自行整理；例子为自编，使用条件见各卡。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "scot-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多路径推理与自一致性",
+      "knowledgePoint": "额外训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Self-Consistency 方法是否要求额外训练一个验证模型？",
+      "answer": "不要求；论文直接对同一个语言模型采样并聚合答案。",
+      "explanation": "具体应用仍可以叠加外部验证。",
+      "example": "用现有模型多次生成候选答案。",
+      "tags": [
+        "多路径推理与自一致性",
+        "额外训练"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2203.11171v4"
+    },
+    {
+      "id": "scot-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多路径推理与自一致性",
+      "knowledgePoint": "答案归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多路径推理按最终答案投票前为什么常需要统一答案格式？",
+      "answer": "相同答案可能以不同文字或数值形式出现，直接按字符串计数会分散票数。",
+      "explanation": "归一化规则需要符合任务语义，不能错误合并不同答案。",
+      "example": "把“5”和“五”在合适任务中映射到同一答案。",
+      "tags": [
+        "多路径推理与自一致性",
+        "答案归一化"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2203.11171v4"
+    },
+    {
+      "id": "scot-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多路径推理与自一致性",
+      "knowledgePoint": "成本权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-Consistency 相比单次生成通常增加什么推理成本？",
+      "answer": "需要生成并处理多条候选路径，通常增加 token 消耗及计算量。",
+      "explanation": "延迟还取决于是否并行生成和服务容量。",
+      "example": "同一问题采样多次再投票。",
+      "tags": [
+        "多路径推理与自一致性",
+        "成本权衡"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2203.11171v4"
+    },
+    {
+      "id": "scot-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多路径推理与自一致性",
+      "knowledgePoint": "投票与路径分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "论文实验中的无权多数投票和按路径概率加权的聚合有什么区别？",
+      "answer": "无权投票只统计各答案出现次数；加权聚合还利用路径的模型分数。",
+      "explanation": "不同加权方式可能对路径长度和归一化敏感。",
+      "example": "三个路径分别按各自答案计票，或先给路径分配权重。",
+      "tags": [
+        "多路径推理与自一致性",
+        "投票与路径分数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2203.11171v4"
+    }
+  ]
+}

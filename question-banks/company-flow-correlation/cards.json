@@ -1,0 +1,144 @@
+{
+  "source": {
+    "id": "company-flow-correlation",
+    "title": "腾讯安全面经启发：多源流量关联",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+    "type": "公开面经合集",
+    "note": "合集收录个人面试复盘，可能含转载；公司、岗位及经历为分享者自述。原帖仅提出多源关联，具体考点依据技术规范自行整理。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "secint-flow-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多源流量关联",
+      "knowledgePoint": "跨工具流关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Community ID 对关联 Zeek 与 Suricata 等工具的流记录有什么用途？",
+      "answer": "它按统一规则计算流标识，可作为跨工具查找同一网络流记录的线索。",
+      "explanation": "面经只提到多数据源关联；这里依据 Community ID 规范另行整理具体方法。",
+      "example": "两个工具都记录同一流的 Community ID 后，可用它缩小候选范围。",
+      "tags": [
+        "跨工具流关联",
+        "多源流量关联",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+      "referenceId": "company-tencent",
+      "referenceTitle": "腾讯安全公开面经（自述主题启发，非原帖逐题）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "community-id-spec",
+          "title": "Community ID Flow Hashing 规范",
+          "url": "https://github.com/corelight/community-id-spec",
+          "type": "开放技术规范",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-flow-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多源流量关联",
+      "knowledgePoint": "端点方向与流标识",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Community ID v1 中，TCP 流的源和目的端点互换会改变标识吗？",
+      "answer": "当流元组、版本和种子相同时，不会；计算前会规范化两个端点的顺序，再对协议、地址、端口等信息计算哈希。",
+      "explanation": "前提是两条记录的流元组、版本和种子一致。",
+      "example": "同一 TCP 对话的正反方向使用一致的端点信息计算。",
+      "tags": [
+        "端点方向与流标识",
+        "多源流量关联",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+      "referenceId": "company-tencent",
+      "referenceTitle": "腾讯安全公开面经（自述主题启发，非原帖逐题）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "community-id-spec",
+          "title": "Community ID Flow Hashing 规范",
+          "url": "https://github.com/corelight/community-id-spec",
+          "type": "开放技术规范",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-flow-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多源流量关联",
+      "knowledgePoint": "流哈希与连接实例",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Community ID 相同能否单独证明两条记录属于同一次连接？",
+      "answer": "不能；重复使用同一流元组或哈希碰撞都可能产生相同标识，还需要结合时间及原始记录判断。",
+      "explanation": "Community ID 规范建议保留时间及工具原生标识以消除歧义。",
+      "example": "在不同时间重复使用相同地址和端口建立连接。",
+      "tags": [
+        "流哈希与连接实例",
+        "多源流量关联",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+      "referenceId": "company-tencent",
+      "referenceTitle": "腾讯安全公开面经（自述主题启发，非原帖逐题）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "community-id-spec",
+          "title": "Community ID Flow Hashing 规范",
+          "url": "https://github.com/corelight/community-id-spec",
+          "type": "开放技术规范",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-flow-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "多源流量关联",
+      "knowledgePoint": "网络地址转换与流关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经过地址或端口转换的流，为什么两侧计算的 Community ID 可能不同？",
+      "answer": "Community ID 根据观测到的地址、端口和协议计算；转换前后的流元组可能不同，因此可能得到不同标识。",
+      "explanation": "应结合转换记录、采集位置和时间，而不能只依赖哈希值。",
+      "example": "内网客户端地址经 NAT 变成公网地址后，两侧观测结果不同。",
+      "tags": [
+        "网络地址转换与流关联",
+        "多源流量关联",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+      "referenceId": "company-tencent",
+      "referenceTitle": "腾讯安全公开面经（自述主题启发，非原帖逐题）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "community-id-spec",
+          "title": "Community ID Flow Hashing 规范",
+          "url": "https://github.com/corelight/community-id-spec",
+          "type": "开放技术规范",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

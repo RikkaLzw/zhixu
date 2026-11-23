@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "agentdojo-tool-boundaries",
+    "title": "AgentDojo 原论文 v2：工具信任边界与评测",
+    "url": "https://arxiv.org/pdf/2406.13352v2",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的固定版本资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "agentdojo-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具信任边界评测",
+      "knowledgePoint": "工具注入位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentDojo 的间接提示注入测试通常把不可信内容放在什么位置？",
+      "answer": "放在智能体可能通过工具读取的环境内容中，例如外部文档或消息。",
+      "explanation": "智能体需要区分用户任务与外部数据中的指令。",
+      "example": "分析一份由外部来源提供的文档。",
+      "tags": [
+        "工具信任边界评测",
+        "工具注入位置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.13352v2"
+    },
+    {
+      "id": "agentdojo-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具信任边界评测",
+      "knowledgePoint": "双目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentDojo 用哪两类目标分别衡量智能体和攻击者的行为？",
+      "answer": "用户任务目标衡量任务效用，注入任务目标衡量攻击者是否达成其目标。",
+      "explanation": "这两个目标通过对应的评估函数检查。",
+      "example": "检查任务是否完成，同时检查是否出现未授权操作。",
+      "tags": [
+        "工具信任边界评测",
+        "双目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.13352v2"
+    },
+    {
+      "id": "agentdojo-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具信任边界评测",
+      "knowledgePoint": "良性效用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentDojo 的 benign utility 如何定义？",
+      "answer": "它是没有攻击时，智能体成功完成用户任务的比例。",
+      "explanation": "该指标用于观察智能体的基础任务能力。",
+      "example": "不插入对抗内容先运行任务集。",
+      "tags": [
+        "工具信任边界评测",
+        "良性效用"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.13352v2"
+    },
+    {
+      "id": "agentdojo-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具信任边界评测",
+      "knowledgePoint": "受攻击效用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentDojo 的 utility under attack 要求什么才算成功？",
+      "answer": "要求在安全测试用例中正确完成用户任务，且没有对抗性副作用。",
+      "explanation": "它的分母是安全测试用例，而不是仅成功的攻击。",
+      "example": "任务完成但发生攻击者期望的副作用时不计为成功。",
+      "tags": [
+        "工具信任边界评测",
+        "受攻击效用"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.13352v2"
+    },
+    {
+      "id": "agentdojo-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具信任边界评测",
+      "knowledgePoint": "定向成功率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentDojo 的 targeted attack success rate 衡量什么？",
+      "answer": "它衡量安全测试用例中攻击者预设目标达成的比例。",
+      "explanation": "这与智能体任务效用是不同指标。",
+      "example": "统计出现指定未授权状态变化的测试用例。",
+      "tags": [
+        "工具信任边界评测",
+        "定向成功率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.13352v2"
+    },
+    {
+      "id": "agentdojo-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具信任边界评测",
+      "knowledgePoint": "评估函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentDojo 任务效用检查可使用哪些信息？",
+      "answer": "检查模型输出，以及执行前后的环境状态。",
+      "explanation": "论文中的任务效用函数是确定性的二元检查。",
+      "example": "比较操作前后的日历状态与用户要求。",
+      "tags": [
+        "工具信任边界评测",
+        "评估函数"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.13352v2"
+    },
+    {
+      "id": "agentdojo-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具信任边界评测",
+      "knowledgePoint": "无攻击基线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么评估 AgentDojo 防御方案时还要测量无攻击任务表现？",
+      "answer": "防御可能降低正常任务的完成率；只报告攻击成功率会遗漏这一代价。",
+      "explanation": "应同时报告任务效用与安全结果。",
+      "example": "过滤器拦截过多正常工具结果会影响任务完成。",
+      "tags": [
+        "工具信任边界评测",
+        "无攻击基线"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.13352v2"
+    },
+    {
+      "id": "agentdojo-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具信任边界评测",
+      "knowledgePoint": "攻击集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentDojo 对一组候选攻击的联合成功如何定义？",
+      "answer": "同一测试用例中，只要该组任一攻击成功，就把该用例视为成功。",
+      "explanation": "这可用于评估在多个候选攻击中选择有效方式的情况。",
+      "example": "两种攻击各自失败或成功，按至少一次成功汇总。",
+      "tags": [
+        "工具信任边界评测",
+        "攻击集合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2406.13352v2"
+    },
+    {
+      "id": "agentdojo-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具信任边界评测",
+      "knowledgePoint": "测试范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentDojo 的低攻击成功率能单独证明智能体能抵御所有提示注入吗？",
+      "answer": "不能；结果受环境、任务、攻击方式和评估规则限制。",
+      "explanation": "需要结合更多任务与适应防御的测试。",
+      "example": "报告具体测试套件和防御配置。",
+      "tags": [
+        "工具信任边界评测",
+        "测试范围"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/pdf/2406.13352v2"
+    }
+  ]
+}

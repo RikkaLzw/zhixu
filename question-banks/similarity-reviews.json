@@ -1,0 +1,6272 @@
+{
+  "version": 1,
+  "date": "2026-11-23",
+  "threshold": 0.55,
+  "method": "逐对阅读问题与答案，比较定义、算法、参数、字段、对象范围和适用边界。全库 0.55 相似候选共 1044 组，均经人工核对为不同考点或不同适用边界；未发现仅改写措辞的重复题。",
+  "pairs": [
+    {
+      "first": "bashadv-004",
+      "second": "bashadv-005",
+      "score": 0.92,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcsdp-003",
+      "second": "lcsdp-004",
+      "score": 0.91,
+      "decision": "distinct"
+    },
+    {
+      "first": "cbpe-003",
+      "second": "cbpe-004",
+      "score": 0.91,
+      "decision": "distinct"
+    },
+    {
+      "first": "bintree-004",
+      "second": "bintree-006",
+      "score": 0.91,
+      "decision": "distinct"
+    },
+    {
+      "first": "deepdga-003",
+      "second": "deepdga-004",
+      "score": 0.91,
+      "decision": "distinct"
+    },
+    {
+      "first": "memfree-011",
+      "second": "memfree-012",
+      "score": 0.88,
+      "decision": "distinct"
+    },
+    {
+      "first": "makebuild-002",
+      "second": "makebuild-003",
+      "score": 0.88,
+      "decision": "distinct"
+    },
+    {
+      "first": "dmathcs-016",
+      "second": "dmathcs-017",
+      "score": 0.87,
+      "decision": "distinct"
+    },
+    {
+      "first": "bintree-004",
+      "second": "bintree-005",
+      "score": 0.87,
+      "decision": "distinct"
+    },
+    {
+      "first": "bintree-005",
+      "second": "bintree-006",
+      "score": 0.87,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentplan-011",
+      "second": "agentplan-013",
+      "score": 0.87,
+      "decision": "distinct"
+    },
+    {
+      "first": "vmpolicy-002",
+      "second": "vmpolicy-003",
+      "score": 0.87,
+      "decision": "distinct"
+    },
+    {
+      "first": "csc-003",
+      "second": "csc-004",
+      "score": 0.87,
+      "decision": "distinct"
+    },
+    {
+      "first": "zeekweird-001",
+      "second": "zeekweird-004",
+      "score": 0.83,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentarch-008",
+      "second": "agentarch-009",
+      "score": 0.83,
+      "decision": "distinct"
+    },
+    {
+      "first": "bnbcfg-001",
+      "second": "bnbcfg-002",
+      "score": 0.83,
+      "decision": "distinct"
+    },
+    {
+      "first": "kafkabase-010",
+      "second": "kafkabase-011",
+      "score": 0.83,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstruct-001",
+      "second": "lcstruct-007",
+      "score": 0.83,
+      "decision": "distinct"
+    },
+    {
+      "first": "laudit-004",
+      "second": "laudit-006",
+      "score": 0.83,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentmem-001",
+      "second": "agentmem-002",
+      "score": 0.82,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcbase-005",
+      "second": "lcpractice-011",
+      "score": 0.82,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgwrite-008",
+      "second": "pgwrite-009",
+      "score": 0.82,
+      "decision": "distinct"
+    },
+    {
+      "first": "vmpolicy-005",
+      "second": "vmpolicy-006",
+      "score": 0.82,
+      "decision": "distinct"
+    },
+    {
+      "first": "cloud-014",
+      "second": "cloud-015",
+      "score": 0.82,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmon-005",
+      "score": 0.82,
+      "decision": "distinct"
+    },
+    {
+      "first": "rnnbase-008",
+      "second": "rnnbase-009",
+      "score": 0.82,
+      "decision": "distinct"
+    },
+    {
+      "first": "dmathcs-011",
+      "second": "dmathcs-012",
+      "score": 0.82,
+      "decision": "distinct"
+    },
+    {
+      "first": "ipbase-001",
+      "second": "ipbase-002",
+      "score": 0.82,
+      "decision": "distinct"
+    },
+    {
+      "first": "httpbase-001",
+      "second": "httpbase-002",
+      "score": 0.81,
+      "decision": "distinct"
+    },
+    {
+      "first": "archivecmd-002",
+      "second": "archivecmd-003",
+      "score": 0.81,
+      "decision": "distinct"
+    },
+    {
+      "first": "ai4sec-017",
+      "second": "ai4sec-018",
+      "score": 0.8,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentmem-001",
+      "second": "agentmem-003",
+      "score": 0.8,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentmem-002",
+      "second": "agentmem-003",
+      "score": 0.8,
+      "decision": "distinct"
+    },
+    {
+      "first": "parsecc-017",
+      "second": "parsecc-018",
+      "score": 0.8,
+      "decision": "distinct"
+    },
+    {
+      "first": "ragadv-002",
+      "second": "ragadv-003",
+      "score": 0.8,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxbase-032",
+      "second": "netcmd-004",
+      "score": 0.8,
+      "decision": "distinct"
+    },
+    {
+      "first": "weaklabel-004",
+      "second": "weaklabel-005",
+      "score": 0.8,
+      "decision": "distinct"
+    },
+    {
+      "first": "rrfstudy-005",
+      "second": "rrfstudy-006",
+      "score": 0.8,
+      "decision": "distinct"
+    },
+    {
+      "first": "rustf-035",
+      "second": "rustf-036",
+      "score": 0.79,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-001",
+      "second": "skthresh-003",
+      "score": 0.79,
+      "decision": "distinct"
+    },
+    {
+      "first": "ocsfbase-010",
+      "second": "ocsfbase-011",
+      "score": 0.79,
+      "decision": "distinct"
+    },
+    {
+      "first": "memfree-010",
+      "second": "memfree-012",
+      "score": 0.78,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-004",
+      "second": "lchistory-006",
+      "score": 0.78,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhist-001",
+      "second": "skhist-007",
+      "score": 0.77,
+      "decision": "distinct"
+    },
+    {
+      "first": "rl-009",
+      "second": "rl-010",
+      "score": 0.77,
+      "decision": "distinct"
+    },
+    {
+      "first": "amd64abi-004",
+      "second": "amd64abi-005",
+      "score": 0.77,
+      "decision": "distinct"
+    },
+    {
+      "first": "oneclass-002",
+      "second": "oneclass-003",
+      "score": 0.77,
+      "decision": "distinct"
+    },
+    {
+      "first": "npchoice-001",
+      "second": "npchoice-004",
+      "score": 0.77,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-002",
+      "second": "lchistory-004",
+      "score": 0.77,
+      "decision": "distinct"
+    },
+    {
+      "first": "faiss-010",
+      "second": "xdom-049",
+      "score": 0.76,
+      "decision": "distinct"
+    },
+    {
+      "first": "dohdata-004",
+      "second": "dohdata-005",
+      "score": 0.76,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-002",
+      "second": "lchistory-003",
+      "score": 0.76,
+      "decision": "distinct"
+    },
+    {
+      "first": "vulnintel-002",
+      "second": "xdom-099",
+      "score": 0.76,
+      "decision": "distinct"
+    },
+    {
+      "first": "lgnode-005",
+      "second": "lgnode-007",
+      "score": 0.76,
+      "decision": "distinct"
+    },
+    {
+      "first": "memfree-010",
+      "second": "memfree-011",
+      "score": 0.75,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcpractice-002",
+      "second": "lcpractice-003",
+      "score": 0.75,
+      "decision": "distinct"
+    },
+    {
+      "first": "stixdetail-007",
+      "second": "stixdetail-008",
+      "score": 0.75,
+      "decision": "distinct"
+    },
+    {
+      "first": "gymapi-002",
+      "second": "gymapi-005",
+      "score": 0.75,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-001",
+      "second": "lchistory-007",
+      "score": 0.75,
+      "decision": "distinct"
+    },
+    {
+      "first": "isouse-004",
+      "second": "isouse-005",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "matcalc-008",
+      "second": "matcalc-011",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "ragadv-003",
+      "second": "ragadv-004",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "calapi-001",
+      "second": "calapi-002",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "probability-007",
+      "second": "probability-009",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "mannu-006",
+      "second": "mannu-007",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "cflow-006",
+      "second": "cflow-007",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxbase-007",
+      "second": "linuxbase-035",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "bashcore-006",
+      "second": "bashadv-008",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptsampler-001",
+      "second": "ptsampler-003",
+      "score": 0.74,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-001",
+      "second": "lchistory-002",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "generate-009",
+      "second": "genconfig-002",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "suriflow-002",
+      "second": "suriflow-003",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-001",
+      "second": "lchistory-003",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "smotepractice-004",
+      "second": "smotepractice-006",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "weaklabel-004",
+      "second": "weaklabel-006",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparent-001",
+      "second": "lcparent-003",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "rnnbase-007",
+      "second": "rnnbase-008",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "rnnbase-007",
+      "second": "rnnbase-009",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "dmathcs-016",
+      "second": "dmathcs-018",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "testproc-011",
+      "second": "testproc-012",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxres-010",
+      "second": "linuxres-011",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcsplit-001",
+      "second": "lcsplit-002",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcsplit-007",
+      "second": "lcsplit-009",
+      "score": 0.73,
+      "decision": "distinct"
+    },
+    {
+      "first": "cpusched-015",
+      "second": "cpusched-016",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "lccache-001",
+      "second": "lccache-006",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "noticebase-001",
+      "second": "zeekweird-004",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "focalloss-005",
+      "second": "focalloss-006",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "msrvul-004",
+      "second": "msrvul-005",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "npchoice-001",
+      "second": "npchoice-002",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "npchoice-002",
+      "second": "npchoice-004",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "semisec-004",
+      "second": "semisec-008",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "ssvc-002",
+      "second": "ssvc-003",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-003",
+      "second": "lchistory-007",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-001",
+      "second": "sentinelops-002",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-003",
+      "second": "sysmonextra-006",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "focalloss-004",
+      "second": "focalloss-005",
+      "score": 0.72,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgtime-004",
+      "second": "pgtime-005",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgplan-002",
+      "second": "pgplan-003",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentbench-001",
+      "second": "mtjudge-001",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-003",
+      "second": "tfox-004",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-002",
+      "second": "lchistory-006",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "skperm-001",
+      "second": "skperm-003",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "opt-006",
+      "second": "nnloss-016",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "focalloss-004",
+      "second": "focalloss-006",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-004",
+      "second": "lchistory-008",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "ragadv-002",
+      "second": "ragadv-004",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-004",
+      "second": "mispfmt-008",
+      "score": 0.71,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-005",
+      "second": "tfox-006",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "semisec-004",
+      "second": "semisec-009",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "weborigin-006",
+      "second": "weborigin-007",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-004",
+      "second": "skthresh-009",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-002",
+      "second": "lchistory-007",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgjson-006",
+      "second": "pgjson-008",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-001",
+      "second": "lchistory-004",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "sftdialogue-016",
+      "second": "hfcoll-003",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "rl-004",
+      "second": "rl-008",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "primeeval-004",
+      "second": "primeeval-005",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "osbase-002",
+      "second": "osbase-009",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "bptree-005",
+      "second": "bptree-006",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "amd64abi-002",
+      "second": "amd64abi-003",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "npchoice-002",
+      "second": "npchoice-005",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "amd64abi-015",
+      "second": "amd64abi-016",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "dmathcs-017",
+      "second": "dmathcs-018",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhist-004",
+      "second": "skhist-007",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "vtbehavior-005",
+      "second": "vtbehavior-006",
+      "score": 0.7,
+      "decision": "distinct"
+    },
+    {
+      "first": "hftrainer-001",
+      "second": "hftrainer-002",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgnlogic-002",
+      "second": "pgnlogic-005",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptmha-006",
+      "second": "ptmha-007",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhist-001",
+      "second": "skhist-004",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-009",
+      "second": "sentinelops-010",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "encode-003",
+      "second": "encode-006",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-001",
+      "second": "sentinelops-010",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxbase-011",
+      "second": "bashcore-023",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "visprep-005",
+      "second": "visprep-006",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "torchtrain-002",
+      "second": "ptcommon-001",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "dsbase-012",
+      "second": "sortalg-017",
+      "score": 0.69,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-021",
+      "second": "skmetric-022",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "cloud-003",
+      "second": "cloud-004",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "httpbase-011",
+      "second": "httpstatus-008",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "hdbscan-002",
+      "second": "hdbscan-013",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptcommon-017",
+      "second": "ptembed-005",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "cflite-001",
+      "second": "cflite-002",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "graphagent-002",
+      "second": "graphagent-003",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "llmcomp-004",
+      "second": "llmcomp-006",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmonextra-003",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmonextra-008",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-005",
+      "second": "sysmonextra-008",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptmha-003",
+      "second": "ptmha-004",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "graphstate-009",
+      "second": "graphstate-024",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "weaklabel-005",
+      "second": "weaklabel-006",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxres-009",
+      "second": "linuxres-010",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "pygdeep-008",
+      "second": "pygdeep-010",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "seq2seq-011",
+      "second": "ptmha-003",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-006",
+      "second": "sentinelops-010",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "driftkit-007",
+      "second": "driftkit-008",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "npchoice-001",
+      "second": "npchoice-005",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "npchoice-004",
+      "second": "npchoice-005",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "grag-002",
+      "second": "grag-008",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "oneclass-002",
+      "second": "oneclass-004",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "oneclass-003",
+      "second": "oneclass-004",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "gymapi-002",
+      "second": "gymapi-003",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-007",
+      "second": "elasticth-008",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "lgbapi-003",
+      "second": "lgbapi-004",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-004",
+      "second": "vol3-005",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-004",
+      "second": "skthresh-007",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-004",
+      "second": "skthresh-008",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-002",
+      "second": "skthresh-004",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-007",
+      "second": "skthresh-008",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "minhash-002",
+      "second": "minhash-005",
+      "score": 0.68,
+      "decision": "distinct"
+    },
+    {
+      "first": "tokenc-006",
+      "second": "tokenc-007",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "anomaly-004",
+      "second": "isouse-005",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-005",
+      "second": "mispfmt-007",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "mcnemar-004",
+      "second": "mcnemar-005",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcsplit-004",
+      "second": "lcsplit-006",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "semisec-008",
+      "second": "semisec-009",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "pysqlite-009",
+      "second": "pysqlite-010",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "nlpinput-003",
+      "second": "ptmha-003",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-004",
+      "second": "lchistory-007",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-002",
+      "second": "lchistory-008",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "hftokencls-001",
+      "second": "hftokencls-004",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "weakness-001",
+      "second": "weakness-006",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "semtaint-001",
+      "second": "xdom-085",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "faiss-008",
+      "second": "faissdeep-002",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "irrec-001",
+      "second": "irrec-002",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-003",
+      "second": "genagent-007",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcbase-006",
+      "second": "lcstream-005",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "kevdata-002",
+      "second": "kevdata-003",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "kevdata-003",
+      "second": "kevdata-004",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "linproj-005",
+      "second": "linproj-006",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "tcpbase-015",
+      "second": "tcpretx-001",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "osbase-009",
+      "second": "netcmd-012",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-004",
+      "second": "mispfmt-010",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-008",
+      "second": "mispfmt-011",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-009",
+      "second": "mispfmt-010",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "sortalg-014",
+      "second": "sortalg-015",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "mccmetric-006",
+      "second": "mccmetric-007",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptsampler-002",
+      "second": "ptsampler-003",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-004",
+      "second": "skthresh-005",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptconv-007",
+      "second": "ptconv-009",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-001",
+      "second": "elasticth-002",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-002",
+      "second": "elasticth-006",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "hftoken-003",
+      "second": "hftoken-004",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "aptpkg-008",
+      "second": "aptpkg-009",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "sshkey-003",
+      "second": "sshkey-010",
+      "score": 0.67,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-003",
+      "second": "lchistory-004",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "lgnode-001",
+      "second": "lgnode-003",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-001",
+      "second": "elasticth-006",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgtime-002",
+      "second": "pgtime-003",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptsampler-001",
+      "second": "ptsampler-002",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "bnbcfg-003",
+      "second": "bnbcfg-004",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "pyconcurrent-006",
+      "second": "pymproc-004",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "mccmetric-007",
+      "second": "mccmetric-008",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptcheck-006",
+      "second": "ptcheck-007",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "lfs-018",
+      "second": "lfs-019",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "mccmetric-005",
+      "second": "mccmetric-007",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "robertapre-004",
+      "second": "robertapre-005",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "pythread-007",
+      "second": "pythread-008",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "surith-003",
+      "second": "surith-004",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "gymapi-003",
+      "second": "gymapi-005",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "dnsneg-001",
+      "second": "dnsneg-002",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "genconfig-002",
+      "second": "genconfig-014",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "pegasus-001",
+      "second": "pegasus-005",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "waitpid-002",
+      "second": "waitpid-003",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "vuldeep-001",
+      "second": "vuldeep-002",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "ragpaper-002",
+      "second": "ragpaper-004",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "pytestbase-015",
+      "second": "pytestbase-016",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxres-010",
+      "second": "linuxres-012",
+      "score": 0.66,
+      "decision": "distinct"
+    },
+    {
+      "first": "drebin-002",
+      "second": "drebin-003",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgjson-005",
+      "second": "pgjson-006",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "jcore-015",
+      "second": "jcore-016",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "mcp-004",
+      "second": "mcpflow-001",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-002",
+      "second": "sgdinc-007",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "pydata-005",
+      "second": "pyobject-019",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "vllmpage-001",
+      "second": "vllmpage-003",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxres-009",
+      "second": "linuxres-013",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "mlflow-001",
+      "second": "mlflow-004",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "sshkey-003",
+      "second": "sshkey-004",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "qdrant-008",
+      "second": "qdrant-009",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "matcalc-005",
+      "second": "matcalc-008",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "sclient-005",
+      "second": "sclient-006",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "gitbase-005",
+      "second": "gitbase-006",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "csc-255",
+      "second": "csc-256",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-002",
+      "second": "skthresh-009",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-006",
+      "second": "skthresh-007",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-001",
+      "second": "lchistory-006",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-007",
+      "second": "skthresh-009",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-008",
+      "second": "skthresh-009",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "opseval-008",
+      "second": "skmetric-015",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-004",
+      "second": "skthresh-006",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "hftrainer-001",
+      "second": "hftrainer-003",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "opt-006",
+      "second": "nnloss-017",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-006",
+      "second": "lchistory-008",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-004",
+      "second": "tfox-005",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-004",
+      "second": "vol3-007",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "jsbase-001",
+      "second": "jsbase-005",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "winproc-002",
+      "second": "winproc-003",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "jcore-008",
+      "second": "jcore-009",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-001",
+      "second": "sentinelops-009",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-006",
+      "second": "vol3-007",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "aflins-004",
+      "second": "aflins-005",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "suriflow-002",
+      "second": "suriflow-007",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptmha-003",
+      "second": "ptmha-008",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "csc-014",
+      "second": "csc-016",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "csc-021",
+      "second": "csc-022",
+      "score": 0.65,
+      "decision": "distinct"
+    },
+    {
+      "first": "codet5-003",
+      "second": "codet5-004",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "smotepractice-003",
+      "second": "smotepractice-005",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "cmakebase-009",
+      "second": "cmakebase-010",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentsearch-002",
+      "second": "agentsearch-004",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcbase-006",
+      "second": "lcpractice-010",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-005",
+      "second": "skthresh-009",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "pdstring-004",
+      "second": "pdstring-005",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "vtctx-005",
+      "second": "vtctx-006",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "opseval-013",
+      "second": "skmetric-001",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "calapi-008",
+      "second": "calapi-011",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmonextra-006",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "skperm-003",
+      "second": "skperm-006",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "pdstring-004",
+      "second": "pdstring-006",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "impute-009",
+      "second": "impute-013",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "nnloss-016",
+      "second": "nnloss-017",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmon-006",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmon-008",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmonextra-001",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-005",
+      "second": "sysmonextra-001",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-005",
+      "second": "sysmonextra-003",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-007",
+      "second": "sysmonextra-008",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sigma-008",
+      "second": "sigcorr-005",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "anomaly-004",
+      "second": "isouse-004",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-001",
+      "second": "sysmonextra-005",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptcommon-018",
+      "second": "ptce-001",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "eqlsec-003",
+      "second": "eqlsec-009",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "adamw-001",
+      "second": "adamw-002",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "vpn2016-002",
+      "second": "vpn2016-004",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "skapi-011",
+      "second": "sgdinc-012",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "distillbert-006",
+      "second": "distillbert-007",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "brierapi-002",
+      "second": "brierapi-003",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmon-007",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmonextra-005",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-007",
+      "second": "sysmonextra-005",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-001",
+      "second": "sentinelops-006",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxbase-016",
+      "second": "outcmd-007",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "coltrans-002",
+      "second": "coltrans-003",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "dspypaper-005",
+      "second": "dspypaper-006",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sshkey-004",
+      "second": "sshkey-010",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-007",
+      "second": "lchistory-008",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "opt-005",
+      "second": "ptce-004",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "semisec-012",
+      "second": "semisec-015",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparse-006",
+      "second": "lcparse-007",
+      "score": 0.64,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-006",
+      "second": "sentinelops-009",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "shiftsec-001",
+      "second": "shiftsec-002",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "stencode-002",
+      "second": "stencode-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "openapi31-020",
+      "second": "openapi31-022",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "weaklabel-004",
+      "second": "weaklabel-008",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "cflite-001",
+      "second": "cflite-004",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "ctv1-005",
+      "second": "ctv1-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcpractice-001",
+      "second": "lcpractice-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "tvaug-004",
+      "second": "tvaug-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "impute-002",
+      "second": "impute-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "hostthreat-010",
+      "second": "kerbaudit-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "bashcore-004",
+      "second": "bashcore-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "pyimport-008",
+      "second": "pyimport-012",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "mvnscipy-002",
+      "second": "mvnscipy-004",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstream-004",
+      "second": "lcstream-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "ctxprep-005",
+      "second": "stencode-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "dbbase-011",
+      "second": "pglocks-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "genconfig-002",
+      "second": "genconfig-008",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "rbops-004",
+      "second": "rbops-008",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "vtbehavior-003",
+      "second": "vtbehavior-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-001",
+      "second": "lchistory-008",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "cti-004",
+      "second": "stixdetail-008",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-001",
+      "second": "genagent-005",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "opt-005",
+      "second": "opt-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-001",
+      "second": "sentinelops-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "dsbase-013",
+      "second": "sortalg-017",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "pglocks-012",
+      "second": "pglocks-013",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "cpucache-004",
+      "second": "cpucache-005",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-002",
+      "second": "tfox-004",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "pdstring-005",
+      "second": "pdstring-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "code-001",
+      "second": "code-002",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "loradetail-008",
+      "second": "loradetail-009",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparse-002",
+      "second": "lcparse-007",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "drebin-003",
+      "second": "drebin-004",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxres-010",
+      "second": "linuxres-013",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "vpn2016-004",
+      "second": "vpn2016-005",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "pglocks-012",
+      "second": "pglocks-015",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "aflins-001",
+      "second": "aflins-002",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispwarn-002",
+      "second": "mispwarn-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-005",
+      "second": "sgdinc-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-002",
+      "second": "skthresh-007",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-006",
+      "second": "skthresh-008",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-006",
+      "second": "skthresh-009",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispgal-002",
+      "second": "mispgal-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparse-002",
+      "second": "lcparse-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgwrite-002",
+      "second": "pgwrite-005",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-006",
+      "second": "tfox-007",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "generate-007",
+      "second": "generate-008",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "encode-003",
+      "second": "encode-004",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "noticebase-001",
+      "second": "noticebase-002",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "attackdet-001",
+      "second": "attackdet-004",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "zeekweird-001",
+      "second": "zeekweird-002",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "zeekweird-001",
+      "second": "zeekweird-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "spanbertpre-002",
+      "second": "spanbertpre-003",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-003",
+      "second": "tfox-005",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "pdasof-005",
+      "second": "pdasof-006",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "jsbase-003",
+      "second": "jsbase-009",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "vpn2016-002",
+      "second": "vpn2016-005",
+      "score": 0.63,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-006",
+      "second": "lchistory-007",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "zeekweird-004",
+      "second": "zeekweird-005",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "skrand-001",
+      "second": "skrand-004",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgjson-004",
+      "second": "pgjson-006",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "matcalc-005",
+      "second": "matcalc-011",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "mysqlidx-001",
+      "second": "mysqltx-001",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "cmakebase-001",
+      "second": "cmakebase-002",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptmha-004",
+      "second": "ptmha-008",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "nlpinput-003",
+      "second": "seq2seq-011",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "rbops-008",
+      "second": "rbops-012",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-004",
+      "second": "tfox-006",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "loader-002",
+      "second": "loader-006",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-005",
+      "second": "genagent-006",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-004",
+      "second": "mispfmt-015",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-008",
+      "second": "mispfmt-010",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-001",
+      "second": "sgdinc-006",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "splunkops-001",
+      "second": "splunkops-002",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "archivecmd-009",
+      "second": "archivecmd-010",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparent-002",
+      "second": "lcparent-006",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "suriflow-002",
+      "second": "suriflow-008",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "diffpatch-005",
+      "second": "diffpatch-009",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispgal-003",
+      "second": "mispgal-004",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "skpoly-005",
+      "second": "skpoly-006",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparse-003",
+      "second": "lcparse-004",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "opt-005",
+      "second": "nnloss-016",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "hftrainer-002",
+      "second": "hftrainer-003",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "kqlbase-001",
+      "second": "kqlbase-003",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-006",
+      "second": "sgdinc-009",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "eqlsec-004",
+      "second": "eqlsec-007",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-001",
+      "second": "skthresh-004",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "hfcoll-005",
+      "second": "hfcoll-007",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "pybag-003",
+      "second": "pybag-004",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-004",
+      "second": "jthread-008",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparse-003",
+      "second": "lcparse-007",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcbase-014",
+      "second": "lcbase-015",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhash-002",
+      "second": "skhash-003",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "skknn-006",
+      "second": "skknn-009",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-006",
+      "second": "sentinelops-021",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "aflins-001",
+      "second": "aflins-003",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "semisec-013",
+      "second": "semisec-015",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-001",
+      "second": "skthresh-005",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptce-001",
+      "second": "ptce-002",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "anomaly-004",
+      "second": "isouse-001",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "irrec-001",
+      "second": "nistir-007",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "dbbase-001",
+      "second": "dbbase-002",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-004",
+      "second": "mispfmt-005",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "eslex-005",
+      "second": "eslex-008",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "kqlbase-001",
+      "second": "kqlbase-010",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptnorm-002",
+      "second": "ptnorm-003",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "skperm-001",
+      "second": "skperm-006",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "affileval-002",
+      "second": "affileval-005",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-005",
+      "second": "vol3-007",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "safeio-003",
+      "second": "safeio-005",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "catboost-001",
+      "second": "catboost-008",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "pybag-002",
+      "second": "pybag-007",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-003",
+      "second": "jthread-004",
+      "score": 0.62,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-003",
+      "second": "lchistory-006",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "skrand-002",
+      "second": "skrand-005",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "skknn-003",
+      "second": "skknn-007",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "qdrant-005",
+      "second": "qdrant-007",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "stencode-006",
+      "second": "stencode-007",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-009",
+      "second": "sysmonextra-009",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "vuldeep-001",
+      "second": "vuldeep-011",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "vuldeep-001",
+      "second": "vuldeep-013",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "sancov-001",
+      "second": "sancov-009",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "suriflow-003",
+      "second": "suriflow-008",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "hftokencls-001",
+      "second": "hftokencls-007",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxbase-013",
+      "second": "diffpatch-002",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "httpstatus-001",
+      "second": "httplimit-002",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "skapi-013",
+      "second": "skapi-014",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "pycopod-001",
+      "second": "pycopod-003",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "dsbase-012",
+      "second": "dsbase-013",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "binomeval-002",
+      "second": "binomeval-004",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "asimsoc-001",
+      "second": "asimsoc-003",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "pyconcurrent-007",
+      "second": "futurespy-014",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptcommon-020",
+      "second": "ptce-003",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstream-008",
+      "second": "lcstream-011",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "cluster-011",
+      "second": "hdbscan-002",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-001",
+      "second": "genagent-004",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-005",
+      "second": "genagent-009",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-004",
+      "second": "mispfmt-011",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-004",
+      "second": "mispfmt-014",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-008",
+      "second": "mispfmt-015",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgplan-002",
+      "second": "pgplan-004",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "coltrans-001",
+      "second": "coltrans-005",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "zeekweird-001",
+      "second": "zeekweird-005",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "fairfuzz-003",
+      "second": "fairfuzz-005",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgjson-006",
+      "second": "pgjson-012",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "secint-dist-003",
+      "second": "companyddp-007",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "eslex-006",
+      "second": "eslex-007",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-004",
+      "second": "skthresh-010",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "agents-002",
+      "second": "osbase-009",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "attn-005",
+      "second": "csc-396",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "parsecc-014",
+      "second": "parsecc-017",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "sftdialogue-004",
+      "second": "sftdialogue-005",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "faissapi-007",
+      "second": "faissapi-008",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "osbase-002",
+      "second": "netcmd-012",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "testproc-019",
+      "second": "testfund-006",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "hdfsdata-002",
+      "second": "hdfsdata-003",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "lgnode-001",
+      "second": "lgnode-002",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "hdbscan-003",
+      "second": "hdbscan-004",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "pysubproc-003",
+      "second": "pysubproc-011",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "cti-004",
+      "second": "xdom-103",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "speechfund-029",
+      "second": "speechfund-030",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentbench-005",
+      "second": "agentbench-006",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "usadcode-005",
+      "second": "usadcode-006",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-002",
+      "second": "tfox-003",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-004",
+      "second": "tfox-007",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "visprep-007",
+      "second": "visprep-009",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "codet5-004",
+      "second": "codet5-005",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "isouse-001",
+      "second": "isouse-004",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentsearch-004",
+      "second": "agentsearch-011",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-006",
+      "second": "sentinelops-008",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-010",
+      "second": "sentinelops-021",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-008",
+      "second": "sgdinc-009",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "amd64abi-002",
+      "second": "amd64abi-004",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcpractice-001",
+      "second": "lcpractice-002",
+      "score": 0.61,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-002",
+      "second": "sgdinc-006",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "stencode-008",
+      "second": "crossrank-002",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "malbench-004",
+      "second": "malbench-006",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "pytestbase-001",
+      "second": "pytestbase-006",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxres-009",
+      "second": "linuxres-011",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "pysyntax-020",
+      "second": "pyobject-021",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "cvss4-005",
+      "second": "cvss4-012",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sancov-001",
+      "second": "sancov-003",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgjson-006",
+      "second": "pgjson-009",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "yramath-001",
+      "second": "yramath-005",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "dspypaper-005",
+      "second": "dspypaper-007",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "mccmetric-005",
+      "second": "mccmetric-008",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sktext-001",
+      "second": "sktext-003",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-002",
+      "second": "skthresh-008",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "clockcs-006",
+      "second": "clockcs-007",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgwrite-002",
+      "second": "pgwrite-006",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgwrite-004",
+      "second": "pgwrite-005",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "telemetry-005",
+      "second": "telemetry-006",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-005",
+      "second": "sysmonextra-006",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-008",
+      "second": "sysmonextra-001",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-001",
+      "second": "sysmonextra-003",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-001",
+      "second": "genagent-007",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstream-007",
+      "second": "lcstream-011",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "weaklabel-012",
+      "second": "weaklabel-014",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-008",
+      "second": "mispfmt-009",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-008",
+      "second": "mispfmt-014",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "driftkit-002",
+      "second": "driftkit-004",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "genconfig-006",
+      "second": "genconfig-014",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-006",
+      "second": "sgdinc-007",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "zeekweird-002",
+      "second": "zeekweird-003",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "zeekweird-002",
+      "second": "zeekweird-004",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "zeekweird-003",
+      "second": "zeekweird-004",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-001",
+      "second": "elasticth-003",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-002",
+      "second": "tfox-005",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "jsbase-001",
+      "second": "jsbase-009",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "qdrant-009",
+      "second": "qdrant-012",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "qdrant-010",
+      "second": "qdrant-011",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhist-001",
+      "second": "skhist-002",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "secint-dist-001",
+      "second": "secint-dist-002",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "visprep-001",
+      "second": "visprep-002",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-006",
+      "second": "sgdinc-008",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-002",
+      "second": "skthresh-005",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "qdrant-003",
+      "second": "qdrant-009",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "flashalg-005",
+      "second": "flashalg-007",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "cpusched-018",
+      "second": "cpusched-019",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "rbops-013",
+      "second": "rbops-014",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "yramath-005",
+      "second": "yramath-006",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "attnint-002",
+      "second": "flashalg-002",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-009",
+      "second": "sentinelops-021",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "cvss4-011",
+      "second": "cvss4-012",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgnlogic-002",
+      "second": "pgnlogic-003",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "aptpkg-003",
+      "second": "aptpkg-011",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "cti-004",
+      "second": "stixdetail-007",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-001",
+      "second": "genagent-003",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-003",
+      "second": "genagent-005",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "flashalg-009",
+      "second": "flashalg-011",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "suriflow-002",
+      "second": "suriflow-004",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-005",
+      "second": "sysmon-006",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-007",
+      "second": "sysmonextra-003",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-008",
+      "second": "sysmonextra-005",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-003",
+      "second": "sysmonextra-005",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-005",
+      "second": "sysmonextra-008",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptops-021",
+      "second": "ptops-022",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "loggpt-004",
+      "second": "loggpt-007",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "virtmech-016",
+      "second": "virtmech-017",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "lchistory-003",
+      "second": "lchistory-008",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-011",
+      "second": "sgdinc-012",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-005",
+      "second": "skthresh-007",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-005",
+      "second": "skthresh-008",
+      "score": 0.6,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-002",
+      "second": "sentinelops-010",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparse-011",
+      "second": "lchistory-007",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "eslex-009",
+      "second": "eslex-010",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "aflins-001",
+      "second": "aflins-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "digcmd-003",
+      "second": "digcmd-008",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "osvfmt-002",
+      "second": "osvfmt-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "otelbase-001",
+      "second": "otelbase-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-002",
+      "second": "vol3-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "reliable-010",
+      "second": "reliable-012",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-001",
+      "second": "genagent-008",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-005",
+      "second": "genagent-008",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "osbase-002",
+      "second": "xdom-131",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "rockstore-009",
+      "second": "rockstore-014",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pyregex-006",
+      "second": "pyregex-007",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "otelbase-008",
+      "second": "linuxtrace-003",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "textcli-011",
+      "second": "diffpatch-009",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "httpstatus-001",
+      "second": "httpstatus-002",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-002",
+      "second": "tfox-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "prefixtune-006",
+      "second": "prefixtune-008",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "vpn2016-003",
+      "second": "vpn2016-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "generate-009",
+      "second": "genconfig-001",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "otelbase-006",
+      "second": "otelbase-007",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "corrstat-007",
+      "second": "corrstat-008",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "intgrad-003",
+      "second": "intgrad-007",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-004",
+      "second": "vol3-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-005",
+      "second": "sysmon-007",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-005",
+      "second": "sysmonextra-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "anomaly-002",
+      "second": "oneclass-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "ocrpractice-001",
+      "second": "ocrpractice-002",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-003",
+      "second": "skthresh-004",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-007",
+      "second": "skthresh-010",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "composebase-001",
+      "second": "composebase-010",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "hdfsdata-001",
+      "second": "hdfsdata-002",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pybag-002",
+      "second": "pybag-004",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "nlpinput-004",
+      "second": "ptsdp-007",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparse-002",
+      "second": "lcparse-004",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pystdlib-022",
+      "second": "pystdlib-025",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "skselect-003",
+      "second": "skselect-004",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "weaklabel-011",
+      "second": "weaklabel-014",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhash-003",
+      "second": "skhash-004",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "peakapi-001",
+      "second": "peakapi-002",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-018",
+      "second": "sentinelops-019",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "openvex-007",
+      "second": "openvex-008",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "vtbehavior-003",
+      "second": "vtbehavior-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "sftdialogue-003",
+      "second": "sftdialogue-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-006",
+      "second": "sgdinc-010",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparent-003",
+      "second": "lcparent-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "cluster-011",
+      "second": "hdbscan-001",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "grpo-001",
+      "second": "grpobase-003",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "anomaly-002",
+      "second": "oneclass-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "seq2seq-013",
+      "second": "genconfig-002",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcbase-011",
+      "second": "csc-219",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-004",
+      "second": "sentinelops-010",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "dcons-009",
+      "second": "dcons-010",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "dcons-009",
+      "second": "chashcs-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "mccmetric-006",
+      "second": "mccmetric-008",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "embedbag-001",
+      "second": "embedbag-004",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "calapi-006",
+      "second": "calapi-007",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgwrite-002",
+      "second": "pgwrite-004",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgjson-004",
+      "second": "pgjson-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-005",
+      "second": "vol3-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pdasof-002",
+      "second": "pdasof-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "avl-003",
+      "second": "avl-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "embedbag-009",
+      "second": "ptembed-003",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "rabbitmq-009",
+      "second": "rabbitmq-011",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "nlpinput-006",
+      "second": "ptmha-008",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pylogging-011",
+      "second": "pylogging-012",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-004",
+      "second": "jthread-005",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-005",
+      "second": "sentinelops-010",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "rbops-004",
+      "second": "rbops-012",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "skcurve-002",
+      "second": "skcurve-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pysqlite-003",
+      "second": "pysqlite-014",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "metric-001",
+      "second": "skapi-001",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "attnint-001",
+      "second": "attnint-002",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-001",
+      "second": "genagent-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "k8sbase-010",
+      "second": "k8sbase-013",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstruct-001",
+      "second": "lcstruct-004",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pglocks-004",
+      "second": "pglocks-007",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "rabbitmq-009",
+      "second": "rabbitmq-010",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "winaudit-001",
+      "second": "kerbaudit-003",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "mccmetric-005",
+      "second": "mccmetric-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "sktext-007",
+      "second": "sktext-008",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "findxargs-009",
+      "second": "findxargs-011",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "pymproc-004",
+      "second": "pymproc-006",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "linenv-003",
+      "second": "linenv-004",
+      "score": 0.59,
+      "decision": "distinct"
+    },
+    {
+      "first": "qdrant-008",
+      "second": "qdrant-012",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "pygdeep-009",
+      "second": "pygdeep-010",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "agentsearch-001",
+      "second": "agentsearch-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "pystdlib-022",
+      "second": "pystdlib-023",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "svdd-004",
+      "second": "svdd-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "redisstream-006",
+      "second": "redisstream-010",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "assocanom-002",
+      "second": "assocanom-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptmha-002",
+      "second": "ptmha-008",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "winaudit-001",
+      "second": "winproc-001",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "loader-004",
+      "second": "loader-012",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "graphstate-013",
+      "second": "graphstate-014",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "diamond-002",
+      "second": "csc-422",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "tcpbase-015",
+      "second": "capabase-001",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "osbase-009",
+      "second": "graphalg-017",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "dbbase-007",
+      "second": "dbbase-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-009",
+      "second": "mispfmt-012",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-012",
+      "second": "mispfmt-014",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "binomeval-004",
+      "second": "binomeval-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcselfq-001",
+      "second": "lcselfq-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptconv-006",
+      "second": "ptconv-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skrand-001",
+      "second": "skrand-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgwrite-001",
+      "second": "pgwrite-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparse-004",
+      "second": "lcparse-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "stencode-002",
+      "second": "stencode-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skpoly-001",
+      "second": "skpoly-004",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-001",
+      "second": "sentinelops-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparent-004",
+      "second": "lcparent-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparent-006",
+      "second": "lcparent-010",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "d2astudy-003",
+      "second": "d2astudy-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-009",
+      "second": "sysmonextra-001",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "sftdialogue-005",
+      "second": "sftdialogue-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "httpbase-017",
+      "second": "httpbase-018",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "squad2-004",
+      "second": "squad2-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "calapi-005",
+      "second": "calapi-012",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "mysqllog-003",
+      "second": "mysqllog-004",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-003",
+      "second": "tfox-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-022",
+      "second": "sktimes-001",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-002",
+      "second": "skthresh-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "minhash-002",
+      "second": "minhash-008",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-005",
+      "second": "tfox-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "loader-004",
+      "second": "loader-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "sftdialogue-003",
+      "second": "sftdialogue-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skapi-002",
+      "second": "skapi-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptcommon-016",
+      "second": "embedbag-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "graphmath-021",
+      "second": "graphalg-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "splunkops-007",
+      "second": "splunkops-008",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "k8sbase-014",
+      "second": "k8sbase-015",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "githistory-015",
+      "second": "pyenv-008",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-001",
+      "second": "skthresh-002",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "hypfuzz-001",
+      "second": "hypfuzz-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "pyhbos-004",
+      "second": "pyhbos-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-004",
+      "second": "skmetric-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptsampler-003",
+      "second": "ptsampler-004",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "attnint-001",
+      "second": "flashalg-002",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "cflite-007",
+      "second": "cflite-010",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "winproc-002",
+      "second": "winproc-004",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "grag-012",
+      "second": "grag-021",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-002",
+      "second": "sentinelops-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "deepcase-006",
+      "second": "deepcase-008",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "fbench-001",
+      "second": "fbench-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "rbops-008",
+      "second": "rbops-014",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-002",
+      "second": "elasticth-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-003",
+      "second": "elasticth-004",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "psquery-002",
+      "second": "psquery-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "visprep-001",
+      "second": "visprep-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "pglocks-004",
+      "second": "pglocks-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "lgnode-001",
+      "second": "lgnode-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "graphagent-003",
+      "second": "graphstate-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "isouse-005",
+      "second": "isouse-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "pytestbase-001",
+      "second": "pytestbase-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-001",
+      "second": "skthresh-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-001",
+      "second": "skthresh-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgtime-001",
+      "second": "pgtime-002",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptmha-007",
+      "second": "ptmha-008",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-001",
+      "second": "jthread-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-002",
+      "second": "skthresh-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "rabbitmq-009",
+      "second": "rabbitmq-015",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "llmmem-005",
+      "second": "vllmpage-001",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-001",
+      "second": "genagent-002",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "binomeval-002",
+      "second": "binomeval-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "httpneg-001",
+      "second": "httpneg-002",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgwrite-005",
+      "second": "pgwrite-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "yaracond-001",
+      "second": "yaracond-002",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "lgnode-002",
+      "second": "lgnode-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "lgnode-003",
+      "second": "lgnode-004",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-004",
+      "second": "genagent-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-004",
+      "second": "genagent-008",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-008",
+      "second": "genagent-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcpractice-002",
+      "second": "lcstream-005",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "sandbox-010",
+      "second": "sandbox-011",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-004",
+      "second": "mispfmt-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "netcmd-002",
+      "second": "netcmd-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "colbert2-002",
+      "second": "colbert2-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "cvefmt-001",
+      "second": "cvefmt-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "futurespy-001",
+      "second": "futurespy-009",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "calapi-006",
+      "second": "calapi-011",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgjson-006",
+      "second": "pgjson-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "yarab64-001",
+      "second": "yarab64-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "binomeval-002",
+      "second": "distshift-003",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "suriflow-003",
+      "second": "suriflow-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "assocanom-001",
+      "second": "assocanom-007",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcmulticomp-003",
+      "second": "lcmulticomp-006",
+      "score": 0.58,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-007",
+      "second": "jthread-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-005",
+      "second": "skthresh-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "hsts-001",
+      "second": "hsts-002",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcpractice-005",
+      "second": "lcpractice-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-003",
+      "second": "skthresh-009",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-002",
+      "second": "sgdinc-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstruct-001",
+      "second": "lcstruct-002",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "cluster-011",
+      "second": "hdbscan-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "torchtrain-012",
+      "second": "opt-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "cti-003",
+      "second": "cti-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "opt-005",
+      "second": "nnloss-017",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "grpo-001",
+      "second": "grpobase-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "irrec-001",
+      "second": "nistir-009",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "isouse-001",
+      "second": "isouse-005",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "semisec-012",
+      "second": "semisec-013",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "skselect-004",
+      "second": "skselect-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-001",
+      "second": "sentinelops-021",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-004",
+      "second": "sentinelops-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptcheck-007",
+      "second": "ptcheck-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "bptree-006",
+      "second": "dbnorm-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "netcmd-004",
+      "second": "diskdiag-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "genconfig-001",
+      "second": "genconfig-002",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-001",
+      "second": "sgdinc-005",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "lxcg-007",
+      "second": "lxcg-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "cicflow-001",
+      "second": "cicflow-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "dretry-006",
+      "second": "dretry-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "stencode-001",
+      "second": "stencode-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "adalora-007",
+      "second": "adalora-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "gaiabench-003",
+      "second": "gaiabench-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "cflite-001",
+      "second": "cflite-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "archivecmd-005",
+      "second": "archivecmd-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxres-009",
+      "second": "linuxres-012",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "pysubproc-002",
+      "second": "pysubproc-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "sancov-003",
+      "second": "sancov-009",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "pktcap-001",
+      "second": "pktcap-003",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "rsyncops-003",
+      "second": "diffpatch-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispwarn-002",
+      "second": "mispwarn-005",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-003",
+      "second": "elasticth-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhist-002",
+      "second": "skhist-003",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-003",
+      "second": "vol3-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "sktimes-001",
+      "second": "sktimes-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "aptpkg-006",
+      "second": "aptpkg-009",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "psquery-002",
+      "second": "psquery-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "psquery-009",
+      "second": "psquery-010",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "psquery-009",
+      "second": "psquery-012",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "jsbase-009",
+      "second": "jsbase-023",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "pybag-005",
+      "second": "pybag-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-004",
+      "second": "jthread-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "jmm-008",
+      "second": "jmm-010",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "csc-160",
+      "second": "csc-186",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstruct-004",
+      "second": "lcstruct-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "lgnode-001",
+      "second": "lgnode-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "embedbag-009",
+      "second": "ptembed-005",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-008",
+      "second": "skthresh-010",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-009",
+      "second": "skthresh-010",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-005",
+      "second": "jthread-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "pysubproc-002",
+      "second": "pysubproc-003",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispwarn-004",
+      "second": "mispwarn-005",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-015",
+      "second": "skevalcl-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcpractice-002",
+      "second": "lcpractice-005",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "sktext-009",
+      "second": "sktext-016",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhash-004",
+      "second": "skhash-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "osvfmt-002",
+      "second": "osvfmt-003",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "osvfmt-002",
+      "second": "osvfmt-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "cicflow-003",
+      "second": "cicflow-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-003",
+      "second": "vol3-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "irresponse-002",
+      "second": "irrec-003",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "siga-001",
+      "second": "siga-002",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "aflint-006",
+      "second": "aflpersist-005",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-005",
+      "second": "genagent-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-009",
+      "second": "genagent-010",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "pystdlib-023",
+      "second": "pystdlib-025",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "perfmodel-010",
+      "second": "perfmodel-013",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "omniad-003",
+      "second": "omniad-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "isof-001",
+      "second": "isof-007",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "isof-007",
+      "second": "isof-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-001",
+      "second": "sysmonextra-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-008",
+      "second": "sysmonextra-010",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-001",
+      "second": "mispfmt-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "driftkit-009",
+      "second": "driftkit-011",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "psquery-008",
+      "second": "psquery-009",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstream-007",
+      "second": "lcstream-008",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "oneclass-005",
+      "second": "oneclass-006",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "genconfig-006",
+      "second": "hftrainer-009",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "pysyntax-018",
+      "second": "pyobject-016",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "selfrefine-004",
+      "second": "selfrefine-005",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcsplit-006",
+      "second": "lcsplit-009",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "vtbehavior-001",
+      "second": "vtbehavior-004",
+      "score": 0.57,
+      "decision": "distinct"
+    },
+    {
+      "first": "ctxprep-005",
+      "second": "stencode-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "visprep-011",
+      "second": "tvaug-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "rabbitmq-014",
+      "second": "rabbitmq-015",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "ctxprep-005",
+      "second": "stencode-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-021",
+      "second": "sktimes-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pglocks-004",
+      "second": "pglocks-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "nftbase-005",
+      "second": "nftbase-013",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "tokenc-001",
+      "second": "tokenc-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "trailsec-008",
+      "second": "trailsec-011",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-002",
+      "second": "tfox-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "digcmd-001",
+      "second": "digcmd-003",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pycsv-005",
+      "second": "pycsv-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pybag-003",
+      "second": "pybag-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "ares-004",
+      "second": "ares-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "tokenc-003",
+      "second": "tokenc-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-003",
+      "second": "elasticth-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "redisstream-006",
+      "second": "redisstream-011",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "peakapi-002",
+      "second": "peakapi-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "aptpkg-004",
+      "second": "aptpkg-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pythread-005",
+      "second": "pythread-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "mvnscipy-002",
+      "second": "mvnscipy-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "torchtrain-012",
+      "second": "nnloss-016",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "rl-001",
+      "second": "rl-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "gnnmodels-007",
+      "second": "gnnmodels-010",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sqlwin-002",
+      "second": "pgjson-012",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "otelbase-005",
+      "second": "otelbase-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "linevul-005",
+      "second": "linevul-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgjson-005",
+      "second": "pgjson-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "diffpatch-006",
+      "second": "diffpatch-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pycsv-001",
+      "second": "pycsv-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "jsbase-005",
+      "second": "jsbase-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-003",
+      "second": "skmetric-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pglocks-002",
+      "second": "pglocks-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lgnode-001",
+      "second": "lgnode-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "isof-001",
+      "second": "isof-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "irprio-001",
+      "second": "nistir-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "irrec-002",
+      "second": "nistir-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-003",
+      "second": "genagent-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcbase-006",
+      "second": "lccache-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcbase-008",
+      "second": "lcparse-010",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "cflite-004",
+      "second": "cflite-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "vt-001",
+      "second": "vtctx-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sigmamod-001",
+      "second": "sigmamod-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "weaklabel-012",
+      "second": "weaklabel-015",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-002",
+      "second": "mispfmt-012",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lrsched-006",
+      "second": "lrsched-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparent-007",
+      "second": "lcparent-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pybag-002",
+      "second": "pybag-003",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgwrite-004",
+      "second": "pgwrite-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "agents-002",
+      "second": "osbase-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-006",
+      "second": "sysmon-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-006",
+      "second": "sysmonextra-001",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-006",
+      "second": "sysmonextra-003",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-007",
+      "second": "sysmonextra-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-008",
+      "second": "sysmonextra-003",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "distint-003",
+      "second": "secint-dist-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-001",
+      "second": "sysmonextra-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-005",
+      "second": "sysmonextra-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmonextra-005",
+      "second": "sysmonextra-010",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pysyntax-022",
+      "second": "pysyntax-033",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-002",
+      "second": "sentinelops-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "nbayes-016",
+      "second": "nbayes-020",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxbase-007",
+      "second": "gdbbase-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxbase-016",
+      "second": "outcmd-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "osbase-009",
+      "second": "natcs-001",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "genconfig-002",
+      "second": "hfcoll-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "stencode-006",
+      "second": "stencode-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "tcpretx-001",
+      "second": "capabase-001",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "jsdist-001",
+      "second": "jsdist-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "outcmd-006",
+      "second": "outcmd-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "capabase-001",
+      "second": "diffpatch-001",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "phiusiil-001",
+      "second": "phiusiil-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sclient-006",
+      "second": "sclient-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "hftrainer-003",
+      "second": "hftrainer-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "qdrant-006",
+      "second": "qdrant-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "impute-007",
+      "second": "impute-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "ctxprep-003",
+      "second": "lcsplit-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-001",
+      "second": "skthresh-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptmha-002",
+      "second": "ptmha-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptmha-002",
+      "second": "ptmha-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "seq2seq-008",
+      "second": "seq2seq-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-009",
+      "second": "mispfmt-011",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-011",
+      "second": "mispfmt-014",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "cvss4-005",
+      "second": "cvss4-011",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "trailsec-001",
+      "second": "trailsec-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pygroup-001",
+      "second": "pygroup-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "scipytest-002",
+      "second": "scipytest-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "aptpkg-001",
+      "second": "aptpkg-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pybag-001",
+      "second": "pybag-003",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "rlmethod-009",
+      "second": "rlmethod-012",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "weaklabel-015",
+      "second": "weaklabel-016",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "weborigin-009",
+      "second": "weborigin-010",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstruct-002",
+      "second": "lcstruct-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptsampler-001",
+      "second": "ptsampler-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-001",
+      "second": "jthread-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-001",
+      "second": "genagent-011",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-003",
+      "second": "genagent-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-008",
+      "second": "genagent-011",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pgphys-008",
+      "second": "pgcte-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-004",
+      "second": "mispfmt-016",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "cicflow-001",
+      "second": "cicflow-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxres-011",
+      "second": "linuxres-012",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-001",
+      "second": "vol3-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "vol3-002",
+      "second": "vol3-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcstruct-002",
+      "second": "lcstruct-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "ctxprep-005",
+      "second": "stencode-003",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skapi-011",
+      "second": "sgdinc-011",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-021",
+      "second": "sktimes-001",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "contingency-005",
+      "second": "contingency-010",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "dspypaper-006",
+      "second": "dspypaper-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pdstring-002",
+      "second": "pdstring-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "perfmodel-009",
+      "second": "perfmodel-010",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcparent-003",
+      "second": "lcsplit-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pymproc-007",
+      "second": "pymproc-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhist-003",
+      "second": "skhist-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "cti-009",
+      "second": "cti-010",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "mailauth-013",
+      "second": "phishbeh-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "agenteval-006",
+      "second": "agenteval-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "winfeat-001",
+      "second": "winfeat-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "matcalc-005",
+      "second": "matcalc-009",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pyconcurrent-006",
+      "second": "pymproc-011",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "toolformer-002",
+      "second": "toolformer-003",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "dohdata-001",
+      "second": "dohdata-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "dohdata-001",
+      "second": "dohdata-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pysyntax-033",
+      "second": "bashadv-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcbase-006",
+      "second": "lcpractice-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-001",
+      "second": "calapi-001",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-010",
+      "second": "skmetric-013",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-001",
+      "second": "sentinelops-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "pyobject-018",
+      "second": "pyobject-019",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-001",
+      "second": "mispfmt-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "dcons-010",
+      "second": "chashcs-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "colbert2-001",
+      "second": "colbert2-007",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "lxcg-001",
+      "second": "lxcg-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "hdbscan-001",
+      "second": "hdbscan-011",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "linuxres-011",
+      "second": "linuxres-013",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skperm-001",
+      "second": "skperm-002",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "hfdata-002",
+      "second": "hfdata-005",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-001",
+      "second": "skthresh-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "gotpaper-002",
+      "second": "gotpaper-006",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "minhash-005",
+      "second": "minhash-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispgal-002",
+      "second": "mispgal-004",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "syslog-001",
+      "second": "syslog-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-001",
+      "second": "jthread-008",
+      "score": 0.56,
+      "decision": "distinct"
+    },
+    {
+      "first": "tfox-003",
+      "second": "tfox-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "hftrainer-007",
+      "second": "hftrainer-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhist-001",
+      "second": "skhist-003",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "lccache-001",
+      "second": "lccache-003",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "kappa-004",
+      "second": "kappa-005",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "vl-004",
+      "second": "clipvit-006",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-010",
+      "second": "mispfmt-015",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "skhash-003",
+      "second": "skhash-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-001",
+      "second": "sysmon-003",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-003",
+      "second": "sysmon-005",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-005",
+      "second": "sysmon-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-006",
+      "second": "sysmon-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-006",
+      "second": "sysmonextra-005",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-007",
+      "second": "sysmon-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sysmon-007",
+      "second": "sysmonextra-001",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "agenteval-006",
+      "second": "agentjudge-002",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "matcalc-003",
+      "second": "matcalc-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-003",
+      "second": "skthresh-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "hdfsdata-001",
+      "second": "hdfsdata-004",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "brierapi-003",
+      "second": "brierapi-004",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "ptmha-004",
+      "second": "ptmha-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "openapi31-013",
+      "second": "openapi31-025",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-005",
+      "second": "sentinelops-009",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "mispfmt-005",
+      "second": "mispfmt-016",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "cvss4-007",
+      "second": "cvss4-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "genconfig-002",
+      "second": "genconfig-011",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "trailsec-003",
+      "second": "trailsec-004",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "stencode-003",
+      "second": "stencode-006",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "cflite-002",
+      "second": "cflite-003",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "elasticth-004",
+      "second": "elasticth-005",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "tcpdetail-002",
+      "second": "tcpdetail-003",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "impute-006",
+      "second": "impute-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sgdinc-007",
+      "second": "sgdinc-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "promql-007",
+      "second": "promql-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "isof-002",
+      "second": "isouse-002",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "isof-003",
+      "second": "isof-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "incident-001",
+      "second": "nistir-004",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "graphstate-023",
+      "second": "graphstate-024",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "genagent-006",
+      "second": "genagent-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcbase-008",
+      "second": "lcbase-009",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "conformal-014",
+      "second": "conformal-015",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "httpbase-006",
+      "second": "httpmethod-001",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "bashcore-023",
+      "second": "textcli-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "textcli-014",
+      "second": "textmerge-009",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "diversevul-003",
+      "second": "diversevul-004",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "stencode-002",
+      "second": "stencode-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "pytestbase-013",
+      "second": "pytestbase-015",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "thcomp-025",
+      "second": "csc-028",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "skrand-002",
+      "second": "skrand-003",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "spath-023",
+      "second": "spath-024",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sclient-004",
+      "second": "sclient-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-003",
+      "second": "jthread-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "jthread-003",
+      "second": "jthread-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "jcore-018",
+      "second": "jcore-019",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "rabbitmq-018",
+      "second": "rabbitmq-019",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "csc-123",
+      "second": "csc-131",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "skmetric-011",
+      "second": "skmetric-013",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "skthresh-003",
+      "second": "skthresh-005",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "torchtrain-012",
+      "second": "opt-005",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "lcpractice-005",
+      "second": "lcstream-005",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-004",
+      "second": "sentinelops-009",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "otelbase-001",
+      "second": "otelbase-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "peakapi-002",
+      "second": "peakapi-004",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "loader-002",
+      "second": "loader-005",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-002",
+      "second": "sentinelops-003",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sentinelops-002",
+      "second": "sentinelops-021",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "rediscache-004",
+      "second": "rediscache-005",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "torchloss-002",
+      "second": "torchloss-003",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "sshops-003",
+      "second": "sshops-009",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "gitwt-001",
+      "second": "gitwt-007",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "digcmd-001",
+      "second": "digcmd-008",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "jsbase-002",
+      "second": "jsbase-009",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "qdrant-001",
+      "second": "qdrant-010",
+      "score": 0.55,
+      "decision": "distinct"
+    },
+    {
+      "first": "csc-465",
+      "second": "csc-467",
+      "score": 0.55,
+      "decision": "distinct"
+    }
+  ]
+}

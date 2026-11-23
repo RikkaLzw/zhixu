@@ -1,0 +1,313 @@
+{
+  "source": {
+    "id": "neuzz-neural-fuzzing",
+    "title": "NEUZZ 与复现研究：神经覆盖引导模糊测试",
+    "url": "https://arxiv.org/abs/1807.05620v4",
+    "type": "研究论文",
+    "note": "逐题依据所列论文自行整理；例子为自编，性能结论不默认推广到其他实验。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "neuzz-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "NEUZZ神经代理",
+      "knowledgePoint": "程序平滑目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 为什么用神经网络近似目标程序的分支行为？",
+      "answer": "神经代理提供可微近似，使输入变异可以利用梯度指导。",
+      "explanation": "目标程序的离散分支本身通常不适合直接求梯度。",
+      "example": "用神经模型估计输入字节对边覆盖的影响。",
+      "tags": [
+        "程序平滑目的",
+        "NEUZZ神经代理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "NEUZZ神经代理",
+      "knowledgePoint": "代理训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 的神经代理如何使用真实执行的边覆盖信息进行训练？",
+      "answer": "它以输入字节为特征，以目标程序实际覆盖的边作为多标签预测目标。",
+      "explanation": "同一输入可能覆盖多条边，覆盖标签需要从真实执行中获得。",
+      "example": "为每个种子记录其覆盖的控制流边。",
+      "tags": [
+        "代理训练目标",
+        "NEUZZ神经代理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "NEUZZ神经代理",
+      "knowledgePoint": "训练输入处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 论文如何让较短的变长输入适配固定大小的网络输入？",
+      "answer": "设置最大输入长度，并对较短输入补零。",
+      "explanation": "输入长度上限是实验和实现条件，不应视为所有目标的最佳配置。",
+      "example": "把长度较短的种子补到设定长度。",
+      "tags": [
+        "训练输入处理",
+        "NEUZZ神经代理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ神经代理",
+      "knowledgePoint": "覆盖边合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 论文为什么合并训练数据中总是同时出现的覆盖边？",
+      "answer": "它通过合并高度相关的输出标签减少需要预测的维度。",
+      "explanation": "这些边在其他未观察输入上未必永远同时出现。",
+      "example": "现有训练种子总是同时覆盖边 A 与边 B。",
+      "tags": [
+        "覆盖边合并",
+        "NEUZZ神经代理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ神经代理",
+      "knowledgePoint": "训练外新边",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 论文的边预测标签能直接为从未在训练数据中出现的边提供独立输出吗？",
+      "answer": "不能；论文的预处理只保留训练数据至少激活过一次的边。",
+      "explanation": "变异输入仍可能在真实程序中间接发现此前未观察的边。",
+      "example": "区分模型显式预测的边与运行时新发现的边。",
+      "tags": [
+        "训练外新边",
+        "NEUZZ神经代理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ神经代理",
+      "knowledgePoint": "边预测损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 论文用什么损失训练代理模型的边覆盖输出？",
+      "answer": "使用二元交叉熵比较预测覆盖与实际覆盖。",
+      "explanation": "每个输出对应边覆盖的二元结果。",
+      "example": "比较预测的边覆盖位图与实际位图。",
+      "tags": [
+        "边预测损失",
+        "NEUZZ神经代理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ变异生成",
+      "knowledgePoint": "输入梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 的梯度引导变异对哪一组变量求梯度？",
+      "answer": "对当前输入字节求目标边的模型输出梯度。",
+      "explanation": "这与训练模型时对模型参数求梯度的目的不同。",
+      "example": "估计哪个输入位置对边预测更敏感。",
+      "tags": [
+        "输入梯度",
+        "NEUZZ变异生成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ变异生成",
+      "knowledgePoint": "字节位置选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 用输入梯度的绝对值辅助选择什么？",
+      "answer": "选择对目标边预测变化更敏感的输入字节位置。",
+      "explanation": "重要性来自代理模型，仍需真实执行验证。",
+      "example": "优先考虑梯度幅值较大的字节。",
+      "tags": [
+        "字节位置选择",
+        "NEUZZ变异生成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ变异生成",
+      "knowledgePoint": "梯度符号方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 如何利用输入梯度的正负号指导字节变异方向？",
+      "answer": "它根据符号尝试增加或减少相应字节值，以改变目标输出。",
+      "explanation": "论文的变异过程也会尝试不同方向和步长。",
+      "example": "在梯度指示的方向上调整种子字节。",
+      "tags": [
+        "梯度符号方向",
+        "NEUZZ变异生成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ变异生成",
+      "knowledgePoint": "代理预测与真实覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "神经代理预测某输入可能覆盖目标边，能否直接记作程序真实覆盖？",
+      "answer": "不能；需要在目标程序中实际执行并读取覆盖反馈。",
+      "explanation": "代理只是近似，可能预测错误。",
+      "example": "先运行生成输入，再核实目标边是否执行。",
+      "tags": [
+        "代理预测与真实覆盖",
+        "NEUZZ变异生成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ模型更新",
+      "knowledgePoint": "覆盖引导的重训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 如何使用后续发现的新覆盖改进神经代理？",
+      "answer": "将触发新覆盖的输入与筛选保留的历史样本用于增量重训练。",
+      "explanation": "旧数据过滤有助于控制训练数据规模。",
+      "example": "发现新边后更新训练集和模型。",
+      "tags": [
+        "覆盖引导的重训练",
+        "NEUZZ模型更新"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-014",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ模型更新",
+      "knowledgePoint": "增量遗忘",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 NEUZZ 的增量更新不能简单只训练最新样本而忽略旧数据？",
+      "answer": "模型可能遗忘之前学到的程序行为。",
+      "explanation": "论文通过保留部分旧训练数据缓解这一问题。",
+      "example": "用新发现路径更新模型时保留覆盖代表样本。",
+      "tags": [
+        "增量遗忘",
+        "NEUZZ模型更新"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1807.05620v4"
+    },
+    {
+      "id": "neuzz-016",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ评估",
+      "knowledgePoint": "模型与覆盖效果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "代理模型的覆盖预测效果较好，是否必然带来更多真实程序新覆盖？",
+      "answer": "不必然；真实覆盖还取决于变异策略、输入限制和执行效果。",
+      "explanation": "应分别评估预测质量与运行目标程序后的覆盖增量。",
+      "example": "模型预测准确但生成输入没有触发新边。",
+      "tags": [
+        "模型与覆盖效果",
+        "NEUZZ评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.16618v1"
+    },
+    {
+      "id": "neuzz-017",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ评估",
+      "knowledgePoint": "初始语料贡献",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "评价神经模糊测试新增覆盖时，为什么要单独统计初始语料已有覆盖？",
+      "answer": "初始覆盖可能由其他 fuzzer 在训练前产生，不能全部归因于后续神经变异。",
+      "explanation": "比较时还应说明训练和种子生成的资源消耗。",
+      "example": "将初始 AFL 语料覆盖与后续增量分开报告。",
+      "tags": [
+        "初始语料贡献",
+        "NEUZZ评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.16618v1"
+    },
+    {
+      "id": "neuzz-018",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "NEUZZ评估",
+      "knowledgePoint": "研究复现差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NEUZZ 原论文、后续复现及作者回应结论不同时，如何比较实验？",
+      "answer": "应核对实现、运行模式、训练数据和覆盖统计等条件，再比较各自结果。",
+      "explanation": "后续研究与原作者对实现和评估设置存在公开分歧。",
+      "example": "检查是否使用相同的种子与目标配置。",
+      "tags": [
+        "研究复现差异",
+        "NEUZZ评估"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2309.16618v1",
+      "supportingReferences": [
+        {
+          "id": "neuzz-author-response",
+          "title": "NEUZZ 原作者对复现研究的回应",
+          "url": "https://arxiv.org/abs/2409.04504v1",
+          "type": "研究论文",
+          "evidence": "source"
+        },
+        {
+          "id": "neuzz-original-paper",
+          "title": "NEUZZ 原论文 v4",
+          "url": "https://arxiv.org/abs/1807.05620v4",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

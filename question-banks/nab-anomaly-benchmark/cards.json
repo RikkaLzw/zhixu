@@ -1,0 +1,230 @@
+{
+  "source": {
+    "id": "nab-anomaly-benchmark",
+    "title": "NAB：流式异常检测与时间敏感评估",
+    "url": "https://arxiv.org/abs/1510.03336",
+    "type": "研究论文与固定版本开源仓库",
+    "note": "依据逐题所列官方文档、源码或论文自行整理中文问答；例子为自编。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "nab-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "基准范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Numenta Anomaly Benchmark（NAB）主要评估什么任务？",
+      "answer": "评估流式时间序列异常检测，语料包含真实与合成的单变量时间序列。",
+      "explanation": "其中的异常来自多个领域，不能默认全部是安全攻击。",
+      "example": "服务器指标、交通数据和合成异常都可用于评测。",
+      "tags": [
+        "基准范围",
+        "流式异常评估"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/numenta/NAB/blob/ea702d75cc2258d9d7dd35ca8e5e2539d71f3140/README.md"
+    },
+    {
+      "id": "nab-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "标注窗口用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAB 论文的评分窗口如何从异常标注点构造，它是否必然代表真实事件的持续边界？",
+      "answer": "它围绕异常标注点构造评分窗口；该窗口是评估约定，不能无条件视为真实事件的精确起止时间。",
+      "explanation": "窗口内不同位置的检测会得到不同权重。",
+      "example": "标注点附近较早的告警可得到较高奖励。",
+      "tags": [
+        "标注窗口用途",
+        "流式异常评估"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1510.03336"
+    },
+    {
+      "id": "nab-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "重复命中",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAB 论文对同一异常窗口中的多次检测如何计分？",
+      "answer": "只给最早一次检测计入该窗口的命中奖励，忽略窗口内后续的重复检测。",
+      "explanation": "连续报多个点不会在同一窗口重复获得命中奖励。",
+      "example": "窗口内先后触发三次，按最早一次计入。",
+      "tags": [
+        "重复命中",
+        "流式异常评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1510.03336"
+    },
+    {
+      "id": "nab-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "窗口漏检",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 NAB 论文的评分定义，一个异常窗口没有任何检测时如何处理？",
+      "answer": "该窗口被计为一次漏检，并按应用配置施加相应惩罚。",
+      "explanation": "这是窗口级评分概念，不应与逐点混淆矩阵混为一谈。",
+      "example": "某异常窗口内无告警则产生一次窗口漏检。",
+      "tags": [
+        "窗口漏检",
+        "流式异常评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1510.03336"
+    },
+    {
+      "id": "nab-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "窗口外告警",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAB 论文如何处理异常窗口外的检测？",
+      "answer": "将其视为误报；窗口之后的误报惩罚还随它距前一窗口的相对位置变化。",
+      "explanation": "刚错过窗口和远离窗口的误报可能得到不同权重。",
+      "example": "窗口结束后不久的误报与远后的误报权重不同。",
+      "tags": [
+        "窗口外告警",
+        "流式异常评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1510.03336"
+    },
+    {
+      "id": "nab-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "应用权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAB 的 standard、reward low FP 和 reward low FN 配置分别体现什么？",
+      "answer": "它们使用不同的误报、漏报权重；后两者分别更重视减少误报或漏报。",
+      "explanation": "同一检测结果在不同配置下的分数不应直接当作相同成本条件的比较。",
+      "example": "人员处理资源有限时关注低误报配置。",
+      "tags": [
+        "应用权重",
+        "流式异常评估"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/numenta/NAB/blob/ea702d75cc2258d9d7dd35ca8e5e2539d71f3140/config/profiles.json"
+    },
+    {
+      "id": "nab-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "基线归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAB 的归一化分数如何使用完美检测器和空检测器作为基准？",
+      "answer": "完美检测器对应 100 分，不产生任何检测的空检测器对应 0 分；结果也可能低于 0。",
+      "explanation": "归一化分数不是准确率，负分表示比该空检测基线更差。",
+      "example": "误报代价很高的检测器可能得到负分。",
+      "tags": [
+        "基线归一化",
+        "流式异常评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1510.03336",
+      "supportingReferences": [
+        {
+          "id": "nab-readme-fixed",
+          "title": "NAB 基准与分数说明（固定版本）",
+          "url": "https://github.com/numenta/NAB/blob/ea702d75cc2258d9d7dd35ca8e5e2539d71f3140/README.md",
+          "type": "固定版本开源仓库",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "nab-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "预热期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAB 的 probationary period 在评分中起什么作用？",
+      "answer": "它允许检测器先学习数据模式，该阶段的数据不计入评分。",
+      "explanation": "预热规则会改变参与评估的有效时间范围。",
+      "example": "初始一段序列用于适应基线，不纳入检测得分。",
+      "tags": [
+        "预热期",
+        "流式异常评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1510.03336"
+    },
+    {
+      "id": "nab-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "阈值选择边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAB 原论文在整个数据集上优化固定阈值，为什么不能把得到的分数直接当作独立测试集性能？",
+      "answer": "阈值选择使用了同一批评估数据的信息，结果包含调参收益；独立泛化评估应另设验证和测试数据。",
+      "explanation": "论文明确说明了全数据集的阈值优化方式。",
+      "example": "在验证集选择阈值后，用未来时间段独立评估。",
+      "tags": [
+        "阈值选择边界",
+        "流式异常评估"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1510.03336"
+    },
+    {
+      "id": "nab-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "无异常序列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAB 中没有异常的时间序列对评估有什么作用？",
+      "answer": "它们可用于观察检测器在无标注异常序列上的误报告警情况。",
+      "explanation": "应结合标签质量解释这些告警，不能仅凭基准断言真实环境误报率。",
+      "example": "统计人工生成的无异常序列上的告警。",
+      "tags": [
+        "无异常序列",
+        "流式异常评估"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/numenta/NAB/blob/ea702d75cc2258d9d7dd35ca8e5e2539d71f3140/data/README.md"
+    },
+    {
+      "id": "nab-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "流式异常评估",
+      "knowledgePoint": "窗口生成边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAB 固定版本的标签组合流程怎样处理相互重叠的异常窗口？",
+      "answer": "将相互重叠的窗口合并为一个窗口。",
+      "explanation": "窗口生成规则会影响后续窗口级评分。",
+      "example": "两个时间上重叠的候选窗口合并后共同计分。",
+      "tags": [
+        "窗口生成边界",
+        "流式异常评估"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/numenta/NAB/blob/ea702d75cc2258d9d7dd35ca8e5e2539d71f3140/nab/labeler.py"
+    }
+  ]
+}

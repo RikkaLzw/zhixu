@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "one-class-anomaly-methods",
+    "title": "scikit-learn 1.7：单类异常检测",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.svm.OneClassSVM.html",
+    "type": "官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理，示例为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "oneclass-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类模型与异常检测",
+      "knowledgePoint": "nu含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 OneClassSVM 中 nu 控制什么？",
+      "answer": "它是训练误差比例的上界，也是支持向量比例的下界，取值在 (0, 1]。",
+      "explanation": "nu 不是已知真实异常率，也不是对未来数据异常比例的保证。",
+      "example": "调整 nu 后用独立数据验证检测效果。",
+      "tags": [
+        "nu含义",
+        "单类模型与异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.svm.OneClassSVM.html"
+    },
+    {
+      "id": "oneclass-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类模型与异常检测",
+      "knowledgePoint": "单类默认核",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 OneClassSVM 默认使用哪种核？",
+      "answer": "默认使用 RBF 核，参数为 kernel=\"rbf\"。",
+      "explanation": "核及其参数会影响模型边界。",
+      "example": "使用默认核拟合归一化后的特征。",
+      "tags": [
+        "单类默认核",
+        "单类模型与异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.svm.OneClassSVM.html"
+    },
+    {
+      "id": "oneclass-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类模型与异常检测",
+      "knowledgePoint": "gamma默认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 OneClassSVM 在 gamma=\"scale\" 时如何计算系数？",
+      "answer": "对于非零方差的训练数据，使用 1/(特征数 × X.var())。",
+      "explanation": "系数依赖训练数据的整体方差。",
+      "example": "缩放特征后重新拟合会改变默认系数。",
+      "tags": [
+        "gamma默认",
+        "单类模型与异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.svm.OneClassSVM.html"
+    },
+    {
+      "id": "oneclass-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类模型与异常检测",
+      "knowledgePoint": "椭圆估计污染参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 EllipticEnvelope contamination 对拟合后的阈值有什么作用？",
+      "answer": "它用于确定训练分数的偏移量，使训练数据中期望的异常比例接近设定值。",
+      "explanation": "该值不保证与未来数据的真实异常比例一致；分数并列也会影响实际数量。",
+      "example": "以 0.1 配置阈值并单独验证告警率。",
+      "tags": [
+        "椭圆估计污染参数",
+        "单类模型与异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.covariance.EllipticEnvelope.html"
+    },
+    {
+      "id": "oneclass-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类模型与异常检测",
+      "knowledgePoint": "马氏距离平方",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 EllipticEnvelope.mahalanobis 返回距离还是距离平方？",
+      "answer": "返回样本到估计中心的马氏距离平方。",
+      "explanation": "距离结合了估计协方差，不等同于普通欧氏距离。",
+      "example": "比较两个样本对椭圆中心的偏离程度。",
+      "tags": [
+        "马氏距离平方",
+        "单类模型与异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.covariance.EllipticEnvelope.html#sklearn.covariance.EllipticEnvelope.mahalanobis"
+    },
+    {
+      "id": "oneclass-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类模型与异常检测",
+      "knowledgePoint": "稳健协方差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么异常点会影响普通经验协方差的异常检测？",
+      "answer": "离群点可拉动经验中心和协方差，使异常距离被掩盖；稳健估计试图减轻这种影响。",
+      "explanation": "稳健估计仍依赖数据形状及样本量等条件。",
+      "example": "用稳健与普通协方差比较极端样本。",
+      "tags": [
+        "稳健协方差",
+        "单类模型与异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/covariance.html#robust-covariance-estimation"
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "mind2web-offline-evaluation",
+    "title": "Mind2Web 原论文 v2：网页 Agent 离线评测",
+    "url": "https://arxiv.org/pdf/2306.06070v2",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "mind2web-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mind2Web 网页操作评测",
+      "knowledgePoint": "评测数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mind2Web 原论文使用什么数据评估网页操作智能体？",
+      "answer": "使用真实网站上的任务及人工收集的操作轨迹。",
+      "explanation": "论文的基准含多个网站和领域。",
+      "example": "智能体根据指令选择页面元素并执行相应操作。",
+      "tags": [
+        "Mind2Web 网页操作评测",
+        "评测数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.06070v2"
+    },
+    {
+      "id": "mind2web-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mind2Web 网页操作评测",
+      "knowledgePoint": "候选过滤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mind2Web 的 MindAct 为什么先用小模型筛选候选网页元素？",
+      "answer": "真实网页 HTML 常过长，先筛选候选可减少后续模型需要处理的内容。",
+      "explanation": "候选过滤若漏掉目标元素，也会限制后续选择。",
+      "example": "先从大量 DOM 元素中选取少量候选。",
+      "tags": [
+        "Mind2Web 网页操作评测",
+        "候选过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.06070v2"
+    },
+    {
+      "id": "mind2web-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mind2Web 网页操作评测",
+      "knowledgePoint": "跨任务切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mind2Web 的 Cross-Task 测试相对训练集保留了什么网站层面的重叠？",
+      "answer": "测试任务可能来自训练中出现过的网站，也可能与训练任务相似。",
+      "explanation": "该切分主要考查新任务，不保证网站未见过。",
+      "example": "同一网站的不同任务可能分别出现在训练和测试中。",
+      "tags": [
+        "Mind2Web 网页操作评测",
+        "跨任务切分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.06070v2"
+    },
+    {
+      "id": "mind2web-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mind2Web 网页操作评测",
+      "knowledgePoint": "跨网站与领域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mind2Web 的 Cross-Website 与 Cross-Domain 切分在未见环境上有什么区别？",
+      "answer": "前者保留训练中未见的网站；后者保留训练中未见的顶层领域。",
+      "explanation": "Cross-Website 可包含训练中已有的领域。",
+      "example": "新网站和全新网站领域是不同的泛化条件。",
+      "tags": [
+        "Mind2Web 网页操作评测",
+        "跨网站与领域"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.06070v2"
+    },
+    {
+      "id": "mind2web-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mind2Web 网页操作评测",
+      "knowledgePoint": "评估历史",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mind2Web 原论文的逐步离线评测向模型提供什么历史？",
+      "answer": "对每一步独立评测时，提供真实轨迹中的历史动作。",
+      "explanation": "因此该指标不能直接等同于让模型连续控制真实网站的在线成功率。",
+      "example": "某一步的输入包含此前标注的正确操作。",
+      "tags": [
+        "Mind2Web 网页操作评测",
+        "评估历史"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.06070v2"
+    },
+    {
+      "id": "mind2web-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mind2Web 网页操作评测",
+      "knowledgePoint": "元素准确率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mind2Web 的 Element Accuracy 判断预测元素时，如何处理可接受元素？",
+      "answer": "将选中的元素与该步骤所有可接受的目标元素比较。",
+      "explanation": "一个步骤可以有多个被认为可接受的元素。",
+      "example": "选择任一标注为可接受的按钮可视为元素正确。",
+      "tags": [
+        "Mind2Web 网页操作评测",
+        "元素准确率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.06070v2"
+    },
+    {
+      "id": "mind2web-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mind2Web 网页操作评测",
+      "knowledgePoint": "操作指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mind2Web 的 Operation F1 在输入或选择操作上衡量什么？",
+      "answer": "按 token 比较预测操作，考虑输入或选择值的正确性。",
+      "explanation": "对于点击操作，论文指出该指标相当于准确率。",
+      "example": "输入日期值时，仅选对输入框并不足以得到正确操作。",
+      "tags": [
+        "Mind2Web 网页操作评测",
+        "操作指标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.06070v2"
+    },
+    {
+      "id": "mind2web-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mind2Web 网页操作评测",
+      "knowledgePoint": "步骤成功",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mind2Web 原论文何时将一个步骤判为成功？",
+      "answer": "只有目标元素和预测操作都正确时，步骤才成功。",
+      "explanation": "元素和操作两部分需要同时满足。",
+      "example": "选对输入框但填错值时，该步骤不成功。",
+      "tags": [
+        "Mind2Web 网页操作评测",
+        "步骤成功"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.06070v2"
+    },
+    {
+      "id": "mind2web-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Mind2Web 网页操作评测",
+      "knowledgePoint": "整任务成功",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Mind2Web 原论文的任务 Success Rate 对多步骤任务有什么要求？",
+      "answer": "任务中的所有步骤均成功，才把该任务记为成功。",
+      "explanation": "这是严格的整轨迹指标，可能低于逐步成功率。",
+      "example": "五个步骤中有一个错误，该任务不计成功。",
+      "tags": [
+        "Mind2Web 网页操作评测",
+        "整任务成功"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2306.06070v2"
+    }
+  ]
+}

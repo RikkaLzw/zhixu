@@ -1,0 +1,252 @@
+{
+  "source": {
+    "id": "fpn-multiscale-vision",
+    "title": "FPN 原论文 v2：多尺度特征与检测",
+    "url": "https://arxiv.org/pdf/1612.03144v2",
+    "type": "教材、论文与官方技术文档",
+    "note": "根据 FPN 原论文自行整理；58 同城公开面经为主题启发，岗位和经历为作者自述，非逐题转录。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "fpnstudy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多尺度视觉特征",
+      "knowledgePoint": "多层输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 FPN 使用主干网络的哪些信息构造特征金字塔？",
+      "answer": "使用主干网络不同阶段产生的多尺度特征图。",
+      "explanation": "这些层的空间分辨率和语义层次不同。",
+      "example": "ResNet 的不同阶段输出可作为金字塔输入。",
+      "tags": [
+        "多尺度视觉特征",
+        "多层输入",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1612.03144v2",
+      "supportingReferences": [
+        {
+          "id": "company-58",
+          "title": "58 同城视觉公开面经（2020 届作者自述）；FPN 主题启发，非原帖逐题",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fpnstudy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多尺度视觉特征",
+      "knowledgePoint": "自顶向下",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FPN 的自顶向下路径如何把高层语义传给较高分辨率的层？",
+      "answer": "将较低分辨率的高层特征上采样，再与对应的侧向特征融合。",
+      "explanation": "这种融合让高分辨率特征获得更强语义信息。",
+      "example": "将较粗的特征图放大后与浅层特征结合。",
+      "tags": [
+        "多尺度视觉特征",
+        "自顶向下",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1612.03144v2",
+      "supportingReferences": [
+        {
+          "id": "company-58",
+          "title": "58 同城视觉公开面经（2020 届作者自述）；FPN 主题启发，非原帖逐题",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fpnstudy-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多尺度视觉特征",
+      "knowledgePoint": "侧向投影",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FPN 原论文在侧向连接上使用 1×1 卷积主要做什么？",
+      "answer": "调整侧向特征的通道维度，使其能与上采样后的特征逐元素相加。",
+      "explanation": "原论文为金字塔层使用统一的特征通道数。",
+      "example": "把不同主干层映射到相同通道数后相加。",
+      "tags": [
+        "多尺度视觉特征",
+        "侧向投影",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1612.03144v2",
+      "supportingReferences": [
+        {
+          "id": "company-58",
+          "title": "58 同城视觉公开面经（2020 届作者自述）；FPN 主题启发，非原帖逐题",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fpnstudy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多尺度视觉特征",
+      "knowledgePoint": "特征融合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FPN 原论文的基本侧向融合操作如何合并两个对应特征图？",
+      "answer": "将上采样后的特征图与经过侧向投影的特征图逐元素相加。",
+      "explanation": "参与相加的特征图需要具有兼容的空间与通道形状。",
+      "example": "两个 256 通道同尺寸特征图逐位置相加。",
+      "tags": [
+        "多尺度视觉特征",
+        "特征融合",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1612.03144v2",
+      "supportingReferences": [
+        {
+          "id": "company-58",
+          "title": "58 同城视觉公开面经（2020 届作者自述）；FPN 主题启发，非原帖逐题",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fpnstudy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多尺度视觉特征",
+      "knowledgePoint": "上采样方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 FPN 自顶向下路径采用什么方式做 2 倍上采样？",
+      "answer": "采用最近邻上采样。",
+      "explanation": "其他 FPN 实现可以使用不同的上采样算子。",
+      "example": "把较低分辨率特征扩大到相邻层大小。",
+      "tags": [
+        "多尺度视觉特征",
+        "上采样方式",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1612.03144v2",
+      "supportingReferences": [
+        {
+          "id": "company-58",
+          "title": "58 同城视觉公开面经（2020 届作者自述）；FPN 主题启发，非原帖逐题",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fpnstudy-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多尺度视觉特征",
+      "knowledgePoint": "平滑卷积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FPN 原论文在合并特征图后加 3×3 卷积的主要目的是什么？",
+      "answer": "减轻上采样带来的混叠效应，并生成最终金字塔特征。",
+      "explanation": "这是论文所述实现细节，不是所有变体的强制规定。",
+      "example": "融合后使用卷积产生对应的 P 层。",
+      "tags": [
+        "多尺度视觉特征",
+        "平滑卷积",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1612.03144v2",
+      "supportingReferences": [
+        {
+          "id": "company-58",
+          "title": "58 同城视觉公开面经（2020 届作者自述）；FPN 主题启发，非原帖逐题",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fpnstudy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多尺度视觉特征",
+      "knowledgePoint": "多尺度结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FPN 的网络内特征金字塔与先构造图像金字塔再分别提特征有什么区别？",
+      "answer": "前者复用单个输入尺度的主干层级特征；后者对不同输入图像尺度分别计算特征。",
+      "explanation": "实际计算与内存开销仍依实现而定。",
+      "example": "缩放输入多次与在网络内部融合不同层输出是不同流程。",
+      "tags": [
+        "多尺度视觉特征",
+        "多尺度结构",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1612.03144v2",
+      "supportingReferences": [
+        {
+          "id": "company-58",
+          "title": "58 同城视觉公开面经（2020 届作者自述）；FPN 主题启发，非原帖逐题",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "fpnstudy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多尺度视觉特征",
+      "knowledgePoint": "RPN共享",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 FPN 用于 RPN 时，不同金字塔层的预测头参数如何处理？",
+      "answer": "论文在各金字塔层之间共享预测头参数。",
+      "explanation": "论文还比较过不共享参数的替代方式。",
+      "example": "各尺度特征使用相同的 RPN 头。",
+      "tags": [
+        "多尺度视觉特征",
+        "RPN共享",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1612.03144v2",
+      "supportingReferences": [
+        {
+          "id": "company-58",
+          "title": "58 同城视觉公开面经（2020 届作者自述）；FPN 主题启发，非原帖逐题",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

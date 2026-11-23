@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "cloudtrail-security-telemetry",
+    "title": "AWS CloudTrail 官方文档：云审计事件与字段",
+    "url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-events.html",
+    "type": "官方文档与教材",
+    "note": "依据题目所列文档或教材自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "trailsec-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "管理与数据事件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail 的 management events 与 data events 分别关注什么？",
+      "answer": "前者记录资源管理等控制平面活动；后者记录资源内部或资源上的数据平面操作。",
+      "explanation": "两类事件覆盖范围与选择器配置不同。",
+      "example": "创建 S3 存储桶与访问桶内对象。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "管理与数据事件"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-events.html"
+    },
+    {
+      "id": "trailsec-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "默认记录范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "默认 CloudTrail trail 是否自动记录所有数据事件？",
+      "answer": "不是；默认记录管理事件，数据事件需要配置记录。",
+      "explanation": "实际覆盖还取决于事件选择器和资源类型支持。",
+      "example": "想分析 S3 对象访问时需检查数据事件配置。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "默认记录范围"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-events.html"
+    },
+    {
+      "id": "trailsec-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "事件历史窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail Event history 默认提供多长时间、哪类事件的可查记录？",
+      "answer": "提供一个 AWS 区域内最近 90 天的管理事件记录。",
+      "explanation": "Event history 不显示数据事件；长期保存可配置 trail 或事件数据存储。",
+      "example": "查看过去一个月的控制台登录事件。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "事件历史窗口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events.html"
+    },
+    {
+      "id": "trailsec-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "搜索范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail Event history 一次查询能直接跨多个账号和多个区域吗？",
+      "answer": "不能；事件历史搜索限定一个账号和一个区域。",
+      "explanation": "跨账号或跨区域分析需使用合适的集中记录和查询方式。",
+      "example": "分别检查多个区域的管理事件。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "搜索范围"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/view-cloudtrail-events.html"
+    },
+    {
+      "id": "trailsec-005",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "服务与动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail 的 eventSource 和 eventName 分别表示什么？",
+      "answer": "eventSource 标识请求的 AWS 服务，eventName 标识请求的操作。",
+      "explanation": "二者共同提供事件行为的基本上下文。",
+      "example": "结合服务和 API 名称分析一次资源操作。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "服务与动作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html"
+    },
+    {
+      "id": "trailsec-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "事件时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail 记录中的 eventTime 指什么时间及时间标准？",
+      "answer": "指请求完成的时间，使用 UTC。",
+      "explanation": "事件时间与日志实际交付或摄取时间不一定相同。",
+      "example": "跨日志源关联前统一时间语义。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "事件时间"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html"
+    },
+    {
+      "id": "trailsec-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "来源地址语义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail 的 sourceIPAddress 一定是用户设备的公网 IP 吗？",
+      "answer": "不一定；AWS 服务发起的请求可能显示服务 DNS 名称或 AWS 内部标识。",
+      "explanation": "应结合 userIdentity 和调用上下文理解来源。",
+      "example": "由 AWS 服务代为执行的操作显示服务来源。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "来源地址语义"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html"
+    },
+    {
+      "id": "trailsec-008",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "调用身份",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail 的 userIdentity 字段主要用于描述什么？",
+      "answer": "用于描述发起请求的 IAM 身份信息。",
+      "explanation": "具体子字段取决于身份类型和调用情境。",
+      "example": "区分角色会话与其他身份发起的操作。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "调用身份"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html"
+    },
+    {
+      "id": "trailsec-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "只读标志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail 的 readOnly 字段为 true 表示什么？",
+      "answer": "它表示该操作是只读操作。",
+      "explanation": "该字段为可选字段；缺失不能直接解释为 false。",
+      "example": "DescribeTrails 是文档给出的只读操作例子。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "只读标志"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html"
+    },
+    {
+      "id": "trailsec-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "跨账号事件标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail 的 eventID 与 sharedEventID 在跨账号事件中有什么区别？",
+      "answer": "eventID 标识单条事件；同一 AWS 操作送往不同账号的事件可共享 sharedEventID。",
+      "explanation": "同一组记录仍各有各自的 eventID 和接收账号。",
+      "example": "一个账号调用另一个账号拥有的 KMS 密钥。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "跨账号事件标识"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html"
+    },
+    {
+      "id": "trailsec-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "接收账号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail 的 recipientAccountId 为什么可能不同于 userIdentity 中的账号？",
+      "answer": "跨账号访问时，发起请求的账号与接收事件的资源所属账号可能不同。",
+      "explanation": "应结合各字段角色分析，不能直接当成账号冲突。",
+      "example": "一个账号访问另一个账号的密钥。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "接收账号"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html"
+    },
+    {
+      "id": "trailsec-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CloudTrail 云审计数据",
+      "knowledgePoint": "响应缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CloudTrail 的 responseElements 为 null 是否必然表示调用失败？",
+      "answer": "不是；只读 API 或不返回响应元素的操作也可能为 null。",
+      "explanation": "判断执行结果还需结合事件中其他可用信息。",
+      "example": "只读描述类 API 的 responseElements 可为空。",
+      "tags": [
+        "CloudTrail 云审计数据",
+        "响应缺失"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-event-reference-record-contents.html"
+    }
+  ]
+}

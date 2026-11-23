@@ -1,0 +1,354 @@
+{
+  "source": {
+    "id": "graph-algorithms-fundamentals",
+    "title": "CP-Algorithms：图遍历、最短路与并查集",
+    "url": "https://cp-algorithms.com/graph/breadth-first-search.html",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理；示例自编，适用环境与前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "graphalg-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "BFS 标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图的 BFS 中，为什么常在节点入队时就标记已访问？",
+      "answer": "可避免同一节点经多条边反复入队。",
+      "explanation": "适用于只需首次访问每个节点的标准遍历。",
+      "example": "菱形图中的汇合节点只需入队一次。",
+      "tags": [
+        "图算法与并查集",
+        "BFS 标记"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/breadth-first-search.html"
+    },
+    {
+      "id": "graphalg-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "遍历复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用邻接表且每个节点至多访问一次时，图的 BFS 或 DFS 的时间上界通常是多少？",
+      "answer": "通常为 O(V+E)，其中 V 是节点数，E 是边数。",
+      "explanation": "这包含访问节点与扫描邻接边的成本。",
+      "example": "对稀疏图遍历时无需检查所有节点对。",
+      "tags": [
+        "图算法与并查集",
+        "遍历复杂度"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/breadth-first-search.html"
+    },
+    {
+      "id": "graphalg-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "路径恢复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "无权图 BFS 找到终点后，如何恢复一条最少边数路径？",
+      "answer": "发现新节点时记录其前驱，从终点沿前驱回溯到起点，再反转顺序。",
+      "explanation": "前驱应记录 BFS 首次发现该节点时的来源。",
+      "example": "由终点回溯得到起点到终点的路径。",
+      "tags": [
+        "图算法与并查集",
+        "路径恢复"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/breadth-first-search.html"
+    },
+    {
+      "id": "graphalg-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "遍历连通分量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如何用多次 BFS 求无向图的所有连通分量？",
+      "answer": "保留全局访问标记，对每个尚未访问的节点启动一次 BFS。",
+      "explanation": "每次搜索得到一个分量；整体仍可在线性时间内遍历。",
+      "example": "两个互不连接的子图各触发一次搜索。",
+      "tags": [
+        "图算法与并查集",
+        "遍历连通分量"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/breadth-first-search.html"
+    },
+    {
+      "id": "graphalg-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "DFS 深度限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "递归 DFS 面对很深的图时有哪些实现风险？",
+      "answer": "递归调用栈可能过深并耗尽栈空间；可考虑显式栈实现。",
+      "explanation": "可用栈空间和语言递归限制依运行环境而异。",
+      "example": "长链图可能导致递归深度随节点数增长。",
+      "tags": [
+        "图算法与并查集",
+        "DFS 深度限制"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/depth-first-search.html"
+    },
+    {
+      "id": "graphalg-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "有向环与回边",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有向图的三色 DFS 中，遇到指向当前递归路径上节点的边说明什么？",
+      "answer": "这是一条回边，说明存在有向环。",
+      "explanation": "当前递归路径上的节点常标为灰色。",
+      "example": "a→b→c→a 中 c 指向尚未退出的 a。",
+      "tags": [
+        "图算法与并查集",
+        "有向环与回边"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/depth-first-search.html"
+    },
+    {
+      "id": "graphalg-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "无向图判环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在简单无向图的 DFS 判环中，为什么不能把返回父节点的那条边直接视为环？",
+      "answer": "无向边会在两个端点的邻接表中出现，返回父节点可能只是走到了同一条树边的反方向。",
+      "explanation": "多重边图需额外区分边的身份。",
+      "example": "访问 b 时看到父节点 a 并不单独构成环。",
+      "tags": [
+        "图算法与并查集",
+        "无向图判环"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/depth-first-search.html"
+    },
+    {
+      "id": "graphalg-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "拓扑排序存在性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有向图存在拓扑排序需要满足什么条件？",
+      "answer": "图必须没有有向环，即是有向无环图。",
+      "explanation": "环上的节点无法同时满足每条边的先后约束。",
+      "example": "a 依赖 b 且 b 依赖 a 时无法给出拓扑序。",
+      "tags": [
+        "图算法与并查集",
+        "拓扑排序存在性"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/topological-sort.html"
+    },
+    {
+      "id": "graphalg-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "拓扑序唯一性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一个有向无环图的拓扑排序一定唯一吗？",
+      "answer": "不一定；没有先后依赖的节点可能有多种合法排列。",
+      "explanation": "不同合法顺序都必须满足每条有向边的约束。",
+      "example": "a 和 b 互不依赖时可有不同先后顺序。",
+      "tags": [
+        "图算法与并查集",
+        "拓扑序唯一性"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/topological-sort.html"
+    },
+    {
+      "id": "graphalg-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "拓扑排序与 DFS",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在有向无环图上，如何从 DFS 完成时间得到拓扑序？",
+      "answer": "把节点按 DFS 退出时间的逆序排列。",
+      "explanation": "对尚未访问的节点继续启动 DFS，才能覆盖全图。",
+      "example": "先完成的后继节点排在其前驱之后。",
+      "tags": [
+        "图算法与并查集",
+        "拓扑排序与 DFS"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/topological-sort.html"
+    },
+    {
+      "id": "graphalg-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "最短路松弛",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单源最短路算法中的边松弛通常做什么？",
+      "answer": "若通过边 u→v 的候选距离更小，就更新 v 当前的最短距离估计。",
+      "explanation": "候选距离为 dist[u] 加该边权重。",
+      "example": "已知 dist[u]=3、边权为 2，可尝试更新 v 为 5。",
+      "tags": [
+        "图算法与并查集",
+        "最短路松弛"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "graphalg-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "不可达节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单源最短路计算中，不可达节点的距离通常如何表示？",
+      "answer": "通常保留为无穷大或其他明确的不可达标记。",
+      "explanation": "实现时应避免对标记执行可能溢出的普通加法。",
+      "example": "没有路径连接的节点不应被报告为距离 0。",
+      "tags": [
+        "图算法与并查集",
+        "不可达节点"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/dijkstra.html"
+    },
+    {
+      "id": "graphalg-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "零一 BFS",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "图的边权仅为 0 或 1 时，0-1 BFS 使用双端队列的什么规则？",
+      "answer": "距离改善时，权重 0 的后继放到队首，权重 1 的后继放到队尾。",
+      "explanation": "该规则依赖边权只取 0 或 1。",
+      "example": "零成本转移比增加 1 的转移优先处理。",
+      "tags": [
+        "图算法与并查集",
+        "零一 BFS"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/01_bfs.html"
+    },
+    {
+      "id": "graphalg-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "并查集操作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "并查集的 find 和 union 分别用于什么？",
+      "answer": "find 查询元素所属集合的代表；union 合并两个元素所在的集合。",
+      "explanation": "常用于维护逐步合并的连通关系。",
+      "example": "逐条加入边时判断两个端点是否已连通。",
+      "tags": [
+        "图算法与并查集",
+        "并查集操作"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/data_structures/disjoint_set_union.html"
+    },
+    {
+      "id": "graphalg-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "路径压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "并查集 find 的路径压缩如何加快后续查找？",
+      "answer": "查找代表时把经过的节点直接或更接近地指向代表，从而缩短后续路径。",
+      "explanation": "具体压缩实现可以不同。",
+      "example": "长父指针链在一次查询后变短。",
+      "tags": [
+        "图算法与并查集",
+        "路径压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/data_structures/disjoint_set_union.html"
+    },
+    {
+      "id": "graphalg-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "按规模合并",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "并查集按规模合并的主要作用是什么？",
+      "answer": "通常把较小集合的树接到较大集合的根下，以控制树的高度增长。",
+      "explanation": "路径压缩和按规模合并可配合使用。",
+      "example": "大小为 2 的集合并入大小为 8 的集合。",
+      "tags": [
+        "图算法与并查集",
+        "按规模合并"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/data_structures/disjoint_set_union.html"
+    },
+    {
+      "id": "graphalg-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "Kruskal 判环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kruskal 算法使用并查集时，为什么跳过两端已在同一集合的边？",
+      "answer": "它的两个端点已有由已选边组成的路径，再加入该边会形成环。",
+      "explanation": "对无向加权图，Kruskal 按权重从小到大考虑边。",
+      "example": "两个端点已连通时不选该候选边。",
+      "tags": [
+        "图算法与并查集",
+        "Kruskal 判环"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/mst_kruskal_with_dsu.html"
+    },
+    {
+      "id": "graphalg-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "图算法与并查集",
+      "knowledgePoint": "最小生成森林",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对不连通的无向加权图执行 Kruskal 算法会得到什么？",
+      "answer": "得到各连通分量的最小生成树，合起来是最小生成森林。",
+      "explanation": "整个不连通图不存在覆盖全部节点的单棵生成树。",
+      "example": "两个不连通分量分别生成各自的树。",
+      "tags": [
+        "图算法与并查集",
+        "最小生成森林"
+      ],
+      "evidence": "source",
+      "reference": "https://cp-algorithms.com/graph/mst_kruskal_with_dsu.html"
+    }
+  ]
+}

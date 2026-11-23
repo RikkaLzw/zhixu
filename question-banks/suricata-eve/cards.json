@@ -7,16 +7,252 @@
     "note": "字段和事件结构参考官方文档；检测、标签和评估方案为原创应用。"
   },
   "cards": [
-    {"id":"suri-001","category":"operations","level":"入门","question":"Suricata EVE JSON 适合 AI 安全运营中的什么工作？","answer":"它提供结构化的安全事件，可用于告警分析、事件关联和模型特征构建。","explanation":"EVE 可记录告警、流、协议等多种事件，具体内容依赖配置。","example":"读取 alert 事件并关联同一流的其他可用上下文。","tags":["Suricata","EVE","告警"],"evidence":"source"},
-    {"id":"suri-002","category":"operations","level":"入门","question":"EVE 事件中的 event_type 有什么用途？","answer":"它标识事件类型，帮助处理程序区分告警、流或协议事件等记录。","explanation":"不同事件类型可能拥有不同字段，解析时不能假设结构完全一致。","example":"只对 alert 事件提取规则告警内容，对 flow 事件提取流量统计。","tags":["event_type","事件解析"],"evidence":"source"},
-    {"id":"suri-003","category":"operations","level":"入门","question":"EVE 中的 flow_id 可用于什么？","answer":"可作为关联同一流相关 EVE 事件的线索。","explanation":"它的作用范围要结合采集来源；不同产品的连接标识不能直接当作相同值。","example":"将同一 flow_id 的 alert 与可用协议记录合并。","tags":["flow_id","事件关联"],"evidence":"source"},
-    {"id":"suri-004","category":"operations","level":"进阶","question":"为什么 Suricata 规则告警不能直接等同于真实攻击标签？","answer":"规则命中可能是误报，也可能只代表需要进一步调查的可疑行为。","explanation":"将所有命中都当作真阳性会把规则偏差复制给模型。","example":"将分析人员确认结果和规则命中分开存储。","tags":["弱标签","误报"],"evidence":"application"},
-    {"id":"suri-005","category":"operations","level":"实践","question":"如何从 EVE 告警中构造可追溯的研判输入？","answer":"保留告警内容、事件时间、端点、规则信息、流标识和原始记录引用。","explanation":"下游模型输出应能对应回具体事件，便于审计。","example":"给模型的每条上下文附事件编号，要求回答引用编号。","tags":["证据","告警研判"],"evidence":"application"},
-    {"id":"suri-006","category":"operations","level":"进阶","question":"为什么不能只用 EVE 规则名称训练告警优先级模型？","answer":"规则名称可能与既有处置结果高度绑定，使模型只复述旧规则。","explanation":"应验证模型是否从资产、行为和关联事件中获得额外价值。","example":"比较仅规则名称基线与加入资产和流上下文后的模型。","tags":["告警排序","基线"],"evidence":"application"},
-    {"id":"suri-007","category":"operations","level":"实践","question":"多条 EVE 告警指向同一流时，如何避免重复统计事件？","answer":"按流标识及来源等上下文关联，并依据业务规则区分告警数与事件数。","explanation":"同一流可触发多个规则；去重不能简单删除可能有价值的不同证据。","example":"把同一流的多条规则命中展示为一个事件下的多条证据。","tags":["去重","事件关联"],"evidence":"application"},
-    {"id":"suri-008","category":"operations","level":"进阶","question":"用 EVE 数据做时间窗口特征时，为什么要确定时间字段含义？","answer":"必须明确使用事件发生时间、日志生成时间还是接收时间。","explanation":"乱序和采集延迟可能影响窗口统计和训练时的可用信息。","example":"评估实时检测时，仅使用预测时刻前已到达的日志。","tags":["事件时间","时序"],"evidence":"application"},
-    {"id":"suri-009","category":"operations","level":"实践","question":"如何评估 EVE 告警排序系统是否改善安全运营？","answer":"在相同告警集上比较高优先级真实威胁比例、处理量和漏掉的高风险事件。","explanation":"还要记录标签来源与人工复核范围，避免只评估已被关注的告警。","example":"对比原始规则排序和模型排序在前 50 条告警中的有效发现数。","tags":["排序","运营评估"],"evidence":"application"},
-    {"id":"suri-010","category":"operations","level":"进阶","question":"为什么 Suricata 升级规则后需要监测告警模型？","answer":"规则变化会改变告警类型、数量和上下文分布，影响依赖这些字段的模型。","explanation":"需要记录规则版本，并在规则调整后复评模型。","example":"发现某类规则更新后大量新告警进入最高优先级，检查模型分数和真实处置结果。","tags":["规则版本","漂移"],"evidence":"application"},
-    {"id":"suri-011","category":"operations","level":"实践","question":"Zeek uid 与 Suricata flow_id 可以直接相等匹配吗？","answer":"不能假定它们来自同一命名空间；需要根据时间、端点、协议与采集视角做关联。","explanation":"跨产品关联可能存在歧义，应保留关联置信度和原始记录。","example":"先按五元组与时间范围候选匹配，再检查方向和传感器位置。","tags":["跨产品关联","数据质量"],"evidence":"application"}
+    {
+      "id": "suri-001",
+      "category": "operations",
+      "level": "入门",
+      "question": "Suricata EVE JSON 适合 AI 安全运营中的什么工作？",
+      "answer": "它提供结构化的安全事件，可用于告警分析、事件关联和模型特征构建。",
+      "explanation": "EVE 可记录告警、流、协议等多种事件，具体内容依赖配置。",
+      "example": "读取 alert 事件并关联同一流的其他可用上下文。",
+      "tags": [
+        "Suricata",
+        "EVE",
+        "告警"
+      ],
+      "evidence": "source",
+      "origin": "自行整理",
+      "subtopic": "EVE事件",
+      "knowledgePoint": "EVE日志用途",
+      "questionType": "安全场景",
+      "reference": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html"
+    },
+    {
+      "id": "suri-002",
+      "category": "operations",
+      "level": "入门",
+      "question": "EVE 事件中的 event_type 有什么用途？",
+      "answer": "它标识事件类型，帮助处理程序区分告警、流或协议事件等记录。",
+      "explanation": "不同事件类型可能拥有不同字段，解析时不能假设结构完全一致。",
+      "example": "只对 alert 事件提取规则告警内容，对 flow 事件提取流量统计。",
+      "tags": [
+        "event_type",
+        "事件解析"
+      ],
+      "evidence": "source",
+      "subtopic": "EVE事件",
+      "knowledgePoint": "EVE事件类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html"
+    },
+    {
+      "id": "suri-003",
+      "category": "operations",
+      "level": "入门",
+      "question": "EVE 中的 flow_id 可用于什么？",
+      "answer": "可作为关联同一流相关 EVE 事件的线索。",
+      "explanation": "它的作用范围要结合采集来源；不同产品的连接标识不能直接当作相同值。",
+      "example": "将同一 flow_id 的 alert 与可用协议记录合并。",
+      "tags": [
+        "flow_id",
+        "事件关联"
+      ],
+      "evidence": "source",
+      "subtopic": "EVE事件",
+      "knowledgePoint": "EVE流标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html#field-flow-id"
+    },
+    {
+      "id": "suri-004",
+      "category": "operations",
+      "level": "进阶",
+      "question": "为什么 Suricata 规则告警不能直接等同于真实攻击标签？",
+      "answer": "规则命中可能是误报，也可能只代表需要进一步调查的可疑行为。",
+      "explanation": "将所有命中都当作真阳性会把规则偏差复制给模型。",
+      "example": "将分析人员确认结果和规则命中分开存储。",
+      "tags": [
+        "弱标签",
+        "误报"
+      ],
+      "evidence": "application",
+      "origin": "自行整理",
+      "subtopic": "告警标签",
+      "knowledgePoint": "规则命中与标签",
+      "questionType": "易错点",
+      "reference": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+      "supportingReferences": [
+        {
+          "id": "nist-ids-review",
+          "title": "NIST SP 800-94：入侵检测误报",
+          "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "suri-005",
+      "category": "operations",
+      "level": "实践",
+      "question": "如何从 EVE 告警中构造可追溯的研判输入？",
+      "answer": "保留告警内容、事件时间、端点、规则信息、流标识和原始记录引用。",
+      "explanation": "下游模型输出应能对应回具体事件，便于审计。",
+      "example": "给模型的每条上下文附事件编号，要求回答引用编号。",
+      "tags": [
+        "证据",
+        "告警研判"
+      ],
+      "evidence": "application",
+      "origin": "自行整理",
+      "subtopic": "告警研判",
+      "knowledgePoint": "可追溯告警输入",
+      "questionType": "安全场景",
+      "reference": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html"
+    },
+    {
+      "id": "suri-006",
+      "category": "operations",
+      "level": "进阶",
+      "question": "告警优先级标签主要由规则决定时，仅用规则名称训练模型有什么局限？",
+      "answer": "模型可能学会复现规则与标签的对应关系，不能据此证明它利用上下文改进了研判。",
+      "explanation": "可与仅基于规则的基线比较，再验证资产、行为和关联事件是否提供额外价值。",
+      "example": "若规则 A 的告警默认高优先级，模型可能只学习“A → 高”。",
+      "tags": [
+        "告警排序",
+        "基线"
+      ],
+      "evidence": "application",
+      "origin": "自行整理",
+      "subtopic": "告警排序评估",
+      "knowledgePoint": "规则派生标签与基线",
+      "questionType": "易错点",
+      "reference": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+      "supportingReferences": [
+        {
+          "id": "security-eval-paper",
+          "title": "USENIX Security 2022：安全机器学习的虚假相关与基线",
+          "url": "https://www.usenix.org/system/files/sec22-arp.pdf",
+          "type": "研究论文",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "suri-007",
+      "category": "operations",
+      "level": "实践",
+      "question": "多条 EVE 告警指向同一流时，如何避免重复统计事件？",
+      "answer": "按流标识及来源等上下文关联，并依据业务规则区分告警数与事件数。",
+      "explanation": "同一流可触发多个规则；去重不能简单删除可能有价值的不同证据。",
+      "example": "把同一流的多条规则命中展示为一个事件下的多条证据。",
+      "tags": [
+        "去重",
+        "事件关联"
+      ],
+      "evidence": "application",
+      "origin": "自行整理",
+      "subtopic": "告警关联",
+      "knowledgePoint": "同流多规则告警",
+      "questionType": "安全场景",
+      "reference": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html#field-flow-id"
+    },
+    {
+      "id": "suri-008",
+      "category": "operations",
+      "level": "进阶",
+      "question": "用 EVE 数据做时间窗口特征时，为什么要确定时间字段含义？",
+      "answer": "不同时间含义和采集延迟可能改变事件所属窗口，也影响实时预测时哪些日志可用。",
+      "explanation": "乱序和采集延迟可能影响窗口统计和训练时的可用信息。",
+      "example": "评估实时检测时，仅使用预测时刻前已到达的日志。",
+      "tags": [
+        "事件时间",
+        "时序"
+      ],
+      "evidence": "application",
+      "subtopic": "安全事件时间",
+      "knowledgePoint": "事件时间与接收时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "ecs-event-time-ref",
+          "title": "Elastic Common Schema：事件创建与入库时间",
+          "url": "https://www.elastic.co/guide/en/ecs/current/ecs-event.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "suri-009",
+      "category": "operations",
+      "level": "实践",
+      "question": "如何评估 EVE 告警排序系统是否改善安全运营？",
+      "answer": "在相同告警集上比较高优先级真实威胁比例、处理量和漏掉的高风险事件。",
+      "explanation": "还要记录标签来源与人工复核范围，避免只评估已被关注的告警。",
+      "example": "对比原始规则排序和模型排序在前 50 条告警中的有效发现数。",
+      "tags": [
+        "排序",
+        "运营评估"
+      ],
+      "evidence": "application"
+    },
+    {
+      "id": "suri-010",
+      "category": "operations",
+      "level": "进阶",
+      "question": "为什么 Suricata 升级规则后需要监测告警模型？",
+      "answer": "规则变化会改变告警类型、数量和上下文分布，影响依赖这些字段的模型。",
+      "explanation": "需要记录规则版本，并在规则调整后复评模型。",
+      "example": "发现某类规则更新后大量新告警进入最高优先级，检查模型分数和真实处置结果。",
+      "tags": [
+        "规则版本",
+        "漂移"
+      ],
+      "evidence": "application",
+      "subtopic": "模型监控",
+      "knowledgePoint": "规则变更后的输入分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "production-monitoring-ref",
+          "title": "Google ML：生产模型监控",
+          "url": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "suri-011",
+      "category": "operations",
+      "level": "进阶",
+      "question": "Zeek uid 与 Suricata flow_id 可以直接相等匹配吗？",
+      "answer": "不能假定它们来自同一命名空间；需要根据时间、端点、协议与采集视角做关联。",
+      "explanation": "跨产品关联可能存在歧义，应保留关联置信度和原始记录。",
+      "example": "先按五元组与时间范围候选匹配，再检查方向和传感器位置。",
+      "tags": [
+        "跨产品关联",
+        "数据质量"
+      ],
+      "evidence": "application",
+      "subtopic": "多源流量关联",
+      "knowledgePoint": "跨产品流标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "community-id-spec",
+          "title": "Community ID Flow Hashing 规范",
+          "url": "https://github.com/corelight/community-id-spec",
+          "type": "开放技术规范",
+          "evidence": "source"
+        }
+      ]
+    }
   ]
 }

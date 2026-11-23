@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "androzoo-android-app-dataset",
+    "title": "AndroZoo 官方资料：Android 应用样本",
+    "url": "https://androzoo.uni.lu/api_doc",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "androzoo-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "AndroZoo 样本与元数据",
+      "knowledgePoint": "样本对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AndroZoo 主要收集哪类样本？",
+      "answer": "收集来自多个来源的 Android 应用 APK。",
+      "explanation": "其中包含来自不同市场的应用，不应把整个集合都视为恶意软件。",
+      "example": "按来源和时间选择 Android 应用样本。",
+      "tags": [
+        "AndroZoo 样本与元数据",
+        "样本对象"
+      ],
+      "evidence": "source",
+      "reference": "https://androzoo.uni.lu/api_doc"
+    },
+    {
+      "id": "androzoo-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "AndroZoo 样本与元数据",
+      "knowledgePoint": "下载依据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 AndroZoo API 文档，下载指定 APK 通常需要什么？",
+      "answer": "需要访问 API 的个人密钥和该 APK 的 SHA-256。",
+      "explanation": "应遵守服务访问条件及并发限制。",
+      "example": "根据已记录的 SHA-256 获取对应样本。",
+      "tags": [
+        "AndroZoo 样本与元数据",
+        "下载依据"
+      ],
+      "evidence": "source",
+      "reference": "https://androzoo.uni.lu/api_doc"
+    },
+    {
+      "id": "androzoo-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "AndroZoo 样本与元数据",
+      "knowledgePoint": "杀毒检测数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AndroZoo 的 vt_detection 和 vt_scan_date 分别表示什么？",
+      "answer": "分别是标记该 APK 的 VirusTotal 引擎数量和扫描日期。",
+      "explanation": "引擎数量是某次扫描结果，不是永久不变的人工真值。",
+      "example": "比较样本标签前先核对扫描时间。",
+      "tags": [
+        "AndroZoo 样本与元数据",
+        "杀毒检测数"
+      ],
+      "evidence": "source",
+      "reference": "https://androzoo.uni.lu/api_doc"
+    },
+    {
+      "id": "androzoo-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "AndroZoo 样本与元数据",
+      "knowledgePoint": "DEX日期局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 AndroZoo 的 dex_date 不能无条件当作应用发布时间？",
+      "answer": "它是 APK 内 DEX 文件附带的日期，官方说明该字段经常不可靠。",
+      "explanation": "一些应用会带有 1980 年日期。",
+      "example": "建立时间切分时另行核对其他时间证据。",
+      "tags": [
+        "AndroZoo 样本与元数据",
+        "DEX日期局限"
+      ],
+      "evidence": "source",
+      "reference": "https://androzoo.uni.lu/api_doc"
+    },
+    {
+      "id": "androzoo-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "AndroZoo 样本与元数据",
+      "knowledgePoint": "收录时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AndroZoo 元数据的 added 日期表示什么，有什么时间解释限制？",
+      "answer": "表示 APK 被加入 AndroZoo 的日期；应用可能在此之前已存在多年。",
+      "explanation": "收录时间不等于首次发布或首次出现时间。",
+      "example": "不能仅据 added 推断应用创建日期。",
+      "tags": [
+        "AndroZoo 样本与元数据",
+        "收录时间"
+      ],
+      "evidence": "source",
+      "reference": "https://androzoo.uni.lu/api_doc"
+    },
+    {
+      "id": "androzoo-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "AndroZoo 样本与元数据",
+      "knowledgePoint": "市场缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AndroZoo 的 markets 字段没有列出某市场，能否证明 APK 从未在该市场发布？",
+      "answer": "不能；只能说明数据集没有在该市场观察到该 APK。",
+      "explanation": "采集范围与时间会影响观察结果。",
+      "example": "把未观察到与已确认未发布区分开。",
+      "tags": [
+        "AndroZoo 样本与元数据",
+        "市场缺失"
+      ],
+      "evidence": "source",
+      "reference": "https://androzoo.uni.lu/api_doc"
+    }
+  ]
+}

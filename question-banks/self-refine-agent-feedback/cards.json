@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "self-refine-agent-feedback",
+    "title": "Self-Refine 原论文 v2：自反馈与迭代修订",
+    "url": "https://arxiv.org/abs/2303.17651v2",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据题目所列固定版本资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "selfrefine-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-Refine 反馈与修订",
+      "knowledgePoint": "具体与可执行反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-Refine 论文所说的具体反馈与可执行反馈分别强调什么？",
+      "answer": "具体反馈指出需要修改的位置或内容；可执行反馈提出可能改进输出的具体行动。",
+      "explanation": "建议仍可能错误，需要结合任务证据核对。",
+      "example": "指出低效循环，并建议改用公式。",
+      "tags": [
+        "Self-Refine 反馈与修订",
+        "具体与可执行反馈"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.17651v2"
+    },
+    {
+      "id": "selfrefine-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-Refine 反馈与修订",
+      "knowledgePoint": "修订历史",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-Refine 论文如何让后续修订看到先前轮次的信息？",
+      "answer": "把过去的输出和反馈追加到修订提示中。",
+      "explanation": "历史增多会占用上下文，且模型不一定正确利用这些信息。",
+      "example": "第二轮修订同时看到第一轮草稿和反馈。",
+      "tags": [
+        "Self-Refine 反馈与修订",
+        "修订历史"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.17651v2"
+    },
+    {
+      "id": "selfrefine-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Self-Refine 反馈与修订",
+      "knowledgePoint": "停止条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Self-Refine 论文如何决定停止迭代？",
+      "answer": "可以使用预设轮次，或从模型反馈中提取停止信号。",
+      "explanation": "停止条件按任务设定，模型自判停止不证明答案正确。",
+      "example": "达到最大轮数后输出最近一次结果。",
+      "tags": [
+        "Self-Refine 反馈与修订",
+        "停止条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.17651v2"
+    }
+  ]
+}

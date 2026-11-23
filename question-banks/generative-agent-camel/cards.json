@@ -1,0 +1,516 @@
+{
+  "source": {
+    "id": "generative-agent-camel",
+    "title": "Generative Agents 与 CAMEL：记忆、计划和角色协作",
+    "url": "https://arxiv.org/abs/2304.03442v2",
+    "type": "研究论文",
+    "note": "依据固定版本原论文整理；模拟研究结果和应用推论均标明范围。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "genagent-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "记忆流结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 原论文中的记忆流通常记录什么？",
+      "answer": "它保存智能体经历的自然语言记忆对象，包括描述、创建时间和最近访问时间。",
+      "explanation": "观察、反思和计划都可成为记忆。",
+      "example": "把一次对话记录为带时间信息的记忆对象。",
+      "tags": [
+        "记忆流结构",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "观察与反思",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 中的观察和反思有什么区别？",
+      "answer": "观察记录智能体直接感知到的事件；反思是从记忆中归纳出的较高层推断。",
+      "explanation": "反思也是可以再次检索的记忆。",
+      "example": "多次共同工作是观察，对共同兴趣的归纳是反思。",
+      "tags": [
+        "观察与反思",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "记忆检索评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 原论文用哪三个因素组合记忆检索分数？",
+      "answer": "结合最近访问程度、重要性和与当前情况的相关性。",
+      "explanation": "各因素经归一化后再加权组合。",
+      "example": "近期的重要相关记忆可能更容易被选入提示。",
+      "tags": [
+        "记忆检索评分",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "最近访问时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 原论文的记忆近期性主要根据哪个时间计算？",
+      "answer": "根据该记忆最近一次被检索或访问后的时间间隔计算。",
+      "explanation": "论文实现使用随游戏时间衰减的分数。",
+      "example": "经常被访问的旧记忆可以获得较高的近期性分数。",
+      "tags": [
+        "最近访问时间",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "记忆重要性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 原论文如何给新记忆估计重要性？",
+      "answer": "在创建记忆时，让语言模型按提示给记忆打重要性分数。",
+      "explanation": "这是模型的主观估计，不是对事件真实性的独立证明。",
+      "example": "普通日常事件和重大个人事件可获得不同分数。",
+      "tags": [
+        "记忆重要性",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "记忆相关性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 原论文怎样估计记忆与当前查询的相关性？",
+      "answer": "计算记忆文本向量与查询向量之间的余弦相似度。",
+      "explanation": "相关性取决于查询内容和向量表示。",
+      "example": "针对当前人物检索与其有关的过去交互。",
+      "tags": [
+        "记忆相关性",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "检索分数归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 原论文在合并记忆检索的三个分数前做了什么？",
+      "answer": "分别将近期性、重要性和相关性分数缩放到 0 到 1 的范围，再加权求和。",
+      "explanation": "这有助于把不同量纲的信号放到可组合的尺度。",
+      "example": "归一化后再组合时间、重要性和语义相关度。",
+      "tags": [
+        "检索分数归一化",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "反思触发条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 原论文的实现何时触发一次反思？",
+      "answer": "当最近事件的重要性分数累计超过设定阈值时触发。",
+      "explanation": "阈值是该实现的配置，不是所有智能体的通用规则。",
+      "example": "重要事件连续发生时触发总结和推断。",
+      "tags": [
+        "反思触发条件",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "反思证据追踪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 原论文如何把生成的反思与其依据联系起来？",
+      "answer": "把反思存入记忆流时保留其引用的记忆对象指针。",
+      "explanation": "这些指针便于回查支持该推断的记录。",
+      "example": "查看一条偏好推断引用了哪些观察。",
+      "tags": [
+        "反思证据追踪",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "递归反思",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 能否依据已有反思生成更高层的反思？",
+      "answer": "可以；反思本身也是记忆，可与观察一起被检索和综合。",
+      "explanation": "由此可以形成从观察到不同抽象层次的反思树。",
+      "example": "从多次研究活动归纳兴趣，再综合其他反思。",
+      "tags": [
+        "递归反思",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "计划记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 原论文的计划条目通常包含哪些时间和位置要素？",
+      "answer": "计划包含行动地点、开始时间和持续时间。",
+      "explanation": "计划可存入记忆流并用于后续行动决策。",
+      "example": "记录下午在图书馆工作一段时间。",
+      "tags": [
+        "计划记录",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "分层计划",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 怎样把较粗略的日程转成可执行的小步骤？",
+      "answer": "先生成粗粒度计划，再逐层拆分为更细、带时间范围的行动。",
+      "explanation": "所用时间粒度可按应用调整。",
+      "example": "把一段工作时间拆成准备、执行和休息等步骤。",
+      "tags": [
+        "分层计划",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "观察与计划更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 感知到新事件后如何处理已有计划？",
+      "answer": "它可结合观察和相关记忆判断继续原计划还是作出反应，并在需要时更新计划。",
+      "explanation": "不是每个观察都必须触发计划变更。",
+      "example": "突发会面可以使智能体调整后续日程。",
+      "tags": [
+        "观察与计划更新",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "信息传播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 的多智能体模拟中，信息如何从一个角色传播到另一个角色？",
+      "answer": "角色可以通过交谈传递信息，接收者再把交互作为记忆。",
+      "explanation": "不同角色不应默认自动拥有完全相同的记忆。",
+      "example": "一个角色邀请另一角色参与活动，后者从交谈得知活动。",
+      "tags": [
+        "信息传播",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "生成式智能体",
+      "knowledgePoint": "可信行为评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Generative Agents 论文中的人工可信度评价能否单独证明智能体陈述事实正确？",
+      "answer": "不能；可信度评价关注行为看起来是否合理，事实仍需独立核验。",
+      "explanation": "论文实验中的评价范围应与实际部署目标区分。",
+      "example": "表述自然的计划仍可能包含未经确认的事件。",
+      "tags": [
+        "可信行为评估",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2304.03442v2",
+      "referenceTitle": "Generative Agents 原论文 §4—6"
+    },
+    {
+      "id": "genagent-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CAMEL协作",
+      "knowledgePoint": "任务具体化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAMEL 原论文中的 task specifier 主要做什么？",
+      "answer": "结合初始想法和角色，生成更具体的协作任务描述。",
+      "explanation": "它位于角色对话开始之前。",
+      "example": "把宽泛的“设计程序”具体化为可讨论的任务。",
+      "tags": [
+        "任务具体化",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.17760v2",
+      "referenceTitle": "CAMEL 原论文 §3—4"
+    },
+    {
+      "id": "genagent-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CAMEL协作",
+      "knowledgePoint": "用户与助手角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAMEL 原论文中 AI user 和 AI assistant 分别承担什么职责？",
+      "answer": "AI user 提供指令并推动任务；AI assistant 根据指令提供解决方案。",
+      "explanation": "二者都是模拟角色，角色边界由初始提示约束。",
+      "example": "用户角色提出下一步，助手角色给出对应方案。",
+      "tags": [
+        "用户与助手角色",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.17760v2",
+      "referenceTitle": "CAMEL 原论文 §3—4"
+    },
+    {
+      "id": "genagent-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CAMEL协作",
+      "knowledgePoint": "Inception提示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAMEL 的 inception prompting 在协作开始时主要设定什么？",
+      "answer": "为任务细化和两个角色提供初始提示，包括角色、任务、通信格式和终止条件。",
+      "explanation": "对话开始后，两个角色可继续相互提示。",
+      "example": "分别给规划角色和执行角色设置任务与输出格式。",
+      "tags": [
+        "Inception提示",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.17760v2",
+      "referenceTitle": "CAMEL 原论文 §3—4"
+    },
+    {
+      "id": "genagent-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CAMEL协作",
+      "knowledgePoint": "角色反转",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAMEL 论文讨论的 role flipping 指什么？",
+      "answer": "原本跟随指令的助手转而向用户角色发号指令，双方职责发生反转。",
+      "explanation": "这可能使协作偏离预设流程。",
+      "example": "执行者开始要求规划者代替它完成步骤。",
+      "tags": [
+        "角色反转",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.17760v2",
+      "referenceTitle": "CAMEL 原论文 §3—4"
+    },
+    {
+      "id": "genagent-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CAMEL协作",
+      "knowledgePoint": "空泛承诺",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAMEL 论文中的 flake reply 是哪类回复？",
+      "answer": "助手只承诺将来会做某事，却没有提供推进当前任务的实际结果。",
+      "explanation": "可检查输出是否包含可用的解决内容。",
+      "example": "只说“我会处理”而不提供任何处理结果。",
+      "tags": [
+        "空泛承诺",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.17760v2",
+      "referenceTitle": "CAMEL 原论文 §3—4"
+    },
+    {
+      "id": "genagent-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CAMEL协作",
+      "knowledgePoint": "完成标记的含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAMEL 原论文的任务完成标记表示什么？",
+      "answer": "它表示 AI user 判断任务已完成并结束对话。",
+      "explanation": "该标记不是外部执行结果或客观正确性的证明。",
+      "example": "收到完成标记后仍可用独立测试检查结果。",
+      "tags": [
+        "完成标记的含义",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2303.17760v2",
+      "referenceTitle": "CAMEL 原论文 §3—4"
+    },
+    {
+      "id": "genagent-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CAMEL协作",
+      "knowledgePoint": "批评者角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAMEL 的 critic-in-the-loop 可以怎样参与协作？",
+      "answer": "批评者可选择候选方案或给协作智能体提供反馈；批评者可以是人或 AI。",
+      "explanation": "它为多候选决策引入额外监督。",
+      "example": "人工审阅候选步骤并返回改进意见。",
+      "tags": [
+        "批评者角色",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.17760v2",
+      "referenceTitle": "CAMEL 原论文 §3—4"
+    },
+    {
+      "id": "genagent-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CAMEL协作",
+      "knowledgePoint": "重复上下文成本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多智能体对话每轮都重传完整历史时，为什么总输入 token 可能随轮数快速增长？",
+      "answer": "每一轮的上下文都包含此前消息；若每轮消息长度近似固定，累计输入量随轮数近似二次增长。",
+      "explanation": "上下文裁剪和缓存等机制会改变实际成本。",
+      "example": "比较 10 轮与 20 轮完整历史重传的输入量。",
+      "tags": [
+        "重复上下文成本",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2303.17760v2",
+      "referenceTitle": "CAMEL 原论文 §3—4"
+    },
+    {
+      "id": "genagent-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CAMEL协作",
+      "knowledgePoint": "生成对话数据质量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAMEL 式角色对话生成的训练数据为什么需要质量检查？",
+      "answer": "智能体可能角色反转、重复指令或空泛承诺，生成内容不能自动视为有效示范。",
+      "explanation": "可检查任务完成、角色遵循和答案正确性。",
+      "example": "把重复寒暄的对话排除出高质量训练集。",
+      "tags": [
+        "生成对话数据质量",
+        "Agent",
+        "多智能体"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2303.17760v2",
+      "referenceTitle": "CAMEL 原论文 §3—4"
+    }
+  ]
+}

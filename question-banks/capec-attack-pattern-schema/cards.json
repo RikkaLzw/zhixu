@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "capec-attack-pattern-schema",
+    "title": "MITRE CAPEC 数据 3.9 与模式 3.5",
+    "url": "https://capec.mitre.org/data/xsd/ap_schema_v3.5.xsd",
+    "type": "固定版本论文、官方文档与数据规范",
+    "note": "依据逐题引用的资料自行整理；示例为自编。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "capec-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CAPEC 攻击模式结构",
+      "knowledgePoint": "抽象层级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAPEC 攻击模式的 Meta、Standard 和 Detailed 抽象层级如何区分？",
+      "answer": "Meta 描述高层方法，Standard 描述具体技术，Detailed 更具体并常包含执行流程。",
+      "explanation": "不同层级服务于不同粒度的威胁分析。",
+      "example": "总体攻击方法可细化为针对特定技术的执行模式。",
+      "tags": [
+        "CAPEC 攻击模式结构",
+        "抽象层级"
+      ],
+      "evidence": "source",
+      "reference": "https://capec.mitre.org/data/xsd/ap_schema_v3.5.xsd"
+    },
+    {
+      "id": "capec-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CAPEC 攻击模式结构",
+      "knowledgePoint": "子父关系",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAPEC 相关攻击模式中的 ChildOf 与 ParentOf 分别指向什么？",
+      "answer": "ChildOf 指向更高抽象层级的相关模式；ParentOf 指向更低抽象层级的模式。",
+      "explanation": "方向以当前条目中的关系为准。",
+      "example": "某具体模式可以是较抽象模式的 ChildOf。",
+      "tags": [
+        "CAPEC 攻击模式结构",
+        "子父关系"
+      ],
+      "evidence": "source",
+      "reference": "https://capec.mitre.org/data/xsd/ap_schema_v3.5.xsd"
+    },
+    {
+      "id": "capec-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CAPEC 攻击模式结构",
+      "knowledgePoint": "顺序关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAPEC 中 CanPrecede 与 CanFollow 表示什么关系？",
+      "answer": "CanPrecede 表示当前模式可先于关联模式；CanFollow 表示当前模式可跟随关联模式。",
+      "explanation": "这种知识库关系不证明某个实际事件中两者一定按该顺序出现。",
+      "example": "一种模式可能为后续模式创造条件。",
+      "tags": [
+        "CAPEC 攻击模式结构",
+        "顺序关联"
+      ],
+      "evidence": "source",
+      "reference": "https://capec.mitre.org/data/xsd/ap_schema_v3.5.xsd"
+    },
+    {
+      "id": "capec-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CAPEC 攻击模式结构",
+      "knowledgePoint": "弱点关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAPEC 的 Related_Weaknesses 字段关联哪类标识？",
+      "answer": "它引用与攻击模式相关的 CWE 弱点标识。",
+      "explanation": "字段是可选的；没有列出关联不能单独证明不存在相关弱点。",
+      "example": "攻击模式可关联一个或多个 CWE。",
+      "tags": [
+        "CAPEC 攻击模式结构",
+        "弱点关联"
+      ],
+      "evidence": "source",
+      "reference": "https://capec.mitre.org/data/xsd/ap_schema_v3.5.xsd"
+    },
+    {
+      "id": "capec-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CAPEC 攻击模式结构",
+      "knowledgePoint": "多个弱点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAPEC 模式 3.5 中，一个攻击模式关联多个 CWE 时，是否要求它们全部同时存在？",
+      "answer": "不一定；模式说明多项关联不表示所有列出的弱点都必须同时存在。",
+      "explanation": "实际攻击仍须结合具体前提和证据判断。",
+      "example": "多条弱点关联并非自动表示逻辑 AND。",
+      "tags": [
+        "CAPEC 攻击模式结构",
+        "多个弱点"
+      ],
+      "evidence": "source",
+      "reference": "https://capec.mitre.org/data/xsd/ap_schema_v3.5.xsd"
+    },
+    {
+      "id": "capec-006",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CAPEC 攻击模式结构",
+      "knowledgePoint": "先决条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAPEC 的 Prerequisites 字段描述什么？",
+      "answer": "描述该类攻击成功需要存在的条件。",
+      "explanation": "满足先决条件也不能单独证明攻击已经发生或必然成功。",
+      "example": "某攻击可能要求攻击者能够提供特定输入。",
+      "tags": [
+        "CAPEC 攻击模式结构",
+        "先决条件"
+      ],
+      "evidence": "source",
+      "reference": "https://capec.mitre.org/data/xsd/ap_schema_v3.5.xsd"
+    },
+    {
+      "id": "capec-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CAPEC 攻击模式结构",
+      "knowledgePoint": "执行流程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAPEC 模式 3.5 的 Execution_Flow 中，攻击步骤的 Phase 可取哪些值？",
+      "answer": "可取 Explore、Experiment 或 Exploit。",
+      "explanation": "字段描述攻击模式的典型步骤，不要求所有真实事件都包含每个阶段。",
+      "example": "某步骤可标为 Experiment。",
+      "tags": [
+        "CAPEC 攻击模式结构",
+        "执行流程"
+      ],
+      "evidence": "source",
+      "reference": "https://capec.mitre.org/data/xsd/ap_schema_v3.5.xsd"
+    },
+    {
+      "id": "capec-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CAPEC 攻击模式结构",
+      "knowledgePoint": "标识与弃用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CAPEC 模式要求弃用攻击模式后，可以把原 ID 分配给新的不同模式吗？",
+      "answer": "不应复用；模式要求保留弃用条目的占位。",
+      "explanation": "稳定标识有助于追溯历史关联，但条目状态仍需核对。",
+      "example": "旧情报中的 CAPEC 编号不应因复用而指向无关条目。",
+      "tags": [
+        "CAPEC 攻击模式结构",
+        "标识与弃用"
+      ],
+      "evidence": "source",
+      "reference": "https://capec.mitre.org/data/xsd/ap_schema_v3.5.xsd"
+    }
+  ]
+}

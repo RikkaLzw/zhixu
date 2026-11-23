@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "clang-asan-ubsan-fuzzing",
+    "title": "Clang 20.1：ASan 与 UBSan 运行",
+    "url": "https://releases.llvm.org/20.1.0/tools/clang/docs/AddressSanitizer.html",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "sanrun-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "ASan 与 UBSan 诊断",
+      "knowledgePoint": "启用ASan",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Clang 20.1 中常用什么编译选项启用 AddressSanitizer？",
+      "answer": "使用 -fsanitize=address，并在最终链接阶段同样使用相应选项。",
+      "explanation": "链接时需正确加入 AddressSanitizer 运行时。",
+      "example": "clang -fsanitize=address -g test.c 可生成带检测的程序。",
+      "tags": [
+        "ASan 与 UBSan 诊断",
+        "启用ASan"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/AddressSanitizer.html"
+    },
+    {
+      "id": "sanrun-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ASan 与 UBSan 诊断",
+      "knowledgePoint": "首次错误停止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AddressSanitizer 默认发现首个内存错误后通常怎样处理？",
+      "answer": "打印诊断并终止程序。",
+      "explanation": "程序发生内存破坏后继续执行可能产生误导性的后续结果。",
+      "example": "一次测试触发越界后，修复该问题再继续查找其他缺陷。",
+      "tags": [
+        "ASan 与 UBSan 诊断",
+        "首次错误停止"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/AddressSanitizer.html"
+    },
+    {
+      "id": "sanrun-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ASan 与 UBSan 诊断",
+      "knowledgePoint": "栈返回后访问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ASan 的 use-after-return 检测主要针对什么错误？",
+      "answer": "检测函数返回后仍访问其已经失效的栈对象。",
+      "explanation": "检测模式和运行时开关会影响是否启用。",
+      "example": "返回指向局部变量的指针后再解引用，可能触发该诊断。",
+      "tags": [
+        "ASan 与 UBSan 诊断",
+        "栈返回后访问"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/AddressSanitizer.html"
+    },
+    {
+      "id": "sanrun-004",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "ASan 与 UBSan 诊断",
+      "knowledgePoint": "符号化诊断",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "ASan 报告只有地址而缺少易读函数名和行号时，可检查什么工具？",
+      "answer": "检查 llvm-symbolizer 是否位于 PATH，或通过 ASAN_SYMBOLIZER_PATH 指向它。",
+      "explanation": "编译时加入调试信息也有助于定位源码位置。",
+      "example": "结合 -g 编译和符号化工具阅读调用栈。",
+      "tags": [
+        "ASan 与 UBSan 诊断",
+        "符号化诊断"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/AddressSanitizer.html"
+    },
+    {
+      "id": "sanrun-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ASan 与 UBSan 诊断",
+      "knowledgePoint": "UBSan可恢复模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Clang UBSan 的多数检查默认在发现问题后如何处理？",
+      "answer": "输出诊断并继续执行；具体检查和运行配置可能不同。",
+      "explanation": "因此一次运行可能输出多条未定义行为诊断。",
+      "example": "默认模式下有符号整数溢出诊断后程序可能继续。",
+      "tags": [
+        "ASan 与 UBSan 诊断",
+        "UBSan可恢复模式"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/UndefinedBehaviorSanitizer.html"
+    },
+    {
+      "id": "sanrun-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ASan 与 UBSan 诊断",
+      "knowledgePoint": "UBSan不可恢复",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Clang 的 -fno-sanitize-recover=null 对 null 检查有什么影响？",
+      "answer": "检测到该类错误时输出诊断并退出，而不是继续执行。",
+      "explanation": "该设置只作用于指定的 sanitizer 检查。",
+      "example": "模糊测试可根据需要让特定未定义行为终止进程。",
+      "tags": [
+        "ASan 与 UBSan 诊断",
+        "UBSan不可恢复"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/UndefinedBehaviorSanitizer.html"
+    },
+    {
+      "id": "sanrun-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ASan 与 UBSan 诊断",
+      "knowledgePoint": "UBSan陷阱模式",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Clang 的 -fsanitize-trap=alignment 与普通 UBSan 报告模式有什么区别？",
+      "answer": "发现该类问题时执行陷阱指令，不需要对应 UBSan 运行时报告支持。",
+      "explanation": "信号未被处理时程序通常因 SIGILL 或 SIGTRAP 结束。",
+      "example": "部署不使用 UBSan 运行时的构建可考虑陷阱模式。",
+      "tags": [
+        "ASan 与 UBSan 诊断",
+        "UBSan陷阱模式"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/UndefinedBehaviorSanitizer.html"
+    },
+    {
+      "id": "sanrun-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "ASan 与 UBSan 诊断",
+      "knowledgePoint": "禁用特定检查",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Clang 同时使用 -fsanitize=undefined 和后续 -fno-sanitize=alignment 有什么效果？",
+      "answer": "启用 undefined 检查组，同时禁用其中的 alignment 检查。",
+      "explanation": "对同一检查后出现的启用或禁用选项生效。",
+      "example": "只需排除对齐检查时可使用这一组合。",
+      "tags": [
+        "ASan 与 UBSan 诊断",
+        "禁用特定检查"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/tools/clang/docs/UndefinedBehaviorSanitizer.html"
+    }
+  ]
+}

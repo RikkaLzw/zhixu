@@ -1,0 +1,92 @@
+{
+  "source": {
+    "id": "ragas-evaluation-details",
+    "title": "Ragas：回答与上下文评估",
+    "url": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/",
+    "type": "官方技术文档",
+    "note": "题目依据公开资料自行整理；安全场景的使用仍应结合部署条件。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "rageval-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAG评估",
+      "knowledgePoint": "忠实度的声明比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ragas 的 Faithfulness 如何根据回答中的声明计算忠实度？",
+      "answer": "它将回答拆为声明，计算能从检索上下文推断出的声明数占全部声明数的比例。",
+      "explanation": "该指标衡量对上下文的忠实程度，不单独证明上下文本身正确。",
+      "example": "两个声明中只有一个受上下文支持时，忠实度为 0.5。",
+      "tags": [
+        "忠实度的声明比例",
+        "RAG评估",
+        "Ragas"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/"
+    },
+    {
+      "id": "rageval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAG评估",
+      "knowledgePoint": "回答相关性与正确性",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Ragas 的 Answer Relevancy 高，能否单独证明回答事实正确？",
+      "answer": "不能；该指标关注回答与用户问题的相关程度，不直接评价事实准确性。",
+      "explanation": "还应独立检查事实与证据支持情况。",
+      "example": "回答紧扣漏洞问题，但错误地给出受影响版本。",
+      "tags": [
+        "回答相关性与正确性",
+        "RAG评估",
+        "Ragas"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/answer_relevance/"
+    },
+    {
+      "id": "rageval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAG评估",
+      "knowledgePoint": "回答相关性的反向提问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ragas Answer Relevancy 如何利用生成的问题估计回答相关性？",
+      "answer": "它根据回答生成若干可能的问题，再平均这些问题与原问题的向量余弦相似度。",
+      "explanation": "生成器、向量模型和生成问题数量会影响该评估。",
+      "example": "由回答反向生成问题，再与用户原问题比较。",
+      "tags": [
+        "回答相关性的反向提问",
+        "RAG评估",
+        "Ragas"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/answer_relevance/"
+    },
+    {
+      "id": "rageval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RAG评估",
+      "knowledgePoint": "上下文精度的参照",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "在 Ragas collections API 中，ContextPrecision 与 ContextUtilization 分别将检索片段与什么比较？",
+      "answer": "ContextPrecision 与参考答案比较；ContextUtilization 与实际生成的回答比较。",
+      "explanation": "基于生成回答的评价不能替代对回答事实正确性的独立判断。",
+      "example": "没有参考答案时可用生成回答估计片段利用情况。",
+      "tags": [
+        "上下文精度的参照",
+        "RAG评估",
+        "Ragas"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision/"
+    }
+  ]
+}

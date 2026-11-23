@@ -7,19 +7,374 @@
     "note": "根据 CodeXGLUE 官方任务说明整理；实验方案和审计案例为原创应用。"
   },
   "cards": [
-    {"id":"code-001","category":"vulnerabilities","level":"入门","question":"CodeXGLUE 缺陷检测任务使用什么作为主要样本？","answer":"任务以函数级源代码为样本，预测代码是否存在安全缺陷。","explanation":"官方数据来自 Devign 相关数据，并提供训练、验证和测试文件。","example":"输入一个 C 函数，输出二分类预测。","tags":["CodeXGLUE","函数级","漏洞检测"],"evidence":"source"},
-    {"id":"code-002","category":"vulnerabilities","level":"入门","question":"CodeXGLUE 缺陷检测任务的测试文件采用什么组织方式？","answer":"数据以 JSONL 组织，每行对应一个函数样本。","explanation":"训练、验证和测试数据分开保存。","example":"读取每行的代码字段与标签字段，构建函数分类数据集。","tags":["JSONL","数据集"],"evidence":"source"},
-    {"id":"code-003","category":"vulnerabilities","level":"进阶","question":"为什么函数级二分类结果不能直接证明漏洞可利用？","answer":"分类结果只是对样本是否存在缺陷的预测，触发条件仍需结合上下文验证。","explanation":"调用路径、输入来源和运行配置可能影响实际风险。","example":"模型将函数判为有缺陷后，进一步检查调用方是否可传入不可信输入。","tags":["漏洞验证","函数上下文"],"evidence":"application"},
-    {"id":"code-004","category":"vulnerabilities","level":"进阶","question":"CodeXGLUE 的官方固定切分有什么用途？","answer":"它为研究者比较基线提供统一的训练、验证和测试划分。","explanation":"如果目标是评估跨项目泛化，还需要设计额外的项目级切分。","example":"报告官方切分结果，再补充未见项目的测试结果。","tags":["基准","跨项目"],"evidence":"source"},
-    {"id":"code-005","category":"vulnerabilities","level":"实践","question":"代码漏洞分类为什么要检查相似函数是否跨集合？","answer":"重复或高度相似函数跨集合会让模型通过记忆样本获得虚高结果。","explanation":"去重需要考虑格式变化、变量重命名和修复前后的相似代码。","example":"先聚合同一项目中近似函数，再按组切分训练和测试。","tags":["代码去重","数据泄漏"],"evidence":"application"},
-    {"id":"code-006","category":"vulnerabilities","level":"实践","question":"对漏洞代码做词法基线时，应避免哪些标签捷径？","answer":"避免把漏洞编号、标签注释或事后修复说明放入模型输入。","explanation":"这些信息可能直接透露答案，却不会出现在真实待审计代码中。","example":"比较仅代码输入与包含提交信息输入时的结果，排查标签泄漏。","tags":["标签泄漏","代码特征"],"evidence":"application"},
-    {"id":"code-007","category":"vulnerabilities","level":"进阶","question":"为什么 CodeXGLUE 原始任务的准确率不能单独描述审计效果？","answer":"准确率不能直接体现漏洞召回率、误报量和不同漏洞类型的表现。","explanation":"官方脚本报告准确率；实际应用还应依据标签和场景补充指标。","example":"增加精确率、召回率、混淆矩阵和每百个函数的可疑告警数。","tags":["准确率","审计评估"],"evidence":"source"},
-    {"id":"code-008","category":"vulnerabilities","level":"进阶","question":"如何为代码漏洞检测构建简单基线？","answer":"先比较代码词频特征配合分类器、简单规则和代码模型。","explanation":"在相同切分与指标下比较，才能判断复杂模型的增益。","example":"用词频加逻辑回归作为基线，再与代码语言模型比较。","tags":["基线","代码表示"],"evidence":"application"},
-    {"id":"code-009","category":"vulnerabilities","level":"实践","question":"函数太长超过模型输入长度时，直接截断有什么风险？","answer":"截断可能丢失触发漏洞的关键语句、条件或上下文。","explanation":"应记录截断比例，并比较切片、分块或扩大上下文的结果。","example":"检查漏报函数中的危险调用是否落在被截去的部分。","tags":["上下文长度","漏报"],"evidence":"application"},
-    {"id":"code-010","category":"vulnerabilities","level":"进阶","question":"为什么按项目切分能补充代码漏洞模型的评估？","answer":"它可以检查模型在未见项目的代码风格和依赖环境下是否仍然有效。","explanation":"项目切分与官方随机划分回答不同的泛化问题。","example":"保留一个项目作为测试集，并报告各项目样本数量。","tags":["跨项目","泛化"],"evidence":"application"},
-    {"id":"code-011","category":"vulnerabilities","level":"实践","question":"如何检查漏洞模型是否只学会了项目或命名习惯？","answer":"结合项目级切分、变量重命名和特征消融观察效果变化。","explanation":"这些分析提示模型依赖哪些表面特征，但不能单独证明因果关系。","example":"统一变量命名后重新评估，检查模型是否仍能识别相同缺陷。","tags":["捷径","代码模型"],"evidence":"application"},
-    {"id":"code-012","category":"vulnerabilities","level":"实践","question":"漏洞分类模型的输出怎样才能帮助人工审计？","answer":"除了风险分数，还应提供可疑位置、相关代码及可验证的理由。","explanation":"高分只能用于优先级排序，审计人员仍需检查完整上下文。","example":"列出可疑调用位置及其参数来源，并标记尚未确认的条件。","tags":["漏洞定位","证据"],"evidence":"application"},
-    {"id":"code-013","category":"vulnerabilities","level":"进阶","question":"漏洞数据集中标签噪声会怎样影响模型？","answer":"错误或不完整的标签会影响训练，也会使评估错误归因。","explanation":"预测与标签不一致的样本需要人工复核，不能自动认定模型出错。","example":"抽查高置信度误报，发现部分样本缺少必要的跨函数上下文。","tags":["标签噪声","错误分析"],"evidence":"application"},
-    {"id":"code-014","category":"vulnerabilities","level":"实践","question":"如何分析漏洞检测模型的漏报？","answer":"按漏洞类型、代码长度、项目和上下文可用性分组检查。","explanation":"分组分析可以发现整体指标掩盖的系统性盲区。","example":"比较长函数与短函数的召回率，并检查输入截断情况。","tags":["漏报","错误分析"],"evidence":"application"}
+    {
+      "id": "code-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "question": "CodeXGLUE 缺陷检测任务使用什么作为主要样本？",
+      "answer": "任务以函数级源代码为样本，预测代码是否存在安全缺陷。",
+      "explanation": "官方数据来自 Devign 相关数据，并提供训练、验证和测试文件。",
+      "example": "输入一个 C 函数，输出二分类预测。",
+      "tags": [
+        "CodeXGLUE",
+        "函数级",
+        "漏洞检测"
+      ],
+      "evidence": "source",
+      "subtopic": "缺陷检测基准",
+      "knowledgePoint": "CodeXGLUE函数样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md"
+    },
+    {
+      "id": "code-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "question": "CodeXGLUE 缺陷检测任务的测试文件采用什么组织方式？",
+      "answer": "数据以 JSONL 组织，每行对应一个函数样本。",
+      "explanation": "训练、验证和测试数据分开保存。",
+      "example": "读取每行的代码字段与标签字段，构建函数分类数据集。",
+      "tags": [
+        "JSONL",
+        "数据集"
+      ],
+      "evidence": "source",
+      "subtopic": "漏洞检测基准",
+      "knowledgePoint": "CodeXGLUE数据格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md#data-format"
+    },
+    {
+      "id": "code-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "question": "为什么函数级二分类结果不能直接证明漏洞可利用？",
+      "answer": "分类结果只是对样本是否存在缺陷的预测，触发条件仍需结合上下文验证。",
+      "explanation": "调用路径、输入来源和运行配置可能影响实际风险。",
+      "example": "模型将函数判为有缺陷后，进一步检查调用方是否可传入不可信输入。",
+      "tags": [
+        "漏洞验证",
+        "函数上下文"
+      ],
+      "evidence": "application",
+      "subtopic": "漏洞检测基准",
+      "knowledgePoint": "分类预测与可利用性",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+      "supportingReferences": [
+        {
+          "id": "llm4vuln-paper-ref",
+          "title": "LLM4Vuln：漏洞推理与代码上下文",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "code-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "question": "CodeXGLUE 的官方固定切分有什么用途？",
+      "answer": "它为研究者比较基线提供统一的训练、验证和测试划分。",
+      "explanation": "如果目标是评估跨项目泛化，还需要设计额外的项目级切分。",
+      "example": "报告官方切分结果，再补充未见项目的测试结果。",
+      "tags": [
+        "基准",
+        "跨项目"
+      ],
+      "evidence": "source",
+      "subtopic": "数据切分",
+      "knowledgePoint": "CodeXGLUE官方切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md"
+    },
+    {
+      "id": "code-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "question": "代码漏洞分类为什么要检查相似函数是否跨集合？",
+      "answer": "重复或高度相似函数跨集合会让模型通过记忆样本获得虚高结果。",
+      "explanation": "去重需要考虑格式变化、变量重命名和修复前后的相似代码。",
+      "example": "先聚合同一项目中近似函数，再按组切分训练和测试。",
+      "tags": [
+        "代码去重",
+        "数据泄漏"
+      ],
+      "evidence": "application",
+      "subtopic": "数据去重",
+      "knowledgePoint": "相似代码跨集合泄漏",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md"
+    },
+    {
+      "id": "code-006",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "question": "对漏洞代码做词法基线时，应避免哪些标签捷径？",
+      "answer": "避免把漏洞编号、标签注释或事后修复说明放入模型输入。",
+      "explanation": "这些信息可能直接透露答案；是否可以使用取决于预测时的实际可用信息。",
+      "example": "比较仅代码输入与包含提交信息输入时的结果，排查标签泄漏。",
+      "tags": [
+        "标签泄漏",
+        "代码特征"
+      ],
+      "evidence": "application",
+      "subtopic": "数据泄漏",
+      "knowledgePoint": "代码输入中的标签捷径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+      "supportingReferences": [
+        {
+          "id": "code-leak-ref",
+          "title": "scikit-learn：数据泄漏",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html#data-leakage",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "code-007",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "question": "为什么 CodeXGLUE 原始任务的准确率不能单独描述审计效果？",
+      "answer": "准确率不能直接体现漏洞召回率、误报量和不同漏洞类型的表现。",
+      "explanation": "官方脚本报告准确率；实际应用还应依据标签和场景补充指标。",
+      "example": "增加精确率、召回率、混淆矩阵和每百个函数的可疑告警数。",
+      "tags": [
+        "准确率",
+        "审计评估"
+      ],
+      "evidence": "source",
+      "subtopic": "漏洞模型评估",
+      "knowledgePoint": "准确率的局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+      "supportingReferences": [
+        {
+          "id": "code-metric-ref",
+          "title": "PrimeVul：漏洞检测评估",
+          "url": "https://arxiv.org/html/2403.18624",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "code-008",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "question": "如何为代码漏洞检测构建简单基线？",
+      "answer": "先比较代码词频特征配合分类器、简单规则和代码模型。",
+      "explanation": "在相同切分与指标下比较，才能判断复杂模型的增益。",
+      "example": "用词频加逻辑回归作为基线，再与代码语言模型比较。",
+      "tags": [
+        "基线",
+        "代码表示"
+      ],
+      "evidence": "application",
+      "subtopic": "漏洞模型基线",
+      "knowledgePoint": "代码词袋基线",
+      "questionType": "实践与诊断",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "code-baseline-bow-study",
+          "title": "Explaining the Contributing Factors for Vulnerability Detection in Machine Learning：词袋与分类基线",
+          "url": "https://arxiv.org/abs/2406.03577",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "code-009",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "question": "函数太长超过模型输入长度时，直接截断有什么风险？",
+      "answer": "截断可能丢失触发漏洞的关键语句、条件或上下文。",
+      "explanation": "应记录截断比例，并比较切片、分块或扩大上下文的结果。",
+      "example": "检查漏报函数中的危险调用是否落在被截去的部分。",
+      "tags": [
+        "上下文长度",
+        "漏报"
+      ],
+      "evidence": "application",
+      "subtopic": "上下文与截断",
+      "knowledgePoint": "代码输入截断风险",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "reference": "https://huggingface.co/docs/transformers/main/en/pad_truncation",
+      "referenceTitle": "Transformers：Padding and truncation",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "llm4vuln-context-review",
+          "title": "LLM4Vuln：代码上下文对漏洞推理的影响",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "code-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "question": "为什么按项目切分能补充代码漏洞模型的评估？",
+      "answer": "它可以检查模型在未见项目的代码风格和依赖环境下是否仍然有效。",
+      "explanation": "项目切分与官方随机划分回答不同的泛化问题。",
+      "example": "保留一个项目作为测试集，并报告各项目样本数量。",
+      "tags": [
+        "跨项目",
+        "泛化"
+      ],
+      "evidence": "application",
+      "subtopic": "数据切分",
+      "knowledgePoint": "跨项目评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+      "supportingReferences": [
+        {
+          "id": "code-group-ref",
+          "title": "scikit-learn：分组交叉验证",
+          "url": "https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation-iterators-for-grouped-data",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "code-011",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "question": "如何检查漏洞模型是否只学会了项目或命名习惯？",
+      "answer": "结合项目级切分、变量重命名和特征消融观察效果变化。",
+      "explanation": "变量重命名必须保持作用域、绑定关系和程序语义；这些分析提示模型依赖哪些表面特征，但不能单独证明因果关系。",
+      "example": "对局部变量做语义保持的重命名后重新评估，检查模型判断是否变化。",
+      "tags": [
+        "捷径",
+        "代码模型"
+      ],
+      "evidence": "application",
+      "subtopic": "模型鲁棒性与捷径",
+      "knowledgePoint": "语义保持与模型捷径",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+      "supportingReferences": [
+        {
+          "id": "diversevul-shortcut-ref",
+          "title": "DiverseVul：跨项目与语义保持代码变换",
+          "url": "https://arxiv.org/abs/2304.00409",
+          "type": "研究论文",
+          "evidence": "source"
+        },
+        {
+          "id": "llm4vuln-context-review",
+          "title": "LLM4Vuln：语义保持的标识符改写",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "code-012",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "question": "漏洞分类模型的输出怎样才能帮助人工审计？",
+      "answer": "除了风险分数，还应提供可疑位置、相关代码及可验证的理由。",
+      "explanation": "高分只能用于优先级排序，审计人员仍需检查完整上下文。",
+      "example": "列出可疑调用位置及其参数来源，并标记尚未确认的条件。",
+      "tags": [
+        "漏洞定位",
+        "证据"
+      ],
+      "evidence": "application",
+      "subtopic": "人工审计证据",
+      "knowledgePoint": "审计输出与证据",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "reference": "https://codeql.github.com/docs/writing-codeql-queries/creating-path-queries/",
+      "referenceTitle": "CodeQL：Creating path queries",
+      "referenceType": "官方技术文档",
+      "supportingReferences": [
+        {
+          "id": "llm4vuln-context-review",
+          "title": "LLM4Vuln：漏洞推理与分析原因",
+          "url": "https://arxiv.org/abs/2401.16185",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "code-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "question": "漏洞数据集中标签噪声会怎样影响模型？",
+      "answer": "错误或不完整的标签会影响训练，也会使评估错误归因。",
+      "explanation": "预测与标签不一致的样本需要人工复核，不能自动认定模型出错。",
+      "example": "抽查高置信度误报，发现部分样本缺少必要的跨函数上下文。",
+      "tags": [
+        "标签噪声",
+        "错误分析"
+      ],
+      "evidence": "application",
+      "subtopic": "标签质量",
+      "knowledgePoint": "漏洞标注噪声",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+      "supportingReferences": [
+        {
+          "id": "code-label-ref",
+          "title": "PrimeVul：自动漏洞标注误差",
+          "url": "https://arxiv.org/html/2403.18624",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "code-014",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "question": "如何分析漏洞检测模型的漏报？",
+      "answer": "按漏洞类型、代码长度、项目和上下文可用性分组检查。",
+      "explanation": "分组分析可以发现整体指标掩盖的系统性盲区。",
+      "example": "比较长函数与短函数的召回率，并检查输入截断情况。",
+      "tags": [
+        "漏报",
+        "错误分析"
+      ],
+      "evidence": "application",
+      "subtopic": "漏洞模型评估",
+      "knowledgePoint": "漏洞漏报分组分析",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "reference": "https://arxiv.org/abs/2304.00409",
+      "referenceTitle": "DiverseVul：漏洞类型与跨项目评估",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "truncation-review",
+          "title": "Transformers：Padding and truncation",
+          "url": "https://huggingface.co/docs/transformers/main/en/pad_truncation",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
   ]
 }

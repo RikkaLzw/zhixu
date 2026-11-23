@@ -1,0 +1,414 @@
+{
+  "source": {
+    "id": "statistics-resampling-inference",
+    "title": "SciPy / NIST / ASA：重采样与统计推断",
+    "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html",
+    "type": "官方文档与研究资料",
+    "note": "逐题依据统计资料整理；旷视公开面经仅为模型评估主题启发。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "statresample-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "非参数自助采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于独立同分布样本，非参数 bootstrap 通常如何产生重采样数据？",
+      "answer": "从原样本中有放回地抽取相同数量的观测，再对每次重采样计算统计量。",
+      "explanation": "一次重采样中某些观测可能重复，另一些可能未被抽到。",
+      "example": "重复抽取测试样本并计算模型指标。",
+      "tags": [
+        "非参数自助采样",
+        "统计推断",
+        "公开面经",
+        "旷视"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html",
+      "referenceTitle": "SciPy 统计文档",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-megvii",
+          "title": "旷视大模型公开面经（合集转载，经历为分享者自述）；评估主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E6%97%B7%E8%A7%86/%E3%80%900323%E3%80%91%E6%97%B7%E8%A7%86.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "statresample-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "百分位区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "百分位 bootstrap 如何从重采样统计量构造双侧置信区间？",
+      "answer": "按置信水平取重采样统计量分布的相应上下分位数作为端点。",
+      "explanation": "不同 bootstrap 区间方法的端点计算方式可能不同。",
+      "example": "95% 双侧区间使用约 2.5% 与 97.5% 分位数。",
+      "tags": [
+        "百分位区间",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html",
+      "referenceTitle": "SciPy 统计文档",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "statresample-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "配对重采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较两个模型在同一批独立样本上的结果时，配对 bootstrap 怎样保留对应关系？",
+      "answer": "每次抽取样本索引后，对两个模型的结果使用同一组索引。",
+      "explanation": "分别独立抽样可能破坏同一案例上的配对关系。",
+      "example": "同一条告警上两个模型的结果一起被抽中。",
+      "tags": [
+        "配对重采样",
+        "统计推断",
+        "公开面经",
+        "旷视"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html",
+      "referenceTitle": "SciPy 统计文档",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-megvii",
+          "title": "旷视大模型公开面经（合集转载，经历为分享者自述）；评估主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E6%97%B7%E8%A7%86/%E3%80%900323%E3%80%91%E6%97%B7%E8%A7%86.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "statresample-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "重采样次数与样本量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "非参数 bootstrap 中增大重采样次数，能否等同于获得更多独立原始样本？",
+      "answer": "不能；它主要减少重采样计算的随机误差，原始数据的信息和覆盖范围没有因此扩大。",
+      "explanation": "不同统计量和区间方法对重采样次数的需求可能不同。",
+      "example": "同一百条记录重复抽样不等于新增一百条独立记录。",
+      "tags": [
+        "重采样次数与样本量",
+        "统计推断",
+        "公开面经",
+        "旷视"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html",
+      "referenceTitle": "SciPy 统计文档",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-megvii",
+          "title": "旷视大模型公开面经（合集转载，经历为分享者自述）；评估主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E6%97%B7%E8%A7%86/%E3%80%900323%E3%80%91%E6%97%B7%E8%A7%86.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "statresample-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "样本偏差与自助采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如果原始评估样本严重偏离目标环境，非参数 bootstrap 能单独修正这个偏差吗？",
+      "answer": "不能；重采样通常只反复使用已有样本，不能自动补回未覆盖的环境或行为。",
+      "explanation": "还需改进采样、分组评估或收集更具代表性的数据。",
+      "example": "仅有单一网络环境的数据时反复抽样。",
+      "tags": [
+        "样本偏差与自助采样",
+        "统计推断",
+        "公开面经",
+        "旷视"
+      ],
+      "evidence": "application",
+      "reference": "https://inferentialthinking.com/chapters/13/2/bootstrap/index.html",
+      "referenceTitle": "《Computational and Inferential Thinking》Bootstrap 章节",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-megvii",
+          "title": "旷视大模型公开面经（合集转载，经历为分享者自述）；评估主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E6%97%B7%E8%A7%86/%E3%80%900323%E3%80%91%E6%97%B7%E8%A7%86.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "statresample-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "时间序列块采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间序列存在相邻观测依赖时，块 bootstrap 的基本做法是什么？",
+      "answer": "以连续观测片段为单位重采样，而不是把每个时间点都当成独立个体。",
+      "explanation": "块长度会影响保留的相邻依赖，需要依据数据和方法选择并满足相应假设。",
+      "example": "按连续日志窗口构建重采样块。",
+      "tags": [
+        "时间序列块采样",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://arch.readthedocs.io/en/latest/bootstrap/timeseries-bootstraps.html",
+      "referenceTitle": "时间序列 bootstrap 文档",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "statresample-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "未拒绝原假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "当 p 值高于预设显著性水平时，能否据此证明原假设为真？",
+      "answer": "不能；这只表示在所用检验下证据不足以按该阈值拒绝原假设。",
+      "explanation": "样本量、噪声和检验功效都会影响结果。",
+      "example": "未检出差异不等于两个模型完全相同。",
+      "tags": [
+        "未拒绝原假设",
+        "统计推断",
+        "公开面经",
+        "旷视"
+      ],
+      "evidence": "application",
+      "reference": "https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf",
+      "referenceTitle": "ASA p 值声明",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-megvii",
+          "title": "旷视大模型公开面经（合集转载，经历为分享者自述）；评估主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E6%97%B7%E8%A7%86/%E3%80%900323%E3%80%91%E6%97%B7%E8%A7%86.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "statresample-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "显著性与效果大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "统计显著能否单独说明模型改进幅度大或具有实际价值？",
+      "answer": "不能；p 值不直接衡量效果大小或业务重要性，还应报告差异大小和不确定性。",
+      "explanation": "大样本可能使很小的差异也达到统计显著。",
+      "example": "同时报告指标提升、区间和实际成本。",
+      "tags": [
+        "显著性与效果大小",
+        "统计推断",
+        "公开面经",
+        "旷视"
+      ],
+      "evidence": "application",
+      "reference": "https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf",
+      "referenceTitle": "ASA p 值声明",
+      "referenceType": "官方文档与研究资料",
+      "supportingReferences": [
+        {
+          "id": "company-megvii",
+          "title": "旷视大模型公开面经（合集转载，经历为分享者自述）；评估主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E6%97%B7%E8%A7%86/%E3%80%900323%E3%80%91%E6%97%B7%E8%A7%86.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "statresample-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "多重比较风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么同时检验许多模型或指标时要考虑多重比较？",
+      "answer": "反复检验可能增大整组结论中至少一次错误拒绝原假设的风险。",
+      "explanation": "总体错误率取决于检验之间的依赖及所用方法。",
+      "example": "同时比较大量候选模型后只挑最显著的一项。",
+      "tags": [
+        "多重比较风险",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://www.itl.nist.gov/div898/handbook/prc/section4/prc473.htm",
+      "referenceTitle": "NIST 统计手册",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "statresample-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "Bonferroni 校正",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "要用 Bonferroni 方法控制 m 项有效检验的总体第一类错误率 α，常用什么单项阈值？",
+      "answer": "将每项检验的显著性阈值设为 α/m。",
+      "explanation": "该方法依赖各单项检验有效，通常较保守。",
+      "example": "对预先定义的多项比较使用统一调整阈值。",
+      "tags": [
+        "Bonferroni 校正",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://www.itl.nist.gov/div898/handbook/prc/section4/prc473.htm",
+      "referenceTitle": "NIST 统计手册",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "statresample-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "置换检验前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用独立样本置换检验时，为什么要核查原假设下观测是否可交换？",
+      "answer": "置换步骤依赖原假设允许重新分配样本标签；若数据结构不支持这种交换，结果可能无效。",
+      "explanation": "例如时间依赖或分组结构可能需要不同的置换方案。",
+      "example": "按组织分组的数据不能随意把所有记录混洗到两组。",
+      "tags": [
+        "置换检验前提",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.permutation_test.html",
+      "referenceTitle": "SciPy 统计文档",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "statresample-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "精确与随机置换",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "精确置换检验和随机置换检验在构造参考分布时有什么区别？",
+      "answer": "精确检验枚举所有允许的不同置换或分配；随机检验抽取其中一部分来近似参考分布。",
+      "explanation": "排列数目可能增长很快，随机近似会带来额外计算误差。",
+      "example": "小样本枚举所有分配，大样本抽取一定次数。",
+      "tags": [
+        "精确与随机置换",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.permutation_test.html",
+      "referenceTitle": "SciPy 统计文档",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "statresample-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "配对置换方式",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "SciPy permutation_test 的 samples 与 pairings 两种配对置换方式有什么区别？",
+      "answer": "samples 在保留配对的同时交换样本归属；pairings 改变样本间的配对关系。",
+      "explanation": "选择方式应与检验的原假设和统计量一致。",
+      "example": "比较同一案例的两个模型结果，或检验两个变量的关联。",
+      "tags": [
+        "配对置换方式",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.permutation_test.html",
+      "referenceTitle": "SciPy 统计文档",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "statresample-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "随机置换 p 值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 的随机置换单侧检验如何避免把有限次抽样得到的 p 值记为零？",
+      "answer": "计算尾部比例时将计数分子和抽样数分母都加一。",
+      "explanation": "这是该实现对随机检验使用的保守约定；精确检验口径不同。",
+      "example": "没有随机置换达到观测统计量的极端程度时，仍得到非零值。",
+      "tags": [
+        "随机置换 p 值",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.permutation_test.html",
+      "referenceTitle": "SciPy 统计文档",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "statresample-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "单侧与双侧检验",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "假设检验中的单侧与双侧备择假设有什么区别？",
+      "answer": "单侧备择关注预先指定方向的偏离；双侧备择关注两个方向的偏离。",
+      "explanation": "方向应根据研究问题预先确定，而不是看完结果后挑选。",
+      "example": "只检验误报率是否下降，或检验它是否发生任意变化。",
+      "tags": [
+        "单侧与双侧检验",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://www.itl.nist.gov/div898/handbook/prc/section2/prc24.htm",
+      "referenceTitle": "NIST 统计手册",
+      "referenceType": "官方文档与研究资料"
+    },
+    {
+      "id": "statresample-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "统计推断与重采样",
+      "knowledgePoint": "置信区间与预测区间",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "在回归模型中，均值响应的置信区间和单个未来观测的预测区间有什么区别？",
+      "answer": "前者描述均值响应估计的不确定性；后者还考虑未来单次观测的随机波动。",
+      "explanation": "在相同模型与置信水平下，单次观测预测区间通常更宽。",
+      "example": "比较预测平均告警量和下一天实际告警量。",
+      "tags": [
+        "置信区间与预测区间",
+        "统计推断"
+      ],
+      "evidence": "source",
+      "reference": "https://www.itl.nist.gov/div898/handbook/pmd/section1/pmd132.htm",
+      "referenceTitle": "NIST 统计手册",
+      "referenceType": "官方文档与研究资料"
+    }
+  ]
+}

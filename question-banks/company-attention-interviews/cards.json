@@ -1,0 +1,111 @@
+{
+  "source": {
+    "id": "company-attention-interviews",
+    "title": "字节、百度公开面经：注意力与任务适配",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "attnint-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型面经",
+      "knowledgePoint": "FlashAttention分块",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 FlashAttention 如何减少注意力计算中的显存读写？",
+      "answer": "它把注意力计算分块，在片上存储中处理并减少对显存中完整注意力矩阵的读写。",
+      "explanation": "实际加速取决于硬件、序列长度和实现；它不是保证每个场景都更快。",
+      "example": "长序列计算时避免在高带宽显存中存取完整 N×N 中间矩阵。",
+      "tags": [
+        "FlashAttention分块",
+        "大模型面经",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "interview-paper-ref",
+          "title": "FlashAttention 原论文",
+          "url": "https://arxiv.org/abs/2205.14135",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "attnint-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大模型面经",
+      "knowledgePoint": "FlashAttention精确性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始稠密 FlashAttention 是否必须近似计算注意力？",
+      "answer": "不必；原论文的稠密 FlashAttention 计算的是精确注意力，浮点运算仍可能有数值差异。",
+      "explanation": "论文另讨论块稀疏扩展，不能将扩展的近似性套到原始稠密算法。",
+      "example": "比较常规稠密注意力与原始 FlashAttention 的数学目标。",
+      "tags": [
+        "FlashAttention精确性",
+        "大模型面经",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "interview-paper-ref",
+          "title": "FlashAttention 原论文",
+          "url": "https://arxiv.org/abs/2205.14135",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "attnint-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "大模型面经",
+      "knowledgePoint": "上下文学习与微调",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "上下文学习（in-context learning）与监督微调在模型参数更新上有什么区别？",
+      "answer": "上下文学习在推理时利用提示和上下文（可含示例），不进行梯度更新；监督微调通过训练更新模型参数。",
+      "explanation": "两者可以结合，效果和成本应按任务评估。",
+      "example": "在提示中给几个示例，或用标注数据训练模型适配器。",
+      "tags": [
+        "上下文学习与微调",
+        "大模型面经",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-baidu",
+      "referenceTitle": "百度公开面经（合集转载，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "interview-paper-ref",
+          "title": "Language Models are Few-Shot Learners 原论文",
+          "url": "https://arxiv.org/abs/2005.14165",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "sklearn-sgd-incremental",
+    "title": "scikit-learn 1.9：SGD 分类与增量训练",
+    "url": "https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.SGDClassifier.html",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的论文或固定版本官方文档自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "sgdinc-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "损失与分类模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 SGDClassifier 使用 hinge 和 log_loss 分别对应哪类线性分类模型？",
+      "answer": "hinge 对应线性支持向量分类；log_loss 对应逻辑回归分类。",
+      "explanation": "两者使用不同的损失函数。",
+      "example": "要使用概率输出可考虑 log_loss。",
+      "tags": [
+        "SGD 与增量训练",
+        "损失与分类模型"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.SGDClassifier.html"
+    },
+    {
+      "id": "sgdinc-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "增量拟合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 SGDClassifier.partial_fit 每次调用通常对给定样本执行多少轮 SGD？",
+      "answer": "对当前提供的样本执行一轮；max_iter 只影响 fit。",
+      "explanation": "单次调用不保证达到最优或收敛；需要多轮时由调用方控制数据遍历。",
+      "example": "流式数据每到一批就调用一次 partial_fit。",
+      "tags": [
+        "SGD 与增量训练",
+        "增量拟合"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.SGDClassifier.html"
+    },
+    {
+      "id": "sgdinc-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "特征尺度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用默认学习率策略训练 SGDClassifier 时，为什么通常先做合适的特征缩放？",
+      "answer": "特征尺度差异可能影响梯度更新和收敛，文档建议数据大致零均值、单位方差。",
+      "explanation": "缩放参数应只从训练数据估计。",
+      "example": "先在训练集拟合 StandardScaler。",
+      "tags": [
+        "SGD 与增量训练",
+        "特征尺度"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.SGDClassifier.html"
+    },
+    {
+      "id": "sgdinc-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "概率接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 SGDClassifier 对哪些常用 loss 提供 predict_proba？",
+      "answer": "文档列出的 log_loss 和 modified_huber 支持该接口。",
+      "explanation": "hinge 模型可输出决策分数，但不直接提供概率接口。",
+      "example": "需要分类概率时选择支持概率估计的损失。",
+      "tags": [
+        "SGD 与增量训练",
+        "概率接口"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/sgd.html"
+    },
+    {
+      "id": "sgdinc-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "多分类策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 SGDClassifier 如何扩展到多类别分类？",
+      "answer": "采用一对其余（one-vs-rest）策略，为每个类别训练二分类器。",
+      "explanation": "各类别分数用于选择预测类别。",
+      "example": "三个类别分别训练三个区分该类与其余类的分类器。",
+      "tags": [
+        "SGD 与增量训练",
+        "多分类策略"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/sgd.html"
+    },
+    {
+      "id": "sgdinc-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "拟合计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 SGDClassifier 重复调用 fit 与 partial_fit 时，学习率相关的样本计数如何处理？",
+      "answer": "fit 会重置计数；partial_fit 会在已有计数上继续增加。",
+      "explanation": "动态学习率下两种调用顺序可能产生不同结果。",
+      "example": "训练后检查 t_ 的变化。",
+      "tags": [
+        "SGD 与增量训练",
+        "拟合计数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.SGDClassifier.html"
+    },
+    {
+      "id": "sgdinc-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "warm start",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 SGDClassifier 设 warm_start=True 后再次调用 fit，怎样初始化参数？",
+      "answer": "复用上一次 fit 的解作为初始化。",
+      "explanation": "这不保证与一次连续 fit 得到完全相同的模型。",
+      "example": "继续从此前系数开始下一次拟合。",
+      "tags": [
+        "SGD 与增量训练",
+        "warm start"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.SGDClassifier.html"
+    },
+    {
+      "id": "sgdinc-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "平均参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 SGDClassifier 设 average=True 时，coef_ 保存哪种权重？",
+      "answer": "保存各次 SGD 更新权重的平均结果。",
+      "explanation": "整数 average 可指定开始平均的样本计数。",
+      "example": "平均有时可降低更新波动。",
+      "tags": [
+        "SGD 与增量训练",
+        "平均参数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.SGDClassifier.html"
+    },
+    {
+      "id": "sgdinc-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "类别权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 SGDClassifier 使用 fit 且设置 class_weight=\"balanced\" 时，类别权重如何随类别频率变化？",
+      "answer": "类别样本越少，自动计算的权重通常越大。",
+      "explanation": "文档给出的权重为样本数除以类别数与该类样本数的乘积；partial_fit 不支持该选项。",
+      "example": "多数类与少数类可得到不同权重。",
+      "tags": [
+        "SGD 与增量训练",
+        "类别权重"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.linear_model.SGDClassifier.html"
+    },
+    {
+      "id": "sgdinc-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "稀疏特征中心化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 StandardScaler 处理稀疏矩阵时，为什么通常需要 with_mean=False？",
+      "answer": "中心化会破坏稀疏结构并可能导致高内存开销，因此该配置避免减去均值。",
+      "explanation": "是否同时缩放方差由 with_std 控制。",
+      "example": "对稀疏词袋特征保留稀疏表示。",
+      "tags": [
+        "SGD 与增量训练",
+        "稀疏特征中心化"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html"
+    },
+    {
+      "id": "sgdinc-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "增量统计量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 StandardScaler.partial_fit 主要更新什么？",
+      "answer": "基于新批次增量更新特征均值和方差等统计量。",
+      "explanation": "它不训练分类器；后续转换使用当前累积统计量。",
+      "example": "逐批处理无法一次装入内存的训练数据。",
+      "tags": [
+        "SGD 与增量训练",
+        "增量统计量"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html"
+    },
+    {
+      "id": "sgdinc-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SGD 与增量训练",
+      "knowledgePoint": "流式缩放一致性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在线训练时不断更新特征缩放器，为什么需要留意模型参数与缩放尺度的一致性？",
+      "answer": "同一个原始特征可能在不同时刻被映射到不同数值尺度，使已学系数的含义发生变化。",
+      "explanation": "可设计固定或协调更新缩放器的策略。",
+      "example": "训练中大幅改变均值与方差会改变模型看到的输入。",
+      "tags": [
+        "SGD 与增量训练",
+        "流式缩放一致性"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.preprocessing.StandardScaler.html"
+    }
+  ]
+}

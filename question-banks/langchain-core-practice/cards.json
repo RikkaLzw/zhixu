@@ -1,0 +1,390 @@
+{
+  "source": {
+    "id": "langchain-core-practice",
+    "title": "LangChain 实用接口：消息、工具与调用",
+    "url": "https://github.com/langchain-ai/langchain/tree/langchain-core%3D%3D1.8.4/libs/core",
+    "type": "官方技术文档与固定版本源码",
+    "note": "依据 langchain-core 1.8.4 源码与官方文档逐题整理；使用本地工具和合成向量验证代表性接口，未调用外部模型。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "lcpractice-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "工具调用字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 LangChain 的 AIMessage.tool_calls 中，一条工具请求通常包含哪些关键信息？",
+      "answer": "通常包含工具名 name、参数 args 和调用标识 id（若提供）。",
+      "explanation": "这些字段描述请求；具体字段和调用支持取决于模型集成。",
+      "example": "查看 name 和 args 后，再交给相应工具执行。",
+      "tags": [
+        "工具调用字段",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/ai.py#L160",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：AIMessage"
+    },
+    {
+      "id": "lcpractice-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "工具结果关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 ToolMessage.tool_call_id 有什么作用？",
+      "answer": "它把工具执行结果关联到对应的工具调用请求。",
+      "explanation": "一次模型回复可能请求多个工具，需要逐个匹配结果。",
+      "example": "把 id 为 call_1 的请求与同 id 的 ToolMessage 对应起来。",
+      "tags": [
+        "工具结果关联",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/tool.py#L26",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：ToolMessage"
+    },
+    {
+      "id": "lcpractice-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "无法解析的调用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 AIMessage.invalid_tool_calls 记录什么？",
+      "answer": "它记录解析出错的工具调用信息。",
+      "explanation": "解析失败与工具已经执行后失败是不同阶段。",
+      "example": "检查模型生成的工具参数能否解析。",
+      "tags": [
+        "无法解析的调用",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/ai.py#L160",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：AIMessage"
+    },
+    {
+      "id": "lcpractice-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "令牌用量可缺失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 AIMessage.usage_metadata 为空时，能否认定模型没有消耗 token？",
+      "answer": "不能；为空只表示该消息没有提供可用的用量元数据。",
+      "explanation": "用量数据是否返回取决于模型和集成。",
+      "example": "统计成本时将缺失用量记为未知。",
+      "tags": [
+        "令牌用量可缺失",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/ai.py#L160",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：AIMessage"
+    },
+    {
+      "id": "lcpractice-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "工具结果与附加产物",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 ToolMessage 中 content 与 artifact 分别用于什么？",
+      "answer": "content 是提供给模型的工具结果内容；artifact 保存供应用其他部分使用的附加产物，设计上不发给模型。",
+      "explanation": "实际数据流仍应检查所用集成和应用代码。",
+      "example": "content 放简短摘要，artifact 保存完整检索结果。",
+      "tags": [
+        "工具结果与附加产物",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/messages/tool.py#L26",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：ToolMessage"
+    },
+    {
+      "id": "lcpractice-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "工具调用输入格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 langchain-core 1.8.4 中，用普通参数字典和完整 ToolCall 调用工具，常规返回值有何不同？",
+      "answer": "普通参数字典通常得到工具内容；带调用 id 的完整 ToolCall 通常得到关联该 id 的 ToolMessage。",
+      "explanation": "完整 ToolCall 需包含 type、name、args 和 id 等字段；工具自定义返回类型可能改变行为。",
+      "example": "tool.invoke({\"x\": 2}) 与 tool.invoke(tool_call) 的结果类型可不同。",
+      "tags": [
+        "工具调用输入格式",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/tools/base.py#L1353",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：BaseTool 输入与输出格式"
+    },
+    {
+      "id": "lcpractice-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "工具内容与产物返回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 @tool 设置 response_format=\"content_and_artifact\" 后，函数应返回什么？",
+      "answer": "返回二元组 (content, artifact)。",
+      "explanation": "使用完整 ToolCall 执行时，可将两者放入对应的 ToolMessage 字段。",
+      "example": "返回供模型阅读的摘要和供应用使用的原始结果。",
+      "tags": [
+        "工具内容与产物返回",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/tools/convert.py#L136",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：@tool 选项"
+    },
+    {
+      "id": "lcpractice-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "工具错误配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 的 handle_tool_error 与 handle_validation_error 分别处理哪类错误？",
+      "answer": "前者处理 ToolException；后者处理工具输入的 Pydantic 校验错误。",
+      "explanation": "默认不启用这两种处理；其他任意异常不会因此自动被这两个选项捕获。",
+      "example": "对输入类型错误和工具自身不可用分别设置反馈。",
+      "tags": [
+        "工具错误配置",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/tools/base.py#L528",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：BaseTool 错误处理"
+    },
+    {
+      "id": "lcpractice-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "可选历史占位符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MessagesPlaceholder 设置 optional=True 后，省略该消息变量会怎样？",
+      "answer": "占位符会提供空消息列表。",
+      "explanation": "默认 optional=False 时，省略变量会报错。",
+      "example": "第一次对话没有历史记录时仍可格式化提示。",
+      "tags": [
+        "可选历史占位符",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/prompts/chat.py#L54",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：MessagesPlaceholder"
+    },
+    {
+      "id": "lcpractice-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "历史消息数量限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MessagesPlaceholder 的 n_messages 限制的是什么？",
+      "answer": "它保留消息列表末尾指定数量的消息。",
+      "explanation": "这是消息条数而非 token 预算；截断工具调用历史时还需保证消息配对有效。",
+      "example": "n_messages=1 时只保留最后一条消息。",
+      "tags": [
+        "历史消息数量限制",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/prompts/chat.py#L54",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：MessagesPlaceholder"
+    },
+    {
+      "id": "lcpractice-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "提示变量预填",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ChatPromptTemplate.partial 的主要作用是什么？",
+      "answer": "它创建一个预先填入部分变量的新模板，调用时再提供其余变量。",
+      "explanation": "原模板仍可使用。",
+      "example": "固定输出语言，再为每次调用提供问题。",
+      "tags": [
+        "提示变量预填",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/prompts/chat.py#L1231",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：ChatPromptTemplate.partial"
+    },
+    {
+      "id": "lcpractice-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "提示中的字面花括号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 LangChain 默认 f-string 风格的提示模板中，如何写出字面花括号？",
+      "answer": "使用双花括号 {{ 和 }} 转义。",
+      "explanation": "未转义的花括号可能被识别为模板变量。",
+      "example": "把 JSON 示例的外层花括号写成双花括号。",
+      "tags": [
+        "提示中的字面花括号",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/prompts/base.py#L167",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：提示输入校验"
+    },
+    {
+      "id": "lcpractice-013",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "批量调用异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 的 Runnable.batch 设置 return_exceptions=True 后，单个输入失败会怎样？",
+      "answer": "对应位置返回异常对象，其余输入仍可返回结果。",
+      "explanation": "默认值为 False，未处理的异常会抛出。",
+      "example": "一批中只有第 2 项失败，可检查其异常并处理成功项。",
+      "tags": [
+        "批量调用异常",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/base.py#L995",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：Runnable.batch"
+    },
+    {
+      "id": "lcpractice-014",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "按完成顺序取结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Runnable.batch_as_completed 与 batch 在结果返回顺序上有什么区别？",
+      "answer": "batch_as_completed 按完成顺序逐个返回输入索引和结果；batch 返回按输入顺序排列的列表。",
+      "explanation": "异步或不同耗时的任务可能乱序完成。",
+      "example": "利用返回的索引把结果对应回原始问题。",
+      "tags": [
+        "按完成顺序取结果",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/base.py#L1046",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：Runnable.batch_as_completed"
+    },
+    {
+      "id": "lcpractice-015",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "局部重试范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "管道 a | b.with_retry() 中，b 失败触发重试时通常会重复执行哪一部分？",
+      "answer": "重试包装在 b 上，因此通常只重新执行 b。",
+      "explanation": "若把整个管道包装进重试，则成功的前序步骤也可能重新执行；有副作用时需谨慎。",
+      "example": "先准备输入，再仅重试临时失败的远程调用。",
+      "tags": [
+        "局部重试范围",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/base.py#L2153",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：Runnable.with_retry"
+    },
+    {
+      "id": "lcpractice-016",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "备用步骤触发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Runnable.with_fallbacks 默认依据什么切换到备用步骤？",
+      "answer": "当主步骤抛出配置范围内的异常时，按顺序尝试备用步骤。",
+      "explanation": "返回了质量较差的结果但没有抛异常，不会仅凭质量差自动触发。",
+      "example": "主调用抛出异常后调用备用处理器。",
+      "tags": [
+        "备用步骤触发",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/base.py#L2243",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：Runnable.with_fallbacks"
+    },
+    {
+      "id": "lcpractice-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "运行追踪信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RunnableConfig 中的 tags 和 metadata 常用于什么？",
+      "answer": "它们为调用及其子调用附加标签和元数据，便于追踪、过滤与分析。",
+      "explanation": "它们属于运行配置，不等同于提示消息正文。",
+      "example": "给一组检索调用标记实验名称。",
+      "tags": [
+        "运行追踪信息",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/config.py#L57",
+      "referenceTitle": "langchain-core 1.8.4 官方源码：RunnableConfig"
+    },
+    {
+      "id": "lcpractice-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "LangChain 实用接口",
+      "knowledgePoint": "多轮消息输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单独调用 LangChain 聊天模型时，怎样让它看到前面的对话？",
+      "answer": "调用方需要在输入消息中提供相关历史，或使用专门的历史管理机制。",
+      "explanation": "单次模型调用的消息输入与保存会话状态是不同职责。",
+      "example": "传入上一轮用户消息、助手回复和本轮问题。",
+      "tags": [
+        "多轮消息输入",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.langchain.com/oss/python/langchain/messages#basic-usage",
+      "referenceTitle": "LangChain 官方文档：Messages / Basic usage"
+    }
+  ]
+}

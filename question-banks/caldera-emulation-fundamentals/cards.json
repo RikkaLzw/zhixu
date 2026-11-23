@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "caldera-emulation-fundamentals",
+    "title": "MITRE CALDERA 5.0：对抗模拟基本对象",
+    "url": "https://caldera.readthedocs.io/en/5.0.0/Basic-Usage.html",
+    "type": "固定版本官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，版本与前提见题目。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "caldera-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CALDERA 安全模拟",
+      "knowledgePoint": "能力",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CALDERA 5.0 的 ability 在对抗模拟中通常描述什么？",
+      "answer": "它描述可由代理执行的一项行为及其相关配置。",
+      "explanation": "能力可关联 ATT&CK 战术和技术，实际执行取决于代理及平台。",
+      "example": "在测试环境中定义一个可观测的模拟行为。",
+      "tags": [
+        "CALDERA 安全模拟",
+        "能力"
+      ],
+      "evidence": "source",
+      "reference": "https://caldera.readthedocs.io/en/5.0.0/Basic-Usage.html"
+    },
+    {
+      "id": "caldera-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CALDERA 安全模拟",
+      "knowledgePoint": "对手配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CALDERA 5.0 的 adversary profile 主要组织什么？",
+      "answer": "组织可选目标以及一组能力的顺序。",
+      "explanation": "文档中的 atomic_ordering 列表用于描述能力顺序。",
+      "example": "为一个评测场景组合多项模拟能力。",
+      "tags": [
+        "CALDERA 安全模拟",
+        "对手配置"
+      ],
+      "evidence": "source",
+      "reference": "https://caldera.readthedocs.io/en/5.0.0/Basic-Usage.html"
+    },
+    {
+      "id": "caldera-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CALDERA 安全模拟",
+      "knowledgePoint": "操作对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CALDERA 5.0 创建 operation 时，group 参数用于选择什么？",
+      "answer": "选择本次操作使用的代理组。",
+      "explanation": "代理组与对手配置、规划器是不同配置项。",
+      "example": "指定实验环境中参与模拟的代理组。",
+      "tags": [
+        "CALDERA 安全模拟",
+        "操作对象"
+      ],
+      "evidence": "source",
+      "reference": "https://caldera.readthedocs.io/en/5.0.0/Basic-Usage.html"
+    },
+    {
+      "id": "caldera-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CALDERA 安全模拟",
+      "knowledgePoint": "规划器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CALDERA 5.0 中 planner 的主要职责是什么？",
+      "answer": "决定运行中的操作选择哪些能力以及采用什么顺序。",
+      "explanation": "不同规划器可实现不同决策逻辑。",
+      "example": "按预定义能力顺序推进测试。",
+      "tags": [
+        "CALDERA 安全模拟",
+        "规划器"
+      ],
+      "evidence": "source",
+      "reference": "https://caldera.readthedocs.io/en/5.0.0/Basic-Usage.html"
+    },
+    {
+      "id": "caldera-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CALDERA 安全模拟",
+      "knowledgePoint": "事实来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CALDERA 5.0 的 fact source 在启动 operation 时有什么用途？",
+      "answer": "向操作提供一组预先已知的事实，用于填充能力中的变量。",
+      "explanation": "事实可以表示某台计算机的可识别信息。",
+      "example": "为测试提供已知的实验主机信息。",
+      "tags": [
+        "CALDERA 安全模拟",
+        "事实来源"
+      ],
+      "evidence": "source",
+      "reference": "https://caldera.readthedocs.io/en/5.0.0/Basic-Usage.html"
+    },
+    {
+      "id": "caldera-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CALDERA 安全模拟",
+      "knowledgePoint": "人工模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CALDERA 5.0 的 operation 使用 manual 模式时，命令如何处理？",
+      "answer": "操作员可以逐条批准或丢弃待执行命令。",
+      "explanation": "这使实验人员能够控制具体的模拟步骤。",
+      "example": "审核下一步模拟动作后再继续。",
+      "tags": [
+        "CALDERA 安全模拟",
+        "人工模式"
+      ],
+      "evidence": "source",
+      "reference": "https://caldera.readthedocs.io/en/5.0.0/Basic-Usage.html"
+    },
+    {
+      "id": "caldera-007",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CALDERA 安全模拟",
+      "knowledgePoint": "操作报告",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CALDERA 5.0 的运行报告可以从操作界面导出为什么格式？",
+      "answer": "可以导出 JSON 格式的操作报告。",
+      "explanation": "报告可用于复盘模拟步骤和结果。",
+      "example": "把实验报告与检测日志一起复核。",
+      "tags": [
+        "CALDERA 安全模拟",
+        "操作报告"
+      ],
+      "evidence": "source",
+      "reference": "https://caldera.readthedocs.io/en/5.0.0/Basic-Usage.html"
+    }
+  ]
+}

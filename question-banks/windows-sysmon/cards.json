@@ -1,0 +1,223 @@
+{
+  "source": {
+    "id": "windows-sysmon",
+    "title": "Microsoft Sysmon：Windows 主机遥测",
+    "url": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon",
+    "type": "官方技术文档",
+    "note": "依据所列资料自行整理为简体中文问答；例子为自编。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "sysmon-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "进程事件",
+      "knowledgePoint": "进程创建事件",
+      "questionType": "概念与原理",
+      "question": "Sysmon Event ID 1 记录什么类型的行为？",
+      "answer": "它记录进程创建，并可提供映像、完整命令行和进程标识等上下文。",
+      "explanation": "命令行内容可能包含敏感信息，使用时应遵循数据治理规则。",
+      "example": "用进程创建事件建立进程序列特征。",
+      "tags": [
+        "进程创建事件",
+        "进程事件"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-1-process-creation",
+      "referenceTitle": "Sysmon：Process creation",
+      "origin": "自行整理"
+    },
+    {
+      "id": "sysmon-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "进程事件",
+      "knowledgePoint": "ProcessGUID关联",
+      "questionType": "概念与原理",
+      "question": "为什么关联 Sysmon 中的进程事件时常使用 ProcessGUID？",
+      "answer": "ProcessGUID 用于标识进程实例，有助于关联该进程的不同事件。",
+      "explanation": "相比只依赖可能复用的进程号，ProcessGUID 更适合跨时间关联；网络连接事件也包含 ProcessId 和 ProcessGuid。",
+      "example": "将进程创建与同一进程的网络连接关联。",
+      "tags": [
+        "ProcessGUID关联",
+        "进程事件",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-1-process-creation",
+      "referenceTitle": "Sysmon：Process creation",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯安全岗位公开面经（合集收录，经历为分享者自述）",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6b-%E8%85%BE%E8%AE%AF-%E4%BA%91%E9%BC%8E%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "sysmon-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络事件",
+      "knowledgePoint": "网络连接采集默认值",
+      "questionType": "易错点",
+      "question": "Sysmon Event ID 3 默认会记录所有网络连接吗？",
+      "answer": "不会；Sysinternals Sysmon 的网络连接事件默认关闭，需要配置启用。",
+      "explanation": "即使启用，采集过滤和日志丢失也会影响可见范围。",
+      "example": "没有 Event ID 3 不能证明进程没有联网。",
+      "tags": [
+        "网络连接采集默认值",
+        "网络事件"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-3-network-connection",
+      "referenceTitle": "Sysmon：Network connection",
+      "origin": "自行整理"
+    },
+    {
+      "id": "sysmon-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "DNS事件",
+      "knowledgePoint": "进程DNS查询",
+      "questionType": "概念与原理",
+      "question": "在支持的 Windows 版本且启用相关采集时，Sysmon Event ID 22 记录哪些 DNS 查询？",
+      "answer": "进程执行 DNS 查询时会记录该事件，无论查询成功或失败、结果是否来自缓存。",
+      "explanation": "该事件的遥测从 Windows 8.1 开始提供。",
+      "example": "将可疑域名查询与发起进程关联。",
+      "tags": [
+        "进程DNS查询",
+        "DNS事件"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-22-dnsevent-dns-query",
+      "referenceTitle": "Sysmon：DNS query",
+      "origin": "自行整理"
+    },
+    {
+      "id": "sysmon-005",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "模块事件",
+      "knowledgePoint": "映像加载事件",
+      "questionType": "比较与选型",
+      "question": "Sysmon Event ID 7 记录什么类型的事件？",
+      "answer": "它记录模块加载到特定进程的事件。",
+      "explanation": "它不表示新进程创建；该事件默认关闭，广泛启用可能产生大量日志。",
+      "example": "一个进程加载 DLL 不代表创建了新进程。",
+      "tags": [
+        "映像加载事件",
+        "模块事件"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-7-image-loaded",
+      "referenceTitle": "Sysmon：Image loaded",
+      "origin": "自行整理"
+    },
+    {
+      "id": "sysmon-006",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "进程交互",
+      "knowledgePoint": "远程线程事件",
+      "questionType": "概念与原理",
+      "question": "Sysmon Event ID 8 记录的远程线程行为是什么？",
+      "answer": "一个进程在另一个进程中创建线程时，事件记录源进程和目标进程等信息。",
+      "explanation": "该行为可作为进程注入线索，但一次事件本身不能证明恶意。",
+      "example": "把远程线程事件与后续模块加载等上下文一起检查。",
+      "tags": [
+        "远程线程事件",
+        "进程交互"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-8-createremotethread",
+      "referenceTitle": "Sysmon：CreateRemoteThread",
+      "origin": "自行整理"
+    },
+    {
+      "id": "sysmon-007",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "进程交互",
+      "knowledgePoint": "进程访问事件",
+      "questionType": "概念与原理",
+      "question": "Sysmon Event ID 10 表示什么进程交互？",
+      "answer": "它报告一个进程打开另一个进程的访问行为。",
+      "explanation": "合法诊断工具也会产生此类事件，需结合来源进程和目标上下文判断。",
+      "example": "检查哪些进程访问了敏感进程。",
+      "tags": [
+        "进程访问事件",
+        "进程交互"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-10-processaccess",
+      "referenceTitle": "Sysmon：ProcessAccess",
+      "origin": "自行整理"
+    },
+    {
+      "id": "sysmon-008",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "文件事件",
+      "knowledgePoint": "文件创建覆盖",
+      "questionType": "概念与原理",
+      "question": "Sysmon Event ID 11 记录的文件操作包括哪些？",
+      "answer": "它记录文件被创建或覆盖的操作。",
+      "explanation": "该事件不等于完整的文件读写审计。",
+      "example": "分析下载目录中由进程创建的新文件。",
+      "tags": [
+        "文件创建覆盖",
+        "文件事件"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-11-filecreate",
+      "referenceTitle": "Sysmon：FileCreate",
+      "origin": "自行整理"
+    },
+    {
+      "id": "sysmon-009",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "文件事件",
+      "knowledgePoint": "删除归档区别",
+      "questionType": "比较与选型",
+      "question": "Sysmon Event ID 23 与 Event ID 26 在处理删除文件时有什么区别？",
+      "answer": "两者都记录文件删除；Event ID 23 还归档删除的文件，Event ID 26 不保存文件副本。",
+      "explanation": "归档目录可能占用大量存储，应结合配置管理。",
+      "example": "只需要删除事件时，可考虑不归档文件内容的事件类型。",
+      "tags": [
+        "删除归档区别",
+        "文件事件"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#event-id-23-filedelete-file-delete-archived",
+      "referenceTitle": "Sysmon：FileDelete",
+      "origin": "自行整理"
+    },
+    {
+      "id": "sysmon-010",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "日志时间",
+      "knowledgePoint": "Sysmon时间标准",
+      "questionType": "概念与原理",
+      "question": "Sysmon 事件中的时间戳使用什么时间标准？",
+      "answer": "Sysmon 事件时间戳使用 UTC。",
+      "explanation": "跨系统关联时应确认其他数据源的时区和时间含义。",
+      "example": "把本地时间日志转换后与 Sysmon 事件对齐。",
+      "tags": [
+        "Sysmon时间标准",
+        "日志时间"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon#events",
+      "referenceTitle": "Sysmon：Events",
+      "origin": "自行整理"
+    }
+  ]
+}

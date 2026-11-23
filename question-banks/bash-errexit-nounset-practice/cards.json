@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "bash-errexit-nounset-practice",
+    "title": "Bash 5.3 参考手册：错误处理",
+    "url": "https://tiswww.case.edu/php/chet/bash/bashref.html#The-Set-Builtin",
+    "type": "官方文档或手册",
+    "note": "依据注明版本的文档或手册自行整理，示例自编；命令及语言行为应以所用实现为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "basherr-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 错误处理",
+      "knowledgePoint": "失败退出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 脚本启用 set -e 后，是否所有非零状态都会立即让脚本退出？",
+      "answer": "不会；例如 if 的条件命令失败时，Bash 不因该失败立即退出。",
+      "explanation": "while、&&／|| 列表及管道等还有具体例外，不能把 -e 当作通用异常处理。",
+      "example": "set -e; if false; then :; fi 仍可继续执行。",
+      "tags": [
+        "Bash 错误处理",
+        "失败退出"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#The-Set-Builtin"
+    },
+    {
+      "id": "basherr-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 错误处理",
+      "knowledgePoint": "函数例外",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 启用 set -e 后，在 if 条件中调用的函数内部命令失败一定会退出吗？",
+      "answer": "不一定；函数在忽略 -e 的条件上下文中执行时，其内部命令不受 -e 影响。",
+      "explanation": "函数可能继续执行后续命令并返回其状态。",
+      "example": "if f; then ... 中应明确检查 f 内部的关键失败。",
+      "tags": [
+        "Bash 错误处理",
+        "函数例外"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#The-Set-Builtin"
+    },
+    {
+      "id": "basherr-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Bash 错误处理",
+      "knowledgePoint": "未设置变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Bash 的 set -u 对展开未设置的普通变量有什么影响？",
+      "answer": "会报告变量未设置的错误；在非交互式 shell 中会退出。",
+      "explanation": "位置参数和特殊参数等存在手册规定的例外。",
+      "example": "使用未定义的 $missing 可暴露拼写错误。",
+      "tags": [
+        "Bash 错误处理",
+        "未设置变量"
+      ],
+      "evidence": "source",
+      "reference": "https://tiswww.case.edu/php/chet/bash/bashref.html#The-Set-Builtin"
+    }
+  ]
+}

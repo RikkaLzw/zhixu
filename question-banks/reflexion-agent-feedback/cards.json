@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "reflexion-agent-feedback",
+    "title": "Reflexion 原论文：反馈、反思与智能体记忆",
+    "url": "https://arxiv.org/abs/2303.11366v4",
+    "type": "论文及官方技术资料",
+    "note": "依据原论文或 NIST 官方资料整理；应用判断和示例为自行整理。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "reflex-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Reflexion 智能体反思",
+      "knowledgePoint": "三个角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 原论文将工作流程划分为哪三个主要角色？",
+      "answer": "Actor 生成行动或回答，Evaluator 评估轨迹，Self-Reflection 根据反馈生成文字反思。",
+      "explanation": "这些角色可以由不同提示或实现承担。",
+      "example": "执行任务后评估结果，再总结需要改进的步骤。",
+      "tags": [
+        "三个角色",
+        "Reflexion 智能体反思"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.11366v4"
+    },
+    {
+      "id": "reflex-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Reflexion 智能体反思",
+      "knowledgePoint": "参数更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 主要依靠文字反馈改进后续尝试时，是否需要更新语言模型权重？",
+      "answer": "不需要；它将文字反思加入记忆和后续上下文，通过上下文影响行动。",
+      "explanation": "这与用梯度更新模型参数的微调不同。",
+      "example": "保留失败经验作为下一次尝试的提示。",
+      "tags": [
+        "参数更新",
+        "Reflexion 智能体反思"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.11366v4"
+    },
+    {
+      "id": "reflex-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Reflexion 智能体反思",
+      "knowledgePoint": "评估器来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 的 Evaluator 只能由语言模型自己担任吗？",
+      "answer": "不是；评估器还可以使用精确匹配、环境反馈或任务启发式。",
+      "explanation": "评估信号可来自外部环境或内部评估。",
+      "example": "用任务完成信号或专门规则判断一次尝试。",
+      "tags": [
+        "评估器来源",
+        "Reflexion 智能体反思"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.11366v4"
+    },
+    {
+      "id": "reflex-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Reflexion 智能体反思",
+      "knowledgePoint": "短期与长期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 的轨迹历史与文字反思通常分别放在哪类记忆中？",
+      "answer": "当前轨迹历史作为短期记忆；跨尝试保留的文字反思作为长期情景记忆。",
+      "explanation": "两类信息共同为后续行动提供上下文。",
+      "example": "保存当前动作序列，同时保留上次失败经验。",
+      "tags": [
+        "短期与长期",
+        "Reflexion 智能体反思"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.11366v4"
+    },
+    {
+      "id": "reflex-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Reflexion 智能体反思",
+      "knowledgePoint": "记忆容量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 为什么需要限制保留的历史反思数量？",
+      "answer": "历史反思会占用上下文窗口；限制数量可控制提示长度。",
+      "explanation": "丢弃旧反思也可能丢失有用经验。",
+      "example": "只保留最近几次有用反思。",
+      "tags": [
+        "记忆容量",
+        "Reflexion 智能体反思"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.11366v4"
+    },
+    {
+      "id": "reflex-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Reflexion 智能体反思",
+      "knowledgePoint": "反思可靠性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 生成的自我反思能否自动视为正确的失败原因？",
+      "answer": "不能；文字反思依赖评估信号和模型推断，可能归因错误。",
+      "explanation": "可结合外部观察或可复现证据核对。",
+      "example": "检查工具实际返回结果是否支持模型的解释。",
+      "tags": [
+        "反思可靠性",
+        "Reflexion 智能体反思"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2303.11366v4"
+    },
+    {
+      "id": "reflex-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Reflexion 智能体反思",
+      "knowledgePoint": "测试误报",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 代码生成中，自生成测试全部通过能否证明程序实现正确？",
+      "answer": "不能；测试可能覆盖不足或断言有误，使错误实现通过。",
+      "explanation": "论文把这种情况视为测试对错误实现的假正例。",
+      "example": "补充独立测试和边界条件。",
+      "tags": [
+        "测试误报",
+        "Reflexion 智能体反思"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.11366v4"
+    },
+    {
+      "id": "reflex-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Reflexion 智能体反思",
+      "knowledgePoint": "测试误拒",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 的自生成测试写错预期结果时，可能怎样影响正确代码？",
+      "answer": "正确实现也可能被错误测试判为失败，从而触发不必要的修改。",
+      "explanation": "测试失败需要结合规格判断问题在代码还是测试。",
+      "example": "核对断言与题目要求。",
+      "tags": [
+        "测试误拒",
+        "Reflexion 智能体反思"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2303.11366v4"
+    },
+    {
+      "id": "reflex-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Reflexion 智能体反思",
+      "knowledgePoint": "测试语法过滤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Reflexion 论文通过构造 AST 过滤自生成测试，能否确保测试断言符合任务要求？",
+      "answer": "不能；语法有效只说明测试语句可解析，不证明断言语义正确。",
+      "explanation": "测试还可能遗漏重要输入或使用错误预期值。",
+      "example": "对通过语法检查的断言再核对规格。",
+      "tags": [
+        "测试语法过滤",
+        "Reflexion 智能体反思"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2303.11366v4"
+    }
+  ]
+}

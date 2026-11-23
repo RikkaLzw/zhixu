@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "semgrep-taint",
+    "title": "Semgrep 污点规则与数据流说明",
+    "url": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode/overview",
+    "type": "技术文档",
+    "note": "根据逐题标注的文档自行整理；示例为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "semtaint-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点规则",
+      "knowledgePoint": "净化器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "污点分析中的 sanitizer 通常表示什么？",
+      "answer": "它表示按规则定义对受污染数据进行有效处理或检查的位置。",
+      "explanation": "净化是否足够取决于漏洞类型和具体使用上下文。",
+      "example": "针对特定输出上下文使用正确编码。",
+      "tags": [
+        "净化器",
+        "污点规则"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode/overview"
+    },
+    {
+      "id": "semtaint-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点规则",
+      "knowledgePoint": "自定义传播的起点终点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep Pro 自定义污点传播规则的 from 和 to 分别指定什么？",
+      "answer": "from 指定污点传播的起点，to 指定传播的目标，两者使用元变量表示。",
+      "explanation": "自定义传播规则是 Semgrep Pro 功能，可用于补充特定库的传播方式。",
+      "example": "把一个参数中的污点传播到容器对象。",
+      "tags": [
+        "自定义传播的起点终点",
+        "污点规则"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode/overview"
+    },
+    {
+      "id": "semtaint-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点规则",
+      "knowledgePoint": "污点规则模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep 规则的 mode: taint 表明采用什么分析方式？",
+      "answer": "它启用污点跟踪规则，按定义的来源、传播、净化和汇点分析数据流。",
+      "explanation": "具体匹配和跨过程能力取决于版本与产品配置。",
+      "example": "跟踪请求参数是否流向敏感调用。",
+      "tags": [
+        "污点规则模式",
+        "污点规则"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode/overview"
+    },
+    {
+      "id": "semtaint-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点规则",
+      "knowledgePoint": "污点路径展示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep 同一汇点存在多条污点路径时，展示的一条 trace 能否证明不存在其他路径？",
+      "answer": "不能；其文档说明一个结果可能只展示其中一条污点路径。",
+      "explanation": "审核修复时应考虑其他可能到达同一汇点的来源。",
+      "example": "修复一个输入来源后，另一来源仍可到达该汇点。",
+      "tags": [
+        "污点路径展示",
+        "污点规则"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode/overview"
+    },
+    {
+      "id": "semtaint-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点规则",
+      "knowledgePoint": "净化上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能把任意字符串处理函数都视为污点净化器？",
+      "answer": "是否安全取决于处理是否针对对应漏洞和具体使用上下文有效。",
+      "explanation": "错误标注净化器可能掩盖真正的污点路径。",
+      "example": "仅去除空格不能普遍防止 SQL 注入。",
+      "tags": [
+        "净化上下文",
+        "污点规则"
+      ],
+      "evidence": "application",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode/overview"
+    },
+    {
+      "id": "semtaint-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点规则",
+      "knowledgePoint": "精确匹配来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep 污点来源设置 exact: true 对嵌套子表达式有什么影响？",
+      "answer": "只把来源模式的精确匹配结果视为来源，不自动把其中所有子表达式也视为来源。",
+      "explanation": "其他规则仍可能独立地将子表达式标为污点；净化器的 exact: true 也只对精确匹配部分生效。",
+      "example": "来源调用的参数里嵌套另一个表达式时，检查该选项的影响。",
+      "tags": [
+        "精确匹配来源",
+        "污点规则"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode/overview"
+    }
+  ]
+}

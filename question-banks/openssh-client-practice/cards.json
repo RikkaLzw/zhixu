@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "openssh-client-practice",
+    "title": "OpenSSH 手册：远程连接与客户端配置",
+    "url": "https://man.openbsd.org/ssh.1",
+    "type": "官方文档与手册",
+    "note": "依据逐题链接自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sshops-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "用户与主机身份",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "SSH 用户密钥和服务器主机密钥通常分别用于验证什么身份？",
+      "answer": "用户密钥用于用户认证；主机密钥用于客户端识别服务器。",
+      "explanation": "两者验证方向不同；首次连接服务器时仍需通过可信渠道核对主机密钥。",
+      "example": "本地私钥可用于登录，同时客户端检查服务器主机密钥。",
+      "tags": [
+        "SSH 远程连接",
+        "用户与主机身份"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh.1"
+    },
+    {
+      "id": "sshops-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "已知主机密钥",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH 客户端的 known_hosts 通常保存什么信息？",
+      "answer": "保存已知服务器的主机公钥记录，供后续连接校验。",
+      "explanation": "服务器更换主机密钥后应先核实变更原因。",
+      "example": "用户级记录通常位于 ~/.ssh/known_hosts。",
+      "tags": [
+        "SSH 远程连接",
+        "已知主机密钥"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh.1"
+    },
+    {
+      "id": "sshops-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "连接端口",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH ssh -p 2222 host 中的 -p 指定什么？",
+      "answer": "指定连接远程 SSH 服务器时使用的端口。",
+      "explanation": "这是客户端连接目标端口，不是本地转发监听端口。",
+      "example": "ssh -p 2222 user@example.com。",
+      "tags": [
+        "SSH 远程连接",
+        "连接端口"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh.1"
+    },
+    {
+      "id": "sshops-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "身份文件",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH ssh -i keyfile 指定的文件主要用于什么？",
+      "answer": "指定用于公钥认证的用户身份私钥文件。",
+      "explanation": "客户端可能还根据配置尝试其他身份文件或代理中的密钥。",
+      "example": "ssh -i ~/.ssh/id_ed25519 user@example.com。",
+      "tags": [
+        "SSH 远程连接",
+        "身份文件"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh.1"
+    },
+    {
+      "id": "sshops-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "跳板主机",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH ssh -J jump target 的常见用途是什么？",
+      "answer": "先连接跳板主机，再经跳板连接目标主机。",
+      "explanation": "目标主机和跳板主机可以分别配置连接参数。",
+      "example": "ssh -J bastion internal.example。",
+      "tags": [
+        "SSH 远程连接",
+        "跳板主机"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh.1"
+    },
+    {
+      "id": "sshops-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "本地端口转发",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH 的 -L 本地端口转发怎样传递连接？",
+      "answer": "在客户端本地监听端口，并通过 SSH 连接转发到远端一侧指定的主机和端口。",
+      "explanation": "目标地址由远端一侧访问；是否对外监听取决于绑定地址等设置。",
+      "example": "ssh -L 127.0.0.1:15432:db:5432 host。",
+      "tags": [
+        "SSH 远程连接",
+        "本地端口转发"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh.1"
+    },
+    {
+      "id": "sshops-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "动态端口转发",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH ssh -D 1080 host 在客户端提供什么服务？",
+      "answer": "在本地端口提供动态转发，作为 SOCKS4 或 SOCKS5 代理。",
+      "explanation": "需要让应用使用该代理；监听地址也影响其他主机能否连接。",
+      "example": "ssh -D 127.0.0.1:1080 host。",
+      "tags": [
+        "SSH 远程连接",
+        "动态端口转发"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh.1"
+    },
+    {
+      "id": "sshops-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "无远端命令",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH ssh -N 对远程命令有什么影响？",
+      "answer": "不执行远程命令，常与端口转发一起使用。",
+      "explanation": "SSH 连接仍需按其配置建立。",
+      "example": "ssh -N -L 127.0.0.1:8080:127.0.0.1:80 host。",
+      "tags": [
+        "SSH 远程连接",
+        "无远端命令"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh.1"
+    },
+    {
+      "id": "sshops-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "展开客户端配置",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH ssh -G host 常用于排查什么？",
+      "answer": "输出评估 Host 和 Match 配置后的客户端配置，然后退出。",
+      "explanation": "可用于检查某个主机最终使用的端口、用户名等参数。",
+      "example": "ssh -G example.com 可查看生效配置。",
+      "tags": [
+        "SSH 远程连接",
+        "展开客户端配置"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh.1"
+    },
+    {
+      "id": "sshops-010",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "批处理交互",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH 客户端设置 BatchMode yes 后，交互提示怎样变化？",
+      "answer": "禁用密码提示和主机密钥确认等用户交互。",
+      "explanation": "无可用非交互认证或主机校验条件时，连接可能失败。",
+      "example": "批处理可使用 ssh -o BatchMode=yes host。",
+      "tags": [
+        "SSH 远程连接",
+        "批处理交互"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh_config.5"
+    },
+    {
+      "id": "sshops-011",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SSH 远程连接",
+      "knowledgePoint": "主机密钥严格检查",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "OpenSSH 的 StrictHostKeyChecking yes 如何处理未知或已变更的主机密钥？",
+      "answer": "拒绝未知或发生变更的主机密钥，不自动将新主机密钥加入已知列表。",
+      "explanation": "应提前通过可信渠道核实并配置主机密钥。",
+      "example": "受控自动化环境可预先分发服务器主机公钥。",
+      "tags": [
+        "SSH 远程连接",
+        "主机密钥严格检查"
+      ],
+      "evidence": "source",
+      "reference": "https://man.openbsd.org/ssh_config.5"
+    }
+  ]
+}

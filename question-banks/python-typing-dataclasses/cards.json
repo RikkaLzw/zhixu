@@ -1,0 +1,663 @@
+{
+  "source": {
+    "id": "python-typing-dataclasses",
+    "title": "Python 类型提示与数据类",
+    "url": "https://docs.python.org/3.12/library/typing.html",
+    "type": "官方技术文档",
+    "note": "依据 Python 3.12 typing 与 dataclasses 官方文档整理，代表性运行时行为使用 Python 3.12.13 验证；静态类型规则以官方文档为依据。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pytypes-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "类型提示",
+      "knowledgePoint": "可空类型与可省略参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 中 Optional[int] 是否意味着调用函数时可以省略该参数？",
+      "answer": "不意味着；它表示该值允许为 int 或 None，参数能否省略还取决于是否有默认值。",
+      "explanation": "Optional[int] 等价于 int | None。",
+      "example": "x: int | None 没有默认值时，调用仍需提供 x。",
+      "tags": [
+        "可空类型与可省略参数",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.Optional",
+      "referenceTitle": "Python 3.12 标准库：typing.Optional"
+    },
+    {
+      "id": "pytypes-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "泛型与运行时检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Python 3.12 中，isinstance(value, list[str]) 能检查列表元素是否都是字符串吗？",
+      "answer": "不能；对参数化泛型使用 isinstance 会抛出 TypeError。",
+      "explanation": "如需运行时验证，需检查容器类型和元素，或使用专门的验证工具。",
+      "example": "先检查 isinstance(value, list)，再按需求检查元素。",
+      "tags": [
+        "泛型与运行时检查",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/stdtypes.html#types-genericalias",
+      "referenceTitle": "Python 3.12 标准类型：参数化泛型"
+    },
+    {
+      "id": "pytypes-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "Any与object",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "静态类型检查中，Any 与 object 对允许的操作有什么主要区别？",
+      "answer": "Any 通常允许任意操作而不要求先证明类型；object 只允许适用于所有对象的操作。",
+      "explanation": "二者的区别主要体现在静态检查，而非自动运行时校验。",
+      "example": "object 类型的值通常需要先缩小类型范围才能调用特定方法。",
+      "tags": [
+        "Any与object",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.Any",
+      "referenceTitle": "Python 3.12 标准库：typing.Any"
+    },
+    {
+      "id": "pytypes-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "类型提示",
+      "knowledgePoint": "TypedDict用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TypedDict 用来描述什么样的数据结构？",
+      "answer": "它描述字典中预期的字符串键以及各键对应的值类型。",
+      "explanation": "类型检查器可检查键和值；运行时实例仍是普通字典。",
+      "example": "用它描述包含 name 和 score 字段的记录。",
+      "tags": [
+        "TypedDict用途",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.TypedDict",
+      "referenceTitle": "Python 3.12 标准库：typing.TypedDict"
+    },
+    {
+      "id": "pytypes-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "TypedDict运行时验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "构造 TypedDict 时，Python 解释器会自动校验字典里的键和值类型吗？",
+      "answer": "不会；TypedDict 主要供静态类型检查，运行时不会自动校验。",
+      "explanation": "运行时输入仍需按应用需要验证。",
+      "example": "传入错误类型的值不一定在构造时抛出异常。",
+      "tags": [
+        "TypedDict运行时验证",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.TypedDict",
+      "referenceTitle": "Python 3.12 标准库：typing.TypedDict"
+    },
+    {
+      "id": "pytypes-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "键可缺失与值可为空",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TypedDict 中 NotRequired[str] 与 str | None 分别表达什么？",
+      "answer": "NotRequired[str] 表示该键可以缺失；str | None 表示键存在时的值可以是字符串或 None。",
+      "explanation": "默认必填的键若要既可缺失又可为 None，需要同时表达两者。",
+      "example": "note: NotRequired[str] 可没有 note；name: str | None 默认仍要求有 name。",
+      "tags": [
+        "键可缺失与值可为空",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.NotRequired",
+      "referenceTitle": "Python 3.12 标准库：typing.NotRequired"
+    },
+    {
+      "id": "pytypes-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "TypedDict非必填键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TypedDict 定义中的 total=False 对未单独标记的键有什么影响？",
+      "answer": "这些键默认可以缺失。",
+      "explanation": "total=False 只改变本次定义的键的默认规则；继承的键保留原有要求，也可显式使用 Required 和 NotRequired。",
+      "example": "部分更新记录可以只包含需要更新的字段。",
+      "tags": [
+        "TypedDict非必填键",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.TypedDict",
+      "referenceTitle": "Python 3.12 标准库：typing.TypedDict"
+    },
+    {
+      "id": "pytypes-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "类型提示",
+      "knowledgePoint": "字面量类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 类型提示 Literal[\"train\", \"test\"] 用来表达什么？",
+      "answer": "它限定静态类型检查所允许的值为所列字面量。",
+      "explanation": "Literal 本身不会自动执行运行时输入校验。",
+      "example": "用它描述模式只能是 train 或 test。",
+      "tags": [
+        "字面量类型",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.Literal",
+      "referenceTitle": "Python 3.12 标准库：typing.Literal"
+    },
+    {
+      "id": "pytypes-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "结构化类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 Protocol 如何支持结构化子类型？",
+      "answer": "类型满足协议要求的成员及其类型时，可被静态类型检查器视为实现该协议，无须显式继承。",
+      "explanation": "这为鸭子类型提供了可检查的接口描述。",
+      "example": "有符合签名的 read 方法的类可满足读取协议。",
+      "tags": [
+        "结构化类型",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.Protocol",
+      "referenceTitle": "Python 3.12 标准库：typing.Protocol"
+    },
+    {
+      "id": "pytypes-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "运行时协议检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 @runtime_checkable Protocol 用于 isinstance 时，会验证方法的参数和返回类型吗？",
+      "answer": "不会；它主要检查要求的属性是否存在，不检查方法的类型签名。",
+      "explanation": "因此检查通过不能证明调用时的参数一定兼容。",
+      "example": "对象有 read 属性但签名不匹配，仍可能通过检查。",
+      "tags": [
+        "运行时协议检查",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.runtime_checkable",
+      "referenceTitle": "Python 3.12 标准库：typing.runtime_checkable"
+    },
+    {
+      "id": "pytypes-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "类型注解元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Annotated[T, metadata] 在类型 T 上增加了什么？",
+      "answer": "它为类型附加供工具或框架解释的元数据。",
+      "explanation": "不认识这些元数据的工具可以只按 T 处理；元数据不会自行执行校验。",
+      "example": "Annotated[int, \"大于零\"] 可供支持该约定的工具读取。",
+      "tags": [
+        "类型注解元数据",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.Annotated",
+      "referenceTitle": "Python 3.12 标准库：typing.Annotated"
+    },
+    {
+      "id": "pytypes-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "保留注解元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "读取 Annotated 类型提示时，get_type_hints 的 include_extras=True 有什么作用？",
+      "answer": "它保留 Annotated 等额外信息；默认返回结果会移除 Annotated 的元数据。",
+      "explanation": "该选项影响读取到的注解表示，不会校验实际参数。",
+      "example": "框架读取字段说明时可启用 include_extras。",
+      "tags": [
+        "保留注解元数据",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.get_type_hints",
+      "referenceTitle": "Python 3.12 标准库：typing.get_type_hints"
+    },
+    {
+      "id": "pytypes-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "cast的运行时行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "typing.cast(T, value) 会在运行时把 value 转换或验证为 T 吗？",
+      "answer": "不会；它原样返回 value，只向静态类型检查器表达期望类型。",
+      "explanation": "使用 cast 前仍需由程序逻辑保证类型判断可靠。",
+      "example": "cast(str, 123) 的运行时结果仍是整数 123。",
+      "tags": [
+        "cast的运行时行为",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.cast",
+      "referenceTitle": "Python 3.12 标准库：typing.cast"
+    },
+    {
+      "id": "pytypes-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "NewType运行时行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 UserId = NewType(\"UserId\", int) 时，UserId(x) 在运行时会创建新的包装对象吗？",
+      "answer": "不会；它在运行时直接返回传入对象，静态类型检查器会把 UserId 视为独立的派生类型。",
+      "explanation": "它不替代运行时值校验。",
+      "example": "把整数包装为 UserId 后，运行时得到的仍是原整数对象。",
+      "tags": [
+        "NewType运行时行为",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.NewType",
+      "referenceTitle": "Python 3.12 标准库：typing.NewType"
+    },
+    {
+      "id": "pytypes-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "仅类型检查时导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "typing.TYPE_CHECKING 在普通运行时与静态类型检查时分别是什么值？",
+      "answer": "运行时为 False；静态类型检查器通常将其视为 True。",
+      "explanation": "只在该条件下导入的名字若在运行时求值，还需要妥善处理注解。",
+      "example": "把仅供类型检查的导入放在 if TYPE_CHECKING 中。",
+      "tags": [
+        "仅类型检查时导入",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.TYPE_CHECKING",
+      "referenceTitle": "Python 3.12 标准库：typing.TYPE_CHECKING"
+    },
+    {
+      "id": "pytypes-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "类型提示",
+      "knowledgePoint": "类型变量关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在函数签名中重复使用同一个 TypeVar 有什么用途？",
+      "answer": "它向类型检查器表达多个位置之间的类型关系。",
+      "explanation": "实际推断规则还取决于类型变量的约束及类型检查器。",
+      "example": "identity(x: T) -> T 表示返回值与输入共享类型变量。",
+      "tags": [
+        "类型变量关联",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.TypeVar",
+      "referenceTitle": "Python 3.12 标准库：typing.TypeVar"
+    },
+    {
+      "id": "pytypes-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "类型提示",
+      "knowledgePoint": "可调用对象签名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Callable[[int, str], bool] 描述什么？",
+      "answer": "它描述接收 int 和 str 两个参数并返回 bool 的可调用对象。",
+      "explanation": "这是静态类型描述，不会自动拦截不匹配的运行时调用。",
+      "example": "用于标注接收计数和名称并返回判断结果的函数。",
+      "tags": [
+        "可调用对象签名",
+        "Python",
+        "类型提示"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/typing.html#typing.Callable",
+      "referenceTitle": "Python 3.12 标准库：typing.Callable"
+    },
+    {
+      "id": "pytypes-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据类",
+      "knowledgePoint": "数据类生成方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 @dataclass 默认会为类生成哪些常用方法？",
+      "answer": "默认会根据字段生成初始化、表示和相等比较等方法。",
+      "explanation": "具体生成行为还受装饰器参数和类中已有方法影响。",
+      "example": "用字段定义记录后，直接构造实例并比较内容。",
+      "tags": [
+        "数据类生成方法",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.dataclass",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.dataclass"
+    },
+    {
+      "id": "pytypes-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "可变字段默认值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Python 数据类的可变字段通常使用 field(default_factory=list)？",
+      "answer": "工厂在需要默认值时创建新列表，避免实例意外共享同一个可变默认值。",
+      "explanation": "Python 3.12 会拒绝未通过工厂设置的不可哈希默认值；这只能捕捉部分可变值问题。",
+      "example": "每个样本记录拥有各自的 tags 列表。",
+      "tags": [
+        "可变字段默认值",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#mutable-default-values",
+      "referenceTitle": "Python 3.12 标准库：mutable-default-values"
+    },
+    {
+      "id": "pytypes-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "冻结并非深度不可变",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据类设置 frozen=True 后，字段中的列表还能被修改吗？",
+      "answer": "可以；冻结阻止普通字段赋值或删除，不会自动冻结嵌套可变对象。",
+      "explanation": "要获得更强的不变性，应选择不可变字段并检查引用。",
+      "example": "不能重新绑定 tags，但 tags.append 仍可改变列表。",
+      "tags": [
+        "冻结并非深度不可变",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.dataclass",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.dataclass"
+    },
+    {
+      "id": "pytypes-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "初始化后处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据类的 __post_init__ 通常在什么时候自动执行？",
+      "answer": "由 dataclass 生成的 __init__ 完成字段初始化后调用。",
+      "explanation": "如果没有生成 __init__，则不会自动调用该方法。",
+      "example": "根据输入字段计算一个派生字段。",
+      "tags": [
+        "初始化后处理",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#post-init-processing",
+      "referenceTitle": "Python 3.12 标准库：post-init-processing"
+    },
+    {
+      "id": "pytypes-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "排除初始化参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据类字段设置 field(init=False) 后，对自动生成的 __init__ 有什么影响？",
+      "answer": "该字段不会作为生成的 __init__ 参数。",
+      "explanation": "它可通过默认值或 __post_init__ 等方式初始化。",
+      "example": "score 根据其他字段计算，而非由调用方传入。",
+      "tags": [
+        "排除初始化参数",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.field",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.field"
+    },
+    {
+      "id": "pytypes-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "数据类中的类变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据类中标注为 ClassVar 的属性会作为普通数据类字段处理吗？",
+      "answer": "不会；dataclass 会将其排除在字段处理之外。",
+      "explanation": "它通常表示类级别配置，不会成为生成的初始化参数。",
+      "example": "shared: ClassVar[str] = \"v1\" 表示类共享的配置。",
+      "tags": [
+        "数据类中的类变量",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#class-variables",
+      "referenceTitle": "Python 3.12 标准库：class-variables"
+    },
+    {
+      "id": "pytypes-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "仅初始化变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据类的 InitVar 适合传递什么信息？",
+      "answer": "它声明仅用于初始化的参数，可传给 __post_init__，但不作为普通字段列入 fields()。",
+      "explanation": "是否保留或另行保存该信息由类的实现决定。",
+      "example": "用一次性配置计算结果字段，不将配置作为普通数据字段。",
+      "tags": [
+        "仅初始化变量",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#init-only-variables",
+      "referenceTitle": "Python 3.12 标准库：init-only-variables"
+    },
+    {
+      "id": "pytypes-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "数据类相等比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用默认 eq=True 时，数据类实例怎样进行相等比较？",
+      "answer": "生成的相等比较按参与比较的字段值比较，并要求两个实例属于相同类型。",
+      "explanation": "字段可通过 compare=False 排除在生成的比较之外。",
+      "example": "同一数据类的两个实例字段值相同，则默认相等。",
+      "tags": [
+        "数据类相等比较",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.dataclass",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.dataclass"
+    },
+    {
+      "id": "pytypes-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "可变数据类的哈希",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据类使用默认 eq=True、frozen=False 时，实例通常能直接作为字典键吗？",
+      "answer": "不能；默认情况下该类通常不可哈希。",
+      "explanation": "这样可避免可变对象的哈希值与相等关系失去一致性。",
+      "example": "如需字典键，应设计不可变且可哈希的字段。",
+      "tags": [
+        "可变数据类的哈希",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.dataclass",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.dataclass"
+    },
+    {
+      "id": "pytypes-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "数据类转换字典",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "dataclasses.asdict 对嵌套数据类和普通对象如何处理？",
+      "answer": "它递归转换嵌套数据类及常见容器，其他对象使用 deepcopy 复制。",
+      "explanation": "这可能有额外开销，也不等同于只复制最外层字典。",
+      "example": "转换后修改得到的嵌套列表，不会因此修改原列表。",
+      "tags": [
+        "数据类转换字典",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.asdict",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.asdict"
+    },
+    {
+      "id": "pytypes-028",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据类",
+      "knowledgePoint": "替换数据类实例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "dataclasses.replace(instance, field=value) 会原地修改原实例吗？",
+      "answer": "不会；它调用数据类的初始化方法创建新实例。",
+      "explanation": "使用生成的初始化方法时，__post_init__ 会再次运行；init=False 字段不会从源对象直接复制。",
+      "example": "用 replace 修改配置中的学习率，保留原配置。",
+      "tags": [
+        "替换数据类实例",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.replace",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.replace"
+    },
+    {
+      "id": "pytypes-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "关键字专用字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "@dataclass(kw_only=True) 对生成的初始化方法有什么影响？",
+      "answer": "它使数据类字段默认成为只能通过关键字传入的参数。",
+      "explanation": "可以让调用处明确字段名；具体字段也可单独配置。",
+      "example": "Config(rate=0.1) 可用，Config(0.1) 不符合该初始化签名。",
+      "tags": [
+        "关键字专用字段",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.dataclass",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.dataclass"
+    },
+    {
+      "id": "pytypes-030",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "repr排除字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据类字段设为 repr=False 后，还会出现在 asdict 的结果中吗？",
+      "answer": "通常会；repr=False 只控制生成的字符串表示是否包含该字段。",
+      "explanation": "它不自动从其他导出或序列化结果中移除字段。",
+      "example": "隐藏 repr 中的内部值后，asdict 仍可能包含该字段。",
+      "tags": [
+        "repr排除字段",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.field",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.field"
+    },
+    {
+      "id": "pytypes-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据类",
+      "knowledgePoint": "默认字段顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "生成数据类 __init__ 时，没有默认值的字段能放在有默认值字段之后吗？",
+      "answer": "通常不能；这样的字段顺序会触发 TypeError。",
+      "explanation": "继承合并字段时也要遵守这一规则；关键字专用字段的排序规则另有处理。",
+      "example": "把必填字段放在具有默认值的普通字段之前。",
+      "tags": [
+        "默认字段顺序",
+        "Python",
+        "数据类"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/dataclasses.html#dataclasses.dataclass",
+      "referenceTitle": "Python 3.12 标准库：dataclasses.dataclass"
+    }
+  ]
+}

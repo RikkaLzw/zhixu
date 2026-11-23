@@ -1,0 +1,524 @@
+{
+  "source": {
+    "id": "tcp-ip-fundamentals",
+    "title": "TCP/IP 基础：RFC 9293、RFC 5681 和 RFC 768",
+    "url": "https://www.rfc-editor.org/rfc/rfc9293.html",
+    "type": "协议标准与官方系统文档",
+    "note": "逐题依据协议或手册自行整理；实际行为可能依实现、版本及环境而异。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "tcpbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "TCP与UDP",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 与 UDP 在传输抽象上有什么主要区别？",
+      "answer": "TCP 提供面向连接、可靠且按序的字节流；UDP 提供数据报服务，不保证交付或顺序。",
+      "explanation": "应用可以在 UDP 之上自行实现额外机制。",
+      "example": "文件传输和实时通信可根据需求选择传输协议。",
+      "tags": [
+        "TCP与UDP",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html",
+      "supportingReferences": [
+        {
+          "id": "udp-rfc768",
+          "title": "RFC 768：User Datagram Protocol",
+          "url": "https://www.rfc-editor.org/rfc/rfc768.html",
+          "type": "协议标准",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "tcpbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "字节流边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 接收方每次 read 得到的数据一定对应发送方的一次 write 吗？",
+      "answer": "不一定；TCP 是字节流，不保留应用写入的消息边界，而 UDP 按数据报处理消息。",
+      "explanation": "TCP 应用需要用长度、分隔符等方式定义消息边界。",
+      "example": "一次发送的消息可能需要多次读取才能收齐。",
+      "tags": [
+        "字节流边界",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html",
+      "supportingReferences": [
+        {
+          "id": "udp-rfc768",
+          "title": "RFC 768：User Datagram Protocol",
+          "url": "https://www.rfc-editor.org/rfc/rfc768.html",
+          "type": "协议标准",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "tcpbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "端口作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 或 UDP 的端口号主要用于什么？",
+      "answer": "它与 IP 地址及协议等信息一起，将传输层数据交给合适的通信端点。",
+      "explanation": "端口号与主机 IP 地址的作用不同。",
+      "example": "同一主机可在不同端口提供不同服务。",
+      "tags": [
+        "端口作用",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc768.html"
+    },
+    {
+      "id": "tcpbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "连接四元组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "通常用哪些信息区分两个 TCP 连接？",
+      "answer": "用源 IP、源端口、目的 IP 和目的端口组成的四元组区分。",
+      "explanation": "在多协议环境中还需结合传输协议等上下文。",
+      "example": "同一服务器端口可与多个客户端端点建立连接。",
+      "tags": [
+        "连接四元组",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "全双工",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 连接的全双工是什么意思？",
+      "answer": "连接双方可以同时在两个方向发送和接收数据。",
+      "explanation": "两个方向各有各自的序号空间。",
+      "example": "客户端和服务端可以同时发送数据。",
+      "tags": [
+        "全双工",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "三次握手",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "常见 TCP 三次握手的报文顺序是什么？",
+      "answer": "发起方发送 SYN，接收方回复 SYN+ACK，发起方再回复 ACK。",
+      "explanation": "三次握手用于建立连接并同步双方初始序号。",
+      "example": "客户端连接监听中的服务器。",
+      "tags": [
+        "三次握手",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.5"
+    },
+    {
+      "id": "tcpbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "初始序号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 建立连接时为什么要交换并确认双方的初始序号？",
+      "answer": "双方需要知道各自发送和接收序列的起点，才能确认及重组后续字节。",
+      "explanation": "每个方向维护独立的序号空间。",
+      "example": "服务器确认客户端的 SYN 序号并发送自己的 SYN。",
+      "tags": [
+        "初始序号",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.4"
+    },
+    {
+      "id": "tcpbase-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "序号含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 数据段中的序号通常标识什么？",
+      "answer": "它标识该段第一个数据字节的序号；SYN 段的序号表示初始序号。",
+      "explanation": "TCP 对字节编号，而不是简单地给每条应用消息编号。",
+      "example": "从指定序号开始的多个字节形成一个数据段。",
+      "tags": [
+        "序号含义",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.1"
+    },
+    {
+      "id": "tcpbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "SYN和FIN序号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 中 SYN 和 FIN 是否占用序号空间？",
+      "answer": "是；SYN 和 FIN 各占用一个序号。",
+      "explanation": "这使建立与关闭连接的控制事件也能被确认。",
+      "example": "不携带数据的 SYN 通常也会使期望序号前进一位。",
+      "tags": [
+        "SYN和FIN序号",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.4"
+    },
+    {
+      "id": "tcpbase-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "累计确认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 的 ACK 确认号通常表示什么？",
+      "answer": "它表示接收方下一步期望按序接收的序号，累计确认此前的字节。",
+      "explanation": "选择确认等扩展还可报告其他已收到的数据范围。",
+      "example": "ACK 为 101 时表示此前按序字节已收到。",
+      "tags": [
+        "累计确认",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.3.1"
+    },
+    {
+      "id": "tcpbase-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "确认与应用消费",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 已确认某些数据，是否证明接收端应用已经处理这些数据？",
+      "answer": "不能；确认表明接收端 TCP 已接收对应数据，不证明应用已读取或业务处理成功。",
+      "explanation": "应用级成功需要相应的业务响应或确认。",
+      "example": "传输确认后，服务程序仍可能尚未处理请求。",
+      "tags": [
+        "确认与应用消费",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpbase-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "重传超时",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 发送方等待确认超时后通常会做什么？",
+      "answer": "它会重传尚未确认的数据，并按相应算法调整重传计时和拥塞控制状态。",
+      "explanation": "重传超时并不单独证明某一具体原因。",
+      "example": "丢失的数据段未收到确认后被重新发送。",
+      "tags": [
+        "重传超时",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "快速重传",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 RFC 5681 的经典快速重传算法，收到第三个重复 ACK 后发送方会做什么？",
+      "answer": "它不必等待重传计时器到期，就重传推定丢失的段。",
+      "explanation": "重复 ACK 也可能由乱序或重复造成，不能单独证明丢包原因。",
+      "example": "后续数据到达而前面一个数据段未被累计确认。",
+      "tags": [
+        "快速重传",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5681.html#section-3.2"
+    },
+    {
+      "id": "tcpbase-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "校验和边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 校验和的主要用途是什么？",
+      "answer": "它用于检测传输中的数据或相关头部损坏；检测通过并不保证应用内容在语义上正确。",
+      "explanation": "校验和不能独立完成数据纠错。",
+      "example": "损坏的数据段可被丢弃并通过重传恢复。",
+      "tags": [
+        "校验和边界",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.1"
+    },
+    {
+      "id": "tcpbase-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "流量控制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 接收窗口主要用于控制什么？",
+      "answer": "它通告接收方当前允许的接收序号范围，帮助发送方避免超过接收端可接收的数据量。",
+      "explanation": "窗口大小可随接收缓冲区状态变化。",
+      "example": "应用读取缓慢时接收窗口可能缩小。",
+      "tags": [
+        "流量控制",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpbase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "两个窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 的接收窗口 rwnd 与拥塞窗口 cwnd 约束的是什么？",
+      "answer": "rwnd 反映接收端容量限制；cwnd 反映发送方根据网络状况施加的拥塞限制。",
+      "explanation": "可发送的新数据通常同时受两者约束。",
+      "example": "接收端很空闲时，网络拥塞仍可能限制发送。",
+      "tags": [
+        "两个窗口",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5681.html#section-3.1"
+    },
+    {
+      "id": "tcpbase-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "零窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "接收方通告 TCP 零窗口后，发送方为什么还会进行窗口探测？",
+      "answer": "探测可帮助发现窗口重新打开，避免窗口更新丢失后双方长时间等待。",
+      "explanation": "零窗口表示当前接收窗口不允许普通新数据进入。",
+      "example": "接收端恢复读取后，发送方需要获知可用窗口。",
+      "tags": [
+        "零窗口",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpbase-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "慢启动与拥塞避免",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典 TCP 拥塞控制的慢启动和拥塞避免在窗口增长速度上有什么区别？",
+      "answer": "慢启动通常增长较快；拥塞避免通常较缓慢，RFC 5681 中约每 RTT 增加一个 MSS。",
+      "explanation": "具体增长受到确认方式和实现影响。",
+      "example": "窗口较小时快速探索，较大时谨慎增加。",
+      "tags": [
+        "慢启动与拥塞避免",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5681.html#section-3.1"
+    },
+    {
+      "id": "tcpbase-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "慢启动阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典 TCP 中 ssthresh 的主要作用是什么？",
+      "answer": "它帮助决定使用慢启动还是拥塞避免来增长拥塞窗口。",
+      "explanation": "cwnd 小于阈值时使用慢启动，大于阈值时使用拥塞避免。",
+      "example": "根据窗口与阈值的关系选择增长方式。",
+      "tags": [
+        "慢启动阈值",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5681.html#section-3.1"
+    },
+    {
+      "id": "tcpbase-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "FIN与半关闭",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 一端发送 FIN 后，是否一定不能再接收对方数据？",
+      "answer": "不一定；TCP 支持单方向关闭，发送 FIN 的一方仍可能继续接收对方的数据。",
+      "explanation": "FIN 表示该方向不再发送更多数据。",
+      "example": "客户端结束请求发送后继续读取响应。",
+      "tags": [
+        "FIN与半关闭",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.6"
+    },
+    {
+      "id": "tcpbase-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "关闭报文数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 正常关闭连接一定需要恰好四个独立报文吗？",
+      "answer": "不一定；两个方向分别关闭，但 ACK 与对方的 FIN 有时可以合并。",
+      "explanation": "具体报文数量取决于关闭时序。",
+      "example": "服务端确认对端 FIN 时也可能同时发送自己的 FIN。",
+      "tags": [
+        "关闭报文数量",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.6"
+    },
+    {
+      "id": "tcpbase-024",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "TIME_WAIT端点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "正常 TCP 关闭中，哪一端通常进入 TIME-WAIT？",
+      "answer": "通常是主动关闭的一端；同时关闭等情况需要按状态机具体分析。",
+      "explanation": "不能把这一规则无条件用于所有异常关闭。",
+      "example": "客户端先发起关闭时通常由客户端进入 TIME-WAIT。",
+      "tags": [
+        "TIME_WAIT端点",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpbase-025",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "TIME_WAIT作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 的 TIME-WAIT 状态主要有什么作用？",
+      "answer": "它让连接关闭相关的最后确认可被重传，并使旧连接的迟到报文有时间失效。",
+      "explanation": "RFC 9293 的状态机规定该状态等待 2×MSL。",
+      "example": "最终 ACK 丢失时，对端重发 FIN 可再次得到确认。",
+      "tags": [
+        "TIME_WAIT作用",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpbase-026",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "RST与FIN",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP RST 与 FIN 在连接终止上有什么主要区别？",
+      "answer": "FIN 用于正常关闭一个发送方向；RST 用于复位连接并中止当前连接状态。",
+      "explanation": "接收 RST 的具体应用错误表现依实现和状态而异。",
+      "example": "正常结束会话与复位异常连接使用不同控制标志。",
+      "tags": [
+        "RST与FIN",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    },
+    {
+      "id": "tcpbase-027",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "最大报文段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 的 MSS 表示什么大小？",
+      "answer": "它表示接收端愿意接收的 TCP 数据段载荷上限，不包含 IP 和 TCP 头部。",
+      "explanation": "实际可发送的载荷还受到路径和头部选项等因素影响。",
+      "example": "建连时双方可通过 MSS 选项通告各自接收能力。",
+      "tags": [
+        "最大报文段",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html#section-3.7.1"
+    },
+    {
+      "id": "tcpbase-028",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "TCP 与 UDP 基础",
+      "knowledgePoint": "可靠传输边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TCP 的可靠传输是否保证在网络永久中断时数据最终一定送达？",
+      "answer": "不保证；持续故障可能使连接超时或失败，应用需要处理错误。",
+      "explanation": "TCP 提供检测、确认和重传机制，并非无限成功保证。",
+      "example": "连接中断时请求可能没有完成。",
+      "tags": [
+        "可靠传输边界",
+        "TCP 与 UDP 基础"
+      ],
+      "evidence": "application",
+      "reference": "https://www.rfc-editor.org/rfc/rfc9293.html"
+    }
+  ]
+}

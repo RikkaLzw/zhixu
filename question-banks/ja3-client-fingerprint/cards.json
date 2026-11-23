@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "ja3-client-fingerprint",
+    "title": "Salesforce JA3 固定版本说明：TLS 客户端指纹",
+    "url": "https://raw.githubusercontent.com/salesforce/ja3/502cc6395811c54743b0561419d61900a6df3ff7/README.md",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "ja3base-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "JA3 TLS 指纹",
+      "knowledgePoint": "客户端字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "JA3 原始字符串按顺序组合 ClientHello 中的哪些字段？",
+      "answer": "版本、密码套件、扩展、椭圆曲线及曲线点格式。",
+      "explanation": "这些是握手元数据，不是加密应用载荷。",
+      "example": "同一客户端的 ClientHello 可被转换成五段字段。",
+      "tags": [
+        "JA3 TLS 指纹",
+        "客户端字段"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/salesforce/ja3/502cc6395811c54743b0561419d61900a6df3ff7/README.md"
+    },
+    {
+      "id": "ja3base-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "JA3 TLS 指纹",
+      "knowledgePoint": "字段分隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "JA3 原始字符串怎样分隔字段和字段内的多个数值？",
+      "answer": "字段之间用逗号；同一字段中的多个十进制值用连字符。",
+      "explanation": "字段和字段内元素的顺序由 ClientHello 决定。",
+      "example": "例如密码套件列表可表示为 47-53-5。",
+      "tags": [
+        "JA3 TLS 指纹",
+        "字段分隔"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/salesforce/ja3/502cc6395811c54743b0561419d61900a6df3ff7/README.md"
+    },
+    {
+      "id": "ja3base-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "JA3 TLS 指纹",
+      "knowledgePoint": "GREASE 处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "JA3 生成时为什么忽略 GREASE 值？",
+      "answer": "避免为保持协议可扩展性而变化的 GREASE 值导致指纹随之变化。",
+      "explanation": "GREASE 不应被当成普通稳定指纹特征。",
+      "example": "同一客户端仅 GREASE 值变化时，可仍得到相同 JA3。",
+      "tags": [
+        "JA3 TLS 指纹",
+        "GREASE 处理"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/salesforce/ja3/502cc6395811c54743b0561419d61900a6df3ff7/README.md"
+    },
+    {
+      "id": "ja3base-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "JA3 TLS 指纹",
+      "knowledgePoint": "指纹哈希",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "JA3 通常对原始字段字符串使用什么摘要？",
+      "answer": "计算 MD5，得到便于存储和共享的摘要字符串。",
+      "explanation": "该摘要用于指纹表示，不能单独证明客户端身份或行为。",
+      "example": "可保留原始字符串与摘要供排查。",
+      "tags": [
+        "JA3 TLS 指纹",
+        "指纹哈希"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/salesforce/ja3/502cc6395811c54743b0561419d61900a6df3ff7/README.md"
+    },
+    {
+      "id": "ja3base-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "JA3 TLS 指纹",
+      "knowledgePoint": "服务端响应字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "JA3S 原始字符串由服务端响应的哪些字段组成？",
+      "answer": "由版本、所选密码套件和扩展组成。",
+      "explanation": "服务端响应可能受客户端提供的选项和服务端配置影响。",
+      "example": "应结合客户端上下文解释 JA3S。",
+      "tags": [
+        "JA3 TLS 指纹",
+        "服务端响应字段"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/salesforce/ja3/502cc6395811c54743b0561419d61900a6df3ff7/README.md"
+    }
+  ]
+}

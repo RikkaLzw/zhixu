@@ -1,0 +1,106 @@
+{
+  "source": {
+    "id": "trec-map-ranking-evaluation",
+    "title": "TREC Eval 9.0.8：平均精确率与 MAP",
+    "url": "https://github.com/usnistgov/trec_eval/blob/v9.0.8/m_map.c",
+    "type": "官方文档、固定版本源码或论文",
+    "note": "依据 TREC Eval v9.0.8 的 map 实现自行整理；讨论二值相关判定及有已知相关文档的查询。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "trecmap-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "检索 MAP 指标",
+      "knowledgePoint": "多查询平均",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "检索评估中的 MAP 如何从多个查询的平均精确率得到？",
+      "answer": "先分别计算每个查询的平均精确率，再对查询分数取算术平均。",
+      "explanation": "每个查询在该平均中贡献相同权重。",
+      "example": "两个查询 AP 分别为 0.5 和 1 时，MAP 为 0.75。",
+      "tags": [
+        "检索 MAP 指标",
+        "多查询平均"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/usnistgov/trec_eval/blob/v9.0.8/m_map.c"
+    },
+    {
+      "id": "trecmap-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "检索 MAP 指标",
+      "knowledgePoint": "单查询计算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 TREC Eval 的二值相关口径，单查询 AP 如何利用各相关结果的排名？",
+      "answer": "在每个已检出的相关结果位置计算 Precision@该位置，求和后除以该查询的已知相关文档总数。",
+      "explanation": "未检出的已知相关文档仍在分母中。",
+      "example": "三篇相关文档中只检出一篇时，未检出的两篇仍影响 AP。",
+      "tags": [
+        "检索 MAP 指标",
+        "单查询计算"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/usnistgov/trec_eval/blob/v9.0.8/m_map.c"
+    },
+    {
+      "id": "trecmap-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索 MAP 指标",
+      "knowledgePoint": "MAP 与 MRR",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "MAP 与 MRR 对同一查询中多个相关结果的关注有什么区别？",
+      "answer": "AP 会综合各相关结果出现位置，再跨查询平均形成 MAP；倒数排名只由第一个相关结果决定，再跨查询形成 MRR。",
+      "explanation": "两种指标关注的排序行为不同。",
+      "example": "首个结果同为相关时，后续相关结果位置仍可能改变 AP。",
+      "tags": [
+        "检索 MAP 指标",
+        "MAP 与 MRR"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/usnistgov/trec_eval/blob/v9.0.8/m_map.c",
+      "supportingReferences": [
+        {
+          "id": "treceval-reciprocal-rank-v908",
+          "title": "TREC Eval v9.0.8：倒数排名实现",
+          "url": "https://github.com/usnistgov/trec_eval/blob/v9.0.8/m_recip_rank.c",
+          "type": "固定版本源码",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "trecmap-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索 MAP 指标",
+      "knowledgePoint": "二值与分级",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "TREC Eval 的 map 与能使用分级相关性的 nDCG 在相关性输入上有何不同？",
+      "answer": "map 使用阈值将结果视为相关或不相关；nDCG 可区分不同相关等级并按位置折损。",
+      "explanation": "比较系统时需明确所用标注和指标口径。",
+      "example": "高相关与弱相关文档可在分级指标中贡献不同。",
+      "tags": [
+        "检索 MAP 指标",
+        "二值与分级"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/usnistgov/trec_eval/blob/v9.0.8/m_map.c",
+      "supportingReferences": [
+        {
+          "id": "treceval-ndcg-v908",
+          "title": "TREC Eval v9.0.8：nDCG 实现",
+          "url": "https://github.com/usnistgov/trec_eval/blob/v9.0.8/m_ndcg.c",
+          "type": "固定版本源码",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "virustotal-file-behaviour-fields",
+    "title": "VirusTotal 文档：文件沙箱行为报告",
+    "url": "https://docs.virustotal.com/reference/file-behaviour-summary",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题列出的资料自行整理；代码行为以题中版本为准。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "vtbehavior-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "VirusTotal 文件行为",
+      "knowledgePoint": "行为报告",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirusTotal 文件行为报告主要汇总什么？",
+      "answer": "汇总文件在沙箱中被执行或打开时观察到的行为。",
+      "explanation": "观察结果受运行环境和执行路径影响。",
+      "example": "分析报告可列出文件访问与进程活动。",
+      "tags": [
+        "沙箱行为",
+        "行为报告"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/file-behaviour-summary"
+    },
+    {
+      "id": "vtbehavior-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "VirusTotal 文件行为",
+      "knowledgePoint": "子进程行为",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirusTotal 文件行为报告中的动作一定都由最初的文件进程直接触发吗？",
+      "answer": "不一定；文档说明其中一些动作可能由其子进程触发。",
+      "explanation": "定位责任进程时应结合进程树等上下文。",
+      "example": "初始程序启动子进程后产生网络连接。",
+      "tags": [
+        "沙箱行为",
+        "子进程行为"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/file-behaviour-summary"
+    },
+    {
+      "id": "vtbehavior-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "VirusTotal 文件行为",
+      "knowledgePoint": "分析时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirusTotal file_behaviour 的 analysis_date 使用什么时间单位？",
+      "answer": "使用 UTC Unix 时间戳，单位为秒。",
+      "explanation": "转换日期时不要误当成毫秒。",
+      "example": "将该字段作为 epoch 秒转换为 UTC 日期。",
+      "tags": [
+        "沙箱行为",
+        "分析时间"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/file-behaviour-summary"
+    },
+    {
+      "id": "vtbehavior-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "VirusTotal 文件行为",
+      "knowledgePoint": "行为相似哈希",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirusTotal 行为报告的 behash 有什么用途？",
+      "answer": "用于查找行为分析相似的结果。",
+      "explanation": "相似行为不自动证明样本完全相同或属于同一家族。",
+      "example": "用 behash 查找可能相关的沙箱报告。",
+      "tags": [
+        "沙箱行为",
+        "行为相似哈希"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/file-behaviour-summary"
+    },
+    {
+      "id": "vtbehavior-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "VirusTotal 文件行为",
+      "knowledgePoint": "hosts 字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirusTotal file_behaviour 的 hosts_file 字段在什么情况下填充？",
+      "answer": "文档说明仅在本地 hosts 文件被修改时填充该文件内容。",
+      "explanation": "字段缺失不表示系统中不存在 hosts 文件。",
+      "example": "样本修改主机名到 IP 的映射时报告可能包含内容。",
+      "tags": [
+        "沙箱行为",
+        "hosts 字段"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/file-behaviour-summary"
+    },
+    {
+      "id": "vtbehavior-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "VirusTotal 文件行为",
+      "knowledgePoint": "PCAP 产物",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirusTotal file_behaviour 的 has_pcap 表示什么？",
+      "answer": "表示该次行为分析是否有可供获取的 PCAP 网络捕获产物。",
+      "explanation": "它不说明该捕获中一定含有恶意连接。",
+      "example": "有 PCAP 时可进一步检查具体流量。",
+      "tags": [
+        "沙箱行为",
+        "PCAP 产物"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/file-behaviour-summary"
+    },
+    {
+      "id": "vtbehavior-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "VirusTotal 文件行为",
+      "knowledgePoint": "注册表操作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirusTotal 的 registry_keys_opened 与 registry_keys_set 分别记录什么？",
+      "answer": "前者记录获取过句柄的注册表键；后者记录被设置的键和值等信息。",
+      "explanation": "打开注册表键并不等于修改该键。",
+      "example": "只读取系统配置可能出现在 opened 而非 set。",
+      "tags": [
+        "沙箱行为",
+        "注册表操作"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.virustotal.com/reference/file-behaviour-summary"
+    }
+  ]
+}

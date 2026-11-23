@@ -1,0 +1,60 @@
+{
+  "source": {
+    "id": "postgresql-partial-index-foundations",
+    "title": "PostgreSQL 17 官方文档：部分索引",
+    "url": "https://www.postgresql.org/docs/17/indexes-partial.html",
+    "type": "PostgreSQL 固定版本官方文档",
+    "note": "依据 PostgreSQL 17 官方文档逐题整理；查询规划行为按该版本所述规则表述。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgpartial-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 部分索引",
+      "knowledgePoint": "参数化查询",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的通用参数化查询能否仅凭 x < $1 自动证明它满足谓词为 x < 10 的部分索引？",
+      "answer": "通常不能；规划阶段无法假定参数的具体值总使查询条件蕴含 x < 10。",
+      "explanation": "部分索引的可用性需要在规划时证明，不能依赖运行时某次参数值恰好满足条件。",
+      "example": "准备语句中的阈值参数可能大于或小于索引谓词边界。",
+      "tags": ["PostgreSQL", "部分索引", "参数化查询"],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/indexes-partial.html"
+    },
+    {
+      "id": "pgpartial-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 部分索引",
+      "knowledgePoint": "唯一 NULL 值",
+      "questionType": "应用场景",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 中，怎样用唯一部分索引限制某列最多出现一个 NULL？",
+      "answer": "在该列上建立唯一索引，并使用该列 IS NULL 作为索引谓词。",
+      "explanation": "索引只收录空值行，因此唯一性检查只作用于这些行。",
+      "example": "CREATE UNIQUE INDEX one_null ON t (col) WHERE col IS NULL。",
+      "tags": ["PostgreSQL", "部分索引", "NULL"],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/indexes-partial.html"
+    },
+    {
+      "id": "pgpartial-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 部分索引",
+      "knowledgePoint": "排除常见值",
+      "questionType": "设计权衡",
+      "origin": "自行整理",
+      "question": "PostgreSQL 部分索引为什么有时会排除表中很常见的值？",
+      "answer": "若目标查询主要检索较少见的值，排除常见值可缩小索引，并减少部分行更新时的索引维护。",
+      "explanation": "是否获益取决于数据分布和查询条件，应通过实际执行计划验证。",
+      "example": "索引仅覆盖来自组织外部网段的访问记录。",
+      "tags": ["PostgreSQL", "部分索引", "索引维护"],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/indexes-partial.html"
+    }
+  ]
+}

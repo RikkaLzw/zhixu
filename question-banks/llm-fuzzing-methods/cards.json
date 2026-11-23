@@ -1,0 +1,401 @@
+{
+  "source": {
+    "id": "llm-fuzzing-methods",
+    "title": "FuzzGPT、Fuzz4All 与差分测试资料",
+    "url": "https://arxiv.org/html/2304.02014v1",
+    "type": "研究论文与技术文档",
+    "note": "依据两篇原论文、Csmith 论文和 PyTorch 2.7 文档整理；场景建议与逻辑推论注明为应用。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "llmfuzz-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "生成策略",
+      "knowledgePoint": "历史缺陷示例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzGPT 为什么利用历史缺陷代码引导生成测试程序？",
+      "answer": "历史触发代码可能包含少见的边界值或调用组合，可作为生成新测试的线索。",
+      "explanation": "这是论文采用的研究假设，历史模式不保证触发新的缺陷。",
+      "example": "从历史张量形状问题中提取边界输入思路。",
+      "tags": [
+        "历史缺陷示例",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2304.02014v1#S3.SS1",
+      "referenceTitle": "FuzzGPT 论文：3.1 Dataset Construction"
+    },
+    {
+      "id": "llmfuzz-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "生成策略",
+      "knowledgePoint": "历史缺陷API标注",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "历史缺陷代码调用了多个 API 时，为什么自动标注的出错 API 需要核查？",
+      "answer": "模型预测的 API 标签可能不准确，不能仅凭该标签认定真正的故障位置。",
+      "explanation": "FuzzGPT 使用少量人工标注示例引导自动标注，并评估其精度。",
+      "example": "代码调用多个张量操作时，需要结合错误报告和复现结果确认。",
+      "tags": [
+        "历史缺陷API标注",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2304.02014v1#S3.SS1.SSS2",
+      "referenceTitle": "FuzzGPT 论文：3.1.2 Automated Buggy API Annotation"
+    },
+    {
+      "id": "llmfuzz-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "生成策略",
+      "knowledgePoint": "历史代码补全与编辑",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "FuzzGPT 的历史代码补全与编辑策略有什么区别？",
+      "answer": "补全使用截断后的历史代码前缀继续生成；编辑使用完整历史代码并要求适配目标 API。",
+      "explanation": "论文将二者作为不同的零样本生成策略。",
+      "example": "分别续写旧测试片段或修改旧片段中的目标调用。",
+      "tags": [
+        "历史代码补全与编辑",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2304.02014v1#S3.SS2.SSS2",
+      "referenceTitle": "FuzzGPT 论文：3.2.2 Zero-shot Learning"
+    },
+    {
+      "id": "llmfuzz-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "提示设计",
+      "knowledgePoint": "自动提示提炼",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzz4All 的自动提示阶段怎样利用目标文档？",
+      "answer": "它先让模型从文档或示例中提炼候选提示，再选择适合生成测试输入的提示。",
+      "explanation": "提炼的内容仍需通过目标程序执行来评估。",
+      "example": "从较长的 API 文档中提取功能与调用约束。",
+      "tags": [
+        "自动提示提炼",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2308.04748v3#S3.SS1",
+      "referenceTitle": "Fuzz4All 论文：3.1 Autoprompting"
+    },
+    {
+      "id": "llmfuzz-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "提示设计",
+      "knowledgePoint": "候选提示评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzz4All 默认用什么信号选择自动生成的候选提示？",
+      "answer": "它对每个提示试生成输入，按被目标接受的不同有效输入数量评分。",
+      "explanation": "这是论文中的默认代理指标，不直接等于发现的缺陷数量。",
+      "example": "比较候选提示各自产生的可被解析且不重复的程序数。",
+      "tags": [
+        "候选提示评分",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2308.04748v3#S3.SS1.SSS1",
+      "referenceTitle": "Fuzz4All 论文：3.1.1 Autoprompting Algorithm"
+    },
+    {
+      "id": "llmfuzz-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "生成策略",
+      "knowledgePoint": "循环更新示例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzz4All 为什么在后续生成轮次中加入先前的有效测试输入？",
+      "answer": "它把先前输入作为示例，并配合生成或修改指令，帮助产生更多样的测试。",
+      "explanation": "论文中的循环从先前批次的有效输入中选择示例。",
+      "example": "把可执行程序作为示例，要求模型生成其变体。",
+      "tags": [
+        "循环更新示例",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2308.04748v3#S3.SS2",
+      "referenceTitle": "Fuzz4All 论文：3.2 Fuzzing Loop"
+    },
+    {
+      "id": "llmfuzz-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "变形测试",
+      "knowledgePoint": "等价变体验证",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "大模型声称生成了语义等价的测试变体，能否直接把输出差异判为目标缺陷？",
+      "answer": "不能；需要先验证变换确实保留相关语义，并排查输入的未定义或不确定行为。",
+      "explanation": "生成指令表达的是意图，不保证模型生成结果必然满足等价关系。",
+      "example": "重写程序后先检查是否改变了运算顺序或溢出条件。",
+      "tags": [
+        "等价变体验证",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2308.04748v3#S3.SS2",
+      "referenceTitle": "Fuzz4All 论文：3.2 Fuzzing Loop",
+      "supportingReferences": [
+        {
+          "id": "csmith-equivalence-ref",
+          "title": "Csmith 论文：编译器差分测试与未定义行为",
+          "url": "https://www.cs.utah.edu/~regehr/papers/pldi11-preprint.pdf",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "llmfuzz-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "输入有效性",
+      "knowledgePoint": "无效输入的测试价值",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "生成的输入不满足目标格式时，是否一定没有模糊测试价值？",
+      "answer": "不一定；接近有效格式的无效输入也可能触发目标的解析和校验逻辑缺陷。",
+      "explanation": "需要区分目标按预期拒绝输入与意外崩溃等异常。",
+      "example": "语法略有错误的输入可用于检查编译器的错误处理。",
+      "tags": [
+        "无效输入的测试价值",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2308.04748v3#S5.SS1",
+      "referenceTitle": "Fuzz4All 论文：5.1 Validity and Coverage"
+    },
+    {
+      "id": "llmfuzz-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "效果评估",
+      "knowledgePoint": "API与代码覆盖",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "测试中调用的 API 数量与代码覆盖率为什么不能相互替代？",
+      "answer": "调用到某个 API 只说明接口被触达；接口内部的不同分支和代码路径可能仍未执行。",
+      "explanation": "比较测试效果时可以同时报告两类覆盖，但都不能单独证明发现缺陷。",
+      "example": "两组测试调用同一 API，却覆盖不同的内部路径。",
+      "tags": [
+        "API与代码覆盖",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2304.02014v1#S5.SS3",
+      "referenceTitle": "FuzzGPT 论文：5.3 Evaluation Metrics"
+    },
+    {
+      "id": "llmfuzz-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "效果评估",
+      "knowledgePoint": "预言机覆盖隔离",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "FuzzGPT 评估生成程序覆盖时，为什么排除预言机检查带来的额外覆盖？",
+      "answer": "预言机可能执行额外代码；排除其新增覆盖有助于比较生成程序本身触达的代码。",
+      "explanation": "FuzzGPT 在评估中排除了预言机检查带来的额外覆盖。",
+      "example": "两种测试采用不同数量的结果检查步骤时，只比较约定的目标覆盖范围。",
+      "tags": [
+        "预言机覆盖隔离",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2304.02014v1#S5.SS3",
+      "referenceTitle": "FuzzGPT 论文：5.3 Evaluation Metrics"
+    },
+    {
+      "id": "llmfuzz-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "实验比较",
+      "knowledgePoint": "生成开销与预算",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "比较 LLM 模糊测试的总时间预算时，为什么要记录提示构造或生成阶段的耗时？",
+      "answer": "这些准备工作也消耗资源；只统计后续运行时间会遗漏方法的部分成本。",
+      "explanation": "应说明时间预算边界，Fuzz4All 的一项实验将自动提示时间计入总预算。",
+      "example": "比较两个方法的端到端耗时及实际测试执行时间。",
+      "tags": [
+        "生成开销与预算",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2308.04748v3#S4.SS3",
+      "referenceTitle": "Fuzz4All 论文：4.3 Fuzzing Campaigns"
+    },
+    {
+      "id": "llmfuzz-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "实验比较",
+      "knowledgePoint": "随机重复实验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么评估随机生成式模糊测试时要独立重复运行并报告变化范围？",
+      "answer": "不同随机运行可能探索不同输入和路径，多次结果有助于判断效果是否稳定。",
+      "explanation": "重复运行仍需控制预算、环境和其他比较条件。",
+      "example": "分别记录多次运行的覆盖率和缺陷发现情况。",
+      "tags": [
+        "随机重复实验",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/html/2308.04748v3#S4.SS3",
+      "referenceTitle": "Fuzz4All 论文：4.3 Fuzzing Campaigns"
+    },
+    {
+      "id": "llmfuzz-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "差分预言机",
+      "knowledgePoint": "跨设备数值容差",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "比较深度学习程序在 CPU 和 GPU 上的数值输出时，为什么通常需要容差？",
+      "answer": "不同后端的浮点运算或非确定性可能产生小幅数值差异，不能把任意差异都当成缺陷。",
+      "explanation": "应结合算子语义、精度和输入设置合适的比较条件。",
+      "example": "对同一运算的 CPU 与 GPU 结果按约定容差比较。",
+      "tags": [
+        "跨设备数值容差",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2304.02014v1#S3.SS3",
+      "referenceTitle": "FuzzGPT 论文：3.3 CPU/GPU Oracle"
+    },
+    {
+      "id": "llmfuzz-014",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "差分预言机",
+      "knowledgePoint": "自动微分检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "怎样用数值微分辅助检查自动微分计算的梯度？",
+      "answer": "对输入施加小扰动估计数值梯度，再与自动微分得到的梯度比较。",
+      "explanation": "比较应考虑浮点误差和函数在检查位置是否可微。",
+      "example": "用有限差分估计一个可微函数的导数。",
+      "tags": [
+        "自动微分检查",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.0/torch/autograd/gradcheck.py#L1972",
+      "referenceTitle": "PyTorch 2.7：gradcheck 实现及文档"
+    },
+    {
+      "id": "llmfuzz-015",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "差分预言机",
+      "knowledgePoint": "不可微位置",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "梯度检查在不可微点出现数值与解析结果不一致，能否直接认定实现有缺陷？",
+      "answer": "不能；有限差分与所选解析梯度在不可微点可能不同，需要结合函数定义判断。",
+      "explanation": "PyTorch gradcheck 文档指出这种不一致不一定表示任一结果错误。",
+      "example": "在绝对值函数的零点附近进行有限差分检查。",
+      "tags": [
+        "不可微位置",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.0/torch/autograd/gradcheck.py#L1972",
+      "referenceTitle": "PyTorch 2.7：gradcheck 的不可微点说明"
+    },
+    {
+      "id": "llmfuzz-016",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "差分预言机",
+      "knowledgePoint": "重叠内存梯度检查",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "输入张量存在重叠内存时，为什么逐元素扰动的梯度检查可能失败？",
+      "answer": "多个索引可能指向同一内存位置，扰动一个元素会同时改变其他别名位置。",
+      "explanation": "PyTorch 文档以 expand 产生的重叠输入为例。",
+      "example": "先构造无重叠的独立输入，再比较梯度检查结果。",
+      "tags": [
+        "重叠内存梯度检查",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.0/torch/autograd/gradcheck.py#L1972",
+      "referenceTitle": "PyTorch 2.7：gradcheck 的重叠内存说明"
+    },
+    {
+      "id": "llmfuzz-017",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "差分预言机",
+      "knowledgePoint": "共同缺陷盲区",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "多个实现对同一输入给出相同结果，能否证明结果正确？",
+      "answer": "不能；如果各实现产生相同的错误，单靠相互比较无法发现该缺陷。",
+      "explanation": "独立的规范、参考结果或其他预言机可补充差分测试。",
+      "example": "两个实现都遗漏了同一种边界检查。",
+      "tags": [
+        "共同缺陷盲区",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.utah.edu/~regehr/papers/pldi11-preprint.pdf",
+      "referenceTitle": "Csmith 论文：No ground truth"
+    },
+    {
+      "id": "llmfuzz-018",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "差分预言机",
+      "knowledgePoint": "未定义行为与比较",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "用差分测试比较 C 编译器输出时，为什么要排除输入中的未定义行为？",
+      "answer": "未定义行为使程序结果不受标准约束，输出不同未必意味着某个编译器有缺陷。",
+      "explanation": "还要考虑实现定义和未指定行为等可比较性条件。",
+      "example": "测试程序发生有符号整数溢出时不能直接按输出差异判错。",
+      "tags": [
+        "未定义行为与比较",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cs.utah.edu/~regehr/papers/pldi11-preprint.pdf",
+      "referenceTitle": "Csmith 论文：2.2 Design Goals"
+    },
+    {
+      "id": "llmfuzz-019",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "执行环境",
+      "knowledgePoint": "生成程序隔离",
+      "questionType": "安全场景",
+      "origin": "自行整理",
+      "question": "执行大模型生成的模糊测试程序时，为什么需要合适的隔离环境？",
+      "answer": "生成程序可能包含意外的文件访问、网络访问或其他副作用，需要限制其执行影响。",
+      "explanation": "Fuzz4All 的项目说明建议在隔离环境中运行生成代码。",
+      "example": "在受限容器或专用测试机中运行生成的测试。",
+      "tags": [
+        "生成程序隔离",
+        "AI辅助模糊测试"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/fuzz4all/fuzz4all/blob/0bf42fe037c8761bdde61e1c37a0946e8103fba1/README.md",
+      "referenceTitle": "Fuzz4All 项目：Quick Start"
+    }
+  ]
+}

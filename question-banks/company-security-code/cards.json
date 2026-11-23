@@ -1,0 +1,225 @@
+{
+  "source": {
+    "id": "company-security-code",
+    "title": "大厂安全岗位公开面经：代码漏洞与防护",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x01-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E5%85%A8%E5%AE%9E%E4%B9%A0",
+    "type": "公开面经合集",
+    "note": "合集收录个人面试复盘，可能含转载；公司、岗位及经历为分享者自述，答案另依据逐题列出的资料核验。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "secint-code-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "授权检查",
+      "knowledgePoint": "水平与垂直越权",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "水平越权和垂直越权分别跨越什么权限边界？",
+      "answer": "水平越权访问同一权限层级的其他主体资源；垂直越权访问本应由更高权限主体使用的功能或资源。",
+      "explanation": "具体边界由应用授权策略决定。",
+      "example": "普通用户读取另一用户的订单属于水平越权；调用管理员功能属于垂直越权。",
+      "tags": [
+        "水平与垂直越权",
+        "授权检查",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "referenceId": "company-alibaba",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x01-%E9%98%BF%E9%87%8C%E4%BA%91%E5%AE%89%E5%85%A8%E5%AE%9E%E4%B9%A0",
+      "referenceTitle": "阿里公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "access-control-ref",
+          "title": "PortSwigger：Access control",
+          "url": "https://portswigger.net/web-security/access-control",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-code-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "SQL注入",
+      "knowledgePoint": "二次SQL注入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二次 SQL 注入中，危险数据通常何时被当作 SQL 语法？",
+      "answer": "数据先被保存，之后应用读取它并不安全地拼接进另一条 SQL 时，数据可能改变查询结构。",
+      "explanation": "安全地存储输入并不保证以后拼接查询也是安全的；后续查询仍需参数化或使用允许列表。",
+      "example": "保存的用户名在稍后的查询中再次被使用。",
+      "tags": [
+        "二次SQL注入",
+        "SQL注入",
+        "公开面经",
+        "腾讯",
+        "京东"
+      ],
+      "evidence": "application",
+      "referenceId": "company-tencent",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x07-%E8%85%BE%E8%AE%AF-%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E5%AE%9E%E4%B9%A0%E7%94%9F",
+      "referenceTitle": "腾讯公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "stored-sqli-ref",
+          "title": "PortSwigger：Second-order SQL injection",
+          "url": "https://portswigger.net/web-security/sql-injection#second-order-sql-injection",
+          "type": "技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "company-jd",
+          "title": "京东安全工程师公开面经（合集收录，经历为分享者自述）",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x4c-%E4%BA%AC%E4%B8%9C-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "secint-code-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "XSS",
+      "knowledgePoint": "DOM型XSS",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DOM 型 XSS 的危险数据从输入到执行主要发生在哪里？",
+      "answer": "浏览器端脚本把不可信数据送入会解析 HTML 或执行脚本的危险位置，导致浏览器执行非预期代码。",
+      "explanation": "输入可能来自 URL 片段等浏览器端来源，未必需要服务端把它写入响应。",
+      "example": "页面脚本把地址片段直接赋给 innerHTML。",
+      "tags": [
+        "DOM型XSS",
+        "XSS",
+        "公开面经",
+        "美团"
+      ],
+      "evidence": "application",
+      "referenceId": "company-meituan",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x80-%E7%BE%8E%E5%9B%A2",
+      "referenceTitle": "美团公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "dom-xss-ref",
+          "title": "PortSwigger：DOM-based XSS",
+          "url": "https://portswigger.net/web-security/cross-site-scripting/dom-based",
+          "type": "技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-code-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CSRF防护",
+      "knowledgePoint": "SameSite Lax限制",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "显式 SameSite=Lax 为什么不能保护所有使用 GET 改变状态的操作？",
+      "answer": "跨站顶层导航使用 GET 等安全方法时，浏览器仍可能发送该 Cookie。",
+      "explanation": "服务端应避免用 GET 执行状态变更，并结合适用的 CSRF 防护。",
+      "example": "用户从外站点击链接，导航到会修改数据的 GET 地址。",
+      "tags": [
+        "SameSite Lax限制",
+        "CSRF防护",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x00-%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8-%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AE%9E%E4%B9%A0%E7%94%9F",
+      "referenceTitle": "字节公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "cookie-samesite-ref",
+          "title": "MDN：Set-Cookie 与 SameSite",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value",
+          "type": "官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "csrf-samesite-ref",
+          "title": "OWASP：CSRF 与 SameSite",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-code-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "CSRF防护",
+      "knowledgePoint": "SameSite与同源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 SameSite Cookie 不能隔离同站但不受信任的兄弟子域？",
+      "answer": "SameSite 按站点而非完整源判断；同方案、同可注册域下的兄弟子域通常被视为同站。",
+      "explanation": "子域受控不代表它与目标应用同源，也不应单独依赖 SameSite 替代授权或 CSRF 防护。",
+      "example": "不受信任的子域发起对同站应用的请求。",
+      "tags": [
+        "SameSite与同源",
+        "CSRF防护",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x00-%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8-%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AE%9E%E4%B9%A0%E7%94%9F",
+      "referenceTitle": "字节公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "csrf-samesite-ref",
+          "title": "OWASP：CSRF 与 SameSite",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#samesite-cookie-attribute",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-code-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "XSS防护",
+      "knowledgePoint": "链接协议校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么对不可信 href 值只做 HTML 属性编码还不够？",
+      "answer": "属性编码不能阻止浏览器把危险协议当作链接目标；还应校验 URL 并限制允许的协议。",
+      "explanation": "具体允许的 URL 类型由业务决定，例如只允许 http 与 https。",
+      "example": "拒绝不符合允许协议的链接目标。",
+      "tags": [
+        "链接协议校验",
+        "XSS防护",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x00-%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8-%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AE%9E%E4%B9%A0%E7%94%9F",
+      "referenceTitle": "字节公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "xss-url-ref",
+          "title": "OWASP：XSS Prevention Cheat Sheet",
+          "url": "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#xss-prevention-rules-summary",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

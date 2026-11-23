@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "affiliation-anomaly-evaluation",
+    "title": "Huet 等原论文 v1：时间序列异常关联指标",
+    "url": "https://arxiv.org/pdf/2206.13167v1",
+    "type": "教材、官方文档与原论文",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "affileval-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异常事件关联评估",
+      "knowledgePoint": "关联区域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Huet 等人的 affiliation 指标怎样把时间轴分配给真实异常事件？",
+      "answer": "把时间位置归入距离最近的真实异常事件，形成每个事件的关联区域。",
+      "explanation": "每个区域单独评价相关预测。",
+      "example": "两段相邻真实事件之间的时间会按距离分配。",
+      "tags": [
+        "异常事件关联评估",
+        "关联区域"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2206.13167v1"
+    },
+    {
+      "id": "affileval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异常事件关联评估",
+      "knowledgePoint": "有向距离",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "affiliation 指标中，精确率和召回率分别基于哪两个方向的距离？",
+      "answer": "精确率方向从预测到真实事件；召回率方向从真实事件到预测。",
+      "explanation": "两种有向距离不必相同。",
+      "example": "预测只覆盖真实事件一小部分时，两方向可能差异很大。",
+      "tags": [
+        "异常事件关联评估",
+        "有向距离"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2206.13167v1"
+    },
+    {
+      "id": "affileval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异常事件关联评估",
+      "knowledgePoint": "临近预测",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "affiliation 指标中，预测区间未与真实事件重叠时一定得零分吗？",
+      "answer": "不一定；指标考虑时间距离，临近但不重叠的预测可能得到部分分数。",
+      "explanation": "具体得分还取决于关联区域和随机基准。",
+      "example": "略早于真实事件的一段预测可能得到非零贡献。",
+      "tags": [
+        "异常事件关联评估",
+        "临近预测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2206.13167v1"
+    },
+    {
+      "id": "affileval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异常事件关联评估",
+      "knowledgePoint": "无预测区域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "某真实事件的关联区域没有任何预测时，其局部 affiliation 精确率和召回率如何处理？",
+      "answer": "该区域的局部精确率未定义，局部召回率为 0。",
+      "explanation": "整体精确率不把未定义的局部精确率按零直接计入。",
+      "example": "完全没有相关预测的事件不会获得召回贡献。",
+      "tags": [
+        "异常事件关联评估",
+        "无预测区域"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2206.13167v1"
+    },
+    {
+      "id": "affileval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异常事件关联评估",
+      "knowledgePoint": "全局聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "affiliation 指标的整体精确率和召回率分别怎样聚合事件级结果？",
+      "answer": "精确率平均有定义的局部精确率；召回率平均所有真实事件的局部召回率。",
+      "explanation": "这种按事件聚合与按时间点加权的结果可能不同。",
+      "example": "没有预测的事件参与召回率平均。",
+      "tags": [
+        "异常事件关联评估",
+        "全局聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2206.13167v1"
+    },
+    {
+      "id": "affileval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异常事件关联评估",
+      "knowledgePoint": "随机基准",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "affiliation 指标为何把时间距离与关联区域中的随机预测比较？",
+      "answer": "将距离转换为相对于局部均匀随机基准的概率尺度，便于比较事件。",
+      "explanation": "这不是对实际部署误报成本的直接测量。",
+      "example": "不同宽度的关联区域可使用各自的局部基准。",
+      "tags": [
+        "异常事件关联评估",
+        "随机基准"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2206.13167v1"
+    },
+    {
+      "id": "affileval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "异常事件关联评估",
+      "knowledgePoint": "时间间隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Huet 等人的 affiliation 评估能处理采样间隔不均匀的时间序列吗？",
+      "answer": "可以；方法使用实际时间戳及其间的时间距离。",
+      "explanation": "输入预测与真实标签需要按同一时间轴对齐。",
+      "example": "日志事件采样间隔不同时使用真实时间计算距离。",
+      "tags": [
+        "异常事件关联评估",
+        "时间间隔"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2206.13167v1"
+    }
+  ]
+}

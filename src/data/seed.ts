@@ -1,10 +1,11 @@
 import { CategoryId, StudyCard, StudyData } from '../types';
 import { normalizeBanks } from './banks';
+import { contentRevision } from './contentRevision';
 
 type SeedQuestion = [CategoryId, string, string];
 
 const questions: SeedQuestion[] = [
-  ['foundations', 'AI4SEC 中的分类和异常检测有什么区别？', '分类利用已标注样本学习已知类别；异常检测寻找偏离常态的样本，还需要结合上下文判断是否构成攻击。'],
+  ['foundations', '有监督分类与异常检测的常见目标有什么区别？', '有监督分类利用标注样本学习类别；异常检测关注偏离参考数据的观测，还需结合上下文判断是否构成威胁。'],
   ['foundations', '安全检测中的标签泄漏是什么？', '训练或评估使用了预测时不应获得的标签信息或事后信息，使模型效果被高估。'],
   ['foundations', '为什么安全数据需要考虑时间切分？', '实际系统通常用过去的数据预测未来；时间切分有助于检查模型面对后续数据时的表现。'],
   ['foundations', '为什么相似样本不能随意分到训练集和测试集？', '模型可能记住重复流量、同一攻击活动或相似代码，使测试结果不能反映对新样本的效果。'],
@@ -12,13 +13,13 @@ const questions: SeedQuestion[] = [
   ['foundations', '安全告警的精确率是什么？', '模型报出的告警中，真正属于目标威胁的比例。'],
   ['foundations', '安全检测的召回率是什么？', '所有真实目标威胁中，被模型检测出来的比例。'],
   ['foundations', '为什么需要在验证集选择检测阈值？', '阈值影响告警量、误报和漏报。应结合处置能力在验证集选定阈值，再用独立测试集报告效果。'],
-  ['foundations', '安全模型训练中的类别不平衡是什么？', '正常样本与攻击样本数量差异很大，模型容易偏向多数类，需要结合类别权重、采样和合适指标处理。'],
+  ['foundations', '安全分类数据中的类别不平衡是什么？', '不同类别的样本数量明显不均衡，例如正常样本远多于攻击样本。'],
   ['foundations', '为什么特征处理要先划分数据集？', '应只在训练集拟合预处理参数，再应用到验证集和测试集，避免测试数据的信息进入训练过程。'],
   ['detection', '做恶意流量检测时，一条样本可以是什么？', '可以是一条网络流，也可以是某个主机在固定时间窗口内的流量统计；选择取决于要识别的行为。'],
   ['detection', '异常流量一定是恶意流量吗？', '不一定。新业务、配置变化和正常的集中访问也可能偏离历史行为。'],
-  ['detection', '提高检测阈值通常会带来什么变化？', '通常会减少告警量，并改变误报和漏报；具体变化应在验证数据上测量。'],
+  ['detection', '固定样本中分数越高越可疑时，提高告警阈值会怎样影响告警量？', '对固定模型评分，提高告警阈值不会增加告警数量；应在验证数据上检查误报和漏报的变化。'],
   ['detection', '为什么要把机器学习检测与规则基线比较？', '可以判断模型是否真正补充了现有规则，并比较双方的漏报、误报和维护成本。'],
-  ['detection', '安全检测中的模型漂移指什么？', '业务环境、用户行为或攻击方式变化后，模型输入或预测效果发生变化，需要持续监测和复评。'],
+  ['detection', '在 Evidently 的用法中，模型漂移表示什么？', '它表示模型质量随时间下降，但本身不说明具体原因。'],
   ['detection', '恶意流量模型可以使用哪些可用特征？', '可根据检测时机使用协议、连接持续时间、包数、字节数和连接频率等特征，并确认预测时能够获取。'],
   ['detection', '安全告警中的误报是什么？', '误报是正常行为被系统判为目标威胁。误报过多会消耗分析人员时间并造成告警疲劳。'],
   ['detection', '安全告警中的漏报是什么？', '漏报是真实威胁未被系统识别。应分析漏报所属攻击类型、数据缺失和检测盲区。'],
@@ -31,8 +32,8 @@ const questions: SeedQuestion[] = [
   ['vulnerabilities', '什么是代码漏洞检测的误报？', '模型把实际不存在目标漏洞的代码判为有漏洞。需要检查代码上下文和触发条件。'],
   ['vulnerabilities', '为什么漏洞定位比单纯输出有无漏洞更有用？', '定位能帮助审计人员快速检查可疑代码和数据流，并验证模型给出的原因。'],
   ['vulnerabilities', '恶意软件静态检测可以使用哪些输入？', '可以使用文件结构、导入函数、字节统计和字符串等不依赖实际运行的特征。'],
-  ['vulnerabilities', '为什么恶意软件检测要关注样本时间和家族？', '同家族或相近时间的样本可能高度相似；按时间和家族分析有助于了解面对新样本的效果。'],
-  ['vulnerabilities', '静态特征与动态行为特征有什么区别？', '静态特征来自文件本身；动态特征来自隔离环境中的运行行为，两者能提供不同证据。'],
+  ['vulnerabilities', '恶意软件检测如何评估对未见家族的泛化？', '有可信家族标签时，可按家族分组划分数据，并用训练中未见的家族进行测试。'],
+  ['vulnerabilities', '恶意软件分析中，静态特征与动态行为特征有什么区别？', '静态特征来自不执行文件时的内容与结构；动态特征来自运行时观察到的活动，常在隔离环境中采集。'],
   ['vulnerabilities', '代码模型发现疑似漏洞后应如何验证？', '结合完整代码上下文进行人工审计，并在授权的隔离环境中构造可复现的测试。'],
   ['operations', '如何用 AI 辅助安全告警研判？', '汇集告警、日志、资产和情报，让模型提取证据、生成判断与待验证事项，再交给分析人员复核。'],
   ['operations', 'AI 研判结果为什么需要列出证据？', '分析人员需要回查日志或情报，核对结论是否得到支持，并据此决定后续处置。'],
@@ -46,19 +47,21 @@ const questions: SeedQuestion[] = [
   ['operations', '模型建议封禁资产后应怎样处理？', '先核查证据、影响范围和处置权限，由具备权限的人员确认后再执行。'],
 ];
 
-export function createInitialData(): StudyData {
-  const legacyCards: StudyCard[] = questions.map(([category, question, answer], index) => ({
+export function createLegacyCards(): StudyCard[] {
+  return questions.map(([category, question, answer], index) => ({
     id: `ai4sec-${String(index + 1).padStart(3, '0')}`,
     category,
     question,
     answer,
     createdAt: 0,
   }));
+}
 
+export function createInitialData(): StudyData {
   return {
     version: 1,
-    contentRevision: 2,
-    cards: normalizeBanks(legacyCards),
+    contentRevision,
+    cards: normalizeBanks(createLegacyCards()),
     progress: {},
     history: [],
     deletedCardIds: [],

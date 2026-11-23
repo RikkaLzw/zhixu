@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "transformers-tokenizer-batching",
+    "title": "Transformers 4.51.3：分词批次与截断",
+    "url": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题列出的资料自行整理；代码行为以题中版本为准。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "hftoken-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 分词批次",
+      "knowledgePoint": "最长与最大长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 分词时设置 padding=True、truncation=False 和 max_length=128，会自动填充到 128 吗？",
+      "answer": "不会；padding=True 仍按批次内最长序列填充，要指定长度可用 padding=\"max_length\"。",
+      "explanation": "这时 max_length 不会把最长填充策略改成固定长度。",
+      "example": "批内最长序列为 12 个 token 时填充到 12。",
+      "tags": [
+        "Tokenizer",
+        "最长与最大长度"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer"
+    },
+    {
+      "id": "hftoken-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 分词批次",
+      "knowledgePoint": "填充不等于截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 分词时只启用 padding=\"max_length\"，会自动截断超过 max_length 的输入吗？",
+      "answer": "不会；要限制较长输入，还需要启用相应的 truncation。",
+      "explanation": "填充与截断是分别配置的操作。",
+      "example": "长度为 20 的输入不会仅因填充长度设为 16 就被截断。",
+      "tags": [
+        "Tokenizer",
+        "填充不等于截断"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer"
+    },
+    {
+      "id": "hftoken-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 分词批次",
+      "knowledgePoint": "填充方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers tokenizer 的 padding_side 控制什么？",
+      "answer": "它控制将填充 token 加在序列左侧还是右侧；对应的 attention_mask 也会对齐填充位置。",
+      "explanation": "模型通常对有效位置使用 1，对填充位置使用 0。",
+      "example": "左填充时短序列的掩码可为 [0,1,1]。",
+      "tags": [
+        "Tokenizer",
+        "填充方向"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer"
+    },
+    {
+      "id": "hftoken-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 分词批次",
+      "knowledgePoint": "缺少填充符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers tokenizer 没有配置 pad token 时直接请求 padding 会怎样？",
+      "answer": "会报错；需要按模型需要配置或添加合适的 pad token。",
+      "explanation": "新增 token 后还要考虑模型词嵌入表是否与词表一致。",
+      "example": "批量编码前先检查 tokenizer.pad_token。",
+      "tags": [
+        "Tokenizer",
+        "缺少填充符"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer"
+    },
+    {
+      "id": "hftoken-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 分词批次",
+      "knowledgePoint": "特殊符号长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers tokenizer 启用特殊 token 时，max_length 截断限制是否需要为特殊 token 留出位置？",
+      "answer": "需要；截断后的模型输入长度包括该分词器添加的特殊 token。",
+      "explanation": "具体添加哪些特殊 token 由分词器及后处理配置决定。",
+      "example": "总长 7 的序列对中，3 个特殊 token 会占用 3 个位置。",
+      "tags": [
+        "Tokenizer",
+        "特殊符号长度"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer"
+    },
+    {
+      "id": "hftoken-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 分词批次",
+      "knowledgePoint": "张量批次形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 批量分词时请求 return_tensors=\"pt\"，但各序列长度不同且未填充，通常会怎样？",
+      "answer": "无法把不等长序列直接整理成规则张量，通常会报错；可启用填充或另行整理。",
+      "explanation": "填充方案仍应符合模型的输入要求。",
+      "example": "将短句和长句组成 PyTorch 批次前启用 padding。",
+      "tags": [
+        "Tokenizer",
+        "张量批次形状"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer"
+    },
+    {
+      "id": "hftoken-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 分词批次",
+      "knowledgePoint": "溢出来源映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 快速分词器返回 overflow_to_sample_mapping 时，该字段把什么映射到什么？",
+      "answer": "它为每个截断窗口指出其在原始输入批次中的样本索引。",
+      "explanation": "同一长样本可以生成多个窗口并重复出现同一索引。",
+      "example": "映射 [0,0,1] 表示前两个窗口来自第一个样本。",
+      "tags": [
+        "Tokenizer",
+        "溢出来源映射"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer"
+    },
+    {
+      "id": "hftoken-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 分词批次",
+      "knowledgePoint": "倍数与截断冲突",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 同时启用填充、截断与 pad_to_multiple_of，max_length 不是该倍数时会怎样？",
+      "answer": "会抛出 ValueError；应使截断长度满足指定倍数或调整配置。",
+      "explanation": "该检查要求三个条件同时成立且给出 max_length。",
+      "example": "max_length=7 与 pad_to_multiple_of=8 不兼容。",
+      "tags": [
+        "Tokenizer",
+        "倍数与截断冲突"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer"
+    },
+    {
+      "id": "hftoken-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformers 分词批次",
+      "knowledgePoint": "偏移映射实现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的慢速 Python tokenizer 能使用 return_offsets_mapping=True 吗？",
+      "answer": "不能；该接口由快速 tokenizer 提供，慢速实现会抛出 NotImplementedError。",
+      "explanation": "偏移可用于把 token 结果对应回原始文本位置。",
+      "example": "需要字符跨度时选用支持该功能的 fast tokenizer。",
+      "tags": [
+        "Tokenizer",
+        "偏移映射实现"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/main_classes/tokenizer"
+    }
+  ]
+}

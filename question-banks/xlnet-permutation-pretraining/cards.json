@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "xlnet-permutation-pretraining",
+    "title": "XLNet 原论文 v2：排列语言建模",
+    "url": "https://arxiv.org/pdf/1906.08237v2",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本与环境为准。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "xlnetpaper-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLNet 预训练",
+      "knowledgePoint": "训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLNet 原论文如何使自回归模型学习双向上下文？",
+      "answer": "在不同的因子分解顺序上训练共享参数，使预测位置能利用左右两侧的上下文。",
+      "explanation": "每次预测仍只使用该分解顺序中更早的内容。",
+      "example": "不同顺序下，同一词可以看到不同位置的词。",
+      "tags": [
+        "XLNet 预训练",
+        "训练目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.08237v2"
+    },
+    {
+      "id": "xlnetpaper-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLNet 预训练",
+      "knowledgePoint": "排列对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLNet 的排列语言建模会把输入文本真正随机打乱吗？",
+      "answer": "不会；它排列概率分解顺序，保留原始序列及其位置，并使用注意力掩码控制可见内容。",
+      "explanation": "原始顺序对于自然语言位置关系仍然重要。",
+      "example": "句子原来的词序不因采样分解顺序而被改写。",
+      "tags": [
+        "XLNet 预训练",
+        "排列对象"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.08237v2"
+    },
+    {
+      "id": "xlnetpaper-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLNet 预训练",
+      "knowledgePoint": "联合依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "相比把多个被掩码位置独立预测的目标，XLNet 的自回归分解如何处理目标之间的依赖？",
+      "answer": "它可以按排列顺序将先预测位置的内容纳入后续位置的条件上下文。",
+      "explanation": "这避免了将所有预测目标条件独立的简化假设。",
+      "example": "一个待预测词可影响另一个待预测词的条件概率。",
+      "tags": [
+        "XLNet 预训练",
+        "联合依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.08237v2"
+    },
+    {
+      "id": "xlnetpaper-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLNet 预训练",
+      "knowledgePoint": "内容流",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLNet 两流注意力中的 content stream 与 query stream 在目标词内容上有何区别？",
+      "answer": "content stream 可编码当前位置的词内容；query stream 对要预测的当前位置内容不可见。",
+      "explanation": "query stream 知道预测位置但不能读取该位置的词，以避免预测时直接看到答案。",
+      "example": "内容流可表示目标词；查询流据位置和允许的上下文预测它。",
+      "tags": [
+        "XLNet 预训练",
+        "内容流"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.08237v2"
+    },
+    {
+      "id": "xlnetpaper-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLNet 预训练",
+      "knowledgePoint": "部分预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLNet 原论文的 partial prediction 选择排列顺序中哪部分位置作为预测目标？",
+      "answer": "只预测排列顺序中靠后的目标子序列，以减轻训练优化难度。",
+      "explanation": "较靠后的预测位置通常具有更长的可用上下文。",
+      "example": "先把排列切成非目标部分和目标部分。",
+      "tags": [
+        "XLNet 预训练",
+        "部分预测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.08237v2"
+    },
+    {
+      "id": "xlnetpaper-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLNet 预训练",
+      "knowledgePoint": "推理表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLNet 原论文在下游微调时可以丢弃哪条注意力流？",
+      "answer": "可以丢弃 query stream，使用 content stream 作为普通 Transformer 表示。",
+      "explanation": "这是论文描述的微调方式。",
+      "example": "分类任务从内容表示继续训练。",
+      "tags": [
+        "XLNet 预训练",
+        "推理表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.08237v2"
+    },
+    {
+      "id": "xlnetpaper-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "XLNet 预训练",
+      "knowledgePoint": "长上下文机制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "XLNet 原论文借鉴 Transformer-XL 的哪些机制处理序列？",
+      "answer": "借鉴片段循环和相对位置编码机制。",
+      "explanation": "循环状态的可见范围仍受实现和训练设置约束。",
+      "example": "跨片段复用历史状态。",
+      "tags": [
+        "XLNet 预训练",
+        "长上下文机制"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1906.08237v2"
+    }
+  ]
+}

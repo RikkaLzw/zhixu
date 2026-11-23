@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "hypothesis-property-fuzzing",
+    "title": "Hypothesis 6.100.0：性质测试与收缩",
+    "url": "https://github.com/HypothesisWorks/hypothesis/blob/hypothesis-python-6.100.0/hypothesis-python/docs/quickstart.rst",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "hypfuzz-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Hypothesis 性质测试",
+      "knowledgePoint": "生成测试输入",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Hypothesis 的 @given 装饰器与 strategy 如何配合测试？",
+      "answer": "strategy 描述输入生成方式，@given 多次向测试函数提供符合策略的输入。",
+      "explanation": "测试函数负责断言希望保持的性质。",
+      "example": "@given(st.integers()) 可反复向测试提供整数。",
+      "tags": [
+        "Hypothesis 性质测试",
+        "生成测试输入"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/HypothesisWorks/hypothesis/blob/hypothesis-python-6.100.0/hypothesis-python/docs/quickstart.rst"
+    },
+    {
+      "id": "hypfuzz-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Hypothesis 性质测试",
+      "knowledgePoint": "失败收缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Hypothesis 找到失败输入后，shrinking 主要尝试做什么？",
+      "answer": "在保持测试失败的条件下，寻找更简单、更易理解的输入。",
+      "explanation": "具体收缩顺序取决于策略，不能把结果视为对任意复杂度度量的全局最优。",
+      "example": "长列表导致失败后，工具可能找到更短的失败列表。",
+      "tags": [
+        "Hypothesis 性质测试",
+        "失败收缩"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/HypothesisWorks/hypothesis/blob/hypothesis-python-6.100.0/hypothesis-python/docs/data.rst"
+    },
+    {
+      "id": "hypfuzz-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Hypothesis 性质测试",
+      "knowledgePoint": "过滤策略",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Hypothesis strategy.filter(predicate) 如何影响生成的输入？",
+      "answer": "只接受满足 predicate 的候选输入，其他候选会被拒绝。",
+      "explanation": "条件过于苛刻可能导致生成效率低或健康检查失败。",
+      "example": "生成偶数时可过滤整数策略，但直接构造通常更高效。",
+      "tags": [
+        "Hypothesis 性质测试",
+        "过滤策略"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/HypothesisWorks/hypothesis/blob/hypothesis-python-6.100.0/hypothesis-python/docs/data.rst"
+    },
+    {
+      "id": "hypfuzz-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Hypothesis 性质测试",
+      "knowledgePoint": "假设条件",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Hypothesis 测试中 assume(False) 与断言失败有什么区别？",
+      "answer": "它拒绝当前输入，不把该输入作为性质失败的反例。",
+      "explanation": "频繁拒绝输入会增加生成成本。",
+      "example": "仅讨论非空列表时，可排除空列表输入。",
+      "tags": [
+        "Hypothesis 性质测试",
+        "假设条件"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/HypothesisWorks/hypothesis/blob/hypothesis-python-6.100.0/hypothesis-python/docs/details.rst"
+    },
+    {
+      "id": "hypfuzz-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Hypothesis 性质测试",
+      "knowledgePoint": "显式示例",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Hypothesis 的 @example 适合用于什么？",
+      "answer": "为性质测试显式提供希望每次检查的特定输入。",
+      "explanation": "固定样例可与自动生成的示例一起用于回归测试。",
+      "example": "可将已知边界输入作为显式示例加入回归测试。",
+      "tags": [
+        "Hypothesis 性质测试",
+        "显式示例"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/HypothesisWorks/hypothesis/blob/hypothesis-python-6.100.0/hypothesis-python/docs/quickstart.rst"
+    },
+    {
+      "id": "hypfuzz-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Hypothesis 性质测试",
+      "knowledgePoint": "映射策略",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Hypothesis 的 strategy.map(f) 如何构造新输入？",
+      "answer": "先从原策略生成值，再将函数 f 应用于该值。",
+      "explanation": "映射后仍应确保结果符合被测接口要求。",
+      "example": "可将整数列表映射成排序后的列表。",
+      "tags": [
+        "Hypothesis 性质测试",
+        "映射策略"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/HypothesisWorks/hypothesis/blob/hypothesis-python-6.100.0/hypothesis-python/docs/data.rst"
+    },
+    {
+      "id": "hypfuzz-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Hypothesis 性质测试",
+      "knowledgePoint": "测试次数边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Hypothesis 的 max_examples 能否保证实际测试到输入空间的所有值？",
+      "answer": "不能；它控制生成测试的规模，通常只能探索输入空间的一部分。",
+      "explanation": "通过性质测试也不能证明被测程序对所有输入都正确。",
+      "example": "大型字节输入空间远超有限测试次数。",
+      "tags": [
+        "Hypothesis 性质测试",
+        "测试次数边界"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/HypothesisWorks/hypothesis/blob/hypothesis-python-6.100.0/hypothesis-python/docs/settings.rst"
+    },
+    {
+      "id": "hypfuzz-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Hypothesis 性质测试",
+      "knowledgePoint": "显式示例收缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Hypothesis 6.100.0 对 @example 显式提供的失败输入会执行普通 shrinking 吗？",
+      "answer": "不会；文档说明显式示例不能被收缩。",
+      "explanation": "随机生成阶段找到的失败输入可以进入收缩阶段。",
+      "example": "手工固定的已知失败样本按原样报告。",
+      "tags": [
+        "Hypothesis 性质测试",
+        "显式示例收缩"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/HypothesisWorks/hypothesis/blob/hypothesis-python-6.100.0/hypothesis-python/docs/settings.rst"
+    }
+  ]
+}

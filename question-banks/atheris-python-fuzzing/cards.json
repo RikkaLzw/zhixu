@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "atheris-python-fuzzing",
+    "title": "Atheris 2.3.0：Python 覆盖引导模糊测试",
+    "url": "https://github.com/google/atheris/blob/2.3.0/README.md",
+    "type": "官方文档与固定版本源码",
+    "note": "依据引用资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "atheris-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "Atheris用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 2.3.0 主要用于测试什么，使用什么反馈指导探索？",
+      "answer": "它用于模糊测试 Python 代码及 CPython 原生扩展，使用覆盖反馈指导输入变异。",
+      "explanation": "Atheris 基于 libFuzzer。",
+      "example": "测试 Python 解析器对不同字节输入的行为。",
+      "tags": [
+        "Atheris用途",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md"
+    },
+    {
+      "id": "atheris-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "目标函数输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 2.3.0 的测试入口通常接收什么输入？",
+      "answer": "它接收一个 bytes 对象，并对输入执行待测代码。",
+      "explanation": "引擎会反复用不同字节输入调用测试入口。",
+      "example": "将 bytes 交给被测解析函数。",
+      "tags": [
+        "目标函数输入",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#api"
+    },
+    {
+      "id": "atheris-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "启动顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 2.3.0 中 Setup 和 Fuzz 分别做什么？",
+      "answer": "Setup 注册参数和测试入口；随后调用 Fuzz 开始模糊测试。",
+      "explanation": "必须在 Fuzz 之前调用 Setup。",
+      "example": "先注册 TestOneInput，再启动引擎。",
+      "tags": [
+        "启动顺序",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#api"
+    },
+    {
+      "id": "atheris-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "未捕获异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 对 Python 待测代码中的未捕获异常通常怎样处理？",
+      "answer": "它会将未捕获的 Python 异常报告为测试失败。",
+      "explanation": "测试入口可针对预期的无效输入捕获特定异常，同时保留意外异常。",
+      "example": "解析错误预期时只捕获相应的解析异常。",
+      "tags": [
+        "未捕获异常",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#example"
+    },
+    {
+      "id": "atheris-005",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "导入插桩范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 的 instrument_imports 能给进入上下文前已经导入的模块补加插桩吗？",
+      "answer": "通常不能；模块已被导入时，该上下文不会重新执行导入并补加插桩。",
+      "explanation": "应在 instrument_imports 块内导入待测模块，或使用文档列出的其他插桩方法。",
+      "example": "先导入目标模块，再进入插桩上下文并不能达到预期。",
+      "tags": [
+        "导入插桩范围",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#instrument_importsinclude-exclude"
+    },
+    {
+      "id": "atheris-006",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "函数插桩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 的 instrument_func 对传入的 Python 函数如何插桩？",
+      "answer": "它原地给指定函数增加插桩，常用作装饰器。",
+      "explanation": "文档说明不能直接传入绑定方法，应使用未绑定的函数。",
+      "example": "在测试入口函数定义上使用装饰器。",
+      "tags": [
+        "函数插桩",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#instrument_funcfunc"
+    },
+    {
+      "id": "atheris-007",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "未发现有效输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 报告前两次测试没有覆盖事件，是否一定说明没有对代码插桩？",
+      "answer": "不一定；即使部分代码已插桩，前两次调用也可能没有执行到插桩位置。",
+      "explanation": "可检查测试入口和导入的插桩范围。",
+      "example": "空输入在到达被测解析逻辑前就返回。",
+      "tags": [
+        "未发现有效输入",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#why-am-i-getting-no-interesting-inputs-were-found"
+    },
+    {
+      "id": "atheris-008",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "测试数据转换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 的 FuzzedDataProvider 用于什么？",
+      "answer": "它把输入字节消费并转换成整数、字符串、布尔值等不同形式，供被测接口使用。",
+      "explanation": "各次消费共享同一个输入数据来源。",
+      "example": "从单个字节输入中构造字符串和范围内整数。",
+      "tags": [
+        "测试数据转换",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#fuzzeddataprovider"
+    },
+    {
+      "id": "atheris-009",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "浮点特殊值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 2.3.0 的 ConsumeFloat 与 ConsumeRegularFloat 对特殊浮点值有何区别？",
+      "answer": "ConsumeFloat 可能产生 NaN 或无穷值；ConsumeRegularFloat 不产生这些特殊值。",
+      "explanation": "测试时应根据接口需要决定是否覆盖特殊值。",
+      "example": "分别测试包含和不包含 NaN 的数值输入。",
+      "tags": [
+        "浮点特殊值",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#fuzzeddataprovider"
+    },
+    {
+      "id": "atheris-010",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "覆盖报告退出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "结合 coverage.py 使用 Atheris 2.3.0 时，为什么可用 -atheris_runs 限定运行次数？",
+      "answer": "它让模糊测试在指定次数后正常退出，从而有机会生成覆盖报告。",
+      "explanation": "原生代码崩溃等非正常退出不保证生成报告。",
+      "example": "先运行固定次数，再查看生成的覆盖报告。",
+      "tags": [
+        "覆盖报告退出",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#visualizing-python-code-coverage"
+    },
+    {
+      "id": "atheris-011",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "原生扩展插桩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么仅对 Python 字节码插桩不足以有效测量原生扩展内部覆盖？",
+      "answer": "扩展内部是原生代码，需要对原生扩展本身进行相应插桩。",
+      "explanation": "原生代码还可配合 AddressSanitizer 等检测额外错误。",
+      "example": "对 C 扩展进行插桩构建后再模糊测试。",
+      "tags": [
+        "原生扩展插桩",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#fuzzing-native-extensions"
+    },
+    {
+      "id": "atheris-012",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Python 模糊测试",
+      "knowledgePoint": "结构化变异入口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Atheris 2.3.0 如何启用自定义输入变异函数？",
+      "answer": "在调用 Setup 时通过 custom_mutator 参数传入自定义变异函数。",
+      "explanation": "自定义变异可以帮助生成符合复杂格式的输入。",
+      "example": "先解压、变异内容，再重新压缩。",
+      "tags": [
+        "结构化变异入口",
+        "Python 模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/google/atheris/blob/2.3.0/README.md#structure-aware-fuzzing"
+    }
+  ]
+}

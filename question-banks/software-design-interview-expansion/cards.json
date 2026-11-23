@@ -1,0 +1,253 @@
+{
+  "source": {
+    "id": "software-design-interview-expansion",
+    "title": "Refactoring.Guru、Martin Fowler 与 Java SE 21：软件设计面试基础",
+    "url": "https://refactoring.guru/design-patterns/catalog",
+    "type": "教材与软件工程技术资料",
+    "note": "补齐 GoF 设计模式并整理常见模式辨析、依赖注入与 Java 类型设计问题；每张卡均引用具体资料页面，示例为自行整理。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "sdp2-001", "category": "foundations", "level": "进阶", "subtopic": "结构型设计模式",
+      "knowledgePoint": "桥接模式", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "桥接模式如何让抽象部分与实现部分独立变化？",
+      "answer": "它把高层抽象持有的实现职责交给另一组对象，通过组合连接两者，使抽象和实现可以分别扩展。",
+      "explanation": "当两个变化维度都可能扩展时，桥接可避免为每种组合建立一个子类。",
+      "example": "遥控器抽象与电视、音响等设备实现分别扩展，再通过组合配对。",
+      "tags": ["设计模式", "桥接模式", "结构型"], "evidence": "source",
+      "referenceId": "refactoring-bridge", "reference": "https://refactoring.guru/design-patterns/bridge",
+      "referenceTitle": "Refactoring.Guru：Bridge", "referenceType": "设计模式资料"
+    },
+    {
+      "id": "sdp2-002", "category": "foundations", "level": "进阶", "subtopic": "结构型设计模式",
+      "knowledgePoint": "享元模式", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "享元模式通过什么方式减少大量相似对象的内存占用？",
+      "answer": "它共享可复用的内部状态，并把每个对象不同的外部状态放在共享对象之外按需传入。",
+      "explanation": "只有共享对象数量足够多且内部状态可复用时，管理共享池的复杂度才可能值得。",
+      "example": "文本渲染可共享字符字形和字体数据，把每个字符的位置作为外部状态。",
+      "tags": ["设计模式", "享元模式", "内存"], "evidence": "source",
+      "referenceId": "refactoring-flyweight", "reference": "https://refactoring.guru/design-patterns/flyweight",
+      "referenceTitle": "Refactoring.Guru：Flyweight", "referenceType": "设计模式资料"
+    },
+    {
+      "id": "sdp2-003", "category": "foundations", "level": "进阶", "subtopic": "行为型设计模式",
+      "knowledgePoint": "中介者模式", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "中介者模式主要如何降低多个协作对象之间的直接依赖？",
+      "answer": "让协作对象把交互请求交给中介者，由中介者协调对象之间的通信和流程。",
+      "explanation": "中介者集中协调逻辑可能变复杂，需要避免它演变成承载全部业务的对象。",
+      "example": "对话框中按钮、输入框和列表通过对话框协调启用状态，而不彼此直接引用。",
+      "tags": ["设计模式", "中介者模式", "对象协作"], "evidence": "source",
+      "referenceId": "refactoring-mediator", "reference": "https://refactoring.guru/design-patterns/mediator",
+      "referenceTitle": "Refactoring.Guru：Mediator", "referenceType": "设计模式资料"
+    },
+    {
+      "id": "sdp2-004", "category": "foundations", "level": "进阶", "subtopic": "行为型设计模式",
+      "knowledgePoint": "备忘录模式", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "备忘录模式如何支持对象状态的保存与恢复？",
+      "answer": "由对象生成封装其状态快照的备忘录，再由管理者保存快照并在需要时交回原对象恢复。",
+      "explanation": "快照应避免让外部直接依赖对象内部状态表示；保存频率和状态大小会影响内存成本。",
+      "example": "文本编辑器把文档版本快照放入撤销历史，需要时恢复到某一版本。",
+      "tags": ["设计模式", "备忘录模式", "状态恢复"], "evidence": "source",
+      "referenceId": "refactoring-memento", "reference": "https://refactoring.guru/design-patterns/memento",
+      "referenceTitle": "Refactoring.Guru：Memento", "referenceType": "设计模式资料"
+    },
+    {
+      "id": "sdp2-005", "category": "foundations", "level": "进阶", "subtopic": "行为型设计模式",
+      "knowledgePoint": "访问者模式", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "访问者模式适合怎样把操作从一组元素类型中分离出来？",
+      "answer": "为元素结构定义访问者操作，并让元素接受访问者；这样可在不把新操作塞进元素类的情况下扩展操作。",
+      "explanation": "访问者便于增加新操作，但增加新的元素类型时通常需要更新各访问者实现。",
+      "example": "对固定的语法树节点类型分别实现打印、类型检查和代码生成访问者。",
+      "tags": ["设计模式", "访问者模式", "双重分派"], "evidence": "source",
+      "referenceId": "refactoring-visitor", "reference": "https://refactoring.guru/design-patterns/visitor",
+      "referenceTitle": "Refactoring.Guru：Visitor", "referenceType": "设计模式资料"
+    },
+    {
+      "id": "sdp2-006", "category": "foundations", "level": "进阶", "subtopic": "行为型设计模式",
+      "knowledgePoint": "解释器模式", "questionType": "概念与原理", "origin": "自行整理",
+      "question": "解释器模式通常用什么结构表示并执行一类简单语言的语法？",
+      "answer": "它把文法规则表示为语法结构或表达式对象，并为这些结构定义解释或求值行为。",
+      "explanation": "解释器适合语法和规则较简单、结构稳定的语言；复杂语法通常需要专门解析器。",
+      "example": "把布尔过滤条件解析成表达式树，再由各节点计算记录是否匹配。",
+      "tags": ["设计模式", "解释器模式", "语法"], "evidence": "source",
+      "referenceId": "oodesign-interpreter", "reference": "https://www.oodesign.com/interpreter-pattern",
+      "referenceTitle": "OODesign：Interpreter Pattern", "referenceType": "设计模式资料"
+    },
+    {
+      "id": "sdp2-007", "category": "foundations", "level": "进阶", "subtopic": "设计模式基础",
+      "knowledgePoint": "适配器与桥接", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "适配器模式与桥接模式在设计目的上有什么区别？",
+      "answer": "适配器让已有且不兼容的接口协同工作；桥接从设计开始就分离抽象与实现，以便两侧独立扩展。",
+      "explanation": "两者都可能使用组合，但一个主要适配既有接口，另一个主要管理两个变化维度。",
+      "example": "包装旧支付 SDK 是适配器；让遥控器类型和设备实现独立扩展是桥接。",
+      "tags": ["设计模式", "适配器", "桥接"], "evidence": "source",
+      "referenceId": "refactoring-adapter", "reference": "https://refactoring.guru/design-patterns/adapter",
+      "referenceTitle": "Refactoring.Guru：Adapter", "referenceType": "设计模式资料",
+      "supportingReferences": [{"id": "refactoring-bridge", "title": "Refactoring.Guru：Bridge", "url": "https://refactoring.guru/design-patterns/bridge", "type": "设计模式资料", "evidence": "source"}]
+    },
+    {
+      "id": "sdp2-008", "category": "foundations", "level": "进阶", "subtopic": "设计模式基础",
+      "knowledgePoint": "装饰器与代理", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "装饰器模式和代理模式都包装对象时，主要意图有什么不同？",
+      "answer": "装饰器主要为对象动态叠加职责；代理主要控制对目标对象的访问，例如延迟创建、权限检查或远程转发。",
+      "explanation": "两者都可保持相同接口，具体归类应看包装层承担的意图，而非只看代码形状。",
+      "example": "给数据流增加压缩是装饰；在访问数据库对象前检查权限是代理。",
+      "tags": ["设计模式", "装饰器", "代理"], "evidence": "source",
+      "referenceId": "refactoring-decorator", "reference": "https://refactoring.guru/design-patterns/decorator",
+      "referenceTitle": "Refactoring.Guru：Decorator", "referenceType": "设计模式资料",
+      "supportingReferences": [{"id": "refactoring-proxy", "title": "Refactoring.Guru：Proxy", "url": "https://refactoring.guru/design-patterns/proxy", "type": "设计模式资料", "evidence": "source"}]
+    },
+    {
+      "id": "sdp2-009", "category": "foundations", "level": "进阶", "subtopic": "设计模式基础",
+      "knowledgePoint": "策略与状态", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "策略模式和状态模式都委托给对象时，关注点有何不同？",
+      "answer": "策略模式让调用方为同一任务选择可互换算法；状态模式让对象根据当前状态改变行为，并通常由状态转换驱动后续状态。",
+      "explanation": "两者结构相似，区分时要看对象为何替换协作者以及替换是否代表状态迁移。",
+      "example": "选择不同运费算法是策略；订单从待支付转为已支付是状态。",
+      "tags": ["设计模式", "策略模式", "状态模式"], "evidence": "source",
+      "referenceId": "refactoring-strategy", "reference": "https://refactoring.guru/design-patterns/strategy",
+      "referenceTitle": "Refactoring.Guru：Strategy", "referenceType": "设计模式资料",
+      "supportingReferences": [{"id": "refactoring-state", "title": "Refactoring.Guru：State", "url": "https://refactoring.guru/design-patterns/state", "type": "设计模式资料", "evidence": "source"}]
+    },
+    {
+      "id": "sdp2-010", "category": "foundations", "level": "进阶", "subtopic": "设计模式基础",
+      "knowledgePoint": "模板方法与策略", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "模板方法模式与策略模式通常分别通过什么方式改变算法步骤？",
+      "answer": "模板方法在基类中固定流程并由子类覆盖部分步骤；策略模式把算法封装为可替换对象，由上下文通过组合委托。",
+      "explanation": "前者主要依赖继承形成编译期结构，后者更适合在运行时替换算法。",
+      "example": "固定报表流程并让子类实现格式化步骤可用模板方法；按请求选择计价算法可用策略。",
+      "tags": ["设计模式", "模板方法", "策略模式"], "evidence": "source",
+      "referenceId": "refactoring-template-method", "reference": "https://refactoring.guru/design-patterns/template-method",
+      "referenceTitle": "Refactoring.Guru：Template Method", "referenceType": "设计模式资料",
+      "supportingReferences": [{"id": "refactoring-strategy", "title": "Refactoring.Guru：Strategy", "url": "https://refactoring.guru/design-patterns/strategy", "type": "设计模式资料", "evidence": "source"}]
+    },
+    {
+      "id": "sdp2-011", "category": "foundations", "level": "进阶", "subtopic": "设计模式基础",
+      "knowledgePoint": "工厂方法与抽象工厂", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "工厂方法和抽象工厂在创建产品的范围上有何区别？",
+      "answer": "工厂方法通常由创建者决定某一种产品的具体实现；抽象工厂提供创建一组相关产品的接口。",
+      "explanation": "抽象工厂更适合需要保持兼容的产品系列，新增产品种类可能要求扩展工厂接口。",
+      "example": "创建一种通知可用工厂方法；创建同一 UI 风格的按钮和菜单可用抽象工厂。",
+      "tags": ["设计模式", "工厂方法", "抽象工厂"], "evidence": "source",
+      "referenceId": "refactoring-factory-method", "reference": "https://refactoring.guru/design-patterns/factory-method",
+      "referenceTitle": "Refactoring.Guru：Factory Method", "referenceType": "设计模式资料",
+      "supportingReferences": [{"id": "refactoring-abstract-factory", "title": "Refactoring.Guru：Abstract Factory", "url": "https://refactoring.guru/design-patterns/abstract-factory", "type": "设计模式资料", "evidence": "source"}]
+    },
+    {
+      "id": "sdp2-012", "category": "foundations", "level": "进阶", "subtopic": "设计模式基础",
+      "knowledgePoint": "组合与装饰器", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "组合模式与装饰器模式的对象结构有什么主要区别？",
+      "answer": "组合对象通常管理多个子对象以形成树；装饰器通常包装一个组件并在转发时增加职责。",
+      "explanation": "二者都可让客户端面向统一组件接口，核心区别在子对象集合的树形组合与单对象包装。",
+      "example": "文件夹包含多个文件和子文件夹是组合；为文件读写流增加压缩是装饰器。",
+      "tags": ["设计模式", "组合模式", "装饰器"], "evidence": "source",
+      "referenceId": "refactoring-composite", "reference": "https://refactoring.guru/design-patterns/composite",
+      "referenceTitle": "Refactoring.Guru：Composite", "referenceType": "设计模式资料",
+      "supportingReferences": [{"id": "refactoring-decorator", "title": "Refactoring.Guru：Decorator", "url": "https://refactoring.guru/design-patterns/decorator", "type": "设计模式资料", "evidence": "source"}]
+    },
+    {
+      "id": "sdp2-013", "category": "foundations", "level": "进阶", "subtopic": "设计模式基础",
+      "knowledgePoint": "观察者与中介者", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "观察者模式与中介者模式分别组织哪类对象协作？",
+      "answer": "观察者组织主题向多个订阅者通知变化；中介者集中协调多个同事对象之间的交互流程。",
+      "explanation": "观察者常用于事件通知，中介者常用于有条件、有顺序的多方协调；具体实现可以组合两者。",
+      "example": "库存变更通知多个视图是观察者；对话框协调按钮和输入框状态是中介者。",
+      "tags": ["设计模式", "观察者模式", "中介者模式"], "evidence": "source",
+      "referenceId": "refactoring-observer", "reference": "https://refactoring.guru/design-patterns/observer",
+      "referenceTitle": "Refactoring.Guru：Observer", "referenceType": "设计模式资料",
+      "supportingReferences": [{"id": "refactoring-mediator", "title": "Refactoring.Guru：Mediator", "url": "https://refactoring.guru/design-patterns/mediator", "type": "设计模式资料", "evidence": "source"}]
+    },
+    {
+      "id": "sdp2-014", "category": "foundations", "level": "进阶", "subtopic": "行为型设计模式",
+      "knowledgePoint": "访问者模式的变化代价", "questionType": "适用边界", "origin": "自行整理",
+      "question": "访问者模式为何适合频繁增加操作、但不适合频繁增加元素类型的结构？",
+      "answer": "新操作通常可通过新增访问者实现；新增元素类型时，已有访问者往往都要增加对应访问方法。",
+      "explanation": "它把变化成本从操作维度转移到元素类型维度，适用性取决于哪一侧更稳定。",
+      "example": "稳定的语法树节点可持续增加打印和检查访问者；若节点类型频繁扩展则维护成本会上升。",
+      "tags": ["设计模式", "访问者模式", "适用边界"], "evidence": "source",
+      "referenceId": "refactoring-visitor", "reference": "https://refactoring.guru/design-patterns/visitor",
+      "referenceTitle": "Refactoring.Guru：Visitor", "referenceType": "设计模式资料"
+    },
+    {
+      "id": "sdp2-015", "category": "foundations", "level": "进阶", "subtopic": "行为型设计模式",
+      "knowledgePoint": "中介者复杂度", "questionType": "适用边界", "origin": "自行整理",
+      "question": "使用中介者模式降低对象间依赖时，需要留意什么设计风险？",
+      "answer": "交互逻辑可能全部集中到中介者，使它变成难以维护的复杂对象；应按职责拆分或限制协调范围。",
+      "explanation": "降低对象间直接引用不等于消除复杂度，复杂度可能转移到中介者内部。",
+      "example": "若一个对话框协调所有业务流程和数据访问，可再拆分专门的工作流服务。",
+      "tags": ["设计模式", "中介者模式", "复杂度"], "evidence": "source",
+      "referenceId": "refactoring-mediator", "reference": "https://refactoring.guru/design-patterns/mediator",
+      "referenceTitle": "Refactoring.Guru：Mediator", "referenceType": "设计模式资料"
+    },
+    {
+      "id": "sdp2-016", "category": "foundations", "level": "入门", "subtopic": "面向对象设计",
+      "knowledgePoint": "内聚与耦合", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "软件设计中的高内聚与低耦合分别描述什么？",
+      "answer": "内聚描述模块内部职责彼此相关的程度；耦合描述模块之间相互依赖的程度。设计通常追求职责相关且跨模块依赖受控。",
+      "explanation": "高内聚、低耦合是指导原则，不意味着依赖数量越少越好或模块越小越好。",
+      "example": "订单校验规则集中在订单模块，同时通过稳定接口调用库存服务。",
+      "tags": ["软件设计", "内聚", "耦合"], "evidence": "source",
+      "referenceId": "wikipedia-cohesion", "reference": "https://en.wikipedia.org/wiki/Cohesion_(computer_science)",
+      "referenceTitle": "Wikipedia：Cohesion (computer science)", "referenceType": "软件工程概念资料",
+      "supportingReferences": [{"id": "wikipedia-coupling", "title": "Wikipedia：Coupling (computer programming)", "url": "https://en.wikipedia.org/wiki/Coupling_(computer_programming)", "type": "软件工程概念资料", "evidence": "source"}]
+    },
+    {
+      "id": "sdp2-017", "category": "foundations", "level": "进阶", "subtopic": "SOLID 设计原则",
+      "knowledgePoint": "依赖倒置与依赖注入", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "依赖倒置原则与依赖注入分别是什么？",
+      "answer": "依赖倒置是高层和底层都依赖抽象的设计原则；依赖注入是把协作者从对象外部提供进来的实现方式之一。",
+      "explanation": "使用注入容器并不自动保证依赖倒置，接口边界仍需符合业务设计。",
+      "example": "业务服务依赖支付接口，再由装配代码注入具体支付实现。",
+      "tags": ["SOLID", "依赖倒置", "依赖注入"], "evidence": "source",
+      "referenceId": "fowler-injection", "reference": "https://martinfowler.com/articles/injection.html",
+      "referenceTitle": "Martin Fowler：Inversion of Control Containers and the Dependency Injection pattern", "referenceType": "软件工程文章",
+      "supportingReferences": [{"id": "wikipedia-dip", "title": "Dependency inversion principle", "url": "https://en.wikipedia.org/wiki/Dependency_inversion_principle", "type": "软件工程概念资料", "evidence": "source"}]
+    },
+    {
+      "id": "sdp2-018", "category": "foundations", "level": "进阶", "subtopic": "面向对象设计",
+      "knowledgePoint": "控制反转与依赖注入", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "控制反转与依赖注入之间是什么关系？",
+      "answer": "控制反转是把部分控制权交给框架或外部组件的广义原则；依赖注入是通过外部提供依赖来实现控制反转的一种模式。",
+      "explanation": "控制反转还可通过事件回调等方式实现，不能把它限定为依赖注入容器。",
+      "example": "测试框架控制测试方法的调用属于控制反转；构造服务时传入仓储接口属于依赖注入。",
+      "tags": ["软件设计", "控制反转", "依赖注入"], "evidence": "source",
+      "referenceId": "fowler-injection", "reference": "https://martinfowler.com/articles/injection.html",
+      "referenceTitle": "Martin Fowler：Inversion of Control Containers and Dependency Injection", "referenceType": "软件工程文章"
+    },
+    {
+      "id": "sdp2-019", "category": "foundations", "level": "进阶", "subtopic": "面向对象设计",
+      "knowledgePoint": "依赖注入与服务定位器", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "依赖注入与服务定位器在依赖获取方式上有什么区别？",
+      "answer": "依赖注入由外部把依赖提供给对象；服务定位器让对象主动向注册表查询依赖。",
+      "explanation": "两者都能隔离具体实现，但服务定位器可能隐藏类实际需要哪些依赖。",
+      "example": "构造函数接收 Logger 是注入；在方法中调用 locator.get(Logger.class) 是服务定位。",
+      "tags": ["软件设计", "依赖注入", "服务定位器"], "evidence": "source",
+      "referenceId": "fowler-injection", "reference": "https://martinfowler.com/articles/injection.html",
+      "referenceTitle": "Martin Fowler：Inversion of Control Containers and Dependency Injection", "referenceType": "软件工程文章"
+    },
+    {
+      "id": "sdp2-020", "category": "foundations", "level": "进阶", "subtopic": "面向对象设计",
+      "knowledgePoint": "构造器与 Setter 注入", "questionType": "适用场景", "origin": "自行整理",
+      "question": "依赖注入中，构造器注入与 Setter 注入通常各适合什么依赖？",
+      "answer": "构造器注入常用于对象正常工作所必需的依赖；Setter 注入可用于可选或允许运行时重新配置的依赖。",
+      "explanation": "必需依赖通过构造器表达可避免对象处于不完整状态；具体选择仍取决于生命周期和框架约束。",
+      "example": "支付服务必须有网关可用构造器注入；可选的诊断回调可以单独配置。",
+      "tags": ["软件设计", "依赖注入", "构造器注入"], "evidence": "source",
+      "referenceId": "fowler-injection", "reference": "https://martinfowler.com/articles/injection.html",
+      "referenceTitle": "Martin Fowler：Inversion of Control Containers and Dependency Injection", "referenceType": "软件工程文章"
+    },
+    {
+      "id": "sdp2-021", "category": "foundations", "level": "进阶", "subtopic": "面向对象设计",
+      "knowledgePoint": "Java 接口与抽象类", "questionType": "区别辨析", "origin": "自行整理",
+      "question": "Java 中接口与抽象类在状态、实现和继承上的常见区别是什么？",
+      "answer": "抽象类可有实例状态、构造器和具体方法；接口可声明抽象、默认、静态及私有方法，但不能保存普通实例字段；类可实现多个接口但只能直接继承一个类。",
+      "explanation": "Java 8 之后接口支持默认方法；这里依据 Java SE 21 语言规范，不应把旧版接口规则套用到新版本。",
+      "example": "多个类可实现同一能力接口；共享实例状态和构造流程时可考虑抽象基类。",
+      "tags": ["Java", "接口", "抽象类"], "evidence": "source",
+      "referenceId": "oracle-jls-interfaces", "reference": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-9.html",
+      "referenceTitle": "Java SE 21 JLS：Interfaces", "referenceType": "语言规范",
+      "supportingReferences": [{"id": "oracle-jls-classes", "title": "Java SE 21 JLS：Classes", "url": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-8.html", "type": "语言规范", "evidence": "source"}]
+    }
+  ]
+}

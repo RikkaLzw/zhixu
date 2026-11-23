@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "gnu-timeout-command-practice",
+    "title": "GNU coreutils 手册：timeout 命令",
+    "url": "https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html",
+    "type": "官方文档或手册",
+    "note": "依据注明版本的文档或手册自行整理，示例自编；命令及语言行为应以所用实现为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "gtimeout-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU timeout 超时控制",
+      "knowledgePoint": "用途与单位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU timeout 命令的持续时间参数有什么作用，支持哪些常见单位？",
+      "answer": "限制命令运行时间；可用 s、m、h、d 表示秒、分、时、天，不写后缀默认按秒。",
+      "explanation": "持续时间可为浮点数；0 禁用该时间限制，而不是立即终止命令。",
+      "example": "timeout 5m command 限制命令运行五分钟。",
+      "tags": [
+        "GNU timeout 超时控制",
+        "用途与单位"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html"
+    },
+    {
+      "id": "gtimeout-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU timeout 超时控制",
+      "knowledgePoint": "超时信号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU timeout 默认在命令超时后首先发送什么信号？",
+      "answer": "默认发送 SIGTERM；可用 --signal 指定其他信号。",
+      "explanation": "目标可能捕获或忽略可捕获的信号。",
+      "example": "timeout --signal=INT 3s command。",
+      "tags": [
+        "GNU timeout 超时控制",
+        "超时信号"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html"
+    },
+    {
+      "id": "gtimeout-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU timeout 超时控制",
+      "knowledgePoint": "强制终止",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU timeout 的 --kill-after=DURATION 从何时开始计时？",
+      "answer": "从发送首次超时信号开始；到期时若命令仍在运行，会再发送 SIGKILL。",
+      "explanation": "这个时长是首次超时之后的宽限时间。",
+      "example": "timeout -k 2s 5s command 先等五秒，再给两秒退出。",
+      "tags": [
+        "GNU timeout 超时控制",
+        "强制终止"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html"
+    },
+    {
+      "id": "gtimeout-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU timeout 超时控制",
+      "knowledgePoint": "超时退出状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU timeout 命令超时且未指定 --preserve-status 时，通常返回什么状态？",
+      "answer": "通常返回 124。",
+      "explanation": "使用 --preserve-status 可返回被运行命令的状态；收到 SIGKILL 可能返回 137，命令自身也可能返回 124。",
+      "example": "脚本检查超时状态时结合具体运行上下文。",
+      "tags": [
+        "GNU timeout 超时控制",
+        "超时退出状态"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html"
+    },
+    {
+      "id": "gtimeout-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU timeout 超时控制",
+      "knowledgePoint": "前台模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU timeout --foreground 对终端和子进程处理有什么注意点？",
+      "answer": "它便于命令读取终端并接收终端信号；该模式下命令的子进程不受 timeout 超时控制。",
+      "explanation": "选择模式时需考虑程序是否会启动子进程。",
+      "example": "交互式程序需要终端输入时检查前台模式行为。",
+      "tags": [
+        "GNU timeout 超时控制",
+        "前台模式"
+      ],
+      "evidence": "source",
+      "reference": "https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html"
+    }
+  ]
+}

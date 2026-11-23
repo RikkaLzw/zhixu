@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "mlflow-experiment-tracking",
+    "title": "MLflow 3.1 官方文档：实验跟踪",
+    "url": "https://mlflow.org/docs/3.1.0/ml/tracking/",
+    "type": "官方技术文档、固定版本源码或研究论文",
+    "note": "依照逐题所列资料自行整理，示例自编；涉及实现的行为以指定版本为准。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "mlflow-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MLflow 实验跟踪",
+      "knowledgePoint": "运行记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow Tracking 的 run 通常表示什么？",
+      "answer": "表示一次数据科学或训练代码的运行，并记录其参数、指标、时间和产物等。",
+      "explanation": "一次实验可包含多次运行。",
+      "example": "不同学习率各进行一次训练并记录为不同 run。",
+      "tags": [
+        "MLflow 实验跟踪",
+        "运行记录"
+      ],
+      "evidence": "source",
+      "reference": "https://mlflow.org/docs/3.1.0/ml/tracking/"
+    },
+    {
+      "id": "mlflow-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MLflow 实验跟踪",
+      "knowledgePoint": "实验分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow 的 experiment 与 run 如何组织？",
+      "answer": "experiment 将同一任务的一组 run 和模型组织在一起。",
+      "explanation": "实验名称与运行参数仍需按项目规范管理。",
+      "example": "将同一数据集上的多次训练放入一个实验。",
+      "tags": [
+        "MLflow 实验跟踪",
+        "实验分组"
+      ],
+      "evidence": "source",
+      "reference": "https://mlflow.org/docs/3.1.0/ml/tracking/"
+    },
+    {
+      "id": "mlflow-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MLflow 实验跟踪",
+      "knowledgePoint": "参数与指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow 的 log_param 与 log_metric 分别用于记录什么？",
+      "answer": "log_param 记录运行参数；log_metric 记录数值型评估或训练指标。",
+      "explanation": "指标可随训练步骤记录多次。",
+      "example": "记录学习率和每轮验证损失。",
+      "tags": [
+        "MLflow 实验跟踪",
+        "参数与指标"
+      ],
+      "evidence": "source",
+      "reference": "https://mlflow.org/docs/3.1.0/ml/tracking/"
+    },
+    {
+      "id": "mlflow-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MLflow 实验跟踪",
+      "knowledgePoint": "运行产物",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow Tracking 的 artifact 通常指什么？",
+      "answer": "运行产生的文件，如模型权重、图像或其他输出文件。",
+      "explanation": "指标数值与文件产物可分别记录和查看。",
+      "example": "把混淆矩阵图片保存为运行产物。",
+      "tags": [
+        "MLflow 实验跟踪",
+        "运行产物"
+      ],
+      "evidence": "source",
+      "reference": "https://mlflow.org/docs/3.1.0/ml/tracking/"
+    },
+    {
+      "id": "mlflow-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MLflow 实验跟踪",
+      "knowledgePoint": "默认存储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow 3.1 在没有额外服务器或数据库配置时，跟踪数据默认存放在哪里？",
+      "answer": "默认保存在本地 mlruns 目录。",
+      "explanation": "实际路径可通过跟踪 URI 等配置改变。",
+      "example": "本地实验会生成 mlruns 目录。",
+      "tags": [
+        "MLflow 实验跟踪",
+        "默认存储"
+      ],
+      "evidence": "source",
+      "reference": "https://mlflow.org/docs/3.1.0/ml/tracking/"
+    },
+    {
+      "id": "mlflow-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MLflow 实验跟踪",
+      "knowledgePoint": "自动记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow 的 autolog 主要用于什么？",
+      "answer": "为受支持的训练库自动记录相应参数、指标和模型等信息。",
+      "explanation": "不同库支持的内容与版本条件可能不同。",
+      "example": "启用 scikit-learn 自动记录后执行训练。",
+      "tags": [
+        "MLflow 实验跟踪",
+        "自动记录"
+      ],
+      "evidence": "source",
+      "reference": "https://mlflow.org/docs/3.1.0/ml/tracking/"
+    },
+    {
+      "id": "mlflow-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MLflow 实验跟踪",
+      "knowledgePoint": "查询运行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MLflow Tracking 如何按指标查找实验中的运行？",
+      "answer": "可用 MlflowClient.search_runs 等接口按指标条件或排序检索运行。",
+      "explanation": "比较结果时仍需核对数据切分与指标口径。",
+      "example": "按验证损失升序查看候选运行。",
+      "tags": [
+        "MLflow 实验跟踪",
+        "查询运行"
+      ],
+      "evidence": "source",
+      "reference": "https://mlflow.org/docs/3.1.0/ml/tracking/"
+    }
+  ]
+}

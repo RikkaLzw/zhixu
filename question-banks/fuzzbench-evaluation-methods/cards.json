@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "fuzzbench-evaluation-methods",
+    "title": "FuzzBench 2021 论文：模糊测试评估方法",
+    "url": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf",
+    "type": "教材、研究论文与官方资料",
+    "note": "依据逐题引用的教材或研究论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fbench-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "FuzzBench 评估方法",
+      "knowledgePoint": "评测目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzBench 主要比较什么类型的工具？",
+      "answer": "它在一组基准程序上比较模糊测试工具的表现。",
+      "explanation": "论文使用真实软件项目及其 fuzz target 作为基准。",
+      "example": "比较两个 fuzzer 在同一解析器上的表现。",
+      "tags": [
+        "FuzzBench 评估方法",
+        "评测目标"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf"
+    },
+    {
+      "id": "fbench-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "FuzzBench 评估方法",
+      "knowledgePoint": "统一覆盖度量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较不同模糊测试工具的覆盖率时，为什么要使用统一且独立的覆盖度量？",
+      "answer": "不同 fuzzer 自带的覆盖统计和实现可能不同，统一独立度量有助于公平比较。",
+      "explanation": "比较仍需控制目标版本、资源和其他实验配置。",
+      "example": "用相同的外部覆盖实现测量不同 fuzzer 的语料。",
+      "tags": [
+        "FuzzBench 评估方法",
+        "统一覆盖度量"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf"
+    },
+    {
+      "id": "fbench-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "FuzzBench 评估方法",
+      "knowledgePoint": "覆盖与漏洞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 FuzzBench 论文建议结合代码覆盖和漏洞发现进行评估？",
+      "answer": "覆盖反映探索范围，而漏洞发现反映可观察的缺陷；任一指标都不能单独完整描述效果。",
+      "explanation": "更高覆盖不保证一定发现更多不同漏洞。",
+      "example": "同时报告覆盖增长与已知缺陷发现。",
+      "tags": [
+        "FuzzBench 评估方法",
+        "覆盖与漏洞"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf"
+    },
+    {
+      "id": "fbench-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FuzzBench 评估方法",
+      "knowledgePoint": "快照测量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzBench 论文中 runner 和 measurer 如何配合记录覆盖随时间的变化？",
+      "answer": "runner 周期性保存语料快照，measurer 对快照测量覆盖并记录结果。",
+      "explanation": "该论文描述的默认快照间隔是 15 分钟，不应直接视为当前版本的默认值。",
+      "example": "比较不同时间点的覆盖增长曲线。",
+      "tags": [
+        "FuzzBench 评估方法",
+        "快照测量"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf"
+    },
+    {
+      "id": "fbench-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FuzzBench 评估方法",
+      "knowledgePoint": "差异覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzBench 的差异覆盖用于比较什么？",
+      "answer": "它比较不同 fuzzer 覆盖的具体代码区域，包括某个工具独有的区域。",
+      "explanation": "全局唯一覆盖取决于该实验比较的其他 fuzzer 集合；相同覆盖总数也可能对应不同区域。",
+      "example": "一个工具覆盖区域 A，另一个工具覆盖区域 B。",
+      "tags": [
+        "FuzzBench 评估方法",
+        "差异覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf"
+    },
+    {
+      "id": "fbench-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FuzzBench 评估方法",
+      "knowledgePoint": "效应量与检验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzBench 2021 论文默认的单基准两两比较分别用什么衡量效应量与显著性？",
+      "answer": "使用 Vargha–Delaney A12 衡量效应量，使用双侧 Mann–Whitney U 检验评估显著性。",
+      "explanation": "显著性与效应大小回答不同问题。",
+      "example": "先看覆盖差异，再结合试验分布与检验结果。",
+      "tags": [
+        "FuzzBench 评估方法",
+        "效应量与检验"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf"
+    },
+    {
+      "id": "fbench-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FuzzBench 评估方法",
+      "knowledgePoint": "版本记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzBench 论文为何强调记录平台提交版本、fuzzer 和基准版本及实验参数？",
+      "answer": "这些信息有助于重建实验配置并核验结果。",
+      "explanation": "论文通过固定软件版本并记录平台提交哈希支持可复现性。",
+      "example": "记录目标版本、试验时长和平台提交。",
+      "tags": [
+        "FuzzBench 评估方法",
+        "版本记录"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf"
+    },
+    {
+      "id": "fbench-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "FuzzBench 评估方法",
+      "knowledgePoint": "论文设置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FuzzBench 2021 论文所述默认每个 fuzzer 与基准组合运行多少次、每次多长？",
+      "answer": "论文当时默认运行 20 次，每次 23 小时。",
+      "explanation": "这些是论文描述的设置，不应假定所有后续版本和实验都相同。",
+      "example": "报告论文实验时明确注明当时的默认设置。",
+      "tags": [
+        "FuzzBench 评估方法",
+        "论文设置"
+      ],
+      "evidence": "source",
+      "reference": "https://storage.googleapis.com/gweb-research2023-media/pubtools/6318.pdf"
+    }
+  ]
+}

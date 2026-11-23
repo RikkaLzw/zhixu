@@ -1,0 +1,430 @@
+{
+  "source": {
+    "id": "nlp-generation-evaluation",
+    "title": "BLEU、ROUGE 与自回归语言模型困惑度",
+    "url": "https://aclanthology.org/P02-1040/",
+    "type": "研究论文与技术文档",
+    "note": "逐题对照原论文或固定版本官方文档自行整理，数值示例为自编。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "nlpeval-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "自回归困惑度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "自回归语言模型的困惑度通常衡量什么？",
+      "answer": "它衡量模型在给定前文时为评估文本实际 token 分配的概率，基于每个 token 的平均负对数似然。",
+      "explanation": "标准定义针对自回归因子分解；分词和上下文影响数值。",
+      "example": "比较同一分词和测试集上的两个语言模型。",
+      "tags": [
+        "自回归困惑度",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "困惑度与负对数似然",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用自然对数时，语言模型困惑度与平均 token 负对数似然有什么关系？",
+      "answer": "困惑度等于平均 token 负对数似然的指数，即 PPL = exp(平均 NLL)。",
+      "explanation": "先按参与计分的 token 求平均，再取指数。",
+      "example": "平均 NLL 为 ln(4) 时，PPL 为 4。",
+      "tags": [
+        "困惑度与负对数似然",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "困惑度数值例子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "某评估序列中每个被计分 token 的条件概率均为 0.25，困惑度是多少？",
+      "answer": "困惑度为 4。",
+      "explanation": "平均负对数似然是 -ln(0.25)，其指数为 4。",
+      "example": "若每一步概率都为 1/4，PPL 为 4。",
+      "tags": [
+        "困惑度数值例子",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "困惑度比较前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "比较两个自回归模型的困惑度时，为什么要关注分词方式？",
+      "answer": "困惑度是按 token 计量的；不同分词会改变预测单位和序列长度，数值不能直接当作同一口径比较。",
+      "explanation": "还需要统一评估文本、上下文及计分规则。",
+      "example": "比较前检查模型是否使用相同 tokenizer。",
+      "tags": [
+        "困惑度比较前提",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "困惑度方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在评估文本、分词与计分口径一致时，较低的困惑度表示什么？",
+      "answer": "表示该模型对评估序列的平均负对数似然较低，通常为实际 token 分配了更高的几何平均概率。",
+      "explanation": "这只反映给定数据上的预测指标，不能单凭它保证所有任务效果更好。",
+      "example": "同口径下 PPL 10 低于 20。",
+      "tags": [
+        "困惑度方向",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "掩码模型与困惑度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 BERT 等掩码语言模型不能直接套用标准自回归困惑度？",
+      "answer": "标准自回归困惑度依赖从左到右的条件概率分解；BERT 的掩码预测任务不是同一种分解。",
+      "explanation": "其他伪困惑度等替代口径需要明确其计算方法。",
+      "example": "不要把 BERT 的掩码损失直接称为标准自回归 PPL。",
+      "tags": [
+        "掩码模型与困惑度",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "固定上下文评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定上下文长度的语言模型在评估长文本时，为什么不能总利用完整前文？",
+      "answer": "模型一次只能接收有限长度的输入，因此较远的前文可能超出可用上下文。",
+      "explanation": "窗口构造方式影响每个目标实际看到的历史。",
+      "example": "模型最多处理 1024 个 token 时分窗口评估长文。",
+      "tags": [
+        "固定上下文评估",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "不重叠切块的上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "计算长文本困惑度时，为什么不重叠切块通常会损失上下文？",
+      "answer": "每个新块的开头不能利用上一块中可用的前文，使部分 token 的条件信息减少。",
+      "explanation": "实际困惑度不保证对每个模型和数据都单调变化。",
+      "example": "以 1024 token 为互不重叠的块评分。",
+      "tags": [
+        "不重叠切块的上下文",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "滑动窗口重复计分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用重叠滑动窗口计算困惑度时，为什么要屏蔽只作为上下文的旧 token 标签？",
+      "answer": "为了让窗口重叠部分提供上下文，同时避免对已计分 token 重复计入损失。",
+      "explanation": "Hugging Face 的示例使用 -100 忽略相应标签，并考虑模型内部的标签移位。",
+      "example": "上一个窗口评过的前缀只保留为上下文。",
+      "tags": [
+        "滑动窗口重复计分",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语言模型评估",
+      "knowledgePoint": "按有效 token 聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "各评估片段包含的有效 token 数不同时，如何计算整体平均负对数似然？",
+      "answer": "将各片段的平均损失按有效预测 token 数加权求和，再除以有效 token 总数。",
+      "explanation": "不要直接平均各片段的困惑度；需按模型实际移位与掩码确认计数。",
+      "example": "长片段和最后的短片段按各自有效 token 数加权。",
+      "tags": [
+        "按有效 token 聚合",
+        "语言模型评估"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v4.51.3/en/perplexity"
+    },
+    {
+      "id": "nlpeval-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "BLEU修正精确率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BLEU 的修正 n-gram 精确率为什么要裁剪候选中重复出现的 n-gram 次数？",
+      "answer": "裁剪使某 n-gram 的匹配次数不超过它在任一单个参考中出现次数的最大值，防止重复词虚增匹配。",
+      "explanation": "分母仍是候选文本中该阶 n-gram 的总次数。",
+      "example": "候选有 4 个 the，参考最多有 2 个，匹配计数至多 2。",
+      "tags": [
+        "BLEU修正精确率",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/P02-1040/"
+    },
+    {
+      "id": "nlpeval-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "BLEU裁剪数值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "只看 unigram 时，候选为“a a a a”、唯一参考为“a a b”，BLEU 修正精确率是多少？",
+      "answer": "是 2/4，即 0.5。",
+      "explanation": "参考中 a 出现 2 次，候选 4 次被裁剪为 2 次匹配。",
+      "example": "不考虑大小写、平滑或长度惩罚。",
+      "tags": [
+        "BLEU裁剪数值",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/P02-1040/"
+    },
+    {
+      "id": "nlpeval-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "BLEU多阶n元组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么标准 BLEU 同时统计不同阶的 n-gram？",
+      "answer": "不同阶的匹配分别反映词汇和较长连续词序的重合，组合后综合多种局部匹配信号。",
+      "explanation": "原论文的基线使用 1 到 4 阶及等权重。",
+      "example": "既统计单词匹配，也统计连续二词和四词片段。",
+      "tags": [
+        "BLEU多阶n元组",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/P02-1040/"
+    },
+    {
+      "id": "nlpeval-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "BLEU几何平均",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 BLEU 如何组合各阶修正精确率？",
+      "answer": "先对各阶修正精确率取加权几何平均，再乘以简短惩罚。",
+      "explanation": "等价于对对数精确率加权求和后取指数。",
+      "example": "原文基线为 1 到 4 阶使用相等权重。",
+      "tags": [
+        "BLEU几何平均",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/P02-1040/"
+    },
+    {
+      "id": "nlpeval-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "BLEU简短惩罚",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 BLEU 的简短惩罚在候选总长度短于有效参考总长度时起什么作用？",
+      "answer": "它用小于 1 的因子降低得分，减少过短候选仅靠高精确率获得高分的问题。",
+      "explanation": "候选长度 c 大于或等于参考长度 r 时，惩罚因子为 1；不负责评估事实正确性。",
+      "example": "只有几个正确单词的短翻译会受到长度惩罚。",
+      "tags": [
+        "BLEU简短惩罚",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/P02-1040/"
+    },
+    {
+      "id": "nlpeval-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "BLEU零匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "无平滑的 BLEU 使用几何平均时，如果某个计入的 n-gram 阶数精确率为零会怎样？",
+      "answer": "几何平均为零，整体 BLEU 也为零。",
+      "explanation": "短句更容易缺少高阶匹配；不同平滑方法会改变句级分数。",
+      "example": "BLEU-4 的四元组无匹配且不做平滑。",
+      "tags": [
+        "BLEU零匹配",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/P02-1040/"
+    },
+    {
+      "id": "nlpeval-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "语料BLEU聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始语料级 BLEU 是先平均每句话的 BLEU 吗？",
+      "answer": "不是。它先按句计算匹配并在语料上汇总各阶裁剪计数和候选计数，再计算语料级 BLEU。",
+      "explanation": "句级平均和语料级汇总的结果通常不同。",
+      "example": "汇总多句翻译后计算一组语料级精确率。",
+      "tags": [
+        "语料BLEU聚合",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/P02-1040/"
+    },
+    {
+      "id": "nlpeval-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "ROUGE-N召回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 ROUGE-N 主要按哪一侧的 n-gram 数量归一化？",
+      "answer": "它用参考摘要中的 n-gram 数量作为分母，因此是基于参考覆盖的召回型指标。",
+      "explanation": "不同实现也可能提供精确率和 F 值，报告时应说明口径。",
+      "example": "参考有 4 个 unigram，候选匹配其中 3 个，单参考召回为 3/4。",
+      "tags": [
+        "ROUGE-N召回",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/W04-1013/"
+    },
+    {
+      "id": "nlpeval-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "ROUGE阶数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ROUGE-1 和 ROUGE-2 分别统计什么？",
+      "answer": "ROUGE-1 关注 unigram 重合，ROUGE-2 关注连续 bigram 重合。",
+      "explanation": "两者从不同粒度描述候选与参考摘要的词面重合。",
+      "example": "“机器 学习”是按空格分词后的一个 bigram。",
+      "tags": [
+        "ROUGE阶数",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/W04-1013/"
+    },
+    {
+      "id": "nlpeval-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "最长公共子序列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ROUGE-L 使用的最长公共子序列必须在文本中连续吗？",
+      "answer": "不必须连续，但匹配项在两个序列中的相对顺序必须一致。",
+      "explanation": "子序列与连续子串不同。",
+      "example": "“a b c”与“a x c”的公共子序列可以是“a c”。",
+      "tags": [
+        "最长公共子序列",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/W04-1013/"
+    },
+    {
+      "id": "nlpeval-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "ROUGE-L精确率与召回",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "句级 ROUGE-L 中，最长公共子序列长度如何分别构成精确率和召回率？",
+      "answer": "精确率除以候选序列长度，召回率除以参考序列长度。",
+      "explanation": "还可以按指定权重结合为 F 值。",
+      "example": "参考长度 4、候选长度 3、LCS 长度 2 时分别为 2/3 和 2/4。",
+      "tags": [
+        "ROUGE-L精确率与召回",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/W04-1013/"
+    },
+    {
+      "id": "nlpeval-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本生成评估",
+      "knowledgePoint": "参考重合与语义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BLEU 和 ROUGE 的词面重合为什么不能完整代表文本语义质量？",
+      "answer": "表达相同含义的改写可能与参考词面不同；词面重合高也不能单独证明答案内容正确。",
+      "explanation": "应结合任务所需的人工或其他评估，并记录参考与预处理。",
+      "example": "正确的同义改写可能没有匹配到相同短语。",
+      "tags": [
+        "参考重合与语义",
+        "文本生成评估"
+      ],
+      "evidence": "source",
+      "reference": "https://aclanthology.org/P02-1040/"
+    }
+  ]
+}

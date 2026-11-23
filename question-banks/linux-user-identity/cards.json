@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "linux-user-identity",
+    "title": "Linux 手册：用户、组与进程身份",
+    "url": "https://man7.org/linux/man-pages/man7/credentials.7.html",
+    "type": "Linux 与 GNU 官方手册",
+    "note": "逐题依据手册自行整理，示例自编；命令和实现行为以题中所述环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "linuxid-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 用户与进程身份",
+      "knowledgePoint": "用户编号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 进程的真实用户 ID 与有效用户 ID 分别常用于什么？",
+      "answer": "真实 UID 标识进程的拥有者；有效 UID 参与内核对共享资源访问权限的判断。",
+      "explanation": "Linux 文件访问检查通常使用与有效 UID 相同的文件系统 UID，但两者可不同。",
+      "example": "设置 setuid 的程序可能让有效 UID 不同于真实 UID。",
+      "tags": [
+        "Linux 用户与进程身份",
+        "用户编号"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/credentials.7.html"
+    },
+    {
+      "id": "linuxid-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 用户与进程身份",
+      "knowledgePoint": "附加组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 进程的附加组 ID 有什么作用？",
+      "answer": "它们参与文件及其他共享资源的权限检查。",
+      "explanation": "附加组列表不一定等同于有效组；进程可用 getgroups 获取附加组 ID。",
+      "example": "用户可通过附加组获得组共享目录的访问权限。",
+      "tags": [
+        "Linux 用户与进程身份",
+        "附加组"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/credentials.7.html"
+    },
+    {
+      "id": "linuxid-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 用户与进程身份",
+      "knowledgePoint": "fork继承身份",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中 fork 创建子进程时，父进程的用户和组 ID 如何传递？",
+      "answer": "子进程继承父进程用户和组 ID 的副本。",
+      "explanation": "之后的身份变更仍要遵守权限规则。",
+      "example": "创建子进程不会自动切换为其他账户。",
+      "tags": [
+        "Linux 用户与进程身份",
+        "fork继承身份"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/credentials.7.html"
+    },
+    {
+      "id": "linuxid-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 用户与进程身份",
+      "knowledgePoint": "exec身份",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 执行 execve 时，真实 ID 和附加组通常如何变化？",
+      "answer": "真实用户／组 ID 和附加组保留；有效及保存的 ID 在特定条件下可能变化。",
+      "explanation": "set-user-ID 或 set-group-ID 程序是可能改变有效 ID 的情形。",
+      "example": "执行普通程序不等于创建新的登录身份。",
+      "tags": [
+        "Linux 用户与进程身份",
+        "exec身份"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/credentials.7.html"
+    },
+    {
+      "id": "linuxid-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 用户与进程身份",
+      "knowledgePoint": "id命令",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU id -u 与 id -g 分别显示什么？",
+      "answer": "默认分别显示有效用户 ID 和有效组 ID。",
+      "explanation": "加 -r 时可查询对应的真实 ID。",
+      "example": "id -u 可用于查看当前命令的有效 UID。",
+      "tags": [
+        "Linux 用户与进程身份",
+        "id命令"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/id.1.html"
+    },
+    {
+      "id": "linuxid-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 用户与进程身份",
+      "knowledgePoint": "组列表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU id -G 与 id -g 显示的组信息有何区别？",
+      "answer": "-g 显示有效组 ID；-G 显示所有组 ID。",
+      "explanation": "输出可按选项选择数字或名称。",
+      "example": "用 id -G 检查进程的组列表。",
+      "tags": [
+        "Linux 用户与进程身份",
+        "组列表"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/id.1.html"
+    },
+    {
+      "id": "linuxid-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 用户与进程身份",
+      "knowledgePoint": "账户记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "传统 /etc/passwd 记录中包含哪些常见字段？",
+      "answer": "包含登录名、口令字段、数字 UID、数字 GID、说明、主目录和登录 shell。",
+      "explanation": "账户信息也可能来自其他名称服务，不保证都在本地文件中。",
+      "example": "UID 与登录名是同一账户的不同标识方式。",
+      "tags": [
+        "Linux 用户与进程身份",
+        "账户记录"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/passwd.5.html"
+    },
+    {
+      "id": "linuxid-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 用户与进程身份",
+      "knowledgePoint": "影子口令",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "/etc/passwd 的密码字段为 x 常表示什么？",
+      "answer": "通常表示加密口令保存在 /etc/shadow。",
+      "explanation": "具体认证方案和账户数据库配置可以不同。",
+      "example": "不能把 x 本身当作用户的密码。",
+      "tags": [
+        "Linux 用户与进程身份",
+        "影子口令"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/passwd.5.html"
+    },
+    {
+      "id": "linuxid-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 用户与进程身份",
+      "knowledgePoint": "组文件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "/etc/group 中的成员列表是否一定列出所有以该组为主组的用户？",
+      "answer": "不一定；主组信息可由用户账户记录中的 GID 表示。",
+      "explanation": "组成员列表列出额外的用户名。",
+      "example": "排查组权限时可同时查看账户的主组和附加组。",
+      "tags": [
+        "Linux 用户与进程身份",
+        "组文件"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/group.5.html"
+    }
+  ]
+}

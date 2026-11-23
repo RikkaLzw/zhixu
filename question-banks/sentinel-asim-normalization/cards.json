@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "sentinel-asim-normalization",
+    "title": "Microsoft Sentinel 文档：ASIM 安全日志解析",
+    "url": "https://learn.microsoft.com/en-us/azure/sentinel/normalization-about-parsers",
+    "type": "教材、官方文档与原论文",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "asimsoc-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ASIM 安全日志归一化",
+      "knowledgePoint": "查询时解析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 的 ASIM 查询时解析器如何产生归一化事件？",
+      "answer": "通过 KQL 函数把现有日志表中的数据转换成对应的归一化模式。",
+      "explanation": "查询时解析不等于修改原始表中的已摄取记录。",
+      "example": "将 Syslog 或自定义日志映射到相应事件模式。",
+      "tags": [
+        "ASIM 安全日志归一化",
+        "查询时解析"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/sentinel/normalization-parsers-overview"
+    },
+    {
+      "id": "asimsoc-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ASIM 安全日志归一化",
+      "knowledgePoint": "统一与来源解析",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "ASIM 的 unifying parser 与 source-specific parser 分别做什么？",
+      "answer": "统一解析器汇集同一模式的多个来源；来源专用解析器执行各来源的具体解析和归一化。",
+      "explanation": "也可以单独调用来源专用解析器。",
+      "example": "统一 DNS 查询可调用多个 DNS 数据来源解析器。",
+      "tags": [
+        "ASIM 安全日志归一化",
+        "统一与来源解析"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/sentinel/normalization-parsers-overview"
+    },
+    {
+      "id": "asimsoc-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "ASIM 安全日志归一化",
+      "knowledgePoint": "统一DNS解析",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Microsoft Sentinel 中 _Im_Dns 通常是什么类型的 ASIM 解析器？",
+      "answer": "它是 DNS 模式的统一解析器，可返回已归一化的 DNS 事件。",
+      "explanation": "实际结果受已配置的数据源和解析器影响。",
+      "example": "查询 DNS 事件时按归一化字段筛选。",
+      "tags": [
+        "ASIM 安全日志归一化",
+        "统一DNS解析"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/sentinel/normalization-about-parsers"
+    },
+    {
+      "id": "asimsoc-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ASIM 安全日志归一化",
+      "knowledgePoint": "旧版解析器",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "ASIM 的 _ASim_<schema> 与 _Im_<schema> 在过滤参数支持上有什么区别？",
+      "answer": "_ASim_ 系列用于兼容旧内容，不支持这些过滤参数；_Im_ 系列提供过滤参数支持。",
+      "explanation": "应按具体模式文档检查可用参数。",
+      "example": "需要在 DNS 解析器中传入时间过滤时使用支持过滤的版本。",
+      "tags": [
+        "ASIM 安全日志归一化",
+        "旧版解析器"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/sentinel/normalization-parsers-overview"
+    },
+    {
+      "id": "asimsoc-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ASIM 安全日志归一化",
+      "knowledgePoint": "预过滤",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ASIM 解析器支持过滤参数时，为什么通常建议在调用时传入这些参数？",
+      "answer": "解析器可尽早过滤数据，通常有助于降低解析和查询开销。",
+      "explanation": "具体性能仍取决于数据源和查询计划。",
+      "example": "在 _Im_Dns 中指定开始时间和响应类型。",
+      "tags": [
+        "ASIM 安全日志归一化",
+        "预过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/sentinel/normalization-about-parsers"
+    },
+    {
+      "id": "asimsoc-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ASIM 安全日志归一化",
+      "knowledgePoint": "附加字段",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "支持 pack 参数的 ASIM 解析器设置 pack=true 时，额外数据如何保存？",
+      "answer": "额外数据会被打包到 AdditionalFields 动态字段。",
+      "explanation": "并非所有解析器都支持该参数，应查看对应解析器列表。",
+      "example": "调查时保留必要的来源专用附加字段。",
+      "tags": [
+        "ASIM 安全日志归一化",
+        "附加字段"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/sentinel/normalization-about-parsers"
+    },
+    {
+      "id": "asimsoc-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "ASIM 安全日志归一化",
+      "knowledgePoint": "数据覆盖边界",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "使用 ASIM 统一解析器后，能否据此断定环境中的所有相关安全事件都已采集？",
+      "answer": "不能；结果仍取决于数据源是否采集、可用以及解析器是否覆盖。",
+      "explanation": "归一化不能补造未摄取的日志。",
+      "example": "未接入某 DNS 设备日志时，统一查询仍看不到该来源。",
+      "tags": [
+        "ASIM 安全日志归一化",
+        "数据覆盖边界"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/azure/sentinel/normalization-about-parsers"
+    }
+  ]
+}

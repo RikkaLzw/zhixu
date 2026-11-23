@@ -1,0 +1,108 @@
+{
+  "source": {
+    "id": "evaluation-cross-validation",
+    "title": "scikit-learn：模型评估与交叉验证",
+    "url": "https://scikit-learn.org/stable/modules/cross_validation.html",
+    "type": "教材与技术文档",
+    "note": "逐题根据所列教材或技术文档自行整理；例子用于说明适用条件。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "evalcv-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估设计",
+      "knowledgePoint": "嵌套交叉验证",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "嵌套交叉验证中内层和外层通常分别用于什么？",
+      "answer": "内层用于模型或超参数选择；外层在未参与该轮选择的数据上评估整个选择过程。",
+      "explanation": "外层评估的对象包含调参过程，而非单一固定模型。",
+      "example": "每个外层训练折内再次执行交叉验证调参。",
+      "tags": [
+        "嵌套交叉验证",
+        "模型评估设计"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/auto_examples/model_selection/plot_nested_cross_validation_iris.html",
+      "referenceTitle": "scikit-learn：嵌套交叉验证"
+    },
+    {
+      "id": "evalcv-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估设计",
+      "knowledgePoint": "折外预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "交叉验证中的折外预测（out-of-fold prediction）有什么特点？",
+      "answer": "每个样本的预测来自没有用该样本所在验证折训练的模型。",
+      "explanation": "具体切分仍需满足时间、分组和泄漏约束。",
+      "example": "用各折验证预测生成训练集上的折外预测。",
+      "tags": [
+        "折外预测",
+        "模型评估设计"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/cross_validation.html"
+    },
+    {
+      "id": "evalcv-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估设计",
+      "knowledgePoint": "合并预测与折平均",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "对折外预测合并后计算一次指标，是否总等于各折指标的简单平均？",
+      "answer": "不一定；折大小不同或指标不是可按样本直接分解时，两种结果可能不同。",
+      "explanation": "应说明采用的汇总方式及其适用条件。",
+      "example": "比较合并预测的 F1 与各折 F1 的均值。",
+      "tags": [
+        "合并预测与折平均",
+        "模型评估设计"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/cross_validation.html"
+    },
+    {
+      "id": "evalcv-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估设计",
+      "knowledgePoint": "分层与真实波动",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "分层交叉验证得到的折间波动能否完整代表真实部署中的所有不确定性？",
+      "answer": "不能；分层让各折类别比例更相似，可能缩小由样本类别比例变化带来的折间波动。",
+      "explanation": "仍需考虑时间、群组、环境变化和抽样误差。",
+      "example": "各折固定相似攻击比例，但生产环境比例可能变化。",
+      "tags": [
+        "分层与真实波动",
+        "模型评估设计"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/cross_validation.html"
+    },
+    {
+      "id": "evalcv-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型评估设计",
+      "knowledgePoint": "随机划分与重复测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 ShuffleSplit 多次划分中，同一样本能出现在多个测试折吗？",
+      "answer": "能；各次随机划分的测试集不保证互不重叠。",
+      "explanation": "如果需要每个样本恰好评估一次，应选择满足该约束的切分方式。",
+      "example": "同一事件可能在两次随机划分中都被选作验证样本。",
+      "tags": [
+        "随机划分与重复测试",
+        "模型评估设计"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/cross_validation.html"
+    }
+  ]
+}

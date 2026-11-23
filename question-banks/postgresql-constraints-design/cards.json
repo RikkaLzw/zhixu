@@ -1,0 +1,259 @@
+{
+  "source": {
+    "id": "postgresql-constraints-design",
+    "title": "PostgreSQL 17：表约束与数据完整性",
+    "url": "https://www.postgresql.org/docs/17/ddl-constraints.html",
+    "type": "官方技术文档与协议标准",
+    "note": "依据逐题引用的官方文档或协议标准自行整理；示例自编，版本和前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgconstr-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "CHECK 判空",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 CHECK (price > 0) 能单独阻止 NULL 价格吗？",
+      "answer": "不能；CHECK 表达式结果为 TRUE 或 NULL 都视为满足约束。",
+      "explanation": "若价格不允许为空，应另加 NOT NULL。",
+      "example": "price 为 NULL 时还需要 NOT NULL 才会拒绝该行。",
+      "tags": [
+        "数据库约束与设计",
+        "CHECK 判空"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "pgconstr-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "多列 CHECK",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的表级 CHECK 能否比较同一行的多个列？",
+      "answer": "可以；CHECK 表达式可引用当前行中的多个列。",
+      "explanation": "它不能可靠地约束其他行随后的变化。",
+      "example": "CHECK (sale_price < price) 可比较同一行的两个价格。",
+      "tags": [
+        "数据库约束与设计",
+        "多列 CHECK"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "pgconstr-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "跨行限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 PostgreSQL 不建议用引用其他行数据的 CHECK 保证跨行不变量？",
+      "answer": "其他行之后变化时不会自动重新检查该行，约束可能失效。",
+      "explanation": "跨行或跨表约束应考虑 UNIQUE、EXCLUDE 或 FOREIGN KEY 等合适机制。",
+      "example": "用唯一约束限制重复编号，而非用 CHECK 查询其他行。",
+      "tags": [
+        "数据库约束与设计",
+        "跨行限制"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "pgconstr-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "组合唯一",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 UNIQUE (a, b) 约束要求每一列都分别唯一吗？",
+      "answer": "不要求；它约束的是 a 和 b 的组合值。",
+      "explanation": "默认情况下 NULL 的唯一性比较具有特殊规则。",
+      "example": "(1, 2) 和 (1, 3) 可以同时存在。",
+      "tags": [
+        "数据库约束与设计",
+        "组合唯一"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "pgconstr-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "唯一索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 添加 UNIQUE 约束时会自动建立什么索引？",
+      "answer": "会为该约束涉及的列自动创建唯一 B-tree 索引。",
+      "explanation": "部分行上的唯一性可用唯一部分索引表达。",
+      "example": "对 email 声明 UNIQUE 会生成相应的唯一索引。",
+      "tags": [
+        "数据库约束与设计",
+        "唯一索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "pgconstr-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "外键索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 创建外键时，引用表的外键列会自动建立索引吗？",
+      "answer": "不会自动创建；是否为引用列建索引需结合删除、更新和查询需求决定。",
+      "explanation": "被引用列本身需要满足可作为外键目标的唯一性条件。",
+      "example": "删除父表行前，索引子表外键列可有助于查找引用。",
+      "tags": [
+        "数据库约束与设计",
+        "外键索引"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "pgconstr-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "外键目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的外键通常可以引用哪些键？",
+      "answer": "可引用不可延迟的主键或唯一约束，或非部分唯一索引所覆盖的对应列。",
+      "explanation": "引用列与目标列的数量和类型需要匹配。",
+      "example": "子表可引用父表的唯一业务编号。",
+      "tags": [
+        "数据库约束与设计",
+        "外键目标"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-createtable.html"
+    },
+    {
+      "id": "pgconstr-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "级联删除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 外键的 ON DELETE CASCADE 在删除被引用行时做什么？",
+      "answer": "自动删除引用该被删除行的子表行。",
+      "explanation": "是否适用取决于数据之间的业务关系。",
+      "example": "删除订单时可级联删除其订单明细。",
+      "tags": [
+        "数据库约束与设计",
+        "级联删除"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "pgconstr-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "删除动作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 外键的 NO ACTION 与 RESTRICT 在检查时间上有什么区别？",
+      "answer": "NO ACTION 在约束允许延迟时可推迟检查；RESTRICT 不允许推迟该动作检查。",
+      "explanation": "NO ACTION 是未指定删除动作时的默认值。",
+      "example": "可延迟的外键允许事务内先调整相关引用再检查。",
+      "tags": [
+        "数据库约束与设计",
+        "删除动作"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "pgconstr-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "组合外键 NULL 匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 组合外键的默认 MATCH SIMPLE 与 MATCH FULL 如何处理部分为 NULL 的引用值？",
+      "answer": "MATCH SIMPLE 下只要有引用列为 NULL 就不必匹配；MATCH FULL 下 NULL 与非 NULL 混合会违反约束。",
+      "explanation": "MATCH FULL 在引用列全为 NULL 时才允许跳过匹配；全非 NULL 时仍需匹配被引用键。",
+      "example": "(NULL, 7) 在默认 MATCH SIMPLE 下可跳过匹配，但不满足 MATCH FULL。",
+      "tags": [
+        "数据库约束与设计",
+        "组合外键 NULL 匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/ddl-constraints.html"
+    },
+    {
+      "id": "pgconstr-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "延迟约束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 DEFERRABLE 约束有什么用途？",
+      "answer": "它允许符合条件的约束检查推迟到事务后续时点，例如提交时。",
+      "explanation": "只有声明为 DEFERRABLE 的相应约束能按规则延迟。",
+      "example": "事务内调整多行引用关系后在提交时检查。",
+      "tags": [
+        "数据库约束与设计",
+        "延迟约束"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-createtable.html"
+    },
+    {
+      "id": "pgconstr-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "默认值与 NULL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL INSERT 省略列与显式插入 NULL，对该列 DEFAULT 的处理有什么区别？",
+      "answer": "省略列时使用默认值；显式写 NULL 不会自动替换为默认值。",
+      "explanation": "显式 DEFAULT 关键字也可请求使用默认值。",
+      "example": "带 DEFAULT 1 的列显式写入 NULL 时仍为 NULL，除非其他约束拒绝。",
+      "tags": [
+        "数据库约束与设计",
+        "默认值与 NULL"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-createtable.html"
+    },
+    {
+      "id": "pgconstr-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "数据库约束与设计",
+      "knowledgePoint": "NULL 安全比较",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 IS NOT DISTINCT FROM 与普通等号相比如何处理 NULL？",
+      "answer": "它把两个 NULL 视为相等，把只有一侧为 NULL 视为不相等。",
+      "explanation": "普通等号涉及 NULL 时结果通常为未知。",
+      "example": "NULL IS NOT DISTINCT FROM NULL 为 TRUE。",
+      "tags": [
+        "数据库约束与设计",
+        "NULL 安全比较"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-comparison.html"
+    }
+  ]
+}

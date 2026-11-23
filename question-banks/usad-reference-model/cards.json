@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "usad-reference-model",
+    "title": "USAD 作者固定提交：多变量时序重建实现",
+    "url": "https://raw.githubusercontent.com/manigalati/usad/e25af45c8e1c32783aed94fc7e5ab85effef2b1a/usad.py",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "usadcode-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "USAD 重建异常检测",
+      "knowledgePoint": "模型组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "USAD 作者固定提交的 UsadModel 使用多少个编码器和解码器？",
+      "answer": "使用一个共享编码器和两个解码器。",
+      "explanation": "两个解码器分别参与不同的训练损失。",
+      "example": "输入先经过共享编码器，再可送入两个解码器。",
+      "tags": [
+        "USAD 重建异常检测",
+        "模型组成"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/manigalati/usad/e25af45c8e1c32783aed94fc7e5ab85effef2b1a/usad.py"
+    },
+    {
+      "id": "usadcode-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "USAD 重建异常检测",
+      "knowledgePoint": "级联重建",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "USAD 作者实现的 w3 如何从第一解码器输出生成？",
+      "answer": "先将第一解码器输出重新送入编码器，再由第二解码器解码。",
+      "explanation": "w3 是一次级联重建。",
+      "example": "w1=decoder1(encoder(batch)) 后，w3=decoder2(encoder(w1))。",
+      "tags": [
+        "USAD 重建异常检测",
+        "级联重建"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/manigalati/usad/e25af45c8e1c32783aed94fc7e5ab85effef2b1a/usad.py"
+    },
+    {
+      "id": "usadcode-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "USAD 重建异常检测",
+      "knowledgePoint": "对抗损失符号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "USAD 作者实现中，两个训练损失对级联重建误差项的符号有什么区别？",
+      "answer": "loss1 加上该误差项，loss2 减去该误差项。",
+      "explanation": "具体权重随训练轮次参数 n 变化。",
+      "example": "两项目标对同一误差有不同方向的作用。",
+      "tags": [
+        "USAD 重建异常检测",
+        "对抗损失符号"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/manigalati/usad/e25af45c8e1c32783aed94fc7e5ab85effef2b1a/usad.py"
+    },
+    {
+      "id": "usadcode-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "USAD 重建异常检测",
+      "knowledgePoint": "共享参数优化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "USAD 作者实现的两个优化器分别包含哪些模块？",
+      "answer": "第一个优化共享编码器和解码器 1；第二个优化共享编码器和解码器 2。",
+      "explanation": "同一编码器参数出现在两个优化器中。",
+      "example": "每批训练中先执行一个优化步骤，再执行另一个。",
+      "tags": [
+        "USAD 重建异常检测",
+        "共享参数优化"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/manigalati/usad/e25af45c8e1c32783aed94fc7e5ab85effef2b1a/usad.py"
+    },
+    {
+      "id": "usadcode-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "USAD 重建异常检测",
+      "knowledgePoint": "测试分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "USAD 作者实现的 testing 函数怎样组合两个重建误差？",
+      "answer": "对一次重建和级联重建的均方误差按 alpha、beta 加权求和。",
+      "explanation": "默认 alpha 和 beta 都为 0.5。",
+      "example": "两个误差分别为 0.2、0.4 时，默认加权结果为 0.3。",
+      "tags": [
+        "USAD 重建异常检测",
+        "测试分数"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/manigalati/usad/e25af45c8e1c32783aed94fc7e5ab85effef2b1a/usad.py"
+    },
+    {
+      "id": "usadcode-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "USAD 重建异常检测",
+      "knowledgePoint": "阈值范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "USAD 作者实现的 testing 函数是否直接给出二元异常标签？",
+      "answer": "不会；该函数返回每批样本的异常分数。",
+      "explanation": "要得到标签还需要在其他步骤选择并应用阈值。",
+      "example": "分数较大是否告警取决于后续阈值策略。",
+      "tags": [
+        "USAD 重建异常检测",
+        "阈值范围"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/manigalati/usad/e25af45c8e1c32783aed94fc7e5ab85effef2b1a/usad.py"
+    }
+  ]
+}

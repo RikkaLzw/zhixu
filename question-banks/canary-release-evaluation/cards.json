@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "canary-release-evaluation",
+    "title": "Google SRE Workbook：金丝雀发布评估",
+    "url": "https://sre.google/workbook/canarying-releases/",
+    "type": "教材、论文与官方技术文档",
+    "note": "逐题根据所列教材、论文或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "canarystudy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型发布与评估",
+      "knowledgePoint": "对照组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "金丝雀评估中，为什么常同时观察旧版本的对照流量？",
+      "answer": "可比较相近时间内新旧版本的表现，减少把共同环境变化误判为新版本问题的风险。",
+      "explanation": "两组流量仍需具有可比性。",
+      "example": "流量整体波动时对比候选版和旧版错误率。",
+      "tags": [
+        "模型发布与评估",
+        "对照组"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/workbook/canarying-releases/"
+    },
+    {
+      "id": "canarystudy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型发布与评估",
+      "knowledgePoint": "按版本分解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么金丝雀发布应按版本或流量组拆分监控指标？",
+      "answer": "金丝雀流量通常占比很小，整体指标可能掩盖新版本的异常。",
+      "explanation": "应能分别观察候选组与对照组。",
+      "example": "总体错误率平稳，但候选版错误率明显升高。",
+      "tags": [
+        "模型发布与评估",
+        "按版本分解"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/workbook/canarying-releases/"
+    },
+    {
+      "id": "canarystudy-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型发布与评估",
+      "knowledgePoint": "比例与计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "金丝雀与对照组流量规模不同，为什么比较错误率通常比直接比较错误数更合适？",
+      "answer": "错误率将错误数与各组请求量联系起来，减少流量规模差异造成的误判。",
+      "explanation": "仍需关注样本量、请求类型及统计不确定性。",
+      "example": "小流量组错误更少，但错误占比可能更高。",
+      "tags": [
+        "模型发布与评估",
+        "比例与计数"
+      ],
+      "evidence": "application",
+      "reference": "https://sre.google/workbook/canarying-releases/"
+    },
+    {
+      "id": "canarystudy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型发布与评估",
+      "knowledgePoint": "窗口长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么金丝雀评估的指标聚合周期应与观察时长相匹配？",
+      "answer": "若指标周期长于金丝雀运行时间，数据可能混入不同时段或不足以反映当前发布。",
+      "explanation": "采样和聚合延迟也要纳入评估。",
+      "example": "30 分钟发布不宜只依赖滞后的一小时聚合值。",
+      "tags": [
+        "模型发布与评估",
+        "窗口长度"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/workbook/canarying-releases/"
+    },
+    {
+      "id": "canarystudy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型发布与评估",
+      "knowledgePoint": "代表性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "金丝雀流量缺少某类真实请求时，会影响什么判断？",
+      "answer": "该发布阶段难以发现只在缺失请求类型下出现的问题。",
+      "explanation": "扩大覆盖或补充其他测试有助于降低盲区。",
+      "example": "只路由短文本无法暴露长上下文请求问题。",
+      "tags": [
+        "模型发布与评估",
+        "代表性"
+      ],
+      "evidence": "application",
+      "reference": "https://sre.google/workbook/canarying-releases/"
+    },
+    {
+      "id": "canarystudy-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型发布与评估",
+      "knowledgePoint": "样本不足",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "短时间金丝雀没有出现错误，能否单独证明新版本不会产生错误？",
+      "answer": "不能；请求量有限或场景未覆盖时，低频问题可能尚未出现。",
+      "explanation": "结论需要结合流量规模、观察时长和测试覆盖。",
+      "example": "低频故障在少量请求中可能没有被触发。",
+      "tags": [
+        "模型发布与评估",
+        "样本不足"
+      ],
+      "evidence": "application",
+      "reference": "https://sre.google/workbook/canarying-releases/"
+    },
+    {
+      "id": "canarystudy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型发布与评估",
+      "knowledgePoint": "故障判定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "金丝雀指标偏离对照组并超过预设条件时，发布流程通常应做什么？",
+      "answer": "暂停扩大流量，并按预定策略回滚或交由人员调查。",
+      "explanation": "阈值和处置动作应在发布前定义。",
+      "example": "候选组错误率持续升高时停止推广。",
+      "tags": [
+        "模型发布与评估",
+        "故障判定"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/workbook/canarying-releases/"
+    },
+    {
+      "id": "canarystudy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型发布与评估",
+      "knowledgePoint": "复制流量状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "复制线上流量进行影子测试时，为什么还要注意候选系统与正式系统是否共享状态？",
+      "answer": "共享缓存或其他可变状态可能相互影响，使测试指标失真或产生额外副作用。",
+      "explanation": "隔离方式需要结合系统实际设计。",
+      "example": "两套服务共用缓存时，复制请求可能改变命中率。",
+      "tags": [
+        "模型发布与评估",
+        "复制流量状态"
+      ],
+      "evidence": "source",
+      "reference": "https://sre.google/workbook/canarying-releases/"
+    }
+  ]
+}

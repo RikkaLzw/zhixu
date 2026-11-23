@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "tree-sitter-code-parsing",
+    "title": "py-tree-sitter 0.24.0：代码语法解析",
+    "url": "https://github.com/tree-sitter/py-tree-sitter/blob/v0.24.0/README.md",
+    "type": "教材、官方文档与论文",
+    "note": "依据逐题引用的文档、教材或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "treesit-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Tree-sitter 代码解析",
+      "knowledgePoint": "设置语言",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "py-tree-sitter 0.24.0 如何为 Parser 指定源代码语言？",
+      "answer": "先构造对应的 Language，再用它创建或配置 Parser。",
+      "explanation": "语言语法通常由对应的 tree-sitter 语言包提供。",
+      "example": "可用 tree-sitter-python 提供的语言构造 Python 解析器。",
+      "tags": [
+        "Tree-sitter 代码解析",
+        "设置语言"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tree-sitter/py-tree-sitter/blob/v0.24.0/README.md"
+    },
+    {
+      "id": "treesit-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Tree-sitter 代码解析",
+      "knowledgePoint": "解析结果",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "py-tree-sitter 的 Parser.parse 解析源码后通常返回什么？",
+      "answer": "返回语法树 Tree，可通过 root_node 访问根节点。",
+      "explanation": "传入源码通常为 UTF-8 或 UTF-16 编码的字节。",
+      "example": "解析 Python 文件后可从 module 根节点遍历函数。",
+      "tags": [
+        "Tree-sitter 代码解析",
+        "解析结果"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tree-sitter/py-tree-sitter/blob/v0.24.0/README.md"
+    },
+    {
+      "id": "treesit-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Tree-sitter 代码解析",
+      "knowledgePoint": "命名字段",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Tree-sitter 为什么提供 child_by_field_name(\"name\") 这类字段访问方式？",
+      "answer": "可按语法定义的字段查找子节点，而不必只依赖子节点在列表中的位置。",
+      "explanation": "字段是否存在取决于节点类型和语言语法。",
+      "example": "函数定义的 name 字段可用于查找函数名节点。",
+      "tags": [
+        "Tree-sitter 代码解析",
+        "命名字段"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tree-sitter/py-tree-sitter/blob/v0.24.0/README.md"
+    },
+    {
+      "id": "treesit-004",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "Tree-sitter 代码解析",
+      "knowledgePoint": "字节偏移",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "Tree-sitter 节点的 start_byte 和 end_byte 能否直接当作 Python Unicode 字符串下标？",
+      "answer": "不能保证；它们是编码后源码的字节偏移，多字节字符会使字符下标不同。",
+      "explanation": "按原始字节切片后再解码可避免混淆。",
+      "example": "中文字符在 UTF-8 中占多个字节。",
+      "tags": [
+        "Tree-sitter 代码解析",
+        "字节偏移"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tree-sitter/py-tree-sitter/blob/v0.24.0/README.md"
+    },
+    {
+      "id": "treesit-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Tree-sitter 代码解析",
+      "knowledgePoint": "节点坐标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tree-sitter 节点的 start_point 和 end_point 表示什么？",
+      "answer": "表示节点在源码中的起始和结束位置，采用行和列坐标。",
+      "explanation": "行与列的具体计数按解析器的字节位置约定处理。",
+      "example": "可用这些坐标定位源文件中的语法节点。",
+      "tags": [
+        "Tree-sitter 代码解析",
+        "节点坐标"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tree-sitter/py-tree-sitter/blob/v0.24.0/README.md"
+    },
+    {
+      "id": "treesit-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Tree-sitter 代码解析",
+      "knowledgePoint": "增量解析更新",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "使用旧 Tree 进行增量解析前，为什么要先调用 tree.edit 描述源码编辑？",
+      "answer": "它让旧树的位置信息反映插入、删除或替换，再将旧树交给解析器复用。",
+      "explanation": "编辑树本身不等于已经获得解析新源码后的完整新树。",
+      "example": "修改源码后更新字节和行列边界，再调用 parse(new_src, old_tree)。",
+      "tags": [
+        "Tree-sitter 代码解析",
+        "增量解析更新"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tree-sitter/py-tree-sitter/blob/v0.24.0/README.md"
+    },
+    {
+      "id": "treesit-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Tree-sitter 代码解析",
+      "knowledgePoint": "变更范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tree.changed_ranges(new_tree) 主要返回什么？",
+      "answer": "返回旧树与新树之间语法结构发生变化的范围。",
+      "explanation": "它不是通用的逐字节文本差异列表。",
+      "example": "变量替换导致语法结构变化时，可用它定位相关区域。",
+      "tags": [
+        "Tree-sitter 代码解析",
+        "变更范围"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tree-sitter/py-tree-sitter/blob/v0.24.0/README.md"
+    },
+    {
+      "id": "treesit-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Tree-sitter 代码解析",
+      "knowledgePoint": "查询捕获",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "py-tree-sitter 0.24.0 的 Query.matches 与 Query.captures 在结果组织上有什么区别？",
+      "answer": "matches 按每次模式匹配组织相关捕获；captures 按捕获名称组织节点。",
+      "explanation": "需要保留同一匹配中函数名与函数体的对应关系时，按匹配分组更方便。",
+      "example": "查询函数定义时可把名称和函数体作为一组捕获。",
+      "tags": [
+        "Tree-sitter 代码解析",
+        "查询捕获"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/tree-sitter/py-tree-sitter/blob/v0.24.0/README.md"
+    }
+  ]
+}

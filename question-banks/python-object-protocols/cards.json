@@ -1,0 +1,563 @@
+{
+  "source": {
+    "id": "python-object-protocols",
+    "title": "Python 3.13：对象协议、属性与异常处理",
+    "url": "https://docs.python.org/3.13/reference/datamodel.html",
+    "type": "官方文档与固定版本源码",
+    "note": "依据引用资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyobject-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "对象创建与初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 类的 __new__ 与 __init__ 在构造对象时分别负责什么？",
+      "answer": "__new__ 创建并返回对象；__init__ 在对象创建后初始化实例。",
+      "explanation": "两者在普通类的构造中顺序执行。",
+      "example": "为不可变类型子类定制创建过程。",
+      "tags": [
+        "对象创建与初始化",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__new__"
+    },
+    {
+      "id": "pyobject-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "初始化返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 __init__ 能返回非 None 值作为新对象吗？",
+      "answer": "不能；__init__ 返回非 None 值会引发 TypeError。",
+      "explanation": "实例由 __new__ 创建，__init__ 不负责返回实例。",
+      "example": "用属性赋值初始化对象，而不是从 __init__ 返回对象。",
+      "tags": [
+        "初始化返回值",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__init__"
+    },
+    {
+      "id": "pyobject-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "创建返回其他对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如果某类的 __new__ 返回的不是该类的实例，该类的 __init__ 会被调用吗？",
+      "answer": "不会；只有 __new__ 返回该类的实例时，构造过程才调用其初始化方法。",
+      "explanation": "自定义对象创建时可能出现这一行为。",
+      "example": "__new__ 返回不同类型的对象。",
+      "tags": [
+        "创建返回其他对象",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__new__"
+    },
+    {
+      "id": "pyobject-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "对象字符串表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 __repr__ 与 __str__ 各用于什么样的对象表示？",
+      "answer": "__repr__ 通常提供便于调试的明确表示；__str__ 提供便于阅读的展示文本。",
+      "explanation": "两者都必须返回字符串。",
+      "example": "调试时查看对象的属性，展示时显示简短名称。",
+      "tags": [
+        "对象字符串表示",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__repr__"
+    },
+    {
+      "id": "pyobject-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "实例可调用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "自定义 Python 对象实现 __call__ 后可以怎样使用？",
+      "answer": "可以像函数一样用 obj(...) 调用该实例。",
+      "explanation": "实际行为由 __call__ 的实现决定。",
+      "example": "用对象保存配置，并作为可调用的处理器使用。",
+      "tags": [
+        "实例可调用",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__call__"
+    },
+    {
+      "id": "pyobject-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "绑定实例方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "访问普通实例方法时，为什么调用 obj.method(x) 不需要手动传入 self？",
+      "answer": "函数经实例访问会成为绑定方法，调用时自动把该实例作为第一个参数。",
+      "explanation": "通过类直接访问函数时不会自动绑定某个实例。",
+      "example": "obj.method(x) 通常等价于 type(obj).method(obj, x)。",
+      "tags": [
+        "绑定实例方法",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#instance-methods"
+    },
+    {
+      "id": "pyobject-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "多继承super",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 多继承中，super() 查找方法依据什么顺序？",
+      "answer": "依据该类的方法解析顺序（MRO），从指定位置之后继续查找。",
+      "explanation": "下一个类不一定是源码中直观认为的唯一父类。",
+      "example": "菱形继承中各类合作调用 super()。",
+      "tags": [
+        "多继承super",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/functions.html#super"
+    },
+    {
+      "id": "pyobject-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "slots与实例字典",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 定义 __slots__ 后，实例一定没有 __dict__ 吗？",
+      "answer": "不一定；基类已提供实例字典，或 slots 中显式包含 __dict__ 时，实例仍可拥有它。",
+      "explanation": "无实例字典时不能随意添加未列出的属性。",
+      "example": "继承没有 slots 的普通基类。",
+      "tags": [
+        "slots与实例字典",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#slots"
+    },
+    {
+      "id": "pyobject-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "定义相等与哈希",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 类重写 __eq__ 却未定义 __hash__ 时，实例通常还能作为字典键吗？",
+      "answer": "通常不能；Python 会将该类的 __hash__ 设为 None，使实例不可哈希。",
+      "explanation": "如需可哈希，哈希实现必须与相等比较保持一致。",
+      "example": "自定义值对象只重写了 __eq__。",
+      "tags": [
+        "定义相等与哈希",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__hash__"
+    },
+    {
+      "id": "pyobject-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "比较方法返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的比较特殊方法返回 NotImplemented 表示什么？",
+      "answer": "表示该方法不支持这组操作数，解释器可以尝试另一侧的对应比较方法。",
+      "explanation": "NotImplemented 不是抛出 NotImplementedError。",
+      "example": "自定义类型遇到不支持比较的其他类型。",
+      "tags": [
+        "比较方法返回值",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__lt__"
+    },
+    {
+      "id": "pyobject-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "对象真值判断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "自定义对象没有 __bool__ 时，Python 如何判断它的真值？",
+      "answer": "如果定义了 __len__，长度为零时为假；没有 __bool__ 和 __len__ 时默认视为真。",
+      "explanation": "__bool__ 必须返回布尔值。",
+      "example": "空容器因长度为零而为假。",
+      "tags": [
+        "对象真值判断",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__bool__"
+    },
+    {
+      "id": "pyobject-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "成员判断回退",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 对象没有 __contains__ 时，in 成员判断还可能如何工作？",
+      "answer": "它可以通过迭代对象查找；若没有迭代器协议，还可能使用旧式序列索引协议。",
+      "explanation": "是否能成功取决于对象实现了哪些协议。",
+      "example": "遍历一个只实现迭代的自定义容器。",
+      "tags": [
+        "成员判断回退",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__contains__"
+    },
+    {
+      "id": "pyobject-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "缺失属性钩子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 __getattr__ 与 __getattribute__ 在属性查找时有什么区别？",
+      "answer": "__getattribute__ 处理实例的常规属性访问；常规查找失败并引发 AttributeError 时才调用 __getattr__。",
+      "explanation": "特殊方法的隐式查找可能绕过实例的 __getattribute__。",
+      "example": "用 __getattr__ 为缺失属性提供后备值。",
+      "tags": [
+        "缺失属性钩子",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__getattr__"
+    },
+    {
+      "id": "pyobject-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "属性查找递归",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在自定义 __getattribute__ 内读取对象属性时，怎样避免无限递归？",
+      "answer": "通常调用 object.__getattribute__(self, name) 或相应基类实现取得所需属性。",
+      "explanation": "直接使用 self.name 又会进入当前的属性查找方法。",
+      "example": "在自定义查找方法里访问内部配置。",
+      "tags": [
+        "属性查找递归",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__getattribute__"
+    },
+    {
+      "id": "pyobject-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "数据描述符优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "默认属性读取中，同时定义 __get__ 与 __set__ 的数据描述符和同名实例字典条目谁优先？",
+      "answer": "该数据描述符优先；它的 __get__ 会覆盖同名实例字典条目的读取。",
+      "explanation": "仅定义 __get__ 的非数据描述符通常可被实例字典中的同名值覆盖。",
+      "example": "带 setter 的 property 参与属性查找。",
+      "tags": [
+        "数据描述符优先级",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#invoking-descriptors"
+    },
+    {
+      "id": "pyobject-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "只读property",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "只有 getter 的 Python property 能直接赋值吗？",
+      "answer": "不能；没有 setter 时给该属性赋值会引发 AttributeError。",
+      "explanation": "需要写入时应定义相应的 setter。",
+      "example": "只暴露计算得到的只读属性。",
+      "tags": [
+        "只读property",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/functions.html#property"
+    },
+    {
+      "id": "pyobject-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "特殊方法查找",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "给某个实例单独赋值 __len__，会保证 len(instance) 使用它吗？",
+      "answer": "不会；隐式调用特殊方法通常在对象的类型上查找，而非直接查找实例字典。",
+      "explanation": "应在类上实现相应特殊方法。",
+      "example": "为自定义容器类定义 __len__。",
+      "tags": [
+        "特殊方法查找",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#special-method-lookup"
+    },
+    {
+      "id": "pyobject-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "异常匹配顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多个 Python except 子句都能匹配同一异常时，执行哪一个？",
+      "answer": "按源码顺序执行第一个匹配的 except 子句。",
+      "explanation": "应把更具体的异常类型放在较宽泛的基类之前。",
+      "example": "先捕获 FileNotFoundError，再捕获 OSError。",
+      "tags": [
+        "异常匹配顺序",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/errors.html#handling-exceptions"
+    },
+    {
+      "id": "pyobject-019",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "多个异常类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 一个 except 子句如何处理多个异常类型？",
+      "answer": "可以在 except 后使用异常类型元组，匹配其中任一类型。",
+      "explanation": "应只合并确实需要相同处理方式的异常。",
+      "example": "except (TypeError, ValueError) 处理两类输入错误。",
+      "tags": [
+        "多个异常类型",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/errors.html#handling-exceptions"
+    },
+    {
+      "id": "pyobject-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "重新抛出异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 except 块中单独写 raise 有什么作用？",
+      "answer": "它重新抛出当前正在处理的异常。",
+      "explanation": "这可在记录或局部清理后让调用方继续处理异常。",
+      "example": "捕获异常写入日志后重新抛出。",
+      "tags": [
+        "重新抛出异常",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/errors.html#raising-exceptions"
+    },
+    {
+      "id": "pyobject-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "隐藏异常上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 raise new_error from None 对异常链的默认显示有什么作用？",
+      "answer": "它抑制默认回溯中自动显示先前异常的上下文；原上下文仍可通过异常属性检查。",
+      "explanation": "它不等于撤销此前发生的异常。",
+      "example": "将底层错误转换为面向调用方的错误时隐藏默认上下文。",
+      "tags": [
+        "隐藏异常上下文",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/errors.html#exception-chaining"
+    },
+    {
+      "id": "pyobject-022",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "自定义异常基类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "定义一般应用错误的自定义异常时，通常应继承哪个内置类？",
+      "answer": "通常继承 Exception 或其合适子类。",
+      "explanation": "BaseException 还包括系统退出等通常不应当作普通应用错误处理的情况。",
+      "example": "定义 InvalidRecordError(Exception)。",
+      "tags": [
+        "自定义异常基类",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/errors.html#user-defined-exceptions"
+    },
+    {
+      "id": "pyobject-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "finally覆盖异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Python finally 中执行 return，可能怎样影响尚未处理的异常？",
+      "answer": "它会丢弃待传播的异常并返回该值。",
+      "explanation": "在 finally 中返回可能隐藏错误，应谨慎使用。",
+      "example": "try 中抛错而 finally 返回时，调用方可能只看到返回值。",
+      "tags": [
+        "finally覆盖异常",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/tutorial/errors.html#defining-clean-up-actions"
+    },
+    {
+      "id": "pyobject-024",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "with绑定对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 with manager as value 中，value 绑定的是什么？",
+      "answer": "它绑定上下文管理器 __enter__ 的返回值，不一定是 manager 自身。",
+      "explanation": "资源管理器可以返回其管理的资源。",
+      "example": "文件上下文管理器通常返回打开的文件对象。",
+      "tags": [
+        "with绑定对象",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#object.__enter__"
+    },
+    {
+      "id": "pyobject-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "进入失败清理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如果上下文管理器的 __enter__ 本身抛出异常，with 会自动调用它的 __exit__ 吗？",
+      "answer": "不会；未成功进入该上下文时，with 不会为它调用 __exit__。",
+      "explanation": "若 __enter__ 部分获取了资源，需要自行处理失败清理。",
+      "example": "连接过程失败时释放已取得的部分资源。",
+      "tags": [
+        "进入失败清理",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/reference/datamodel.html#with-statement-context-managers"
+    },
+    {
+      "id": "pyobject-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "生成器上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用 contextlib.contextmanager 装饰的生成器应 yield 几次？",
+      "answer": "应恰好 yield 一次，将值交给 with 块并在退出时恢复执行。",
+      "explanation": "可以把资源释放逻辑放在 finally 中。",
+      "example": "在 yield 前获取资源，yield 后释放。",
+      "tags": [
+        "生成器上下文",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/contextlib.html#contextlib.contextmanager"
+    },
+    {
+      "id": "pyobject-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "生成器上下文异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "contextmanager 生成器捕获 with 块异常后，如果只记录日志但没有重新抛出，会怎样？",
+      "answer": "该异常会被视为已处理，不再自动传播给外层。",
+      "explanation": "仅为记录异常而捕获时，应按需要重新抛出。",
+      "example": "记录错误后用 raise 保持异常传播。",
+      "tags": [
+        "生成器上下文异常",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/contextlib.html#contextlib.contextmanager"
+    },
+    {
+      "id": "pyobject-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "动态退出顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "contextlib.ExitStack 关闭时按什么顺序执行已登记的退出回调？",
+      "answer": "按登记顺序的逆序执行，类似嵌套 with 逐层退出。",
+      "explanation": "适合动态数量的上下文管理器或清理函数。",
+      "example": "后打开的资源先关闭。",
+      "tags": [
+        "动态退出顺序",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/contextlib.html#contextlib.ExitStack"
+    },
+    {
+      "id": "pyobject-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 对象模型与异常",
+      "knowledgePoint": "可选上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "contextlib.nullcontext(value) 适合什么用途？",
+      "answer": "它提供一个基本不做处理的上下文，并在进入时返回 value，适合可选的资源管理分支。",
+      "explanation": "它本身不会替调用方关闭传入对象。",
+      "example": "调用者已打开文件时，直接使用该对象而不重复管理其关闭。",
+      "tags": [
+        "可选上下文",
+        "Python 对象模型与异常"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.13/library/contextlib.html#contextlib.nullcontext"
+    }
+  ]
+}

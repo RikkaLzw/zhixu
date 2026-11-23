@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "fuzzing-engine",
+    "title": "LLVM libFuzzer、UBSan 与 OSS-Fuzz 操作指南",
+    "url": "https://llvm.org/docs/LibFuzzer.html",
+    "type": "技术文档",
+    "note": "根据逐题标注的文档自行整理；示例为自编。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fuzzeng-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "崩溃输入最小化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -minimize_crash 用于什么？",
+      "answer": "它尝试缩小给定的崩溃输入，同时保持其触发的故障。",
+      "explanation": "崩溃输入最小化针对单个失败样本，与保留语料覆盖的语料最小化不同。",
+      "example": "将可复现崩溃的大文件缩减为更容易分析的输入。",
+      "tags": [
+        "崩溃输入最小化",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzeng-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "fuzzer与no-link",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Clang 的 -fsanitize=fuzzer 与 -fsanitize=fuzzer-no-link 在链接测试入口上有什么区别？",
+      "answer": "前者会链接 libFuzzer 的 main；后者只进行插桩，不链接该 main。",
+      "explanation": "可在普通目标的编译阶段使用 fuzzer-no-link，再在 fuzz 驱动链接阶段引入引擎。",
+      "example": "同时构建普通可执行文件和独立 fuzz 驱动时，避免引入重复的 main。",
+      "tags": [
+        "fuzzer与no-link",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzeng-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "字典",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的输入字典能提供什么？",
+      "answer": "它提供可能有用的关键词或字节片段，帮助变异到达依赖特定输入格式的代码。",
+      "explanation": "字典可能提高搜索效率，但不保证覆盖所有路径。",
+      "example": "为协议解析器提供消息类型关键词。",
+      "tags": [
+        "字典",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzeng-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "多个语料目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 常规运行传入多个语料目录时，新发现的输入写到哪里？",
+      "answer": "写入第一个语料目录；其他目录中的输入也会被读取。",
+      "explanation": "应避免把需要保持只读的共享目录放在首位。",
+      "example": "指定可写目录后，再指定只读种子目录。",
+      "tags": [
+        "多个语料目录",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzeng-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "文件重放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "向 libFuzzer 传入输入文件而非语料目录时，主要执行什么？",
+      "answer": "它重放给定文件作为测试输入，不进行模糊变异。",
+      "explanation": "这种方式可用于回归检查或崩溃复现。",
+      "example": "对修复前保存的 testcase 再运行一次。",
+      "tags": [
+        "文件重放",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzeng-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "运行预算",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -max_total_time 与 -timeout 分别限制什么？",
+      "answer": "前者限制整体模糊测试运行时间；后者限制单个输入的执行时间。",
+      "explanation": "它们可以同时设置。",
+      "example": "设置一小时任务预算，并单独限制每个输入的执行时长。",
+      "tags": [
+        "运行预算",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzeng-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "并行作业与工作进程",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -jobs 和 -workers 分别控制什么？",
+      "answer": "jobs 指要运行完成的作业数；workers 指同时执行这些作业的进程数。",
+      "explanation": "多个进程可共享语料，但输出文件与资源使用应合理配置。",
+      "example": "安排 20 个作业，同时运行 4 个工作进程。",
+      "tags": [
+        "并行作业与工作进程",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzeng-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "比较值反馈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的比较指令跟踪可怎样帮助生成输入？",
+      "answer": "它利用比较指令的参数引导变异，更有机会通过特定比较条件。",
+      "explanation": "额外插桩可能增加开销，应按目标验证效果。",
+      "example": "解析器比较固定文件魔数时，比较反馈可帮助构造接近的输入。",
+      "tags": [
+        "比较值反馈",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzeng-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "UBSan检测目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UndefinedBehaviorSanitizer 主要用于检测哪类问题？",
+      "answer": "它在运行时检测启用的未定义行为，例如有符号整数溢出或无效指针对齐。",
+      "explanation": "可检测范围取决于启用的检查及实际执行路径。",
+      "example": "使用 UBSan 执行触发有符号整数溢出的测试。",
+      "tags": [
+        "UBSan检测目标",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html"
+    },
+    {
+      "id": "fuzzeng-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "UBSan恢复模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用 UBSan 后，遇到诊断是否一定立即终止？",
+      "answer": "不一定；不同检查和配置可以选择继续、报告后退出或触发 trap。",
+      "explanation": "复现问题时应核对具体 sanitizer 选项。",
+      "example": "对空指针检查配置为报告后退出。",
+      "tags": [
+        "UBSan恢复模式",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html"
+    },
+    {
+      "id": "fuzzeng-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试工程",
+      "knowledgePoint": "复现架构依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么复现 OSS-Fuzz 问题时需要核对目标架构？",
+      "answer": "某些指针或整数相关问题可能只在特定字长或架构下复现。",
+      "explanation": "同时还应核对构建版本和 sanitizer。",
+      "example": "同一输入在 32 位构建中崩溃，而 64 位构建未复现。",
+      "tags": [
+        "复现架构依赖",
+        "模糊测试工程"
+      ],
+      "evidence": "source",
+      "reference": "https://google.github.io/oss-fuzz/advanced-topics/reproducing/"
+    }
+  ]
+}

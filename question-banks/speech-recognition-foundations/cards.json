@@ -1,0 +1,712 @@
+{
+  "source": {
+    "id": "speech-recognition-foundations",
+    "title": "语音与音频基础：采样、特征和识别",
+    "url": "https://huggingface.co/learn/audio-course/en/chapter1/audio_data",
+    "type": "官方课程、技术文档与研究论文",
+    "note": "依照逐题列出的课程、指定版本文档及原论文整理，例子为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "speechfund-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频采样",
+      "knowledgePoint": "奈奎斯特频率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "采样率为 fs 的数字音频，其奈奎斯特频率是多少？",
+      "answer": "为 fs/2；理想带限信号的可无混叠表示频率须低于该界限。",
+      "explanation": "实际采集还需要处理超过该界限的频率成分。",
+      "example": "16 kHz 采样的奈奎斯特频率为 8 kHz。",
+      "tags": [
+        "奈奎斯特频率",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter1/audio_data",
+      "referenceTitle": "Hugging Face 音频课程：数字音频"
+    },
+    {
+      "id": "speechfund-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频采样",
+      "knowledgePoint": "采样混叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "音频采样中的混叠（aliasing）指什么？",
+      "answer": "超出采样系统可区分范围的频率成分会被映射为其他频率，使采样结果产生失真。",
+      "explanation": "提高采样率或在采样前进行适当的抗混叠滤波可降低风险。",
+      "example": "未经滤波就降低采样率时，高频可能折叠到较低频段。",
+      "tags": [
+        "采样混叠",
+        "语音与音频"
+      ],
+      "evidence": "application",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter1/preprocessing",
+      "referenceTitle": "Hugging Face 音频课程：重采样"
+    },
+    {
+      "id": "speechfund-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频采样",
+      "knowledgePoint": "降采样抗混叠",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "音频降采样前为什么通常需要低通滤波？",
+      "answer": "为了抑制高于新奈奎斯特频率的成分，减少降采样引入的混叠。",
+      "explanation": "滤波器的具体设计和过渡带依实现而定。",
+      "example": "从 48 kHz 降到 16 kHz 时处理接近或超过 8 kHz 的频率。",
+      "tags": [
+        "降采样抗混叠",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter1/preprocessing",
+      "referenceTitle": "Hugging Face 音频课程：重采样"
+    },
+    {
+      "id": "speechfund-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频采样",
+      "knowledgePoint": "升采样信息限制",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "把低采样率音频升采样到更高采样率，能恢复原先未记录的高频细节吗？",
+      "answer": "不能仅靠插值恢复未被采集或已被滤除的真实高频信息。",
+      "explanation": "升采样可生成更多采样点，但新增点不等同于重新录制。",
+      "example": "将电话音频升到 16 kHz 后，不能假定高频细节已真实恢复。",
+      "tags": [
+        "升采样信息限制",
+        "语音与音频"
+      ],
+      "evidence": "application",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter1/preprocessing",
+      "referenceTitle": "Hugging Face 音频课程：重采样"
+    },
+    {
+      "id": "speechfund-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "音频采样",
+      "knowledgePoint": "音频位深",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "整数 PCM 音频的位深主要决定什么？",
+      "answer": "它决定每个样本幅度可使用的量化等级数量；位深为 n 时最多有 2ⁿ 个编码值。",
+      "explanation": "采样率描述时间上的采样密度，位深描述样本幅度的量化精度。",
+      "example": "16 位整数样本可使用 65536 个编码值。",
+      "tags": [
+        "音频位深",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter1/audio_data",
+      "referenceTitle": "Hugging Face 音频课程：幅度与位深"
+    },
+    {
+      "id": "speechfund-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时频特征",
+      "knowledgePoint": "STFT复数输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "短时傅里叶变换的复数结果除了幅度还包含什么信息？",
+      "answer": "还包含相位信息；复数的模对应幅度，角度对应相位。",
+      "explanation": "只保存幅度会丢失原始相位，无法直接按原值逆变换还原。",
+      "example": "查看一个时频点的模与相角。",
+      "tags": [
+        "STFT复数输出",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://librosa.org/doc/0.11.0/generated/librosa.stft.html",
+      "referenceTitle": "librosa 0.11：STFT"
+    },
+    {
+      "id": "speechfund-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时频特征",
+      "knowledgePoint": "时频分辨率权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定其他条件时，缩短 STFT 窗口对时间和频率分辨率通常有什么影响？",
+      "answer": "较短窗口通常更利于区分时间上接近的变化，但更难分辨频率接近的纯音。",
+      "explanation": "窗口长度是时频分辨率之间的常见权衡。",
+      "example": "分析快速音素变化时考虑较短窗口。",
+      "tags": [
+        "时频分辨率权衡",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://librosa.org/doc/0.11.0/generated/librosa.stft.html",
+      "referenceTitle": "librosa 0.11：STFT"
+    },
+    {
+      "id": "speechfund-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时频特征",
+      "knowledgePoint": "STFT帧移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "音频 STFT 的 hop_length 控制什么？",
+      "answer": "它控制相邻分析帧起点相隔的采样点数；其他参数固定时，较小帧移产生更密集的时间帧。",
+      "explanation": "帧移与每帧窗口长度是不同参数。",
+      "example": "采样率 16 kHz 时，160 点帧移对应 10 毫秒。",
+      "tags": [
+        "STFT帧移",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://librosa.org/doc/0.11.0/generated/librosa.stft.html",
+      "referenceTitle": "librosa 0.11：STFT"
+    },
+    {
+      "id": "speechfund-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时频特征",
+      "knowledgePoint": "STFT居中与流式",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "librosa 0.11 的 STFT 设置 center=True 时，时间帧如何与输入对齐？",
+      "answer": "它通过填充输入，使第 t 帧以 t × hop_length 对应的采样位置为中心。",
+      "explanation": "对 librosa.stream 的流式分析，文档要求 center=False。",
+      "example": "核对输出帧对应的时间位置。",
+      "tags": [
+        "STFT居中与流式",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://librosa.org/doc/0.11.0/generated/librosa.stft.html",
+      "referenceTitle": "librosa 0.11：STFT"
+    },
+    {
+      "id": "speechfund-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时频特征",
+      "knowledgePoint": "梅尔滤波器组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "梅尔频谱图怎样从普通频谱构造？",
+      "answer": "它使用梅尔滤波器组对各频段的频谱值加权汇总，得到按梅尔刻度组织的频带表示。",
+      "explanation": "梅尔刻度近似反映人耳对频率的非线性感知。",
+      "example": "将短时功率谱映射到若干梅尔频带。",
+      "tags": [
+        "梅尔滤波器组",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://librosa.org/doc/0.11.0/generated/librosa.feature.melspectrogram.html",
+      "referenceTitle": "librosa 0.11：Mel spectrogram"
+    },
+    {
+      "id": "speechfund-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时频特征",
+      "knowledgePoint": "对数梅尔频谱",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对数梅尔频谱中的“对数”通常作用于什么？",
+      "answer": "它对梅尔频带的幅度或功率值进行对数压缩，用于表示较宽的动态范围。",
+      "explanation": "具体使用幅度、功率和对数变换的方式取决于实现。",
+      "example": "将梅尔功率谱转换为分贝刻度。",
+      "tags": [
+        "对数梅尔频谱",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter1/audio_data",
+      "referenceTitle": "Hugging Face 音频课程：Mel 频谱"
+    },
+    {
+      "id": "speechfund-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时频特征",
+      "knowledgePoint": "MFCC来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "常见 MFCC 特征如何从对数梅尔功率谱得到？",
+      "answer": "对每帧的对数梅尔功率谱沿频带维度做离散余弦变换，并选取所需的系数。",
+      "explanation": "变换类型、系数数量和归一化方式依配置而定。",
+      "example": "使用 librosa 的 MFCC 特征提取器。",
+      "tags": [
+        "MFCC来源",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://librosa.org/doc/0.11.0/generated/librosa.feature.mfcc.html",
+      "referenceTitle": "librosa 0.11：MFCC"
+    },
+    {
+      "id": "speechfund-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时频特征",
+      "knowledgePoint": "多声道MFCC",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "librosa 0.11 对多声道音频一次计算 MFCC，与逐声道分别计算一定相同吗？",
+      "answer": "不一定；文档说明多声道计算会受所有声道峰值响度影响。",
+      "explanation": "如需逐声道独立结果，应核对输入和计算方式。",
+      "example": "左右声道响度不同时，比较两种提取方式。",
+      "tags": [
+        "多声道MFCC",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://librosa.org/doc/0.11.0/generated/librosa.feature.mfcc.html",
+      "referenceTitle": "librosa 0.11：MFCC"
+    },
+    {
+      "id": "speechfund-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "时频特征",
+      "knowledgePoint": "Mel最高频率默认值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "librosa 0.11 构造梅尔滤波器组时，未指定 fmax 默认使用什么值？",
+      "answer": "默认使用采样率的一半，即 sr/2。",
+      "explanation": "更改采样率时应同步检查频带配置是否符合模型要求。",
+      "example": "采样率为 16 kHz 时，默认上限为 8 kHz。",
+      "tags": [
+        "Mel最高频率默认值",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://librosa.org/doc/0.11.0/generated/librosa.feature.melspectrogram.html",
+      "referenceTitle": "librosa 0.11：Mel spectrogram"
+    },
+    {
+      "id": "speechfund-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC单调对齐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 CTC 允许的输入与输出对齐具有什么顺序约束？",
+      "answer": "对齐是单调的：输入时间向前时，输出位置只能保持或向前，不能倒退重排。",
+      "explanation": "这一约束适合输出顺序与输入大致一致的任务。",
+      "example": "较早说出的字符不会对齐到较晚字符之后。",
+      "tags": [
+        "CTC单调对齐",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#the-alignment",
+      "referenceTitle": "Distill：CTC alignment"
+    },
+    {
+      "id": "speechfund-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC路径折叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 CTC 如何把逐帧标签路径转换成最终输出序列？",
+      "answer": "先合并相邻重复标签，再删除 blank 标记。",
+      "explanation": "操作顺序会影响相同字符连续出现时的结果。",
+      "example": "路径 [a, a, blank, b] 折叠为 ab。",
+      "tags": [
+        "CTC路径折叠",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#the-alignment",
+      "referenceTitle": "Distill：CTC alignment"
+    },
+    {
+      "id": "speechfund-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC空白与空格",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "CTC 的 blank 标记与文本中的空格有什么区别？",
+      "answer": "blank 表示该时间步不产生输出标签，折叠时被删除；空格或词边界符可以是实际输出标签。",
+      "explanation": "blank 不必等同于声学上的静音。",
+      "example": "路径中的 blank 可消失，而词间空格可保留。",
+      "tags": [
+        "CTC空白与空格",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter3/ctc",
+      "referenceTitle": "Hugging Face 音频课程：CTC 架构"
+    },
+    {
+      "id": "speechfund-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC连续重复标签",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "CTC 输出中若需要连续两个相同字符，对应路径通常需要怎样区分它们？",
+      "answer": "需要在两个相同标签之间插入 blank，否则相邻重复标签会在折叠时合并。",
+      "explanation": "这个 blank 是对齐符号，不是输出文本字符。",
+      "example": "[a, blank, a] 折叠为 aa，而 [a, a] 折叠为 a。",
+      "tags": [
+        "CTC连续重复标签",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#the-alignment",
+      "referenceTitle": "Distill：CTC alignment"
+    },
+    {
+      "id": "speechfund-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC长度约束",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "CTC 中目标标签长度为什么不能超过模型输出的时间步数？",
+      "answer": "每个输出时间步最多分配一个路径标签，因此时间步不足时不存在有效对齐。",
+      "explanation": "相邻重复标签还需要额外时间步放置 blank；这里的时间步是模型输出帧，不是原始采样点。",
+      "example": "三个输出帧无法对齐到四个目标字符。",
+      "tags": [
+        "CTC长度约束",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#the-alignment",
+      "referenceTitle": "Distill：CTC alignment"
+    },
+    {
+      "id": "speechfund-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC序列概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CTC 怎样计算一个目标文本的概率？",
+      "answer": "将所有折叠后得到该文本的有效对齐路径概率相加。",
+      "explanation": "因此训练时不需要人工给出每个字符与音频帧的对齐；单条路径概率由逐帧条件概率组成。",
+      "example": "不同的 blank 位置可能映射到同一转写。",
+      "tags": [
+        "CTC序列概率",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#loss-function",
+      "referenceTitle": "Distill：CTC loss"
+    },
+    {
+      "id": "speechfund-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC动态规划",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CTC 为什么常用动态规划计算目标文本的概率？",
+      "answer": "有效对齐路径可能非常多；动态规划合并共享的中间状态，避免逐条枚举。",
+      "explanation": "计算仍需遵守 blank 与重复标签的合法转移规则。",
+      "example": "在同一时间步累计到同一输出位置的路径概率。",
+      "tags": [
+        "CTC动态规划",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#loss-function",
+      "referenceTitle": "Distill：CTC loss"
+    },
+    {
+      "id": "speechfund-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC条件独立",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 CTC 对逐时间步输出作了什么条件独立假设？",
+      "answer": "给定输入后，各时间步的路径标签概率按条件独立方式相乘。",
+      "explanation": "编码器本身仍可利用输入的上下文；该假设不等于各音频帧相互独立。",
+      "example": "模型可看完整音频，但 CTC 不直接把先前输出标签作为条件。",
+      "tags": [
+        "CTC条件独立",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#conditional-independence",
+      "referenceTitle": "Distill：CTC conditional independence"
+    },
+    {
+      "id": "speechfund-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC贪心解码",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "逐帧选择最高概率标签并折叠，为什么不一定得到概率最高的 CTC 文本？",
+      "answer": "同一文本可能对应多条路径，概率最高的单条路径折叠结果未必拥有最高的路径概率总和。",
+      "explanation": "贪心解码通常速度快，但属于近似选择。",
+      "example": "多条次优路径合计可能胜过最优单路径。",
+      "tags": [
+        "CTC贪心解码",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#inference",
+      "referenceTitle": "Distill：CTC inference"
+    },
+    {
+      "id": "speechfund-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC束搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CTC 束搜索与逐帧贪心解码在候选保留上有什么区别？",
+      "answer": "束搜索在解码过程中保留多个候选前缀，并利用其路径概率比较；贪心法每帧只取一个标签。",
+      "explanation": "有限束宽的搜索也不能保证找到全局最优文本。",
+      "example": "使用较大的束宽探索更多候选转写。",
+      "tags": [
+        "CTC束搜索",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#inference",
+      "referenceTitle": "Distill：CTC inference"
+    },
+    {
+      "id": "speechfund-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CTC语音识别",
+      "knowledgePoint": "CTC语言模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CTC 解码中为什么可以引入外部语言模型？",
+      "answer": "它为候选文本提供语言序列的额外评分，帮助在声学上相近的转写之间选择。",
+      "explanation": "语言模型的权重和词插入奖励等需要按任务调整。",
+      "example": "用语言模型辅助区分发音相近的候选句。",
+      "tags": [
+        "CTC语言模型",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2017/ctc/#inference",
+      "referenceTitle": "Distill：CTC inference"
+    },
+    {
+      "id": "speechfund-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音模型推理",
+      "knowledgePoint": "CTC分块上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "长音频的 CTC 分块识别为什么可在块两侧保留重叠上下文？",
+      "answer": "重叠区域为块边缘提供上下文；推理后可丢弃两侧对应的 logits，再拼接中间部分。",
+      "explanation": "需要按模型输出帧及采样率正确换算边界。",
+      "example": "每个音频块额外带上左右相邻片段。",
+      "tags": [
+        "CTC分块上下文",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/blog/asr-chunking",
+      "referenceTitle": "Hugging Face：ASR chunking with stride"
+    },
+    {
+      "id": "speechfund-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音模型推理",
+      "knowledgePoint": "分块与整段推理",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "带重叠的音频分块推理一定与整段音频一次推理完全相同吗？",
+      "answer": "不一定；每块可见的上下文不同，拼接结果是对整段推理的近似。",
+      "explanation": "上下文长度、分块边界和模型结构都可能影响结果。",
+      "example": "长录音分块识别后与整段结果可能有差异。",
+      "tags": [
+        "分块与整段推理",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/blog/asr-chunking",
+      "referenceTitle": "Hugging Face：ASR chunking with stride"
+    },
+    {
+      "id": "speechfund-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音模型训练",
+      "knowledgePoint": "Wav2Vec2自监督预训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 原论文怎样利用无转写的语音进行自监督预训练？",
+      "answer": "模型遮盖一部分潜在语音表示，并通过对比任务区分真实目标与干扰项。",
+      "explanation": "预训练无需逐条语音转写；论文还学习离散化目标表示。",
+      "example": "用大量无标注录音学习语音表征。",
+      "tags": [
+        "Wav2Vec2自监督预训练",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2006.11477v3#S2",
+      "referenceTitle": "wav2vec 2.0 原论文"
+    },
+    {
+      "id": "speechfund-030",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音模型训练",
+      "knowledgePoint": "Wav2Vec2语音微调",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "wav2vec 2.0 原论文在自监督预训练后如何适配语音识别？",
+      "answer": "使用带转写的语音数据，通过 CTC 损失微调模型。",
+      "explanation": "无标注预训练和有标注下游微调承担不同作用。",
+      "example": "用少量转写数据微调预训练语音模型。",
+      "tags": [
+        "Wav2Vec2语音微调",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2006.11477v3#S2",
+      "referenceTitle": "wav2vec 2.0 原论文"
+    },
+    {
+      "id": "speechfund-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音模型训练",
+      "knowledgePoint": "Whisper模型结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文使用什么类型的模型处理语音输入？",
+      "answer": "它使用编码器—解码器 Transformer，编码器接收由音频计算出的对数梅尔频谱。",
+      "explanation": "这是原论文模型的做法，不代表所有语音识别模型都使用相同输入。",
+      "example": "将音频转为频谱特征后由模型生成文本。",
+      "tags": [
+        "Whisper模型结构",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2212.04356v1#S2.SS2",
+      "referenceTitle": "Whisper 原论文：Model"
+    },
+    {
+      "id": "speechfund-032",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音模型训练",
+      "knowledgePoint": "Whisper任务标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文如何让同一个模型区分转写和翻译等任务？",
+      "answer": "通过解码序列中的特殊任务标记指定任务和输出格式。",
+      "explanation": "还可使用语言及时间戳相关标记。",
+      "example": "用不同任务标记指定转写或语音翻译。",
+      "tags": [
+        "Whisper任务标记",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2212.04356v1#S2.SS3",
+      "referenceTitle": "Whisper 原论文：Multitask format"
+    },
+    {
+      "id": "speechfund-033",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音模型训练",
+      "knowledgePoint": "Whisper时间戳",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Whisper 原论文预测的时间戳相对于什么时间范围？",
+      "answer": "它预测相对于当前音频片段的时间，并将时间量化到模型的时间分辨率。",
+      "explanation": "处理多个片段时，需结合片段起点换算为整段音频的时间。",
+      "example": "片段从第 60 秒开始时，将片段内时间换算为全局时间。",
+      "tags": [
+        "Whisper时间戳",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2212.04356v1#S2.SS3",
+      "referenceTitle": "Whisper 原论文：Multitask format"
+    },
+    {
+      "id": "speechfund-034",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音评估",
+      "knowledgePoint": "字错误率",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "语音识别的字错误率 CER 与词错误率 WER 的主要区别是什么？",
+      "answer": "CER 按字符计算替换、插入和删除错误；WER 按词计算。",
+      "explanation": "比较结果时应说明字符或词的切分和规范化规则。",
+      "example": "对同一转写分别按字符和词计算编辑错误率。",
+      "tags": [
+        "字错误率",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter5/evaluation",
+      "referenceTitle": "Hugging Face 音频课程：ASR metrics"
+    },
+    {
+      "id": "speechfund-035",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音评估",
+      "knowledgePoint": "语音评估规范化",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "比较语音识别系统的错误率时，为什么应说明文本规范化规则？",
+      "answer": "大小写、标点和分词等处理会改变比较单元或差异，从而影响错误率。",
+      "explanation": "参考文本与预测文本应按照明确且一致的评估规则处理。",
+      "example": "说明评估前是否去除标点并统一大小写。",
+      "tags": [
+        "语音评估规范化",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter5/evaluation",
+      "referenceTitle": "Hugging Face 音频课程：ASR metrics"
+    },
+    {
+      "id": "speechfund-036",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "语音评估",
+      "knowledgePoint": "数据集级WER",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "计算多句语音的数据集级 WER 时，怎样合并各句的错误？",
+      "answer": "先汇总各句的替换、插入、删除次数和参考词数，再计算总错误数除以总参考词数。",
+      "explanation": "它通常不等于每句 WER 的简单平均，因为各句长度不同。",
+      "example": "短句和长句按各自参考词数共同参与整体统计。",
+      "tags": [
+        "数据集级WER",
+        "语音与音频"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/audio-course/en/chapter5/evaluation",
+      "referenceTitle": "Hugging Face 音频课程：ASR metrics"
+    }
+  ]
+}

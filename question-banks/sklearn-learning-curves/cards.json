@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "sklearn-learning-curves",
+    "title": "scikit-learn 1.7.2：学习曲线和验证曲线",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.learning_curve.html",
+    "type": "论文、固定版本文档与源码",
+    "note": "根据逐题引用的资料自行整理；示例为自编，具体版本见题干。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skcurve-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "学习曲线与模型诊断",
+      "knowledgePoint": "学习曲线目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn learning_curve 主要比较什么？",
+      "answer": "它在多个训练集规模下，计算交叉验证的训练分数与验证分数。",
+      "explanation": "可以观察增加训练样本时模型表现的变化。",
+      "example": "比较 100、500 和 1000 个训练样本的得分。",
+      "tags": [
+        "学习曲线与模型诊断",
+        "学习曲线目的"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.learning_curve.html"
+    },
+    {
+      "id": "skcurve-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习曲线与模型诊断",
+      "knowledgePoint": "训练规模参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "learning_curve 的 train_sizes 用浮点数和整数时分别表示什么？",
+      "answer": "浮点数表示相对第一个交叉验证训练折规模的比例；整数表示绝对样本数。",
+      "explanation": "1.7.2 源码用第一个训练折长度确定规模；不同折长度不同时，应留意实际取用的样本数。",
+      "example": "0.5 使用约一半可用训练折样本。",
+      "tags": [
+        "学习曲线与模型诊断",
+        "训练规模参数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_validation.py#L2024"
+    },
+    {
+      "id": "skcurve-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习曲线与模型诊断",
+      "knowledgePoint": "分数矩阵形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "learning_curve 返回的训练和测试分数数组通常是什么形状？",
+      "answer": "形状为（实际训练规模数，交叉验证折数）。",
+      "explanation": "实际规模可能因取整和去重少于输入规模数。",
+      "example": "三个有效规模和五折得到 3×5 的分数矩阵。",
+      "tags": [
+        "学习曲线与模型诊断",
+        "分数矩阵形状"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.learning_curve.html"
+    },
+    {
+      "id": "skcurve-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习曲线与模型诊断",
+      "knowledgePoint": "打乱训练前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "learning_curve 默认 shuffle=False 对不同训练规模的取样顺序有什么影响？",
+      "answer": "它按每个训练折原有顺序取不同长度的前缀，不会先打乱训练折。",
+      "explanation": "输入排序可能使较小训练子集不具代表性；是否打乱应结合任务和切分方式。",
+      "example": "按标签排序的数据可能使小训练集只包含一个类别。",
+      "tags": [
+        "学习曲线与模型诊断",
+        "打乱训练前缀"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.learning_curve.html"
+    },
+    {
+      "id": "skcurve-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习曲线与模型诊断",
+      "knowledgePoint": "额外时间输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "learning_curve 设置 return_times=True 后会多返回什么？",
+      "answer": "会额外返回各训练规模和折对应的拟合时间与评分时间。",
+      "explanation": "时间是运行环境下的观测值，不等于模型复杂度的理论证明。",
+      "example": "比较不同训练规模的拟合耗时。",
+      "tags": [
+        "学习曲线与模型诊断",
+        "额外时间输出"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.learning_curve.html"
+    },
+    {
+      "id": "skcurve-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习曲线与模型诊断",
+      "knowledgePoint": "训练规模去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "learning_curve 将浮点 train_sizes 换算成整数后，重复规模会怎样处理？",
+      "answer": "重复的绝对规模会被去重，返回的实际规模数可能减少。",
+      "explanation": "小数据集上的相邻比例可能因取整对应同一样本数。",
+      "example": "少量样本中 0.21 与 0.22 可能得到相同规模。",
+      "tags": [
+        "学习曲线与模型诊断",
+        "训练规模去重"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.learning_curve.html"
+    },
+    {
+      "id": "skcurve-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "学习曲线与模型诊断",
+      "knowledgePoint": "训练失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 的 learning_curve 默认某些拟合失败时，会如何记录对应得分？",
+      "answer": "默认 error_score 为 NaN，并发出拟合失败警告。",
+      "explanation": "如果所有拟合都失败，仍可能抛出错误；可设置 error_score=\"raise\" 排查。",
+      "example": "过小的分类训练子集只有一个类别时可能拟合失败。",
+      "tags": [
+        "学习曲线与模型诊断",
+        "训练失败"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.learning_curve.html"
+    },
+    {
+      "id": "skcurve-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "学习曲线与模型诊断",
+      "knowledgePoint": "验证曲线用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "validation_curve 与 learning_curve 在横轴选择上通常有什么区别？",
+      "answer": "validation_curve 改变一个超参数；learning_curve 改变训练样本规模。",
+      "explanation": "两者都可通过交叉验证比较训练与验证分数。",
+      "example": "固定数据规模比较不同正则化参数。",
+      "tags": [
+        "学习曲线与模型诊断",
+        "验证曲线用途"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.validation_curve.html"
+    }
+  ]
+}

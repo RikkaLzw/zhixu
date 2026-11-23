@@ -1,0 +1,151 @@
+{
+  "source": {
+    "id": "windows-kerberos-audit",
+    "title": "Microsoft 安全审核文档：Kerberos 事件",
+    "url": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4768",
+    "type": "官方文档与教材",
+    "note": "依据题目所列文档或教材自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "kerbaudit-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "Windows Kerberos 审核日志",
+      "knowledgePoint": "TGT和服务票据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 安全事件 4768 与 4769 分别涉及什么 Kerberos 票据？",
+      "answer": "4768 涉及票据授予票据 TGT；4769 涉及服务票据 TGS 的请求。",
+      "explanation": "两种事件描述认证过程中不同阶段，需结合结果字段判断成功或失败。",
+      "example": "先取得 TGT，再请求访问某项服务的票据。",
+      "tags": [
+        "Windows Kerberos 审核日志",
+        "TGT和服务票据"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4768",
+      "supportingReferences": [
+        {
+          "id": "windows-4769",
+          "title": "Microsoft：4769 Kerberos 服务票据请求",
+          "url": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4769",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "kerbaudit-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows Kerberos 审核日志",
+      "knowledgePoint": "事件生成位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 的 Kerberos 审核事件 4768、4769 和 4771 通常在哪类主机生成？",
+      "answer": "它们在域控制器上生成。",
+      "explanation": "还需要启用相应审核策略并采集域控制器日志。",
+      "example": "缺少域控制器日志时，这些事件可能不可见。",
+      "tags": [
+        "Windows Kerberos 审核日志",
+        "事件生成位置"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4769",
+      "supportingReferences": [
+        {
+          "id": "windows-4768",
+          "title": "Microsoft：4768 Kerberos TGT 请求",
+          "url": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4768",
+          "type": "官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "windows-4771",
+          "title": "Microsoft：4771 Kerberos 预认证失败",
+          "url": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4771",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "kerbaudit-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows Kerberos 审核日志",
+      "knowledgePoint": "预认证失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 安全事件 4771 表示什么？",
+      "answer": "表示 Kerberos 预身份验证失败。",
+      "explanation": "失败可能有多种原因，需要结合错误码和环境排查。",
+      "example": "密码错误或智能卡证书问题可能导致失败。",
+      "tags": [
+        "Windows Kerberos 审核日志",
+        "预认证失败"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4771"
+    },
+    {
+      "id": "kerbaudit-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows Kerberos 审核日志",
+      "knowledgePoint": "免预认证盲区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "账号被设置为不要求 Kerberos 预身份验证时，能否依靠 4771 记录该账号的预认证失败？",
+      "answer": "不能；Microsoft 文档说明这种设置下不会生成 4771 事件。",
+      "explanation": "不应把没有 4771 简单解释为没有相关认证活动。",
+      "example": "盘点关闭预认证的账号时结合其他数据。",
+      "tags": [
+        "Windows Kerberos 审核日志",
+        "免预认证盲区"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4771"
+    },
+    {
+      "id": "kerbaudit-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows Kerberos 审核日志",
+      "knowledgePoint": "服务票据过期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 事件 4769 的失败码 0x20 在文档中通常说明什么？",
+      "answer": "通常表示服务票据已过期，文档说明这类事件多为信息性消息。",
+      "explanation": "仍需结合具体上下文判断，不能仅凭该码认定攻击。",
+      "example": "正常票据到期后的失败记录。",
+      "tags": [
+        "Windows Kerberos 审核日志",
+        "服务票据过期"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4769"
+    },
+    {
+      "id": "kerbaudit-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "Windows Kerberos 审核日志",
+      "knowledgePoint": "服务账号字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Windows 事件 4769 的 Service Name 字段指什么？",
+      "answer": "它表示为其请求服务票据的账号或计算机名称。",
+      "explanation": "该字段有助于分析哪些服务账号被请求，但名称本身不证明异常。",
+      "example": "统计某请求者访问了哪些服务账号。",
+      "tags": [
+        "Windows Kerberos 审核日志",
+        "服务账号字段"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4769"
+    }
+  ]
+}

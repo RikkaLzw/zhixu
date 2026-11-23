@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "fuzz4all-generation-oracles",
+    "title": "Fuzz4All 原论文 v3：生成策略与测试预言机",
+    "url": "https://arxiv.org/abs/2308.04748v3",
+    "type": "论文与官方技术文档",
+    "note": "根据所引论文或固定版本官方文档自行整理；例子为自编，使用条件见各卡。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fuzzall-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Fuzz4All 生成与预言机",
+      "knowledgePoint": "模型角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzz4All 论文中的蒸馏模型与生成模型分别用于什么？",
+      "answer": "蒸馏模型整理生成提示；生成模型根据提示产生测试输入。",
+      "explanation": "论文实验使用的具体模型不代表该方法只能使用这些模型。",
+      "example": "先提炼文档，再用代码模型生成测试程序。",
+      "tags": [
+        "Fuzz4All 生成与预言机",
+        "模型角色"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.04748v3"
+    },
+    {
+      "id": "fuzzall-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzz4All 生成与预言机",
+      "knowledgePoint": "生成策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzz4All 的三类生成指令分别侧重什么？",
+      "answer": "生成新输入、修改已有输入，以及生成语义等价变体。",
+      "explanation": "语义等价是生成目标，实际等价性需要验证。",
+      "example": "对已有程序请求一个变异版本。",
+      "tags": [
+        "Fuzz4All 生成与预言机",
+        "生成策略"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.04748v3"
+    },
+    {
+      "id": "fuzzall-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzz4All 生成与预言机",
+      "knowledgePoint": "目标插桩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzz4All 的输入生成与测试是否要求目标系统必须支持代码插桩？",
+      "answer": "不要求；论文将该方法描述为无需对被测系统插桩。",
+      "explanation": "如果要测量代码覆盖率，则仍需合适的覆盖采集手段。",
+      "example": "对可执行的解析器生成输入并观察崩溃。",
+      "tags": [
+        "Fuzz4All 生成与预言机",
+        "目标插桩"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.04748v3"
+    },
+    {
+      "id": "fuzzall-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Fuzz4All 生成与预言机",
+      "knowledgePoint": "目标预言机",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Fuzz4All 是否只能使用同一个预言机检查所有被测系统？",
+      "answer": "不必；论文允许针对被测系统定义或定制测试预言机。",
+      "explanation": "预言机能发现的问题类型取决于其设计。",
+      "example": "把意外崩溃作为一个检测信号。",
+      "tags": [
+        "Fuzz4All 生成与预言机",
+        "目标预言机"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.04748v3"
+    }
+  ]
+}

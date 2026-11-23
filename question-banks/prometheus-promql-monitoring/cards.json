@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "prometheus-promql-monitoring",
+    "title": "Prometheus 3.5.0：PromQL 监控查询",
+    "url": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/functions.md",
+    "type": "固定版本论文、官方文档与数据规范",
+    "note": "依据逐题引用的资料自行整理；示例为自编。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "promql-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "向量类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PromQL 即时向量和区间向量分别包含什么？",
+      "answer": "即时向量在一个评估时刻为每条有效序列取一个样本；区间向量为每条序列取一段时间内的样本。",
+      "explanation": "不同函数对输入类型有不同要求。",
+      "example": "rate 接收区间向量。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "向量类型"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/basics.md"
+    },
+    {
+      "id": "promql-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "区间端点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Prometheus 3.5 的 [5m] 区间选择器怎样处理时间边界？",
+      "answer": "区间左端不包含、右端包含。",
+      "explanation": "右端为评估时刻，左端为五分钟前。",
+      "example": "正好五分钟前的样本不在该区间内。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "区间端点"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/basics.md"
+    },
+    {
+      "id": "promql-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "rate含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PromQL rate(counter[5m]) 通常计算什么？",
+      "answer": "计算计数器在窗口内的平均每秒增长率，并考虑计数器重置。",
+      "explanation": "窗口边界采用外推，结果依采样数据和窗口大小而定。",
+      "example": "估计过去五分钟每秒请求数。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "rate含义"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/functions.md#rate"
+    },
+    {
+      "id": "promql-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "irate与rate",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PromQL 的 irate 与 rate 对计数器使用的样本范围有什么主要区别？",
+      "answer": "irate 根据窗口内最近两个样本计算瞬时速率；rate 计算整个窗口的平均增长率。",
+      "explanation": "短暂尖峰可能使 irate 波动较大。",
+      "example": "绘图查看快速变化与告警平滑通常有不同需求。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "irate与rate"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/functions.md#irate"
+    },
+    {
+      "id": "promql-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "先求速率再聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对多个计数器序列统计总速率时，为什么通常先 rate 再 sum？",
+      "answer": "先分别计算速率有助于识别各序列各自的重置；先合并可能掩盖某个实例的重置。",
+      "explanation": "这个规则针对计数器及可发生独立重置的序列。",
+      "example": "sum(rate(requests_total[5m]))。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "先求速率再聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/functions.md#rate"
+    },
+    {
+      "id": "promql-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "increase小数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "计数器每次只增加整数时，PromQL increase 在一个窗口内为什么可能返回小数？",
+      "answer": "它会向窗口两端外推增长量，因此结果不一定是整数。",
+      "explanation": "increase 适用于计数器，而不是任意可上下波动的量。",
+      "example": "采样时间与窗口边界不完全重合。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "increase小数"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/functions.md#increase"
+    },
+    {
+      "id": "promql-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "分位数桶标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对经典 Prometheus 直方图做跨实例聚合后计算 histogram_quantile，为什么要保留 le 标签？",
+      "answer": "le 标识桶的上界，分位数函数需要它识别经典直方图的各个桶。",
+      "explanation": "原生直方图的聚合形式不同。",
+      "example": "sum by (le) (rate(latency_bucket[5m]))。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "分位数桶标签"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/functions.md#histogram_quantile"
+    },
+    {
+      "id": "promql-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "分位数估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Prometheus 对经典直方图的 histogram_quantile 是直接返回所有原始观测值排序后的精确分位数吗？",
+      "answer": "通常不是；它利用桶计数并在适用桶内插值估计分位数。",
+      "explanation": "估计精度依赖桶边界等因素。",
+      "example": "两个桶之间的分位位置按线性插值估算。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "分位数估计"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/functions.md#histogram_quantile"
+    },
+    {
+      "id": "promql-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "缺失指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PromQL absent(metric) 在匹配不到任何时间序列时返回什么？",
+      "answer": "返回一个值为 1 的元素；若输入向量有元素则返回空向量。",
+      "explanation": "空向量与一个数值为 0 的样本是不同结果。",
+      "example": "可用于检测某个指标完全消失。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "缺失指标"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/functions.md#absent"
+    },
+    {
+      "id": "promql-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PromQL 服务与模型监控",
+      "knowledgePoint": "正则锚定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PromQL 标签匹配器中 env=~\"prod\" 是否匹配 prod-east？",
+      "answer": "不匹配；正则表达式按完整标签值锚定。",
+      "explanation": "若要匹配前缀可显式使用适当的通配表达式。",
+      "example": "env=~\"prod.*\" 可匹配 prod-east。",
+      "tags": [
+        "PromQL 服务与模型监控",
+        "正则锚定"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/prometheus/prometheus/blob/v3.5.0/docs/querying/basics.md"
+    }
+  ]
+}

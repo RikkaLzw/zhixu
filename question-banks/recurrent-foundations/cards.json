@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "recurrent-foundations",
+    "title": "动手学深度学习：循环网络与门控单元",
+    "url": "https://zh.d2l.ai/chapter_recurrent-neural-networks/rnn.html",
+    "type": "教材与技术文档",
+    "note": "逐题根据所列教材或技术文档自行整理；例子用于说明适用条件。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "rnnbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "循环隐状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "循环神经网络的隐状态在序列处理中有什么作用？",
+      "answer": "它携带之前时间步的信息，并与当前输入一起影响当前状态和输出。",
+      "explanation": "能保留多少信息取决于网络结构和训练。",
+      "example": "处理日志序列时将前一时刻状态传给下一时刻。",
+      "tags": [
+        "循环隐状态",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-neural-networks/rnn.html"
+    },
+    {
+      "id": "rnnbase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "循环权重共享",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "常见 RNN 在不同时间步使用的是不同的参数组吗？",
+      "answer": "通常不是；同一组循环和输入变换参数在各时间步重复使用。",
+      "explanation": "隐状态会随时间变化，参数共享不意味着每一步输出相同。",
+      "example": "用同一个循环单元依次处理句子中的词。",
+      "tags": [
+        "循环权重共享",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-neural-networks/rnn.html"
+    },
+    {
+      "id": "rnnbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "通过时间反向传播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "通过时间反向传播（BPTT）如何计算循环网络的梯度？",
+      "answer": "它将循环计算按时间步展开，再沿展开后的依赖关系使用反向传播。",
+      "explanation": "同一参数在多个时间步的贡献会共同影响其梯度。",
+      "example": "将长度为 3 的序列展开成三个时间步。",
+      "tags": [
+        "通过时间反向传播",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-neural-networks/bptt.html"
+    },
+    {
+      "id": "rnnbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "截断时间反传",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "截断 BPTT 对跨时间步的梯度传播有什么限制？",
+      "answer": "它在选定的时间边界切断计算图，不再沿这条图向更早的时间步反传。",
+      "explanation": "隐藏状态仍可作为数值传递；梯度被截断不等于状态一定重置。",
+      "example": "每处理一段序列后分离隐藏状态。",
+      "tags": [
+        "截断时间反传",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-neural-networks/bptt.html"
+    },
+    {
+      "id": "rnnbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "长期梯度不稳定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "长序列反向传播中为什么可能出现梯度消失或爆炸？",
+      "answer": "梯度沿时间传播时涉及多次导数或矩阵相乘，结果可能不断缩小或放大。",
+      "explanation": "实际表现取决于参数、状态和序列长度。",
+      "example": "远早于损失位置的状态获得极小梯度。",
+      "tags": [
+        "长期梯度不稳定",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-neural-networks/bptt.html"
+    },
+    {
+      "id": "rnnbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "LSTM双状态",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "标准 LSTM 的单元状态与隐状态各承担什么作用？",
+      "answer": "单元状态提供跨时间传递和更新的信息通路；隐状态是当前步对外传递的表示。",
+      "explanation": "两者由门控共同计算，并非互不相关的存储。",
+      "example": "下一时间步同时接收上一时刻的单元状态和隐状态。",
+      "tags": [
+        "LSTM双状态",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-modern/lstm.html"
+    },
+    {
+      "id": "rnnbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "LSTM遗忘门",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LSTM 的遗忘门控制什么？",
+      "answer": "它控制上一时刻单元状态中有多少信息保留到当前更新。",
+      "explanation": "门值可按状态元素分别变化。",
+      "example": "遗忘门较小时，对应旧单元状态的保留较少。",
+      "tags": [
+        "LSTM遗忘门",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-modern/lstm.html"
+    },
+    {
+      "id": "rnnbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "LSTM输入门",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LSTM 的输入门控制什么？",
+      "answer": "它控制候选信息中有多少写入当前单元状态。",
+      "explanation": "输入门与遗忘门共同影响单元状态的更新。",
+      "example": "输入门较小时，候选信息对对应单元状态的影响较小。",
+      "tags": [
+        "LSTM输入门",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-modern/lstm.html"
+    },
+    {
+      "id": "rnnbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "LSTM输出门",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LSTM 的输出门控制什么？",
+      "answer": "它控制当前单元状态经变换后有多少被用于产生隐状态。",
+      "explanation": "输出门影响对外暴露的当前表示。",
+      "example": "门值较小时，对应隐状态分量受到抑制。",
+      "tags": [
+        "LSTM输出门",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-modern/lstm.html"
+    },
+    {
+      "id": "rnnbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "GRU重置门",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GRU 的重置门主要影响哪一步？",
+      "answer": "它控制计算候选隐状态时保留多少前一隐状态的信息。",
+      "explanation": "门值按元素变化；不同实现的具体计算顺序可能不同。",
+      "example": "重置门接近 0 时，对应旧状态对候选状态的影响减弱。",
+      "tags": [
+        "GRU重置门",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-modern/gru.html"
+    },
+    {
+      "id": "rnnbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "GRU更新门",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GRU 的更新门主要在什么之间调节？",
+      "answer": "它调节前一隐状态和候选隐状态对新隐状态的相对贡献。",
+      "explanation": "门值接近两端时，新状态会更偏向其中一方。",
+      "example": "保留旧状态有助于信息跨多个时间步传递。",
+      "tags": [
+        "GRU更新门",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-modern/gru.html"
+    },
+    {
+      "id": "rnnbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "循环神经网络",
+      "knowledgePoint": "双向循环网络",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "为什么普通双向 RNN 不适合在无法看到未来输入的流式场景中直接使用？",
+      "answer": "反向分支需要利用后续位置的输入，而实时处理时这些输入可能尚未到达。",
+      "explanation": "若任务允许等待整个序列，双向结构仍可使用。",
+      "example": "离线分析完整日志与实时处理逐条到达的日志条件不同。",
+      "tags": [
+        "双向循环网络",
+        "循环神经网络"
+      ],
+      "evidence": "source",
+      "reference": "https://zh.d2l.ai/chapter_recurrent-modern/bi-rnn.html"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "hierarchical-task-network-planning",
+    "title": "HDDL 原论文 v1：层级任务网络规划",
+    "url": "https://arxiv.org/abs/1911.05499v1",
+    "type": "论文、官方文档与系统手册",
+    "note": "依据逐题所列固定版本论文或官方资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "htnbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "层级任务网络规划",
+      "knowledgePoint": "任务类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HDDL 论文描述的层级任务网络包含哪两种任务？",
+      "answer": "包含原始任务和复合任务；原始任务对应可执行动作，复合任务需进一步分解。",
+      "explanation": "复合任务也称抽象任务。",
+      "example": "运输任务可以分解为移动、装载和卸载。",
+      "tags": [
+        "层级任务网络规划",
+        "任务类型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1911.05499v1"
+    },
+    {
+      "id": "htnbase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "层级任务网络规划",
+      "knowledgePoint": "分解方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTN 中的分解方法如何处理一个复合任务？",
+      "answer": "它将复合任务替换为一个子任务网络。",
+      "explanation": "不同方法可以为同一复合任务提供不同分解。",
+      "example": "根据运输场景选择不同的子任务组合。",
+      "tags": [
+        "层级任务网络规划",
+        "分解方法"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1911.05499v1"
+    },
+    {
+      "id": "htnbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "层级任务网络规划",
+      "knowledgePoint": "任务标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTN 的任务网络为什么用任务标识符区分任务出现次数？",
+      "answer": "同一任务名称和参数可能在网络中出现多次，需要分别表示和约束。",
+      "explanation": "标识符可以用于指定不同出现位置之间的顺序。",
+      "example": "计划中两次执行相同的移动任务。",
+      "tags": [
+        "层级任务网络规划",
+        "任务标识"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1911.05499v1"
+    },
+    {
+      "id": "htnbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "层级任务网络规划",
+      "knowledgePoint": "部分顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTN 任务网络的部分顺序约束意味着所有任务都只有一种执行顺序吗？",
+      "answer": "不意味着；只要遵守已给定的先后约束，可能存在多个线性顺序。",
+      "explanation": "可执行性还取决于动作前置条件和状态变化。",
+      "example": "两个互不约束的子任务可按不同顺序安排。",
+      "tags": [
+        "层级任务网络规划",
+        "部分顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1911.05499v1"
+    },
+    {
+      "id": "htnbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "层级任务网络规划",
+      "knowledgePoint": "复合任务语义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 HDDL 论文给出的基础形式化中，复合任务本身直接定义状态效果吗？",
+      "answer": "不直接定义；它通过分解方法关联到子任务网络。",
+      "explanation": "论文说明其他层级规划形式可以为复合任务引入前置条件或效果。",
+      "example": "先把抽象运输任务分解成具体动作。",
+      "tags": [
+        "层级任务网络规划",
+        "复合任务语义"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1911.05499v1"
+    },
+    {
+      "id": "htnbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "层级任务网络规划",
+      "knowledgePoint": "可执行解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 HDDL 论文的 HTN 定义中，什么样的任务网络可构成解？",
+      "answer": "它须由初始网络经允许的分解、具体化和添加顺序约束得到，且全为原始任务并有可执行顺序。",
+      "explanation": "若问题指定目标，至少存在一个可执行顺序使最终状态满足目标。",
+      "example": "分解后依次执行所有具体动作。",
+      "tags": [
+        "层级任务网络规划",
+        "可执行解"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1911.05499v1"
+    },
+    {
+      "id": "htnbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "层级任务网络规划",
+      "knowledgePoint": "任务实例化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HDDL 论文中称任务网络为 ground，表示什么？",
+      "answer": "任务参数都已绑定或替换为具体常量。",
+      "explanation": "这是区分带变量描述与具体任务实例的条件。",
+      "example": "把目的地变量绑定为指定仓库。",
+      "tags": [
+        "层级任务网络规划",
+        "任务实例化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1911.05499v1"
+    }
+  ]
+}

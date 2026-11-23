@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "go-native-fuzzing-practice",
+    "title": "Go 官方文档：原生模糊测试",
+    "url": "https://go.dev/doc/security/fuzz/",
+    "type": "官方文档或教材",
+    "note": "依据 Go 原生模糊测试文档自行整理；本地示例使用 Go 1.25.5。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "gofuzz-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Go 原生模糊测试",
+      "knowledgePoint": "测试入口",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Go 原生模糊测试函数通常使用什么命名和参数形式？",
+      "answer": "函数名以 Fuzz 开头，接收 *testing.F 参数，并通过 F.Fuzz 注册目标函数。",
+      "explanation": "目标函数接收 *testing.T 和受支持类型的模糊参数。",
+      "example": "定义 FuzzParser(f *testing.F) 并注册解析目标。",
+      "tags": [
+        "Go 原生模糊测试",
+        "测试入口"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/doc/security/fuzz/"
+    },
+    {
+      "id": "gofuzz-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Go 原生模糊测试",
+      "knowledgePoint": "种子输入",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Go 模糊测试中的 F.Add 用于什么？",
+      "answer": "它向种子语料添加一组具体输入值。",
+      "explanation": "各输入的类型与顺序应匹配模糊目标的参数。",
+      "example": "用 F.Add(\"hello\") 提供字符串种子。",
+      "tags": [
+        "Go 原生模糊测试",
+        "种子输入"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/doc/security/fuzz/"
+    },
+    {
+      "id": "gofuzz-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Go 原生模糊测试",
+      "knowledgePoint": "普通测试与模糊",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Go 中普通 go test 与 go test -fuzz=FuzzName 对模糊测试有什么区别？",
+      "answer": "普通 go test 运行种子语料；加 -fuzz 后还会持续生成和变异输入以寻找新覆盖和故障。",
+      "explanation": "-fuzz 的正则应匹配单个模糊测试。",
+      "example": "先运行种子回归，再限定时间执行模糊测试。",
+      "tags": [
+        "Go 原生模糊测试",
+        "普通测试与模糊"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/doc/security/fuzz/"
+    },
+    {
+      "id": "gofuzz-006",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Go 原生模糊测试",
+      "knowledgePoint": "失败语料与回归",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Go 模糊测试保存到 testdata/fuzz/目标名 的失败输入有何后续用途？",
+      "answer": "该输入成为种子语料，后续普通 go test 也会运行它以复现或回归。",
+      "explanation": "持久化成功与否还取决于写入权限等环境条件。",
+      "example": "修复故障后运行普通测试确认保存的输入不再失败。",
+      "tags": [
+        "Go 原生模糊测试",
+        "失败语料与回归"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/doc/tutorial/fuzz"
+    },
+    {
+      "id": "gofuzz-007",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Go 原生模糊测试",
+      "knowledgePoint": "重放单个输入",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Go 模糊测试输出 go test -run=FuzzName/标识 的命令有什么用途？",
+      "answer": "它重放指定的模糊测试语料项，便于复现该失败。",
+      "explanation": "输出中的标识由对应语料文件决定。",
+      "example": "按测试输出重放一个已保存的失败输入。",
+      "tags": [
+        "Go 原生模糊测试",
+        "重放单个输入"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/doc/tutorial/fuzz"
+    },
+    {
+      "id": "gofuzz-008",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Go 原生模糊测试",
+      "knowledgePoint": "运行时间",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Go 的 go test -fuzztime 选项主要控制什么？",
+      "answer": "它限制模糊测试执行的时间或迭代次数。",
+      "explanation": "该选项不等同于对每个目标输入单独设置超时。",
+      "example": "使用 -fuzztime=10s 进行短时间探索。",
+      "tags": [
+        "Go 原生模糊测试",
+        "运行时间"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/doc/security/fuzz/"
+    },
+    {
+      "id": "gofuzz-009",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Go 原生模糊测试",
+      "knowledgePoint": "无效输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Go 模糊目标遇到不属于被测输入前提的样本时，t.Skip() 表示什么？",
+      "answer": "它跳过该输入的测试，而不是将其报告为故障。",
+      "explanation": "输入限制应符合目标实际契约，避免遗漏本应支持的情况。",
+      "example": "目标只接受合法 UTF-8 时跳过不满足前提的样本。",
+      "tags": [
+        "Go 原生模糊测试",
+        "无效输入"
+      ],
+      "evidence": "source",
+      "reference": "https://go.dev/doc/tutorial/fuzz"
+    }
+  ]
+}

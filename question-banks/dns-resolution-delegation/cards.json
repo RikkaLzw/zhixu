@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "dns-resolution-delegation",
+    "title": "RFC 1034：DNS 分层解析和委派",
+    "url": "https://www.rfc-editor.org/rfc/rfc1034.html",
+    "type": "教材、协议标准与系统手册",
+    "note": "依据逐题引用的教材、标准或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "dnsresolve-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DNS 分层解析基础",
+      "knowledgePoint": "域与区域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 域（domain）和区域（zone）有什么区别？",
+      "answer": "域是域名树中的一个子树；区域是由管理边界划分、由一组权威服务器管理的数据部分。",
+      "explanation": "区域可以把部分子域委派给其他区域管理。",
+      "example": "example.com 的子域可单独成为一个区域。",
+      "tags": [
+        "DNS 分层解析基础",
+        "域与区域"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1034.html#section-4.2"
+    },
+    {
+      "id": "dnsresolve-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DNS 分层解析基础",
+      "knowledgePoint": "区域委派",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 中把子域委派给其他权威服务器通常意味着什么？",
+      "answer": "父区域通过委派信息指出负责子区域的名称服务器，由子区域管理相应数据。",
+      "explanation": "委派允许域名空间分层管理。",
+      "example": "父区域将某个子域交给另一组名称服务器。",
+      "tags": [
+        "DNS 分层解析基础",
+        "区域委派"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1034.html#section-4.2.1"
+    },
+    {
+      "id": "dnsresolve-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DNS 分层解析基础",
+      "knowledgePoint": "解析链路",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "递归解析器没有相关缓存时，解析常见域名可能怎样逐级找到权威服务器？",
+      "answer": "它可从根服务器开始，沿顶级域和下级区域的委派逐步查询，直到取得答案或明确的否定结果。",
+      "explanation": "实际解析可能利用缓存、转发器或本地配置跳过部分步骤。",
+      "example": "解析 www.example.com 可依次跟随根、com 和 example.com 的委派。",
+      "tags": [
+        "DNS 分层解析基础",
+        "解析链路"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1034.html#section-5.3.3"
+    },
+    {
+      "id": "dnsresolve-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DNS 分层解析基础",
+      "knowledgePoint": "递归与迭代",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 递归查询与迭代查询在服务器处理后续查询上有什么区别？",
+      "answer": "递归查询请求服务器代为追寻答案；迭代查询可返回指向其他服务器的转介，由查询方继续。",
+      "explanation": "是否提供递归服务取决于服务器配置和权限。",
+      "example": "递归解析器向权威服务器逐步追查记录。",
+      "tags": [
+        "DNS 分层解析基础",
+        "递归与迭代"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1034.html#section-4.3.1"
+    },
+    {
+      "id": "dnsresolve-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DNS 分层解析基础",
+      "knowledgePoint": "胶水记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DNS 委派中的 glue 地址记录主要用于解决什么问题？",
+      "answer": "当子区域名称服务器的名称位于该子区域内时，父区域提供地址信息可帮助解析器联系它，避免循环依赖。",
+      "explanation": "这些辅助地址不是父区域对该子区域所有数据的权威答案。",
+      "example": "委派 example.com 给 ns1.example.com 时提供其地址。",
+      "tags": [
+        "DNS 分层解析基础",
+        "胶水记录"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1034.html#section-4.2.1"
+    }
+  ]
+}

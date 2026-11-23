@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "threat-indicator-lifecycle",
+    "title": "NIST SP 800-150：威胁指标质量与使用",
+    "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf",
+    "type": "官方文档与研究资料",
+    "note": "按逐题所列资料自行整理；安全场景示例用于说明，不代表原资料中的实际事件。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "ctilife-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁指标使用",
+      "knowledgePoint": "指标具体性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "威胁指标为什么需要足够具体？",
+      "answer": "具体描述有助于接收方识别目标行为，同时减少过宽匹配带来的误报。",
+      "explanation": "过于严格的条件也可能漏掉相关变体，应根据任务权衡。",
+      "example": "仅以常见文件名匹配，可能命中大量正常文件。",
+      "tags": [
+        "指标具体性",
+        "威胁指标使用"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    },
+    {
+      "id": "ctilife-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁指标使用",
+      "knowledgePoint": "指标可操作性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "威胁指标的可操作性强调什么？",
+      "answer": "它应提供足够信息和上下文，使接收方能够制定适当的检测或响应。",
+      "explanation": "可操作性不等同于信息真实或与所有组织相关。",
+      "example": "提供指标类型、观察背景和建议核查条件。",
+      "tags": [
+        "指标可操作性",
+        "威胁指标使用"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    },
+    {
+      "id": "ctilife-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁指标使用",
+      "knowledgePoint": "指标时效与相关性",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "威胁指标的时效性和相关性有什么区别？",
+      "answer": "时效性关注信息到达是否及时；相关性关注信息是否适用于接收方环境和面临的威胁。",
+      "explanation": "及时的信息也可能与本组织无关。",
+      "example": "新发布的某平台攻击指标不一定适用于没有该平台的组织。",
+      "tags": [
+        "指标时效与相关性",
+        "威胁指标使用"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    },
+    {
+      "id": "ctilife-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁指标使用",
+      "knowledgePoint": "指标过期与再利用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "历史恶意 IP 为什么不能在没有时间和上下文核验时永久视为恶意？",
+      "answer": "IP 地址可能被重新分配或由多个主体共享，历史观察不能保证当前使用者仍与原威胁有关。",
+      "explanation": "应结合观察时间、来源和当前行为复核。",
+      "example": "云地址更换租户后沿用旧封禁规则可能误伤。",
+      "tags": [
+        "指标过期与再利用",
+        "威胁指标使用"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    },
+    {
+      "id": "ctilife-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁指标使用",
+      "knowledgePoint": "单一指标与归因",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "发现一个曾与攻击相关的 IP，能否仅凭它确认当前事件属于某个攻击组织？",
+      "answer": "不能；单一指标可能共享、变化或被误用，需要结合行为、时间和其他独立证据。",
+      "explanation": "指标匹配是调查线索，不等同于完成归因。",
+      "example": "代理地址同时出现在多种无关活动中。",
+      "tags": [
+        "单一指标与归因",
+        "威胁指标使用"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    },
+    {
+      "id": "ctilife-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁指标使用",
+      "knowledgePoint": "共享标记与真实性",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "情报带有共享范围标记，是否就能证明其中的指标准确？",
+      "answer": "不能；共享标记说明信息如何传播，指标准确性仍需依据来源和证据判断。",
+      "explanation": "处理要求与内容质量是不同问题。",
+      "example": "允许社区内共享的指标也可能后来被更正。",
+      "tags": [
+        "共享标记与真实性",
+        "威胁指标使用"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-150.pdf"
+    }
+  ]
+}

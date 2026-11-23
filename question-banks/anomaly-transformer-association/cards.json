@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "anomaly-transformer-association",
+    "title": "Anomaly Transformer 原论文 v1：时序关联差异",
+    "url": "https://arxiv.org/abs/2110.02642v1",
+    "type": "协议标准、官方文档与论文",
+    "note": "依据逐题标注的规范、固定版本文档或论文自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "assocanom-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "时序异常关联差异",
+      "knowledgePoint": "方法观察",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Anomaly Transformer 原论文对异常点的时间关联提出了什么观察？",
+      "answer": "论文观察到异常点较难与远处时刻形成强关联，其关联更倾向附近时刻。",
+      "explanation": "这是该方法的建模观察，不是所有异常都必然满足的规律。",
+      "example": "某些孤立异常更依赖相邻点重构。",
+      "tags": [
+        "时序异常关联差异",
+        "方法观察"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2110.02642v1"
+    },
+    {
+      "id": "assocanom-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "时序异常关联差异",
+      "knowledgePoint": "两类关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Anomaly Transformer 的 prior association 与 series association 分别来自什么？",
+      "answer": "前者由可学习的局部高斯先验构造；后者由时序表示的自注意力权重得到。",
+      "explanation": "先验以当前时刻为中心、尺度可学习；两者描述窗口内其他时刻的关联分布。",
+      "example": "比较局部位置先验和数据学习到的关联。",
+      "tags": [
+        "时序异常关联差异",
+        "两类关联"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2110.02642v1"
+    },
+    {
+      "id": "assocanom-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序异常关联差异",
+      "knowledgePoint": "关联差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Anomaly Transformer 如何计算一个时间点的 association discrepancy？",
+      "answer": "用先验关联和序列关联之间的双向 KL 差异，并在多个层上汇总。",
+      "explanation": "论文先把关联权重规范化为分布。",
+      "example": "比较某时间点的两种关联分布。",
+      "tags": [
+        "时序异常关联差异",
+        "关联差异"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2110.02642v1"
+    },
+    {
+      "id": "assocanom-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序异常关联差异",
+      "knowledgePoint": "Minimax两阶段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Anomaly Transformer 的 minimax 学习中，两个阶段分别怎样调整关联？",
+      "answer": "最小化阶段让先验关联逼近序列关联并停止后者的差异梯度；最大化阶段在重构约束下增大差异并停止先验关联的差异梯度。",
+      "explanation": "两阶段分别对另一分支停止梯度，以控制优化方向。",
+      "example": "交替调整局部先验与数据关联。",
+      "tags": [
+        "时序异常关联差异",
+        "Minimax两阶段"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2110.02642v1"
+    },
+    {
+      "id": "assocanom-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序异常关联差异",
+      "knowledgePoint": "异常评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Anomaly Transformer 原论文怎样结合关联差异与重构误差计算异常分数？",
+      "answer": "它对负关联差异做 softmax，再乘以对应时间点的平方 L2 重构误差。",
+      "explanation": "在重构误差相同的条件下，较小差异会获得较大的关联权重。",
+      "example": "对一个窗口中的多个时间点计算分数。",
+      "tags": [
+        "时序异常关联差异",
+        "异常评分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2110.02642v1"
+    },
+    {
+      "id": "assocanom-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "时序异常关联差异",
+      "knowledgePoint": "窗口归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Anomaly Transformer 的关联权重为何不是独立于其他时间点的异常概率？",
+      "answer": "softmax 在同一窗口内对负关联差异归一化，因此每个权重取决于窗口中的其他点。",
+      "explanation": "最终分数还乘以重构误差，不能直接解释为异常概率。",
+      "example": "窗口内其他点变化会影响某点权重。",
+      "tags": [
+        "时序异常关联差异",
+        "窗口归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2110.02642v1"
+    }
+  ]
+}

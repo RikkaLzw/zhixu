@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "ddpm-diffusion-foundations",
+    "title": "DDPM 原论文 v2：扩散模型基础",
+    "url": "https://arxiv.org/pdf/2006.11239v2",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "ddpm-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DDPM 扩散模型",
+      "knowledgePoint": "前向过程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DDPM 的前向扩散过程如何逐步处理训练数据？",
+      "answer": "按照方差日程逐步向数据加入高斯噪声，形成马尔可夫链。",
+      "explanation": "论文实现将前向噪声日程固定为超参数。",
+      "example": "把清晰图像逐渐扰动为接近噪声的状态。",
+      "tags": [
+        "DDPM 扩散模型",
+        "前向过程"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.11239v2"
+    },
+    {
+      "id": "ddpm-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DDPM 扩散模型",
+      "knowledgePoint": "反向生成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DDPM 的反向生成过程从哪里开始，怎样得到样本？",
+      "answer": "从标准高斯噪声开始，通过学习到的反向转移逐步生成数据。",
+      "explanation": "这描述原论文的采样方式，不代表所有扩散模型都完全相同。",
+      "example": "从噪声逐步生成图像。",
+      "tags": [
+        "DDPM 扩散模型",
+        "反向生成"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.11239v2"
+    },
+    {
+      "id": "ddpm-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DDPM 扩散模型",
+      "knowledgePoint": "噪声日程",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DDPM 前向过程中的 βt 主要控制什么？",
+      "answer": "控制各时间步加入噪声的方差规模。",
+      "explanation": "不同日程会改变信号随时间衰减的方式。",
+      "example": "记录每一步噪声水平的配置。",
+      "tags": [
+        "DDPM 扩散模型",
+        "噪声日程"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.11239v2"
+    },
+    {
+      "id": "ddpm-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DDPM 扩散模型",
+      "knowledgePoint": "直接采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DDPM 训练时为何可以直接得到任意时间步的带噪样本 xt？",
+      "answer": "前向过程具有给定原始样本的闭式分布，可用原样本与一次高斯噪声直接采样。",
+      "explanation": "这避免每次训练都顺序模拟全部前向步骤。",
+      "example": "随机选择时间步后直接生成对应噪声输入。",
+      "tags": [
+        "DDPM 扩散模型",
+        "直接采样"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.11239v2"
+    },
+    {
+      "id": "ddpm-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DDPM 扩散模型",
+      "knowledgePoint": "噪声预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DDPM 论文常用的神经网络参数化预测什么？",
+      "answer": "根据带噪样本和时间步预测添加的噪声。",
+      "explanation": "也可采用其他参数化，论文比较过不同选择。",
+      "example": "模型接收 xt 和 t 并输出噪声估计。",
+      "tags": [
+        "DDPM 扩散模型",
+        "噪声预测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.11239v2"
+    },
+    {
+      "id": "ddpm-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DDPM 扩散模型",
+      "knowledgePoint": "简化训练目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DDPM 论文的简化训练目标如何比较网络输出与目标？",
+      "answer": "对随机时间步和噪声，最小化预测噪声与采样噪声之间的平方误差。",
+      "explanation": "具体训练权重和采样策略可能随扩散方法变化。",
+      "example": "对噪声预测误差计算均方损失。",
+      "tags": [
+        "DDPM 扩散模型",
+        "简化训练目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.11239v2"
+    },
+    {
+      "id": "ddpm-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DDPM 扩散模型",
+      "knowledgePoint": "时间条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "DDPM 的去噪网络为什么需要时间步信息？",
+      "answer": "不同时间步的噪声水平不同，网络需要据此调整预测。",
+      "explanation": "时间步通常以可供网络使用的编码形式提供。",
+      "example": "对同一图像在低噪和高噪状态下采用不同去噪条件。",
+      "tags": [
+        "DDPM 扩散模型",
+        "时间条件"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2006.11239v2"
+    }
+  ]
+}

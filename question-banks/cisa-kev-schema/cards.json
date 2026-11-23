@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "cisa-kev-schema",
+    "title": "CISA KEV：漏洞情报目录字段与使用",
+    "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json",
+    "type": "研究论文与技术文档",
+    "note": "逐题依据原论文、固定版本文档或官方 Schema 自行整理；示例为自编。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "kevdata-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "目录版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CISA KEV JSON 的 catalogVersion 字段用于什么？",
+      "answer": "它标识已发布目录的版本。",
+      "explanation": "使用动态情报做实验时应记录所用版本。",
+      "example": "保留下载时的目录版本以便复现。",
+      "tags": [
+        "目录版本",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    },
+    {
+      "id": "kevdata-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "目录发布时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CISA KEV JSON 的 dateReleased 表示什么？",
+      "answer": "它记录目录发布的日期与时间。",
+      "explanation": "这不是每个漏洞首次被利用的时间。",
+      "example": "记录该快照的发布时间。",
+      "tags": [
+        "目录发布时间",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    },
+    {
+      "id": "kevdata-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "收录时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CISA KEV 中的 dateAdded 表示什么？",
+      "answer": "它记录漏洞加入该目录的日期。",
+      "explanation": "目录加入日期不一定等于漏洞首次被利用的日期。",
+      "example": "按 dateAdded 追踪新加入的条目。",
+      "tags": [
+        "收录时间",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    },
+    {
+      "id": "kevdata-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "处置到期日",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CISA KEV 中的 dueDate 字段描述什么？",
+      "answer": "它描述记录所要求行动的到期日期。",
+      "explanation": "适用范围需结合相应指令及组织要求解释，不能默认是所有组织统一的法定期限。",
+      "example": "结合 requiredAction 与适用指令处理条目。",
+      "tags": [
+        "处置到期日",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    },
+    {
+      "id": "kevdata-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "修复行动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CISA KEV 记录的 requiredAction 字段用于什么？",
+      "answer": "它描述针对该漏洞所要求的处置行动。",
+      "explanation": "具体步骤还应结合厂商说明和环境情况。",
+      "example": "核对条目的修复或缓解要求。",
+      "tags": [
+        "修复行动",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    },
+    {
+      "id": "kevdata-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "勒索软件使用状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CISA KEV 的 knownRansomwareCampaignUse 为 Known 或 Unknown 分别表示什么？",
+      "answer": "Known 表示 CISA 确认曾被用于勒索软件活动；Unknown 表示尚未获得这种确认。",
+      "explanation": "Unknown 不等于已证明从未被用于勒索软件。",
+      "example": "不要把 Unknown 转换成已确认的否。",
+      "tags": [
+        "勒索软件使用状态",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    },
+    {
+      "id": "kevdata-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "可选字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CISA KEV JSON 中缺少非必填的勒索软件使用字段时，能否直接当成 Known 或 Unknown？",
+      "answer": "不能；字段缺失与明确给出的值是不同状态。",
+      "explanation": "解析时应保留缺失状态，避免臆造情报。",
+      "example": "旧快照缺少某字段时记录为缺失。",
+      "tags": [
+        "可选字段",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    },
+    {
+      "id": "kevdata-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "CVE数字长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CISA KEV JSON Schema 中，CVE 编号末尾的数字部分是否固定为四位？",
+      "answer": "不是；该模式允许不少于四位的数字。",
+      "explanation": "不能用固定四位数字的解析规则截断较长编号。",
+      "example": "CVE 编号的序号可能超过四位。",
+      "tags": [
+        "CVE数字长度",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    },
+    {
+      "id": "kevdata-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "弱点类别字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CISA KEV Schema 的 cwes 字段允许记录什么？",
+      "answer": "它是与漏洞关联的 CWE 编号数组。",
+      "explanation": "CWE 描述弱点类型，不等于具体的 CVE 漏洞编号。",
+      "example": "一个漏洞记录可以列出一个或多个相关 CWE。",
+      "tags": [
+        "弱点类别字段",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    },
+    {
+      "id": "kevdata-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "CISA KEV数据",
+      "knowledgePoint": "法证研判字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "截至 2026 年 11 月的 CISA KEV Schema 中，forensicTriage 的 Yes 表示什么？",
+      "answer": "表示该漏洞按 BOD 26-04 要求进行法证研判。",
+      "explanation": "应结合适用指令理解该字段，字段可以不出现在旧记录中。",
+      "example": "接收目录快照时检查是否包含该字段。",
+      "tags": [
+        "法证研判字段",
+        "CISA KEV数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities_schema.json"
+    }
+  ]
+}

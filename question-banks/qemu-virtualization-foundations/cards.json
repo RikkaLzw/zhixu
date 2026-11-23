@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "qemu-virtualization-foundations",
+    "title": "QEMU 官方文档：系统虚拟化基础",
+    "url": "https://www.qemu.org/docs/master/system/introduction.html",
+    "type": "官方文档与手册",
+    "note": "依据逐题链接自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "vmcore-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与 QEMU",
+      "knowledgePoint": "系统仿真",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "QEMU 系统仿真提供什么以运行客户操作系统？",
+      "answer": "提供包括 CPU、内存和设备在内的虚拟机器模型。",
+      "explanation": "具体可用机器类型和设备取决于所选架构。",
+      "example": "可用 qemu-system-x86_64 启动 x86 客户系统。",
+      "tags": [
+        "虚拟机与 QEMU",
+        "系统仿真"
+      ],
+      "evidence": "source",
+      "reference": "https://www.qemu.org/docs/master/system/introduction.html"
+    },
+    {
+      "id": "vmcore-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与 QEMU",
+      "knowledgePoint": "TCG 与加速器",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "QEMU 的 TCG 和 KVM 在运行客户 CPU 的方式上有什么区别？",
+      "answer": "TCG 使用动态翻译进行软件仿真；KVM 使用受支持主机的虚拟化加速。",
+      "explanation": "跨架构系统仿真可使用 TCG，但运行成本和功能取决于目标。",
+      "example": "不能因为安装了 QEMU 就认定当前虚拟机使用 KVM。",
+      "tags": [
+        "虚拟机与 QEMU",
+        "TCG 与加速器"
+      ],
+      "evidence": "source",
+      "reference": "https://www.qemu.org/docs/master/system/introduction.html"
+    },
+    {
+      "id": "vmcore-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与 QEMU",
+      "knowledgePoint": "虚拟设备",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "QEMU 文档中的 VirtIO 设备主要面向什么需求？",
+      "answer": "为虚拟化环境提供经过优化的设备接口。",
+      "explanation": "客户系统通常需要相应驱动才能使用这些设备。",
+      "example": "虚拟机可使用 VirtIO 网络或存储设备。",
+      "tags": [
+        "虚拟机与 QEMU",
+        "虚拟设备"
+      ],
+      "evidence": "source",
+      "reference": "https://www.qemu.org/docs/master/system/introduction.html"
+    },
+    {
+      "id": "vmcore-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与 QEMU",
+      "knowledgePoint": "虚拟机管理接口",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "QEMU 的 QMP 是什么用途的接口？",
+      "answer": "提供机器可用、带版本的接口，用于管理和控制虚拟机。",
+      "explanation": "上层管理工具可以通过该接口与 QEMU 交互。",
+      "example": "管理程序可使用 QMP 查询或控制虚拟机状态。",
+      "tags": [
+        "虚拟机与 QEMU",
+        "虚拟机管理接口"
+      ],
+      "evidence": "source",
+      "reference": "https://www.qemu.org/docs/master/system/introduction.html"
+    }
+  ]
+}

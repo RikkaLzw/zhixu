@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "sarif-static-analysis-results",
+    "title": "OASIS SARIF 2.1.0：静态分析结果交换",
+    "url": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html",
+    "type": "论文、协议规范与开源实现",
+    "note": "依据逐题引用的论文、规范或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "sarif-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "SARIF 静态分析结果",
+      "knowledgePoint": "报告结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SARIF 2.1.0 日志的 runs 数组通常组织什么？",
+      "answer": "它组织一个或多个分析运行的信息，每个 run 可包含工具信息和分析结果。",
+      "explanation": "规范也允许特定情形下 runs 为空数组或 null。",
+      "example": "同一报告可包含不同工具运行的结果。",
+      "tags": [
+        "SARIF 静态分析结果",
+        "报告结构"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html"
+    },
+    {
+      "id": "sarif-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "SARIF 静态分析结果",
+      "knowledgePoint": "结果与规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SARIF result 的 ruleId 与单条发现是什么关系？",
+      "answer": "ruleId 标识产生结果的规则；同一规则可以产生多条不同的结果。",
+      "explanation": "不能只用 ruleId 唯一区分所有告警。",
+      "example": "一条 SQL 注入规则可能在多个位置报告结果。",
+      "tags": [
+        "SARIF 静态分析结果",
+        "结果与规则"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html"
+    },
+    {
+      "id": "sarif-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "SARIF 静态分析结果",
+      "knowledgePoint": "结果位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SARIF 的 physicalLocation 常用于描述什么？",
+      "answer": "它描述结果在物理工件中的位置，例如文件及其区域。",
+      "explanation": "位置是分析线索，是否为真实漏洞仍需结合代码判断。",
+      "example": "指出源文件中的某个行列范围。",
+      "tags": [
+        "SARIF 静态分析结果",
+        "结果位置"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html"
+    },
+    {
+      "id": "sarif-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "SARIF 静态分析结果",
+      "knowledgePoint": "代码流",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SARIF result 的 codeFlows 可用于提供什么信息？",
+      "answer": "它可记录说明代码中潜在问题的执行路径细节。",
+      "explanation": "路径由分析工具报告，不能单独证明该路径在实际环境一定可触发。",
+      "example": "展示污点从输入传播到敏感调用的路径。",
+      "tags": [
+        "SARIF 静态分析结果",
+        "代码流"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html"
+    },
+    {
+      "id": "sarif-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "SARIF 静态分析结果",
+      "knowledgePoint": "部分指纹",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SARIF 的 partialFingerprints 与完整 fingerprints 有什么区别？",
+      "answer": "partialFingerprints 提供可用于计算稳定结果身份的组成信息；fingerprints 提供结果的稳定标识。",
+      "explanation": "完整指纹用于关联跨运行的逻辑相同结果；管理系统可组合多个部分信息计算它。",
+      "example": "分别保存路径和代码上下文的指纹片段。",
+      "tags": [
+        "SARIF 静态分析结果",
+        "部分指纹"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html"
+    },
+    {
+      "id": "sarif-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "SARIF 静态分析结果",
+      "knowledgePoint": "新增与消失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SARIF baselineState 的 new 与 absent 分别表示什么？",
+      "answer": "new 表示当前运行发现、基线运行未发现；absent 表示基线发现、当前运行未发现。",
+      "explanation": "发现消失不一定证明漏洞已修复，扫描范围或规则配置变化也可能导致它未被报告。",
+      "example": "用基线比较识别新出现或不再出现的告警。",
+      "tags": [
+        "SARIF 静态分析结果",
+        "新增与消失"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html"
+    },
+    {
+      "id": "sarif-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "SARIF 静态分析结果",
+      "knowledgePoint": "基线覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SARIF 2.1.0 中一个 run 的某个 result 设置了 baselineState，其他 result 有什么要求？",
+      "answer": "该 run 的每个 result 都必须提供 baselineState。",
+      "explanation": "这样消费者可以把它理解为对该运行结果的完整基线比较。",
+      "example": "不能只为新告警设置状态而让其他结果缺省。",
+      "tags": [
+        "SARIF 静态分析结果",
+        "基线覆盖"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/os/sarif-v2.1.0-os.html"
+    }
+  ]
+}

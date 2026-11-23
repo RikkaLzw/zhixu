@@ -1,0 +1,316 @@
+{
+  "source": {
+    "id": "linux-ipc-fundamentals",
+    "title": "Linux 手册：进程间通信与共享内存",
+    "url": "https://man7.org/linux/man-pages/man7/pipe.7.html",
+    "type": "教材与官方技术文档",
+    "note": "依据逐题引用的教材或官方文档自行整理；示例自编，适用环境与前提见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "ipcbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "匿名管道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 pipe 调用成功后提供什么通信端点？",
+      "answer": "它返回两个文件描述符，分别用于读取和写入同一个单向管道。",
+      "explanation": "父子进程可通过继承描述符使用管道。",
+      "example": "父进程向管道写入，子进程从另一端读取。",
+      "tags": [
+        "Linux 进程间通信",
+        "匿名管道"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    },
+    {
+      "id": "ipcbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "命名管道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 FIFO 与匿名管道在创建和打开方式上有什么区别？",
+      "answer": "FIFO 在文件系统中有名称，可由有权限的进程打开；匿名管道通过 pipe 创建并使用返回的描述符。",
+      "explanation": "两者建立后的 I/O 语义相同。",
+      "example": "通过 mkfifo 创建路径，再由进程打开读端和写端。",
+      "tags": [
+        "Linux 进程间通信",
+        "命名管道"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    },
+    {
+      "id": "ipcbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "字节流",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 普通管道是否自动保留写入操作的消息边界？",
+      "answer": "不保留；管道提供字节流，应用若需要消息边界应自行设计分帧。",
+      "explanation": "一次读取不保证对应一次写入。",
+      "example": "可在消息前写入长度，再按长度读取。",
+      "tags": [
+        "Linux 进程间通信",
+        "字节流"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    },
+    {
+      "id": "ipcbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "读取结束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对非零长度的读取请求，Linux 管道何时会让读取者看到文件结束（EOF）？",
+      "answer": "缓冲区数据读完且所有写端描述符关闭后，读取返回 0。",
+      "explanation": "任一写端副本仍打开都可能使读取者等不到 EOF；父子进程应关闭不使用的端点副本。",
+      "example": "父子进程都关闭不使用的写端。",
+      "tags": [
+        "Linux 进程间通信",
+        "读取结束"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    },
+    {
+      "id": "ipcbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "空管道阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 普通阻塞管道中，存在写端但当前没有数据时，非零长度的 read 通常怎样？",
+      "answer": "读取会阻塞，直到有数据或写端全部关闭等状态变化。",
+      "explanation": "非阻塞模式具有不同的返回行为。",
+      "example": "读进程等待写进程发送数据。",
+      "tags": [
+        "Linux 进程间通信",
+        "空管道阻塞"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    },
+    {
+      "id": "ipcbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "满管道阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 阻塞管道的缓冲区已满时继续写入会怎样？",
+      "answer": "写入会阻塞，等待读端读走数据腾出空间。",
+      "explanation": "应用不应依赖某个固定的管道容量。",
+      "example": "消费者停滞可能让生产者停在 write。",
+      "tags": [
+        "Linux 进程间通信",
+        "满管道阻塞"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    },
+    {
+      "id": "ipcbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "非阻塞读取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 非阻塞管道为空时，非零长度的 read 在有写端和没有任何写端时分别怎样？",
+      "answer": "仍有写端时返回 EAGAIN；没有写端时返回 0，表示 EOF。",
+      "explanation": "读取前提是当前缓冲区没有数据。",
+      "example": "非阻塞读取者应区分暂时无数据与通信结束。",
+      "tags": [
+        "Linux 进程间通信",
+        "非阻塞读取"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    },
+    {
+      "id": "ipcbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "原子写入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 管道中不超过 PIPE_BUF 的单次写入，对多个写者有什么原子性保证？",
+      "answer": "成功写入的这些字节不会与其他写者的数据交错。",
+      "explanation": "这不保证读者一次 read 就取得整个写入，也不规定应用消息格式。",
+      "example": "两个进程分别写入短记录，各记录字节不会互相交错。",
+      "tags": [
+        "Linux 进程间通信",
+        "原子写入"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pipe.7.html"
+    },
+    {
+      "id": "ipcbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "非阻塞 FIFO 打开",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 非阻塞地以只写方式打开 FIFO 且尚无读者时会怎样？",
+      "answer": "open 失败并报告 ENXIO。",
+      "explanation": "这是 Linux fifo(7) 描述的特定打开条件。",
+      "example": "生产者应处理读者尚未启动的情况。",
+      "tags": [
+        "Linux 进程间通信",
+        "非阻塞 FIFO 打开"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/fifo.7.html"
+    },
+    {
+      "id": "ipcbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "本地套接字",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 AF_UNIX 套接字主要用于什么？",
+      "answer": "用于同一台机器上进程之间的通信，可使用路径名、匿名或 Linux 抽象地址。",
+      "explanation": "它支持流式和数据报等套接字类型。",
+      "example": "服务通过本地套接字与客户端通信。",
+      "tags": [
+        "Linux 进程间通信",
+        "本地套接字"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/unix.7.html"
+    },
+    {
+      "id": "ipcbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "套接字对",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "socketpair 成功时通常创建什么？",
+      "answer": "创建一对相互连接的未命名套接字，并返回它们的描述符。",
+      "explanation": "可用于本地进程间的双向通信。",
+      "example": "父子进程各持一端交换数据。",
+      "tags": [
+        "Linux 进程间通信",
+        "套接字对"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/socketpair.2.html"
+    },
+    {
+      "id": "ipcbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "描述符传递",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux UNIX 域套接字如何向另一个进程传递打开的文件描述符？",
+      "answer": "可通过辅助数据 SCM_RIGHTS 发送，使接收方获得指向同一打开文件描述的描述符。",
+      "explanation": "接收方得到的描述符数字不必与发送方相同。",
+      "example": "服务进程向工作进程传递已打开的套接字。",
+      "tags": [
+        "Linux 进程间通信",
+        "描述符传递"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/unix.7.html"
+    },
+    {
+      "id": "ipcbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "共享内存建立",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "POSIX 共享内存常用哪几个操作建立可访问的共享区域？",
+      "answer": "用 shm_open 创建或打开对象，设置所需大小，再用 mmap 映射到进程地址空间。",
+      "explanation": "新建对象初始大小为零；常用 ftruncate 设置大小。",
+      "example": "两个进程映射同名共享内存对象。",
+      "tags": [
+        "Linux 进程间通信",
+        "共享内存建立"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/shm_overview.7.html"
+    },
+    {
+      "id": "ipcbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "共享与私有映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux mmap 的 MAP_SHARED 和 MAP_PRIVATE 对映射中的修改有什么基本区别？",
+      "answer": "MAP_SHARED 的修改对映射同一存储区域的其他进程可见；MAP_PRIVATE 的写入为私有的写时复制。",
+      "explanation": "文件持久化还受同步方式和文件系统等因素影响。",
+      "example": "共享映射可用于进程交换数据。",
+      "tags": [
+        "Linux 进程间通信",
+        "共享与私有映射"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man2/mmap.2.html"
+    },
+    {
+      "id": "ipcbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "共享内存同步",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多个进程并发修改共享内存时，为什么仍可能需要同步？",
+      "answer": "共享存储本身不保证复合读写操作互斥或顺序正确；可使用适当的进程间同步机制。",
+      "explanation": "POSIX 信号量可用于同步对共享内存的访问。",
+      "example": "多个写者用进程共享信号量保护计数器。",
+      "tags": [
+        "Linux 进程间通信",
+        "共享内存同步"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/sem_overview.7.html"
+    },
+    {
+      "id": "ipcbase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程间通信",
+      "knowledgePoint": "共享内存解除名称",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "POSIX shm_unlink 后，已经打开或映射该对象的进程会立刻失去映射吗？",
+      "answer": "不会；名称被移除，但对象的销毁要等所有引用和映射解除。",
+      "explanation": "后续以该名称打开旧对象将受名称移除影响。",
+      "example": "已映射的进程可继续使用该区域直至解除映射。",
+      "tags": [
+        "Linux 进程间通信",
+        "共享内存解除名称"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/shm_open.3.html"
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "gdb-debugging-foundations",
+    "title": "GNU GDB 手册：程序调试基础",
+    "url": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Set-Breaks.html",
+    "type": "官方文档",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "gdbbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "调试信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用 GCC 构建 C 程序时，-g 对 GDB 源码级调试有什么作用？",
+      "answer": "生成调试信息，使调试器能够关联源代码、变量等信息。",
+      "explanation": "编译优化仍可能改变代码和变量的可见性。",
+      "example": "gcc -g 程序.c -o 程序。",
+      "tags": [
+        "GDB 调试基础",
+        "调试信息"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Compilation.html"
+    },
+    {
+      "id": "gdbbase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "优化与变量",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "程序使用 -g 编译后，GDB 是否一定能查看优化后代码中的每个局部变量？",
+      "answer": "不一定；编译优化可能消除变量或改变其位置。",
+      "explanation": "调试时常用较低优化级别，并注意实际运行代码可能不同。",
+      "example": "GDB 可能显示变量为 optimized out。",
+      "tags": [
+        "GDB 调试基础",
+        "优化与变量"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Optimized-Code.html"
+    },
+    {
+      "id": "gdbbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "函数断点",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GDB 中 break add 常用于什么？",
+      "answer": "在 add 函数入口设置断点，使程序执行到该位置时暂停。",
+      "explanation": "断点命中时可以检查当前状态。",
+      "example": "break main 可在进入 main 时暂停。",
+      "tags": [
+        "GDB 调试基础",
+        "函数断点"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Set-Breaks.html"
+    },
+    {
+      "id": "gdbbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "条件断点",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GDB 的条件断点有什么作用？",
+      "answer": "只在断点位置处满足指定条件时使程序暂停。",
+      "explanation": "条件通常在程序到达断点时求值。",
+      "example": "break demo.c:10 if count > 3。",
+      "tags": [
+        "GDB 调试基础",
+        "条件断点"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Set-Breaks.html"
+    },
+    {
+      "id": "gdbbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "继续执行",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GDB 程序暂停后，continue 命令做什么？",
+      "answer": "恢复执行，直到再次遇到断点、信号或程序结束等事件。",
+      "explanation": "continue 不等于重启程序。",
+      "example": "检查变量后继续运行。",
+      "tags": [
+        "GDB 调试基础",
+        "继续执行"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Continuing-and-Stepping.html"
+    },
+    {
+      "id": "gdbbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "单步跨入跨过",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "GDB 的 step 与 next 遇到函数调用时通常有什么区别？",
+      "answer": "step 可进入有调试信息的被调用函数；next 通常跨过调用，在当前函数的下一源码行暂停。",
+      "explanation": "断点、信号或缺少调试信息等会影响实际停下的位置。",
+      "example": "定位调用内部问题用 step，先观察调用结果可用 next。",
+      "tags": [
+        "GDB 调试基础",
+        "单步跨入跨过"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Continuing-and-Stepping.html"
+    },
+    {
+      "id": "gdbbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "当前函数返回",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GDB 的 finish 命令通常执行到哪里？",
+      "answer": "继续运行到当前函数返回，并在调用者处暂停。",
+      "explanation": "正常返回且调试信息允许时还可能显示返回值。",
+      "example": "进入函数后可用 finish 回到调用处。",
+      "tags": [
+        "GDB 调试基础",
+        "当前函数返回"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Continuing-and-Stepping.html"
+    },
+    {
+      "id": "gdbbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "调用栈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GDB 的 backtrace（bt）常用于查看什么？",
+      "answer": "查看当前线程的调用栈及各层栈帧。",
+      "explanation": "栈信息有助于追溯执行到当前位置的调用路径。",
+      "example": "异常停下后查看 main 到当前函数的调用链。",
+      "tags": [
+        "GDB 调试基础",
+        "调用栈"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Backtrace.html"
+    },
+    {
+      "id": "gdbbase-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "检查表达式",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GDB 的 print 命令通常用于什么？",
+      "answer": "求值并显示当前上下文中的表达式。",
+      "explanation": "可用它检查局部变量或简单表达式的值。",
+      "example": "print count 查看当前帧中的 count。",
+      "tags": [
+        "GDB 调试基础",
+        "检查表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Expressions.html"
+    },
+    {
+      "id": "gdbbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "观察点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GDB 的 watch 表达式与普通代码断点的触发条件有何不同？",
+      "answer": "watch 通常在表达式值发生变化时暂停；代码断点在执行到指定位置时暂停。",
+      "explanation": "硬件观察点数量和可观察范围取决于平台。",
+      "example": "watch counter 可观察 counter 的值变化。",
+      "tags": [
+        "GDB 调试基础",
+        "观察点"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Set-Watchpoints.html"
+    },
+    {
+      "id": "gdbbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GDB 调试基础",
+      "knowledgePoint": "停用断点",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GDB 中 disable 断点编号 与 delete 断点编号 有什么区别？",
+      "answer": "disable 暂时停用并保留断点；delete 删除该断点。",
+      "explanation": "停用的断点可重新启用。",
+      "example": "disable 1 后可通过 enable 1 恢复。",
+      "tags": [
+        "GDB 调试基础",
+        "停用断点"
+      ],
+      "evidence": "source",
+      "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Disabling.html"
+    }
+  ]
+}

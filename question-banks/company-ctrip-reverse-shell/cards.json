@@ -1,0 +1,78 @@
+{
+  "source": {
+    "id": "company-ctrip-reverse-shell",
+    "title": "携程公开面经：主机反向连接",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x39-%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-%E5%9F%BA%E7%A1%80%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+    "type": "公开面经合集",
+    "note": "公司、岗位和经历为分享者自述；标注主题启发的卡是延伸练习，答案另由技术文档核验。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "ctripshell-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机行为检测",
+      "knowledgePoint": "反向 Shell 连接方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "反向 Shell 与目标主机等待外部连接的方式，在连接方向上有什么区别？",
+      "answer": "反向 Shell 由目标主机向远端发起连接，再通过该连接提供命令交互；等待外部连接的方式则由远端连接目标主机。",
+      "explanation": "此处描述连接发起方向，具体实现和使用的网络协议可能不同。",
+      "example": "受控主机主动连到远端，之后接收交互命令。",
+      "tags": [
+        "反向 Shell 连接方向",
+        "主机检测",
+        "公开面经",
+        "携程"
+      ],
+      "evidence": "application",
+      "referenceId": "company-ctrip",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x39-%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-%E5%9F%BA%E7%A1%80%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "携程基础安全工程师公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "elastic-reverse-shell-interview",
+          "title": "Elastic：Potential Reverse Shell",
+          "url": "https://www.elastic.co/guide/en/security/current/potential-reverse-shell.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "ctripshell-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "主机行为检测",
+      "knowledgePoint": "反向 Shell 行为关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "排查 Linux 反向 Shell 时，为什么要关联网络事件和进程树？",
+      "answer": "网络连接与随后出现的命令解释器之间的进程关系，可为异常远程交互提供线索。",
+      "explanation": "这只是可检测的一类模式，合法运维也可能触发，需要结合用户、命令及目标地址核查。",
+      "example": "核查网络事件后启动的交互式 shell。",
+      "tags": [
+        "反向 Shell 行为关联",
+        "主机检测",
+        "公开面经",
+        "携程"
+      ],
+      "evidence": "application",
+      "referenceId": "company-ctrip",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x39-%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-%E5%9F%BA%E7%A1%80%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "携程基础安全工程师公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "elastic-reverse-shell-interview",
+          "title": "Elastic：Potential Reverse Shell",
+          "url": "https://www.elastic.co/guide/en/security/current/potential-reverse-shell.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

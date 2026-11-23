@@ -36,6 +36,7 @@
     "test:ui": "playwright test",
     "check:banks": "tsx tools/check-banks.ts",
     "export:banks": "tsx tools/export-banks.ts",
+    "report:coverage": "tsx tools/report-coverage.ts",
     "icons": "node tools/build-icons.mjs"
   },
   "private": true

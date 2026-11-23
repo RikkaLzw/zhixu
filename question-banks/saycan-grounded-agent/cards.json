@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "saycan-grounded-agent",
+    "title": "SayCan 原论文 v2：语言规划与技能可行性",
+    "url": "https://arxiv.org/pdf/2204.01691v2",
+    "type": "教材、官方文档与原论文",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "saycan-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SayCan 具身智能体",
+      "knowledgePoint": "技能集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SayCan 原论文中的候选技能由哪些基本部分描述？",
+      "answer": "每项技能有语言描述、可执行策略以及用于估计可行性的价值或 affordance 函数。",
+      "explanation": "高层选择发生在预先给定的技能集合上。",
+      "example": "“拿起杯子”对应描述和机器人控制技能。",
+      "tags": [
+        "SayCan 具身智能体",
+        "技能集合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2204.01691v2"
+    },
+    {
+      "id": "saycan-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SayCan 具身智能体",
+      "knowledgePoint": "语言相关性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SayCan 中语言模型对候选技能的分数主要反映什么？",
+      "answer": "反映技能的语言描述对当前高层指令及已选步骤的相关程度。",
+      "explanation": "语言模型本身未必知道当前实体环境中该技能能否执行。",
+      "example": "完成清理任务时，“拿起海绵”可能获得较高语言分数。",
+      "tags": [
+        "SayCan 具身智能体",
+        "语言相关性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2204.01691v2"
+    },
+    {
+      "id": "saycan-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SayCan 具身智能体",
+      "knowledgePoint": "可行性估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SayCan 的 affordance 函数主要估计什么？",
+      "answer": "估计当前状态下执行某项技能成功的可能性。",
+      "explanation": "论文用技能的价值函数提供与环境相关的依据。",
+      "example": "场景中没有可抓取的海绵时，该技能可行性可能低。",
+      "tags": [
+        "SayCan 具身智能体",
+        "可行性估计"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2204.01691v2"
+    },
+    {
+      "id": "saycan-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SayCan 具身智能体",
+      "knowledgePoint": "融合评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SayCan 原论文如何组合候选技能的语言分数和可行性分数？",
+      "answer": "将两者相乘，并选择组合分数最高的候选技能。",
+      "explanation": "乘积分数的解释依赖论文提出的建模假设和估计质量。",
+      "example": "相关但当前不可行的技能会被较低可行性分数压低。",
+      "tags": [
+        "SayCan 具身智能体",
+        "融合评分"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2204.01691v2"
+    },
+    {
+      "id": "saycan-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SayCan 具身智能体",
+      "knowledgePoint": "逐步执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SayCan 执行选中的技能后，如何生成下一步？",
+      "answer": "更新环境状态，并将已选技能加入语言上下文，再对候选技能重新评分。",
+      "explanation": "该过程持续到选中终止项等停止条件。",
+      "example": "拿起物品后根据新状态选择后续操作。",
+      "tags": [
+        "SayCan 具身智能体",
+        "逐步执行"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2204.01691v2"
+    },
+    {
+      "id": "saycan-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SayCan 具身智能体",
+      "knowledgePoint": "候选边界",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "SayCan 的语言模型在高层选择时是否直接从任意机器人电机指令中选动作？",
+      "answer": "不是；它对预定义技能的语言描述评分，由所选技能策略执行底层动作。",
+      "explanation": "可选能力受当前技能集合约束。",
+      "example": "机器人没有某技能时，语言模型不能仅靠文字使其具备该能力。",
+      "tags": [
+        "SayCan 具身智能体",
+        "候选边界"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2204.01691v2"
+    },
+    {
+      "id": "saycan-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SayCan 具身智能体",
+      "knowledgePoint": "估计误差",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "SayCan 选择了最高组合分数的技能，能否保证该技能实际成功？",
+      "answer": "不能；语言相关性和可行性都是估计，技能执行也可能失败。",
+      "explanation": "需要观察结果并评估模型和技能的适用条件。",
+      "example": "抓取价值高的物体仍可能在执行中滑落。",
+      "tags": [
+        "SayCan 具身智能体",
+        "估计误差"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2204.01691v2"
+    }
+  ]
+}

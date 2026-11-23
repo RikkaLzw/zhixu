@@ -1,0 +1,349 @@
+{
+  "source": {
+    "id": "algorithm-complexity-foundations",
+    "title": "Open Data Structures：渐近记号与复杂度",
+    "url": "https://opendatastructures.org/ods-java/1_3_Mathematical_Background.html",
+    "type": "教材、协议标准与系统手册",
+    "note": "依据逐题引用的教材、标准或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "complexity-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "Theta记号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "时间复杂度 Θ(g(n)) 表示什么？",
+      "answer": "当规模足够大时，运行时间同时有 g(n) 常数倍的渐近上界和下界。",
+      "explanation": "Θ 给出与 g(n) 同量级的紧界。",
+      "example": "3n+5 属于 Θ(n)。",
+      "tags": [
+        "算法复杂度基础",
+        "Theta记号"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "Omega记号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "渐近记号 Ω(g(n)) 描述什么？",
+      "answer": "它描述规模足够大时，函数增长具有 g(n) 常数倍的下界。",
+      "explanation": "下界本身并不规定算法在每个输入上的精确耗时。",
+      "example": "需要读取 n 个元素的扫描至少需要 Ω(n) 次读取。",
+      "tags": [
+        "算法复杂度基础",
+        "Omega记号"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "最坏与期望",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分析算法时，最坏情况时间与期望时间有什么区别？",
+      "answer": "最坏情况给出考虑范围内最慢情况的界；期望时间是针对明确随机性或输入分布的平均值。",
+      "explanation": "期望界不保证每次执行都不超过该量级。",
+      "example": "随机化算法偶尔可能运行得比期望更久。",
+      "tags": [
+        "算法复杂度基础",
+        "最坏与期望"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-java/1_5_Correctness_Time_Comple.html"
+    },
+    {
+      "id": "complexity-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "摊还时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "摊还时间复杂度与“每一次操作都有该最坏时间上界”有什么区别？",
+      "answer": "摊还是把一串操作的总成本分摊到各次操作；个别操作仍可能比摊还成本更高。",
+      "explanation": "摊还分析不必依赖输入概率分布。",
+      "example": "偶尔触发扩容的连续追加操作可按整个序列分析。",
+      "tags": [
+        "算法复杂度基础",
+        "摊还时间"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-java/1_5_Correctness_Time_Comple.html"
+    },
+    {
+      "id": "complexity-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "多输入规模",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一个算法先扫描长度为 n 的数组，再扫描长度为 m 的数组，通常如何表示时间复杂度？",
+      "answer": "在每个元素处理成本为常数时，时间复杂度为 O(n+m)。",
+      "explanation": "两个输入规模独立时，不应默认它们相等。",
+      "example": "分别读取两个不同长度的列表。",
+      "tags": [
+        "算法复杂度基础",
+        "多输入规模"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-java/1_3_Mathematical_Background.html"
+    },
+    {
+      "id": "complexity-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "嵌套循环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "外层循环 n 次、内层每次都循环 n 次且循环体为常数成本时，运行时间是什么量级？",
+      "answer": "循环体共执行 n² 次，整体时间为 Θ(n²)。",
+      "explanation": "内层次数随外层变化时应另行求和。",
+      "example": "逐一比较两个长度均为 n 的列表中的所有元素对。",
+      "tags": [
+        "算法复杂度基础",
+        "嵌套循环"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "辅助空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "空间复杂度分析中的辅助空间通常指什么？",
+      "answer": "它指算法除输入本身外额外使用的空间，是否计入输出需说明口径。",
+      "explanation": "递归调用栈和临时数组通常也要计入。",
+      "example": "原地修改数组与复制数组所需的额外空间不同。",
+      "tags": [
+        "算法复杂度基础",
+        "辅助空间"
+      ],
+      "evidence": "source",
+      "reference": "https://opendatastructures.org/ods-java/1_5_Correctness_Time_Comple.html",
+      "supportingReferences": [
+        {
+          "id": "auxiliary-space-ref",
+          "title": "Space complexity：Auxiliary space",
+          "url": "https://en.wikipedia.org/wiki/Space_complexity#Auxiliary_space_complexity",
+          "type": "公开百科",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "complexity-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "大O上界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "运行时间为 O(g(n)) 是否表示它的紧确复杂度一定是 Θ(g(n))？",
+      "answer": "不一定；O(g(n)) 只给出渐近上界，函数可能增长得更慢。",
+      "explanation": "Θ(g(n)) 还要求渐近下界为 g(n) 的常数倍。",
+      "example": "线性算法也满足 O(n²)，但通常应报告更紧的 Θ(n)。",
+      "tags": [
+        "算法复杂度基础",
+        "大O上界"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "主导增长项",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "表达式 5n³ + 10n² + 7n + 2 的渐近紧界由什么决定？",
+      "answer": "n³ 项主导，整体为 Θ(n³)；较低次项和固定系数不改变渐近阶。",
+      "explanation": "这里假设 n 增长，表达式各项的系数固定。",
+      "example": "5n³ + 10n² + 7n + 2 属于 Θ(n³)。",
+      "tags": [
+        "算法复杂度基础",
+        "主导增长项"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "对数底数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "复杂度中的 log₂(n) 与 log₁₀(n) 在渐近分析中属于不同阶吗？",
+      "answer": "不属于；任意固定且大于 1 的底数只相差常数倍，因此都是 Θ(log n)。",
+      "explanation": "换底公式给出 logₐ(n) = log_b(n) / log_b(a)。",
+      "example": "二分查找的 Θ(log₂ n) 也可写为 Θ(log n)。",
+      "tags": [
+        "算法复杂度基础",
+        "对数底数"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "指数递增循环",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "循环变量从 1 开始，每轮乘以 2，直到达到或超过 n，循环体执行次数是什么量级？",
+      "answer": "Θ(log n)，因为经过 k 轮后变量约为 2ᵏ，达到 n 需要 k 为 Θ(log n)。",
+      "explanation": "假设循环体每轮工作为常数时间。",
+      "example": "for (i = 1; i < n; i *= 2) 的循环次数为 Θ(log n)。",
+      "tags": [
+        "算法复杂度基础",
+        "指数递增循环"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "独立规模嵌套循环",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "外层循环 n 次、内层循环 m 次且每轮工作为常数时，时间复杂度如何表示？",
+      "answer": "Θ(nm)，因为内层工作会对每个外层迭代重复 m 次。",
+      "explanation": "n 与 m 是独立输入规模时，不应未经说明就将它们视为相等。",
+      "example": "比较两个长度分别为 n 和 m 的列表中的所有元素对。",
+      "tags": [
+        "算法复杂度基础",
+        "独立规模嵌套循环"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "递归运行时间递推式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "递归算法的运行时间递推式通常由哪两部分构成？",
+      "answer": "递归子问题的运行时间，以及当前调用在递归之外的工作量；还需给出小规模输入的基例。",
+      "explanation": "递推式应反映子问题数量、规模和分解或合并成本。",
+      "example": "单个规模 n/2 的子问题加常数工作可写作 T(n)=T(n/2)+Θ(1)。",
+      "tags": [
+        "算法复杂度基础",
+        "递归运行时间递推式"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "折半递推式",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "若 T(n)=T(n/2)+Θ(1)，且 T(1)=Θ(1)，则 T(n) 的渐近阶是什么？",
+      "answer": "Θ(log n)，因为每层规模减半，递归深度为 Θ(log n)，每层工作为常数。",
+      "explanation": "默认 n 按整数规模取整不会改变渐近阶。",
+      "example": "每次把问题规模减半且只做常数比较的搜索过程。",
+      "tags": [
+        "算法复杂度基础",
+        "折半递推式"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    },
+    {
+      "id": "complexity-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "归并排序递推式",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "归并排序将数组分成两半、递归排序并线性合并时，运行时间递推式及解是什么？",
+      "answer": "T(n)=2T(n/2)+Θ(n)，其解为 Θ(n log n)。",
+      "explanation": "递归树每层总合并工作为 Θ(n)，层数为 Θ(log n)。",
+      "example": "每个递归层处理的子数组总长度仍为 n。",
+      "tags": [
+        "算法复杂度基础",
+        "归并排序递推式"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/22mergesort/",
+      "referenceTitle": "Princeton Algorithms：归并排序",
+      "referenceType": "教材与课程资料"
+    },
+    {
+      "id": "complexity-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "算法复杂度基础",
+      "knowledgePoint": "渐近证明常数",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "用归纳法证明 f(n)=O(g(n)) 时，能否在归纳步骤中把隐藏常数选成随 n 增长？",
+      "answer": "不能；定义中的常数上界必须是固定常数，不能依赖当前输入规模 n。",
+      "explanation": "若常数可随 n 任意增大，几乎任何增长函数都能被错误地证明为 O(1)。",
+      "example": "证明 f(n)=n 为 O(1) 时不能令每个 n 的常数 c=n。",
+      "tags": [
+        "算法复杂度基础",
+        "渐近证明常数"
+      ],
+      "evidence": "source",
+      "reference": "https://courses.csail.mit.edu/6.006/fall11/rec/rec01.pdf",
+      "referenceTitle": "MIT 6.006：渐近复杂度",
+      "referenceType": "课程讲义"
+    }
+  ]
+}

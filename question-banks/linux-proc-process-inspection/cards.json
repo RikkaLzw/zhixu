@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "linux-proc-process-inspection",
+    "title": "Linux proc 手册：进程信息与文件描述符",
+    "url": "https://man7.org/linux/man-pages/man5/proc.5.html",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "procinfo-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux proc 进程信息",
+      "knowledgePoint": "proc作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 /proc 文件系统主要提供什么？",
+      "answer": "提供内核和进程相关信息的伪文件接口。",
+      "explanation": "内容通常由内核运行时生成，而非普通磁盘文件。",
+      "example": "通过 /proc 查询进程的状态信息。",
+      "tags": [
+        "Linux proc 进程信息",
+        "proc作用"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/proc.5.html"
+    },
+    {
+      "id": "procinfo-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux proc 进程信息",
+      "knowledgePoint": "self链接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 中 /proc/self 通常指向哪个进程的目录？",
+      "answer": "指向正在访问该路径的进程自身的 /proc/PID 目录。",
+      "explanation": "不同进程访问同一链接时可得到不同目标。",
+      "example": "程序读取 /proc/self/status 查看自身状态。",
+      "tags": [
+        "Linux proc 进程信息",
+        "self链接"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/proc.5.html"
+    },
+    {
+      "id": "procinfo-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux proc 进程信息",
+      "knowledgePoint": "状态字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 /proc/PID/status 中 PPid、Threads 和 VmRSS 分别描述什么？",
+      "answer": "分别描述父进程 ID、线程数和驻留内存大小。",
+      "explanation": "VmRSS 是近似统计值，不应当作精确的逐页审计。",
+      "example": "排查进程关系、线程数量及内存占用。",
+      "tags": [
+        "Linux proc 进程信息",
+        "状态字段"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/proc_pid_status.5.html"
+    },
+    {
+      "id": "procinfo-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux proc 进程信息",
+      "knowledgePoint": "命令行分隔",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 正常运行的进程在 /proc/PID/cmdline 中通常怎样分隔命令行参数？",
+      "answer": "通常用 NUL 字节分隔参数，末尾也有 NUL。",
+      "explanation": "进程可以修改相关内存，因此格式和内容不保证可信。",
+      "example": "读取时不要假设参数由换行符分隔。",
+      "tags": [
+        "Linux proc 进程信息",
+        "命令行分隔"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/proc_pid_cmdline.5.html"
+    },
+    {
+      "id": "procinfo-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux proc 进程信息",
+      "knowledgePoint": "僵尸命令行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 僵尸进程的 /proc/PID/cmdline 读取通常返回什么？",
+      "answer": "返回空内容。",
+      "explanation": "空内容也应结合进程状态和其他证据解释。",
+      "example": "已退出但尚未回收的进程不再提供普通命令行。",
+      "tags": [
+        "Linux proc 进程信息",
+        "僵尸命令行"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/proc_pid_cmdline.5.html"
+    },
+    {
+      "id": "procinfo-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux proc 进程信息",
+      "knowledgePoint": "初始环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 /proc/PID/environ 是否一定实时反映进程后来对环境变量的修改？",
+      "answer": "不一定；它通常展示当前程序通过 execve 启动时的初始环境。",
+      "explanation": "进程还可能通过特定操作改变相关内存位置。",
+      "example": "运行后调用 putenv 不保证更新该文件内容。",
+      "tags": [
+        "Linux proc 进程信息",
+        "初始环境"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/proc_pid_environ.5.html"
+    },
+    {
+      "id": "procinfo-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux proc 进程信息",
+      "knowledgePoint": "描述符目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 /proc/PID/fd 目录通常包含什么？",
+      "answer": "包含以文件描述符编号命名的符号链接，指向进程打开的对象。",
+      "explanation": "读取或解析链接受权限检查约束。",
+      "example": "编号 0 通常对应标准输入描述符。",
+      "tags": [
+        "Linux proc 进程信息",
+        "描述符目录"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/proc_pid_fd.5.html"
+    },
+    {
+      "id": "procinfo-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux proc 进程信息",
+      "knowledgePoint": "管道套接字",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 /proc/PID/fd 中，管道或套接字的符号链接常以什么形式显示？",
+      "answer": "常显示为 pipe:[inode] 或 socket:[inode] 这样的类型和 inode 编号。",
+      "explanation": "套接字 inode 可用于关联其他网络信息。",
+      "example": "用 readlink 查看某个描述符目标。",
+      "tags": [
+        "Linux proc 进程信息",
+        "管道套接字"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/proc_pid_fd.5.html"
+    },
+    {
+      "id": "procinfo-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux proc 进程信息",
+      "knowledgePoint": "映射权限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 的 /proc/PID/maps 中的 rwxp 等权限字符表示什么？",
+      "answer": "表示映射区域的读、写、执行以及私有或共享属性。",
+      "explanation": "该文件描述虚拟内存映射区域，并非实际物理内存占用明细。",
+      "example": "r-xp 表示可读、可执行且为私有映射。",
+      "tags": [
+        "Linux proc 进程信息",
+        "映射权限"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man5/proc_pid_maps.5.html"
+    }
+  ]
+}

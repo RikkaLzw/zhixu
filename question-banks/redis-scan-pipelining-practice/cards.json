@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "redis-scan-pipelining-practice",
+    "title": "Redis 官方文档：SCAN 与管线",
+    "url": "https://redis.io/docs/latest/commands/scan/",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "redisscan-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "扫描起止",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Redis SCAN 怎样开始并结束一次完整遍历？",
+      "answer": "第一次使用游标 0；之后把每次返回的游标用于下一次调用，直到返回游标 0。",
+      "explanation": "返回的另一部分是本次扫描到的键列表。",
+      "example": "SCAN 0 后即使第一批很少，也应按返回游标继续。",
+      "tags": [
+        "Redis 扫描与管线",
+        "扫描起止"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/scan/"
+    },
+    {
+      "id": "redisscan-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "空批次",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "Redis SCAN 返回空键列表时，是否说明完整遍历已经结束？",
+      "answer": "不一定；只有返回游标为 0 才表示这次完整遍历结束。",
+      "explanation": "过滤条件和内部遍历方式都可能使某次调用返回空批次。",
+      "example": "游标非 0 而键列表为空时，应继续下一次 SCAN。",
+      "tags": [
+        "Redis 扫描与管线",
+        "空批次"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/scan/"
+    },
+    {
+      "id": "redisscan-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "COUNT提示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis SCAN 的 COUNT 100 是否保证每次返回恰好 100 个键？",
+      "answer": "不保证；COUNT 是对单次扫描工作量的提示，返回数量可以不同。",
+      "explanation": "某次调用也可能返回零个元素，不能把 COUNT 当作精确分页大小。",
+      "example": "需要精确展示数量时，应由应用累积并处理扫描结果。",
+      "tags": [
+        "Redis 扫描与管线",
+        "COUNT提示"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/scan/"
+    },
+    {
+      "id": "redisscan-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "重复键",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "Redis SCAN 完整遍历过程中，为什么应用需要处理重复键？",
+      "answer": "同一个键可能被返回多次，因此应用应去重或使用可重复执行的处理。",
+      "explanation": "SCAN 不提供每个元素恰好一次的保证。",
+      "example": "批量清理任务可设计幂等处理。",
+      "tags": [
+        "Redis 扫描与管线",
+        "重复键"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/scan/"
+    },
+    {
+      "id": "redisscan-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "遍历稳定元素",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis SCAN 完整遍历对从遍历开始到结束始终存在的键提供什么保证？",
+      "answer": "这些键会至少返回一次。",
+      "explanation": "完整遍历指从 0 开始并持续使用返回游标，直到游标重新为 0。",
+      "example": "扫描开始前已存在且结束时仍持续存在的键应被访问到。",
+      "tags": [
+        "Redis 扫描与管线",
+        "遍历稳定元素"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/scan/"
+    },
+    {
+      "id": "redisscan-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "遍历期间变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis SCAN 遍历期间新增或删除的键，是否保证一定会出现在结果中？",
+      "answer": "不保证；对于遍历全过程中并非持续存在的键，是否返回未定义。",
+      "explanation": "SCAN 不是固定时间点的一致快照。",
+      "example": "扫描期间新增的临时键可能出现，也可能不出现。",
+      "tags": [
+        "Redis 扫描与管线",
+        "遍历期间变化"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/scan/"
+    },
+    {
+      "id": "redisscan-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "MATCH过滤",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "Redis SCAN 的 MATCH pattern 在扫描中起什么作用？",
+      "answer": "仅返回匹配给定 glob 模式的键。",
+      "explanation": "过滤后的一次结果仍可能为空，是否完成应以返回游标判断。",
+      "example": "SCAN 0 MATCH user:* COUNT 100 用于逐步查找 user: 前缀键。",
+      "tags": [
+        "Redis 扫描与管线",
+        "MATCH过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/scan/"
+    },
+    {
+      "id": "redisscan-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "扫描对象",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Redis SCAN 与 HSCAN 分别遍历什么？",
+      "answer": "SCAN 遍历当前数据库的键名；HSCAN 遍历指定 Hash 的字段及其值。",
+      "explanation": "SSCAN 和 ZSCAN 分别用于集合成员及有序集合成员与分数。",
+      "example": "要遍历 user:1 这个 Hash 的字段，可使用 HSCAN。",
+      "tags": [
+        "Redis 扫描与管线",
+        "扫描对象"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/commands/scan/"
+    },
+    {
+      "id": "redisscan-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "管线减少往返",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Redis pipelining 如何减少多个独立命令的网络往返等待？",
+      "answer": "客户端可以连续发送多个命令，再批量读取响应，而不是每发一条都等待回复。",
+      "explanation": "它主要减少往返和系统调用开销，应用仍需读取并处理各命令响应。",
+      "example": "批量写入独立键时可分批发送命令。",
+      "tags": [
+        "Redis 扫描与管线",
+        "管线减少往返"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/using-commands/pipelining/"
+    },
+    {
+      "id": "redisscan-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Redis 扫描与管线",
+      "knowledgePoint": "管线依赖限制",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "为什么前一条命令的结果决定后一条命令参数时，普通 Redis 管线不能消除这两条命令之间的依赖等待？",
+      "answer": "客户端必须先取得前一结果才能生成后一命令的具体参数。",
+      "explanation": "对于可在服务端完成的读改写逻辑，可评估脚本等机制及其适用条件。",
+      "example": "要根据 GET 返回值计算下一条 SET 的值，客户端管线无法预先知道该值。",
+      "tags": [
+        "Redis 扫描与管线",
+        "管线依赖限制"
+      ],
+      "evidence": "source",
+      "reference": "https://redis.io/docs/latest/develop/using-commands/pipelining/"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "minhash-jaccard-retrieval",
+    "title": "datasketch 1.6.5 源码：MinHash 与近似去重",
+    "url": "https://raw.githubusercontent.com/ekzhu/datasketch/v1.6.5/datasketch/minhash.py",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "minhash-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MinHash 与相似集合检索",
+      "knowledgePoint": "估计量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "datasketch 1.6.5 的 MinHash.jaccard 如何从两个签名估计相似度？",
+      "answer": "计算两个签名在对应位置上哈希值相等的比例。",
+      "explanation": "结果是对集合 Jaccard 相似度的估计，不必与精确值完全相等。",
+      "example": "128 个位置中有 64 个相等时，估计值为 0.5。",
+      "tags": [
+        "MinHash 与相似集合检索",
+        "估计量"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/ekzhu/datasketch/v1.6.5/datasketch/minhash.py"
+    },
+    {
+      "id": "minhash-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MinHash 与相似集合检索",
+      "knowledgePoint": "签名长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在其他条件相同时，增加 MinHash 的 num_perm 通常带来什么取舍？",
+      "answer": "通常降低估计的随机误差，但增加签名存储和相关计算成本。",
+      "explanation": "单次估计不保证随签名变长严格更接近真实值。",
+      "example": "将签名长度从 128 增至 256 会增加存储。",
+      "tags": [
+        "MinHash 与相似集合检索",
+        "签名长度"
+      ],
+      "evidence": "source",
+      "reference": "https://ekzhu.com/datasketch/minhash.html"
+    },
+    {
+      "id": "minhash-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MinHash 与相似集合检索",
+      "knowledgePoint": "默认输入类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "datasketch 1.6.5 的 MinHash 使用默认哈希函数时，update 通常接收什么类型的数据？",
+      "answer": "接收字节数据；字符串应先按约定编码。",
+      "explanation": "自定义哈希函数可能接受不同输入类型。",
+      "example": "使用 token.encode(\"utf-8\") 更新签名。",
+      "tags": [
+        "MinHash 与相似集合检索",
+        "默认输入类型"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/ekzhu/datasketch/v1.6.5/datasketch/minhash.py"
+    },
+    {
+      "id": "minhash-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MinHash 与相似集合检索",
+      "knowledgePoint": "签名兼容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "datasketch 1.6.5 的 MinHash.jaccard 对不同 seed 或不同签名长度会怎样？",
+      "answer": "会抛出 ValueError。",
+      "explanation": "比较还应确保哈希函数和排列方案兼容。",
+      "example": "两个签名的 num_perm 不同时不能直接比较。",
+      "tags": [
+        "MinHash 与相似集合检索",
+        "签名兼容"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/ekzhu/datasketch/v1.6.5/datasketch/minhash.py"
+    },
+    {
+      "id": "minhash-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MinHash 与相似集合检索",
+      "knowledgePoint": "自定义哈希兼容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个 datasketch 1.6.5 MinHash 即使 seed 和 num_perm 相同，也一定能可靠比较吗？",
+      "answer": "不一定；若自定义哈希函数或排列参数不同，签名可能不兼容。",
+      "explanation": "实现仅检查 seed 和长度，不会验证所有自定义配置一致。",
+      "example": "生成签名的两端应固定相同的哈希与排列方案。",
+      "tags": [
+        "MinHash 与相似集合检索",
+        "自定义哈希兼容"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/ekzhu/datasketch/v1.6.5/datasketch/minhash.py"
+    },
+    {
+      "id": "minhash-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MinHash 与相似集合检索",
+      "knowledgePoint": "合并集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "datasketch 1.6.5 的 MinHash.merge 与 MinHash.union 有什么区别？",
+      "answer": "merge 原地更新当前签名；union 创建新的合并签名。",
+      "explanation": "合并对象需要兼容的 seed、长度及哈希方案。",
+      "example": "并行处理后可合并兼容的局部集合签名。",
+      "tags": [
+        "MinHash 与相似集合检索",
+        "合并集合"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/ekzhu/datasketch/v1.6.5/datasketch/minhash.py"
+    },
+    {
+      "id": "minhash-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MinHash 与相似集合检索",
+      "knowledgePoint": "近似阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "datasketch 1.6.5 的 MinHashLSH.query 返回结果是否保证都达到精确 Jaccard 阈值？",
+      "answer": "不保证；它基于签名分段碰撞返回近似候选，可能有误报或漏报。",
+      "explanation": "需要精确结果时，应使用原始集合重新计算并过滤；索引和签名的长度也应匹配。",
+      "example": "去重流程可先用 LSH 找候选，再做精确相似度检查。",
+      "tags": [
+        "MinHash 与相似集合检索",
+        "近似阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/ekzhu/datasketch/v1.6.5/datasketch/lsh.py"
+    },
+    {
+      "id": "minhash-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MinHash 与相似集合检索",
+      "knowledgePoint": "自定义分带",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "datasketch 1.6.5 的 MinHashLSH 显式传入 params=(b,r) 时，threshold 还用于优化分带吗？",
+      "answer": "不用于该优化；显式参数直接指定分带数和每带大小。",
+      "explanation": "同一索引中的签名长度仍需与配置匹配。",
+      "example": "params=(16,8) 指定 16 个大小为 8 的分带。",
+      "tags": [
+        "MinHash 与相似集合检索",
+        "自定义分带"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/ekzhu/datasketch/v1.6.5/datasketch/lsh.py"
+    }
+  ]
+}

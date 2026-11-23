@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "network-address-translation",
+    "title": "RFC 3022：传统 NAT 与网络地址端口转换",
+    "url": "https://www.rfc-editor.org/rfc/rfc3022.html",
+    "type": "标准、教材与技术手册",
+    "note": "依据逐题引用的标准、文档或手册自行整理；示例为自编。在线资料以 2026-11-22 查看内容为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "natcs-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "网络地址转换与端口映射",
+      "knowledgePoint": "NAT作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "网络地址转换 NAT 的主要作用是什么？",
+      "answer": "它在网络边界转换报文中的 IP 地址，使不同地址域中的主机能够按配置通信。",
+      "explanation": "地址转换与路由、访问控制是不同功能；具体行为取决于设备配置。",
+      "example": "内网私有地址通过网关映射为外部地址。",
+      "tags": [
+        "网络地址转换与端口映射",
+        "NAT作用"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3022.html"
+    },
+    {
+      "id": "natcs-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "网络地址转换与端口映射",
+      "knowledgePoint": "BasicNAT与NAPT",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 3022 中 Basic NAT 和 NAPT 的转换范围有什么区别？",
+      "answer": "Basic NAT 主要转换 IP 地址；NAPT 还转换传输层标识，例如 TCP 或 UDP 端口。",
+      "explanation": "两者是该文描述的传统 NAT 的两种形式。",
+      "example": "NAPT 可把多个内部地址和端口映射到一个外部地址的不同端口。",
+      "tags": [
+        "网络地址转换与端口映射",
+        "BasicNAT与NAPT"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3022.html"
+    },
+    {
+      "id": "natcs-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "网络地址转换与端口映射",
+      "knowledgePoint": "返回路径转换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "传统 NAPT 收到已有外出连接的返回报文时，如何确定内网目标？",
+      "answer": "它根据已有的转换状态，将外部目标地址和端口还原为对应的内网地址和端口。",
+      "explanation": "相应往返流量需经过有该映射状态的转换设备。",
+      "example": "公网端口对应到发起连接的内网主机端口。",
+      "tags": [
+        "网络地址转换与端口映射",
+        "返回路径转换"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3022.html"
+    },
+    {
+      "id": "natcs-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "网络地址转换与端口映射",
+      "knowledgePoint": "外部主动连接",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "传统 NAT 中，没有已建立映射或专门配置时，外部主机能否假定可以主动访问任意内网主机？",
+      "answer": "不能；传统 NAT 通常由内部发起会话，外部主动访问需要适当的静态映射等配置。",
+      "explanation": "能否访问还取决于路由、监听服务和访问控制。",
+      "example": "未配置端口映射时，外部连接通常无法确定目标内网服务。",
+      "tags": [
+        "网络地址转换与端口映射",
+        "外部主动连接"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3022.html"
+    },
+    {
+      "id": "natcs-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "网络地址转换与端口映射",
+      "knowledgePoint": "端口映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 NAT 网关上配置静态端口映射通常用于什么？",
+      "answer": "把特定外部地址和端口的入站流量转发到指定内网主机与端口。",
+      "explanation": "这只建立转发关系，服务本身和访问控制仍需正确配置。",
+      "example": "将网关的 TCP 8443 映射到内网服务的 TCP 443。",
+      "tags": [
+        "网络地址转换与端口映射",
+        "端口映射"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3022.html"
+    },
+    {
+      "id": "natcs-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "网络地址转换与端口映射",
+      "knowledgePoint": "会话路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有状态 NAT 的同一会话如果往返报文经过不同且不共享状态的网关，可能出现什么问题？",
+      "answer": "另一个网关可能没有对应映射，导致返回报文无法正确转换或连接中断。",
+      "explanation": "多出口部署通常需要考虑路径一致和状态同步。",
+      "example": "主备设备切换时未同步活动映射可能影响连接。",
+      "tags": [
+        "网络地址转换与端口映射",
+        "会话路径"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3022.html"
+    },
+    {
+      "id": "natcs-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "网络地址转换与端口映射",
+      "knowledgePoint": "校验和调整",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NAT 改写 IPv4 地址或 TCP／UDP 端口后，为什么需要处理校验和？",
+      "answer": "被校验的头部、伪首部或端口发生变化，需要按协议更新受影响的校验和。",
+      "explanation": "IPv4 的 UDP 校验和可为零，表示未使用；其他情况应按相应协议处理。",
+      "example": "改写 IPv4 源地址会影响 IPv4 头部及 TCP 伪首部校验。",
+      "tags": [
+        "网络地址转换与端口映射",
+        "校验和调整"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3022.html"
+    },
+    {
+      "id": "natcs-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "网络地址转换与端口映射",
+      "knowledgePoint": "载荷中地址",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么某些把地址或端口放在应用载荷中的协议需要额外的 NAT 适配？",
+      "answer": "只改写网络和传输层头部不会自动修正载荷中的地址或端口，通信双方可能得到不可用的端点。",
+      "explanation": "是否使用应用层网关或其他穿透方式取决于协议及部署。",
+      "example": "协议报文正文公布了仅在内网有效的地址。",
+      "tags": [
+        "网络地址转换与端口映射",
+        "载荷中地址"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3022.html"
+    }
+  ]
+}

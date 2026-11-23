@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "gnu-sort-uniq-practice",
+    "title": "GNU sort 与 uniq 手册：排序和去重实践",
+    "url": "https://man7.org/linux/man-pages/man1/sort.1.html",
+    "type": "官方文档与手册",
+    "note": "依据逐题链接自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "coreord-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU 排序与去重",
+      "knowledgePoint": "稳定排序",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU sort 使用指定排序键时，-s 有什么作用？",
+      "answer": "禁用最后的整行兜底比较，使排序键相等的记录保持输入顺序。",
+      "explanation": "不加 -s 时，相等键的记录可能再按整行比较。",
+      "example": "按部门排序后，部门相同的员工保持输入顺序。",
+      "tags": [
+        "GNU 排序与去重",
+        "稳定排序"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sort.1.html"
+    },
+    {
+      "id": "coreord-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "GNU 排序与去重",
+      "knowledgePoint": "按键去重",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU sort -u 与指定的排序键一起使用时，怎样判断记录是否重复？",
+      "answer": "按排序比较所用的键判断；键相等的行只输出一行。",
+      "explanation": "这与仅在排序后对完整行运行 uniq 不一定等价。",
+      "example": "按第一列排序并去重时，第一列相同的两行可能只留一行。",
+      "tags": [
+        "GNU 排序与去重",
+        "按键去重"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sort.1.html"
+    },
+    {
+      "id": "coreord-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU 排序与去重",
+      "knowledgePoint": "检查排序",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU sort -C 对输入有什么检查作用？",
+      "answer": "检查输入是否有序，不输出排序结果；无序时以非零状态退出。",
+      "explanation": "-C 也不报告第一个无序行；-c 可报告。",
+      "example": "脚本可以用 sort -C file 检查文件排序。",
+      "tags": [
+        "GNU 排序与去重",
+        "检查排序"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sort.1.html"
+    },
+    {
+      "id": "coreord-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU 排序与去重",
+      "knowledgePoint": "合并有序文件",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU sort -m 适用于什么输入？",
+      "answer": "合并已经按相同排序规则排好序的输入文件。",
+      "explanation": "它不替代对各输入文件的排序。",
+      "example": "先对两个文件分别排序，再使用 sort -m 合并。",
+      "tags": [
+        "GNU 排序与去重",
+        "合并有序文件"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sort.1.html"
+    },
+    {
+      "id": "coreord-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU 排序与去重",
+      "knowledgePoint": "版本号排序",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU sort -V 按什么方式比较文本中的数字？",
+      "answer": "使用版本号排序，使数字片段按自然顺序比较。",
+      "explanation": "它适合含数字的版本或文件名，不等于普通字典序。",
+      "example": "file2 通常排在 file10 前。",
+      "tags": [
+        "GNU 排序与去重",
+        "版本号排序"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sort.1.html"
+    },
+    {
+      "id": "coreord-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU 排序与去重",
+      "knowledgePoint": "重复与单次",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU uniq -d 和 uniq -u 分别输出什么？",
+      "answer": "-d 对每组相邻重复行输出一行；-u 只输出未与相邻行重复的行。",
+      "explanation": "uniq 按相邻行分组，输入未排序时相同内容可能分散。",
+      "example": "a、a、b 连续输入时，-d 输出 a，-u 输出 b。",
+      "tags": [
+        "GNU 排序与去重",
+        "重复与单次"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/uniq.1.html"
+    },
+    {
+      "id": "coreord-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "GNU 排序与去重",
+      "knowledgePoint": "NUL 记录",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "GNU sort -z 把输入输出记录分隔符改成什么？",
+      "answer": "改为 NUL，而不是换行。",
+      "explanation": "可与其他支持 NUL 分隔的命令配合处理含换行的文件名。",
+      "example": "find 的 -print0 输出可交给 sort -z。",
+      "tags": [
+        "GNU 排序与去重",
+        "NUL 记录"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/sort.1.html"
+    }
+  ]
+}

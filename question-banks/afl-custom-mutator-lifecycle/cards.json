@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "afl-custom-mutator-lifecycle",
+    "title": "AFL++ v4.21c 文档：自定义变异器",
+    "url": "https://raw.githubusercontent.com/AFLplusplus/AFLplusplus/v4.21c/docs/custom_mutators.md",
+    "type": "固定版本论文、标准或官方文档",
+    "note": "根据逐题引用的资料自行整理，示例自编；行为以指定版本与前提为准。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "aflmut-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 自定义变异器",
+      "knowledgePoint": "加载方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ v4.21c 怎样指定 C/C++ 自定义变异器库？",
+      "answer": "通过 AFL_CUSTOM_MUTATOR_LIBRARY 环境变量提供共享库路径。",
+      "explanation": "该变量还可以用分号指定多个库。",
+      "example": "为结构化输入加载专用变异器。",
+      "tags": [
+        "AFL++ 自定义变异器",
+        "加载方式"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/AFLplusplus/AFLplusplus/v4.21c/docs/custom_mutators.md"
+    },
+    {
+      "id": "aflmut-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 自定义变异器",
+      "knowledgePoint": "次数控制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 自定义变异器的 fuzz_count 回调主要控制什么？",
+      "answer": "为当前队列输入指定自定义变异调用次数。",
+      "explanation": "未定义该回调时由 AFL++ 按自身策略决定。",
+      "example": "对不同种子分配不同数量的定制变异。",
+      "tags": [
+        "AFL++ 自定义变异器",
+        "次数控制"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/AFLplusplus/AFLplusplus/v4.21c/docs/custom_mutators.md"
+    },
+    {
+      "id": "aflmut-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 自定义变异器",
+      "knowledgePoint": "拼接输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 自定义 fuzz 回调的 add_buf 可以提供什么？",
+      "answer": "提供另一个队列条目的内容，可供拼接等变异使用。",
+      "explanation": "变异器也可以忽略它；定义 splice_optout 可避免获取拼接目标。",
+      "example": "组合两个样本中的结构化字段。",
+      "tags": [
+        "AFL++ 自定义变异器",
+        "拼接输入"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/AFLplusplus/AFLplusplus/v4.21c/docs/custom_mutators.md"
+    },
+    {
+      "id": "aflmut-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 自定义变异器",
+      "knowledgePoint": "自定义裁剪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 自定义裁剪支持为何需要 init_trim、trim 和 post_trim 协同？",
+      "answer": "它们分别初始化裁剪、产生候选并接收覆盖反馈；缺少任一方法会回退到内置裁剪。",
+      "explanation": "结构化裁剪可在缩小输入时尽量保持格式。",
+      "example": "裁剪结构化样本并根据覆盖反馈保留结果。",
+      "tags": [
+        "AFL++ 自定义变异器",
+        "自定义裁剪"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/AFLplusplus/AFLplusplus/v4.21c/docs/custom_mutators.md"
+    },
+    {
+      "id": "aflmut-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++ 自定义变异器",
+      "knowledgePoint": "输出缓冲区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ v4.21c 的 C/C++ 自定义变异器要增大 out_buf 时应注意什么？",
+      "answer": "使用 AFL++ 提供的 afl_realloc 分配或扩容输出缓冲区。",
+      "explanation": "文档提醒不按要求分配可能导致 afl-fuzz 释放缓冲区时崩溃。",
+      "example": "扩展变异输出前检查内存管理约定。",
+      "tags": [
+        "AFL++ 自定义变异器",
+        "输出缓冲区"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/AFLplusplus/AFLplusplus/v4.21c/docs/custom_mutators.md"
+    }
+  ]
+}

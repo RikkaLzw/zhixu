@@ -1,0 +1,377 @@
+{
+  "source": {
+    "id": "agent-search-strategies",
+    "title": "Agent 推理与搜索：ToT、Self-Consistency 与 ReAct",
+    "url": "https://arxiv.org/abs/2305.10601",
+    "type": "研究论文",
+    "note": "依据逐题论文整理；快手公开面经仅为 Agent 工程主题启发。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "agentsearch-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "思维树与单链",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Tree of Thoughts 与只生成一条推理链的做法有什么主要区别？",
+      "answer": "它在中间步骤生成并评估多个候选，按搜索策略探索或回退不同路径。",
+      "explanation": "具体生成、评估和搜索策略可以因任务而异。",
+      "example": "为调查任务比较多个候选步骤。",
+      "tags": [
+        "思维树与单链",
+        "Agent 推理",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentsearch-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "思维单元",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tree of Thoughts 论文中的 thought 指什么？",
+      "answer": "它是朝向问题求解的一个连贯中间步骤，可以是一句话、方程或计划片段。",
+      "explanation": "单元大小由问题和评估方式决定。",
+      "example": "写作任务中一个 thought 可以是段落计划。",
+      "tags": [
+        "思维单元",
+        "Agent 推理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentsearch-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "思维粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "设计 Tree of Thoughts 的步骤粒度时，为什么不宜一味过大或过小？",
+      "answer": "过大可能难以生成多样且连贯的候选；过小则可能缺少可供评价的意义。",
+      "explanation": "合适粒度取决于任务与模型能力。",
+      "example": "在单个 token 和完整长篇方案之间选择有意义的步骤。",
+      "tags": [
+        "思维粒度",
+        "Agent 推理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentsearch-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "候选生成方式",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Tree of Thoughts 论文中的独立采样和一次提出多个候选有什么区别？",
+      "answer": "独立采样多次生成候选；一次提出多个候选让模型在同一上下文中列出若干选择。",
+      "explanation": "论文将后者用于选择空间较受限的任务，以减少候选重复。",
+      "example": "多次分别生成计划，或一次列出多种下一步。",
+      "tags": [
+        "候选生成方式",
+        "Agent 推理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentsearch-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "状态评估方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tree of Thoughts 的独立评分和候选投票分别怎样评估状态？",
+      "answer": "独立评分分别评价每个状态；候选投票把多个状态放在一起比较并选择较有希望的状态。",
+      "explanation": "评估可以调用模型多次，但仍是可能出错的启发式判断。",
+      "example": "分别打分，或让评估器比较多份部分方案。",
+      "tags": [
+        "状态评估方式",
+        "Agent 推理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentsearch-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "广度与深度搜索",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "在 Tree of Thoughts 中，广度优先和深度优先探索路径有什么主要区别？",
+      "answer": "广度优先按步骤层扩展多个状态；深度优先沿一条路径向下探索，并可回溯到其他分支。",
+      "explanation": "原论文的广度搜索还对每层保留的状态数量设上限。",
+      "example": "先比较多条第一步，或先沿一条方案继续探索。",
+      "tags": [
+        "广度与深度搜索",
+        "Agent 推理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentsearch-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "搜索宽度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Tree of Thoughts 的 BFS 实例中，宽度限制 b 控制什么？",
+      "answer": "它限制每一步保留下来继续扩展的候选状态数。",
+      "explanation": "较小宽度可减少后续工作，但也可能过早丢掉有用分支。",
+      "example": "每层只保留得分最高的少量候选。",
+      "tags": [
+        "搜索宽度",
+        "Agent 推理",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentsearch-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "启发式剪枝风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Tree of Thoughts 用模型评估结果剪枝时，为什么可能错过正确方案？",
+      "answer": "评估器可能误判一个有解的中间状态，将包含正确解的分支提前删除。",
+      "explanation": "应结合任务证据评估剪枝质量，并权衡搜索预算。",
+      "example": "评估器误把可完成的部分填词判为不可能。",
+      "tags": [
+        "启发式剪枝风险",
+        "Agent 推理",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentsearch-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "搜索回溯与外部副作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Agent 搜索过程回溯到先前方案时，之前执行的外部写操作会自动撤销吗？",
+      "answer": "不会；回溯思考状态不等于回滚外部系统，副作用需要独立的恢复或补偿机制。",
+      "explanation": "有些外部操作无法撤销；必要时先用只读模拟或明确审批和补偿流程。",
+      "example": "放弃某个搜索分支并不会自动撤销已发送的写入请求。",
+      "tags": [
+        "搜索回溯与外部副作用",
+        "Agent 推理",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        },
+        {
+          "id": "langgraph-functional-search",
+          "title": "LangGraph：持久化执行中的副作用",
+          "url": "https://docs.langchain.com/oss/python/langgraph/functional-api",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "agentsearch-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "自一致性与思维树",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "自一致性与 Tree of Thoughts 在探索多个候选时有什么区别？",
+      "answer": "自一致性通常采样完整推理路径并按最终答案投票；思维树可以在中间步骤评估并继续扩展候选。",
+      "explanation": "具体实现可能组合两种方法。",
+      "example": "分别生成完整答案，或逐层筛选部分方案。",
+      "tags": [
+        "自一致性与思维树",
+        "Agent 推理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "self-consistency-paper",
+          "title": "Self-Consistency 原论文",
+          "url": "https://arxiv.org/abs/2203.11171",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "agentsearch-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "推理时搜索与参数训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 Tree of Thoughts 是否要求为每个任务重新训练模型参数？",
+      "answer": "不要求；论文展示了利用现成模型在推理时生成、评价并搜索候选。",
+      "explanation": "搜索可能增加模型调用与计算成本，后续方法也可以引入训练。",
+      "example": "保持模型权重不变，调整搜索宽度和评价提示。",
+      "tags": [
+        "推理时搜索与参数训练",
+        "Agent 推理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.10601",
+      "referenceTitle": "Tree of Thoughts 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentsearch-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "推理与环境动作",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "原始 ReAct 中，语言 thought 与环境 action 对外部环境的影响有什么区别？",
+      "answer": "thought 更新用于后续推理的上下文；环境 action 可与外部环境交互并产生观察。",
+      "explanation": "实际工具可能带来副作用，调用前仍需权限控制。",
+      "example": "思考下一步不会写文件，执行写入工具可能会。",
+      "tags": [
+        "推理与环境动作",
+        "Agent 推理",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2210.03629",
+      "referenceTitle": "ReAct 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型应用一面（合集转载，经历为分享者自述）；主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "agentsearch-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "稀疏思考",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReAct 的原论文要求每个环境动作都必须先生成一段 thought 吗？",
+      "answer": "不要求；论文也讨论了在需要大量动作的任务中稀疏插入思考。",
+      "explanation": "具体轨迹格式由任务和实现决定。",
+      "example": "导航过程中只在关键节点更新计划。",
+      "tags": [
+        "稀疏思考",
+        "Agent 推理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2210.03629",
+      "referenceTitle": "ReAct 原论文",
+      "referenceType": "研究论文"
+    },
+    {
+      "id": "agentsearch-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 推理与搜索",
+      "knowledgePoint": "外部观察与模型判断",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "ReAct 轨迹中的 observation 与模型生成的 thought 有什么区别？",
+      "answer": "observation 是环境对动作返回的信息；thought 是模型根据上下文形成的语言推理。",
+      "explanation": "观察内容也可能不完整或不可信，需要结合来源核查。",
+      "example": "查询工具返回记录，模型再提出下一步判断。",
+      "tags": [
+        "外部观察与模型判断",
+        "Agent 推理"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2210.03629",
+      "referenceTitle": "ReAct 原论文",
+      "referenceType": "研究论文"
+    }
+  ]
+}

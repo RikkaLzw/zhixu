@@ -1,0 +1,45 @@
+{
+  "source": {
+    "id": "company-security-detection",
+    "title": "腾讯公开面经：加密流量检测",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+    "type": "公开面经合集",
+    "note": "合集收录个人面试复盘，可能含转载；公司、岗位及经历为分享者自述，答案另依据逐题列出的资料核验。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "secint-detect-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "加密流量检测",
+      "knowledgePoint": "加密流量可见信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "网络流量使用 TLS 加密后，还能利用哪些可见信息辅助恶意流量检测？",
+      "answer": "在采集条件允许时，仍可使用包长度、到达时间、双向字节数或连接时长等流量元数据。",
+      "explanation": "内容被加密不等于所有流量特征都隐藏；这些特征也不能单独证明恶意。",
+      "example": "比较连接中包长度与到达间隔的分布。",
+      "tags": [
+        "加密流量可见信息",
+        "加密流量检测",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "referenceId": "company-tencent",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+      "referenceTitle": "腾讯公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "encrypted-flow-paper",
+          "title": "Anderson 等：加密流量中的恶意软件检测",
+          "url": "https://arxiv.org/abs/1607.01639",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

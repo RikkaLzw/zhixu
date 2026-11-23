@@ -1,0 +1,35 @@
+{
+  "version": 25,
+  "note": "修正代码标识符重命名实验的语义保持条件前的内容快照。",
+  "cards": [
+    {
+      "id": "code-011",
+      "category": "vulnerabilities",
+      "question": "如何检查漏洞模型是否只学会了项目或命名习惯？",
+      "answer": "结合项目级切分、变量重命名和特征消融观察效果变化。",
+      "createdAt": 0,
+      "topic": "code-vulnerability",
+      "knowledgeArea": "13",
+      "level": "实践",
+      "tags": [
+        "捷径",
+        "代码模型"
+      ],
+      "explanation": "这些分析提示模型依赖哪些表面特征，但不能单独证明因果关系。",
+      "example": "统一变量命名后重新评估，检查模型是否仍能识别相同缺陷。",
+      "sources": [
+        {
+          "id": "codexglue-defects",
+          "title": "CodeXGLUE 缺陷检测任务",
+          "url": "https://github.com/microsoft/CodeXGLUE/blob/main/Code-Code/Defect-detection/README.md",
+          "type": "开源基准",
+          "evidence": "application",
+          "sourceCardId": "code-011"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

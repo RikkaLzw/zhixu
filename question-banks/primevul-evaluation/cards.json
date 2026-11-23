@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "primevul-evaluation",
+    "title": "PrimeVul：标注质量与实用评估",
+    "url": "https://arxiv.org/html/2403.18624",
+    "type": "研究论文",
+    "note": "根据逐题所列资料自行整理简体中文问答，示例为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "primeeval-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞数据集",
+      "knowledgePoint": "修复提交的标注噪声",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能把漏洞修复提交中修改的每个函数都自动标为有漏洞？",
+      "answer": "提交还可能修改周边功能或测试等代码，并非每个变更函数都包含同一个漏洞。",
+      "explanation": "PrimeVul 论文将这一假设视为旧数据集标签噪声的来源。",
+      "example": "同一次修复同时修改漏洞函数和调用者的普通逻辑。",
+      "tags": [
+        "修复提交的标注噪声",
+        "PrimeVul"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2403.18624"
+    },
+    {
+      "id": "primeeval-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞数据集",
+      "knowledgePoint": "OneFunc标注假设",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PrimeVul-OneFunc 如何利用修复提交中修改的函数数量辅助标注？",
+      "answer": "它将安全相关提交中唯一发生变更的函数视为漏洞函数候选。",
+      "explanation": "这是自动标注启发式，并不保证每条标签都绝对正确。",
+      "example": "一个安全提交只修改一个函数时，该函数可进入候选集。",
+      "tags": [
+        "OneFunc标注假设",
+        "PrimeVul"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2403.18624"
+    },
+    {
+      "id": "primeeval-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞模型评估",
+      "knowledgePoint": "VD-S指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PrimeVul 论文的 Vulnerability Detection Score（VD-S）衡量什么？",
+      "answer": "它衡量误报率不超过指定上限时的漏报率。",
+      "explanation": "论文示例使用 0.5% 的误报率上限；上限和评估方法应一并报告。",
+      "example": "比较固定误报预算下两个漏洞模型的漏报率。",
+      "tags": [
+        "VD-S指标",
+        "PrimeVul"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2403.18624"
+    },
+    {
+      "id": "primeeval-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞模型评估",
+      "knowledgePoint": "成对预测偏向",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PrimeVul 成对评估的 P-V 和 P-B 分别表示什么？",
+      "answer": "P-V 是将漏洞与修复版本都判为有漏洞；P-B 是将两者都判为无漏洞。",
+      "explanation": "两种结果都没能正确区分这一对版本。",
+      "example": "分别统计模型一概报警与一概放行的成对结果。",
+      "tags": [
+        "成对预测偏向",
+        "PrimeVul"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2403.18624"
+    },
+    {
+      "id": "primeeval-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞模型评估",
+      "knowledgePoint": "成对预测反转",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PrimeVul 成对评估中 P-R 表示什么？",
+      "answer": "模型把漏洞版本判为无漏洞，同时把修复版本判为有漏洞。",
+      "explanation": "两个标签相对于该对样本的真实标签都被反转。",
+      "example": "一对函数的两个预测都与预期相反。",
+      "tags": [
+        "成对预测反转",
+        "PrimeVul"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2403.18624"
+    },
+    {
+      "id": "primeeval-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞模型评估",
+      "knowledgePoint": "成对样本选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 PrimeVul 的成对测试子集不能直接代表所有漏洞函数？",
+      "answer": "论文只纳入有对应修复版本且文本相似度达到设定条件的函数对。",
+      "explanation": "例如被修复提交直接删除的函数可能没有可配对版本。",
+      "example": "报告成对评估时，同时说明样本筛选条件。",
+      "tags": [
+        "成对样本选择",
+        "PrimeVul"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/2403.18624"
+    }
+  ]
+}

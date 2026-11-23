@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "postgresql-datetime-timezone",
+    "title": "PostgreSQL 17 文档：时间类型与时区",
+    "url": "https://www.postgresql.org/docs/17/datatype-datetime.html",
+    "type": "官方文档或教材",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以注明版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgtime-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 时间与时区",
+      "knowledgePoint": "无时区类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 已确定为 timestamp without time zone 的输入若带有 +08 偏移，如何处理该偏移？",
+      "answer": "该类型忽略输入中的时区指示，保留输入中的日期和时钟字段。",
+      "explanation": "类型已经确定后，不会根据偏移自动转换时间。",
+      "example": "timestamp '2024-01-02 09:00:00+08' 保留 09:00。",
+      "tags": [
+        "PostgreSQL",
+        "无时区类型"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/datatype-datetime.html"
+    },
+    {
+      "id": "pgtime-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 时间与时区",
+      "knowledgePoint": "有时区存储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的 timestamp with time zone 是否保存原输入的时区名称？",
+      "answer": "不保存；输入时间按偏移转换为 UTC 存储，输出按当前会话时区显示。",
+      "explanation": "需要保留原时区名称时，可另行存储该名称。",
+      "example": "同一时间点可在不同会话时区显示为不同时钟值。",
+      "tags": [
+        "PostgreSQL",
+        "有时区存储"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/datatype-datetime.html"
+    },
+    {
+      "id": "pgtime-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 时间与时区",
+      "knowledgePoint": "缺省输入时区",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 解析 timestamp with time zone 输入但输入未写时区时，通常采用什么时区？",
+      "answer": "采用当前会话的 TimeZone 设置，再转换成内部时间点。",
+      "explanation": "因此不同会话设置可能将同一无偏移输入解释成不同时间点。",
+      "example": "TimeZone 为 UTC 时，输入 09:00 按 UTC 解释。",
+      "tags": [
+        "PostgreSQL",
+        "缺省输入时区"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/datatype-datetime.html"
+    },
+    {
+      "id": "pgtime-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 时间与时区",
+      "knowledgePoint": "本地时间转时间点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 中无时区 timestamp AT TIME ZONE zone 的作用是什么？",
+      "answer": "把该日期和钟表时间解释为指定时区的本地时间，得到 timestamp with time zone。",
+      "explanation": "结果代表一个时间点，显示时仍受会话时区影响。",
+      "example": "上海本地 09:00 对应 UTC 01:00。",
+      "tags": [
+        "PostgreSQL",
+        "本地时间转时间点"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-datetime.html#FUNCTIONS-DATETIME-ZONECONVERT"
+    },
+    {
+      "id": "pgtime-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 时间与时区",
+      "knowledgePoint": "时间点转本地时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 中 timestamptz AT TIME ZONE zone 的返回类型和含义是什么？",
+      "answer": "返回 timestamp without time zone，表示该时间点在指定时区的本地钟表时间。",
+      "explanation": "结果是当地时钟字段，本身不再带时区。",
+      "example": "UTC 01:00 转成上海本地 09:00。",
+      "tags": [
+        "PostgreSQL",
+        "时间点转本地时间"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-datetime.html#FUNCTIONS-DATETIME-ZONECONVERT"
+    },
+    {
+      "id": "pgtime-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 时间与时区",
+      "knowledgePoint": "实时时钟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 clock_timestamp() 与 now() 对长事务中的当前时间有什么区别？",
+      "answer": "clock_timestamp() 返回调用时的实际时钟时间；now() 等同 transaction_timestamp()，保持事务开始时刻。",
+      "explanation": "实际时钟读数可能受到系统时钟调整影响。",
+      "example": "测量经过时间时先明确所需时钟语义。",
+      "tags": [
+        "PostgreSQL",
+        "实时时钟"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT"
+    },
+    {
+      "id": "pgtime-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 时间与时区",
+      "knowledgePoint": "夏令时运算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 对有时区时间加 interval 1 day 与加 interval 24 hours，跨夏令时切换时一定相同吗？",
+      "answer": "不一定；按日历加一天保持本地时钟时间，加 24 小时则可能落在不同本地时刻。",
+      "explanation": "差异发生在会话时区适用夏令时切换时。",
+      "example": "跨春季切换时，本地 12:00 加一天可能只经过 23 小时。",
+      "tags": [
+        "PostgreSQL",
+        "夏令时运算"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-datetime.html"
+    },
+    {
+      "id": "pgtime-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 时间与时区",
+      "knowledgePoint": "指定时区截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 对 timestamptz 使用 date_trunc 按天截断时，怎样指定计算日界线的时区？",
+      "answer": "可传入第三个时区参数；不指定时使用会话 TimeZone。",
+      "explanation": "截断后的结果仍是带时区的时间点。",
+      "example": "date_trunc('day', value, 'UTC') 以 UTC 午夜为界。",
+      "tags": [
+        "PostgreSQL",
+        "指定时区截断"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-datetime.html#FUNCTIONS-DATETIME-TRUNC"
+    },
+    {
+      "id": "pgtime-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PostgreSQL 时间与时区",
+      "knowledgePoint": "时间戳取秒",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 的 EXTRACT(EPOCH FROM timestamptz) 返回什么？",
+      "answer": "返回相对于 1970-01-01 00:00:00 UTC 的秒数。",
+      "explanation": "不带时区的 timestamp 取 epoch 不考虑时区和夏令时规则。",
+      "example": "1970-01-01 00:00:01 UTC 对应 1 秒。",
+      "tags": [
+        "PostgreSQL",
+        "时间戳取秒"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/functions-datetime.html#FUNCTIONS-DATETIME-EXTRACT"
+    }
+  ]
+}

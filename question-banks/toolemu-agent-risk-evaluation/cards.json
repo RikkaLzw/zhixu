@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "toolemu-agent-risk-evaluation",
+    "title": "ToolEmu 原论文 v2：工具模拟与风险评估",
+    "url": "https://arxiv.org/pdf/2309.15817v2",
+    "type": "官方文档、标准或固定版本论文",
+    "note": "依据逐题引用的资料自行整理，示例自编；具体行为以指定版本和前提为准。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "toolemu-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ToolEmu 智能体风险评估",
+      "knowledgePoint": "模拟环境",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolEmu 使用语言模型模拟什么，以测试带工具的 Agent？",
+      "answer": "模拟工具执行、环境状态及返回观察，从而生成多轮交互轨迹。",
+      "explanation": "模拟可降低构建大量专用环境的成本，但可能与真实工具行为不一致。",
+      "example": "在模拟环境中测试调用邮件或文件工具的行为。",
+      "tags": [
+        "ToolEmu 智能体风险评估",
+        "模拟环境"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.15817v2"
+    },
+    {
+      "id": "toolemu-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ToolEmu 智能体风险评估",
+      "knowledgePoint": "不充分指令",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolEmu 论文的基准重点考查哪类用户指令？",
+      "answer": "用户意图善意，但指令存在任务信息或安全约束未充分说明的情况。",
+      "explanation": "该论文的重点不是假定用户主动要求造成损害。",
+      "example": "任务没有说明哪些文件可以安全清理。",
+      "tags": [
+        "ToolEmu 智能体风险评估",
+        "不充分指令"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.15817v2"
+    },
+    {
+      "id": "toolemu-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ToolEmu 智能体风险评估",
+      "knowledgePoint": "对抗模拟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolEmu 的对抗式模拟器主要怎样增加发现风险的机会？",
+      "answer": "根据测试场景构造更可能暴露 Agent 失败的模拟环境状态。",
+      "explanation": "仍需检查环境与轨迹是否有现实可行性。",
+      "example": "在任务上下文中设置可能引发误操作的状态。",
+      "tags": [
+        "ToolEmu 智能体风险评估",
+        "对抗模拟"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.15817v2"
+    },
+    {
+      "id": "toolemu-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ToolEmu 智能体风险评估",
+      "knowledgePoint": "风险评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolEmu 的自动安全评估器主要分析什么？",
+      "answer": "检查模拟交互轨迹中的潜在危险行为和后果，并评估风险严重程度。",
+      "explanation": "其结果依赖评估模型和评分提示，不能自动替代人工核验。",
+      "example": "审阅工具调用是否可能造成数据损失。",
+      "tags": [
+        "ToolEmu 智能体风险评估",
+        "风险评估"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.15817v2"
+    },
+    {
+      "id": "toolemu-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ToolEmu 智能体风险评估",
+      "knowledgePoint": "有用与安全",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolEmu 为什么同时评估 Agent 的 helpfulness 和 safety？",
+      "answer": "前者衡量安全完成用户任务的程度，后者衡量潜在风险及其严重程度。",
+      "explanation": "只看任务是否完成可能忽略危险操作。",
+      "example": "比较两个完成任务程度相近但风险不同的轨迹。",
+      "tags": [
+        "ToolEmu 智能体风险评估",
+        "有用与安全"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.15817v2"
+    },
+    {
+      "id": "toolemu-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "ToolEmu 智能体风险评估",
+      "knowledgePoint": "模拟有效性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolEmu 中识别到的模拟风险轨迹能否直接当作真实环境中已经发生的事故？",
+      "answer": "不能；模拟结果需要核查其环境假设与真实工具行为是否可实现。",
+      "explanation": "论文通过人工评估真实性，并对部分示例做真实环境复现。",
+      "example": "对高风险轨迹进行人工核验与受控复现。",
+      "tags": [
+        "ToolEmu 智能体风险评估",
+        "模拟有效性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2309.15817v2"
+    }
+  ]
+}

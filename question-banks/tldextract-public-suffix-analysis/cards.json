@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "tldextract-public-suffix-analysis",
+    "title": "tldextract 5.3.0：公共后缀与域名分析",
+    "url": "https://github.com/john-kurkowski/tldextract/blob/5.3.0/README.md",
+    "type": "固定版本论文、官方文档与数据规范",
+    "note": "依据逐题引用的资料自行整理；示例为自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "tldsec-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "公共后缀与网址特征",
+      "knowledgePoint": "解析结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tldextract 通常把域名拆成哪三部分？",
+      "answer": "拆成子域、注册域主体和公共后缀。",
+      "explanation": "具体结果依赖使用的 Public Suffix List。",
+      "example": "forums.bbc.co.uk 可拆为 forums、bbc 和 co.uk。",
+      "tags": [
+        "公共后缀与网址特征",
+        "解析结果"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/john-kurkowski/tldextract/blob/5.3.0/README.md"
+    },
+    {
+      "id": "tldsec-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "公共后缀与网址特征",
+      "knowledgePoint": "可注册域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tldextract 5.3.0 的 top_domain_under_public_suffix 通常返回什么？",
+      "answer": "返回紧邻公共后缀的域名部分及该公共后缀。",
+      "explanation": "如果没有可用的公共后缀或没有其上一层域名，则返回空字符串。",
+      "example": "forums.bbc.co.uk 的结果为 bbc.co.uk。",
+      "tags": [
+        "公共后缀与网址特征",
+        "可注册域"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/john-kurkowski/tldextract/blob/5.3.0/README.md"
+    },
+    {
+      "id": "tldsec-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "公共后缀与网址特征",
+      "knowledgePoint": "IP解析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tldextract 5.3.0 遇到普通 IPv4 地址或未识别后缀的名称时，能否假定可注册域字段非空？",
+      "answer": "不能；这些输入的 suffix 和 top_domain_under_public_suffix 通常为空。",
+      "explanation": "空结果不单独证明输入恶意或不可解析；IP 与域名应按各自类型处理。",
+      "example": "127.0.0.1 的 suffix 为空。",
+      "tags": [
+        "公共后缀与网址特征",
+        "IP解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/john-kurkowski/tldextract/blob/5.3.0/README.md"
+    },
+    {
+      "id": "tldsec-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "公共后缀与网址特征",
+      "knowledgePoint": "私有后缀默认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "tldextract 5.3.0 默认与启用私有后缀时，waiterrant.blogspot.com 的公共后缀分别是什么？",
+      "answer": "默认是 com；启用 include_psl_private_domains 后是 blogspot.com。",
+      "explanation": "设置变化会影响按可注册域聚合的网址数据。",
+      "example": "启用私有后缀后，可注册域结果为 waiterrant.blogspot.com。",
+      "tags": [
+        "公共后缀与网址特征",
+        "私有后缀默认"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/john-kurkowski/tldextract/blob/5.3.0/README.md"
+    },
+    {
+      "id": "tldsec-007",
+      "category": "detection",
+      "level": "实践",
+      "subtopic": "公共后缀与网址特征",
+      "knowledgePoint": "离线后缀表",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "tldextract 的 TLDExtract(suffix_list_urls=()) 怎样获取后缀数据？",
+      "answer": "不从网络地址更新后缀表，而使用随包提供的快照。",
+      "explanation": "快照可能随版本变动；需要可复现时应记录版本和后缀表来源。",
+      "example": "离线环境固定包版本后进行域名解析。",
+      "tags": [
+        "公共后缀与网址特征",
+        "离线后缀表"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/john-kurkowski/tldextract/blob/5.3.0/README.md"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "least-to-most-reasoning",
+    "title": "Least-to-Most 原论文 v3：分解与顺序求解",
+    "url": "https://arxiv.org/abs/2205.10625v3",
+    "type": "论文与官方技术文档",
+    "note": "根据所引论文或固定版本官方文档自行整理；例子为自编，使用条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "leastmost-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Agent 子问题分解与求解",
+      "knowledgePoint": "历史答案复用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Least-to-Most 的顺序求解阶段如何利用已解决的子问题？",
+      "answer": "把先前子问题及其答案加入后续求解提示。",
+      "explanation": "后续子问题因此可以基于已得到的中间结果。",
+      "example": "先算单次行程时间，再用该结果求多次行程时间。",
+      "tags": [
+        "Agent 子问题分解与求解",
+        "历史答案复用"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.10625v3"
+    },
+    {
+      "id": "leastmost-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 子问题分解与求解",
+      "knowledgePoint": "难度泛化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Least-to-Most 论文讨论的 easy-to-hard 泛化指什么？",
+      "answer": "用较简单的示例帮助模型解决比示例更复杂的问题。",
+      "explanation": "论文展示的是特定模型和任务上的结果，不保证所有任务都有效。",
+      "example": "示例包含较短序列，测试包含更长序列。",
+      "tags": [
+        "Agent 子问题分解与求解",
+        "难度泛化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.10625v3"
+    },
+    {
+      "id": "leastmost-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 子问题分解与求解",
+      "knowledgePoint": "模型训练要求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Least-to-Most 原论文的两个阶段是否依赖对模型进行微调？",
+      "answer": "不依赖；论文使用少样本提示完成分解和子问题求解。",
+      "explanation": "方法可以与其他提示或训练技术组合。",
+      "example": "通过示例指导模型拆分问题而不更新权重。",
+      "tags": [
+        "Agent 子问题分解与求解",
+        "模型训练要求"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.10625v3"
+    },
+    {
+      "id": "leastmost-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 子问题分解与求解",
+      "knowledgePoint": "与思维链结合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Least-to-Most 能与思维链或自一致性结合吗？",
+      "answer": "能；论文说明它可以与这些提示或解码方法结合。",
+      "explanation": "是否有收益应在目标任务上验证。",
+      "example": "对子问题使用思维链生成答案。",
+      "tags": [
+        "Agent 子问题分解与求解",
+        "与思维链结合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.10625v3"
+    },
+    {
+      "id": "leastmost-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Agent 子问题分解与求解",
+      "knowledgePoint": "分解质量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "把复杂任务拆成子问题是否足以保证任务成功？",
+      "answer": "不能；子问题可能遗漏必要步骤、顺序不当或被错误求解。",
+      "explanation": "应检查分解是否覆盖任务目标和依赖关系。",
+      "example": "计划缺少验证输入来源的一步。",
+      "tags": [
+        "Agent 子问题分解与求解",
+        "分解质量"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2205.10625v3"
+    }
+  ]
+}

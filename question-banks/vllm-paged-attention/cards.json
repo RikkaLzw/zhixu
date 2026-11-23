@@ -1,0 +1,236 @@
+{
+  "source": {
+    "id": "vllm-paged-attention",
+    "title": "PagedAttention 原论文与阿里公开面经",
+    "url": "https://arxiv.org/abs/2309.06180",
+    "type": "研究论文",
+    "note": "对照原论文整理；阿里面经提到 vLLM 与 PagedAttention，细节题为主题启发。原合集说明经历经过拼接与改写。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "vllmpage-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "KV块映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PagedAttention 中的块表有什么作用？",
+      "answer": "它记录每个请求的逻辑 KV 块与物理 KV 块之间的映射，使逻辑上相邻的块可以存放在不连续的物理位置。",
+      "explanation": "注意力计算按映射读取各块；这是原论文中的分页管理方式。",
+      "example": "请求的相邻逻辑块映射到显存中的不同位置。",
+      "tags": [
+        "KV块映射",
+        "PagedAttention",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.06180",
+      "referenceTitle": "PagedAttention 与 vLLM 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里大模型公开面经（合集整理并改写，经历为投稿者自述）；vLLM 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900308%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "vllmpage-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "末块剩余空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 PagedAttention 原论文的单序列示例中，哪部分 KV 缓存仍可能有未使用空间？",
+      "answer": "最后一个尚未填满的块可能包含暂未使用的槽位。",
+      "explanation": "按块分配减少浪费，但不意味着所有显存碎片都消失。",
+      "example": "每块容纳四个 token 时，最后只用了其中三个槽位。",
+      "tags": [
+        "末块剩余空间",
+        "PagedAttention",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.06180",
+      "referenceTitle": "PagedAttention 与 vLLM 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里大模型公开面经（合集整理并改写，经历为投稿者自述）；vLLM 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900308%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "vllmpage-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "KV块大小权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PagedAttention 中较大的 KV 块有什么潜在权衡？",
+      "answer": "较大的块可提高块内并行度和硬件利用率，但可能增加未用空间。",
+      "explanation": "实际吞吐和延迟受硬件、模型与请求长度分布影响，块大小应结合工作负载评估。",
+      "example": "比较不同块大小下的吞吐和末块浪费。",
+      "tags": [
+        "KV块大小权衡",
+        "PagedAttention",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.06180",
+      "referenceTitle": "PagedAttention 与 vLLM 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里大模型公开面经（合集整理并改写，经历为投稿者自述）；vLLM 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900308%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "vllmpage-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "并行采样共享前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一个提示词生成多个采样结果时，vLLM 原论文如何减少重复的提示词 KV 缓存？",
+      "answer": "多个输出序列可映射到同一份提示词 KV 物理块，分支生成时再按需要分开存储。",
+      "explanation": "共享能够减少内存占用，尤其在提示词较长时。",
+      "example": "同一输入生成两条不同回答，共用前缀缓存。",
+      "tags": [
+        "并行采样共享前缀",
+        "PagedAttention",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.06180",
+      "referenceTitle": "PagedAttention 与 vLLM 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里大模型公开面经（合集整理并改写，经历为投稿者自述）；vLLM 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900308%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "vllmpage-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "共享KV写时复制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 vLLM 原论文中，为什么多个输出需要修改同一个共享的未填满 KV 块时使用写时复制？",
+      "answer": "先为需要写入的分支复制该块，再分别更新，避免一个分支的新增内容影响其他分支。",
+      "explanation": "共享的完整前缀块不必因为输出分支而整体复制。",
+      "example": "两条采样从相同提示词分叉并写入不同 token。",
+      "tags": [
+        "共享KV写时复制",
+        "PagedAttention",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.06180",
+      "referenceTitle": "PagedAttention 与 vLLM 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里大模型公开面经（合集整理并改写，经历为投稿者自述）；vLLM 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900308%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "vllmpage-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "共享块引用计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "vLLM 原论文如何判断共享的物理 KV 块何时可以回收？",
+      "answer": "用引用计数记录有多少逻辑块指向该物理块；计数降到零时可释放。",
+      "explanation": "某个输出结束并不意味着其他仍在使用该块的输出也结束。",
+      "example": "一个 beam 候选被丢弃时，减少它所引用块的计数。",
+      "tags": [
+        "共享块引用计数",
+        "PagedAttention",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.06180",
+      "referenceTitle": "PagedAttention 与 vLLM 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里大模型公开面经（合集整理并改写，经历为投稿者自述）；vLLM 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900308%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "vllmpage-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "抢占后缓存恢复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "vLLM 原论文提出哪两种恢复被抢占序列 KV 缓存的方法？",
+      "answer": "可以将缓存块换出至 CPU 并在恢复时换回，也可以在重新调度时重算缓存。",
+      "explanation": "两种方案的成本取决于设备带宽和计算能力；这是论文中的设计，不代表所有版本的默认配置。",
+      "example": "显存块不足时暂停部分请求，再选择换回或重算。",
+      "tags": [
+        "抢占后缓存恢复",
+        "PagedAttention",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.06180",
+      "referenceTitle": "PagedAttention 与 vLLM 原论文",
+      "referenceType": "研究论文",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里大模型公开面经（合集整理并改写，经历为投稿者自述）；vLLM 主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900308%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

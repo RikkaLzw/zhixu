@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "ir-evaluation",
+    "title": "信息检索与 RAG 评估文档",
+    "url": "https://ir-measur.es/en/latest/measures.html",
+    "type": "技术文档",
+    "note": "依据逐题注明的资料及对应版本整理，示例为自行编写。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "ragmetric-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索评估",
+      "knowledgePoint": "Recall与命中",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "按照 TREC 常用口径，Recall@K 与 Success@K 有什么区别？",
+      "answer": "Recall@K 衡量前 K 项找回的已知相关文档比例；Success@K 判断前 K 项是否至少出现一个相关文档。",
+      "explanation": "有些资料将后一种口径也称为 Recall@K，因此报告时应写明定义。",
+      "example": "若已知相关文档有 4 篇，前 K 项找回 1 篇，召回率为 1/4，命中为 1。",
+      "tags": [
+        "Recall与命中",
+        "检索评估"
+      ],
+      "evidence": "source",
+      "reference": "https://ir-measur.es/en/latest/measures.html"
+    },
+    {
+      "id": "ragmetric-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "检索评估",
+      "knowledgePoint": "Precision@K",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "检索评估中的 Precision@K 衡量什么？",
+      "answer": "它衡量前 K 个结果中相关结果所占的比例。",
+      "explanation": "应明确相关性标注和结果不足 K 项时的实现口径。",
+      "example": "前 5 项中 2 项相关，Precision@5 为 2/5。",
+      "tags": [
+        "Precision@K",
+        "检索评估"
+      ],
+      "evidence": "source",
+      "reference": "https://ir-measur.es/en/latest/measures.html"
+    },
+    {
+      "id": "ragmetric-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索评估",
+      "knowledgePoint": "倒数排名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单个查询的 Reciprocal Rank 由什么决定？",
+      "answer": "由第一个相关结果的排名决定，其值是该排名的倒数。",
+      "explanation": "多个查询的倒数排名取平均得到 MRR；若无相关命中，通常记为 0。",
+      "example": "第一个相关结果位于第 4 位，则倒数排名为 1/4。",
+      "tags": [
+        "倒数排名",
+        "检索评估"
+      ],
+      "evidence": "source",
+      "reference": "https://ir-measur.es/en/latest/measures.html"
+    },
+    {
+      "id": "ragmetric-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索评估",
+      "knowledgePoint": "分级相关性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "nDCG 相比只看是否命中的指标，还能反映什么？",
+      "answer": "它能利用分级相关性，并通过位置折损强调高相关结果排在前面。",
+      "explanation": "nDCG 将实际排序的累计增益与理想排序比较。",
+      "example": "高度相关公告排在一般相关公告之前时，排序得分可能更高。",
+      "tags": [
+        "分级相关性",
+        "检索评估"
+      ],
+      "evidence": "source",
+      "reference": "https://ir-measur.es/en/latest/measures.html"
+    },
+    {
+      "id": "ragmetric-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索评估",
+      "knowledgePoint": "相关标注缺口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么检索评估中的 Recall@K 依赖相关性标注？",
+      "answer": "分母需要已知的相关文档集合；漏标会使得分不能完整反映真实召回。",
+      "explanation": "跨系统比较时应说明标注范围和未标注文档如何处理。",
+      "example": "测试集只标了 2 篇公告，但语料中还有一篇未标注的相关公告。",
+      "tags": [
+        "相关标注缺口",
+        "检索评估"
+      ],
+      "evidence": "source",
+      "reference": "https://ir-measur.es/en/latest/measures.html"
+    },
+    {
+      "id": "ragmetric-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索评估",
+      "knowledgePoint": "上下文精确率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ragas 的 Context Precision 主要关注检索结果的什么？",
+      "answer": "它关注相关片段是否在检索结果中排得靠前。",
+      "explanation": "该指标按相关片段位置计算，不能直接当成普通的 Precision@K。",
+      "example": "无关片段排在相关片段前面，分数可能降低。",
+      "tags": [
+        "上下文精确率",
+        "检索评估"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_precision/"
+    },
+    {
+      "id": "ragmetric-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检索评估",
+      "knowledgePoint": "上下文召回率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ragas 的 LLM Context Recall 如何利用参考答案？",
+      "answer": "它检查参考答案中的声明能否归因于检索上下文，并计算被支持声明的比例。",
+      "explanation": "这是一种基于参考答案声明的上下文覆盖估计。",
+      "example": "参考答案有两条事实，但检索片段只支持其中一条。",
+      "tags": [
+        "上下文召回率",
+        "检索评估"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/context_recall/"
+    }
+  ]
+}

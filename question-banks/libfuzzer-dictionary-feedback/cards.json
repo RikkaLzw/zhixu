@@ -1,0 +1,50 @@
+{
+  "source": {
+    "id": "libfuzzer-dictionary-feedback",
+    "title": "LLVM 20.1：libFuzzer 字典与反馈",
+    "url": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html",
+    "type": "论文、固定版本文档与源码",
+    "note": "根据逐题引用的资料自行整理；示例为自编，具体版本见题干。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fuzzdict-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "libFuzzer 字典与执行反馈",
+      "knowledgePoint": "字典行格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -dict 指定的字典文件中，怎样表示一个关键字条目？",
+      "answer": "可写 name=\"内容\" 或省略名称写成带引号的内容，也支持十六进制转义。",
+      "explanation": "以 # 开头的行与空行会被忽略。",
+      "example": "magic=\"\\x46\\x4f\\x4f\"。",
+      "tags": [
+        "libFuzzer 字典与执行反馈",
+        "字典行格式"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html#dictionaries"
+    },
+    {
+      "id": "fuzzdict-006",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "libFuzzer 字典与执行反馈",
+      "knowledgePoint": "迭代上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的 -runs=N 主要限制什么？",
+      "answer": "限制执行的单次测试运行次数；默认 -1 表示不按次数设上限。",
+      "explanation": "实际执行也可能受崩溃或其他停止条件影响。",
+      "example": "使用 -runs=1000 进行短时检查。",
+      "tags": [
+        "libFuzzer 字典与执行反馈",
+        "迭代上限"
+      ],
+      "evidence": "source",
+      "reference": "https://releases.llvm.org/20.1.0/docs/LibFuzzer.html#options"
+    }
+  ]
+}

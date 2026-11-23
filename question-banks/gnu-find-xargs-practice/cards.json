@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "gnu-find-xargs-practice",
+    "title": "GNU findutils：文件查找与批量命令",
+    "url": "https://man7.org/linux/man-pages/man1/find.1.html",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；具体实现和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "findxargs-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "搜索深度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU find 的 -maxdepth 1 限制了哪些搜索层级？",
+      "answer": "它只处理起始路径本身及其下一级条目，不继续进入更深的子目录。",
+      "explanation": "起始路径的深度为 0。",
+      "example": "find . -maxdepth 1 -type f 只列出当前目录中的普通文件。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "搜索深度"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "findxargs-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "忽略大小写",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU find 的 -name 和 -iname 在匹配文件名时有什么区别？",
+      "answer": "-name 按给定模式匹配文件名；-iname 使用不区分大小写的匹配。",
+      "explanation": "模式应按 shell 规则引用，避免提前展开。",
+      "example": "-iname '*.log' 可匹配 REPORT.LOG。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "忽略大小写"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "findxargs-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "修改时间范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "未指定 -daystart 且文件时间不在未来时，GNU find 的 -mtime 0 匹配什么？",
+      "answer": "它匹配距 find 启动不足 24 小时的文件修改时间。",
+      "explanation": "find 以完整 24 小时段计算，-mtime 0 不是“自然日今天”。",
+      "example": "今天凌晨以前修改、但距现在不足 24 小时的文件也可匹配。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "修改时间范围"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "findxargs-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "比较文件时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU find 的 -newer 参考文件 按什么时间比较？",
+      "answer": "它匹配修改时间比参考文件的修改时间更新的条目。",
+      "explanation": "参考文件自身不满足严格“更新于自身”的条件。",
+      "example": "可找出基准文件之后修改过的文件。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "比较文件时间"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "findxargs-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "剪枝目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU find 的 -prune 用于控制什么？",
+      "answer": "对目录使用时，它阻止 find 进入该目录的子树。",
+      "explanation": "常用 -path 结合 -prune 和 -o 跳过指定目录；-depth 模式下剪枝无效。",
+      "example": "查找项目文件时可以跳过 .git 子目录。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "剪枝目录"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "findxargs-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "符号链接策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU find 的默认 -P 与 -L 对符号链接有什么主要区别？",
+      "answer": "-P 默认不跟随符号链接；-L 通常跟随链接并按目标属性检查。",
+      "explanation": "悬空链接等特殊情况需要额外处理。",
+      "example": "使用 -L 时，指向普通文件的链接可按普通文件类型匹配。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "符号链接策略"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "findxargs-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "空文件与空目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU find 的 -empty 只会匹配零字节普通文件吗？",
+      "answer": "不会；它也可匹配空目录。",
+      "explanation": "若只要零字节普通文件，可同时指定 -type f。",
+      "example": "find . -type f -empty 查找空普通文件。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "空文件与空目录"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "findxargs-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "逻辑优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU find 表达式中隐含的“与”和 -o（或），哪个优先级更高？",
+      "answer": "隐含的“与”优先级更高；需要不同分组时可用引用或转义的括号。",
+      "explanation": "动作也属于表达式，优先级会影响哪些路径被打印。",
+      "example": "用括号组合 -name '*.txt' 与 -name '*.log' 后再统一 -print。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "逻辑优先级"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/find.1.html"
+    },
+    {
+      "id": "findxargs-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "空输入处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU xargs 的 -r 对空输入有什么作用？",
+      "answer": "输入没有待处理项时不运行目标命令。",
+      "explanation": "GNU xargs 默认空输入时仍会运行一次命令。",
+      "example": "在可能没有搜索结果的管道中可使用 -r。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "空输入处理"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/xargs.1.html"
+    },
+    {
+      "id": "findxargs-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "批次大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU xargs 的 -n 10 对每次运行目标命令有什么约束？",
+      "answer": "每次最多从输入中取 10 个参数；受命令长度等限制，实际可能更少。",
+      "explanation": "它不是保证每次恰好 10 个输入参数。",
+      "example": "23 个输入项可以分为多个调用。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "批次大小"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/xargs.1.html"
+    },
+    {
+      "id": "findxargs-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 文件查找与批处理",
+      "knowledgePoint": "并行批处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GNU xargs 的 -P 4 对批量运行的命令有什么作用？",
+      "answer": "它最多同时运行 4 个子进程。",
+      "explanation": "可与 -n 配合产生多个批次；并行时完成顺序可能与输入顺序不同。",
+      "example": "使用 -n 1 -P 4 最多同时处理 4 项。",
+      "tags": [
+        "Linux 文件查找与批处理",
+        "并行批处理"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man1/xargs.1.html"
+    }
+  ]
+}

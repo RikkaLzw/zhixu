@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "linux-process-query-practice",
+    "title": "procps-ng 4.0.4 手册：进程查询与资源字段",
+    "url": "https://manpages.ubuntu.com/manpages/resolute/en/man1/ps.1.html",
+    "type": "官方文档或教材",
+    "note": "依据 Ubuntu 26.04 的 procps-ng 4.0.4 手册自行整理；不同 ps 实现的选项和输出可能不同。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "psquery-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "指定进程和输出列",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "procps-ng 的 ps -p PID -o pid,ppid,stat,args 主要显示什么？",
+      "answer": "它选择指定 PID，并输出进程号、父进程号、状态和命令行等指定列。",
+      "explanation": "-o 控制输出格式，-p 按 PID 选择进程。",
+      "example": "用 ps -p 123 -o pid,ppid,stat,args 排查进程。",
+      "tags": [
+        "Linux 进程查询",
+        "指定进程和输出列"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/ps.1.html"
+    },
+    {
+      "id": "psquery-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "全部进程",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "procps-ng 的 ps -e 选择什么进程？",
+      "answer": "它选择当前可见的所有进程；仍可用其他选项控制显示列。",
+      "explanation": "ps 的结果是查询时的进程快照。",
+      "example": "ps -e -o pid,comm 列出所有进程的 PID 和命令名。",
+      "tags": [
+        "Linux 进程查询",
+        "全部进程"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/ps.1.html"
+    },
+    {
+      "id": "psquery-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "CPU 平均占用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 4.0.4 的 ps %CPU 是最近一秒的瞬时占用率吗？",
+      "answer": "不是；它以进程累计 CPU 时间除以进程已运行时间，表示生命周期内的平均占用。",
+      "explanation": "短时间内的负载变化可能不会充分反映在该平均值中。",
+      "example": "排查刚出现的负载时应关注采样区间。",
+      "tags": [
+        "Linux 进程查询",
+        "CPU 平均占用"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/ps.1.html"
+    },
+    {
+      "id": "psquery-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "虚拟与驻留内存",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "procps-ng 的 ps 中 VSZ 与 RSS 分别描述什么？",
+      "answer": "VSZ 表示进程的虚拟内存大小；RSS 表示驻留在物理内存中的非交换部分。",
+      "explanation": "RSS 可能包含共享页；此版本的 VSZ 当前不含设备映射。不要将各进程 RSS 简单相加当作去重后的物理占用。",
+      "example": "比较进程 VSZ 与 RSS，判断虚拟地址空间和驻留页的区别。",
+      "tags": [
+        "Linux 进程查询",
+        "虚拟与驻留内存"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/ps.1.html"
+    },
+    {
+      "id": "psquery-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "休眠状态",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "procps-ng 的 ps 进程状态 S 与 D 分别表示什么？",
+      "answer": "S 表示可中断休眠；D 表示不可中断休眠，通常与 I/O 等待有关。",
+      "explanation": "具体等待原因仍需结合系统状态排查。",
+      "example": "进程长期处于 D 状态时可进一步检查 I/O。",
+      "tags": [
+        "Linux 进程查询",
+        "休眠状态"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/ps.1.html"
+    },
+    {
+      "id": "psquery-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "线程显示",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "procps-ng 的 ps -L -p PID 有什么用途？",
+      "answer": "它显示选定进程中的线程，并可显示线程 ID 等列。",
+      "explanation": "进程和线程的展示方式由选项及输出格式共同决定。",
+      "example": "用 ps -L -p 123 查看指定进程的线程。",
+      "tags": [
+        "Linux 进程查询",
+        "线程显示"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/ps.1.html"
+    },
+    {
+      "id": "psquery-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "按 CPU 排序",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "procps-ng 的 ps -eo pid,pcpu,args --sort=-pcpu 按什么顺序展示结果？",
+      "answer": "它选择全部进程，并按 pcpu 数值从高到低排序。",
+      "explanation": "排序依据的是 ps 自身的 CPU 字段口径。",
+      "example": "用该命令寻找平均 CPU 占用较高的进程。",
+      "tags": [
+        "Linux 进程查询",
+        "按 CPU 排序"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/ps.1.html"
+    },
+    {
+      "id": "psquery-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "命令行匹配",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "procps-ng 的 pgrep -f 模式与默认 pgrep 模式匹配的对象有什么区别？",
+      "answer": "默认匹配进程名；-f 改为匹配完整命令行。",
+      "explanation": "匹配表达式仍按 pgrep 的正则表达式规则解释。",
+      "example": "当脚本名出现在参数中时可使用 -f 查找。",
+      "tags": [
+        "Linux 进程查询",
+        "命令行匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/pgrep.1.html"
+    },
+    {
+      "id": "psquery-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "精确匹配",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "procps-ng 的 pgrep -x 模式如何约束匹配？",
+      "answer": "它只选择名称与模式完全匹配的进程；配合 -f 时匹配整个命令行。",
+      "explanation": "-x 不改变其他筛选条件。",
+      "example": "pgrep -x sshd 避免只因名称含 sshd 子串而匹配。",
+      "tags": [
+        "Linux 进程查询",
+        "精确匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/pgrep.1.html"
+    },
+    {
+      "id": "psquery-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "按有效用户筛选",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "procps-ng 的 pgrep -u 用户名匹配进程的哪个用户身份？",
+      "answer": "它匹配进程的有效用户 ID；-U 则筛选真实用户 ID。",
+      "explanation": "两类 ID 在特权切换场景中可能不同。",
+      "example": "pgrep -u root sshd 筛选有效用户为 root 的匹配进程。",
+      "tags": [
+        "Linux 进程查询",
+        "按有效用户筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/pgrep.1.html"
+    },
+    {
+      "id": "psquery-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "无匹配状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "procps-ng 的 pgrep -c 模式没有匹配进程时，输出和退出状态是什么？",
+      "answer": "输出计数 0，并以非零状态退出。",
+      "explanation": "脚本同时使用计数和退出状态时需考虑无匹配情况。",
+      "example": "没有目标进程时，pgrep -c 仍会打印 0。",
+      "tags": [
+        "Linux 进程查询",
+        "无匹配状态"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/pgrep.1.html"
+    },
+    {
+      "id": "psquery-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 进程查询",
+      "knowledgePoint": "显示完整命令",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "procps-ng 的 pgrep -a 模式在进程号之外还显示什么？",
+      "answer": "它同时显示匹配进程的完整命令行。",
+      "explanation": "-a 改变显示内容；-f 改变匹配对象。",
+      "example": "用 pgrep -a 查看匹配 PID 对应的启动参数。",
+      "tags": [
+        "Linux 进程查询",
+        "显示完整命令"
+      ],
+      "evidence": "source",
+      "reference": "https://manpages.ubuntu.com/manpages/resolute/en/man1/pgrep.1.html"
+    }
+  ]
+}

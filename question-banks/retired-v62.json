@@ -1,0 +1,35 @@
+{
+  "version": 62,
+  "note": "澄清告警优先级旧题前的快照，用于保护个人编辑、来源和学习记录。",
+  "cards": [
+    {
+      "id": "suri-006",
+      "category": "operations",
+      "question": "为什么不能只用 EVE 规则名称训练告警优先级模型？",
+      "answer": "规则名称可能与既有处置结果高度绑定，使模型只复述旧规则。",
+      "createdAt": 0,
+      "topic": "security-telemetry",
+      "knowledgeArea": "17",
+      "level": "进阶",
+      "tags": [
+        "告警排序",
+        "基线"
+      ],
+      "explanation": "应验证模型是否从资产、行为和关联事件中获得额外价值。",
+      "example": "比较仅规则名称基线与加入资产和流上下文后的模型。",
+      "sources": [
+        {
+          "id": "suricata-eve",
+          "title": "Suricata EVE JSON 官方文档",
+          "url": "https://docs.suricata.io/en/latest/output/eve/eve-json-format.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "suri-006"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

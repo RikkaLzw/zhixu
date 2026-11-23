@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "ciciot2023-security-dataset",
+    "title": "CIC 官方资料：CICIoT2023 安全数据",
+    "url": "https://www.unb.ca/cic/datasets/iotdataset-2023.html",
+    "type": "论文、官方文档或数据集说明",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "ciciot-001",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CICIoT2023 数据集",
+      "knowledgePoint": "采集拓扑",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CICIoT2023 官方资料描述的攻击数据来自什么环境？",
+      "answer": "来自由 105 个设备组成的物联网拓扑，其中恶意 IoT 设备攻击其他 IoT 设备。",
+      "explanation": "这是实验拓扑，不等同于独立生产网络的全量流量。",
+      "example": "评估跨环境泛化时补充其他来源。",
+      "tags": [
+        "CICIoT2023 数据集",
+        "采集拓扑"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/iotdataset-2023.html"
+    },
+    {
+      "id": "ciciot-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CICIoT2023 数据集",
+      "knowledgePoint": "攻击范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CICIoT2023 官方资料将 33 种攻击归入哪七类？",
+      "answer": "DDoS、DoS、Recon、Web-based、Brute Force、Spoofing 和 Mirai。",
+      "explanation": "具体分类及实验数据版本应以发布说明为准。",
+      "example": "报告结果时说明使用粗类别还是更细的攻击标签。",
+      "tags": [
+        "CICIoT2023 数据集",
+        "攻击范围"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/iotdataset-2023.html"
+    },
+    {
+      "id": "ciciot-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "CICIoT2023 数据集",
+      "knowledgePoint": "数据形式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CICIoT2023 官方数据目录中的 PCAP 与 CSV 分别是什么？",
+      "answer": "PCAP 包含捕获的原始流量；CSV 包含从原始流量中提取的特征。",
+      "explanation": "特征文件不能替代对原始抓包及特征生成方法的理解。",
+      "example": "检查模型输入字段的来源及生成方式。",
+      "tags": [
+        "CICIoT2023 数据集",
+        "数据形式"
+      ],
+      "evidence": "source",
+      "reference": "https://www.unb.ca/cic/datasets/iotdataset-2023.html"
+    }
+  ]
+}

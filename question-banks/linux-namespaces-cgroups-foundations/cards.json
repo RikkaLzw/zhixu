@@ -1,0 +1,268 @@
+{
+  "source": {
+    "id": "linux-namespaces-cgroups-foundations",
+    "title": "Linux man-pages 与内核文档：命名空间和 cgroups v2",
+    "url": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
+    "type": "官方手册与内核文档",
+    "note": "依据 Linux man-pages namespaces(7)、pid_namespaces(7) 与内核 cgroups v2 文档逐题整理；不同内核版本的功能以对应文档为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "lxcg-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "命名空间用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 命名空间主要为进程隔离什么？",
+      "answer": "它隔离进程对某类全局资源的视图，例如进程 ID、网络设备或挂载点。",
+      "explanation": "不同类型的命名空间控制不同资源视图；它本身不是通用资源用量上限。",
+      "example": "网络命名空间可让进程看到独立的网络栈。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "命名空间用途"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/namespaces.7.html"
+    },
+    {
+      "id": "lxcg-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "网络命名空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux 网络命名空间隔离了进程可见的哪些主要对象？",
+      "answer": "它提供独立的网络设备、网络栈和端口号空间等视图。",
+      "explanation": "具体网络配置仍需在该命名空间中设置。",
+      "example": "两个网络命名空间可各自拥有名为 eth0 的接口。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "网络命名空间"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/namespaces.7.html"
+    },
+    {
+      "id": "lxcg-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "PID命名空间视图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "嵌套 PID 命名空间中的同一进程，其 PID 在不同层级中一定相同吗？",
+      "answer": "不一定；进程可在所在的 PID 命名空间及其祖先命名空间中具有不同 PID。",
+      "explanation": "PID 命名空间是分层的，进程能看到的进程集合取决于其命名空间层级。",
+      "example": "容器内进程可能是其命名空间中的 PID 1，同时在宿主机上有另一个 PID。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "PID命名空间视图"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pid_namespaces.7.html"
+    },
+    {
+      "id": "lxcg-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "PID命名空间init",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "新建 PID 命名空间中的第一个进程获得什么 PID？",
+      "answer": "它获得 PID 1，并充当该命名空间的 init 进程。",
+      "explanation": "命名空间内的孤儿子进程会被重新托管给适当的子收割进程；PID 1 退出还会影响该命名空间中的其他进程。",
+      "example": "容器入口进程通常是容器 PID 命名空间中的 PID 1。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "PID命名空间init"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pid_namespaces.7.html"
+    },
+    {
+      "id": "lxcg-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "挂载命名空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "挂载命名空间主要隔离进程对什么内容的视图？",
+      "answer": "它隔离挂载点列表，使不同命名空间中的进程可看到不同的文件系统挂载布局。",
+      "explanation": "挂载传播属性仍可能让部分挂载事件在命名空间之间传播。",
+      "example": "容器可使用自己的根文件系统挂载布局。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "挂载命名空间"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/namespaces.7.html"
+    },
+    {
+      "id": "lxcg-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "用户命名空间映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用户命名空间主要为进程隔离或映射哪类标识？",
+      "answer": "它隔离用户和组 ID；通过 UID/GID 映射，同一个进程可在不同用户命名空间中对应不同标识。",
+      "explanation": "命名空间内的身份不能直接等同于宿主机上的同一数值身份。",
+      "example": "容器内 UID 0 可映射为宿主机上的非零 UID。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "用户命名空间映射"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/namespaces.7.html"
+    },
+    {
+      "id": "lxcg-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "IPC命名空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux IPC 命名空间隔离了哪些常见 IPC 对象？",
+      "answer": "它隔离 System V IPC 对象和 POSIX 消息队列。",
+      "explanation": "这使不同 IPC 命名空间中的进程不会按同一全局集合查找这些对象。",
+      "example": "两个命名空间可分别创建同名的 System V IPC 标识。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "IPC命名空间"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/namespaces.7.html"
+    },
+    {
+      "id": "lxcg-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "UTS命名空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux UTS 命名空间隔离了哪两个常见名称？",
+      "answer": "主机名和 NIS 域名。",
+      "explanation": "它不等同于网络命名空间，也不会自动配置 DNS。",
+      "example": "容器可设置自己的主机名而不改变宿主机主机名。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "UTS命名空间"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/namespaces.7.html"
+    },
+    {
+      "id": "lxcg-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "cgroup v2层级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux cgroup v2 层级主要用来做什么？",
+      "answer": "它把进程组织成层级，并由控制器对 CPU、内存等资源进行组织或限制。",
+      "explanation": "cgroup v2 使用统一的层级；控制器可按层级启用。",
+      "example": "将服务进程放入一个 cgroup，再为该组配置资源控制器。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "cgroup v2层级"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/admin-guide/cgroup-v2.html"
+    },
+    {
+      "id": "lxcg-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "命名空间与cgroups区别",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Linux 命名空间与 cgroups 对容器分别解决什么问题？",
+      "answer": "命名空间隔离资源视图；cgroups 组织进程并控制或统计资源使用。",
+      "explanation": "容器通常组合使用两者，但它们不是同一种隔离机制。",
+      "example": "网络命名空间隔离网络栈，CPU 控制器限制或分配 CPU 时间。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "命名空间与cgroups区别"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/namespaces.7.html",
+      "supportingReferences": [
+        {
+          "id": "linux-cgroup-v2-ref",
+          "title": "Linux 内核文档：Control Group v2",
+          "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
+          "type": "内核文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "lxcg-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "CPU权重与配额",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "cgroup v2 的 cpu.weight 和 cpu.max 分别控制什么？",
+      "answer": "cpu.weight 按竞争关系比例分配 CPU；cpu.max 设置 CPU 带宽上限。",
+      "explanation": "权重不是硬配额，cpu.max 才用于限制周期内可用的 CPU 时间。",
+      "example": "给繁忙的两个 cgroup 设置不同权重，会按相对权重分配竞争中的 CPU。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "CPU权重与配额"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/admin-guide/cgroup-v2.html"
+    },
+    {
+      "id": "lxcg-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "内存高水位与硬限制",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "cgroup v2 的 memory.high 与 memory.max 有什么主要区别？",
+      "answer": "memory.high 是节流边界并会增加直接回收压力；memory.max 是硬限制，达到后可能触发 OOM 处理。",
+      "explanation": "memory.high 不会因为越过该值本身直接触发 OOM kill。",
+      "example": "可用 memory.high 管理持续压力，并用 memory.max 设置最终上限。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "内存高水位与硬限制"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/admin-guide/cgroup-v2.html"
+    },
+    {
+      "id": "lxcg-013",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Linux 命名空间与 cgroups",
+      "knowledgePoint": "pids控制器上限",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "cgroup v2 的 pids.max 已达到上限时，新建进程通常会怎样？",
+      "answer": "fork() 或 clone() 创建任务会因违反 PID 控制器策略而失败，通常返回 EAGAIN。",
+      "explanation": "pids.max 是创建数量限制；它不会阻止把现有任务迁入该 cgroup。",
+      "example": "容器内进程创建子进程失败时，可检查 pids.current 与 pids.max。",
+      "tags": [
+        "Linux 命名空间与 cgroups",
+        "pids控制器上限"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/admin-guide/cgroup-v2.html"
+    }
+  ]
+}

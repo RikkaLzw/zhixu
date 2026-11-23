@@ -1,0 +1,221 @@
+{
+  "source": {
+    "id": "jq-json-command-practice",
+    "title": "jq 1.8 手册：JSON 命令行处理",
+    "url": "https://jqlang.org/manual/v1.8/",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "jqjson-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "对象字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "jq 1.8 中对 JSON 对象使用 .name，若该键不存在会产生什么？",
+      "answer": "产生 null。",
+      "explanation": "这条规则针对对象字段访问；其他类型可能产生错误。",
+      "example": "对 {} 使用 .name 会得到 null。",
+      "tags": [
+        "jq JSON 处理",
+        "对象字段"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "数组展开",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "jq 的 .[] 作用于 JSON 数组时，产生什么？",
+      "answer": "依次产生数组的每个元素，作为输出值流。",
+      "explanation": "它不是自动输出一个包含所有元素的新数组。",
+      "example": "[1,2] | .[] 产生 1 和 2 两个输出。",
+      "tags": [
+        "jq JSON 处理",
+        "数组展开"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "过滤器管道",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "jq 的过滤器 a | b 如何处理 a 产生的多个值？",
+      "answer": "将 a 的每个输出分别作为 b 的输入。",
+      "explanation": "因此一个过滤器可以产生零个、一个或多个下游输入。",
+      "example": ".[] | .name 分别读取数组中每个对象的 name。",
+      "tags": [
+        "jq JSON 处理",
+        "过滤器管道"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "条件筛选",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "jq 的 select(条件) 对不满足条件的输入值如何处理？",
+      "answer": "不输出该输入值。",
+      "explanation": "满足条件的输入值原样通过。",
+      "example": ".[] | select(.status == \"ok\") 保留状态为 ok 的元素。",
+      "tags": [
+        "jq JSON 处理",
+        "条件筛选"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "原始字符串输出",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "jq 的 -r 对字符串输出有什么作用？",
+      "answer": "输出字符串本身，而不是带引号和转义的 JSON 字符串文本。",
+      "explanation": "非字符串输出仍按 JSON 形式输出。",
+      "example": "字符串 hello 输出为 hello，而不是 \"hello\"。",
+      "tags": [
+        "jq JSON 处理",
+        "原始字符串输出"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "紧凑输出",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "jq 的 -c 对 JSON 输出格式有什么影响？",
+      "answer": "将每个输出值紧凑地写在一行，而非默认的美化格式。",
+      "explanation": "多个输出值仍分别输出，不会自动组合成一个数组。",
+      "example": "jq -c . 可把每个对象压缩为一行。",
+      "tags": [
+        "jq JSON 处理",
+        "紧凑输出"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "传参类型",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "jq 的 --arg 与 --argjson 向过滤器传参时有什么区别？",
+      "answer": "--arg 将值作为字符串；--argjson 把参数解析为 JSON 值。",
+      "explanation": "参数可在过滤器中通过对应变量名访问。",
+      "example": "--arg n 3 得到字符串 \"3\"，--argjson n 3 得到数字 3。",
+      "tags": [
+        "jq JSON 处理",
+        "传参类型"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "默认值与布尔假",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "jq 中 .enabled // true 遇到已有的 false 值时会输出什么？",
+      "answer": "输出 true；// 会在左侧没有非 false、非 null 输出时使用右侧。",
+      "explanation": "需要保留 false 时，应显式判断键是否存在或判断 null。",
+      "example": "输入 {\"enabled\":false} 时结果为 true。",
+      "tags": [
+        "jq JSON 处理",
+        "默认值与布尔假"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "键存在性",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "jq 中对象存在键且其值为 null 时，has(\"k\") 与 .k 分别如何表现？",
+      "answer": "has(\"k\") 为 true，而 .k 的结果为 null。",
+      "explanation": "因此只看 .k 的结果不能区分缺少键与键值为 null。",
+      "example": "{\"k\":null} 与 {} 读取 .k 都是 null，但 has(\"k\") 不同。",
+      "tags": [
+        "jq JSON 处理",
+        "键存在性"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "收集输入",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "jq 的 --slurp（-s）如何处理输入中的多个 JSON 文本？",
+      "answer": "将所有输入值收集为一个数组，再作为单次过滤器输入。",
+      "explanation": "不使用 -s 时，过滤器通常分别处理各输入值。",
+      "example": "输入 1 和 2，jq -s . 输出 [1,2]。",
+      "tags": [
+        "jq JSON 处理",
+        "收集输入"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    },
+    {
+      "id": "jqjson-011",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "jq JSON 处理",
+      "knowledgePoint": "退出状态",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "jq 1.8 的 -e 在最后输出值为 false 或 null 时通常返回什么状态？",
+      "answer": "返回 1；最后输出值既非 false 也非 null 时返回 0，没有有效结果时返回 4。",
+      "explanation": "语法错误和系统错误等另有退出状态。",
+      "example": "jq -e . 对 false 返回非零状态，可用于脚本判断。",
+      "tags": [
+        "jq JSON 处理",
+        "退出状态"
+      ],
+      "evidence": "source",
+      "reference": "https://jqlang.org/manual/v1.8/"
+    }
+  ]
+}

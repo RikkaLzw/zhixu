@@ -1,0 +1,199 @@
+{
+  "source": {
+    "id": "llm-memory",
+    "title": "Transformers 5.23.0 缓存、量化与 PagedAttention 资料",
+    "url": "https://huggingface.co/docs/transformers/v5.23.0/en/kv_cache",
+    "type": "技术文档与标准",
+    "note": "根据逐题注明的技术资料自行整理，示例为自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "llmmem-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "动态与静态缓存",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Transformers 5.23.0 中 DynamicCache 与 StaticCache 的容量管理有什么区别？",
+      "answer": "动态缓存随生成增长；静态缓存预分配最大容量。",
+      "explanation": "静态形状有利于编译优化，但可能浪费内存和计算；滑动窗口层还受窗口大小限制。",
+      "example": "不同长度请求使用固定上限缓存。",
+      "tags": [
+        "动态与静态缓存",
+        "推理内存"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/kv_cache"
+    },
+    {
+      "id": "llmmem-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "缓存卸载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "将 KV 缓存卸载到 CPU 通常有什么取舍？",
+      "answer": "它减少 GPU 显存占用，但数据在设备间传输可能降低生成吞吐。",
+      "explanation": "实际影响取决于模型、上下文长度和硬件。",
+      "example": "显存不足时尝试使用支持的 offloaded cache。",
+      "tags": [
+        "缓存卸载",
+        "推理内存"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/kv_cache"
+    },
+    {
+      "id": "llmmem-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "量化缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "量化 KV 缓存主要压缩什么？",
+      "answer": "它降低缓存中键和值的表示精度，以减少缓存内存占用。",
+      "explanation": "量化缓存不同于量化模型权重，两者可以分别考虑。",
+      "example": "长上下文生成时采用较低精度保存缓存。",
+      "tags": [
+        "量化缓存",
+        "推理内存"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/kv_cache"
+    },
+    {
+      "id": "llmmem-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "窗口缓存增长",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "滑动窗口注意力层的 KV 缓存为什么可能不随上下文无限增长？",
+      "answer": "达到窗口上限后，该层只需保留窗口范围内的相关缓存。",
+      "explanation": "这一结论只适用于实际采用滑动窗口的层和实现。",
+      "example": "窗口长度为固定值时，较旧位置可从该层缓存中移出。",
+      "tags": [
+        "窗口缓存增长",
+        "推理内存"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/kv_cache"
+    },
+    {
+      "id": "llmmem-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "KV分页管理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PagedAttention 主要针对大模型服务中的什么内存问题？",
+      "answer": "它按块管理 KV 缓存，减少因分配和重复保存造成的内存浪费。",
+      "explanation": "它是缓存管理与注意力访问方案，不是简单缩短模型上下文。",
+      "example": "多个请求的缓存块可按需分配和共享。",
+      "tags": [
+        "KV分页管理",
+        "推理内存"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2309.06180",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里大模型公开面经（合集整理并改写，经历为投稿者自述）；原帖提及 PagedAttention",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900308%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        },
+        {
+          "id": "company-tencent",
+          "title": "腾讯微信大模型一面（合集转载，经历为投稿者自述）；原帖提及 vLLM 和 PagedAttention",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900311%E3%80%91%E8%85%BE%E8%AE%AFWXG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "llmmem-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "推理内存",
+      "knowledgePoint": "权重量化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "大模型权重量化通常以什么换取较小的权重存储？",
+      "answer": "它用较低位宽表示权重，通常需要权衡数值误差与模型效果。",
+      "explanation": "运行速度和总显存还取决于算子、硬件、缓存及其他开销。",
+      "example": "把部分线性层权重从高精度表示换成 8 位表示。",
+      "tags": [
+        "权重量化",
+        "推理内存"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/quantization/overview"
+    },
+    {
+      "id": "llmmem-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "推理内存",
+      "knowledgePoint": "QLoRA基本思想",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "QLoRA 如何结合低位权重与 LoRA 进行适配？",
+      "answer": "它使用量化的冻结基座权重，并训练额外的低秩适配参数。",
+      "explanation": "量化格式、计算精度和实现支持需要分别确认。",
+      "example": "在 4 位基座上训练 LoRA 适配器。",
+      "tags": [
+        "QLoRA基本思想",
+        "推理内存"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/quantization/bitsandbytes"
+    },
+    {
+      "id": "llmmem-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "存储精度与计算精度",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "量化模型的权重存储精度与运算精度为什么需要分别配置？",
+      "answer": "权重可以低位存储，但运算时可能使用另一种数据类型。",
+      "explanation": "支持的数据类型和转换由量化后端决定。",
+      "example": "以 4 位存储权重，并用 bfloat16 进行部分计算。",
+      "tags": [
+        "存储精度与计算精度",
+        "推理内存"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/quantization/bitsandbytes"
+    },
+    {
+      "id": "llmmem-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "推理内存",
+      "knowledgePoint": "NF4格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "QLoRA 使用的 NF4 是什么类型的表示？",
+      "answer": "它是一种 4 位量化数据类型，针对近似正态分布的权重设计。",
+      "explanation": "是否采用 NF4 取决于模型、任务和量化实现。",
+      "example": "在支持的 4 位 LoRA 训练中配置 NF4。",
+      "tags": [
+        "NF4格式",
+        "推理内存"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/v5.23.0/en/quantization/bitsandbytes"
+    }
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "source": {
+    "id": "correlation-statistical-foundations",
+    "title": "SciPy 1.15.3 文档：相关系数与秩相关",
+    "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.pearsonr.html",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据题目所列固定版本资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "corrstat-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "皮尔逊定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个方差均非零的随机变量的 Pearson 相关系数如何由协方差表示？",
+      "answer": "将协方差除以两个变量标准差的乘积：ρ=Cov(X,Y)/(σXσY)。",
+      "explanation": "它消除了变量原始量纲，要求相关二阶矩存在。",
+      "example": "用相关系数比较两个数值特征的线性关联。",
+      "tags": [
+        "相关系数与秩相关",
+        "皮尔逊定义"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.pearsonr.html"
+    },
+    {
+      "id": "corrstat-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "系数范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Pearson 相关系数的取值范围和符号通常表示什么？",
+      "answer": "取值在 −1 到 1；符号表示线性共同变化的方向。",
+      "explanation": "绝对值接近 1 表示线性关联较强，不直接说明因果。",
+      "example": "正系数表示较大 X 往往伴随较大 Y。",
+      "tags": [
+        "相关系数与秩相关",
+        "系数范围"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.pearsonr.html"
+    },
+    {
+      "id": "corrstat-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "完美线性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两个非常量变量的 Pearson 相关系数等于 1 时，对线性关系有什么含义？",
+      "answer": "总体意义下，它们几乎必然满足正斜率线性关系；等于 −1 对应负斜率。",
+      "explanation": "对有限样本，样本相关系数恰为 ±1 时，对应样本点共线。",
+      "example": "y=2x+3 且 x 非常量时相关系数为 1。",
+      "tags": [
+        "相关系数与秩相关",
+        "完美线性"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.pearsonr.html"
+    },
+    {
+      "id": "corrstat-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "缩放影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对非常量数据，将 Pearson 相关中的一个变量乘以正数或负数会怎样？",
+      "answer": "乘以正数不改变系数；乘以负数会翻转系数符号。",
+      "explanation": "常数平移不改变该系数。",
+      "example": "把温度差按正比例换单位不会改变相关系数。",
+      "tags": [
+        "相关系数与秩相关",
+        "缩放影响"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.pearsonr.html"
+    },
+    {
+      "id": "corrstat-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "秩相关含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Spearman 秩相关系数主要衡量什么关系？",
+      "answer": "它衡量两个变量之间的单调关联，可通过各自的秩计算。",
+      "explanation": "单调关系不要求原始数值之间是直线关系。",
+      "example": "当 x 增大时 y 总是增大，但增长速度变化。",
+      "tags": [
+        "相关系数与秩相关",
+        "秩相关含义"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.spearmanr.html"
+    },
+    {
+      "id": "corrstat-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "非线性单调",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单调但非线性的关系能得到 Spearman 相关为 1 而 Pearson 相关小于 1 吗？",
+      "answer": "可以；秩顺序完全一致时 Spearman 可为 1，但数值不共线使 Pearson 小于 1。",
+      "explanation": "该比较假设没有导致秩顺序变化的并列或噪声。",
+      "example": "x 为 1、2、3，y 为 1、4、9。",
+      "tags": [
+        "相关系数与秩相关",
+        "非线性单调"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.spearmanr.html"
+    },
+    {
+      "id": "corrstat-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "常量输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 pearsonr 或 spearmanr 遇到常量输入时相关系数如何处理？",
+      "answer": "由于相关系数未定义，返回 NaN 并发出 ConstantInputWarning。",
+      "explanation": "不能把该结果直接解释为相关系数 0。",
+      "example": "一列观测值始终相同。",
+      "tags": [
+        "相关系数与秩相关",
+        "常量输入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.pearsonr.html",
+      "supportingReferences": [
+        {
+          "id": "scipy-spearman-115",
+          "title": "SciPy 1.15.3：spearmanr",
+          "url": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.spearmanr.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "corrstat-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "相关置信区间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 pearsonr 返回结果如何计算相关系数置信区间？",
+      "answer": "可调用结果的 confidence_interval 方法；默认使用 Fisher 变换。",
+      "explanation": "也可按文档指定 bootstrap 方法，样本很少时区间可能退化。",
+      "example": "对一个估计出的相关系数给出 95% 区间。",
+      "tags": [
+        "相关系数与秩相关",
+        "相关置信区间"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.pearsonr.html"
+    },
+    {
+      "id": "corrstat-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "样本量与秩检验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 文档对小样本 spearmanr 的默认 p 值有什么提醒？",
+      "answer": "该近似 p 值在很大样本时更准确；小样本可考虑置换检验。",
+      "explanation": "置换方法仍需满足问题相应的可交换性条件。",
+      "example": "几十个配对观测时核查秩相关检验方法。",
+      "tags": [
+        "相关系数与秩相关",
+        "样本量与秩检验"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.spearmanr.html"
+    },
+    {
+      "id": "corrstat-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "相关系数与秩相关",
+      "knowledgePoint": "Kendall系数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SciPy 1.15.3 的 kendalltau 默认采用哪种变体，是否考虑并列秩？",
+      "answer": "默认采用 tau-b，它考虑排序中仅在一个变量上并列的样本对。",
+      "explanation": "没有并列时，tau-b 与 tau-a 一致。",
+      "example": "两个特征含有相同排序值时计算秩相关。",
+      "tags": [
+        "相关系数与秩相关",
+        "Kendall系数"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.scipy.org/doc/scipy-1.15.3/reference/generated/scipy.stats.kendalltau.html"
+    }
+  ]
+}

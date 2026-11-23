@@ -1,0 +1,132 @@
+{
+  "source": {
+    "id": "nist-incident",
+    "title": "NIST SP 800-61r3：事件响应建议",
+    "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf",
+    "type": "官方文档与标准",
+    "note": "根据所列资料自行编写并用简体中文整理，示例为自编。",
+    "knowledgeArea": "16"
+  },
+  "cards": [
+    {
+      "id": "incident-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "事件定义",
+      "knowledgePoint": "事件与安全事件",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 中，可观测 event 与网络安全 incident 有什么区别？",
+      "answer": "event 是涉及计算资产的可观察发生事项；incident 涉及实际或迫近的安全损害或违规等条件。",
+      "explanation": "不是每条日志事件或告警都构成已确认的安全事件。",
+      "example": "一次登录尝试是 event，是否属于 incident 需要分析。",
+      "tags": [
+        "事件与安全事件",
+        "安全运营",
+        "事件响应"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "incident-002",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "事件研判",
+      "knowledgePoint": "初步分诊",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST SP 800-61r3 中，事件报告的初步分诊主要检查什么？",
+      "answer": "初步确认是否发生安全事件，并估计严重程度和响应紧急程度。",
+      "explanation": "后续仍可根据新证据调整分类和优先级。",
+      "example": "分析人员核对告警证据后决定是否升级处理。",
+      "tags": [
+        "初步分诊",
+        "安全运营",
+        "事件响应"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "incident-003",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "事件研判",
+      "knowledgePoint": "事件范围与影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "事件研判中为什么要估计影响范围？",
+      "answer": "估计涉及的资产、服务和影响程度，有助于安排后续响应。",
+      "explanation": "初始范围可能不完整，应随调查结果修订。",
+      "example": "根据关联日志更新受影响主机列表。",
+      "tags": [
+        "事件范围与影响",
+        "安全运营",
+        "事件响应"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "incident-004",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "事件处置",
+      "knowledgePoint": "遏制与根除",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "事件响应中的遏制（containment）与根除（eradication）有什么区别？",
+      "answer": "遏制旨在阻止事件继续扩散；根除旨在移除造成持续影响的机制和入口。",
+      "explanation": "实际处置顺序和方法取决于事件与组织流程。",
+      "example": "先隔离受感染主机，再清除持久化机制。",
+      "tags": [
+        "遏制与根除",
+        "安全运营",
+        "事件响应"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "incident-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "证据管理",
+      "knowledgePoint": "证据保全",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么事件响应过程要按组织程序保全证据？",
+      "answer": "证据及其来源和完整性需要能够支持后续调查、复核或必要的法律程序。",
+      "explanation": "保留方式还应遵循数据保留政策和授权范围。",
+      "example": "保存原始日志、采集时间及处理记录。",
+      "tags": [
+        "证据保全",
+        "安全运营",
+        "事件响应"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    },
+    {
+      "id": "incident-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "告警研判",
+      "knowledgePoint": "资产上下文与优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么事件研判需要了解受影响资产的业务重要性？",
+      "answer": "同一安全行为对不同资产的业务影响可能不同，资产上下文有助于安排响应优先级。",
+      "explanation": "资产所有者和资产依赖关系也可提供处置参考。",
+      "example": "对核心生产服务和测试主机分别评估潜在影响。",
+      "tags": [
+        "资产上下文与优先级",
+        "告警研判",
+        "事件响应"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf"
+    }
+  ]
+}

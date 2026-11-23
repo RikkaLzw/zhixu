@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "semgrep-taint-analysis-details",
+    "title": "Semgrep 官方文档：污点匹配与分析范围",
+    "url": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode",
+    "type": "论文、标准与技术文档",
+    "note": "根据 2026-11-21 查看时的官方文档自行整理；Pro 与语言支持可能变化，未运行 Semgrep 引擎。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "semflow-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "污点分析与规则",
+      "knowledgePoint": "净化器精确匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep 污点规则对 sanitizer 设置 exact: true 时，怎样处理匹配表达式的子表达式？",
+      "answer": "只把精确匹配的表达式视为已净化，不自动把其子表达式全部视为已净化。",
+      "explanation": "这是官方文档当前描述的行为。",
+      "example": "sanitize(sink(x)) 中内部表达式不因外层匹配自动净化。",
+      "tags": [
+        "污点分析与规则",
+        "净化器精确匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode"
+    },
+    {
+      "id": "semflow-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "污点分析与规则",
+      "knowledgePoint": "汇点匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep 官方污点规则文档中，sink 的 exact 默认值是什么？",
+      "answer": "默认是 true；不会默认把匹配表达式的所有子表达式也视作汇点。",
+      "explanation": "设置 exact: false 可改变匹配范围。",
+      "example": "需要检查汇点内子表达式时明确配置该选项。",
+      "tags": [
+        "污点分析与规则",
+        "汇点匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode"
+    },
+    {
+      "id": "semflow-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "污点分析与规则",
+      "knowledgePoint": "源汇元变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep 文档中，source 与 sink 中同名元变量是否自动表示同一个绑定？",
+      "answer": "默认不会；source 和 sink 的元变量分别处理。",
+      "explanation": "若规则需要关联变量，应查看相应的统一规则并验证。",
+      "example": "两个模式都写 $X 不足以单独证明绑定相同。",
+      "tags": [
+        "污点分析与规则",
+        "源汇元变量"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode"
+    },
+    {
+      "id": "semflow-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点分析与规则",
+      "knowledgePoint": "默认传播",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep 官方文档描述的默认污点传播通常覆盖哪些语法？",
+      "answer": "通常通过赋值、运算符和函数调用从输入传播到输出。",
+      "explanation": "实际支持范围依语言、引擎和规则而异。",
+      "example": "将污点赋给另一个变量后继续追踪。",
+      "tags": [
+        "污点分析与规则",
+        "默认传播"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode"
+    },
+    {
+      "id": "semflow-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点分析与规则",
+      "knowledgePoint": "过程内传播器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep Pro 自定义 taint propagator 能否独立完成跨函数传播？",
+      "answer": "不能；文档说明自定义 propagator 在函数或方法内部工作，跨函数追踪需使用过程间分析。",
+      "explanation": "具体可用能力受产品版本及语言支持影响。",
+      "example": "不能只靠自定义 propagator 模拟任意跨函数调用链。",
+      "tags": [
+        "污点分析与规则",
+        "过程内传播器"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode"
+    },
+    {
+      "id": "semflow-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点分析与规则",
+      "knowledgePoint": "过程间范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep 文档中的 --pro-intrafile 主要扩展了什么污点分析范围？",
+      "answer": "在同一文件内跨函数或方法追踪污点。",
+      "explanation": "它不跨越文件边界；相关功能属于 Pro。",
+      "example": "污点经同一文件中的辅助函数流向汇点。",
+      "tags": [
+        "污点分析与规则",
+        "过程间范围"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode"
+    },
+    {
+      "id": "semflow-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "污点分析与规则",
+      "knowledgePoint": "跨文件范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Semgrep Pro 的跨文件污点分析是否对所有语言和规则自动适用？",
+      "answer": "不是；文档说明跨文件分析只支持部分语言，规则还需设置 interfile: true。",
+      "explanation": "执行方式和产品能力需结合实际版本核对。",
+      "example": "在支持的语言中启用相关规则后跨文件分析。",
+      "tags": [
+        "污点分析与规则",
+        "跨文件范围"
+      ],
+      "evidence": "source",
+      "reference": "https://semgrep.dev/docs/writing-rules/data-flow/taint-mode"
+    }
+  ]
+}

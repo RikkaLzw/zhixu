@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "stix-object-semantics",
+    "title": "OASIS STIX 2.1 对象属性与数据标记",
+    "url": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html",
+    "type": "技术文档",
+    "note": "根据逐题标注的文档自行整理；示例为自编。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "stixdetail-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报交换",
+      "knowledgePoint": "置信度含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 confidence 表示谁对数据正确性的判断？",
+      "answer": "它表示对象创建者对该对象数据正确性的信心，取值为 0 到 100。",
+      "explanation": "它不是对情报真实性的独立证明。",
+      "example": "不同来源可能对同一行为给出不同置信度。",
+      "tags": [
+        "置信度含义",
+        "威胁情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html"
+    },
+    {
+      "id": "stixdetail-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报交换",
+      "knowledgePoint": "缺失置信度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 对象未提供 confidence 时，能否认为置信度为 0？",
+      "answer": "不能；未提供表示置信度未指定。",
+      "explanation": "消费系统应保留“未指定”与明确给出 0 的区别。",
+      "example": "来源没有提供可信度评分时不自动填 0。",
+      "tags": [
+        "缺失置信度",
+        "威胁情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html"
+    },
+    {
+      "id": "stixdetail-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报交换",
+      "knowledgePoint": "创建者引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 created_by_ref 指向哪类对象？",
+      "answer": "它引用描述该对象创建实体的 Identity 对象。",
+      "explanation": "该属性可缺省；创建者也不必然等于最初观察者。",
+      "example": "情报组织用 Identity 表示并引用其自身。",
+      "tags": [
+        "创建者引用",
+        "威胁情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html"
+    },
+    {
+      "id": "stixdetail-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报交换",
+      "knowledgePoint": "撤销与版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 可版本化对象被 revoked 后，还能创建相同 ID 的后续版本吗？",
+      "answer": "不能；撤销是永久的，创建者不得再为同一 ID 创建新版本。",
+      "explanation": "撤销表示创建者不再认为对象有效。",
+      "example": "撤销错误指标后，新的独立对象需要自己的标识。",
+      "tags": [
+        "撤销与版本",
+        "威胁情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html"
+    },
+    {
+      "id": "stixdetail-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报交换",
+      "knowledgePoint": "创建时间不变",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 可版本化对象创建新版本时，created 能否改变？",
+      "answer": "不能；created 表示对象最初的创建时间，后续版本必须保持该值。",
+      "explanation": "同一对象的版本仍使用相同 ID。",
+      "example": "更新指标说明时保留最初创建时间并更新修改时间。",
+      "tags": [
+        "创建时间不变",
+        "威胁情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html"
+    },
+    {
+      "id": "stixdetail-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报交换",
+      "knowledgePoint": "对象标记与细粒度标记",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "STIX 2.1 的 object_marking_refs 与 granular_markings 作用范围有什么区别？",
+      "answer": "前者对整个对象指定标记；后者可对对象中的选定内容应用细粒度标记。",
+      "explanation": "具体分享和处理要求由引用的标记定义决定。",
+      "example": "对整条情报使用共享限制，并对其中一个字段单独标记。",
+      "tags": [
+        "对象标记与细粒度标记",
+        "威胁情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html"
+    },
+    {
+      "id": "stixdetail-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报交换",
+      "knowledgePoint": "观测时间窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 Observed Data 的 first_observed 和 last_observed 表示什么？",
+      "answer": "它们表示观察到数据的时间窗口起点和终点。",
+      "explanation": "last_observed 不能早于 first_observed。",
+      "example": "记录某域名首次及最后一次被看到的时间。",
+      "tags": [
+        "观测时间窗口",
+        "威胁情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html"
+    },
+    {
+      "id": "stixdetail-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报交换",
+      "knowledgePoint": "观测次数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 Observed Data 的 number_observed 表示什么？",
+      "answer": "它表示所引用的网络可观察对象被观察到的次数。",
+      "explanation": "该值不是不同对象的数量。",
+      "example": "同一 IP 在一个窗口被观察到 50 次。",
+      "tags": [
+        "观测次数",
+        "威胁情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html"
+    },
+    {
+      "id": "stixdetail-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "威胁情报交换",
+      "knowledgePoint": "观测对象引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "STIX 2.1 Observed Data 的 object_refs 与旧版 objects 能同时出现吗？",
+      "answer": "不能；两者必须提供其一，不能在同一对象中同时出现。",
+      "explanation": "规范将 objects 标为已弃用，新的表示可使用 object_refs。",
+      "example": "Observed Data 通过 object_refs 指向顶层 SCO。",
+      "tags": [
+        "观测对象引用",
+        "威胁情报交换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html"
+    }
+  ]
+}

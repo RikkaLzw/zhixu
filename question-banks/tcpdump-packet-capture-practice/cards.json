@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "tcpdump-packet-capture-practice",
+    "title": "tcpdump 与 libpcap 手册：抓包分析",
+    "url": "https://man7.org/linux/man-pages/man8/tcpdump.8.html",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pktcap-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "指定网卡",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "tcpdump 的 -i eth0 用于什么？",
+      "answer": "指定在 eth0 网络接口上捕获数据包。",
+      "explanation": "实际接口名需以本机环境为准；捕获能力还受系统权限影响。",
+      "example": "tcpdump -i eth0 用于观察该接口的流量。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "指定网卡"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/tcpdump.8.html"
+    },
+    {
+      "id": "pktcap-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "限制抓包数量",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "tcpdump -c 10 会在什么条件下结束捕获？",
+      "answer": "在捕获并处理 10 个匹配过滤条件的数据包后退出。",
+      "explanation": "没有匹配流量时，它可能继续等待。",
+      "example": "tcpdump -i eth0 -c 10 tcp 只收集 10 个匹配 TCP 包。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "限制抓包数量"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/tcpdump.8.html"
+    },
+    {
+      "id": "pktcap-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "保存与读取",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "tcpdump 的 -w 文件和 -r 文件分别用于什么？",
+      "answer": "-w 将捕获到的原始包保存到文件；-r 从已有捕获文件读取数据包。",
+      "explanation": "保存的是供后续分析的数据，而不是普通文本日志。",
+      "example": "tcpdump -r trace.pcap 可读取已有抓包文件。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "保存与读取"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/tcpdump.8.html"
+    },
+    {
+      "id": "pktcap-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "禁用名称解析",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "tcpdump -n 对打印地址和端口有什么作用？",
+      "answer": "不将地址和端口等转换为名称，直接以数字形式显示。",
+      "explanation": "这有助于减少名称解析造成的歧义和额外查询。",
+      "example": "输出中保留数字 IP 和端口，便于与日志关联。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "禁用名称解析"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/tcpdump.8.html"
+    },
+    {
+      "id": "pktcap-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "主机过滤方向",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "libpcap 过滤表达式 host 192.0.2.10 未写 src 或 dst 时匹配哪一侧？",
+      "answer": "匹配源或目的主机为该地址的包。",
+      "explanation": "若只需一侧，可写 src host 或 dst host。",
+      "example": "src host 192.0.2.10 只选源地址符合条件的包。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "主机过滤方向"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pcap-filter.7.html"
+    },
+    {
+      "id": "pktcap-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "传输协议过滤",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "libpcap 表达式 tcp port 443 对协议与端口有什么限制？",
+      "answer": "匹配 TCP 且源端口或目的端口为 443 的包。",
+      "explanation": "未写 src 或 dst 时端口条件检查任一方向。",
+      "example": "使用 udp port 53 可单独观察 UDP 的 53 端口流量。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "传输协议过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pcap-filter.7.html"
+    },
+    {
+      "id": "pktcap-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "布尔过滤",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "怎样组合 libpcap 过滤表达式以捕获发往 192.0.2.10 的 TCP 443 流量？",
+      "answer": "可以使用 tcp and dst host 192.0.2.10 and dst port 443。",
+      "explanation": "and、or 和 not 可组合条件；复杂表达式可引用以避免 shell 特殊字符干扰。",
+      "example": "tcpdump -i eth0 'tcp and dst host 192.0.2.10 and dst port 443'。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "布尔过滤"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pcap-filter.7.html"
+    },
+    {
+      "id": "pktcap-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "捕获长度",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "tcpdump 的 snaplen 设置过小时，对抓包分析有什么影响？",
+      "answer": "每个包可保存的字节数受限，较长包可能被截断，后续协议字段或载荷不可见。",
+      "explanation": "-s 用于设置捕获长度；0 按手册设置为默认值，并不表示无限长度。",
+      "example": "只抓到包头时，可能无法分析后面的应用数据。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "捕获长度"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/tcpdump.8.html"
+    },
+    {
+      "id": "pktcap-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "明文载荷查看",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "tcpdump -X 常以什么形式显示捕获包的数据？",
+      "answer": "以十六进制和 ASCII 形式显示包数据。",
+      "explanation": "只显示已捕获到的字节；加密载荷不会因此自动解密。",
+      "example": "查看测试环境中的明文协议时可结合 -X 判断字段。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "明文载荷查看"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man8/tcpdump.8.html"
+    },
+    {
+      "id": "pktcap-010",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "tcpdump 抓包与过滤",
+      "knowledgePoint": "过滤与分片",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "为什么 libpcap 的 TCP 或 UDP 端口过滤可能漏掉 IPv4 非首个分片？",
+      "answer": "非首个 IP 分片通常不含传输层端口字段，端口过滤无法从该分片读取端口。",
+      "explanation": "抓取分片故障时应考虑更宽的 IP 过滤条件后再分析。",
+      "example": "仅用 udp port 53 不能保证看到某个分片数据报的所有分片。",
+      "tags": [
+        "tcpdump 抓包与过滤",
+        "过滤与分片"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man7/pcap-filter.7.html"
+    }
+  ]
+}

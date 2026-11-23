@@ -1,0 +1,516 @@
+{
+  "source": {
+    "id": "rabbitmq-messaging-foundations",
+    "title": "RabbitMQ 官方 AMQP 与消息可靠性文档",
+    "url": "https://www.rabbitmq.com/tutorials/amqp-concepts",
+    "type": "官方消息中间件文档",
+    "note": "依据 RabbitMQ 官方 AMQP、exchange、queue、consumer 和可靠性文档自行整理；路由与确认行为限定于 RabbitMQ/AMQP 语境。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "rabbitmq-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "AMQP 核心实体",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ 的 AMQP 0-9-1 消息模型中，exchange、queue 和 binding 分别承担什么作用？",
+      "answer": "生产者把消息发布到 exchange；queue 存储等待消费的消息；binding 描述 exchange 如何把消息路由到队列。",
+      "explanation": "消费者通常从队列接收消息，路由规则由 exchange 类型、routing key 和 binding 等共同决定。",
+      "example": "生产者向订单 exchange 发布消息，binding 再把匹配消息送到订单处理队列。",
+      "tags": [
+        "RabbitMQ",
+        "AMQP",
+        "exchange",
+        "queue"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/tutorials/amqp-concepts/index.md"
+    },
+    {
+      "id": "rabbitmq-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "发布目标与消费来源",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "RabbitMQ 中 AMQP 0-9-1 客户端通常向哪里发布消息、从哪里消费消息？",
+      "answer": "客户端向 exchange 发布消息，并从 queue 消费消息。",
+      "explanation": "默认 exchange 等特殊机制可以让发布看起来像直接发往队列，但消息仍经过 exchange 路由模型。",
+      "example": "basic.publish 指定 exchange 和 routing key，basic.consume 指定队列。",
+      "tags": [
+        "RabbitMQ",
+        "AMQP",
+        "publish",
+        "consume"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/rabbitmq/rabbitmq-website/main/docs/amqp.md"
+    },
+    {
+      "id": "rabbitmq-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Direct Exchange",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ direct exchange 通常依据什么条件把消息路由到队列？",
+      "answer": "将消息的 routing key 与队列 binding 上的 routing key 做精确匹配。",
+      "explanation": "一个 exchange 可以有多个 binding，因此一条消息可能匹配并路由到多个队列。",
+      "example": "binding key 为 `orders.created` 时，同名 routing key 的消息匹配该 binding。",
+      "tags": [
+        "RabbitMQ",
+        "direct exchange",
+        "routing key"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/exchanges.md"
+    },
+    {
+      "id": "rabbitmq-004",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Topic Exchange 通配符",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "RabbitMQ topic exchange 的 routing pattern 中，`*` 与 `#` 分别匹配什么？",
+      "answer": "routing key 按点号分段；`*` 匹配恰好一个段，`#` 匹配零个或多个段。",
+      "explanation": "通配符匹配的是段而不是任意字符。",
+      "example": "`orders.*.created` 可匹配 `orders.eu.created`，而 `orders.#` 也可匹配 `orders.eu.web.created`。",
+      "tags": [
+        "RabbitMQ",
+        "topic exchange",
+        "通配符"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/exchanges.md"
+    },
+    {
+      "id": "rabbitmq-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Fanout Exchange",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "RabbitMQ fanout exchange 如何使用 routing key？",
+      "answer": "它忽略 routing key，并将消息路由到所有已绑定的队列。",
+      "explanation": "如果发布时没有任何匹配的绑定，消息仍可能成为不可路由消息。",
+      "example": "把审计事件 fanout 到三个已绑定队列供不同下游分别处理。",
+      "tags": [
+        "RabbitMQ",
+        "fanout exchange",
+        "广播"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/exchanges.md"
+    },
+    {
+      "id": "rabbitmq-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "默认 Exchange",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ 默认 exchange 的名称和自动 binding 行为是什么？",
+      "answer": "默认 exchange 名称为空字符串；队列声明时 RabbitMQ 会自动以队列名称为 routing key 建立 direct binding。",
+      "explanation": "这让客户端可将队列名称作为 routing key 发布消息，但默认 exchange 不能像普通 exchange 那样任意管理绑定。",
+      "example": "向默认 exchange 发布且 routing key 为 `task_queue` 的消息会路由到该名称的队列。",
+      "tags": [
+        "RabbitMQ",
+        "default exchange",
+        "binding"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/exchanges.md"
+    },
+    {
+      "id": "rabbitmq-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Queue Binding 与 Consumer",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "RabbitMQ binding 与 consumer 分别解决什么问题？",
+      "answer": "binding 决定消息如何从 exchange 路由到 queue；consumer 决定哪个应用从 queue 接收消息。",
+      "explanation": "绑定路由关系不等于消费者订阅关系，两者可独立配置。",
+      "example": "多个消费者可以竞争同一队列，而该队列仍由一个或多个 binding 接收路由消息。",
+      "tags": [
+        "RabbitMQ",
+        "binding",
+        "consumer"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/amqp.md"
+    },
+    {
+      "id": "rabbitmq-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Queue 持久化与消息持久化",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "RabbitMQ 中只声明 durable queue，是否就足以保证其中消息在 broker 重启后保留？",
+      "answer": "不够；队列持久化与消息持久化是不同属性，经典队列还需将要保留的消息以 persistent 模式发布。",
+      "explanation": "可靠性还取决于队列类型、发布确认和故障情形，durable 不等于端到端无损保证。",
+      "example": "声明持久队列后仍要检查发布消息的 delivery mode，而不是只依赖队列的 durable 标志。",
+      "tags": [
+        "RabbitMQ",
+        "durable queue",
+        "persistent message"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/queues.md"
+    },
+    {
+      "id": "rabbitmq-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "手动消费者确认",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ consumer 使用手动 acknowledgement 时，通常应在什么时候确认消息？",
+      "answer": "应用完成所需处理后再发送 acknowledgement，让 broker 知道该 delivery 已处理。",
+      "explanation": "过早确认可能在业务处理失败时丢失重试机会；确认前崩溃则可能发生重新投递。",
+      "example": "先写入业务数据库并提交，再确认对应 delivery。",
+      "tags": [
+        "RabbitMQ",
+        "consumer acknowledgement",
+        "消息可靠性"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/confirms.md"
+    },
+    {
+      "id": "rabbitmq-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "消费者确认与删除",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ 收到 consumer 对 delivery 的 acknowledgement 后，队列中的该消息通常会怎样？",
+      "answer": "broker 会把已确认的 delivery 标记为处理完成，并从队列中移除。",
+      "explanation": "acknowledgement 是消费者向 broker 报告处理状态，不是 publisher confirm。",
+      "example": "成功处理消息后调用 basic.ack，避免消息继续等待其他消费者。",
+      "tags": [
+        "RabbitMQ",
+        "basic.ack",
+        "队列"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/confirms.md"
+    },
+    {
+      "id": "rabbitmq-011",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "自动确认风险",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "RabbitMQ consumer 使用 automatic acknowledgement 后，应用进程在收到消息后立即崩溃可能造成什么结果？",
+      "answer": "broker 已将消息视为已投递并可从队列移除，应用可能还没完成处理就丢失该消息。",
+      "explanation": "自动确认减少确认开销，但不能表示业务处理成功。",
+      "example": "需要处理失败重投时，改用手动确认并在成功后 ack。",
+      "tags": [
+        "RabbitMQ",
+        "automatic acknowledgement",
+        "消息丢失"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/confirms.md"
+    },
+    {
+      "id": "rabbitmq-012",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "未确认消息重新入队",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "RabbitMQ consumer 在手动确认前关闭 channel 或连接时，未确认的 delivery 通常会怎样？",
+      "answer": "broker 会重新排队这些未确认消息，使它们可再次投递。",
+      "explanation": "消费者应能处理重复投递；重投并不保证副作用只执行一次。",
+      "example": "消费者写库成功但 ack 尚未到达 broker 时断线，消息可能再次到达。",
+      "tags": [
+        "RabbitMQ",
+        "redelivery",
+        "acknowledgement"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/confirms.md"
+    },
+    {
+      "id": "rabbitmq-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Consumer Prefetch",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ consumer prefetch count 主要限制什么？",
+      "answer": "它限制 consumer 尚未确认、仍处于 in-flight 状态的 delivery 数量。",
+      "explanation": "限制未确认消息可避免 broker 把大量工作集中到处理较慢的消费者。",
+      "example": "设置有限 prefetch，使多个 worker 能在处理完当前批次后继续领取消息。",
+      "tags": [
+        "RabbitMQ",
+        "prefetch",
+        "consumer"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/consumer-prefetch.md"
+    },
+    {
+      "id": "rabbitmq-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Publisher Confirms",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ publisher confirm 主要帮助生产者确认什么？",
+      "answer": "它让生产者获知 broker 是否已接收并负责处理相应发布，而不是确认消费者已经完成业务处理。",
+      "explanation": "publisher confirm 与 consumer acknowledgement 位于消息流的不同阶段。",
+      "example": "生产者等待 confirm 后再把消息标记为已可靠发布。",
+      "tags": [
+        "RabbitMQ",
+        "publisher confirms",
+        "发布可靠性"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/confirms.md"
+    },
+    {
+      "id": "rabbitmq-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Publisher Confirm 与 Consumer Ack",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "RabbitMQ publisher confirm 与 consumer acknowledgement 为什么不能互相替代？",
+      "answer": "publisher confirm 反馈生产者发布是否被 broker 接收处理；consumer acknowledgement 反馈消费者对某条 delivery 的处理状态。",
+      "explanation": "前者保护生产端到 broker 的发布阶段，后者管理 broker 到消费端的 delivery。",
+      "example": "即使生产者收到 confirm，消费者仍可能尚未收到该消息。",
+      "tags": [
+        "RabbitMQ",
+        "publisher confirm",
+        "consumer ack"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/confirms.md"
+    },
+    {
+      "id": "rabbitmq-016",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "不可路由消息返回",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "AMQP 0-9-1 发布时设置 `mandatory` 后，消息没有路由到任何队列会怎样？",
+      "answer": "broker 会把消息作为不可路由消息返回给发布者，而不是静默丢弃。",
+      "explanation": "生产者仍需处理返回事件，并可结合 publisher confirms 处理发布可靠性。",
+      "example": "订阅 basic.return，在 exchange 没有匹配 binding 时记录或重新路由消息。",
+      "tags": [
+        "RabbitMQ",
+        "mandatory",
+        "basic.return"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/publishers/index.md"
+    },
+    {
+      "id": "rabbitmq-017",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Nack 与 Requeue",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "RabbitMQ consumer 使用 reject 或 nack 并设置 `requeue=false` 时，消息可能怎样处理？",
+      "answer": "若队列配置了 dead-letter exchange，消息可被 dead-letter；否则通常会被丢弃。",
+      "explanation": "是否进入死信路由取决于队列配置，`requeue=false` 本身不会创建死信队列。",
+      "example": "将永久格式错误的消息拒绝且不重排，并配置 DLX 收集以供排查。",
+      "tags": [
+        "RabbitMQ",
+        "nack",
+        "requeue",
+        "DLX"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/confirms.md"
+    },
+    {
+      "id": "rabbitmq-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Message TTL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ message TTL 到期后，消息通常会怎样？",
+      "answer": "到期消息不再作为普通消息投递；若队列配置死信交换机，它可能被 dead-letter。",
+      "explanation": "TTL 可按队列配置，也可按单条消息配置；具体清理时机与队列类型有关。",
+      "example": "为短时验证码消息设置有限 TTL，避免过期消息继续等待消费。",
+      "tags": [
+        "RabbitMQ",
+        "TTL",
+        "消息过期"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/ttl.md"
+    },
+    {
+      "id": "rabbitmq-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Queue TTL 与 Message TTL",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "RabbitMQ queue TTL 与 message TTL 分别让什么对象过期？",
+      "answer": "message TTL 让队列中的消息过期；queue TTL 让满足过期条件的队列本身被删除。",
+      "explanation": "队列过期不等于其中每条消息按相同寿命单独到期，两者针对不同对象。",
+      "example": "临时 reply queue 可设置 queue TTL，而普通工作队列可对消息设置 message TTL。",
+      "tags": [
+        "RabbitMQ",
+        "queue TTL",
+        "message TTL"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/ttl.md"
+    },
+    {
+      "id": "rabbitmq-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Dead Letter 触发条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ 消息常见的 dead-letter 触发情形有哪些？",
+      "answer": "包括被拒绝且不重新入队、消息过期、队列达到长度限制，以及 quorum queue 超过投递次数限制等。",
+      "explanation": "具体触发项与队列类型和配置有关；dead-letter 还需要目标 exchange 等队列配置。",
+      "example": "达到最大重投次数的 poison message 可转入隔离队列供人工分析。",
+      "tags": [
+        "RabbitMQ",
+        "dead-letter",
+        "DLX"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/dlx.md"
+    },
+    {
+      "id": "rabbitmq-021",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "DLX 动态策略",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "RabbitMQ 中通过 policy 而不是队列声明参数配置 DLX 有什么运维优势？",
+      "answer": "策略可以独立于应用声明动态增改或移除，通常更方便调整已有队列的死信配置。",
+      "explanation": "队列声明时写入的不可变参数可能在不匹配时导致重新声明失败。",
+      "example": "将已有队列的 dead-letter-exchange 通过匹配队列名称的 policy 统一配置。",
+      "tags": [
+        "RabbitMQ",
+        "DLX",
+        "policy"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/dlx.md"
+    },
+    {
+      "id": "rabbitmq-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Quorum Queue 复制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ quorum queue 如何在集群中提供复制队列语义？",
+      "answer": "它把队列状态复制到多个节点，并使用 Raft 共识协议协调副本。",
+      "explanation": "Quorum queue 是以数据安全和复制为目标的队列类型，和单节点 classic queue 的权衡不同。",
+      "example": "为关键业务队列选择 quorum queue，使节点故障时仍可由剩余副本继续服务。",
+      "tags": [
+        "RabbitMQ",
+        "quorum queue",
+        "Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/quorum-queues/index.md"
+    },
+    {
+      "id": "rabbitmq-023",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Quorum Queue 多数派",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "RabbitMQ quorum queue 丢失多数副本可用性后，为什么不能继续确认所有写入？",
+      "answer": "Raft 复制需要多数派形成 quorum；缺少多数派时队列无法安全推进共识写入。",
+      "explanation": "这会牺牲少数派期间的可写性，以避免分裂节点各自确认相互冲突的状态。",
+      "example": "三副本队列只剩一个副本可用时，无法取得多数派确认。",
+      "tags": [
+        "RabbitMQ",
+        "quorum",
+        "多数派",
+        "Raft"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/quorum-queues/index.md"
+    },
+    {
+      "id": "rabbitmq-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "Single Active Consumer",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RabbitMQ Single Active Consumer 功能对同一队列的多个消费者有什么效果？",
+      "answer": "同一时刻只让一个消费者接收该队列的消息；当前活跃消费者不可用时，可切换到候选消费者。",
+      "explanation": "它不同于让所有消费者并行竞争消息，适用于需要单个活跃消费顺序的场景。",
+      "example": "为有序处理队列注册多个消费者，但启用单活跃消费者使其故障时可接替。",
+      "tags": [
+        "RabbitMQ",
+        "single active consumer",
+        "队列"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/consumers.md"
+    },
+    {
+      "id": "rabbitmq-025",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "RabbitMQ 消息路由与可靠性",
+      "knowledgePoint": "重新投递与幂等处理",
+      "questionType": "实践与排障",
+      "origin": "自行整理",
+      "question": "为什么 RabbitMQ 消费者即使使用手动确认，业务处理仍应考虑重复投递？",
+      "answer": "处理完成到 acknowledgement 被 broker 确认之间可能发生故障，未确认消息会重新投递，因此同一业务操作可能重复执行。",
+      "explanation": "消费端可使用业务幂等键、去重记录或事务性处理来控制重复副作用。",
+      "example": "以订单事件 ID 建唯一约束，避免 redelivery 重复创建同一笔账务记录。",
+      "tags": [
+        "RabbitMQ",
+        "redelivery",
+        "幂等"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/rabbitmq/rabbitmq-website/blob/main/docs/reliability.md"
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "cpu-pipeline-fundamentals",
+    "title": "MIT 6.004：CPU 指令流水线与冒险",
+    "url": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据逐题引用的论文或教材自行整理；例子为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pipebase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "流水线基本思想",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CPU 指令流水线如何提高指令吞吐量？",
+      "answer": "它把执行拆成多个阶段，让不同指令在不同阶段重叠执行。",
+      "explanation": "具体并行程度和瓶颈取决于处理器实现。",
+      "example": "一条指令执行时同时读取另一条指令。",
+      "tags": [
+        "流水线基本思想",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "吞吐与延迟",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "指令流水线提高吞吐量是否一定缩短单条指令的延迟？",
+      "answer": "不一定；流水线可更频繁地完成指令，但单条指令仍要经过多个阶段。",
+      "explanation": "阶段寄存器开销和时钟周期也影响延迟。",
+      "example": "连续任务产出更快，单个任务的经过时间未必减少。",
+      "tags": [
+        "吞吐与延迟",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "五阶段示例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MIT Beta 教材中的经典五级指令流水线依次包含哪些阶段？",
+      "answer": "取指 IF、读寄存器 RF、算术逻辑 ALU、访存 MEM 和写回 WB。",
+      "explanation": "这是教材示例，不代表所有处理器都采用这五级。",
+      "example": "跟踪一条加载指令经过五个阶段。",
+      "tags": [
+        "五阶段示例",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "阶段瓶颈",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "理想同步流水线的时钟周期为什么受最慢阶段限制？",
+      "answer": "时钟周期必须足够长，使每一级的组合逻辑及寄存器时序要求得以满足。",
+      "explanation": "各阶段工作不均衡会限制细分流水线的收益。",
+      "example": "慢 ALU 阶段决定最短可用周期。",
+      "tags": [
+        "阶段瓶颈",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "数据冒险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "流水线中的读后写数据冒险通常在什么情况下出现？",
+      "answer": "后续指令需要读取某值，而产生该值的前序指令尚未将结果提供给它。",
+      "explanation": "依赖本身不一定导致停顿，取决于结果何时可用和硬件处理。",
+      "example": "后续减法读取前一加法的目标寄存器。",
+      "tags": [
+        "数据冒险",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "暂停",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "流水线遇到暂时无法满足的数据依赖时，stall 的作用是什么？",
+      "answer": "暂缓相关指令及受阻的前级，等待所需条件满足。",
+      "explanation": "停顿会降低实际吞吐量。",
+      "example": "等待先前指令写回所需寄存器。",
+      "tags": [
+        "暂停",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "流水线气泡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "指令流水线中的 bubble 通常指什么？",
+      "answer": "它是流水线中不执行有效指令的一次空操作或空槽。",
+      "explanation": "气泡可由停顿或撤销指令产生。",
+      "example": "数据依赖导致某一级插入 NOP。",
+      "tags": [
+        "流水线气泡",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "旁路转发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "流水线的 forwarding 或 bypassing 如何缓解数据冒险？",
+      "answer": "它把已计算但尚未写回的结果直接送到需要该结果的阶段。",
+      "explanation": "只有结果已产生且存在相应通路时才能转发。",
+      "example": "将 ALU 结果送给后续依赖指令。",
+      "tags": [
+        "旁路转发",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "加载使用冒险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么即使存在转发，紧跟加载指令使用其结果仍可能需要停顿？",
+      "answer": "依赖指令需要该值时，加载数据可能尚未从内存返回。",
+      "explanation": "需要的停顿周期数取决于具体流水线和存储时序。",
+      "example": "紧接 LD 使用其目标寄存器。",
+      "tags": [
+        "加载使用冒险",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "控制冒险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "流水线中的控制冒险通常由什么产生？",
+      "answer": "分支、跳转或异常使后续应取哪条指令暂时不确定或发生改变。",
+      "explanation": "不同流水线决定分支结果的阶段可能不同。",
+      "example": "条件分支结果未确定时，后续取指已开始。",
+      "tags": [
+        "控制冒险",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "预测失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分支预测错误后，流水线通常如何处理错误路径上的指令？",
+      "answer": "撤销错误路径上尚未提交的指令，并从正确路径继续取指。",
+      "explanation": "这里指架构状态的更新；微架构状态可能仍受到推测执行影响。",
+      "example": "分支实际跳转时丢弃顺序取出的错误指令。",
+      "tags": [
+        "预测失败",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    },
+    {
+      "id": "pipebase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CPU 指令流水线",
+      "knowledgePoint": "流水线加深",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "流水线级数增加，为什么不保证程序运行时间持续下降？",
+      "answer": "更深的流水线会引入额外时序开销，并可能增加冒险和错误预测的代价。",
+      "explanation": "程序表现还受时钟周期、CPI 和指令数影响。",
+      "example": "增加阶段后比较停顿带来的 CPI 上升。",
+      "tags": [
+        "流水线加深",
+        "CPU 指令流水线"
+      ],
+      "evidence": "source",
+      "reference": "https://ocw.mit.edu/courses/6-004-computation-structures-spring-2017/pages/c15/c15s1/"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "source": {
+    "id": "juliet-code-benchmark",
+    "title": "NIST SARD Juliet 1.3：漏洞测试用例与标签边界",
+    "url": "https://doi.org/10.6028/NIST.TN.1995",
+    "type": "论文及官方技术资料",
+    "note": "依据原论文或 NIST 官方资料整理；应用判断和示例为自行整理。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "juliet-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Juliet 漏洞基准",
+      "knowledgePoint": "测试目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Juliet 1.3 测试套件主要提供什么材料？",
+      "answer": "它提供覆盖多类 CWE 的小型 C/C++ 和 Java 测试程序，用于研究软件保障工具的检测能力。",
+      "explanation": "套件包含有意构造的缺陷场景和相应的对照代码。",
+      "example": "用指定 CWE 的样例检查静态分析器能否识别目标问题。",
+      "tags": [
+        "测试目的",
+        "Juliet 漏洞基准"
+      ],
+      "evidence": "source",
+      "reference": "https://doi.org/10.6028/NIST.TN.1995"
+    },
+    {
+      "id": "juliet-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Juliet 漏洞基准",
+      "knowledgePoint": "目标缺陷对照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Juliet 测试用例中的 bad 与 good 代码通常分别表示什么？",
+      "answer": "bad 代码旨在展示目标缺陷；good 代码提供行为相似但避免该目标缺陷的对照。",
+      "explanation": "good 只描述设计意图，不保证不存在其他错误。",
+      "example": "比较缓冲区越界示例和针对该问题的对照实现。",
+      "tags": [
+        "目标缺陷对照",
+        "Juliet 漏洞基准"
+      ],
+      "evidence": "source",
+      "reference": "https://doi.org/10.6028/NIST.TN.1995"
+    },
+    {
+      "id": "juliet-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Juliet 漏洞基准",
+      "knowledgePoint": "跨文件案例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Juliet 中一个测试用例一定只对应一个源文件吗？",
+      "answer": "不一定；有些测试用例由多个源文件共同构成。",
+      "explanation": "跨文件分析需要考虑相关文件之间的调用和数据传递。",
+      "example": "SARD 77913 的四个函数分别位于四个 C 文件中。",
+      "tags": [
+        "跨文件案例",
+        "Juliet 漏洞基准"
+      ],
+      "evidence": "source",
+      "reference": "https://samate.nist.gov/SARD/test-cases/77913",
+      "referenceTitle": "NIST SARD：Juliet 测试用例 77913"
+    },
+    {
+      "id": "juliet-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Juliet 漏洞基准",
+      "knowledgePoint": "硬编码捷径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST 指出 Juliet 1.3 部分 good 代码大量使用硬编码值，这可能给模型带来什么捷径？",
+      "answer": "模型可能依赖硬编码值与标签的相关性，而不是学习真正的缺陷触发条件。",
+      "explanation": "应检查特征来源并在不同代码分布上验证。",
+      "example": "对照程序用固定安全值替代输入时，固定值可能成为标签线索。",
+      "tags": [
+        "硬编码捷径",
+        "Juliet 漏洞基准"
+      ],
+      "evidence": "application",
+      "reference": "https://samate.nist.gov/SARD/downloads/documents/releaseJuliet1.3Doc.txt"
+    },
+    {
+      "id": "juliet-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Juliet 漏洞基准",
+      "knowledgePoint": "标签与其他错误",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Juliet 中标为 good 的代码不能自动作为“完全没有任何缺陷”的证明？",
+      "answer": "good 表示针对目标问题的对照意图；NIST 仍记录了部分 good 代码中的其他问题，例如内存泄漏。",
+      "explanation": "标签的适用范围应与具体测试目标一致。",
+      "example": "避免把 good 标签当成所有 CWE 都安全的全局标签。",
+      "tags": [
+        "标签与其他错误",
+        "Juliet 漏洞基准"
+      ],
+      "evidence": "source",
+      "reference": "https://samate.nist.gov/SARD/downloads/documents/releaseJuliet1.3Doc.txt"
+    },
+    {
+      "id": "juliet-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Juliet 漏洞基准",
+      "knowledgePoint": "样例标签核验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能只凭 Juliet 旧版本案例的预期标签认定相应缺陷一定真实存在？",
+      "answer": "NIST 修订记录指出部分旧案例没有触发预期缺陷，另有案例包含非预期错误。",
+      "explanation": "应核对套件版本、源代码和对应修订说明。",
+      "example": "检查目标平台上的构建与触发条件。",
+      "tags": [
+        "样例标签核验",
+        "Juliet 漏洞基准"
+      ],
+      "evidence": "source",
+      "reference": "https://doi.org/10.6028/NIST.TN.1995"
+    },
+    {
+      "id": "juliet-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Juliet 漏洞基准",
+      "knowledgePoint": "案例版本标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST 对 Juliet 1.2 中被修改的案例如何在 SARD 中处理版本？",
+      "answer": "旧案例被标记为弃用，并新增对应案例；未改变的案例保留原有 SARD 标识。",
+      "explanation": "不同套件版本之间不能只靠文件名假设完全一致。",
+      "example": "记录案例编号和所用 Juliet 版本。",
+      "tags": [
+        "案例版本标识",
+        "Juliet 漏洞基准"
+      ],
+      "evidence": "source",
+      "reference": "https://doi.org/10.6028/NIST.TN.1995"
+    }
+  ]
+}

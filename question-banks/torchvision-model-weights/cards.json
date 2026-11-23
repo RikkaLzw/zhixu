@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "torchvision-model-weights",
+    "title": "torchvision 0.22：模型和预训练权重",
+    "url": "https://pytorch.org/vision/0.22/models.html",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题标注的文档或论文自行整理；示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "visionweight-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "视觉模型权重接口",
+      "knowledgePoint": "权重枚举",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 中，模型构造函数的 weights 参数通常用于指定什么？",
+      "answer": "用于选择该模型架构加载的预训练权重版本。",
+      "explanation": "同一架构可以提供不同训练配方或效果的权重。",
+      "example": "为 ResNet50 指定 IMAGENET1K_V1 或 V2。",
+      "tags": [
+        "视觉模型权重接口",
+        "权重枚举"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/models.html"
+    },
+    {
+      "id": "visionweight-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "视觉模型权重接口",
+      "knowledgePoint": "默认别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么需要谨慎使用 torchvision 权重枚举的 DEFAULT 别名保证实验可复现？",
+      "answer": "DEFAULT 所指的权重版本可能随 torchvision 版本改变。",
+      "explanation": "复现实验时可固定库版本及明确的权重枚举值。",
+      "example": "记录 IMAGENET1K_V2 而不只记录 DEFAULT。",
+      "tags": [
+        "视觉模型权重接口",
+        "默认别名"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/models.html"
+    },
+    {
+      "id": "visionweight-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉模型权重接口",
+      "knowledgePoint": "不加载预训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 resnet50(weights=None) 会加载 ImageNet 预训练权重吗？",
+      "answer": "不会；该构造方式不加载预训练权重，模型参数按构造过程初始化。",
+      "explanation": "是否适合任务取决于后续训练和数据。",
+      "example": "从随机初始化的 ResNet50 开始训练。",
+      "tags": [
+        "视觉模型权重接口",
+        "不加载预训练"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/models.html"
+    },
+    {
+      "id": "visionweight-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉模型权重接口",
+      "knowledgePoint": "配套预处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 权重对象的 transforms() 常用于什么？",
+      "answer": "获取与该预训练权重配套的推理图像预处理变换。",
+      "explanation": "不同模型或权重版本需要的尺寸、插值或归一化可能不同。",
+      "example": "先使用对应 weights.transforms() 处理输入图像。",
+      "tags": [
+        "视觉模型权重接口",
+        "配套预处理"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/models.html"
+    },
+    {
+      "id": "visionweight-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉模型权重接口",
+      "knowledgePoint": "类别元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 分类模型的权重对象通常如何提供输出类别名称？",
+      "answer": "分类权重可通过 weights.meta[\"categories\"] 提供按输出索引排列的类别名。",
+      "explanation": "具体元数据依权重和任务类型而异。",
+      "example": "用预测的类别索引查找 ImageNet 类别名。",
+      "tags": [
+        "视觉模型权重接口",
+        "类别元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/models.html"
+    },
+    {
+      "id": "visionweight-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉模型权重接口",
+      "knowledgePoint": "缓存下载",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 实例化指定预训练权重的模型时，本地没有对应缓存通常会发生什么？",
+      "answer": "通常会下载权重文件到缓存目录，再加载到模型中。",
+      "explanation": "网络不可用或缓存不可写时需要预先准备权重。",
+      "example": "首次加载预训练权重后在本机缓存。",
+      "tags": [
+        "视觉模型权重接口",
+        "缓存下载"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/models.html"
+    },
+    {
+      "id": "visionweight-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "视觉模型权重接口",
+      "knowledgePoint": "按名称查询模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torchvision 0.22 的 list_models 与 get_model 分别有什么用途？",
+      "answer": "list_models 列出可用模型名称；get_model 按名称构造模型。",
+      "explanation": "get_model 的配置参数需符合对应构造函数。",
+      "example": "查询名称后用 get_model 和 weights=None 创建模型。",
+      "tags": [
+        "视觉模型权重接口",
+        "按名称查询模型"
+      ],
+      "evidence": "source",
+      "reference": "https://pytorch.org/vision/0.22/models.html"
+    }
+  ]
+}

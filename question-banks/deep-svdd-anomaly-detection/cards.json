@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "deep-svdd-anomaly-detection",
+    "title": "Deep SVDD 原论文：单类深度异常检测",
+    "url": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的固定版本资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "svdd-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "方法目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SVDD 原论文的 One-Class 目标希望网络把训练数据映射到哪里？",
+      "answer": "希望训练样本的表示靠近预先固定的中心。",
+      "explanation": "网络通过单类目标学习特征表示。",
+      "example": "用正常训练样本形成紧凑的表示区域。",
+      "tags": [
+        "单类深度异常检测",
+        "方法目标"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf"
+    },
+    {
+      "id": "svdd-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "异常分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "One-Class Deep SVDD 如何用训练后的表示计算异常分数？",
+      "answer": "计算样本表示到固定中心的平方距离；距离越大，分数越高。",
+      "explanation": "分数不是自动校准的异常概率。",
+      "example": "比较两个样本到中心的表示距离。",
+      "tags": [
+        "单类深度异常检测",
+        "异常分数"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf"
+    },
+    {
+      "id": "svdd-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "重构差别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SVDD 与使用自编码器重构误差检测异常，直接优化的目标有什么区别？",
+      "answer": "Deep SVDD 优化表示到中心的紧凑性；重构方法优化输入与重建输出的差异。",
+      "explanation": "两者都需要用独立数据评估异常区分效果。",
+      "example": "一个比较表示中心距离，另一个比较输入与重建。",
+      "tags": [
+        "单类深度异常检测",
+        "重构差别"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf"
+    },
+    {
+      "id": "svdd-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "软边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Soft-boundary Deep SVDD 的目标怎样同时考虑球体大小和训练样本？",
+      "answer": "它惩罚球半径的平方，并惩罚落在球外的训练表示。",
+      "explanation": "目标还包含网络权重正则项。",
+      "example": "允许部分训练表示落在边界外，但会计入惩罚。",
+      "tags": [
+        "单类深度异常检测",
+        "软边界"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf"
+    },
+    {
+      "id": "svdd-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "ν 参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Soft-boundary Deep SVDD 中的 ν 主要影响什么？",
+      "answer": "它控制球体大小与球外训练样本惩罚之间的权衡。",
+      "explanation": "不能直接把 ν 当作实际部署环境的攻击比例。",
+      "example": "改变 ν 可能改变学到的边界。",
+      "tags": [
+        "单类深度异常检测",
+        "ν 参数"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf"
+    },
+    {
+      "id": "svdd-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "中心初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SVDD 原论文如何选择固定中心的一个可行初始值？",
+      "answer": "用初始网络对部分训练样本输出表示的均值设定中心。",
+      "explanation": "论文要求避免中心与全零权重产生的平凡输出相同。",
+      "example": "先做前向计算，再固定所得中心。",
+      "tags": [
+        "单类深度异常检测",
+        "中心初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf"
+    },
+    {
+      "id": "svdd-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "表示塌缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SVDD 中的 hypersphere collapse 指什么退化情况？",
+      "answer": "网络把不同输入映射为相同或近似相同的中心表示，失去区分能力。",
+      "explanation": "训练目标很低并不能据此证明异常检测有效。",
+      "example": "所有文件都得到几乎相同的表示和分数。",
+      "tags": [
+        "单类深度异常检测",
+        "表示塌缩"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf"
+    },
+    {
+      "id": "svdd-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "自由中心风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SVDD 为什么通常不把中心设为与网络一起自由优化的变量？",
+      "answer": "网络和中心可能共同收敛到常量输出，形成没有区分信息的平凡解。",
+      "explanation": "论文将中心固定以规避这一类塌缩。",
+      "example": "所有输入被映射到同一个可移动中心。",
+      "tags": [
+        "单类深度异常检测",
+        "自由中心风险"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf"
+    },
+    {
+      "id": "svdd-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "单类深度异常检测",
+      "knowledgePoint": "偏置项风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deep SVDD 论文为什么建议网络不使用偏置项？",
+      "answer": "偏置项可能使网络学习与输入无关的常量映射，导致球体塌缩。",
+      "explanation": "去掉偏置是论文分析给出的设计条件之一，并不独自保证训练有效。",
+      "example": "偏置让不同输入都输出固定向量。",
+      "tags": [
+        "单类深度异常检测",
+        "偏置项风险"
+      ],
+      "evidence": "source",
+      "reference": "https://proceedings.mlr.press/v80/ruff18a/ruff18a.pdf"
+    }
+  ]
+}

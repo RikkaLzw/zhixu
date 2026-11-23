@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "matryoshka-variable-embeddings",
+    "title": "Matryoshka 论文 v2：可变维度表示",
+    "url": "https://arxiv.org/abs/2205.13147v2",
+    "type": "固定版本官方文档或论文",
+    "note": "依据逐题列出的资料自行整理；代码行为以题中版本为准。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "matryoshka-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Matryoshka 可变维度表示",
+      "knowledgePoint": "嵌套前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Matryoshka Representation Learning 希望同一个嵌入向量的不同前缀具有什么能力？",
+      "answer": "使选定的不同长度前缀都能作为有用的表示，以适应不同资源和精度需求。",
+      "explanation": "短前缀是长表示的嵌套部分。",
+      "example": "同一向量可取前 64 维或前 256 维用于检索。",
+      "tags": [
+        "向量检索",
+        "嵌套前缀"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.13147v2"
+    },
+    {
+      "id": "matryoshka-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Matryoshka 可变维度表示",
+      "knowledgePoint": "联合训练",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Matryoshka 原论文的监督分类形式如何同时训练多个表示长度？",
+      "answer": "对选定的嵌套维度分别计算分类损失，再按权重聚合并共同训练编码器。",
+      "explanation": "论文的基本形式为每个选定维度使用相应的分类器。",
+      "example": "同时优化 64、128、256 维前缀的损失。",
+      "tags": [
+        "向量检索",
+        "联合训练"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.13147v2"
+    },
+    {
+      "id": "matryoshka-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Matryoshka 可变维度表示",
+      "knowledgePoint": "分类器权重共享",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原论文的 MRL-E 相比基本 MRL 怎样减少分类头参数？",
+      "answer": "不同嵌套维度共享同一分类器权重的对应前缀。",
+      "explanation": "权重共享是该论文所述的高效变体。",
+      "example": "64 维分类头使用完整分类器权重的前 64 列。",
+      "tags": [
+        "向量检索",
+        "分类器权重共享"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.13147v2"
+    },
+    {
+      "id": "matryoshka-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Matryoshka 可变维度表示",
+      "knowledgePoint": "粗排与重排",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Matryoshka 自适应检索怎样利用不同维度降低搜索成本？",
+      "answer": "先用短前缀筛选候选，再用更长前缀对保留下来的候选重排。",
+      "explanation": "首轮漏掉的候选无法在后续只处理候选的重排阶段恢复。",
+      "example": "先用 64 维召回，再用 256 维比较候选。",
+      "tags": [
+        "向量检索",
+        "粗排与重排"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.13147v2"
+    },
+    {
+      "id": "matryoshka-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Matryoshka 可变维度表示",
+      "knowledgePoint": "前缀归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Matryoshka 论文将嵌套表示用于对比学习时，为什么要分别处理各维度的归一化？",
+      "answer": "不同长度前缀的范数可能不同，应针对各个前缀分别处理归一化。",
+      "explanation": "截取已归一化长向量的前缀通常不会使该前缀仍为单位长度。",
+      "example": "截取前 64 维后重新计算其 L2 范数。",
+      "tags": [
+        "向量检索",
+        "前缀归一化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.13147v2"
+    },
+    {
+      "id": "matryoshka-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Matryoshka 可变维度表示",
+      "knowledgePoint": "截断适用性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "普通嵌入模型输出的向量能否保证任意截取前缀后仍适合高质量检索？",
+      "answer": "不能保证；Matryoshka 方法通过训练多个前缀来提高不同长度表示的可用性。",
+      "explanation": "仍需在实际任务中评估各维度的召回和成本。",
+      "example": "在选定维度上比较召回率与索引大小。",
+      "tags": [
+        "向量检索",
+        "截断适用性"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.13147v2"
+    },
+    {
+      "id": "matryoshka-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Matryoshka 可变维度表示",
+      "knowledgePoint": "编码与检索成本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 Matryoshka 向量的短前缀检索，是否一定减少编码器的前向计算？",
+      "answer": "不一定；若编码器仍生成完整向量，主要节省的是较短向量的存储和后续比较成本。",
+      "explanation": "是否能提前退出编码器取决于具体模型实现。",
+      "example": "先生成完整表示，再只保存其前 128 维。",
+      "tags": [
+        "向量检索",
+        "编码与检索成本"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2205.13147v2"
+    }
+  ]
+}

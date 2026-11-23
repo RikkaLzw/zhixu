@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "dns-negative-cache-practice",
+    "title": "RFC 2308：DNS 负缓存",
+    "url": "https://www.rfc-editor.org/rfc/rfc2308.html",
+    "type": "官方文档与协议标准",
+    "note": "依据逐题引用的文档或标准自行整理，示例为自编；适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "dnsneg-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DNS 负缓存与排障",
+      "knowledgePoint": "NXDOMAIN缓存范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 RFC 2308 的基本规则，NXDOMAIN 负缓存按哪些查询属性复用？",
+      "answer": "按产生该名称错误的 QNAME 和 QCLASS 缓存与复用。",
+      "explanation": "这与只表示某种记录类型无数据的 NODATA 缓存范围不同。",
+      "example": "同一名称和类别的其他类型查询可受该名称错误缓存影响。",
+      "tags": [
+        "DNS 负缓存与排障",
+        "NXDOMAIN缓存范围"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html"
+    },
+    {
+      "id": "dnsneg-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DNS 负缓存与排障",
+      "knowledgePoint": "NODATA缓存范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 RFC 2308 的基本规则，NODATA 负缓存比 NXDOMAIN 多区分什么？",
+      "answer": "还区分 QTYPE，因此按 QNAME、QTYPE 和 QCLASS 缓存。",
+      "explanation": "一个类型没有记录不等于该名称的所有类型都没有记录。",
+      "example": "某名称无 AAAA 记录，不代表它一定没有 A 记录。",
+      "tags": [
+        "DNS 负缓存与排障",
+        "NODATA缓存范围"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html"
+    },
+    {
+      "id": "dnsneg-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DNS 负缓存与排障",
+      "knowledgePoint": "负缓存SOA",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 2308 中权威服务器为何在 NXDOMAIN 或 NODATA 答复的 authority 区段放入 SOA？",
+      "answer": "它携带负答案的缓存期限，让解析器能够在有限时间内缓存该结果。",
+      "explanation": "负答案没有可直接承载期限的正向答案记录。",
+      "example": "排查域名新增后仍解析失败时，可查看权威负答复的 SOA。",
+      "tags": [
+        "DNS 负缓存与排障",
+        "负缓存SOA"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html"
+    },
+    {
+      "id": "dnsneg-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DNS 负缓存与排障",
+      "knowledgePoint": "负缓存期限",
+      "questionType": "计算与推导",
+      "origin": "自行整理",
+      "question": "按 RFC 2308，权威负答案的 SOA TTL 如何由区域 SOA 确定？",
+      "answer": "取区域 SOA 自身 TTL 和 SOA.MINIMUM 字段中的较小值。",
+      "explanation": "缓存的剩余期限会递减；解析器还可能配置更低的缓存上限。",
+      "example": "SOA TTL 为 3600、MINIMUM 为 600 时，负答案初始 TTL 为 600 秒。",
+      "tags": [
+        "DNS 负缓存与排障",
+        "负缓存期限"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html"
+    },
+    {
+      "id": "dnsneg-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DNS 负缓存与排障",
+      "knowledgePoint": "无SOA负答复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 2308 对没有 SOA 的 DNS 负答复缓存有什么建议？",
+      "answer": "不应缓存这类负答复，因为缺乏可靠的期限会带来缓存循环风险。",
+      "explanation": "这是标准的 SHOULD NOT 建议，不是对所有实现行为的保证。",
+      "example": "排查异常 DNS 中间设备时可检查负答复是否包含 SOA。",
+      "tags": [
+        "DNS 负缓存与排障",
+        "无SOA负答复"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html"
+    },
+    {
+      "id": "dnsneg-006",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "DNS 负缓存与排障",
+      "knowledgePoint": "SOA最小值与正向记录",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "按 RFC 2308，SOA 的 MINIMUM 是否规定区域内所有正向记录 TTL 的下限？",
+      "answer": "不是；该字段作为所有正向记录 TTL 下限的旧含义已被弃用，现在用于确定负答案缓存期限。",
+      "explanation": "负答案 TTL 还要与 SOA 自身 TTL 取较小值；正向记录有各自的 TTL。",
+      "example": "MINIMUM 为 600 秒时，不能断定区域内每条正向记录的 TTL 都至少为 600 秒。",
+      "tags": [
+        "DNS 负缓存与排障",
+        "SOA最小值与正向记录"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc2308.html"
+    }
+  ]
+}

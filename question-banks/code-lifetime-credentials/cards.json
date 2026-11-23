@@ -1,0 +1,116 @@
+{
+  "source": {
+    "id": "code-lifetime-credentials",
+    "title": "CWE 资源生命周期与凭据风险",
+    "url": "https://cwe.mitre.org/data/definitions/367.html",
+    "type": "官方漏洞知识库",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "cwelife-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "资源竞争",
+      "knowledgePoint": "检查与使用时序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么是 TOCTOU（检查时间与使用时间）问题？",
+      "answer": "程序先检查资源状态再使用资源，但状态可能在两步之间变化，使检查结果失效。",
+      "explanation": "是否形成漏洞取决于可否影响该变化和后续操作。",
+      "example": "检查文件路径后，使用前路径指向的对象发生变化。",
+      "tags": [
+        "检查与使用时序",
+        "资源竞争"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/367.html"
+    },
+    {
+      "id": "cwelife-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "资源竞争",
+      "knowledgePoint": "缩短竞争窗口",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "缩短资源检查与使用之间的时间能彻底消除 TOCTOU 吗？",
+      "answer": "不能；竞争窗口变短并不保证检查时与使用时的资源状态一致。",
+      "explanation": "需要结合具体资源采用有效锁定或原子操作等机制。",
+      "example": "减少两条语句之间的耗时，仍应审查资源可能被并发修改的路径。",
+      "tags": [
+        "缩短竞争窗口",
+        "资源竞争"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/367.html"
+    },
+    {
+      "id": "cwelife-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "内存生命周期",
+      "knowledgePoint": "二次释放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "什么是双重释放（double free）？",
+      "answer": "同一内存分配被释放后，又被重复释放。",
+      "explanation": "它与释放后读取或写入的 use-after-free 是不同的错误操作。",
+      "example": "错误处理路径与正常清理路径都释放了同一块内存。",
+      "tags": [
+        "二次释放",
+        "内存生命周期"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/415.html",
+      "supportingReferences": [
+        {
+          "id": "company-huawei",
+          "title": "华为公开面经（合集收录，岗位未注明；经历为分享者自述）；内存漏洞主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x7f-%E5%8D%8E%E4%B8%BA",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "cwelife-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "凭据管理",
+      "knowledgePoint": "硬编码凭据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么把访问凭据硬编码在程序中存在风险？",
+      "answer": "获得代码或程序的人可能提取凭据，而且凭据往往难以单独轮换或禁用。",
+      "explanation": "安全性还受凭据权限和部署方式影响。",
+      "example": "把数据库密码写进应用源码后，泄漏时需要轮换并移除硬编码。",
+      "tags": [
+        "硬编码凭据",
+        "凭据管理"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/798.html"
+    },
+    {
+      "id": "cwelife-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "随机性",
+      "knowledgePoint": "安全随机数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么安全令牌不能依赖可预测的随机数？",
+      "answer": "如果令牌需要不可猜测，可预测的随机数可能让攻击者猜中有效值。",
+      "explanation": "应选择适合安全用途且实现可靠的随机数生成器。",
+      "example": "生成会话标识时使用系统提供的安全随机源。",
+      "tags": [
+        "安全随机数",
+        "随机性"
+      ],
+      "evidence": "source",
+      "reference": "https://cwe.mitre.org/data/definitions/330.html"
+    }
+  ]
+}

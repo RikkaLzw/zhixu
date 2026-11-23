@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "mteb-embedding-evaluation",
+    "title": "MTEB 原论文 v2：文本嵌入基准",
+    "url": "https://arxiv.org/pdf/2210.07316v2",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "mteb-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MTEB 嵌入评估",
+      "knowledgePoint": "评估范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么评估文本嵌入模型时要覆盖检索、聚类和分类等多类任务？",
+      "answer": "单一任务上的嵌入表现不一定能代表其他应用场景。",
+      "explanation": "论文发现没有一个受测方法在所有任务上都占优。",
+      "example": "STS 表现较好不保证检索或聚类也最好。",
+      "tags": [
+        "MTEB 嵌入评估",
+        "评估范围"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.07316v2"
+    },
+    {
+      "id": "mteb-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MTEB 嵌入评估",
+      "knowledgePoint": "检索指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MTEB 原论文的检索任务使用什么主要指标？",
+      "answer": "使用 nDCG@10 作为主要指标。",
+      "explanation": "论文还报告其他截断位置的 MRR、MAP、精确率和召回率等。",
+      "example": "比较检索模型时应确认数据集和指标口径相同。",
+      "tags": [
+        "MTEB 嵌入评估",
+        "检索指标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.07316v2"
+    },
+    {
+      "id": "mteb-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MTEB 嵌入评估",
+      "knowledgePoint": "重排输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MTEB 原论文中的重排任务给模型什么候选？",
+      "answer": "为每个查询给出一组相关和不相关的候选文本，由模型排序。",
+      "explanation": "这不同于从整个语料库构建开放候选集合的检索任务。",
+      "example": "对同一个问题的候选答案按相关性重新排序。",
+      "tags": [
+        "MTEB 嵌入评估",
+        "重排输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.07316v2"
+    },
+    {
+      "id": "mteb-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MTEB 嵌入评估",
+      "knowledgePoint": "跨语种挖掘",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MTEB 原论文的 bitext mining 任务要解决什么？",
+      "answer": "在两种语言的句子集合之间寻找互为对应内容的句子。",
+      "explanation": "论文使用嵌入相似度匹配，并以 F1 作为主要指标。",
+      "example": "从英文句子集中寻找对应的中文译句。",
+      "tags": [
+        "MTEB 嵌入评估",
+        "跨语种挖掘"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.07316v2"
+    },
+    {
+      "id": "mteb-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MTEB 嵌入评估",
+      "knowledgePoint": "分类评测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MTEB 原论文的分类任务怎样使用训练集文本嵌入？",
+      "answer": "在训练集嵌入上拟合逻辑回归分类器，再在测试集上评分。",
+      "explanation": "论文该任务以准确率作为主要指标。",
+      "example": "先把训练与测试文本转成向量，再训练线性分类器。",
+      "tags": [
+        "MTEB 嵌入评估",
+        "分类评测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.07316v2"
+    },
+    {
+      "id": "mteb-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MTEB 嵌入评估",
+      "knowledgePoint": "聚类指标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MTEB 原论文使用的 V-measure 为什么不依赖聚类标签的编号？",
+      "answer": "该指标评价聚类与真实类别的对应关系，标签编号置换不改变分数。",
+      "explanation": "它不要求聚类算法输出与真实标签相同的数字编号。",
+      "example": "交换两个聚类的编号不会改变 V-measure。",
+      "tags": [
+        "MTEB 嵌入评估",
+        "聚类指标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2210.07316v2"
+    }
+  ]
+}

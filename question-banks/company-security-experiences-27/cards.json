@@ -1,0 +1,133 @@
+{
+  "source": {
+    "id": "company-security-experiences-27",
+    "title": "多家企业公开安全岗位面经：既有考点来源",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md",
+    "type": "公开面经合集",
+    "note": "公司、岗位、轮次与经历均为分享者自述；主题启发不是原帖逐题提出。来源卡合并到已复核主卡，技术依据保留在主卡。"
+  },
+  "cards": [
+    {
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "注入",
+      "knowledgePoint": "SQL注入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 注入的核心问题是什么？",
+      "answer": "外部输入被错误地解释为 SQL 命令结构，从而改变原本预期的查询。",
+      "explanation": "检测时需要追踪输入如何进入数据库查询，并检查是否安全绑定。",
+      "example": "把用户输入直接拼接到 SQL 查询中。",
+      "id": "company27-001",
+      "tags": [
+        "SQL注入",
+        "注入",
+        "公开面经",
+        "哔哩哔哩"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bilibili",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x74-%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9",
+      "referenceTitle": "哔哩哔哩安全岗位公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集"
+    },
+    {
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "服务端请求",
+      "knowledgePoint": "SSRF",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "服务端请求伪造（SSRF）的核心风险是什么？",
+      "answer": "服务端按外部可控目标发起请求，却没有充分限制请求目的地。",
+      "explanation": "受影响的服务可能被用于访问原本无法由外部直接访问的内部服务。",
+      "example": "图片抓取功能被引导访问内部地址。",
+      "id": "company27-002",
+      "tags": [
+        "SSRF",
+        "服务端请求",
+        "公开面经",
+        "哔哩哔哩"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bilibili",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x74-%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9",
+      "referenceTitle": "哔哩哔哩安全岗位公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集"
+    },
+    {
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "输出安全",
+      "knowledgePoint": "上下文编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么防止 XSS 的输出编码要考虑输出上下文？",
+      "answer": "HTML 文本、属性、JavaScript 和 URL 等上下文使用不同的语法规则，需要匹配对应的编码或安全处理方式。",
+      "explanation": "允许用户提供 HTML 时，还需要合适的 HTML 清理策略。",
+      "example": "将数据放入 HTML 属性时使用适用于属性上下文的处理。",
+      "id": "company27-003",
+      "tags": [
+        "上下文编码",
+        "输出安全",
+        "公开面经",
+        "商汤"
+      ],
+      "evidence": "application",
+      "referenceId": "company-sensetime",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x51-%E5%95%86%E6%B1%A4",
+      "referenceTitle": "商汤安全岗位公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集"
+    },
+    {
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "告警研判",
+      "knowledgePoint": "响应状态与攻击结果",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Web 攻击请求收到 HTTP 200，能否仅凭状态码确认攻击成功？",
+      "answer": "不能；200 表示请求成功处理，是否发生预期的安全影响仍需结合响应内容和其他证据核实。",
+      "explanation": "状态码的语义取决于请求方法，不等于漏洞已被利用。",
+      "example": "检查返回内容和服务端记录，再判断是否发生未授权的数据访问。",
+      "id": "company27-004",
+      "tags": [
+        "响应状态与攻击结果",
+        "告警研判",
+        "公开面经",
+        "蚂蚁",
+        "360"
+      ],
+      "evidence": "application",
+      "referenceId": "company-360",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x73-360",
+      "referenceTitle": "360安全岗位公开面经（合集收录，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集"
+    },
+    {
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "进程事件",
+      "knowledgePoint": "ProcessGUID关联",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么关联 Sysmon 中的进程事件时常使用 ProcessGUID？",
+      "answer": "ProcessGUID 用于标识进程实例，有助于关联该进程的不同事件。",
+      "explanation": "相比只依赖可能复用的进程号，ProcessGUID 更适合跨时间关联；网络连接事件也包含 ProcessId 和 ProcessGuid。",
+      "example": "将进程创建与同一进程的网络连接关联。",
+      "id": "company27-005",
+      "tags": [
+        "ProcessGUID关联",
+        "进程事件",
+        "公开面经",
+        "腾讯",
+        "滴滴"
+      ],
+      "evidence": "application",
+      "referenceId": "company-didi",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x45-%E6%BB%B4%E6%BB%B4",
+      "referenceTitle": "滴滴安全岗位公开面经（合集收录，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集"
+    }
+  ]
+}

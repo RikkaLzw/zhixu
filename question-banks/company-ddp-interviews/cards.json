@@ -1,0 +1,332 @@
+{
+  "source": {
+    "id": "company-ddp-interviews",
+    "title": "百度公开面经主题启发：分布式训练",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "面经公司与经历为分享者自述；问题是主题启发并由独立技术资料核验。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "companyddp-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "梯度累积与 no_sync",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch DDP 的 no_sync() 在梯度累积时有什么用途？",
+      "answer": "它暂时关闭跨进程梯度同步，在退出后首次正常前向和反向时同步已累积梯度。",
+      "explanation": "要把前向计算也放进 no_sync 上下文，否则仍可能同步。",
+      "example": "前几个微批次累积梯度，最后一个微批次同步。",
+      "tags": [
+        "梯度累积与 no_sync",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.parallel.DistributedDataParallel.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyddp-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "梯度桶与重叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch DDP 为什么把参数梯度组织成多个桶？",
+      "answer": "桶内梯度准备好后即可启动归约，使部分通信有机会与剩余反向计算重叠。",
+      "explanation": "bucket_cap_mb 控制桶大小；实际重叠效果取决于网络、模型与梯度就绪顺序。",
+      "example": "后续层仍在反向计算时，已就绪桶开始同步。",
+      "tags": [
+        "梯度桶与重叠",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.parallel.DistributedDataParallel.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyddp-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "进程组大小",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.distributed 的 world_size 表示什么？",
+      "answer": "它表示某个进程组中参与的进程数量。",
+      "explanation": "进程数量与机器数量或 GPU 数量不一定相同。",
+      "example": "两台机器各运行四个进程时，默认组可以有八个进程。",
+      "tags": [
+        "进程组大小",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/distributed.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyddp-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "全局与本地进程序号",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "分布式训练中的进程组 rank 与节点内 local rank 有什么区别？",
+      "answer": "rank 标识进程在进程组中的位置；local rank 标识该进程在当前节点内的位置。",
+      "explanation": "跨节点时不同节点可以有相同 local rank。",
+      "example": "每台机器的 local rank 0 可对应各自的第一张卡。",
+      "tags": [
+        "全局与本地进程序号",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/distributed.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyddp-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "采样器填充",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "PyTorch DistributedSampler 的 drop_last=False 在数据数目不能整除进程数时如何处理？",
+      "answer": "它会补充索引，使各进程得到等量的样本索引；部分样本可能重复。",
+      "explanation": "评估时要考虑补充样本，避免指标被重复计数。",
+      "example": "五个样本分给两个进程时需要补充一个索引。",
+      "tags": [
+        "采样器填充",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/data.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyddp-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "采样器随机种子",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用打乱的 DistributedSampler 为什么应在各进程使用相同的 seed？",
+      "answer": "各进程需要依据同一随机顺序再分取各自部分，否则采样分区可能不一致。",
+      "explanation": "每轮调用 set_epoch 用于改变不同轮次的打乱顺序。",
+      "example": "各 rank 使用同一 seed，随后按 rank 获取子集。",
+      "tags": [
+        "采样器随机种子",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/data.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyddp-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "DDP 参数注册",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "PyTorch DDP 包装模型后，为什么不能随意增删模型参数？",
+      "answer": "DDP 构造时已为既有参数设置同步机制；后来增删的参数不满足其假设。",
+      "explanation": "应先完成模型结构，再使用 DDP 包装。",
+      "example": "不要在 DDP 包装后才添加训练层。",
+      "tags": [
+        "DDP 参数注册",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.parallel.DistributedDataParallel.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyddp-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "参数顺序",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么各 DDP 进程中的模型参数注册顺序应保持一致？",
+      "answer": "DDP 按约定顺序组织梯度归约；进程间顺序不一致会破坏对应关系或同步。",
+      "explanation": "各进程还应构建相同的模型结构。",
+      "example": "不同 rank 不要按不同顺序动态注册层。",
+      "tags": [
+        "参数顺序",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.parallel.DistributedDataParallel.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyddp-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "集体归约结果",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "torch.distributed 的 reduce 与 all_reduce 在结果分发上有什么区别？",
+      "answer": "reduce 将归约结果写到指定目标进程；all_reduce 将结果分发给组内所有进程。",
+      "explanation": "具体是求和、最大值等由归约操作决定。",
+      "example": "只需主进程汇总时可比较 reduce 的用法。",
+      "tags": [
+        "集体归约结果",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/distributed.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companyddp-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "不均匀迭代与同步",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "DDP 各进程训练步数不一致时为什么可能卡住？",
+      "answer": "先结束的进程可能不再参与同步，而其他进程仍在等待对应的集体通信。",
+      "explanation": "应保证同步路径一致，或使用适用的 join 机制处理不均匀输入。",
+      "example": "一个进程数据耗尽后另一个仍进入梯度归约。",
+      "tags": [
+        "不均匀迭代与同步",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度大模型面经（合集转载，经历为分享者自述）；主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-distributed-doc",
+          "title": "PyTorch 2.15 分布式训练文档",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.parallel.DistributedDataParallel.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

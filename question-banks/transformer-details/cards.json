@@ -1,0 +1,97 @@
+{
+  "source": {
+    "id": "transformer-details",
+    "title": "Hugging Face WordPiece 与 GQA 论文",
+    "url": "https://huggingface.co/learn/llm-course/chapter6/6",
+    "type": "技术文档与标准",
+    "note": "根据逐题注明的技术资料自行整理，示例为自编。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "transdetail-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 结构",
+      "knowledgePoint": "WordPiece推理分词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERT 常见的 WordPiece 分词如何选择词表中的片段？",
+      "answer": "它通常从当前位置开始，贪心选择词表中可匹配的最长片段，再继续切分剩余部分。",
+      "explanation": "这是分词时的策略，不等同于 BPE 按合并规则处理。",
+      "example": "先匹配最长前缀，再为后续部分寻找子词。",
+      "tags": [
+        "WordPiece推理分词",
+        "Transformer 结构"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter6/6"
+    },
+    {
+      "id": "transdetail-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Transformer 结构",
+      "knowledgePoint": "WordPiece续接标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BERT WordPiece 词表中的 ## 前缀通常表示什么？",
+      "answer": "它表示该子词片段位于词的后续位置，而不是词首。",
+      "explanation": "实际特殊前缀取决于所用分词器。",
+      "example": "unaffable 可包含以 ## 开头的后续片段。",
+      "tags": [
+        "WordPiece续接标记",
+        "Transformer 结构"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter6/6"
+    },
+    {
+      "id": "transdetail-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 结构",
+      "knowledgePoint": "WordPiece未知词",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在课程描述的 WordPiece 实现中，词的剩余部分无法匹配词表时通常怎样处理？",
+      "answer": "整个词会被表示为未知 token，而不是只把无法匹配的部分标为未知。",
+      "explanation": "具体行为取决于分词器与词表实现。",
+      "example": "词中出现无法由词表表示的字符时，结果可能为 [UNK]。",
+      "tags": [
+        "WordPiece未知词",
+        "Transformer 结构"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/learn/llm-course/chapter6/6"
+    },
+    {
+      "id": "transdetail-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Transformer 结构",
+      "knowledgePoint": "MHA MQA GQA",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "MHA、MQA 和 GQA 的键值头共享方式有什么区别？",
+      "answer": "MHA 通常每个查询头有各自的键值头；MQA 的查询头共享一组键值头；GQA 按组共享键值头。",
+      "explanation": "GQA 可在键值头数量与模型效果之间提供权衡。",
+      "example": "8 个查询头分为 2 组，每组共享一组 K/V 头。",
+      "tags": [
+        "MHA MQA GQA",
+        "Transformer 结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2305.13245",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯微信大模型一面（合集转载，经历为投稿者自述）；原帖提及手写 GQA；头共享方式为主题启发",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900311%E3%80%91%E8%85%BE%E8%AE%AFWXG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

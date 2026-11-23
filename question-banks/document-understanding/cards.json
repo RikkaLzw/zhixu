@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "document-understanding",
+    "title": "Tesseract 与 LayoutLMv3 文档理解",
+    "url": "https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html",
+    "type": "官方技术文档",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "docai-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "OCR",
+      "knowledgePoint": "页面倾斜",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "扫描页面倾斜为什么可能降低 Tesseract 的 OCR 效果？",
+      "answer": "倾斜会影响文本行分割；纠偏可使文本行更接近水平。",
+      "explanation": "图像质量、语言和分割模式也会影响结果。",
+      "example": "先纠正扫描文档的旋转角度再识别文字。",
+      "tags": [
+        "页面倾斜",
+        "OCR"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html#rotation--deskewing"
+    },
+    {
+      "id": "docai-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "OCR",
+      "knowledgePoint": "页面分割模式",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "用 Tesseract 识别一小块文字时，为什么要考虑调整页面分割模式？",
+      "answer": "默认分割假设输入是整页文字；小区域可能更适合针对单行或单块的模式。",
+      "explanation": "具体模式需结合区域内容试验。",
+      "example": "只识别截图中的一行提示文字时选择相应分割模式。",
+      "tags": [
+        "页面分割模式",
+        "OCR"
+      ],
+      "evidence": "source",
+      "reference": "https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html#page-segmentation-method"
+    },
+    {
+      "id": "docai-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文档模型",
+      "knowledgePoint": "文字与布局输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LayoutLMv3 的词级边界框输入有什么作用？",
+      "answer": "它为文档中的词提供位置和范围信息，使模型能够利用版面布局。",
+      "explanation": "Hugging Face 实现要求词级框按约定归一化到 0–1000。",
+      "example": "识别表单中的字段时同时提供词和词的位置。",
+      "tags": [
+        "文字与布局输入",
+        "文档模型"
+      ],
+      "evidence": "source",
+      "reference": "https://huggingface.co/docs/transformers/main/en/model_doc/layoutlmv3"
+    }
+  ]
+}

@@ -1,0 +1,573 @@
+{
+  "source": {
+    "id": "grammar-fuzzing",
+    "title": "语法引导模糊测试与 AFL++ 自定义变异",
+    "url": "https://www.fuzzingbook.org/html/Grammars.html",
+    "type": "公开教材与官方文档",
+    "note": "依据 The Fuzzing Book 和固定版本 AFL++ 文档整理；面经仅提供主题启发。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "gramfuzz-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语法生成",
+      "knowledgePoint": "终结符与非终结符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "生成语法中的终结符与非终结符有什么区别？",
+      "answer": "非终结符可按规则继续展开；终结符是最终输出中的基本符号。",
+      "explanation": "生成结束时不应再留下待展开的非终结符。",
+      "example": "数字规则中的数字字符是终结符，<digit> 是非终结符。",
+      "tags": [
+        "终结符与非终结符",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Grammars.html#Grammars",
+      "referenceTitle": "The Fuzzing Book：终结符与非终结符"
+    },
+    {
+      "id": "gramfuzz-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语法生成",
+      "knowledgePoint": "语法产生式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语法规则中的产生式用于什么？",
+      "answer": "它描述一个非终结符可以替换成哪些符号序列。",
+      "explanation": "一个非终结符可以有多个备选展开。",
+      "example": "<digit> 可以展开为多个数字字符中的一个。",
+      "tags": [
+        "语法产生式",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Grammars.html#Grammars",
+      "referenceTitle": "The Fuzzing Book：语法产生式",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全工程师实习公开面经（个人复盘，合集收录）；数据库 fuzz 与 AFL++ 主题启发，非原题",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "gramfuzz-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语法生成",
+      "knowledgePoint": "起始符号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语法生成器通常从哪里开始构造输入？",
+      "answer": "从指定的起始非终结符开始，逐步展开直到生成完整字符串。",
+      "explanation": "The Fuzzing Book 的示例默认使用 <start>。",
+      "example": "从 <start> 展开出表达式再生成数字。",
+      "tags": [
+        "起始符号",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Grammars.html#Grammars",
+      "referenceTitle": "The Fuzzing Book：起始符号"
+    },
+    {
+      "id": "gramfuzz-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语法生成",
+      "knowledgePoint": "空产生式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语法中的空产生式或 ε 展开表示什么？",
+      "answer": "它表示该规则可以生成空字符串。",
+      "explanation": "空字符串不等于包含一个空格的字符串。",
+      "example": "可选符号的“没有内容”分支可用空产生式表示。",
+      "tags": [
+        "空产生式",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Grammars.html#Grammar-Shortcuts",
+      "referenceTitle": "The Fuzzing Book：空产生式"
+    },
+    {
+      "id": "gramfuzz-005",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语法生成",
+      "knowledgePoint": "EBNF数量符号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EBNF 中的 ?、* 和 + 通常分别表示多少次出现？",
+      "answer": "? 表示零次或一次；* 表示零次或多次；+ 表示一次或多次。",
+      "explanation": "它们可描述可选项与重复结构。",
+      "example": "数字后使用 + 表示至少有一个数字。",
+      "tags": [
+        "EBNF数量符号",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Grammars.html#Grammar-Shortcuts",
+      "referenceTitle": "The Fuzzing Book：EBNF数量符号"
+    },
+    {
+      "id": "gramfuzz-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语法生成",
+      "knowledgePoint": "语法检查",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "The Fuzzing Book 的 is_valid_grammar 主要检查哪些结构问题？",
+      "answer": "它检查使用但未定义的非终结符、不可达规则等语法结构问题。",
+      "explanation": "结构检查不等于证明所有生成结果都满足业务语义。",
+      "example": "规则引用了不存在的 <name> 时应先修正定义。",
+      "tags": [
+        "语法检查",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/Grammars.html#Checking-Grammars",
+      "referenceTitle": "The Fuzzing Book：语法检查"
+    },
+    {
+      "id": "gramfuzz-007",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "推导树",
+      "knowledgePoint": "推导树作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么语法生成器可以使用推导树而不是只保存最终字符串？",
+      "answer": "推导树保留符号的展开关系和输入结构，便于定位、替换或继续展开子结构。",
+      "explanation": "同一个文本结果也可能有不同的推导过程。",
+      "example": "替换表达式树中的一个子表达式。",
+      "tags": [
+        "推导树作用",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/GrammarFuzzer.html#Derivation-Trees",
+      "referenceTitle": "The Fuzzing Book：推导树作用"
+    },
+    {
+      "id": "gramfuzz-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "推导树",
+      "knowledgePoint": "未展开节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "The Fuzzing Book 的推导树表示中，children 为 None 与空列表通常分别表示什么？",
+      "answer": "None 表示待展开的非终结符；空列表表示没有子节点的终结符。",
+      "explanation": "这是该教程使用的具体数据结构约定。",
+      "example": "(<digit>, None) 仍待展开，(\"1\", []) 是终结符。",
+      "tags": [
+        "未展开节点",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/GrammarFuzzer.html#Representing-Derivation-Trees",
+      "referenceTitle": "The Fuzzing Book：未展开节点"
+    },
+    {
+      "id": "gramfuzz-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "推导树",
+      "knowledgePoint": "从树生成字符串",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "完整推导树如何还原为生成的输入字符串？",
+      "answer": "按顺序遍历并连接叶子终结符的文本。",
+      "explanation": "应先完成所需的非终结符展开。",
+      "example": "把数字、运算符和数字叶子拼成表达式。",
+      "tags": [
+        "从树生成字符串",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/GrammarFuzzer.html#Derivation-Trees",
+      "referenceTitle": "The Fuzzing Book：从树生成字符串"
+    },
+    {
+      "id": "gramfuzz-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "生成控制",
+      "knowledgePoint": "递归展开风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "递归语法为什么可能使简单生成器长时间无法结束？",
+      "answer": "生成器可能反复选择会继续产生非终结符的规则，而迟迟不选择结束展开的规则。",
+      "explanation": "适当的深度、成本或结束策略有助于控制生成。",
+      "example": "表达式反复嵌套括号而不产生数字。",
+      "tags": [
+        "递归展开风险",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/GrammarFuzzer.html#Derivation-Trees",
+      "referenceTitle": "The Fuzzing Book：递归展开风险",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全工程师实习公开面经（个人复盘，合集收录）；数据库 fuzz 与 AFL++ 主题启发，非原题",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "gramfuzz-011",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "生成控制",
+      "knowledgePoint": "非终结符上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "仅限制简单语法生成器中待展开非终结符的数量，能保证生成必定终止吗？",
+      "answer": "不能；递归规则仍可能在限制内反复展开。",
+      "explanation": "还需要确保最终可选择结束推导的策略或设置其他停止条件。",
+      "example": "只允许产生括号递归的候选时可能持续嵌套。",
+      "tags": [
+        "非终结符上限",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/GrammarFuzzer.html",
+      "referenceTitle": "The Fuzzing Book：非终结符上限"
+    },
+    {
+      "id": "gramfuzz-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "生成控制",
+      "knowledgePoint": "三阶段扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "The Fuzzing Book 的 GrammarFuzzer 如何结合成本控制输入生成？",
+      "answer": "先按较高成本扩展以增长结构，再随机扩展，最后倾向低成本展开以结束推导。",
+      "explanation": "初始增长阶段可按参数配置跳过。",
+      "example": "控制表达式复杂度后让剩余非终结符收敛到终结符。",
+      "tags": [
+        "三阶段扩展",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/GrammarFuzzer.html#Three-Expansion-Phases",
+      "referenceTitle": "The Fuzzing Book：三阶段扩展"
+    },
+    {
+      "id": "gramfuzz-013",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "语法覆盖",
+      "knowledgePoint": "产生式覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语法产生式覆盖关注什么？",
+      "answer": "关注测试生成过程中使用了哪些规则展开备选项。",
+      "explanation": "它描述输入语法的覆盖，不直接等同于程序代码覆盖。",
+      "example": "检查表达式测试是否使用了加法和减法两种产生式。",
+      "tags": [
+        "产生式覆盖",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/GrammarCoverageFuzzer.html#Covering-Grammar-Expansions",
+      "referenceTitle": "The Fuzzing Book：产生式覆盖"
+    },
+    {
+      "id": "gramfuzz-014",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语法覆盖",
+      "knowledgePoint": "优先未覆盖规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语法覆盖引导生成器为什么优先考虑未使用过的展开？",
+      "answer": "这样可以更系统地生成包含不同语法结构的测试输入。",
+      "explanation": "最终是否覆盖目标代码仍需另行测量。",
+      "example": "已生成整数后，尝试尚未生成的小数规则。",
+      "tags": [
+        "优先未覆盖规则",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/GrammarCoverageFuzzer.html#Covering-Grammar-Expansions",
+      "referenceTitle": "The Fuzzing Book：优先未覆盖规则"
+    },
+    {
+      "id": "gramfuzz-015",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语法覆盖",
+      "knowledgePoint": "语法与代码覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "语法产生式全部覆盖能否单独保证程序分支全部覆盖？",
+      "answer": "不能；不同输入结构可能走同一代码路径，分支还可能依赖数据值或运行状态。",
+      "explanation": "应分别测量语法覆盖和代码覆盖。",
+      "example": "两个不同数字都可能通过同一个解析分支。",
+      "tags": [
+        "语法与代码覆盖",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "application",
+      "reference": "https://www.fuzzingbook.org/html/GrammarCoverageFuzzer.html#Covering-Code-by-Covering-Grammars",
+      "referenceTitle": "The Fuzzing Book：语法与代码覆盖"
+    },
+    {
+      "id": "gramfuzz-016",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "语法覆盖",
+      "knowledgePoint": "上下文中的覆盖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么只统计某个非终结符的展开覆盖，可能漏掉其在不同位置的组合？",
+      "answer": "同一非终结符可能出现在多个上下文；覆盖其所有展开不代表每个位置都尝试过这些展开。",
+      "explanation": "可以按上下文区分规则或额外记录组合。",
+      "example": "小数点前后的整数使用同一规则，但两个位置未必都覆盖负号。",
+      "tags": [
+        "上下文中的覆盖",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/GrammarCoverageFuzzer.html#Coverage-in-Context",
+      "referenceTitle": "The Fuzzing Book：上下文中的覆盖"
+    },
+    {
+      "id": "gramfuzz-017",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "概率语法",
+      "knowledgePoint": "展开概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "概率语法给备选产生式赋予不同概率有什么作用？",
+      "answer": "它改变生成器选择各展开的频率，以便偏重某些结构。",
+      "explanation": "概率设置不会自动保证覆盖所有目标代码。",
+      "example": "提高复杂表达式分支的生成概率。",
+      "tags": [
+        "展开概率",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/ProbabilisticGrammarFuzzer.html#Specifying-Probabilities",
+      "referenceTitle": "The Fuzzing Book：展开概率"
+    },
+    {
+      "id": "gramfuzz-018",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "概率语法",
+      "knowledgePoint": "概率分配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "The Fuzzing Book 的概率语法中，未显式设置概率的备选项如何分配剩余概率？",
+      "answer": "该实现把剩余概率平均分配给未指定概率的备选项。",
+      "explanation": "同一规则的全部备选概率总和应为 1。",
+      "example": "已指定 0.4 和 0.2，两个未指定项各分得 0.2。",
+      "tags": [
+        "概率分配",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://www.fuzzingbook.org/html/ProbabilisticGrammarFuzzer.html#Distributing-Probabilities",
+      "referenceTitle": "The Fuzzing Book：概率分配"
+    },
+    {
+      "id": "gramfuzz-019",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "结构化变异",
+      "knowledgePoint": "同类子树替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按同一非终结符替换推导树子树为什么有助于保持语法结构？",
+      "answer": "替换后的子树仍由该非终结符的规则产生，通常可保持语法形式。",
+      "explanation": "这不保证跨字段语义约束仍然满足。",
+      "example": "用另一个合法表达式替换表达式子树。",
+      "tags": [
+        "同类子树替换",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "application",
+      "reference": "https://www.fuzzingbook.org/html/GrammarFuzzer.html#Derivation-Trees",
+      "referenceTitle": "The Fuzzing Book：同类子树替换",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全工程师实习公开面经（个人复盘，合集收录）；数据库 fuzz 与 AFL++ 主题启发，非原题",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "gramfuzz-020",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++自定义变异",
+      "knowledgePoint": "自定义变异器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 自定义 mutator 的 fuzz 回调主要做什么？",
+      "answer": "接收已有输入并产生自定义变异结果。",
+      "explanation": "它可利用输入结构实现专门的变异策略。",
+      "example": "对结构化请求修改一个字段。",
+      "tags": [
+        "自定义变异器",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/docs/custom_mutators.md",
+      "referenceTitle": "AFL++ 固定版本：Custom Mutators"
+    },
+    {
+      "id": "gramfuzz-021",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++自定义变异",
+      "knowledgePoint": "仅用自定义变异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 的 AFL_CUSTOM_MUTATOR_ONLY 设置会怎样影响变异？",
+      "answer": "设置后，变异仅由自定义 mutator 执行。",
+      "explanation": "未设置时，自定义 mutator 可以与 AFL++ 自带变异配合。",
+      "example": "比较只用结构化变异与混合变异的效果。",
+      "tags": [
+        "仅用自定义变异",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/docs/custom_mutators.md",
+      "referenceTitle": "AFL++ 固定版本：Custom Mutators",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全工程师实习公开面经（个人复盘，合集收录）；数据库 fuzz 与 AFL++ 主题启发，非原题",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x33-%E8%9A%82%E8%9A%81-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88-%E5%AE%9E%E4%B9%A0",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "gramfuzz-022",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++自定义变异",
+      "knowledgePoint": "跳过一次变异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 自定义 fuzz 回调返回长度 0 时表示什么？",
+      "answer": "表示跳过这一次变异结果。",
+      "explanation": "这不代表目标程序已经处理该结果。",
+      "example": "生成器无法产生可用候选时跳过该次结果。",
+      "tags": [
+        "跳过一次变异",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/docs/custom_mutators.md",
+      "referenceTitle": "AFL++ 固定版本：Custom Mutators"
+    },
+    {
+      "id": "gramfuzz-023",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++自定义变异",
+      "knowledgePoint": "目标输入后处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 自定义 post_process 回调用于什么？",
+      "answer": "它在执行目标前把变异器内部表示转换为目标期望的输入格式。",
+      "explanation": "文档要求不要在该回调中加入随机变异。",
+      "example": "把结构化二进制表示转换成目标接受的文本。",
+      "tags": [
+        "目标输入后处理",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/docs/custom_mutators.md",
+      "referenceTitle": "AFL++ 固定版本：Custom Mutators"
+    },
+    {
+      "id": "gramfuzz-024",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++自定义变异",
+      "knowledgePoint": "队列输入筛选",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 自定义 queue_get 回调返回不处理某个队列项时，会影响哪些变异器？",
+      "answer": "该队列项不会由已定义的自定义 mutator 或 AFL++ 自带 mutator 继续模糊测试。",
+      "explanation": "这是一项队列输入筛选，不只影响当前插件自身。",
+      "example": "过滤掉自定义格式无法处理的队列项。",
+      "tags": [
+        "队列输入筛选",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/docs/custom_mutators.md",
+      "referenceTitle": "AFL++ 固定版本：Custom Mutators"
+    },
+    {
+      "id": "gramfuzz-025",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "AFL++自定义变异",
+      "knowledgePoint": "结构化语料缩减",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AFL++ 为什么允许自定义结构化输入的语料缩减？",
+      "answer": "通用字节级裁剪可能破坏格式，自定义裁剪可以更好地保留结构，并由引擎检查覆盖是否保持。",
+      "explanation": "覆盖保持与保留特定崩溃条件是不同的检查目标。",
+      "example": "按字段删除而不是任意删除字节。",
+      "tags": [
+        "结构化语料缩减",
+        "模糊测试",
+        "语法"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/AFLplusplus/AFLplusplus/blob/d798677805de81b50aa8f45beb0342ae1617b9d8/docs/custom_mutators.md",
+      "referenceTitle": "AFL++ 固定版本：Custom Mutators"
+    }
+  ]
+}

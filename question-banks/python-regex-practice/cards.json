@@ -1,0 +1,449 @@
+{
+  "source": {
+    "id": "python-regex-practice",
+    "title": "Python 3.14：正则表达式与 re 接口",
+    "url": "https://docs.python.org/3.14/library/re.html",
+    "type": "官方技术文档与规范",
+    "note": "依据逐题引用的固定版本文档或规范自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pyregex-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "三种匹配入口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的 re.match、re.search 和 re.fullmatch 如何确定匹配范围？",
+      "answer": "match 从字符串开头匹配；search 寻找任意位置的首个匹配；fullmatch 要求整个字符串匹配。",
+      "explanation": "这三者在失败时都返回 None。",
+      "example": "校验整个输入时可考虑 fullmatch。",
+      "tags": [
+        "三种匹配入口",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "空匹配与失败",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 正则返回零长度匹配与返回 None 有什么区别？",
+      "answer": "零长度匹配仍返回 Match 对象；None 表示没有匹配。",
+      "explanation": "不要用匹配文本是否为空来代替是否匹配的判断。",
+      "example": "re.match(r'a*', 'b') 会产生零长度匹配。",
+      "tags": [
+        "空匹配与失败",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "原始字符串",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 Python 正则模式经常写成原始字符串 r\"...\"？",
+      "answer": "原始字符串减少 Python 字符串字面量对反斜杠的转义处理，让正则语法更易表达。",
+      "explanation": "正则引擎仍会解释模式中的反斜杠。",
+      "example": "r'\\d+' 将反斜杠交给正则引擎处理。",
+      "tags": [
+        "原始字符串",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "编译正则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 的 re.compile 主要产生什么对象？",
+      "answer": "它产生可重复使用的编译正则对象，可调用其 search、match 等方法。",
+      "explanation": "模块级匹配函数也会缓存最近使用的模式。",
+      "example": "对多条日志使用同一个模式对象。",
+      "tags": [
+        "编译正则",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "点号与DOTALL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 正则中的点号默认匹配换行符吗？",
+      "answer": "默认不匹配；启用 re.DOTALL 后点号也可匹配换行符。",
+      "explanation": "其他字符仍按正则模式处理。",
+      "example": "跨多行匹配时按需要启用 DOTALL。",
+      "tags": [
+        "点号与DOTALL",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "Unicode数字类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的字符串正则中，\\d 默认只匹配 ASCII 数字吗？",
+      "answer": "不是；默认匹配 Unicode 十进制数字，re.ASCII 可将其限制为 ASCII 数字。",
+      "explanation": "字节模式的字符类别规则不同。",
+      "example": "阿拉伯文数字可能被字符串模式的 \\d 匹配。",
+      "tags": [
+        "Unicode数字类",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "单词字符类",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 的字符串正则中，\\w 默认包含哪些常见字符？",
+      "answer": "它包含 Unicode 字母数字字符和下划线。",
+      "explanation": "使用 re.ASCII 可限制为 ASCII 字母、数字及下划线。",
+      "example": "中文字符和下划线都可能匹配 \\w。",
+      "tags": [
+        "单词字符类",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "多行锚点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 正则启用 re.MULTILINE 后，^ 和 $ 的含义如何扩展？",
+      "answer": "它们还可分别匹配每行的开头和行尾位置。",
+      "explanation": "MULTILINE 不改变点号是否匹配换行符。",
+      "example": "在多行日志中查找以 ERROR 开头的行。",
+      "tags": [
+        "多行锚点",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "贪婪与非贪婪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 正则量词 * 与 *? 在匹配长度的选择上有什么区别？",
+      "answer": "* 优先尝试尽可能多的字符；*? 优先尝试尽可能少的字符，同时仍要让整个模式匹配。",
+      "explanation": "后续模式可能迫使引擎调整尝试的长度。",
+      "example": "提取两个分隔符之间的短片段。",
+      "tags": [
+        "贪婪与非贪婪",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "整体匹配分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 正则 Match 对象的 group(0) 表示什么？",
+      "answer": "它返回整个正则表达式匹配到的文本。",
+      "explanation": "编号从 1 开始的组对应捕获括号。",
+      "example": "从匹配对象取得完整命中内容。",
+      "tags": [
+        "整体匹配分组",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "命名分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 正则命名捕获组如何通过 Match 对象按名称读取？",
+      "answer": "可用 group(\"名称\") 读取对应内容，或用 groupdict() 获取名称到内容的字典。",
+      "explanation": "命名组同时也是编号捕获组。",
+      "example": "用命名组提取日志级别。",
+      "tags": [
+        "命名分组",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "非捕获分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 正则中的 (?:...) 与普通 (...) 在捕获行为上有什么区别？",
+      "answer": "(?:...) 可用于分组，但不会创建可单独提取的捕获组。",
+      "explanation": "它仍可用于量词或分支的组合。",
+      "example": "把多个备选词作为整体重复。",
+      "tags": [
+        "非捕获分组",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "findall捕获组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python re.findall 的返回元素会如何受捕获组数量影响？",
+      "answer": "没有捕获组时返回完整匹配；一个组时返回该组字符串；多个组时返回各组组成的元组。",
+      "explanation": "非捕获组不改变返回结构。",
+      "example": "提取 key=value 中的键和值。",
+      "tags": [
+        "findall捕获组",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "finditer返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python re.finditer 与 re.findall 在返回形式上有什么主要区别？",
+      "answer": "finditer 迭代返回 Match 对象，可读取位置和分组；findall 返回匹配文本或组值的列表。",
+      "explanation": "两者均按从左到右查找不重叠匹配。",
+      "example": "需要命中位置时使用 finditer。",
+      "tags": [
+        "finditer返回值",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "split捕获分隔符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python re.split 的模式中含捕获组时，分隔符内容会怎样？",
+      "answer": "匹配到的捕获组内容也会出现在结果列表中。",
+      "explanation": "不希望捕获该分组时可考虑非捕获组。",
+      "example": "按标点切分时同时保留标点。",
+      "tags": [
+        "split捕获分隔符",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "sub函数替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python re.sub 的 repl 参数可以是函数吗？",
+      "answer": "可以；函数接收 Match 对象，其返回字符串作为该次匹配的替换内容。",
+      "explanation": "函数会针对每个被替换的匹配调用。",
+      "example": "按匹配到的数字生成替换文本。",
+      "tags": [
+        "sub函数替换",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "subn返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python re.subn 与 re.sub 的返回值有什么区别？",
+      "answer": "subn 返回替换后的字符串及替换次数组成的二元组；sub 返回字符串。",
+      "explanation": "可通过替换次数检查是否发生修改。",
+      "example": "统计日志中脱敏替换的次数。",
+      "tags": [
+        "subn返回值",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "escape适用位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python re.escape 的结果适合直接作为 re.sub 的替换字符串吗？",
+      "answer": "不应直接用于替换字符串；re.escape 用来转义正则模式中的字面文本。",
+      "explanation": "替换字符串有不同的反斜杠和组引用规则。",
+      "example": "把用户提供的字面文本作为模式时使用 re.escape。",
+      "tags": [
+        "escape适用位置",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "前瞻零宽",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 正则的正向前瞻 (?=...) 在匹配时会消耗字符吗？",
+      "answer": "不会；它要求当前位置之后能匹配指定模式，但自身不消耗字符。",
+      "explanation": "失败的前瞻会使当前位置的匹配失败。",
+      "example": "在不包含分隔符的情况下检查其后续内容。",
+      "tags": [
+        "前瞻零宽",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "后顾固定长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.14 内置 re 的正向后顾 (?<=...) 对后顾模式长度有什么限制？",
+      "answer": "后顾模式必须匹配固定长度的文本。",
+      "explanation": "例如固定长度的替代分支可以使用，可变长度量词通常不行。",
+      "example": "(?<=abc)def 检查 def 前面是否是 abc。",
+      "tags": [
+        "后顾固定长度",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "多行下match",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python re.match 启用 re.MULTILINE 后，会自动从每行开头尝试匹配吗？",
+      "answer": "不会；re.match 仍只从整个字符串的开头尝试。",
+      "explanation": "需要在行首查找时可使用带锚点的 search 或 finditer。",
+      "example": "第二行才出现目标时 re.match 仍可能失败。",
+      "tags": [
+        "多行下match",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-022",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "VERBOSE规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 正则的 re.VERBOSE 有什么作用？",
+      "answer": "它允许用空白和注释组织正则表达式，提高复杂模式的可读性。",
+      "explanation": "字符类中的空白以及转义空白等情况不会按普通格式空白忽略。",
+      "example": "把长模式拆成多行并添加注释。",
+      "tags": [
+        "VERBOSE规则",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    },
+    {
+      "id": "pyregex-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Python 正则表达式",
+      "knowledgePoint": "单词边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 字符串正则中的 \\b 在字符类之外通常匹配什么？",
+      "answer": "它匹配单词字符与非单词字符之间，或单词字符与字符串边界之间的位置。",
+      "explanation": "在字符类内部，\\b 表示退格字符。",
+      "example": "查找独立单词时使用单词边界。",
+      "tags": [
+        "单词边界",
+        "Python 正则表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.14/library/re.html"
+    }
+  ]
+}

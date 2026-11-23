@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "trie-string-search",
+    "title": "Princeton Algorithms：字典树与字符串检索",
+    "url": "https://algs4.cs.princeton.edu/52trie/",
+    "type": "标准、教材与官方技术文档",
+    "note": "根据逐题引用的标准、教材或官方文档自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "tries-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "字典树与字符串检索",
+      "knowledgePoint": "前缀树",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "字典树（Trie）如何利用字符串之间的共同前缀？",
+      "answer": "共享相同前缀的字符串沿相同路径存储，再在后续字符处分支。",
+      "explanation": "节点或边的具体表示方式依实现而异。",
+      "example": "cat 与 car 可以共享 ca 的路径。",
+      "tags": [
+        "字典树与字符串检索",
+        "前缀树"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/52trie/"
+    },
+    {
+      "id": "tries-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "字典树与字符串检索",
+      "knowledgePoint": "完整键标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "字典树为什么常要标记某个路径是否对应完整键？",
+      "answer": "因为一个键可能同时是另一个键的前缀，只存在路径不表示该前缀一定已作为完整键插入。",
+      "explanation": "结束标记或与节点关联的值可区分这两种情况。",
+      "example": "插入 car 后，路径 ca 存在但 ca 未必是完整键。",
+      "tags": [
+        "字典树与字符串检索",
+        "完整键标记"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/52trie/"
+    },
+    {
+      "id": "tries-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "字典树与字符串检索",
+      "knowledgePoint": "前缀查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "字典树如何支持查找以给定前缀开头的键？",
+      "answer": "先沿前缀字符找到对应路径，再遍历其后续分支收集键。",
+      "explanation": "结果数量大时，输出本身也需要相应时间。",
+      "example": "输入 ca 后查找 cat 与 car。",
+      "tags": [
+        "字典树与字符串检索",
+        "前缀查询"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/52trie/"
+    },
+    {
+      "id": "tries-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "字典树与字符串检索",
+      "knowledgePoint": "最长前缀匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "字典树的最长前缀匹配寻找什么？",
+      "answer": "寻找键集合中同时是查询字符串前缀的最长完整键。",
+      "explanation": "沿路径查询时要记录遇到的完整键，不能只看走到的最深节点。",
+      "example": "路径匹配到更长位置但未标记为键时，返回较短的已存键。",
+      "tags": [
+        "字典树与字符串检索",
+        "最长前缀匹配"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/52trie/"
+    },
+    {
+      "id": "tries-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "字典树与字符串检索",
+      "knowledgePoint": "查找复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在每个字符转移为常数时间的字典树中，长度为 L 的键查询通常需要多少时间？",
+      "answer": "最多需要 O(L) 次字符转移。",
+      "explanation": "实际成本还取决于字符集、节点表示和访问内存的开销。",
+      "example": "逐字符查找长度为 5 的键。",
+      "tags": [
+        "字典树与字符串检索",
+        "查找复杂度"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/52trie/"
+    },
+    {
+      "id": "tries-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "字典树与字符串检索",
+      "knowledgePoint": "删除共享路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "从字典树删除一个键时，为什么不能无条件删除其整条路径？",
+      "answer": "其他键可能共享其中的前缀节点；只应删除不再被其他键使用的部分。",
+      "explanation": "需要同时维护完整键标记或值。",
+      "example": "删除 car 时仍要保留 cat 共用的 ca 路径。",
+      "tags": [
+        "字典树与字符串检索",
+        "删除共享路径"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/52trie/"
+    },
+    {
+      "id": "tries-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "字典树与字符串检索",
+      "knowledgePoint": "空间权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数组式 R 路字典树的常见空间代价是什么？",
+      "answer": "每个节点为字符集的各个可能分支预留位置，稀疏分支可能浪费空间。",
+      "explanation": "可以选择其他节点表示来权衡访问速度与空间。",
+      "example": "字符集很大但每个节点只有少量子节点时空间开销可能较高。",
+      "tags": [
+        "字典树与字符串检索",
+        "空间权衡"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/52trie/"
+    }
+  ]
+}

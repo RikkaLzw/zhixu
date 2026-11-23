@@ -1,0 +1,786 @@
+{
+  "source": {
+    "id": "python-stdlib-iterators",
+    "title": "Python 3.12 标准库：迭代器、函数与容器工具",
+    "url": "https://docs.python.org/3.12/library/itertools.html",
+    "type": "官方技术文档",
+    "note": "依据 Python 3.12 itertools、functools 与 collections 官方文档自行整理，示例使用 Python 3.12.13 验证。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "pystdlib-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "串接可迭代对象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.chain.from_iterable 如何处理一组可迭代对象？",
+      "answer": "它按顺序逐个遍历内部的可迭代对象，产生一条连续的迭代流。",
+      "explanation": "外层和内层都可以是迭代器，不必先把所有结果拼成列表。",
+      "example": "chain.from_iterable([[1, 2], [3]]) 依次产生 1、2、3。",
+      "tags": [
+        "串接可迭代对象",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.chain.from_iterable",
+      "referenceTitle": "Python 3.12 标准库：itertools.chain.from_iterable"
+    },
+    {
+      "id": "pystdlib-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "迭代切片限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.islice 能否使用负的 start、stop 或 step 来倒序切片？",
+      "answer": "不能；这些位置参数不支持负值，step 必须为正。",
+      "explanation": "islice 面向前向消耗的迭代器，与完整序列切片不同。",
+      "example": "islice(iter([1, 2, 3]), -1, None) 会报 ValueError。",
+      "tags": [
+        "迭代切片限制",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.islice",
+      "referenceTitle": "Python 3.12 标准库：itertools.islice"
+    },
+    {
+      "id": "pystdlib-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "迭代切片消耗",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "完全遍历有限 stop 的 islice 时，step 大于 1 是否只消耗被返回的源元素？",
+      "answer": "不是；源迭代器还会向前消耗被跳过的元素。",
+      "explanation": "源元素足够且完全遍历 islice 时，推进量为 max(start, stop)，与 step 无关。",
+      "example": "对 range(10) 的迭代器运行 islice(it, 1, 5, 2)，返回 1、3 后下一个源元素是 5。",
+      "tags": [
+        "迭代切片消耗",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.islice",
+      "referenceTitle": "Python 3.12 标准库：itertools.islice",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节跳动公开面经（作者自述）；Python 迭代器主题启发，非原题",
+          "url": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "pystdlib-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "相邻元素配对",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.pairwise 会从序列中产生什么？",
+      "answer": "它产生相邻元素组成的重叠二元组。",
+      "explanation": "输入不足两个元素时没有结果。",
+      "example": "pairwise([1, 2, 3]) 产生 (1, 2)、(2, 3)。",
+      "tags": [
+        "相邻元素配对",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.pairwise",
+      "referenceTitle": "Python 3.12 标准库：itertools.pairwise"
+    },
+    {
+      "id": "pystdlib-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "迭代器分批",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 3.12 的 itertools.batched 如何处理不足一整批的末尾元素？",
+      "answer": "它返回包含剩余元素的较短元组。",
+      "explanation": "batched 懒加载输入；3.12 版本没有后续版本新增的 strict 参数。",
+      "example": "batched(range(5), 2) 末批是 (4,)。",
+      "tags": [
+        "迭代器分批",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.batched",
+      "referenceTitle": "Python 3.12 标准库：itertools.batched"
+    },
+    {
+      "id": "pystdlib-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "相邻分组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.groupby 是否会自动把输入中相隔很远、键相同的元素合并为一组？",
+      "answer": "不会；它按连续出现的相同键分组。",
+      "explanation": "若需要合并所有相同键，通常先按同一键排序或使用其他聚合方式。",
+      "example": "groupby(\"ABA\") 依次得到 A、B、A 三组。",
+      "tags": [
+        "相邻分组",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.groupby",
+      "referenceTitle": "Python 3.12 标准库：itertools.groupby"
+    },
+    {
+      "id": "pystdlib-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "分组迭代器共享源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.groupby 前进到下一组后，未保存的前一组迭代器为什么不能继续读取原组？",
+      "answer": "各组共享底层迭代器，前进外层分组会消耗或越过前一组。",
+      "explanation": "需要保留前一组内容时，应及时将其物化。",
+      "example": "先 list(group) 保存，再请求下一组。",
+      "tags": [
+        "分组迭代器共享源",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.groupby",
+      "referenceTitle": "Python 3.12 标准库：itertools.groupby"
+    },
+    {
+      "id": "pystdlib-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "不同长度配对",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.zip_longest 怎样处理长度不同的输入？",
+      "answer": "它继续迭代到最长输入耗尽，并用 fillvalue 补足较短输入。",
+      "explanation": "默认填充值为 None。",
+      "example": "zip_longest([1, 2], [\"a\"], fillvalue=\"?\") 末项为 (2, \"?\")。",
+      "tags": [
+        "不同长度配对",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.zip_longest",
+      "referenceTitle": "Python 3.12 标准库：itertools.zip_longest"
+    },
+    {
+      "id": "pystdlib-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "前缀截取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.takewhile 遇到第一个不满足条件的元素时，对源迭代器有什么影响？",
+      "answer": "它消耗该元素并停止，那个元素不会作为 takewhile 的结果返回。",
+      "explanation": "如需之后处理该元素，要采用其他方式保留它。",
+      "example": "条件 x<3 对 [1, 2, 3, 4] 取前缀后，源迭代器的下一个元素是 4。",
+      "tags": [
+        "前缀截取",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.takewhile",
+      "referenceTitle": "Python 3.12 标准库：itertools.takewhile"
+    },
+    {
+      "id": "pystdlib-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "丢弃前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.dropwhile 开始输出后，还会继续丢弃后来满足条件的元素吗？",
+      "answer": "不会；它只丢弃开头连续满足条件的元素，之后返回余下全部元素。",
+      "explanation": "这与对所有元素做过滤不同。",
+      "example": "dropwhile(lambda x: x < 3, [1, 2, 3, 1]) 返回 3、1。",
+      "tags": [
+        "丢弃前缀",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.dropwhile",
+      "referenceTitle": "Python 3.12 标准库：itertools.dropwhile"
+    },
+    {
+      "id": "pystdlib-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "循环缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 itertools.cycle 处理很长的输入时可能占用较多内存？",
+      "answer": "它会保存首次遍历到的元素，以便之后重复使用。",
+      "explanation": "输入很大或无限时，缓存可能持续增长。",
+      "example": "对一个有限序列循环时，首次遍历会缓存其元素。",
+      "tags": [
+        "循环缓存",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.cycle",
+      "referenceTitle": "Python 3.12 标准库：itertools.cycle"
+    },
+    {
+      "id": "pystdlib-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "笛卡尔积输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 itertools.product 通常要求输入可迭代对象是有限的？",
+      "answer": "它在生成笛卡尔积前会把各输入消耗到内部池中。",
+      "explanation": "无限输入无法完成这一准备阶段。",
+      "example": "product([1, 2], [\"a\", \"b\"]) 生成四种配对。",
+      "tags": [
+        "笛卡尔积输入",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.product",
+      "referenceTitle": "Python 3.12 标准库：itertools.product"
+    },
+    {
+      "id": "pystdlib-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "排列按位置区分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.permutations 如何判断输入元素是否不同？",
+      "answer": "它按元素在输入中的位置区分，而非按值是否相等。",
+      "explanation": "因此输入含重复值时，结果中可能出现相同值的排列。",
+      "example": "permutations([1, 1], 2) 会产生两个值相同的二元组。",
+      "tags": [
+        "排列按位置区分",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.permutations",
+      "referenceTitle": "Python 3.12 标准库：itertools.permutations"
+    },
+    {
+      "id": "pystdlib-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "拆分迭代器缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.tee 产生的多个迭代器消费速度差异很大时，可能有什么内存影响？",
+      "answer": "它可能需要缓存领先迭代器已读取、落后迭代器尚未读取的元素。",
+      "explanation": "缓存量取决于消费差距；需要权衡是否直接构造列表。",
+      "example": "一个分支先遍历大量元素而另一个分支停在开头时，缓存可能很大。",
+      "tags": [
+        "拆分迭代器缓存",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.tee",
+      "referenceTitle": "Python 3.12 标准库：itertools.tee"
+    },
+    {
+      "id": "pystdlib-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "累计与归约",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.accumulate 与 functools.reduce 在结果数量上有什么主要区别？",
+      "answer": "accumulate 逐步产生累计结果；reduce 把输入归约为单个结果。",
+      "explanation": "两者默认操作及可传入参数也有所不同。",
+      "example": "对 [1, 2, 3] 求和时，accumulate 产生 1、3、6，reduce 产生 6。",
+      "tags": [
+        "累计与归约",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.accumulate",
+      "referenceTitle": "Python 3.12 标准库：itertools.accumulate"
+    },
+    {
+      "id": "pystdlib-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "重复对象引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.repeat(obj, n) 会为每次输出自动复制 obj 吗？",
+      "answer": "不会；它重复提供同一个对象的引用。",
+      "explanation": "对象可变时，对一个引用的修改会被其他引用观察到。",
+      "example": "对列表 obj 重复两次，两次取得的是同一个列表对象。",
+      "tags": [
+        "重复对象引用",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.repeat",
+      "referenceTitle": "Python 3.12 标准库：itertools.repeat"
+    },
+    {
+      "id": "pystdlib-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "保留假值条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.filterfalse(predicate, iterable) 保留哪些元素？",
+      "answer": "它保留使 predicate 返回假值的元素。",
+      "explanation": "predicate 为 None 时，按元素自身的真值筛选假值元素。",
+      "example": "filterfalse(None, [0, 1, \"\"]) 产生 0 和空字符串。",
+      "tags": [
+        "保留假值条件",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.filterfalse",
+      "referenceTitle": "Python 3.12 标准库：itertools.filterfalse"
+    },
+    {
+      "id": "pystdlib-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "选择器截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.compress(data, selectors) 在何时停止？",
+      "answer": "当 data 或 selectors 中任意一个先耗尽时停止。",
+      "explanation": "它根据选择器对应位置的真值保留数据。",
+      "example": "compress(\"ABC\", [1, 0]) 只产生 A。",
+      "tags": [
+        "选择器截断",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.compress",
+      "referenceTitle": "Python 3.12 标准库：itertools.compress"
+    },
+    {
+      "id": "pystdlib-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "展开参数映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.starmap 与 map 的参数传递方式有什么区别？",
+      "answer": "starmap 把每个元素中的参数展开后调用函数；map 将各输入迭代器的对应元素分别传入。",
+      "explanation": "starmap 适合已有参数元组的场景。",
+      "example": "starmap(pow, [(2, 3), (3, 2)]) 产生 8、9。",
+      "tags": [
+        "展开参数映射",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.starmap",
+      "referenceTitle": "Python 3.12 标准库：itertools.starmap"
+    },
+    {
+      "id": "pystdlib-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "迭代器工具",
+      "knowledgePoint": "无界计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "itertools.count(start, step) 什么时候自然结束？",
+      "answer": "它通常持续产生等差序列，不会自行结束。",
+      "explanation": "需要用外部条件或有限迭代器限制使用范围。",
+      "example": "可用 islice(count(10, 2), 3) 取出 10、12、14。",
+      "tags": [
+        "无界计数",
+        "Python",
+        "itertools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/itertools.html#itertools.count",
+      "referenceTitle": "Python 3.12 标准库：itertools.count",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节跳动公开面经（作者自述）；Python 迭代器主题启发，非原题",
+          "url": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+          "type": "公开面经",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "pystdlib-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数工具",
+      "knowledgePoint": "预设函数参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "functools.partial 预设关键字参数后，调用时还能用同名关键字覆盖吗？",
+      "answer": "可以；调用时给出的同名关键字会覆盖预设值。",
+      "explanation": "partial 也可以预设位置参数。",
+      "example": "partial(pow, exp=2)(3, exp=3) 得到 27。",
+      "tags": [
+        "预设函数参数",
+        "Python",
+        "functools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/functools.html#functools.partial",
+      "referenceTitle": "Python 3.12 标准库：functools.partial"
+    },
+    {
+      "id": "pystdlib-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数工具",
+      "knowledgePoint": "缓存参数限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 functools.lru_cache 缓存函数时，对参数有什么基本要求？",
+      "answer": "传入的参数必须可哈希，才能作为缓存键的一部分。",
+      "explanation": "普通列表等不可哈希参数不能直接用于缓存调用。",
+      "example": "给带 lru_cache 的函数传入列表会抛出 TypeError。",
+      "tags": [
+        "缓存参数限制",
+        "Python",
+        "functools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/functools.html#functools.lru_cache",
+      "referenceTitle": "Python 3.12 标准库：functools.lru_cache"
+    },
+    {
+      "id": "pystdlib-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数工具",
+      "knowledgePoint": "无界函数缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "functools.cache 与默认 functools.lru_cache 在缓存容量上有什么区别？",
+      "answer": "cache 等价于 maxsize=None 的 lru_cache，缓存不受条目数量上限约束；lru_cache 默认有上限。",
+      "explanation": "无界缓存可能持续保留对象，应考虑调用范围与生命周期。",
+      "example": "有限输入集合的纯函数可使用 cache 复用结果。",
+      "tags": [
+        "无界函数缓存",
+        "Python",
+        "functools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/functools.html#functools.cache",
+      "referenceTitle": "Python 3.12 标准库：functools.cache"
+    },
+    {
+      "id": "pystdlib-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数工具",
+      "knowledgePoint": "并发缓存未命中",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "functools.lru_cache 是线程安全的，是否意味着并发调用同一未缓存参数时函数必定只执行一次？",
+      "answer": "不一定；首次计算完成并写入缓存前，另一个线程可能再次调用原函数。",
+      "explanation": "线程安全保护缓存结构，不等于对同一键实现单次执行。",
+      "example": "两个线程同时首次请求同一参数，计算可能发生两次。",
+      "tags": [
+        "并发缓存未命中",
+        "Python",
+        "functools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/functools.html#functools.lru_cache",
+      "referenceTitle": "Python 3.12 标准库：functools.lru_cache"
+    },
+    {
+      "id": "pystdlib-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数工具",
+      "knowledgePoint": "清空函数缓存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如何清空 functools.lru_cache 包装函数中的缓存？",
+      "answer": "调用包装函数的 cache_clear() 方法。",
+      "explanation": "缓存会保留键和结果的引用，直到条目被淘汰或缓存被清空。",
+      "example": "f.cache_clear() 清除 f 的缓存。",
+      "tags": [
+        "清空函数缓存",
+        "Python",
+        "functools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/functools.html#functools.lru_cache",
+      "referenceTitle": "Python 3.12 标准库：functools.lru_cache"
+    },
+    {
+      "id": "pystdlib-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数工具",
+      "knowledgePoint": "单分派函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "functools.singledispatch 按哪个参数的类型选择注册实现？",
+      "answer": "按第一个参数的类型分派。",
+      "explanation": "可以通过 register 为不同类型注册实现。",
+      "example": "对数字和字符串注册不同的格式化函数。",
+      "tags": [
+        "单分派函数",
+        "Python",
+        "functools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/functools.html#functools.singledispatch",
+      "referenceTitle": "Python 3.12 标准库：functools.singledispatch"
+    },
+    {
+      "id": "pystdlib-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "函数工具",
+      "knowledgePoint": "缓存属性刷新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "functools.cached_property 的值计算并写入实例后，如何让下次访问重新计算？",
+      "answer": "删除该实例上的同名属性，再次访问时会重新计算。",
+      "explanation": "实例也可以直接覆盖该属性；对象通常需要可写的实例字典。",
+      "example": "执行 del obj.value 后再读取 obj.value。",
+      "tags": [
+        "缓存属性刷新",
+        "Python",
+        "functools"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/functools.html#functools.cached_property",
+      "referenceTitle": "Python 3.12 标准库：functools.cached_property"
+    },
+    {
+      "id": "pystdlib-028",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器工具",
+      "knowledgePoint": "缺省工厂",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "collections.defaultdict 在缺失键上使用 d[key] 时，default_factory 的作用是什么？",
+      "answer": "若工厂不是 None，它无参数调用工厂、保存并返回结果。",
+      "explanation": "工厂为 None 时，缺失键会引发 KeyError。",
+      "example": "defaultdict(list)[\"k\"] 会创建并保存一个空列表。",
+      "tags": [
+        "缺省工厂",
+        "Python",
+        "collections"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/collections.html#collections.defaultdict.__missing__",
+      "referenceTitle": "Python 3.12 标准库：collections.defaultdict.__missing__"
+    },
+    {
+      "id": "pystdlib-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器工具",
+      "knowledgePoint": "缺省值读取差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 defaultdict 调用 d.get(missing_key) 会触发 default_factory 并插入键吗？",
+      "answer": "不会；get 不调用 __missing__，默认返回 None，也不因此插入键。",
+      "explanation": "方括号读取缺失键的行为不同。",
+      "example": "defaultdict(list).get(\"k\") 返回 None，字典仍为空。",
+      "tags": [
+        "缺省值读取差异",
+        "Python",
+        "collections"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/collections.html#collections.defaultdict.__missing__",
+      "referenceTitle": "Python 3.12 标准库：collections.defaultdict.__missing__"
+    },
+    {
+      "id": "pystdlib-030",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器工具",
+      "knowledgePoint": "计数器缺失键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "collections.Counter 读取尚未计数的键时默认返回什么？",
+      "answer": "返回 0，而不是抛出 KeyError。",
+      "explanation": "读取缺失键不会因此把该键加入计数器。",
+      "example": "Counter()[\"unknown\"] 的值是 0。",
+      "tags": [
+        "计数器缺失键",
+        "Python",
+        "collections"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/collections.html#collections.Counter",
+      "referenceTitle": "Python 3.12 标准库：collections.Counter"
+    },
+    {
+      "id": "pystdlib-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器工具",
+      "knowledgePoint": "计数器减法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Counter 的二元减法 c - d 与 c.subtract(d) 对非正计数怎样处理？",
+      "answer": "c - d 的结果只保留正计数；subtract 原地相减，可保留零和负数。",
+      "explanation": "两种操作的结果形式及是否修改原对象也不同。",
+      "example": "Counter(a=1).subtract({\"a\": 2}) 后 a 为 -1。",
+      "tags": [
+        "计数器减法",
+        "Python",
+        "collections"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/collections.html#collections.Counter.subtract",
+      "referenceTitle": "Python 3.12 标准库：collections.Counter.subtract"
+    },
+    {
+      "id": "pystdlib-032",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器工具",
+      "knowledgePoint": "高频元素",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Counter.most_common(n) 返回什么？",
+      "answer": "它按计数从高到低返回最多 n 个 (元素, 计数) 对。",
+      "explanation": "省略 n 时返回全部元素；计数相同的元素保留首次遇到的顺序。",
+      "example": "Counter(\"aab\").most_common(1) 返回 [(\"a\", 2)]。",
+      "tags": [
+        "高频元素",
+        "Python",
+        "collections"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/collections.html#collections.Counter.most_common",
+      "referenceTitle": "Python 3.12 标准库：collections.Counter.most_common"
+    },
+    {
+      "id": "pystdlib-033",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器工具",
+      "knowledgePoint": "定长双端队列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "向已满的 deque(maxlen=n) 右端 append 新元素时，哪一项会被移除？",
+      "answer": "左端最旧的一项被自动丢弃。",
+      "explanation": "从左端 appendleft 时则会丢弃右端项。",
+      "example": "deque([1, 2], maxlen=2).append(3) 后内容为 [2, 3]。",
+      "tags": [
+        "定长双端队列",
+        "Python",
+        "collections"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/collections.html#collections.deque.maxlen",
+      "referenceTitle": "Python 3.12 标准库：collections.deque.maxlen"
+    },
+    {
+      "id": "pystdlib-034",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器工具",
+      "knowledgePoint": "双端队列性能",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么频繁从队首取元素时通常选 deque.popleft 而不是 list.pop(0)？",
+      "answer": "deque 在两端追加和弹出通常是近似 O(1)；列表从头部弹出需要移动后续元素。",
+      "explanation": "两者适合的随机访问和操作场景不同。",
+      "example": "用 deque 维护先进先出的任务队列。",
+      "tags": [
+        "双端队列性能",
+        "Python",
+        "collections"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/collections.html#collections.deque",
+      "referenceTitle": "Python 3.12 标准库：collections.deque"
+    },
+    {
+      "id": "pystdlib-035",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "容器工具",
+      "knowledgePoint": "组合映射读写",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "collections.ChainMap 对多个映射的查找和写入分别如何处理？",
+      "answer": "查找按映射顺序依次尝试；写入和删除只作用于第一个映射。",
+      "explanation": "ChainMap 直接引用底层映射。",
+      "example": "将命令行配置放首层、默认配置放后层。",
+      "tags": [
+        "组合映射读写",
+        "Python",
+        "collections"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/collections.html#collections.ChainMap",
+      "referenceTitle": "Python 3.12 标准库：collections.ChainMap"
+    },
+    {
+      "id": "pystdlib-036",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "容器工具",
+      "knowledgePoint": "具名元组",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "collections.namedtuple 创建的实例怎样访问字段？",
+      "answer": "实例既可按元组位置访问，也可按字段名访问。",
+      "explanation": "它是 tuple 子类，字段绑定不可原地重新赋值；字段内的可变对象仍可能改变。",
+      "example": "Point(1, 2).x 与 Point(1, 2)[0] 都可取得第一个字段。",
+      "tags": [
+        "具名元组",
+        "Python",
+        "collections"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.python.org/3.12/library/collections.html#collections.namedtuple",
+      "referenceTitle": "Python 3.12 标准库：collections.namedtuple"
+    }
+  ]
+}

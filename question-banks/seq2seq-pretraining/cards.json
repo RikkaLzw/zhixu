@@ -1,0 +1,453 @@
+{
+  "source": {
+    "id": "seq2seq-pretraining",
+    "title": "编码器—解码器、T5 与 BART 预训练",
+    "url": "https://d2l.ai/chapter_attention-mechanisms-and-transformers/transformer.html",
+    "type": "教材、研究论文与官方文档",
+    "note": "依据动手学深度学习、T5、BART、Scheduled Sampling 论文及指定版本实现逐题整理；实践推论标为应用。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "seq2seq-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列生成训练",
+      "knowledgePoint": "教师强制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "序列到序列训练中的教师强制（teacher forcing）通常把什么作为解码器的历史输入？",
+      "answer": "使用真实目标序列中前面的 token，而不是每一步都使用模型刚生成的 token。",
+      "explanation": "目标端仍需按预测位置对齐，避免把当前答案直接输入该位置。",
+      "example": "训练翻译模型时，用已知目标词预测下一个目标词。",
+      "tags": [
+        "教师强制",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_recurrent-modern/seq2seq.html",
+      "referenceTitle": "动手学深度学习：Sequence to Sequence Learning"
+    },
+    {
+      "id": "seq2seq-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列生成训练",
+      "knowledgePoint": "目标右移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "教师强制训练时，为什么常把目标序列右移后送入解码器？",
+      "answer": "让每个位置的输入只包含当前预测目标之前的 token，输出与下一个目标对齐。",
+      "explanation": "通常在开头加入起始标记，并去掉输入末尾的一个目标 token。",
+      "example": "输入为起始标记、甲、乙，预测目标为甲、乙、结束标记。",
+      "tags": [
+        "目标右移",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_recurrent-modern/seq2seq.html",
+      "referenceTitle": "动手学深度学习：Teacher Forcing"
+    },
+    {
+      "id": "seq2seq-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列生成训练",
+      "knowledgePoint": "训练推理差异",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "教师强制训练与自回归推理在历史 token 来源上有什么区别？",
+      "answer": "训练时使用真实目标前缀；常规推理时使用模型已经生成的前缀。",
+      "explanation": "生成早期的错误可能影响之后的预测，但错误传播并非每次都会发生。",
+      "example": "训练看到正确前词，推理时可能接收到自己先前生成的错误词。",
+      "tags": [
+        "训练推理差异",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1506.03099v3#S1",
+      "referenceTitle": "Scheduled Sampling 论文：Introduction"
+    },
+    {
+      "id": "seq2seq-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列生成训练",
+      "knowledgePoint": "计划采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Scheduled Sampling 如何尝试缩小序列训练与推理时的输入差异？",
+      "answer": "训练时按计划在真实前一 token 和模型生成的前一 token 之间采样。",
+      "explanation": "原论文研究循环神经网络，效果依赖具体任务和训练设置。",
+      "example": "训练早期更多使用真实词，之后逐步增加使用模型预测的机会。",
+      "tags": [
+        "计划采样",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1506.03099v3#S2.SS4",
+      "referenceTitle": "Scheduled Sampling 论文：2.4"
+    },
+    {
+      "id": "seq2seq-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "序列生成训练",
+      "knowledgePoint": "并行训练与逐步生成",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "自回归 Transformer 在教师强制训练和常规推理时，为什么可用不同的计算方式？",
+      "answer": "训练可一次输入已知目标前缀并用因果掩码并行计算各位置；推理通常要逐步获得新 token。",
+      "explanation": "实际推理可使用缓存或其他优化，但必须保证目标端信息可用。",
+      "example": "训练整句时同时计算位置损失，生成时先得到前一个词。",
+      "tags": [
+        "并行训练与逐步生成",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "application",
+      "reference": "https://d2l.ai/chapter_attention-mechanisms-and-transformers/transformer.html",
+      "referenceTitle": "动手学深度学习：Transformer 解码器"
+    },
+    {
+      "id": "seq2seq-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "解码器输入",
+      "knowledgePoint": "解码起始",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "序列到序列解码开始时，为什么需要提供解码器起始 token？",
+      "answer": "开始生成时尚无此前的目标 token，起始 token 提供第一个解码输入。",
+      "explanation": "具体使用的起始标记取决于模型和实现。",
+      "example": "先输入起始标记，再预测目标序列的第一个词。",
+      "tags": [
+        "解码起始",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_recurrent-modern/seq2seq.html",
+      "referenceTitle": "动手学深度学习：Sequence to Sequence Learning"
+    },
+    {
+      "id": "seq2seq-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "注意力结构",
+      "knowledgePoint": "交叉注意力QKV",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "标准编码器—解码器 Transformer 中，解码器自注意力和交叉注意力的 Q、K、V 分别来自哪里？",
+      "answer": "自注意力的 Q、K、V 来自解码器状态；交叉注意力的 Q 来自解码器，K 和 V 来自编码器输出。",
+      "explanation": "解码器自注意力还需要保持目标序列的因果约束。",
+      "example": "翻译时，目标端查询通过交叉注意力访问源句表示。",
+      "tags": [
+        "交叉注意力QKV",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_attention-mechanisms-and-transformers/transformer.html",
+      "referenceTitle": "动手学深度学习：Transformer Decoder"
+    },
+    {
+      "id": "seq2seq-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "前馈层",
+      "knowledgePoint": "位置共享参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformer 的逐位置前馈网络怎样在不同序列位置使用参数？",
+      "answer": "同一层对各位置分别应用同一组前馈网络参数。",
+      "explanation": "不同 Transformer 层通常有各自的参数。",
+      "example": "同一层中两个位置分别通过相同的线性变换和激活。",
+      "tags": [
+        "位置共享参数",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_attention-mechanisms-and-transformers/transformer.html#positionwise-feed-forward-networks",
+      "referenceTitle": "动手学深度学习：Positionwise Feed-Forward Networks"
+    },
+    {
+      "id": "seq2seq-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "前馈层",
+      "knowledgePoint": "逐位置与跨位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准 Transformer 的逐位置前馈网络本身会直接混合不同 token 的信息吗？",
+      "answer": "不会；它独立变换各位置的特征，跨位置的信息交互由注意力等其他组件承担。",
+      "explanation": "前馈网络输入可能已经包含前面注意力层聚合的上下文。",
+      "example": "只应用逐位置 MLP 时，一个位置不会直接读取另一个位置的向量。",
+      "tags": [
+        "逐位置与跨位置",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "application",
+      "reference": "https://d2l.ai/chapter_attention-mechanisms-and-transformers/transformer.html#positionwise-feed-forward-networks",
+      "referenceTitle": "动手学深度学习：Positionwise Feed-Forward Networks"
+    },
+    {
+      "id": "seq2seq-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "归一化结构",
+      "knowledgePoint": "Pre-LN与Post-LN",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Transformer 的 Pre-LN 和 Post-LN 在子层与残差连接附近的归一化位置有什么区别？",
+      "answer": "Pre-LN 先对输入归一化再进入子层；Post-LN 在子层输出与残差相加后归一化。",
+      "explanation": "这里比较常见结构，具体网络实现可能有其他变化。",
+      "example": "PyTorch 的 norm_first 控制其标准 Transformer 层中的这一顺序。",
+      "tags": [
+        "Pre-LN与Post-LN",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.0/torch/nn/modules/transformer.py",
+      "referenceTitle": "PyTorch 2.7：TransformerEncoderLayer"
+    },
+    {
+      "id": "seq2seq-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "掩码语义",
+      "knowledgePoint": "填充键与查询输出",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 MultiheadAttention 的 key_padding_mask 会保证对应填充查询位置的输出为零吗？",
+      "answer": "不保证；该掩码指定要忽略的键位置，并不自动把对应查询输出清零。",
+      "explanation": "如后续任务不能使用填充查询输出，还需在相应处理或损失中排除它。",
+      "example": "屏蔽填充键后，填充查询仍可能对其他未屏蔽的值加权。",
+      "tags": [
+        "填充键与查询输出",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/pytorch/pytorch/blob/v2.7.0/torch/nn/modules/activation.py",
+      "referenceTitle": "PyTorch 2.7：MultiheadAttention key_padding_mask"
+    },
+    {
+      "id": "seq2seq-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "T5实现",
+      "knowledgePoint": "忽略标签右移",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 T5 从 labels 构造解码输入时，为什么把右移后的 -100 替换为 pad token？",
+      "answer": "-100 是损失计算中的忽略标签，不是可供嵌入层查询的正常 token ID。",
+      "explanation": "该实现右移标签并插入 decoder_start_token_id 后再替换 -100。",
+      "example": "填充标签 -100 不直接作为解码器词表索引。",
+      "tags": [
+        "忽略标签右移",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/models/t5/modeling_t5.py",
+      "referenceTitle": "Transformers 4.51.3：T5 _shift_right"
+    },
+    {
+      "id": "seq2seq-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "T5实现",
+      "knowledgePoint": "T5解码起始",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Transformers 4.51.3 的 T5 通常使用哪个 token 作为解码起始？",
+      "answer": "T5 通常把 pad_token_id 设为 decoder_start_token_id。",
+      "explanation": "应以具体模型配置为准，不能假定所有编码器—解码器都相同。",
+      "example": "查看加载的 T5 配置中的两个 ID。",
+      "tags": [
+        "T5解码起始",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/huggingface/transformers/blob/v4.51.3/src/transformers/models/t5/modeling_t5.py",
+      "referenceTitle": "Transformers 4.51.3：T5 _shift_right"
+    },
+    {
+      "id": "seq2seq-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "去噪预训练",
+      "knowledgePoint": "BART重建目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BART 预训练中的去噪重建任务让模型预测什么？",
+      "answer": "模型接收被破坏的文本，训练解码器重建原始文本。",
+      "explanation": "论文探索了不同的文本破坏方式，并以原文为重建目标。",
+      "example": "对输入句子做遮盖后，模型输出完整的原句。",
+      "tags": [
+        "BART重建目标",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1910.13461v1#S2.SS2",
+      "referenceTitle": "BART 论文：2.2 Pre-training"
+    },
+    {
+      "id": "seq2seq-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "去噪预训练",
+      "knowledgePoint": "BART遮盖与删除",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "BART 的 token 遮盖与删除在损坏输入中留下的线索有什么区别？",
+      "answer": "遮盖会在被替换的位置留下掩码标记；删除直接移除 token，不显式标出缺失位置。",
+      "explanation": "两者都用于构造去噪预训练输入。",
+      "example": "同一词被替换为 [MASK]，或直接从句中消失。",
+      "tags": [
+        "BART遮盖与删除",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1910.13461v1#S2.SS2",
+      "referenceTitle": "BART 论文：2.2 Noise Transformations"
+    },
+    {
+      "id": "seq2seq-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "去噪预训练",
+      "knowledgePoint": "BART文本填空",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BART 的文本填空（text infilling）怎样处理被选中的连续片段？",
+      "answer": "每个被选中的连续片段用一个掩码 token 替换，模型需重建原文。",
+      "explanation": "单个掩码不直接给出原片段的 token 数量。",
+      "example": "连续几个词被一个 [MASK] 替代。",
+      "tags": [
+        "BART文本填空",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1910.13461v1#S2.SS2",
+      "referenceTitle": "BART 论文：2.2 Text Infilling"
+    },
+    {
+      "id": "seq2seq-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "文本到文本",
+      "knowledgePoint": "T5任务前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "T5 的文本到文本框架如何向同一模型指明要执行的任务？",
+      "answer": "它在输入前加入描述任务的文本前缀，并将目标统一表示为文本。",
+      "explanation": "任务前缀是输入的一部分，模型仍需学习相应映射。",
+      "example": "在待翻译句子前加上源语言和目标语言的翻译指令。",
+      "tags": [
+        "T5任务前缀",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1910.10683v4#S2.SS4",
+      "referenceTitle": "T5 论文：2.4 Input and Output Format"
+    },
+    {
+      "id": "seq2seq-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "去噪预训练",
+      "knowledgePoint": "T5片段去噪目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 T5 的片段去噪预训练让解码器预测什么？",
+      "answer": "按哨兵标记依次输出输入中被移除的片段，并用最后一个哨兵标记结束目标序列。",
+      "explanation": "这是原始 T5 的基线预训练目标，具体变体可能不同。",
+      "example": "输入中两段被遮盖时，目标按顺序输出两段缺失文本及相应哨兵标记。",
+      "tags": [
+        "T5片段去噪目标",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1910.10683v4#S3.SS1.SSS4",
+      "referenceTitle": "T5 论文：3.1.4 Unsupervised Objective"
+    },
+    {
+      "id": "seq2seq-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "去噪预训练",
+      "knowledgePoint": "T5哨兵标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "T5 片段去噪中的哨兵 token 有什么作用？",
+      "answer": "它标记被移除的片段，并在输入和目标中对应同一处缺失。",
+      "explanation": "不同片段使用不同哨兵标记，目标中还使用结束哨兵。",
+      "example": "输入和输出都用同一标记表示第一处被遮盖片段。",
+      "tags": [
+        "T5哨兵标记",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1910.10683v4#S3.SS1.SSS4",
+      "referenceTitle": "T5 论文：3.1.4 Unsupervised Objective"
+    },
+    {
+      "id": "seq2seq-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "位置表示",
+      "knowledgePoint": "T5相对位置偏置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 T5 在计算注意力时如何使用相对位置偏置？",
+      "answer": "根据查询和键的相对距离选择学习到的标量偏置，并加到注意力 logit 上。",
+      "explanation": "相对距离被分到有限数量的桶，不同注意力头可有不同偏置。",
+      "example": "对相隔一定距离的查询和键加入对应的位置偏置。",
+      "tags": [
+        "T5相对位置偏置",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1910.10683v4#S2.SS1",
+      "referenceTitle": "T5 论文：2.1 Model"
+    },
+    {
+      "id": "seq2seq-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "位置表示",
+      "knowledgePoint": "T5距离分桶",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对方向相同且足够远的相对位置，原始 T5 的单层位置偏置能区分精确距离吗？",
+      "answer": "不能；足够远的相对距离会映射到相同的远距离偏置桶。",
+      "explanation": "这是单层位置偏置的分辨率限制，不表示整个模型无法利用更长距离的信息。",
+      "example": "同一方向上两个足够远的相对偏移可在单层中使用相同距离桶。",
+      "tags": [
+        "T5距离分桶",
+        "NLP",
+        "Transformer"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/html/1910.10683v4#S2.SS1",
+      "referenceTitle": "T5 论文：2.1 Model"
+    }
+  ]
+}

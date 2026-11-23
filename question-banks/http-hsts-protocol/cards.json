@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "http-hsts-protocol",
+    "title": "RFC 6797：HTTP 严格传输安全",
+    "url": "https://www.rfc-editor.org/rfc/rfc6797.txt",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "hsts-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP HSTS 策略",
+      "knowledgePoint": "策略用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HTTP Strict Transport Security（HSTS）主要让符合规范的用户代理做什么？",
+      "answer": "在策略有效期内，将适用的 HTTP 请求升级为 HTTPS，并要求使用安全连接。",
+      "explanation": "策略由主机通过响应头或用户代理预配置等方式提供。",
+      "example": "浏览器记住站点的 HTTPS 要求。",
+      "tags": [
+        "HTTP HSTS 策略",
+        "策略用途"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6797.txt"
+    },
+    {
+      "id": "hsts-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP HSTS 策略",
+      "knowledgePoint": "安全来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 RFC 6797，用户代理应处理通过普通 HTTP 返回的 Strict-Transport-Security 头吗？",
+      "answer": "不应；应忽略非安全传输上的该响应头。",
+      "explanation": "通过无 TLS 错误的安全连接接收策略才能按协议建立或更新记录。",
+      "example": "HTTP 页面无法可靠地首次设置 HSTS。",
+      "tags": [
+        "HTTP HSTS 策略",
+        "安全来源"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6797.txt"
+    },
+    {
+      "id": "hsts-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP HSTS 策略",
+      "knowledgePoint": "有效期限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HSTS 响应头中的 max-age 表示什么？",
+      "answer": "用户代理从接收该策略起，将主机视为已知 HSTS 主机的秒数。",
+      "explanation": "后续有效响应可更新该期限。",
+      "example": "max-age=3600 表示一小时的策略期限。",
+      "tags": [
+        "HTTP HSTS 策略",
+        "有效期限"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6797.txt"
+    },
+    {
+      "id": "hsts-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP HSTS 策略",
+      "knowledgePoint": "包含子域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HSTS 的 includeSubDomains 有什么作用？",
+      "answer": "将该主机的 HSTS 策略应用到其子域名。",
+      "explanation": "子域如果不能正确提供 HTTPS，可能对遵循策略的用户不可访问。",
+      "example": "为子域提供可用的 HTTPS 后再配置。",
+      "tags": [
+        "HTTP HSTS 策略",
+        "包含子域"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6797.txt"
+    },
+    {
+      "id": "hsts-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP HSTS 策略",
+      "knowledgePoint": "删除策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "主机通过有效 HTTPS 响应发送 max-age=0 通常会怎样？",
+      "answer": "使用户代理删除该主机自身记录的 HSTS 策略。",
+      "explanation": "上级域的 includeSubDomains 或用户代理预配置仍可能使该主机受策略约束。",
+      "example": "撤销自身策略时同时核查上级域设置。",
+      "tags": [
+        "HTTP HSTS 策略",
+        "删除策略"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6797.txt"
+    },
+    {
+      "id": "hsts-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP HSTS 策略",
+      "knowledgePoint": "端口升级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HSTS 将 http:// 主机:80 的请求升级时，端口与其他显式端口如何处理？",
+      "answer": "端口 80 改为 443；其他显式端口通常保持不变。",
+      "explanation": "协议仍升级为 HTTPS，目标端口需支持 TLS。",
+      "example": "HTTP 的 8080 端口升级后仍为 HTTPS 的 8080。",
+      "tags": [
+        "HTTP HSTS 策略",
+        "端口升级"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6797.txt"
+    },
+    {
+      "id": "hsts-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP HSTS 策略",
+      "knowledgePoint": "首次访问",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "仅依赖首次 HTTPS 响应设置 HSTS 时，首次访问之前有什么限制？",
+      "answer": "如果用户代理尚未知晓策略且首次通过 HTTP 访问，连接可能面临引导阶段的中间人攻击。",
+      "explanation": "预先配置的 HSTS 主机信息可以缓解这一限制。",
+      "example": "不要把尚未建立的策略当作首次 HTTP 访问的保护。",
+      "tags": [
+        "HTTP HSTS 策略",
+        "首次访问"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6797.txt"
+    },
+    {
+      "id": "hsts-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HTTP HSTS 策略",
+      "knowledgePoint": "证书错误",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 RFC 6797，连接已知 HSTS 主机时遇到 TLS 证书错误应怎样处理？",
+      "answer": "用户代理必须终止连接，不应允许用户绕过错误继续连接。",
+      "explanation": "实际客户端是否遵守规范需结合实现验证。",
+      "example": "已知 HSTS 站点的证书无效时停止连接。",
+      "tags": [
+        "HTTP HSTS 策略",
+        "证书错误"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc6797.txt"
+    }
+  ]
+}

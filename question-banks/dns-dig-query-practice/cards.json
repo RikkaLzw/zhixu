@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "dns-dig-query-practice",
+    "title": "BIND 9.20 文档：dig DNS 查询",
+    "url": "https://bind9.readthedocs.io/en/v9.20.16/manpages.html#dig-dns-lookup-utility",
+    "type": "官方文档或手册",
+    "note": "依据注明版本的文档或手册自行整理，示例自编；命令及语言行为应以所用实现为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "digcmd-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "dig DNS 查询",
+      "knowledgePoint": "反向查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BIND 9.20 的 dig -x 192.0.2.94 会查询什么？",
+      "answer": "查询 94.2.0.192.in-addr.arpa 的 PTR 记录。",
+      "explanation": "这是 DNS 反向查询，不保证结果一定存在。",
+      "example": "排查某个 IPv4 地址是否配置了反向域名。",
+      "tags": [
+        "dig DNS 查询",
+        "反向查询"
+      ],
+      "evidence": "source",
+      "reference": "https://bind9.readthedocs.io/en/v9.20.16/manpages.html#dig-dns-lookup-utility"
+    },
+    {
+      "id": "digcmd-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "dig DNS 查询",
+      "knowledgePoint": "递归标志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BIND 9.20 的 dig +norecurse 会怎样设置 DNS 请求？",
+      "answer": "清除请求中的 RD（期望递归）标志。",
+      "explanation": "服务器如何响应还取决于其权威区、缓存和配置。",
+      "example": "向权威服务器检查非递归响应。",
+      "tags": [
+        "dig DNS 查询",
+        "递归标志"
+      ],
+      "evidence": "source",
+      "reference": "https://bind9.readthedocs.io/en/v9.20.16/manpages.html#dig-dns-lookup-utility"
+    },
+    {
+      "id": "digcmd-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "dig DNS 查询",
+      "knowledgePoint": "TCP 查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BIND 9.20 的 dig +tcp 有什么作用？",
+      "answer": "使用 TCP 向 DNS 服务器发送查询。",
+      "explanation": "普通查询通常先用 UDP；某些查询类型或截断重试可使用 TCP。",
+      "example": "排查 UDP 查询与 TCP 查询的差异。",
+      "tags": [
+        "dig DNS 查询",
+        "TCP 查询"
+      ],
+      "evidence": "source",
+      "reference": "https://bind9.readthedocs.io/en/v9.20.16/manpages.html#dig-dns-lookup-utility"
+    },
+    {
+      "id": "digcmd-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "dig DNS 查询",
+      "knowledgePoint": "重试次数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BIND 9.20 的 dig +retry=N 与 +tries=N 对次数的计数有什么区别？",
+      "answer": "+retry=N 计重试次数，不含首次查询；+tries=N 计总尝试次数。",
+      "explanation": "这两个选项的参数都针对查询次数，而不是查询超时秒数。",
+      "example": "允许一次初始查询和两次重试可用 +tries=3。",
+      "tags": [
+        "dig DNS 查询",
+        "重试次数"
+      ],
+      "evidence": "source",
+      "reference": "https://bind9.readthedocs.io/en/v9.20.16/manpages.html#dig-dns-lookup-utility"
+    },
+    {
+      "id": "digcmd-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "dig DNS 查询",
+      "knowledgePoint": "DNSSEC 请求",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BIND 9.20 的 dig +dnssec 能否单独证明返回记录通过 DNSSEC 验证？",
+      "answer": "不能；它在查询的 OPT 记录中设置 DO 位，请求返回 DNSSEC 记录。",
+      "explanation": "请求附带签名材料与独立验证信任链是不同步骤。",
+      "example": "查看响应中的 DNSSEC 相关记录时仍需明确验证方式。",
+      "tags": [
+        "dig DNS 查询",
+        "DNSSEC 请求"
+      ],
+      "evidence": "source",
+      "reference": "https://bind9.readthedocs.io/en/v9.20.16/manpages.html#dig-dns-lookup-utility"
+    },
+    {
+      "id": "digcmd-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "dig DNS 查询",
+      "knowledgePoint": "返回状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BIND 9.20 的 dig 退出状态为 0，能否证明查询的域名存在？",
+      "answer": "不能；收到 NXDOMAIN 等 DNS 响应时也可能返回 0。",
+      "explanation": "应检查响应头中的 DNS 状态，不能仅依赖进程退出状态。",
+      "example": "脚本收到 NXDOMAIN 时不要把退出码 0 当作域名存在。",
+      "tags": [
+        "dig DNS 查询",
+        "返回状态"
+      ],
+      "evidence": "source",
+      "reference": "https://bind9.readthedocs.io/en/v9.20.16/manpages.html#dig-dns-lookup-utility"
+    },
+    {
+      "id": "digcmd-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "dig DNS 查询",
+      "knowledgePoint": "答案输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BIND 9.20 的 dig +noall +answer 会怎样筛选输出？",
+      "answer": "先关闭常规输出，再显示响应的 answer 部分。",
+      "explanation": "若需要排查状态码或权威信息，应保留或重新启用相应部分。",
+      "example": "只查看 DNS 响应的答案记录。",
+      "tags": [
+        "dig DNS 查询",
+        "答案输出"
+      ],
+      "evidence": "source",
+      "reference": "https://bind9.readthedocs.io/en/v9.20.16/manpages.html#dig-dns-lookup-utility"
+    },
+    {
+      "id": "digcmd-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "dig DNS 查询",
+      "knowledgePoint": "服务端口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BIND 9.20 的 dig -p 选项用于设置什么？",
+      "answer": "设置要查询的 DNS 服务器端口，默认是 53。",
+      "explanation": "指定端口不改变正在查询的记录类型。",
+      "example": "在本机测试非 53 端口的 DNS 服务。",
+      "tags": [
+        "dig DNS 查询",
+        "服务端口"
+      ],
+      "evidence": "source",
+      "reference": "https://bind9.readthedocs.io/en/v9.20.16/manpages.html#dig-dns-lookup-utility"
+    }
+  ]
+}

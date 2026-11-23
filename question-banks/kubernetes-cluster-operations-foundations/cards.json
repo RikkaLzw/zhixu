@@ -1,0 +1,746 @@
+{
+  "source": {
+    "id": "kubernetes-cluster-operations-foundations",
+    "title": "Kubernetes 1.32 官方文档：集群、调度、资源与存储",
+    "url": "https://v1-32.docs.kubernetes.io/docs/concepts/overview/components/",
+    "type": "版本化官方技术文档",
+    "note": "依据 Kubernetes 1.32 官方文档逐题整理；资源对象和控制器的行为按该版本文档表述，具体集群能力还取决于控制器、存储驱动和网络插件。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "k8sf-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 集群架构",
+      "knowledgePoint": "API Server 作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes API Server 在集群中主要承担什么作用？",
+      "answer": "它提供 Kubernetes API 的入口，负责处理客户端和控制平面组件发起的 API 请求。",
+      "explanation": "资源对象的创建、读取和更新通常通过 API Server 进行。",
+      "example": "kubectl apply 提交对象定义时会向 API Server 发起请求。",
+      "tags": [
+        "Kubernetes",
+        "API Server",
+        "控制平面"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/overview/components/"
+    },
+    {
+      "id": "k8sf-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 集群架构",
+      "knowledgePoint": "etcd 存储",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "etcd 在 Kubernetes 控制平面中通常保存什么？",
+      "answer": "etcd 是一致性键值存储，通常保存集群的 API 对象和控制平面状态数据。",
+      "explanation": "etcd 备份、访问控制和高可用性是集群运维的重要部分。",
+      "example": "Deployment 的期望副本数等 API 对象状态会持久化在集群数据存储中。",
+      "tags": [
+        "Kubernetes",
+        "etcd",
+        "集群状态"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/overview/components/"
+    },
+    {
+      "id": "k8sf-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 集群架构",
+      "knowledgePoint": "Scheduler 调度",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Kubernetes Scheduler 负责启动容器吗？",
+      "answer": "不负责直接启动容器；它为尚未分配节点的 Pod 选择合适节点并记录调度结果，节点上的 kubelet 再负责落实 Pod。",
+      "explanation": "调度器根据资源需求、约束和策略选择节点。",
+      "example": "Pod 具有节点亲和性时，Scheduler 会把它调度到满足标签条件的节点。",
+      "tags": [
+        "Kubernetes",
+        "Scheduler",
+        "Pod 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/overview/components/"
+    },
+    {
+      "id": "k8sf-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 集群架构",
+      "knowledgePoint": "控制器协调",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes 控制器通常怎样维持资源对象的期望状态？",
+      "answer": "控制器反复观察当前状态并与期望状态比较，然后通过 API 执行创建、更新或删除等协调操作。",
+      "explanation": "这种循环是持续协调，不是只在提交 YAML 时运行一次。",
+      "example": "Deployment 控制器发现可用副本不足时，会协调 ReplicaSet 补足 Pod。",
+      "tags": [
+        "Kubernetes",
+        "控制器",
+        "协调循环"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/architecture/controller/"
+    },
+    {
+      "id": "k8sf-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 集群架构",
+      "knowledgePoint": "kubelet 节点代理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "kubelet 在 Kubernetes 节点上主要做什么？",
+      "answer": "kubelet 是节点代理，依据 PodSpec 确保调度到该节点的 Pod 中容器按期望运行，并向控制平面报告状态。",
+      "explanation": "kubelet 通常通过容器运行时接口与节点容器运行时交互。",
+      "example": "节点上的 kubelet 发现容器退出后，会按 Pod 的重启策略处理。",
+      "tags": [
+        "Kubernetes",
+        "kubelet",
+        "节点组件"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/overview/components/"
+    },
+    {
+      "id": "k8sf-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "StatefulSet 稳定标识",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "StatefulSet 相比 Deployment 主要为有状态工作负载增加什么能力？",
+      "answer": "它为每个 Pod 提供稳定且唯一的标识，并支持有序部署、扩缩容以及与持久存储的稳定关联。",
+      "explanation": "它适合需要稳定网络身份或持久卷对应关系的应用，但不自动解决应用本身的数据复制和一致性。",
+      "example": "数据库副本可使用稳定序号区分成员身份。",
+      "tags": [
+        "Kubernetes",
+        "StatefulSet",
+        "有状态应用"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/"
+    },
+    {
+      "id": "k8sf-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "StatefulSet 有序管理",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "StatefulSet 默认如何创建或删除 Pod？",
+      "answer": "默认使用 OrderedReady 策略，按序创建 Pod 并等待前一个就绪后再继续；缩容时通常按相反顺序删除。",
+      "explanation": "有序规则适合依赖成员顺序的应用，也可能让某个 Pod 不就绪时后续成员无法推进。",
+      "example": "web-0 就绪前，控制器通常不会继续创建 web-1。",
+      "tags": [
+        "Kubernetes",
+        "StatefulSet",
+        "有序部署"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/"
+    },
+    {
+      "id": "k8sf-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "StatefulSet 并行管理",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "StatefulSet 的 Parallel Pod 管理策略改变什么？",
+      "answer": "它允许控制器并行创建或删除 Pod，不再等待每个 Pod 依序变为 Ready；稳定的序号和身份仍然保留。",
+      "explanation": "只有在应用能承受并发启动或停止时才适合使用。",
+      "example": "成员启动互不依赖的 StatefulSet 可考虑并行创建。",
+      "tags": [
+        "Kubernetes",
+        "StatefulSet",
+        "并行管理"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/"
+    },
+    {
+      "id": "k8sf-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "DaemonSet 节点覆盖",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "DaemonSet 适合部署哪类工作负载？",
+      "answer": "它适合在符合条件的每个节点或一组节点上运行一个 Pod 副本的工作负载。",
+      "explanation": "新节点加入或节点符合选择条件时，控制器会协调相应 Pod。",
+      "example": "节点日志采集器或监控代理常以 DaemonSet 部署。",
+      "tags": [
+        "Kubernetes",
+        "DaemonSet",
+        "节点代理"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/daemonset/"
+    },
+    {
+      "id": "k8sf-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "Job 完成目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes Job 与 Deployment 的主要工作负载目标有什么区别？",
+      "answer": "Job 管理会完成后退出的任务，并确保达到指定成功完成数；Deployment 主要管理持续运行并维持期望副本数的应用。",
+      "explanation": "Job 可以根据失败策略重试任务 Pod。",
+      "example": "一次性数据导入或离线计算可以由 Job 执行。",
+      "tags": [
+        "Kubernetes",
+        "Job",
+        "批处理"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/job/"
+    },
+    {
+      "id": "k8sf-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "Job completions 与 parallelism",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Job 的 completions 和 parallelism 分别表示什么？",
+      "answer": "completions 表示期望成功完成的任务数；parallelism 表示同一时刻允许并行运行的任务 Pod 数量上限。",
+      "explanation": "一个字段定义总工作量，另一个字段影响同时使用的计算资源。",
+      "example": "completions 为 10、parallelism 为 2 时，目标是完成十项任务且最多并行两项。",
+      "tags": [
+        "Kubernetes",
+        "Job",
+        "completions",
+        "parallelism"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/job/"
+    },
+    {
+      "id": "k8sf-012",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "Job backoffLimit",
+      "questionType": "配置与实践",
+      "origin": "自行整理",
+      "question": "Kubernetes Job 的 backoffLimit 主要限制什么？",
+      "answer": "它限制 Job 因 Pod 失败而进行重试的次数；达到限制后，Job 会被标记为失败。",
+      "explanation": "重试次数和退避策略需要结合任务是否幂等及外部副作用设计。",
+      "example": "任务可能重复执行时，应确保重试不会重复扣款或重复写入结果。",
+      "tags": [
+        "Kubernetes",
+        "Job",
+        "backoffLimit",
+        "重试"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/job/"
+    },
+    {
+      "id": "k8sf-013",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "CronJob 并发策略",
+      "questionType": "配置与实践",
+      "origin": "自行整理",
+      "question": "CronJob 的 concurrencyPolicy 控制什么？",
+      "answer": "它控制同一 CronJob 创建的 Job 之间是否允许并发运行，例如 Allow、Forbid 或 Replace。",
+      "explanation": "该策略针对由同一 CronJob 创建的 Job，不是集群全局的任务锁。",
+      "example": "耗时可能超过调度间隔且不应并发的任务可评估 Forbid 策略。",
+      "tags": [
+        "Kubernetes",
+        "CronJob",
+        "并发策略"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/"
+    },
+    {
+      "id": "k8sf-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "Init Container 顺序",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Init Container 与应用容器的启动顺序有什么区别？",
+      "answer": "Init Container 在应用容器启动前运行，并按顺序执行；通常需全部成功完成后，Pod 才启动应用容器。",
+      "explanation": "它适合执行配置准备或等待前置条件等初始化工作。",
+      "example": "应用启动前由 init container 下载只读配置文件。",
+      "tags": [
+        "Kubernetes",
+        "Init Container",
+        "启动顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/pods/init-containers/"
+    },
+    {
+      "id": "k8sf-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 资源管理",
+      "knowledgePoint": "资源 request 与 limit",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Pod 容器资源 request 和 limit 分别影响什么？",
+      "answer": "request 表示调度和资源保证计算使用的需求量；limit 表示容器可使用资源的上限或限制。",
+      "explanation": "CPU 和内存等资源的限制机制不同，不能把所有 limit 都理解成相同的硬性终止行为。",
+      "example": "调度器可依据 CPU request 判断节点是否有足够可分配资源。",
+      "tags": [
+        "Kubernetes",
+        "requests",
+        "limits",
+        "资源管理"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+    },
+    {
+      "id": "k8sf-016",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Kubernetes 资源管理",
+      "knowledgePoint": "调度器资源请求",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "Kubernetes 调度器通常依据容器的实际瞬时用量还是 request 判断节点资源是否可分配？",
+      "answer": "调度器主要依据已分配资源请求与新 Pod 的 request 进行可调度性判断，而不是只看节点当前瞬时 CPU 或内存使用率。",
+      "explanation": "request 配置过高可能造成节点资源看起来已被占满，即使容器实际用量较低。",
+      "example": "降低经过测量但设置过量的 CPU request，可能让更多 Pod 被调度到节点。",
+      "tags": [
+        "Kubernetes",
+        "Scheduler",
+        "资源请求"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+    },
+    {
+      "id": "k8sf-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 资源管理",
+      "knowledgePoint": "CPU 与内存限制",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "容器达到 CPU limit 和 memory limit 时，常见后果有什么不同？",
+      "answer": "CPU 超过 limit 时通常会被节流；内存超过 limit 时可能触发 OOM 终止容器。",
+      "explanation": "CPU 可延后执行，内存不能像 CPU 一样通过时间片节流来满足超限请求。",
+      "example": "CPU throttling 会增加延迟；内存超限可能使容器退出并由控制器重启。",
+      "tags": [
+        "Kubernetes",
+        "CPU limit",
+        "memory limit",
+        "OOM"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/configuration/manage-resources-containers/"
+    },
+    {
+      "id": "k8sf-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 资源管理",
+      "knowledgePoint": "HPA 工作目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Horizontal Pod Autoscaler 根据什么调整工作负载副本数？",
+      "answer": "它周期性读取配置的指标，并据此调整 Deployment 或 StatefulSet 等目标的期望副本数。",
+      "explanation": "HPA 调整副本数量，不负责直接修改单个容器的 CPU 或内存 limit。",
+      "example": "根据平均 CPU 利用率自动增加或减少 Web Deployment 的 Pod 副本。",
+      "tags": [
+        "Kubernetes",
+        "HPA",
+        "自动扩缩容"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/"
+    },
+    {
+      "id": "k8sf-019",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Kubernetes 资源管理",
+      "knowledgePoint": "HPA CPU 利用率基准",
+      "questionType": "配置与实践",
+      "origin": "自行整理",
+      "question": "HPA 使用 CPU 平均利用率指标时，利用率通常相对于什么计算？",
+      "answer": "它通常按 Pod 的 CPU 使用量相对于 CPU request 计算；相关容器未设置 CPU request 时，该 Pod 的利用率无法按此指标确定。",
+      "explanation": "使用该类指标时应为工作负载设置合理的 CPU request，并确保指标 API 可用。",
+      "example": "平均使用 100m CPU、request 为 200m 时，对应利用率约为 50%。",
+      "tags": [
+        "Kubernetes",
+        "HPA",
+        "CPU 利用率",
+        "requests"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/"
+    },
+    {
+      "id": "k8sf-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 存储",
+      "knowledgePoint": "PV 与 PVC",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PersistentVolume 与 PersistentVolumeClaim 分别表示什么？",
+      "answer": "PersistentVolume 表示集群可用的持久存储资源；PersistentVolumeClaim 是工作负载对所需存储容量和属性提出的申请。",
+      "explanation": "Pod 通常引用 PVC，而不是直接绑定某个底层存储卷实现。",
+      "example": "数据库 Pod 挂载一个请求了 20Gi 容量的 PVC。",
+      "tags": [
+        "Kubernetes",
+        "PersistentVolume",
+        "PersistentVolumeClaim"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/storage/persistent-volumes/"
+    },
+    {
+      "id": "k8sf-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 存储",
+      "knowledgePoint": "StorageClass 动态供给",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "StorageClass 如何支持动态创建持久卷？",
+      "answer": "PVC 指定 StorageClass 后，关联的 provisioner 可按该类定义动态创建匹配的 PersistentVolume。",
+      "explanation": "动态供给依赖集群配置的存储驱动和可用后端，不是仅创建 PVC 就能保证成功。",
+      "example": "云存储 provisioner 可根据 PVC 请求创建云盘并绑定 PV。",
+      "tags": [
+        "Kubernetes",
+        "StorageClass",
+        "动态供给"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/storage/persistent-volumes/#dynamic"
+    },
+    {
+      "id": "k8sf-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 存储",
+      "knowledgePoint": "StatefulSet PVC 保留",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "未配置其他 PVC 保留策略时，删除或缩容 StatefulSet 会自动删除其模板创建的 PVC 吗？",
+      "answer": "Kubernetes 1.32 中默认保留策略为 Retain，缩容或删除 StatefulSet 时通常会保留这些 PVC。",
+      "explanation": "PVC 保留策略可显式配置；删除工作负载前仍应核对实际对象和存储回收策略。",
+      "example": "缩容 StatefulSet 后，已移除 Pod 对应的数据卷声明仍可能保留供以后使用。",
+      "tags": [
+        "Kubernetes",
+        "StatefulSet",
+        "PVC",
+        "数据保留"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/statefulset/#persistentvolumeclaim-retention"
+    },
+    {
+      "id": "k8sf-023",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 配置",
+      "knowledgePoint": "ConfigMap 与 Secret",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "ConfigMap 和 Secret 通常分别存放什么类型的配置？",
+      "answer": "ConfigMap 用于非机密配置；Secret 用于密码、令牌等敏感数据。",
+      "explanation": "使用 Secret 不代表集群已自动完成所有机密保护，还需检查访问控制和存储加密配置。",
+      "example": "应用开关可放在 ConfigMap，数据库凭据通常放在 Secret。",
+      "tags": [
+        "Kubernetes",
+        "ConfigMap",
+        "Secret",
+        "配置管理"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/configuration/configmap/",
+      "supportingReferences": [
+        {
+          "id": "kubernetes-secret-docs",
+          "title": "Kubernetes 1.32 Secret 文档",
+          "url": "https://v1-32.docs.kubernetes.io/docs/concepts/configuration/secret/",
+          "type": "Kubernetes 官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "k8sf-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 配置",
+      "knowledgePoint": "Secret Base64 编码",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Kubernetes Secret 数据使用 Base64 编码是否等于加密？",
+      "answer": "不等于；Base64 只是编码，不能保护机密，读取权限和静态数据加密需要另行配置。",
+      "explanation": "还应限制 RBAC 权限、保护备份和访问 Secret 的工作负载。",
+      "example": "任何能读取 Secret 的用户都可以解码 data 字段中的 Base64 内容。",
+      "tags": [
+        "Kubernetes",
+        "Secret",
+        "Base64",
+        "机密管理"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/configuration/secret/"
+    },
+    {
+      "id": "k8sf-025",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Kubernetes 配置",
+      "knowledgePoint": "Secret 静态加密",
+      "questionType": "配置与实践",
+      "origin": "自行整理",
+      "question": "为保护 etcd 中的 Kubernetes Secret，通常需要额外配置什么？",
+      "answer": "需要配置 API Server 的静态数据加密机制，并正确管理加密密钥；Secret 对象本身不会因为类型为 Secret 就自动保证 etcd 中加密。",
+      "explanation": "还需限制 API 权限并保护 etcd 备份，因为加密配置不替代授权控制。",
+      "example": "集群管理员可配置 EncryptionConfiguration 并按要求轮换密钥。",
+      "tags": [
+        "Kubernetes",
+        "Secret",
+        "etcd",
+        "静态数据加密"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/tasks/administer-cluster/encrypt-data/"
+    },
+    {
+      "id": "k8sf-026",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 资源组织",
+      "knowledgePoint": "Namespace 作用范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes Namespace 主要提供什么组织边界？",
+      "answer": "它把集群中的许多命名空间级资源划分到不同逻辑范围，便于命名、授权和配额管理。",
+      "explanation": "Namespace 本身不等同于完整的网络或安全隔离边界，也不适用于所有集群级资源。",
+      "example": "同一集群可用 dev 和 prod Namespace 组织不同环境的 Deployment。",
+      "tags": [
+        "Kubernetes",
+        "Namespace",
+        "资源组织"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/"
+    },
+    {
+      "id": "k8sf-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 资源组织",
+      "knowledgePoint": "ResourceQuota",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ResourceQuota 在 Namespace 中主要限制什么？",
+      "answer": "它限制该 Namespace 可消耗的聚合资源量或可创建的对象数量，例如 CPU、内存、PVC 或 Pod 数。",
+      "explanation": "ResourceQuota 通常需要配合 LimitRange 或明确的请求和限制策略，才能避免资源请求不完整导致对象无法创建。",
+      "example": "为团队 Namespace 设置最多 20 个 Pod 和 50Gi 内存请求的配额。",
+      "tags": [
+        "Kubernetes",
+        "ResourceQuota",
+        "配额",
+        "Namespace"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/policy/resource-quotas/"
+    },
+    {
+      "id": "k8sf-028",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 资源组织",
+      "knowledgePoint": "Label 与 Annotation",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Kubernetes Label 与 Annotation 的常见用途有什么区别？",
+      "answer": "Label 用于标记对象并支持选择器查询或分组；Annotation 用于保存非标识性质的附加元数据。",
+      "explanation": "不能用 Annotation 代替需要被 selector 选择的 Label。",
+      "example": "用 app=payments 作为 Label 选择后端，用构建流水线地址作为 Annotation。",
+      "tags": [
+        "Kubernetes",
+        "Label",
+        "Annotation",
+        "元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/overview/working-with-objects/annotations/",
+      "supportingReferences": [
+        {
+          "id": "kubernetes-label-docs",
+          "title": "Kubernetes 1.32 Label 与选择器文档",
+          "url": "https://v1-32.docs.kubernetes.io/docs/concepts/overview/working-with-objects/labels/",
+          "type": "Kubernetes 官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "k8sf-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 资源组织",
+      "knowledgePoint": "选择器逻辑",
+      "questionType": "规则与结论",
+      "origin": "自行整理",
+      "question": "Kubernetes Label Selector 中多个 matchLabels 条件如何组合？",
+      "answer": "多个 matchLabels 条件必须同时满足，也就是逻辑 AND。",
+      "explanation": "matchExpressions 的多个要求同样需要同时满足；单个 In 表达式的值集合用于匹配其中任一值。",
+      "example": "app=web 且 env=prod 只选择同时带两个标签的对象。",
+      "tags": [
+        "Kubernetes",
+        "Label Selector",
+        "逻辑 AND"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/overview/working-with-objects/labels/"
+    },
+    {
+      "id": "k8sf-030",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 调度",
+      "knowledgePoint": "nodeSelector",
+      "questionType": "配置与实践",
+      "origin": "自行整理",
+      "question": "Pod 的 nodeSelector 如何约束调度节点？",
+      "answer": "它要求目标节点具有所有指定的标签键值，调度器只会考虑满足条件的节点。",
+      "explanation": "nodeSelector 表达简单的精确标签要求，不支持复杂的优先级或表达式逻辑。",
+      "example": "nodeSelector: {disk: ssd} 要求节点具有 disk=ssd 标签。",
+      "tags": [
+        "Kubernetes",
+        "nodeSelector",
+        "节点标签"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"
+    },
+    {
+      "id": "k8sf-031",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 调度",
+      "knowledgePoint": "节点亲和性",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Node Affinity 相比 nodeSelector 增加了哪些表达能力？",
+      "answer": "Node Affinity 支持更丰富的标签表达式，并可表达硬性要求或调度偏好；nodeSelector 主要是简单的精确匹配。",
+      "explanation": "偏好条件会影响调度评分，但不保证 Pod 一定落到偏好节点。",
+      "example": "工作负载可要求只能调度到特定硬件节点，同时优先选择某个可用区。",
+      "tags": [
+        "Kubernetes",
+        "Node Affinity",
+        "nodeSelector",
+        "调度约束"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/"
+    },
+    {
+      "id": "k8sf-032",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 调度",
+      "knowledgePoint": "Taint 与 Toleration",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "Pod 配置了匹配节点污点的 toleration，就一定会被调度到该节点吗？",
+      "answer": "不一定；toleration 只表示该污点不会排除该 Pod，并不主动吸引 Pod 到该节点。",
+      "explanation": "若还要指定或偏好某类节点，应结合 nodeSelector 或 nodeAffinity 等调度规则。",
+      "example": "GPU 污点和 toleration 可允许 GPU 工作负载进入节点，但普通调度仍可能选择其他可行节点。",
+      "tags": [
+        "Kubernetes",
+        "Taint",
+        "Toleration",
+        "调度"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/"
+    },
+    {
+      "id": "k8sf-033",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 网络",
+      "knowledgePoint": "Ingress 控制器",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "只创建 Kubernetes Ingress 资源就一定会产生可用的外部 HTTP 路由吗？",
+      "answer": "不一定；集群需要运行实现 Ingress 规则的 Ingress Controller，控制器才会配置实际数据平面。",
+      "explanation": "Ingress 资源描述路由规则，不是自行监听端口的代理进程。",
+      "example": "部署 NGINX Ingress Controller 后，再创建 Ingress 路由到集群 Service。",
+      "tags": [
+        "Kubernetes",
+        "Ingress",
+        "Ingress Controller",
+        "HTTP 路由"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/services-networking/ingress/"
+    },
+    {
+      "id": "k8sf-034",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "Kubernetes 网络",
+      "knowledgePoint": "NetworkPolicy 实施条件",
+      "questionType": "场景判断",
+      "origin": "自行整理",
+      "question": "创建 Kubernetes NetworkPolicy 对象后，所有集群都一定会执行相应流量限制吗？",
+      "answer": "不一定；集群网络插件必须支持并实现 NetworkPolicy 规则，策略才会在数据平面生效。",
+      "explanation": "API 对象存在并不证明底层网络已执行规则，应确认 CNI 插件能力并做连通性验证。",
+      "example": "支持 NetworkPolicy 的 CNI 可以根据 Pod 标签限制入站或出站连接。",
+      "tags": [
+        "Kubernetes",
+        "NetworkPolicy",
+        "CNI",
+        "网络策略"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/services-networking/network-policies/"
+    },
+    {
+      "id": "k8sf-035",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载",
+      "knowledgePoint": "PodDisruptionBudget 保护范围",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "PodDisruptionBudget 能保证副本在节点故障时始终满足可用数量吗？",
+      "answer": "不能；它限制通过 Eviction API 发起的部分自愿中断，例如节点排空，但不阻止节点故障等非自愿中断。",
+      "explanation": "PDB 提供的是自愿驱逐预算，不替代多副本设计、故障恢复和应用级高可用。",
+      "example": "维护节点时，kubectl drain 可依据 PDB 延后会使可用副本低于预算的驱逐。",
+      "tags": [
+        "Kubernetes",
+        "PodDisruptionBudget",
+        "PDB",
+        "节点维护"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/pods/disruptions/"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "matthews-correlation-evaluation",
+    "title": "scikit-learn 1.7.2：MCC 分类评估",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.matthews_corrcoef.html",
+    "type": "论文与固定版本技术文档",
+    "note": "依据逐题引用的固定版本资料自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "mccmetric-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MCC 分类评估",
+      "knowledgePoint": "二分类MCC公式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "二分类 Matthews 相关系数（MCC）如何由混淆矩阵计算？",
+      "answer": "MCC = (TP×TN−FP×FN) / √[(TP+FP)(TP+FN)(TN+FP)(TN+FN)]。",
+      "explanation": "其中 TP、TN、FP、FN 是混淆矩阵四种计数；分母为零时需按实现约定处理。",
+      "example": "对高度不平衡的恶意样本检测补充报告 MCC。",
+      "tags": [
+        "MCC 分类评估",
+        "二分类MCC公式"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/model_evaluation.html#matthews-correlation-coefficient"
+    },
+    {
+      "id": "mccmetric-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MCC 分类评估",
+      "knowledgePoint": "极端结果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两类真实标签和预测标签均出现时，二分类 MCC 为 +1 或 −1 分别表示什么？",
+      "answer": "+1 表示完全正确，−1 表示预测与真实标签完全相反。",
+      "explanation": "退化输入应另行检查。",
+      "example": "二分类模型将每个样本的标签都颠倒时可得到 −1。",
+      "tags": [
+        "MCC 分类评估",
+        "极端结果"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.matthews_corrcoef.html"
+    },
+    {
+      "id": "mccmetric-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MCC 分类评估",
+      "knowledgePoint": "零值解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MCC 为 0 是否能单独证明分类器使用了随机预测？",
+      "answer": "不能；它表示该指标下相关程度为零，也可能来自确定性的预测结果。",
+      "explanation": "具体原因应结合混淆矩阵分析。",
+      "example": "某个确定性分类器恰好得到均衡的正确与错误组合。",
+      "tags": [
+        "MCC 分类评估",
+        "零值解释"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.matthews_corrcoef.html"
+    },
+    {
+      "id": "mccmetric-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MCC 分类评估",
+      "knowledgePoint": "退化分母",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 的 matthews_corrcoef 在相关分母为零时返回什么？",
+      "answer": "实现返回 0.0；某些单标签输入还可能产生警告。",
+      "explanation": "这是一种实现约定，不应把该值误当成完整类别上的正常评估。",
+      "example": "所有真实与预测标签都只有同一个类别。",
+      "tags": [
+        "MCC 分类评估",
+        "退化分母"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/metrics/_classification.py"
+    },
+    {
+      "id": "mccmetric-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MCC 分类评估",
+      "knowledgePoint": "输入类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 matthews_corrcoef 应直接接收正类概率作为 y_pred 吗？",
+      "answer": "不应；它接收预测类别标签，概率需先按明确的决策阈值转换。",
+      "explanation": "阈值改变会改变混淆矩阵和 MCC。",
+      "example": "把大于某阈值的样本标为正类。",
+      "tags": [
+        "MCC 分类评估",
+        "输入类型"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.matthews_corrcoef.html"
+    },
+    {
+      "id": "mccmetric-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MCC 分类评估",
+      "knowledgePoint": "多类支持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 matthews_corrcoef 是否只支持二分类？",
+      "answer": "不是；它也支持多分类标签。",
+      "explanation": "多分类的下界取决于类别与预测分布，不一定能达到 −1。",
+      "example": "对三种恶意软件家族计算多类 MCC。",
+      "tags": [
+        "MCC 分类评估",
+        "多类支持"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.matthews_corrcoef.html"
+    },
+    {
+      "id": "mccmetric-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MCC 分类评估",
+      "knowledgePoint": "样本权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 matthews_corrcoef 的 sample_weight 参数有什么作用？",
+      "answer": "为样本指定权重，使计算中的混淆计数按权重累积。",
+      "explanation": "加权后的指标应说明权重定义。",
+      "example": "让不同采样概率的样本有不同权重。",
+      "tags": [
+        "MCC 分类评估",
+        "样本权重"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.matthews_corrcoef.html"
+    }
+  ]
+}

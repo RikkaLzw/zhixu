@@ -1,0 +1,373 @@
+{
+  "source": {
+    "id": "kubernetes-workload-service-foundations",
+    "title": "Kubernetes 1.32 官方文档：工作负载与服务",
+    "url": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/pods/",
+    "type": "论文、官方文档与源码",
+    "note": "根据逐题标注的论文、版本化文档或源码自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "k8sbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "Pod基础",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes 中的 Pod 是什么？",
+      "answer": "Pod 是 Kubernetes 中可创建和管理的最小部署单元，包含一个或多个共同调度的容器。",
+      "explanation": "同一 Pod 中的容器共享部分运行上下文和存储资源。",
+      "example": "一个 Pod 内运行应用及其辅助容器。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "Pod基础"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/pods/"
+    },
+    {
+      "id": "k8sbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "Pod网络",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一 Pod 中的容器怎样使用网络地址和端口？",
+      "answer": "它们共享 Pod 的网络命名空间、IP 地址和端口空间，可以通过 localhost 通信。",
+      "explanation": "共享端口空间时，相同地址和端口的绑定可能冲突，需考虑套接字复用设置。",
+      "example": "辅助容器访问 localhost 上的应用端口。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "Pod网络"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/pods/"
+    },
+    {
+      "id": "k8sbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "Pod替换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "受控制器管理的 Pod 被替换时，新旧 Pod 仍是同一个对象吗？",
+      "answer": "不是；替代 Pod 是新的对象，有自己的 UID，IP 地址也可能改变。",
+      "explanation": "控制器可创建替代对象，不能假定原 Pod 被重新调度到其他节点。",
+      "example": "节点故障后控制器创建新的 Pod。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "Pod替换"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/pods/"
+    },
+    {
+      "id": "k8sbase-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "副本控制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes ReplicaSet 如何维持期望副本数？",
+      "answer": "它根据选择器识别需要管理的 Pod，按需创建或删除 Pod 以接近期望数量。",
+      "explanation": "通常由 Deployment 管理 ReplicaSet。",
+      "example": "期望 3 个副本时，一个 Pod 消失后创建替代 Pod。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "副本控制"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/replicaset/"
+    },
+    {
+      "id": "k8sbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "孤儿Pod接管",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ReplicaSet 能否接管并非由它创建、但标签匹配的 Pod？",
+      "answer": "可以；没有控制器所有者且匹配其选择器的 Pod 可能被它接管。",
+      "explanation": "因此不同控制器的选择器需要谨慎设计。",
+      "example": "手工创建的无主 Pod 标签匹配现有 ReplicaSet。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "孤儿Pod接管"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/replicaset/"
+    },
+    {
+      "id": "k8sbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "Deployment作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes Deployment 使用 RollingUpdate 策略时怎样更新应用？",
+      "answer": "它管理 ReplicaSet，按新的 Pod 模板逐步增加新副本并减少旧副本。",
+      "explanation": "更新过程可按配置控制速度，也可回滚到保留的历史版本。",
+      "example": "更新应用镜像后滚动发布。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "Deployment作用"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+    },
+    {
+      "id": "k8sbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "滚动发布触发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes 1.32 中只修改 Deployment 的副本数会触发新的 rollout 吗？",
+      "answer": "不会；修改 Pod 模板才触发 rollout，单纯扩缩容不会。",
+      "explanation": "例如更改容器镜像或模板标签会改变 Pod 模板。",
+      "example": "将 replicas 从 3 改为 5。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "滚动发布触发"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+    },
+    {
+      "id": "k8sbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "滚动更新限额",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Deployment 滚动更新中的 maxUnavailable 与 maxSurge 分别限制什么？",
+      "answer": "前者定义更新期间允许不可用的副本数量；后者定义可超过期望副本数的额外 Pod 数量。",
+      "explanation": "这些是控制器的更新参数，外部故障仍会影响可用性；终止中的 Pod 可能导致瞬时数量更高。",
+      "example": "控制发布期间的可用容量与额外副本。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "滚动更新限额"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+    },
+    {
+      "id": "k8sbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "Deployment选择器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "apps/v1 Deployment 创建后可以直接修改 spec.selector 吗？",
+      "answer": "不可以；该选择器在创建后不可变。",
+      "explanation": "创建时选择器还必须匹配 Pod 模板标签。",
+      "example": "规划应用标签后再创建 Deployment。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "Deployment选择器"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/workloads/controllers/deployment/"
+    },
+    {
+      "id": "k8sbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "Service抽象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes Service 为什么适合为一组 Pod 提供访问入口？",
+      "answer": "Service 为一组后端提供稳定访问抽象；默认 ClusterIP 类型还提供集群内虚拟 IP 和服务发现名称，即使后端 Pod 被替换也可更新端点。",
+      "explanation": "Service 可通过选择器或显式端点描述后端；headless Service 则不分配 ClusterIP。",
+      "example": "客户端通过服务地址访问多个应用副本。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "Service抽象"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/services-networking/service/"
+    },
+    {
+      "id": "k8sbase-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "Service端口映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes Service 的 port 和 targetPort 分别表示什么？",
+      "answer": "port 是 Service 提供的端口，targetPort 是转发到后端使用的端口。",
+      "explanation": "targetPort 可按配置引用容器端口名称或数值。",
+      "example": "Service 的 80 端口转发到 Pod 的 8080 端口。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "Service端口映射"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/services-networking/service/"
+    },
+    {
+      "id": "k8sbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "EndpointSlice更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "有标签选择器的 Service 如何跟踪后端 Pod 的变化？",
+      "answer": "控制平面依据选择器匹配 Pod，并更新对应的 EndpointSlice。",
+      "explanation": "端点是否可接收流量还受就绪状态等条件影响。",
+      "example": "替换 Pod 后服务端点随之更新。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "EndpointSlice更新"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/services-networking/service/"
+    },
+    {
+      "id": "k8sbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "无选择器服务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes Service 是否必须有 Pod 选择器？",
+      "answer": "不必须；无选择器的 Service 可以使用手工管理的 EndpointSlice 指向后端。",
+      "explanation": "这种方式可用于抽象集群外的服务等场景。",
+      "example": "Service 指向外部数据库地址。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "无选择器服务"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/services-networking/service/"
+    },
+    {
+      "id": "k8sbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "Service类型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ClusterIP 与 NodePort 类型的 Service 有什么主要区别？",
+      "answer": "ClusterIP 主要提供集群内虚拟地址；NodePort 还在各节点 IP 上开放指定端口。",
+      "explanation": "外部可达性仍受路由、防火墙及集群配置影响。",
+      "example": "通过节点地址和 NodePort 访问服务。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "Service类型"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/services-networking/service/"
+    },
+    {
+      "id": "k8sbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "Headless服务",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Service 的 clusterIP 设为 None 时有什么主要变化？",
+      "answer": "它成为 headless Service，不分配集群虚拟 IP，DNS 可返回后端地址等信息。",
+      "explanation": "DNS 结果取决于是否配置选择器等条件。",
+      "example": "需要客户端发现独立后端地址。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "Headless服务"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/services-networking/service/"
+    },
+    {
+      "id": "k8sbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "健康探针",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kubernetes 的 liveness 与 readiness 探针失败时通常产生什么不同影响？",
+      "answer": "startupProbe 成功前，liveness 和 readiness 探针不会运行；之后 liveness 持续失败可使 kubelet 重启容器，readiness 失败则使 Pod 暂不接收 Service 流量。",
+      "explanation": "三种探针职责不同：startup 为慢启动设门控，liveness 判断是否重启，readiness 判断是否接收流量。readiness 失败本身不会重启容器。",
+      "example": "服务初始化期间暂不接收请求。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "健康探针"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/"
+    },
+    {
+      "id": "k8sbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "启动探针",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "配置 startupProbe 后，liveness 和 readiness 探针何时开始运行？",
+      "answer": "在 startupProbe 成功之前，它们被禁用；成功后才开始运行。",
+      "explanation": "这有助于慢启动应用避免过早被存活探针重启。",
+      "example": "应用加载大模型后才开始常规探测。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "启动探针"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/"
+    },
+    {
+      "id": "k8sbase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "配置更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ConfigMap 更新后，环境变量与普通卷挂载中的配置是否都会自动更新？",
+      "answer": "环境变量不会自动更新，通常需重启 Pod；普通卷挂载的键会最终更新。",
+      "explanation": "使用 subPath 挂载的容器不会收到 ConfigMap 更新。",
+      "example": "修改配置后区分环境变量和文件挂载。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "配置更新"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/configuration/configmap/"
+    },
+    {
+      "id": "k8sbase-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Kubernetes 工作负载与服务",
+      "knowledgePoint": "临时卷生命周期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "emptyDir 卷能否跨容器重启保留，Pod 被移出节点后会怎样？",
+      "answer": "容器重启或崩溃不会删除 emptyDir；Pod 被移出节点时该卷数据会删除。",
+      "explanation": "它不适合作为跨 Pod 生命周期的持久化存储。",
+      "example": "同一 Pod 的两个容器共享临时文件。",
+      "tags": [
+        "Kubernetes 工作负载与服务",
+        "临时卷生命周期"
+      ],
+      "evidence": "source",
+      "reference": "https://v1-32.docs.kubernetes.io/docs/concepts/storage/volumes/"
+    }
+  ]
+}

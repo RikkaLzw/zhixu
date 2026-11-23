@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "sklearn-decision-threshold-tuning",
+    "title": "scikit-learn 1.7.2：分类阈值调整",
+    "url": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skthresh-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "优化目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 的 TunedThresholdClassifierCV 主要调整分类器的什么？",
+      "answer": "它调整将二分类概率或决策分数转换为类别标签的阈值，以优化指定评分。",
+      "explanation": "该接口在分类器基础上选择决策点，不能替代对独立测试集的评估。",
+      "example": "使用不同阈值可以改变固定分数下的预测标签。",
+      "tags": [
+        "分类决策阈值接口",
+        "优化目标"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    },
+    {
+      "id": "skthresh-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "默认评分",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "TunedThresholdClassifierCV 在未指定 scoring 时优化什么指标？",
+      "answer": "默认优化 balanced_accuracy，即平衡准确率。",
+      "explanation": "如需根据业务关注精确率、召回率或成本，应显式设置合适评分。",
+      "example": "对不平衡分类任务不要假定默认优化普通准确率。",
+      "tags": [
+        "分类决策阈值接口",
+        "默认评分"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    },
+    {
+      "id": "skthresh-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "默认交叉验证",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 的 TunedThresholdClassifierCV 在 cv=None 时采用什么默认划分？",
+      "answer": "默认使用五折分层交叉验证。",
+      "explanation": "涉及时间顺序或实体泄漏时，应提供符合任务约束的划分策略。",
+      "example": "按时间评估时应自行考虑时间顺序和验证窗口。",
+      "tags": [
+        "分类决策阈值接口",
+        "默认交叉验证"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    },
+    {
+      "id": "skthresh-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "连续验证比例",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "TunedThresholdClassifierCV 中 cv=0.25 表示什么？",
+      "answer": "使用一次分层随机划分，其中 25% 样本用于验证阈值。",
+      "explanation": "浮点 cv 必须在 0 和 1 之间；它与四折交叉验证不同。",
+      "example": "可设置 random_state 控制该随机划分。",
+      "tags": [
+        "分类决策阈值接口",
+        "连续验证比例"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    },
+    {
+      "id": "skthresh-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "预训练分类器",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "TunedThresholdClassifierCV 设置 cv=\"prefit\" 时，对分类器和 refit 有什么要求？",
+      "answer": "传入的分类器须已拟合，并设置 refit=False。",
+      "explanation": "该模式只用传给包装器 fit 的数据调整阈值，不再重新拟合分类器。",
+      "example": "可用独立验证集对已有分类器选择工作点。",
+      "tags": [
+        "分类决策阈值接口",
+        "预训练分类器"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    },
+    {
+      "id": "skthresh-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "阈值结果",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "拟合后的 TunedThresholdClassifierCV 用哪个属性提供选出的决策阈值？",
+      "answer": "使用 best_threshold_ 属性。",
+      "explanation": "best_score_ 则记录与所选阈值对应的优化评分。",
+      "example": "报告模型工作点时可以记录 best_threshold_。",
+      "tags": [
+        "分类决策阈值接口",
+        "阈值结果"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    },
+    {
+      "id": "skthresh-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "候选阈值",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "TunedThresholdClassifierCV 的 thresholds 参数可以怎样指定候选阈值？",
+      "answer": "可以传整数指定离散化的候选数量，也可以传数组明确指定候选值。",
+      "explanation": "默认值为 100；候选设置会影响可选择的工作点。",
+      "example": "需要评估特定业务阈值时，可提供阈值数组。",
+      "tags": [
+        "分类决策阈值接口",
+        "候选阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    },
+    {
+      "id": "skthresh-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "评分曲线保存",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "TunedThresholdClassifierCV 怎样保留阈值及相应交叉验证评分？",
+      "answer": "设置 store_cv_results=True，拟合后可读取 cv_results_ 中的 thresholds 和 scores。",
+      "explanation": "默认不保存该属性，以免误以为默认始终可用。",
+      "example": "可据此检查候选工作点附近的评分变化。",
+      "tags": [
+        "分类决策阈值接口",
+        "评分曲线保存"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    },
+    {
+      "id": "skthresh-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "固定阈值",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "FixedThresholdClassifier 与 TunedThresholdClassifierCV 在阈值选择上有什么区别？",
+      "answer": "前者使用给定的固定阈值，后者依据评分与验证划分寻找阈值。",
+      "explanation": "两者都用于将底层二分类器的概率或分数转换为标签。",
+      "example": "已知业务规则要求阈值 0.8 时，可考虑固定阈值包装器。",
+      "tags": [
+        "分类决策阈值接口",
+        "固定阈值"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    },
+    {
+      "id": "skthresh-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分类决策阈值接口",
+      "knowledgePoint": "响应方法",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "TunedThresholdClassifierCV 的 response_method=\"auto\" 优先尝试哪种输出？",
+      "answer": "先尝试 predict_proba，若不可用再尝试 decision_function。",
+      "explanation": "显式指定的方法必须由底层分类器实现。",
+      "example": "阈值是对选定输出的阈值，不一定是概率。",
+      "tags": [
+        "分类决策阈值接口",
+        "响应方法"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/model_selection/_classification_threshold.py"
+    }
+  ]
+}

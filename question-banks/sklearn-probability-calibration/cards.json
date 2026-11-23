@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "sklearn-probability-calibration",
+    "title": "scikit-learn 1.7：概率校准接口",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.CalibratedClassifierCV.html",
+    "type": "官方技术文档与数据集资料",
+    "note": "依据逐题引用的版本文档或数据集官方说明自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "calapi-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "校准曲线输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 calibration_curve 返回的两个数组分别是什么？",
+      "answer": "分别返回每个非空分箱的真实正例比例和平均预测正类概率。",
+      "explanation": "常把平均预测概率作为横坐标、正例比例作为纵坐标。",
+      "example": "检查预测约 0.8 的样本实际正例比例。",
+      "tags": [
+        "概率校准接口",
+        "校准曲线输出"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.calibration_curve.html"
+    },
+    {
+      "id": "calapi-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "输入范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 calibration_curve 要求 y_prob 表示什么？",
+      "answer": "它接收二分类中正类的预测概率，而不是类别标签或任意未缩放分数。",
+      "explanation": "pos_label 可指定正类标签。",
+      "example": "传入正类对应的 predict_proba 列。",
+      "tags": [
+        "概率校准接口",
+        "输入范围"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.calibration_curve.html"
+    },
+    {
+      "id": "calapi-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "空分箱",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "calibration_curve 的结果数组为什么可能比 n_bins 短？",
+      "answer": "没有样本的分箱不会出现在返回结果中。",
+      "explanation": "不能假定每个预设区间都有一个输出点。",
+      "example": "预测概率只集中在低端和高端时跳过中间空箱。",
+      "tags": [
+        "概率校准接口",
+        "空分箱"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.calibration_curve.html"
+    },
+    {
+      "id": "calapi-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "分数来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CalibratedClassifierCV 优先用基础分类器的什么输出拟合校准器？",
+      "answer": "优先使用 decision_function；不存在时使用 predict_proba。",
+      "explanation": "调用方应理解基础分类器输出的含义。",
+      "example": "对支持决策分数的分类器先校准其分数。",
+      "tags": [
+        "概率校准接口",
+        "分数来源"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.CalibratedClassifierCV.html"
+    },
+    {
+      "id": "calapi-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "集成方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CalibratedClassifierCV 的 ensemble=True 与 False 怎样得到用于预测的基础模型？",
+      "answer": "True 在每折训练一个分类器和校准器，并在预测时平均概率；False 用折外预测训练校准器，再用全部数据训练一个基础模型。",
+      "explanation": "两种模式在计算成本和预测组合上不同。",
+      "example": "三折校准可产生三个模型对或一个最终模型对。",
+      "tags": [
+        "概率校准接口",
+        "集成方式"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.CalibratedClassifierCV.html"
+    },
+    {
+      "id": "calapi-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "自动集成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 CalibratedClassifierCV 中 ensemble=\"auto\" 如何处理 FrozenEstimator？",
+      "answer": "基础估计器是 FrozenEstimator 时使用 False，否则使用 True。",
+      "explanation": "这个默认行为依赖 scikit-learn 版本。",
+      "example": "包装已训练分类器后对独立数据做校准。",
+      "tags": [
+        "概率校准接口",
+        "自动集成"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.CalibratedClassifierCV.html"
+    },
+    {
+      "id": "calapi-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "冻结估计器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CalibratedClassifierCV 使用 FrozenEstimator 包装已训练分类器时，提供的 fit 数据用于什么？",
+      "answer": "提供的数据用于拟合校准器；已训练分类器保持冻结。",
+      "explanation": "调用者仍应确保基础模型训练数据和校准数据不重叠。",
+      "example": "用保留的验证集校准已训练的模型。",
+      "tags": [
+        "概率校准接口",
+        "冻结估计器"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.CalibratedClassifierCV.html"
+    },
+    {
+      "id": "calapi-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "校准方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CalibratedClassifierCV 的 sigmoid 和 isotonic 分别属于什么校准方法？",
+      "answer": "sigmoid 使用 Platt 的逻辑模型；isotonic 使用非参数的保序回归。",
+      "explanation": "两者对校准映射的假设和数据需求不同。",
+      "example": "根据校准集规模比较两个方法。",
+      "tags": [
+        "概率校准接口",
+        "校准方法"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.CalibratedClassifierCV.html"
+    },
+    {
+      "id": "calapi-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "保序回归样本量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 scikit-learn 不建议在极少校准样本上使用 isotonic 校准？",
+      "answer": "保序回归在样本较少时更容易过拟合。",
+      "explanation": "应通过独立数据和具体任务评估选择。",
+      "example": "小校准集可先比较参数更少的 sigmoid 方法。",
+      "tags": [
+        "概率校准接口",
+        "保序回归样本量"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.calibration.CalibratedClassifierCV.html"
+    },
+    {
+      "id": "calapi-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "排序并列",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "保序概率校准为什么可能改变 ROC AUC，即使其映射不下降？",
+      "answer": "它可能把不同分数映射成相同值，产生并列并改变排序指标。",
+      "explanation": "严格单调递增映射才会保留所有不同分数的顺序。",
+      "example": "两个不同分数经阶梯映射得到同一概率。",
+      "tags": [
+        "概率校准接口",
+        "排序并列"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/calibration.html"
+    },
+    {
+      "id": "calapi-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "多分类校准",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 CalibratedClassifierCV 如何扩展 sigmoid 或 isotonic 到多分类？",
+      "answer": "分别按一对其余方式校准每个类别，然后对输出概率做归一化。",
+      "explanation": "该过程要求基础分类器支持多分类预测。",
+      "example": "分别校准三个类别的得分后归一化。",
+      "tags": [
+        "概率校准接口",
+        "多分类校准"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/calibration.html"
+    },
+    {
+      "id": "calapi-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率校准接口",
+      "knowledgePoint": "缺失类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CalibratedClassifierCV 使用 ensemble=True 时，为什么交叉验证每折训练集和校准集都应覆盖各类别？",
+      "answer": "缺失类别可能使该折模型的类别概率偏斜，或使对应校准器缺少正例。",
+      "explanation": "对极度不平衡数据尤其需要检查实际分折。",
+      "example": "攻击类别很少时检查每折是否包含攻击样本。",
+      "tags": [
+        "概率校准接口",
+        "缺失类别"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/calibration.html"
+    }
+  ]
+}

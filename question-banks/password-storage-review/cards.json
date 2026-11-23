@@ -1,0 +1,116 @@
+{
+  "source": {
+    "id": "password-storage-review",
+    "title": "OWASP 密码存储与代码审查",
+    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html",
+    "type": "官方安全指南",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "passstore-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "密码存储",
+      "knowledgePoint": "密码哈希与加密",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "一般情况下，保存用户登录密码应优先采用可逆加密还是专门的密码哈希？",
+      "answer": "通常使用现代、可调成本的密码哈希，而不是保存明文或可逆加密后的密码。",
+      "explanation": "某些必须取回原密码的特殊场景需要单独评估。",
+      "example": "用密码哈希验证登录时提交的密码，而不保存原文。",
+      "tags": [
+        "密码哈希与加密",
+        "密码存储"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html"
+    },
+    {
+      "id": "passstore-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "密码存储",
+      "knowledgePoint": "盐的作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "密码哈希中的每用户随机盐主要有什么作用？",
+      "answer": "它使相同密码的哈希通常不同，并使攻击者难以复用预计算结果或一次猜测批量匹配。",
+      "explanation": "盐通常与哈希一起保存；盐不是替代高成本密码哈希的秘密。",
+      "example": "为每个新密码生成独立随机盐。",
+      "tags": [
+        "盐的作用",
+        "密码存储"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#salting",
+      "supportingReferences": [
+        {
+          "id": "company-dji",
+          "title": "大疆公开面经（合集收录，岗位未注明；经历为分享者自述）；哈希加盐主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x7e-%E5%A4%A7%E7%96%86",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "passstore-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "密码存储",
+      "knowledgePoint": "盐与Pepper",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "密码哈希中的 salt 与 pepper 在保存和共享方式上有什么区别？",
+      "answer": "salt 通常每个密码独立并可与哈希同存；pepper 是额外秘密，通常由多个密码共享并与密码库分开保存。",
+      "explanation": "pepper 是纵深防护，不能替代盐和安全的密码哈希算法。",
+      "example": "将 pepper 存在独立的密钥管理设施中。",
+      "tags": [
+        "盐与Pepper",
+        "密码存储"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#peppering"
+    },
+    {
+      "id": "passstore-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "密码存储",
+      "knowledgePoint": "密码哈希成本",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "为什么密码哈希算法需要可调的工作成本？",
+      "answer": "增加计算或内存成本可提高离线猜测密码的代价，但也会增加正常验证资源消耗。",
+      "explanation": "应在安全性和服务容量间选择参数并随条件变化复评。",
+      "example": "依据服务器性能测试密码验证延迟，再设置成本。",
+      "tags": [
+        "密码哈希成本",
+        "密码存储"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#using-work-factors"
+    },
+    {
+      "id": "passstore-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "密码存储",
+      "knowledgePoint": "bcrypt长度限制",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "使用 bcrypt 存储密码时为什么需要检查实现的输入长度限制？",
+      "answer": "多数 bcrypt 实现最多处理 72 字节输入，超长输入可能不能按预期参与验证。",
+      "explanation": "限制是字节数而非必然等于字符数；应遵循所用库行为和产品策略。",
+      "example": "检查多字节字符密码编码后的长度，并处理超限输入。",
+      "tags": [
+        "bcrypt长度限制",
+        "密码存储"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#input-limits-of-bcrypt"
+    }
+  ]
+}

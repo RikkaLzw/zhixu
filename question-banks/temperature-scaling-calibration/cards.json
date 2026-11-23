@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "temperature-scaling-calibration",
+    "title": "Guo 等：神经网络概率校准与温度缩放",
+    "url": "https://arxiv.org/pdf/1706.04599v2",
+    "type": "原论文与官方文档",
+    "note": "依据逐题引用的原文自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "tempcal-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "温度缩放与校准",
+      "knowledgePoint": "缩放位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多类分类的温度缩放怎样从 logits 得到校准后的概率？",
+      "answer": "用同一个正温度 T 除以各类别 logits，再计算 softmax。",
+      "explanation": "温度缩放通常作为已有模型的后处理步骤。",
+      "example": "logits 为 [2,1]、T=2 时，对 [1,0.5] 计算 softmax。",
+      "tags": [
+        "温度缩放与校准",
+        "缩放位置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1706.04599v2"
+    },
+    {
+      "id": "tempcal-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "温度缩放与校准",
+      "knowledgePoint": "温度与概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于非完全相等的多类 logits，温度缩放的 T>1 会如何影响 softmax 分布？",
+      "answer": "使概率分布更平坦，降低最大类别的置信度。",
+      "explanation": "T=1 保持原概率；温度改变的是概率而非 logits 的顺序。",
+      "example": "把 [2,0] 的温度从 1 提高到 2，最大类别概率下降。",
+      "tags": [
+        "温度缩放与校准",
+        "温度与概率"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1706.04599v2"
+    },
+    {
+      "id": "tempcal-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "温度缩放与校准",
+      "knowledgePoint": "预测类别不变",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么标准正温度缩放不会改变多类模型的 argmax 类别？",
+      "answer": "同除以正数保留 logits 的类别间顺序，softmax 也保留该顺序。",
+      "explanation": "因此基于 argmax 的预测类别和准确率不变，概率仍可能变化。",
+      "example": "原预测第一类，温度缩放后仍预测第一类。",
+      "tags": [
+        "温度缩放与校准",
+        "预测类别不变"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1706.04599v2"
+    },
+    {
+      "id": "tempcal-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "温度缩放与校准",
+      "knowledgePoint": "拟合目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Guo 等的温度缩放通常怎样确定温度 T？",
+      "answer": "在留出的验证数据上优化温度，使负对数似然尽量小。",
+      "explanation": "温度是一个正标量；仍应在独立数据上评估校准效果。",
+      "example": "先冻结分类模型，再用验证集拟合 T。",
+      "tags": [
+        "温度缩放与校准",
+        "拟合目标"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1706.04599v2"
+    }
+  ]
+}

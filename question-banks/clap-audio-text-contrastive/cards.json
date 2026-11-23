@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "clap-audio-text-contrastive",
+    "title": "LAION CLAP 原论文 v2：音频文本对比学习",
+    "url": "https://arxiv.org/pdf/2211.06687v2",
+    "type": "官方文档、固定版本源码与原论文",
+    "note": "依据逐题引用的资料自行整理；例子为自编，适用条件见各卡。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "clappaper-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CLAP 音频文本表示",
+      "knowledgePoint": "配对数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LAION CLAP 原论文的预训练样本主要是什么形式？",
+      "answer": "由音频片段及其对应文本描述组成音频—文本对。",
+      "explanation": "数据来源和描述质量可能不同。",
+      "example": "一段鸟叫与描述鸟叫的句子构成配对。",
+      "tags": [
+        "CLAP 音频文本表示",
+        "配对数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.06687v2"
+    },
+    {
+      "id": "clappaper-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CLAP 音频文本表示",
+      "knowledgePoint": "两个编码器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LAION CLAP 论文用什么投影网络将音频和文本编码结果映射到同一维度？",
+      "answer": "音频和文本各使用带 ReLU 的两层 MLP 投影。",
+      "explanation": "投影后两个模态的表示可直接用于相似度比较。",
+      "example": "用文本向量搜索相似音频向量。",
+      "tags": [
+        "CLAP 音频文本表示",
+        "两个编码器"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.06687v2"
+    },
+    {
+      "id": "clappaper-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CLAP 音频文本表示",
+      "knowledgePoint": "文本检索音频",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LAION CLAP 如何用文本检索音频？",
+      "answer": "编码查询文本和候选音频，按嵌入相似度排序。",
+      "explanation": "检索效果依赖训练数据、候选集合与音频质量。",
+      "example": "输入文字描述后返回相似的环境声音。",
+      "tags": [
+        "CLAP 音频文本表示",
+        "文本检索音频"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.06687v2"
+    },
+    {
+      "id": "clappaper-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CLAP 音频文本表示",
+      "knowledgePoint": "长音频融合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LAION CLAP 的长音频特征融合怎样同时获得整体与局部信息？",
+      "answer": "构造缩短的全局输入和多个局部片段，提取并融合两类特征。",
+      "explanation": "该方法面向长于固定输入长度的音频。",
+      "example": "从长录音的前、中、后部分采样局部片段。",
+      "tags": [
+        "CLAP 音频文本表示",
+        "长音频融合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.06687v2"
+    },
+    {
+      "id": "clappaper-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "CLAP 音频文本表示",
+      "knowledgePoint": "关键词扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LAION CLAP 论文为什么把部分音频标签扩展成文本描述？",
+      "answer": "部分音频数据只有关键词标签，扩展成描述可作为音频—文本对用于训练。",
+      "explanation": "自动生成的描述仍可能存在偏差或错误。",
+      "example": "将声音类别标签转换成简短句子。",
+      "tags": [
+        "CLAP 音频文本表示",
+        "关键词扩展"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2211.06687v2"
+    }
+  ]
+}

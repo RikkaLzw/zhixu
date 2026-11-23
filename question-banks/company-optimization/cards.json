@@ -1,0 +1,118 @@
+{
+  "source": {
+    "id": "company-optimization",
+    "title": "腾讯公开面经：优化器与梯度",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+    "type": "公开面经合集",
+    "note": "合集收录个人面试复盘，可能含转载；公司、岗位及经历为分享者自述，答案另依据逐题列出的资料核验。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "secint-opt-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练优化",
+      "knowledgePoint": "SGD与Adam",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "不带动量的 SGD 与 Adam 在利用梯度历史方面有什么区别？",
+      "answer": "不带动量的 SGD 主要使用当前随机梯度；Adam 维护梯度的一阶和二阶移动平均来调整更新。",
+      "explanation": "SGD 也可以加入动量；不同优化器均需要选择合适超参数。",
+      "example": "比较同一模型上 SGD 和 Adam 的训练曲线。",
+      "tags": [
+        "SGD与Adam",
+        "训练优化",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "referenceId": "company-tencent",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+      "referenceTitle": "腾讯公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "d2l-sgd-ref",
+          "title": "动手学深度学习：随机梯度下降",
+          "url": "https://d2l.ai/chapter_optimization/sgd.html",
+          "type": "教材",
+          "evidence": "source"
+        },
+        {
+          "id": "d2l-adam-ref",
+          "title": "动手学深度学习：Adam",
+          "url": "https://d2l.ai/chapter_optimization/adam.html",
+          "type": "教材",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-opt-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练优化",
+      "knowledgePoint": "Adam偏差修正",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Adam 为什么对初始的梯度移动平均做偏差修正？",
+      "answer": "移动平均从零开始时，早期估计偏向零；偏差修正可减轻这种初始化偏差。",
+      "explanation": "修正程度随步数与对应的衰减系数变化。",
+      "example": "训练刚开始时修正一阶和二阶矩估计。",
+      "tags": [
+        "Adam偏差修正",
+        "训练优化",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "referenceId": "company-tencent",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+      "referenceTitle": "腾讯公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "d2l-adam-ref",
+          "title": "动手学深度学习：Adam",
+          "url": "https://d2l.ai/chapter_optimization/adam.html",
+          "type": "教材",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-opt-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "训练优化",
+      "knowledgePoint": "随机梯度估计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "随机梯度下降为什么比全数据梯度下降更容易出现更新方向波动？",
+      "answer": "它每步使用抽样得到的部分数据估计梯度，抽样变化会使估计有噪声。",
+      "explanation": "随机性有助于降低单步计算量，但并不保证每一步都降低整体损失。",
+      "example": "不同小批次对同一参数给出略有不同的梯度。",
+      "tags": [
+        "随机梯度估计",
+        "训练优化",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "application",
+      "referenceId": "company-tencent",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1c-%E8%85%BE%E8%AE%AF-%E7%A7%91%E6%81%A9%E5%AE%9E%E9%AA%8C%E5%AE%A4%E5%AE%9E%E4%B9%A0",
+      "referenceTitle": "腾讯公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "d2l-sgd-ref",
+          "title": "动手学深度学习：随机梯度下降",
+          "url": "https://d2l.ai/chapter_optimization/sgd.html",
+          "type": "教材",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

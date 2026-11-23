@@ -1,0 +1,474 @@
+{
+  "source": {
+    "id": "langchain-fundamentals",
+    "title": "LangChain 基础：消息、提示、Runnable 与工具",
+    "url": "https://docs.langchain.com/oss/python/langchain/overview",
+    "type": "官方技术文档",
+    "note": "依据 LangChain 官方文档整理；核心组合示例使用 langchain-core 1.8.4 验证。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "lcbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "框架基础",
+      "knowledgePoint": "LangChain用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 通常用于构建什么类型的应用？",
+      "answer": "它提供模型、提示、工具等组件及其组合方式，帮助构建大模型应用和智能体。",
+      "explanation": "具体模型和服务由所选集成提供。",
+      "example": "组合提示、模型与工具完成问答任务。",
+      "tags": [
+        "LangChain用途",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/overview",
+      "referenceTitle": "LangChain 官方文档：Overview"
+    },
+    {
+      "id": "lcbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "框架基础",
+      "knowledgePoint": "LangChain与LangGraph",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 与 LangGraph 在智能体开发中的侧重点有什么区别？",
+      "answer": "LangChain 提供较高层的智能体和模型组件；LangGraph 提供状态图等较低层的工作流编排能力。",
+      "explanation": "二者可以配合使用，并非互斥。",
+      "example": "用 LangChain 创建智能体，或用 LangGraph 定义更细的状态流。",
+      "tags": [
+        "LangChain与LangGraph",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/overview",
+      "referenceTitle": "LangChain 官方文档：Overview"
+    },
+    {
+      "id": "lcbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "消息基础",
+      "knowledgePoint": "常见消息角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 中 SystemMessage、HumanMessage 和 AIMessage 通常分别表示什么？",
+      "answer": "它们分别表示系统指令、用户输入和模型回复。",
+      "explanation": "消息还可以携带多模态内容或元数据。",
+      "example": "一次对话可包含系统指令、用户问题和助手回答。",
+      "tags": [
+        "常见消息角色",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/messages#message-types",
+      "referenceTitle": "LangChain 官方文档：Messages / Message types"
+    },
+    {
+      "id": "lcbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "消息基础",
+      "knowledgePoint": "聊天模型返回值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 聊天模型的 invoke 通常返回什么？",
+      "answer": "通常返回 AIMessage，其中可包含内容、工具调用及提供方返回的元数据。",
+      "explanation": "具体字段取决于模型和调用结果。",
+      "example": "从 AIMessage 读取回答内容或 tool_calls。",
+      "tags": [
+        "聊天模型返回值",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/messages#message-types",
+      "referenceTitle": "LangChain 官方文档：Messages / Message types"
+    },
+    {
+      "id": "lcbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "提示模板",
+      "knowledgePoint": "聊天提示模板",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ChatPromptTemplate 的主要作用是什么？",
+      "answer": "它把带变量的消息模板格式化为可供聊天模型使用的提示消息。",
+      "explanation": "变量值由调用方在运行时提供。",
+      "example": "用用户问题填充 human 消息模板。",
+      "tags": [
+        "聊天提示模板",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/prompts/chat/ChatPromptTemplate",
+      "referenceTitle": "LangChain Python reference：ChatPromptTemplate"
+    },
+    {
+      "id": "lcbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "提示模板",
+      "knowledgePoint": "消息占位符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 MessagesPlaceholder 用于什么？",
+      "answer": "它把提供的消息列表插入聊天提示中的指定位置。",
+      "explanation": "占位符本身不负责保存对话历史。",
+      "example": "把已加载的历史对话插入当前问题之前。",
+      "tags": [
+        "消息占位符",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/prompts/chat/MessagesPlaceholder",
+      "referenceTitle": "LangChain Python reference：MessagesPlaceholder"
+    },
+    {
+      "id": "lcbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Runnable基础",
+      "knowledgePoint": "Runnable接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 中的 Runnable 是什么？",
+      "answer": "它是接收输入并产生输出、可与其他步骤组合的工作单元。",
+      "explanation": "Runnable 通常还提供同步、异步、批量或流式接口。",
+      "example": "把提示模板和模型作为可组合的 Runnable。",
+      "tags": [
+        "Runnable接口",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/runnables/base/Runnable",
+      "referenceTitle": "LangChain Python reference：Runnable"
+    },
+    {
+      "id": "lcbase-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Runnable基础",
+      "knowledgePoint": "顺序链",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 RunnableSequence 或管道运算符 | 如何传递数据？",
+      "answer": "前一个步骤的输出作为下一个步骤的输入。",
+      "explanation": "每一步的输入输出类型需要匹配。",
+      "example": "把提示模板、模型和文本解析器顺序连接。",
+      "tags": [
+        "顺序链",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/runnables/base/RunnableSequence",
+      "referenceTitle": "LangChain Python reference：RunnableSequence"
+    },
+    {
+      "id": "lcbase-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Runnable基础",
+      "knowledgePoint": "并行链",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RunnableParallel 如何向多个分支分配输入并组织输出？",
+      "answer": "它向各分支提供相同输入，并把各分支的结果汇总成映射。",
+      "explanation": "分支可并发执行。",
+      "example": "同一字符串同时计算大写形式和长度。",
+      "tags": [
+        "并行链",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/runnables/base/RunnableParallel",
+      "referenceTitle": "LangChain Python reference：RunnableParallel"
+    },
+    {
+      "id": "lcbase-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Runnable基础",
+      "knowledgePoint": "包装Python函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RunnableLambda 的作用是什么？",
+      "answer": "它把 Python 可调用对象包装成可组合的 Runnable。",
+      "explanation": "若需要逐块处理流，可考虑专门支持流式转换的组件。",
+      "example": "把文本清洗函数加入处理链。",
+      "tags": [
+        "包装Python函数",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/runnables/base/RunnableLambda",
+      "referenceTitle": "LangChain Python reference：RunnableLambda"
+    },
+    {
+      "id": "lcbase-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Runnable基础",
+      "knowledgePoint": "透传输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RunnablePassthrough 默认与使用 assign 时分别怎样处理字典输入？",
+      "answer": "默认传递原始输入；assign 写入计算字段，保留不同名字段，同名字段会被覆盖。",
+      "explanation": "assign 用于字典输入，计算字段由对应 Runnable 产生。",
+      "example": "保留数字并附加其平方结果。",
+      "tags": [
+        "透传输入",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/runnables/passthrough/RunnablePassthrough",
+      "referenceTitle": "LangChain Python reference：RunnablePassthrough"
+    },
+    {
+      "id": "lcbase-014",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Runnable基础",
+      "knowledgePoint": "单次与批量调用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Runnable 的 invoke 与 batch 在输入数量上有什么区别？",
+      "answer": "invoke 处理一个输入；batch 处理一组输入并返回对应的一组输出。",
+      "explanation": "默认批量实现通常并发调用，具体组件可以覆盖实现。",
+      "example": "对多个问题批量运行同一条链。",
+      "tags": [
+        "单次与批量调用",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/runnables/base/Runnable",
+      "referenceTitle": "LangChain Python reference：Runnable"
+    },
+    {
+      "id": "lcbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Runnable基础",
+      "knowledgePoint": "异步方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Runnable 的 ainvoke 与 invoke 有什么主要区别？",
+      "answer": "ainvoke 是异步接口，可在异步代码中等待；invoke 是同步接口。",
+      "explanation": "默认异步实现可能使用线程池，具体组件可实现原生异步。",
+      "example": "在异步服务中 await 一个 Runnable 的 ainvoke。",
+      "tags": [
+        "异步方法",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/runnables/base/Runnable",
+      "referenceTitle": "LangChain Python reference：Runnable"
+    },
+    {
+      "id": "lcbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Runnable基础",
+      "knowledgePoint": "流式链中的阻塞",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RunnableSequence 中某个步骤不支持逐块转换时，对后续流式输出可能有什么影响？",
+      "answer": "流式输出可能要等该步骤处理完输入后才能继续向下游传播。",
+      "explanation": "具体延迟取决于组件的流式实现。",
+      "example": "普通阻塞函数放在模型输出后可能推迟后续文本输出。",
+      "tags": [
+        "流式链中的阻塞",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/runnables/base/RunnableSequence",
+      "referenceTitle": "LangChain Python reference：RunnableSequence"
+    },
+    {
+      "id": "lcbase-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "输出处理",
+      "knowledgePoint": "文本输出解析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "StrOutputParser 通常把聊天模型的文本输出转换成什么？",
+      "answer": "它提取模型输出中的文本，返回普通字符串或对应的文本流块。",
+      "explanation": "其他消息元数据不等同于返回的文本。",
+      "example": "把 AIMessage 的文本内容交给后续字符串处理。",
+      "tags": [
+        "文本输出解析",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/output_parsers/string/StrOutputParser",
+      "referenceTitle": "LangChain Python reference：StrOutputParser"
+    },
+    {
+      "id": "lcbase-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "检索组件",
+      "knowledgePoint": "Document用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 Document 与聊天消息通常用于什么不同场景？",
+      "answer": "Document 保存待检索的文本及元数据；聊天消息表示模型交互中的消息。",
+      "explanation": "两者不是必须互相替代的数据类型。",
+      "example": "把文档片段交给检索器，把用户问题作为消息交给模型。",
+      "tags": [
+        "Document用途",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/documents/base/Document",
+      "referenceTitle": "LangChain Python reference：Document"
+    },
+    {
+      "id": "lcbase-019",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "检索组件",
+      "knowledgePoint": "Document字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain Document 的 page_content 和 metadata 分别保存什么？",
+      "answer": "page_content 保存文本内容；metadata 保存与文本相关的元数据。",
+      "explanation": "来源、标题或时间等信息可放在 metadata 中。",
+      "example": "片段正文放在 page_content，来源路径放在 metadata。",
+      "tags": [
+        "Document字段",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/documents/base/Document",
+      "referenceTitle": "LangChain Python reference：Document"
+    },
+    {
+      "id": "lcbase-020",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具调用",
+      "knowledgePoint": "绑定工具与执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 LangChain 聊天模型调用 bind_tools 后，模型返回工具调用请求是否就执行了工具？",
+      "answer": "不一定；单独使用模型时，调用方需要执行请求并把结果返回，智能体循环可代为处理。",
+      "explanation": "绑定主要使模型获得工具定义并能提出调用请求。",
+      "example": "读取 AIMessage.tool_calls 后调用对应工具。",
+      "tags": [
+        "绑定工具与执行",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/models",
+      "referenceTitle": "LangChain 官方文档：Models"
+    },
+    {
+      "id": "lcbase-021",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具调用",
+      "knowledgePoint": "工具定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 @tool 通常如何得到工具描述与输入结构？",
+      "answer": "默认可从函数文档字符串获得描述，并利用类型提示构建参数结构。",
+      "explanation": "也可以显式提供描述或参数 schema。",
+      "example": "为带类型标注的查询函数添加工具描述。",
+      "tags": [
+        "工具定义",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/tools#basic-tool-definition",
+      "referenceTitle": "LangChain 官方文档：Tools / Basic tool definition"
+    },
+    {
+      "id": "lcbase-022",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具调用",
+      "knowledgePoint": "智能体工具循环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 的 create_agent 在模型请求工具时通常负责什么？",
+      "answer": "它编排模型与工具之间的调用循环，把工具结果纳入后续处理。",
+      "explanation": "工具的外部副作用和权限仍需由应用控制。",
+      "example": "模型请求查询工具后，由智能体执行并继续生成。",
+      "tags": [
+        "智能体工具循环",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/overview",
+      "referenceTitle": "LangChain 官方文档：Overview"
+    },
+    {
+      "id": "lcbase-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "结构化输出",
+      "knowledgePoint": "提供方与工具策略",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 结构化输出的 ProviderStrategy 与 ToolStrategy 分别依赖什么？",
+      "answer": "前者依赖模型提供方的原生结构化输出能力；后者利用工具调用产生结构化结果。",
+      "explanation": "是否可用取决于模型和集成能力。",
+      "example": "不支持原生结构化输出的模型可采用工具策略。",
+      "tags": [
+        "提供方与工具策略",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.langchain.com/oss/python/langchain/structured-output",
+      "referenceTitle": "LangChain 官方文档：Structured output"
+    },
+    {
+      "id": "lcbase-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "运行配置",
+      "knowledgePoint": "并发配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain RunnableConfig 的 max_concurrency 用于控制什么？",
+      "answer": "它用于限制相关调用中允许的并发工作数量。",
+      "explanation": "这不等同于自动遵守外部服务的所有速率限制。",
+      "example": "批量处理时设置最大并发数。",
+      "tags": [
+        "并发配置",
+        "LangChain",
+        "Agent"
+      ],
+      "evidence": "source",
+      "reference": "https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig",
+      "referenceTitle": "LangChain Python reference：RunnableConfig"
+    }
+  ]
+}

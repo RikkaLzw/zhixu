@@ -1,0 +1,582 @@
+{
+  "source": {
+    "id": "agent-classical-search",
+    "title": "Berkeley CS188：规划状态与经典搜索",
+    "url": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/state.html",
+    "type": "研究论文与技术文档",
+    "note": "按逐题引用的课程、论文或固定版本知识库自行整理中文问答，例子为自编。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "agentplan-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "搜索问题建模",
+      "knowledgePoint": "规划状态空间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "规划搜索问题中的状态空间表示什么？",
+      "answer": "它是搜索问题可能涉及的状态的集合。",
+      "explanation": "状态需要保留决定可用行动、转移和目标所需的信息。",
+      "example": "路径规划的状态可以是当前位置。",
+      "tags": [
+        "规划状态空间",
+        "搜索问题建模"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/state.html"
+    },
+    {
+      "id": "agentplan-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "搜索问题建模",
+      "knowledgePoint": "目标测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "搜索问题中的目标测试有什么作用？",
+      "answer": "它判断给定状态是否满足任务的目标条件。",
+      "explanation": "满足目标的状态可以不止一个。",
+      "example": "判断当前位置是否为允许的出口。",
+      "tags": [
+        "目标测试",
+        "搜索问题建模"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/state.html"
+    },
+    {
+      "id": "agentplan-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "搜索问题建模",
+      "knowledgePoint": "搜索状态抽象",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "搜索状态与完整世界状态有什么区别？",
+      "answer": "搜索状态通常只保留规划任务所需的世界信息；完整世界状态可能包含更多细节。",
+      "explanation": "具体保留哪些信息取决于目标和转移规则。",
+      "example": "寻路任务可以只记录位置，而不记录路径上的每个细节。",
+      "tags": [
+        "搜索状态抽象",
+        "搜索问题建模"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/state.html"
+    },
+    {
+      "id": "agentplan-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "搜索问题建模",
+      "knowledgePoint": "规划状态充分性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如果达到目标需要知道哪些物品已经收集，搜索状态为何不能只记录当前位置？",
+      "answer": "相同位置可能对应不同的已收集物品，从而具有不同的目标完成情况或后续选择。",
+      "explanation": "状态表示必须区分影响目标和可行行动的情况。",
+      "example": "当前位置相同，但剩余待收集物品不同。",
+      "tags": [
+        "规划状态充分性",
+        "搜索问题建模"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/state.html"
+    },
+    {
+      "id": "agentplan-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "搜索问题建模",
+      "knowledgePoint": "状态与搜索节点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么搜索树中同一个状态可能出现多次？",
+      "answer": "从起点到该状态可能有不同路径，搜索树用不同节点记录这些路径。",
+      "explanation": "状态空间图则按状态表示节点。",
+      "example": "两条不同路线最终到达同一房间。",
+      "tags": [
+        "状态与搜索节点",
+        "搜索问题建模"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/state.html"
+    },
+    {
+      "id": "agentplan-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "搜索问题建模",
+      "knowledgePoint": "路径代价",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "规划搜索中的路径代价通常如何由各步骤代价得到？",
+      "answer": "将路径上各个行动或边的代价相加。",
+      "explanation": "总代价与路径包含的步骤数不一定相同。",
+      "example": "两步分别花费 2 和 5，路径代价为 7。",
+      "tags": [
+        "路径代价",
+        "搜索问题建模"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/state.html"
+    },
+    {
+      "id": "agentplan-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "搜索过程",
+      "knowledgePoint": "搜索前沿",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "搜索中的前沿（frontier）通常保存什么？",
+      "answer": "它保存已发现但尚待按搜索策略处理的候选节点或部分路径。",
+      "explanation": "不同策略选择前沿节点的方式不同。",
+      "example": "把已生成的候选路线放入队列等待扩展。",
+      "tags": [
+        "搜索前沿",
+        "搜索过程"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "搜索过程",
+      "knowledgePoint": "节点扩展",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "搜索算法扩展一个状态节点时通常做什么？",
+      "answer": "枚举该状态可用的行动，并依据转移模型生成后继节点。",
+      "explanation": "是否保留或过滤重复节点由具体搜索实现决定。",
+      "example": "从当前位置生成向上、下、左、右移动后的候选。",
+      "tags": [
+        "节点扩展",
+        "搜索过程"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "搜索过程",
+      "knowledgePoint": "搜索完备性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "搜索算法的完备性指什么？",
+      "answer": "在规定的条件下，如果存在解，算法保证最终找到一个解。",
+      "explanation": "完备不自动意味着找到的解代价最低。",
+      "example": "区分能找到出口与能找到最短路线。",
+      "tags": [
+        "搜索完备性",
+        "搜索过程"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "搜索过程",
+      "knowledgePoint": "搜索最优性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "搜索算法的最优性通常指什么？",
+      "answer": "在规定的条件下，找到的解具有最低路径代价。",
+      "explanation": "最优性和是否一定终止是不同性质。",
+      "example": "比较多个可达出口的总行进代价。",
+      "tags": [
+        "搜索最优性",
+        "搜索过程"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "无信息搜索",
+      "knowledgePoint": "深度优先前沿",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准深度优先搜索如何安排前沿节点？",
+      "answer": "优先扩展最近加入的节点，通常使用后进先出的栈。",
+      "explanation": "具体同层访问顺序取决于后继加入顺序。",
+      "example": "先沿一条分支向深处探索。",
+      "tags": [
+        "深度优先前沿",
+        "无信息搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "无信息搜索",
+      "knowledgePoint": "无限搜索树中的深度优先",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么树搜索中的深度优先策略在无限深分支上可能找不到已有解？",
+      "answer": "它可能一直深入某条无限分支，无法回到包含解的其他分支。",
+      "explanation": "循环和不加去重的树展开可能产生无限路径。",
+      "example": "一条分支反复回到已见状态。",
+      "tags": [
+        "无限搜索树中的深度优先",
+        "无信息搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "无信息搜索",
+      "knowledgePoint": "广度优先前沿",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "标准广度优先搜索如何安排前沿节点？",
+      "answer": "按加入顺序优先处理较浅节点，通常使用先进先出的队列。",
+      "explanation": "它先探索较少步骤的路径。",
+      "example": "先遍历一步可到达的状态，再遍历两步状态。",
+      "tags": [
+        "广度优先前沿",
+        "无信息搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "无信息搜索",
+      "knowledgePoint": "广度优先最小代价条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "当边代价不相等时，广度优先搜索为什么不保证总路径代价最低？",
+      "answer": "广度优先按照深度而不是累计代价扩展节点，步骤更少的路径也可能更昂贵。",
+      "explanation": "边代价相同且非负时，最少步数才对应最低总代价。",
+      "example": "一条一步路线花费 10，另一条两步路线各花费 1。",
+      "tags": [
+        "广度优先最小代价条件",
+        "无信息搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "无信息搜索",
+      "knowledgePoint": "广度优先内存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么广度优先搜索在高分支因子的问题上可能占用大量内存？",
+      "answer": "它可能需要在前沿中同时保留某一深度的大量节点。",
+      "explanation": "搜索树的节点数可随深度按分支因子指数增长。",
+      "example": "每个节点产生多个子节点时，队列迅速变大。",
+      "tags": [
+        "广度优先内存",
+        "无信息搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "无信息搜索",
+      "knowledgePoint": "一致代价搜索优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一致代价搜索（UCS）按什么选择待扩展节点？",
+      "answer": "它优先选择从起点到该节点的累计路径代价最小的前沿节点。",
+      "explanation": "通常用优先队列维护候选。",
+      "example": "先扩展累计代价为 3 而不是 7 的路线。",
+      "tags": [
+        "一致代价搜索优先级",
+        "无信息搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "无信息搜索",
+      "knowledgePoint": "一致代价搜索目标判定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在非负边代价的一致代价搜索中，为什么通常在目标节点被取出时才结束？",
+      "answer": "目标第一次被生成时可能还有一条未展开的更便宜路径；按代价取出时才能利用队列顺序判断。",
+      "explanation": "前提还包括正确处理更优路径。",
+      "example": "先生成代价 10 的目标，后生成代价 2 的目标。",
+      "tags": [
+        "一致代价搜索目标判定",
+        "无信息搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "无信息搜索",
+      "knowledgePoint": "一致代价搜索边权条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能对含负代价边的问题直接套用普通 UCS 的最优性保证？",
+      "answer": "后续负代价边可能降低一条已经较贵路径的总代价，破坏按当前代价扩展的保证。",
+      "explanation": "处理负边需要选择满足问题条件的其他算法。",
+      "example": "当前路径代价为 8，但后面还有代价 -10 的边。",
+      "tags": [
+        "一致代价搜索边权条件",
+        "无信息搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/uninformed.html"
+    },
+    {
+      "id": "agentplan-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "启发函数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "规划搜索中的启发函数 h(n) 通常估计什么？",
+      "answer": "它估计从当前状态到目标的剩余代价。",
+      "explanation": "启发值不一定等于真实最小剩余代价。",
+      "example": "用无障碍网格中的距离估计剩余步数。",
+      "tags": [
+        "启发函数",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "贪心最佳优先",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "贪心最佳优先搜索用什么给候选节点排序？",
+      "answer": "它依据到目标的估计剩余代价 h(n) 排序，优先处理估计更近的节点。",
+      "explanation": "它不直接将已走路径代价 g(n) 加入排序。",
+      "example": "先扩展估计离目标最近的候选。",
+      "tags": [
+        "贪心最佳优先",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "A星优先级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "A* 搜索使用的 f(n) 如何结合已付代价与估计剩余代价？",
+      "answer": "它使用 f(n) = g(n) + h(n)，其中 g 是到节点的路径代价，h 是估计剩余代价。",
+      "explanation": "前沿通常按较小的 f 值优先。",
+      "example": "已花费 4、预计剩余 3 时 f 为 7。",
+      "tags": [
+        "A星优先级",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "A星零启发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "A* 搜索对所有节点使用 h(n)=0 时，其前沿排序与哪种搜索相同？",
+      "answer": "按累计路径代价排序，等价于一致代价搜索的排序。",
+      "explanation": "相同代价的节点仍可能因平局处理方式不同而有不同展开顺序。",
+      "example": "没有可用启发信息时退化为按 g 排序。",
+      "tags": [
+        "A星零启发",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-023",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "可采纳启发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Berkeley CS188 使用的可采纳启发函数有什么代价约束？",
+      "answer": "对每个状态，h 值非负且不超过该状态到最近目标的真实最低代价。",
+      "explanation": "这是该课程给出的约定，不能凭经验猜测就认为启发可采纳。",
+      "example": "忽略墙壁后得到的最短距离不超过有墙的最短距离。",
+      "tags": [
+        "可采纳启发",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "目标启发值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按非负且不高估的可采纳启发定义，目标状态的 h 值是多少？",
+      "answer": "为 0。",
+      "explanation": "目标到自身的最低剩余代价为 0。",
+      "example": "到达出口后剩余代价下界为 0。",
+      "tags": [
+        "目标启发值",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "启发高估风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 A* 使用会高估剩余代价的启发值时不能无条件保证最优？",
+      "answer": "高估可能让最优路径上的候选被推迟，算法先取出代价较高的目标。",
+      "explanation": "具体结果取决于图、启发值和结束规则。",
+      "example": "把正确路线的剩余代价估得过大。",
+      "tags": [
+        "启发高估风险",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "图搜索更优路径",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "A* 图搜索已扩展某状态后又发现更低代价路径时，为什么可能需要重新处理该状态？",
+      "answer": "首次到达的路径未必最便宜；忽略新的更优路径可能错过最优解。",
+      "explanation": "可维护到各状态的最佳已知代价，并按实现条件重新扩展。",
+      "example": "后来通过另一条路更便宜地到达同一节点。",
+      "tags": [
+        "图搜索更优路径",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "可采纳启发组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多个非负可采纳启发值取最大值后，结果仍然可采纳吗？",
+      "answer": "是；各值都不超过真实最低剩余代价，因此最大值也不超过它。",
+      "explanation": "这个结论不要求不同启发具有相同数值。",
+      "example": "两个下界分别为 2 和 3，可用 3 作为下界。",
+      "tags": [
+        "可采纳启发组合",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "启发相加风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么不能无条件把两个可采纳启发值相加并认为结果仍可采纳？",
+      "answer": "它们可能重复估计同一部分代价，相加后超过真实最小剩余代价。",
+      "explanation": "只有在满足额外的代价分摊等条件时才可安全相加。",
+      "example": "真实剩余代价为 3，两个下界都为 2，相加得到 4。",
+      "tags": [
+        "启发相加风险",
+        "启发式搜索"
+      ],
+      "evidence": "application",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "松弛问题与启发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "如何利用放宽约束的问题构造原问题的代价下界？",
+      "answer": "先求允许更多行动的松弛问题的最低代价，作为原问题剩余代价的估计。",
+      "explanation": "松弛问题不能比原问题增加新的限制。",
+      "example": "忽略迷宫墙壁计算到目标的距离。",
+      "tags": [
+        "松弛问题与启发",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    },
+    {
+      "id": "agentplan-030",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "启发式搜索",
+      "knowledgePoint": "曼哈顿距离条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在只能上下左右移动且每步代价为 1 的网格中，曼哈顿距离为什么是可采纳的？",
+      "answer": "每步最多使横纵坐标差的绝对值之和减少 1，因此至少需要该数目的步数。",
+      "explanation": "若允许低代价对角移动，原始曼哈顿距离未必仍是下界。",
+      "example": "从 (0,0) 到 (2,3) 的下界为 5 步。",
+      "tags": [
+        "曼哈顿距离条件",
+        "启发式搜索"
+      ],
+      "evidence": "source",
+      "reference": "https://inst.eecs.berkeley.edu/~cs188/textbook/search/informed.html"
+    }
+  ]
+}

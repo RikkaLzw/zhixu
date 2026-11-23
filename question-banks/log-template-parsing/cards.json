@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "log-template-parsing",
+    "title": "Drain 论文与 Drain3 固定版本：日志模板解析",
+    "url": "https://jiemingzhu.github.io/pub/pjhe_icws2017.pdf",
+    "type": "教材、研究论文与官方源码",
+    "note": "按逐题引用资料自行整理；安全场景示例为自编。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "drainlog-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "Drain在线解析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Drain 原论文中的在线解析与离线批处理有什么主要区别？",
+      "answer": "它在日志逐条到达时查找或更新日志组，不必先收集完整日志集合。",
+      "explanation": "在线结果可能随新日志到达而更新。",
+      "example": "持续处理正在产生的服务日志。",
+      "tags": [
+        "Drain在线解析",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://jiemingzhu.github.io/pub/pjhe_icws2017.pdf"
+    },
+    {
+      "id": "drainlog-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "固定深度树",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Drain 使用固定深度解析树的主要目的是什么？",
+      "answer": "限制搜索时 访问的树层数，以加快查找候选日志组。",
+      "explanation": "叶节点仍可能包含多个需要比较的候选组。",
+      "example": "先按树规则定位候选日志组。",
+      "tags": [
+        "固定深度树",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://jiemingzhu.github.io/pub/pjhe_icws2017.pdf"
+    },
+    {
+      "id": "drainlog-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "长度分支",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Drain 原论文的解析树第一层按日志消息的什么特征分支？",
+      "answer": "按预处理后消息的 token 数量分支。",
+      "explanation": "论文假设同一事件的日志通常有相同长度，也讨论了例外。",
+      "example": "四个 token 的消息进入对应长度分支。",
+      "tags": [
+        "长度分支",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://jiemingzhu.github.io/pub/pjhe_icws2017.pdf"
+    },
+    {
+      "id": "drainlog-005",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "前缀词搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Drain 原论文为什么使用开头位置的 token 引导树搜索？",
+      "answer": "它利用日志消息前部 token 更可能是固定文字的经验假设。",
+      "explanation": "数字等可能变化的 token 会采用特殊处理。",
+      "example": "按照固定的操作名称定位候选组。",
+      "tags": [
+        "前缀词搜索",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://jiemingzhu.github.io/pub/pjhe_icws2017.pdf"
+    },
+    {
+      "id": "drainlog-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "相似度阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Drain 原论文在叶节点如何决定是否采用已有日志组？",
+      "answer": "比较消息与候选模板的 token 相似度，最高相似度达到阈值时采用相应组。",
+      "explanation": "没有合适组时创建新组。",
+      "example": "低于阈值的消息形成新的日志组。",
+      "tags": [
+        "相似度阈值",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://jiemingzhu.github.io/pub/pjhe_icws2017.pdf"
+    },
+    {
+      "id": "drainlog-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "模板更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Drain 原论文把新消息加入已有组时，如何处理模板中同位置不一致的 token？",
+      "answer": "将不同的位置更新为通配符，相同位置保持不变。",
+      "explanation": "模板可随后续消息逐步泛化。",
+      "example": "user alice 与 user bob 的姓名位置变成通配符。",
+      "tags": [
+        "模板更新",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://jiemingzhu.github.io/pub/pjhe_icws2017.pdf"
+    },
+    {
+      "id": "drainlog-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "掩码规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 Drain3 的 masking 配置可以在聚类前做什么？",
+      "answer": "按配置的正则表达式把地址、数字等可变片段替换成对应掩码。",
+      "explanation": "掩码选择会影响后续模板结果。",
+      "example": "将不同 IP 地址替换为 IP 标记。",
+      "tags": [
+        "掩码规则",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/logpai/Drain3/blob/0fb6d6e1828838fa05c8f6fa5cda878e02ea79c7/README.md"
+    },
+    {
+      "id": "drainlog-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "训练与匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 Drain3 的 add_log_message 与 match 对模板状态有什么区别？",
+      "answer": "add_log_message 可创建或更新聚类；match 只匹配已有聚类，不修改模板。",
+      "explanation": "match 找不到符合条件的现有聚类时返回 None。",
+      "example": "训练阶段学习模板，推理阶段固定模板匹配。",
+      "tags": [
+        "训练与匹配",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/logpai/Drain3/blob/0fb6d6e1828838fa05c8f6fa5cda878e02ea79c7/README.md"
+    },
+    {
+      "id": "drainlog-010",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "模板快照",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 Drain3 的持久化快照保存什么，以支持重启后继续处理？",
+      "answer": "它保存解析树及已识别的聚类等状态，包括模板、聚类 ID 和计数。",
+      "explanation": "实际保留哪些快照取决于存储方式和配置。",
+      "example": "服务重启时恢复此前学习的日志模板。",
+      "tags": [
+        "模板快照",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/logpai/Drain3/blob/0fb6d6e1828838fa05c8f6fa5cda878e02ea79c7/README.md"
+    },
+    {
+      "id": "drainlog-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "日志模板解析",
+      "knowledgePoint": "最大聚类数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定版本 Drain3 设置 max_clusters 达到上限后如何管理旧模板？",
+      "answer": "新模板可按最近最少使用（LRU）策略替换旧聚类。",
+      "explanation": "被淘汰模板不一定能在后续直接匹配到。",
+      "example": "限制持续增长的日志模板数量。",
+      "tags": [
+        "最大聚类数",
+        "日志模板解析"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/logpai/Drain3/blob/0fb6d6e1828838fa05c8f6fa5cda878e02ea79c7/README.md"
+    }
+  ]
+}

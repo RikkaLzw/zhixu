@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "langchain-runnable-message-history",
+    "title": "langchain-core 1.8.4 源码：历史消息包装器",
+    "url": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/history.py",
+    "type": "官方技术文档、固定版本源码或研究论文",
+    "note": "自行整理 langchain-core 1.8.4 旧接口；该类自 1.3.3 起弃用，计划在 2.0.0 移除，迁移时建议参照 LangGraph 持久化文档。",
+    "knowledgeArea": "09"
+  },
+  "cards": [
+    {
+      "id": "lchistory-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 对话历史接口",
+      "knowledgePoint": "弃用状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 RunnableWithMessageHistory 构造时对使用者发出什么提示？",
+      "answer": "它已弃用，提示使用 LangGraph 的内置持久化机制。",
+      "explanation": "源码标记自 1.3.3 弃用，计划在 2.0.0 移除。",
+      "example": "维护旧链时应关注版本和迁移路径。",
+      "tags": [
+        "LangChain 对话历史接口",
+        "弃用状态"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/history.py"
+    },
+    {
+      "id": "lchistory-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 对话历史接口",
+      "knowledgePoint": "历史工厂",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 langchain-core 1.8.4 中，RunnableWithMessageHistory 的 get_session_history 负责什么？",
+      "answer": "根据配置获取并返回相应的聊天历史对象。",
+      "explanation": "实际持久化与会话隔离取决于工厂和存储实现。 该类在 1.8.4 已弃用，计划在 2.0.0 移除。",
+      "example": "工厂可按 session_id 从存储中查找历史。",
+      "tags": [
+        "LangChain 对话历史接口",
+        "历史工厂"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/history.py"
+    },
+    {
+      "id": "lchistory-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 对话历史接口",
+      "knowledgePoint": "默认会话参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 RunnableWithMessageHistory 默认从配置的哪里取得 session_id？",
+      "answer": "从 config 的 configurable 字典中取得 session_id，并传给历史工厂。",
+      "explanation": "自定义 history_factory_config 可以使用其他配置字段。 该类在 1.8.4 已弃用，计划在 2.0.0 移除。",
+      "example": "调用时传入 configurable.session_id。",
+      "tags": [
+        "LangChain 对话历史接口",
+        "默认会话参数"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/history.py"
+    },
+    {
+      "id": "lchistory-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 对话历史接口",
+      "knowledgePoint": "当前消息与历史消息键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 langchain-core 1.8.4 中，RunnableWithMessageHistory 的 input_messages_key 与 history_messages_key 分别指定什么？",
+      "answer": "分别指定输入字典中当前输入消息的键和独立历史消息的键。",
+      "explanation": "二者应与被包装 Runnable 接收的字典结构一致。该类在 1.8.4 已弃用，计划在 2.0.0 移除。",
+      "example": "当前问题放在 question，历史消息放在 history。",
+      "tags": [
+        "LangChain 对话历史接口",
+        "当前消息与历史消息键"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/history.py"
+    },
+    {
+      "id": "lchistory-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 对话历史接口",
+      "knowledgePoint": "输出键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 langchain-core 1.8.4 中，RunnableWithMessageHistory 的 output_messages_key 在被包装 Runnable 返回多字段字典时用于什么？",
+      "answer": "指定其中哪个字段包含需要写入历史的输出消息。",
+      "explanation": "应与实际返回字典的结构一致。 该类在 1.8.4 已弃用，计划在 2.0.0 移除。",
+      "example": "从 answer 字段提取助手回复。",
+      "tags": [
+        "LangChain 对话历史接口",
+        "输出键"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/history.py"
+    },
+    {
+      "id": "lchistory-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 对话历史接口",
+      "knowledgePoint": "字符串转消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "langchain-core 1.8.4 的 RunnableWithMessageHistory 如何把字符串输入和输出转成消息？",
+      "answer": "字符串输入转为 HumanMessage；字符串输出转为 AIMessage。",
+      "explanation": "也可接收相应消息对象或消息列表。 该类在 1.8.4 已弃用，计划在 2.0.0 移除。",
+      "example": "当前问题和助手文本都能保存为对应角色消息。",
+      "tags": [
+        "LangChain 对话历史接口",
+        "字符串转消息"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/history.py"
+    },
+    {
+      "id": "lchistory-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LangChain 对话历史接口",
+      "knowledgePoint": "历史重复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 langchain-core 1.8.4 中，RunnableWithMessageHistory 未设置独立 history_messages_key 时，为什么在写回前去掉输入开头已有的历史消息？",
+      "answer": "避免把本次运行输入中预先拼接的历史再次重复写入存储。",
+      "explanation": "该行为针对源码中的成功运行结束回调。 该类在 1.8.4 已弃用，计划在 2.0.0 移除。",
+      "example": "第二轮只追加本轮输入和输出。",
+      "tags": [
+        "LangChain 对话历史接口",
+        "历史重复"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/langchain-ai/langchain/langchain-core%3D%3D1.8.4/libs/core/langchain_core/runnables/history.py"
+    }
+  ]
+}

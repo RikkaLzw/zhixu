@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "grpc-service-fundamentals",
+    "title": "gRPC 官方指南：服务调用与期限",
+    "url": "https://grpc.io/docs/what-is-grpc/core-concepts/",
+    "type": "官方文档或教材",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以注明版本为准。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "grpcbase-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "服务接口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC 通常怎样定义可远程调用的方法及其消息类型？",
+      "answer": "默认使用 Protocol Buffers 的 .proto 服务和消息定义，也可以使用其他方案。",
+      "explanation": "服务定义描述方法、请求和响应消息。",
+      "example": "在 .proto 中声明一个查询方法。",
+      "tags": [
+        "gRPC",
+        "服务接口"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/what-is-grpc/core-concepts/"
+    },
+    {
+      "id": "grpcbase-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "生成代码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC 从 .proto 服务定义生成的客户端 stub 有什么作用？",
+      "answer": "它提供客户端调用接口，并负责将调用交给 gRPC 传输和处理响应。",
+      "explanation": "服务端实现相应的方法并处理调用。",
+      "example": "客户端通过生成的 stub 调用远程查询。",
+      "tags": [
+        "gRPC",
+        "生成代码"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/what-is-grpc/core-concepts/"
+    },
+    {
+      "id": "grpcbase-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "调用模式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC 的四种基本 RPC 模式分别怎样组织请求和响应消息？",
+      "answer": "单次调用是一请求一响应；服务端流是一请求多响应；客户端流是多请求一响应；双向流两端都可发送多条消息。",
+      "explanation": "不同模式决定两侧分别发送一条消息还是消息流。",
+      "example": "日志推送可用服务端流。",
+      "tags": [
+        "gRPC",
+        "调用模式"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/what-is-grpc/core-concepts/"
+    },
+    {
+      "id": "grpcbase-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "双向流",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC 双向流要求客户端每发一条消息后服务器必须立即回复一条吗？",
+      "answer": "不要求；两个方向的流可独立读写，每个方向内的消息顺序得到保持。",
+      "explanation": "不同方向之间不强制交替收发。",
+      "example": "服务端也可先读多条请求再回复。",
+      "tags": [
+        "gRPC",
+        "双向流"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/what-is-grpc/core-concepts/"
+    },
+    {
+      "id": "grpcbase-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "默认期限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC 客户端默认一定会为每次调用设置有限等待期限吗？",
+      "answer": "不会；默认不设置 deadline，应按服务要求显式设置合理期限。",
+      "explanation": "合适期限应结合网络、处理时间与负载确定。",
+      "example": "客户端为查询设置 2 秒 deadline。",
+      "tags": [
+        "gRPC",
+        "默认期限"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/guides/deadlines/"
+    },
+    {
+      "id": "grpcbase-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "超时状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC 调用超过客户端 deadline 时通常返回什么状态？",
+      "answer": "客户端通常得到 DEADLINE_EXCEEDED。",
+      "explanation": "期限表示客户端不再愿意等待的时间点。",
+      "example": "超时后按状态码处理错误。",
+      "tags": [
+        "gRPC",
+        "超时状态"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/guides/deadlines/"
+    },
+    {
+      "id": "grpcbase-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "超时与副作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC 写操作返回 DEADLINE_EXCEEDED，能否断定服务端没有完成写入？",
+      "answer": "不能；操作可能已成功，但响应在期限内未到达客户端。",
+      "explanation": "网络延迟或响应丢失可能让客户端看不到成功结果。",
+      "example": "重试写入前可检查幂等约束。",
+      "tags": [
+        "gRPC",
+        "超时与副作用"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/guides/status-codes/"
+    },
+    {
+      "id": "grpcbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "取消与业务代码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC 服务端调用取消后，正在执行的业务任务一定自动停止吗？",
+      "answer": "不一定；服务端应用应检查取消状态并停止自己启动的相关任务。",
+      "explanation": "取消通知不会替代应用自己的资源清理逻辑。",
+      "example": "长任务定期检查调用是否已取消。",
+      "tags": [
+        "gRPC",
+        "取消与业务代码"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/guides/deadlines/"
+    },
+    {
+      "id": "grpcbase-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "调用元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC metadata 通常用于传递什么类型的信息？",
+      "answer": "用于传递与调用关联的键值元数据，例如认证信息或追踪标识。",
+      "explanation": "metadata 与业务消息共同构成一次调用的上下文。",
+      "example": "附带 trace-id 便于关联日志。",
+      "tags": [
+        "gRPC",
+        "调用元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/guides/metadata/"
+    },
+    {
+      "id": "grpcbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "gRPC 服务调用",
+      "knowledgePoint": "状态码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "gRPC 的 OK 与 UNAVAILABLE 状态分别表示什么？",
+      "answer": "OK 表示调用成功；UNAVAILABLE 表示服务目前不可用，是否重试仍需结合操作语义。",
+      "explanation": "重试写操作前需要考虑是否会重复产生副作用。",
+      "example": "服务暂时不可用时评估是否安全重试。",
+      "tags": [
+        "gRPC",
+        "状态码"
+      ],
+      "evidence": "source",
+      "reference": "https://grpc.io/docs/guides/status-codes/"
+    }
+  ]
+}

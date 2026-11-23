@@ -1,0 +1,391 @@
+{
+  "source": {
+    "id": "naive-bayes-foundations",
+    "title": "scikit-learn 1.7：朴素贝叶斯原理与接口",
+    "url": "https://scikit-learn.org/1.7/modules/naive_bayes.html",
+    "type": "教材与官方技术资料",
+    "note": "逐题依据所列资料自行整理中文问答；示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "nbayes-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "朴素条件独立",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "朴素贝叶斯分类器中的“朴素”假设是什么？",
+      "answer": "给定类别后，模型假设各特征在条件分布上相互独立。",
+      "explanation": "它是对类别条件分布的简化，不保证真实数据满足该假设。",
+      "example": "给定邮件类别后近似分别计算各词出现的概率。",
+      "tags": [
+        "朴素条件独立",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "条件与无条件独立",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "朴素贝叶斯假设给定类别后特征独立，是否意味着特征在总体上也必须独立？",
+      "answer": "不意味着；条件独立和不加条件的独立是不同的关系。",
+      "explanation": "共同受到类别影响的特征，在整体数据中仍可能相关。",
+      "example": "在每个类别内独立的两个特征，混合类别后仍可能相关。",
+      "tags": [
+        "条件与无条件独立",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "后验分类规则",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "朴素贝叶斯进行最大后验分类时，如何比较各类别？",
+      "answer": "比较各类别的先验概率与各特征条件概率乘积，选择乘积最大的类别。",
+      "explanation": "对于固定输入，贝叶斯公式的证据项对各类别相同。",
+      "example": "分别计算两类的先验乘条件似然并选择较大者。",
+      "tags": [
+        "后验分类规则",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "先验与似然",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "朴素贝叶斯中类别先验与特征似然分别描述什么？",
+      "answer": "先验 P(y) 描述观察特征前的类别概率；似然 P(xᵢ|y) 描述给定类别下特征的分布。",
+      "explanation": "二者与后验 P(y|x) 的条件方向不同。",
+      "example": "P(垃圾邮件) 是先验，P(某词出现|垃圾邮件) 是条件似然。",
+      "tags": [
+        "先验与似然",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "对数分数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么朴素贝叶斯实现常在对数空间累加各特征贡献？",
+      "answer": "概率连乘可转换为对数相加，减少许多很小概率相乘时的数值下溢。",
+      "explanation": "对数是单调变换，不改变正数分数的大小顺序。",
+      "example": "把多个 log P(xᵢ|y) 与 log P(y) 相加。",
+      "tags": [
+        "对数分数",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html",
+      "supportingReferences": [
+        {
+          "id": "sklearn-naive-bayes-source-172",
+          "title": "scikit-learn 1.7.2：朴素贝叶斯实现",
+          "url": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/naive_bayes.py",
+          "type": "固定版本官方源码",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "nbayes-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "概率可靠性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "朴素贝叶斯把给定类别后仍强相关的特征当作独立时，概率估计可能出现什么问题？",
+      "answer": "同一证据可能被重复计入，使概率趋向过于极端，导致校准变差。",
+      "explanation": "应在未参与拟合的数据上检查概率可靠性。",
+      "example": "两个高度冗余的词特征可能重复放大同一证据。",
+      "tags": [
+        "概率可靠性",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/calibration.html"
+    },
+    {
+      "id": "nbayes-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "高斯似然",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "GaussianNB 如何建模给定类别下的各个数值特征？",
+      "answer": "它假设每个特征的类别条件分布为高斯分布，并为每个类别和特征估计均值与方差。",
+      "explanation": "这是类别条件分布假设，不要求所有类别共享同一均值和方差。",
+      "example": "分别估计正常与恶意样本中某连续特征的均值。",
+      "tags": [
+        "高斯似然",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "方差平滑",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn GaussianNB 的 var_smoothing 主要用于什么？",
+      "answer": "它按所有特征最大方差的一定比例向方差添加平滑量，以提高数值计算稳定性。",
+      "explanation": "平滑有助于处理很小的方差。",
+      "example": "某类别的某特征方差接近零时增加稳定量。",
+      "tags": [
+        "方差平滑",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.naive_bayes.GaussianNB.html"
+    },
+    {
+      "id": "nbayes-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "多项式特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MultinomialNB 常用于哪类文本特征？",
+      "answer": "常用于非负的词频或计数特征；实际中也可使用非负 TF-IDF 等分数。",
+      "explanation": "文本分类是其典型用途之一。",
+      "example": "用每封邮件中的词频向量训练分类器。",
+      "tags": [
+        "多项式特征",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "非负输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 MultinomialNB 可以直接接收含负值的特征矩阵吗？",
+      "answer": "不能；该实现要求输入特征非负。",
+      "explanation": "预处理可能产生负值时，应检查模型与特征是否匹配。",
+      "example": "中心化后的负数特征不适合直接传入 MultinomialNB。",
+      "tags": [
+        "非负输入",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.naive_bayes.MultinomialNB.html",
+      "supportingReferences": [
+        {
+          "id": "sklearn-naive-bayes-source-172",
+          "title": "scikit-learn 1.7.2：朴素贝叶斯实现",
+          "url": "https://github.com/scikit-learn/scikit-learn/blob/1.7.2/sklearn/naive_bayes.py",
+          "type": "固定版本官方源码",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "nbayes-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "伯努利特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BernoulliNB 与 MultinomialNB 对词出现与缺失的建模有什么区别？",
+      "answer": "BernoulliNB 以二值特征建模，并考虑特征未出现的证据；MultinomialNB 通常使用出现次数，未出现词不贡献对应计数项。",
+      "explanation": "两者的事件模型不同，效果应在数据上比较。",
+      "example": "判断词是否出现与统计词出现次数是两种表示。",
+      "tags": [
+        "伯努利特征",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "伯努利二值化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 BernoulliNB 中 binarize=None 与默认阈值有什么区别？",
+      "answer": "None 假定输入已是二值向量；默认阈值 0.0 会按阈值把输入转成二值特征。",
+      "explanation": "模型所见的特征表示受 binarize 设置影响。",
+      "example": "词频可按默认阈值转成“出现或未出现”。",
+      "tags": [
+        "伯努利二值化",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.naive_bayes.BernoulliNB.html"
+    },
+    {
+      "id": "nbayes-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "类别特征编码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 CategoricalNB 对每一列类别特征的编码有什么要求？",
+      "answer": "各类别应编码为从 0 开始的非负整数索引，并按特征分别表示。",
+      "explanation": "这些整数表示类别标识，不表示类别之间有自然大小顺序。",
+      "example": "把协议类别映射为 0、1、2。",
+      "tags": [
+        "类别特征编码",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "加性平滑",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "多项式朴素贝叶斯中，正的加性平滑参数 alpha 有什么作用？",
+      "answer": "它为计数加入平滑量，避免训练样本未出现的特征在相应类别下被估成零概率。",
+      "explanation": "alpha=1 通常称为拉普拉斯平滑。",
+      "example": "训练中某类别没出现某词时仍赋予该词非零概率。",
+      "tags": [
+        "加性平滑",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "零平滑选项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 MultinomialNB 设置 alpha=0、force_alpha=True 意味着什么？",
+      "answer": "不进行加性平滑；零或极小概率可能带来数值问题。",
+      "explanation": "force_alpha=False 时过小的 alpha 会被提高到实现规定的下限。",
+      "example": "稀疏词频下评估无平滑的数值风险。",
+      "tags": [
+        "零平滑选项",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.naive_bayes.MultinomialNB.html"
+    },
+    {
+      "id": "nbayes-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "类别先验配置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn MultinomialNB 未指定 class_prior 且 fit_prior=False 时使用什么类别先验？",
+      "answer": "使用均匀先验，而不是依据训练数据中的类别频率估计先验。",
+      "explanation": "显式设置 class_prior 可提供不同的先验。",
+      "example": "两个类别都使用 0.5 的先验。",
+      "tags": [
+        "类别先验配置",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.naive_bayes.MultinomialNB.html"
+    },
+    {
+      "id": "nbayes-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "补集朴素贝叶斯",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ComplementNB 用什么数据估计某类别的补集统计？",
+      "answer": "使用不属于该类别的训练样本来计算该类别的补集统计。",
+      "explanation": "它常用于不平衡文本分类，但不保证在所有数据上都优于其他模型。",
+      "example": "估计 A 类的补集时使用其他类别的文档。",
+      "tags": [
+        "补集朴素贝叶斯",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "增量训练类别",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "首次调用朴素贝叶斯的 partial_fit 时，为什么要提供所有可能类别？",
+      "answer": "首次调用需要确定模型要维护的类别集合，即使当前批次没有出现全部类别。",
+      "explanation": "后续调用可省略 classes，但应保持类别空间一致。",
+      "example": "首批只有正常样本，也传入正常和恶意两个类别。",
+      "tags": [
+        "增量训练类别",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/naive_bayes.html"
+    },
+    {
+      "id": "nbayes-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "朴素贝叶斯",
+      "knowledgePoint": "拟合计数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn MultinomialNB 的 class_count_ 与 feature_count_ 分别记录什么？",
+      "answer": "前者记录各类别的样本计数，后者记录各类别的特征累计计数；传入样本权重时计数会加权。",
+      "explanation": "这两个属性用于理解模型拟合得到的统计。",
+      "example": "检查某类样本总权重及该类的词频总量。",
+      "tags": [
+        "拟合计数",
+        "朴素贝叶斯"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.naive_bayes.MultinomialNB.html"
+    }
+  ]
+}

@@ -1,0 +1,648 @@
+{
+  "source": {
+    "id": "pytorch-tensor-operations",
+    "title": "PyTorch 常用张量、序列与训练接口",
+    "url": "https://docs.pytorch.org/docs/2.7/torch.html",
+    "type": "官方技术文档",
+    "note": "依据 PyTorch 2.7 官方文档整理；代表性示例用 PyTorch 2.7.1 CPU 验证。",
+    "knowledgeArea": "04"
+  },
+  "cards": [
+    {
+      "id": "ptops-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量索引",
+      "knowledgePoint": "gather输出形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 torch.gather 对 input、index 的维数和输出形状有什么要求？",
+      "answer": "input 与 index 的维数必须相同；输出形状与 index 相同。",
+      "explanation": "非索引维度的 index 大小不得超过 input；二者不会互相广播。",
+      "example": "对二维输入沿列收集时，可用二维索引张量给出各行要取的位置。",
+      "tags": [
+        "gather输出形状",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.gather.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.gather"
+    },
+    {
+      "id": "ptops-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量索引",
+      "knowledgePoint": "重复索引梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 中 gather 多次选到同一个输入元素，反向传播时该元素的梯度如何处理？",
+      "answer": "来自各次选取的梯度会累加到对应输入元素。",
+      "explanation": "这里指普通稠密梯度的常见情况。",
+      "example": "同一元素被选两次且各处梯度均为 1 时，其梯度为 2。",
+      "tags": [
+        "重复索引梯度",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.gather.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.gather"
+    },
+    {
+      "id": "ptops-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "张量索引",
+      "knowledgePoint": "topk输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch torch.topk 返回什么，largest=False 有什么作用？",
+      "answer": "它返回选中值和对应索引；largest=False 改为选择最小的 k 个值。",
+      "explanation": "sorted 参数控制选中值是否有序。",
+      "example": "对 [5, 1, 3] 取最小 2 个，可得到值 [1, 3]。",
+      "tags": [
+        "topk输出",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.topk.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.topk"
+    },
+    {
+      "id": "ptops-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量索引",
+      "knowledgePoint": "topk相同值索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch torch.topk 能否保证相同值对应的索引顺序在多次调用中稳定？",
+      "answer": "不能；相同值的索引不保证稳定，可能随调用变化。",
+      "explanation": "需要确定的并列处理规则时应另行设计。",
+      "example": "并列最高分的多个候选不应依赖 topk 固定顺序。",
+      "tags": [
+        "topk相同值索引",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.topk.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.topk"
+    },
+    {
+      "id": "ptops-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "归约",
+      "knowledgePoint": "最大值索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch torch.max(x, dim) 和 torch.amax(x, dim) 的返回值有什么不同？",
+      "answer": "max 指定维度时返回最大值和索引；amax 返回最大值，不返回索引。",
+      "explanation": "amax 还支持同时对多个维度归约。",
+      "example": "需要类别位置时可读取 max 的 indices。",
+      "tags": [
+        "最大值索引",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.max.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.max"
+    },
+    {
+      "id": "ptops-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "归约",
+      "knowledgePoint": "并列最大值梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 对指定维度的 max 和 amax 遇到并列最大值时如何分配梯度？",
+      "answer": "max(dim) 将梯度传给选中的一个索引；amax 将梯度均分给相等的最大值。",
+      "explanation": "此处比较的是按维度归约，max 对全部元素归约的行为需另看文档。",
+      "example": "输入 [2, 2, 1] 时，amax 的梯度可为 [0.5, 0.5, 0]。",
+      "tags": [
+        "并列最大值梯度",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.amax.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.amax"
+    },
+    {
+      "id": "ptops-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "广播与存储",
+      "knowledgePoint": "expand与repeat",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 的 expand 与 repeat 在复制数据方面有什么主要区别？",
+      "answer": "expand 对可扩展维度创建共享存储的视图；repeat 复制数据。",
+      "explanation": "expand 通常使用步长为 0 的维度表示重复值。",
+      "example": "形状 (3, 1) 的张量可 expand 为 (3, 4)，而不复制原始元素。",
+      "tags": [
+        "expand与repeat",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.Tensor.expand.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.Tensor.expand",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节跳动大模型公开面经（合集转载，经历为分享者自述）；PyTorch 张量布局主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "ptops-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "广播与存储",
+      "knowledgePoint": "expand保留维度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch Tensor.expand 中的 -1 表示什么，有什么限制？",
+      "answer": "在已有维度上，-1 表示保持该维度大小；新增的前置维度不能设为 -1。",
+      "explanation": "可扩展的已有维度通常要求原大小为 1，或目标大小不变。",
+      "example": "x.expand(-1, 4) 保留第一维，并扩展第二维。",
+      "tags": [
+        "expand保留维度",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.Tensor.expand.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.Tensor.expand"
+    },
+    {
+      "id": "ptops-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "广播与存储",
+      "knowledgePoint": "expand原地写入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么对 PyTorch expand 得到的张量进行原地写入可能出错或产生非预期结果？",
+      "answer": "多个逻辑位置可能引用同一存储位置，原地写入会发生重叠。",
+      "explanation": "需要独立写入时可先 clone。",
+      "example": "扩展后的同一行可能共享原先的一个元素。",
+      "tags": [
+        "expand原地写入",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.Tensor.expand.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.Tensor.expand",
+      "supportingReferences": [
+        {
+          "id": "company-bytedance",
+          "title": "字节跳动大模型公开面经（合集转载，经历为分享者自述）；PyTorch 张量布局主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900305%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "ptops-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "矩阵运算",
+      "knowledgePoint": "bmm与matmul",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch torch.bmm 与批量 torch.matmul 对批次维度广播的支持有什么区别？",
+      "answer": "bmm 要求两个三维张量的批次大小相同；matmul 可按规则广播批次维度。",
+      "explanation": "矩阵乘法的内层维度仍须兼容。",
+      "example": "批次形状 2 和 1 的矩阵可由 matmul 广播，不能直接用 bmm。",
+      "tags": [
+        "bmm与matmul",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.bmm.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.bmm"
+    },
+    {
+      "id": "ptops-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "矩阵运算",
+      "knowledgePoint": "einsum求和",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "torch.einsum 的表达式 ij,jk->ik 对两个矩阵执行什么运算？",
+      "answer": "它沿共同的 j 维求和，结果相当于矩阵乘法。",
+      "explanation": "显式箭头右侧指定输出维度的顺序。",
+      "example": "形状 (2, 3) 和 (3, 4) 的输入得到形状 (2, 4)。",
+      "tags": [
+        "einsum求和",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.einsum.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.einsum"
+    },
+    {
+      "id": "ptops-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量索引",
+      "knowledgePoint": "nonzero输出格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch torch.nonzero 的 as_tuple=False 和 True 分别返回什么形式的索引？",
+      "answer": "False 返回每行表示一个非零位置的二维索引张量；True 返回每个维度一个一维索引张量。",
+      "explanation": "后者可直接用于高级索引。",
+      "example": "二维张量的 True 结果可分别表示行索引和列索引。",
+      "tags": [
+        "nonzero输出格式",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nonzero.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nonzero"
+    },
+    {
+      "id": "ptops-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量索引",
+      "knowledgePoint": "单参数where",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch torch.where(condition) 只传条件时等价于什么？",
+      "answer": "等价于 torch.nonzero(condition, as_tuple=True)。",
+      "explanation": "它返回索引元组，而不是选择后的数值。",
+      "example": "可用返回的索引定位满足条件的元素。",
+      "tags": [
+        "单参数where",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.where.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.where"
+    },
+    {
+      "id": "ptops-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量索引",
+      "knowledgePoint": "掩码选择形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch torch.masked_select 的 mask 能广播吗，结果维数是什么？",
+      "answer": "mask 与输入可广播，返回值总是一维张量。",
+      "explanation": "结果是新张量，不与原张量共享存储。",
+      "example": "二维输入用可广播掩码筛选后，选中元素被展平成一维。",
+      "tags": [
+        "掩码选择形状",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.masked_select.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.masked_select"
+    },
+    {
+      "id": "ptops-015",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "标量与梯度",
+      "knowledgePoint": "item限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch Tensor.item() 返回什么，对张量元素数有什么要求？",
+      "answer": "它把仅含一个元素的张量转换成标准 Python 数值；多元素张量不能调用该方法。",
+      "explanation": "常用于读取单个标量的数值。",
+      "example": "torch.tensor([3.0]).item() 返回 Python 浮点数 3.0。",
+      "tags": [
+        "item限制",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.Tensor.item.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.Tensor.item"
+    },
+    {
+      "id": "ptops-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "标量与梯度",
+      "knowledgePoint": "item不可微",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 对张量调用 item() 后，所得 Python 数值能继续参与原计算图的自动求导吗？",
+      "answer": "不能；item() 本身不可微，得到的是 Python 数值。",
+      "explanation": "训练损失仍应保留为张量，直到完成反向传播。",
+      "example": "用 loss.item() 记录日志，用 loss.backward() 更新梯度。",
+      "tags": [
+        "item不可微",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.Tensor.item.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.Tensor.item"
+    },
+    {
+      "id": "ptops-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "标量与梯度",
+      "knowledgePoint": "clone与梯度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch torch.clone 创建副本后，梯度还能传回原张量吗？",
+      "answer": "能；clone 是可微操作，会复制数据但保留自动微分关系。",
+      "explanation": "若还要断开计算图，可结合 detach。",
+      "example": "对 clone 后的结果求和反向传播，原张量可获得梯度。",
+      "tags": [
+        "clone与梯度",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.clone.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.clone"
+    },
+    {
+      "id": "ptops-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "变长序列",
+      "knowledgePoint": "序列批次形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch pad_sequence 的 batch_first 参数如何影响输出前两维？",
+      "answer": "batch_first=True 时为批次、时间；False 时为时间、批次。",
+      "explanation": "所有序列的尾随维度和类型需要兼容。",
+      "example": "长度不同的序列可补齐为 B×T 或 T×B 的批次。",
+      "tags": [
+        "序列批次形状",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.utils.rnn.pad_sequence.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.utils.rnn.pad_sequence"
+    },
+    {
+      "id": "ptops-019",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "变长序列",
+      "knowledgePoint": "序列填充值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch pad_sequence 把一批序列补到什么长度，默认填充值是什么？",
+      "answer": "补到该批次最长序列的长度，默认填充值为 0。",
+      "explanation": "可用 padding_value 指定其他填充值。",
+      "example": "长度为 3 和 1 的序列都补到长度 3。",
+      "tags": [
+        "序列填充值",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.utils.rnn.pad_sequence.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.utils.rnn.pad_sequence"
+    },
+    {
+      "id": "ptops-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "变长序列",
+      "knowledgePoint": "打包序列排序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 使用 pack_padded_sequence 时，输入未按长度降序排列怎么办？",
+      "answer": "可设置 enforce_sorted=False，由函数处理未排序输入。",
+      "explanation": "默认 enforce_sorted=True 要求长度降序。",
+      "example": "长度依次为 1、3 的批次可在关闭排序要求后打包。",
+      "tags": [
+        "打包序列排序",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.utils.rnn.pack_padded_sequence.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.utils.rnn.pack_padded_sequence"
+    },
+    {
+      "id": "ptops-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "变长序列",
+      "knowledgePoint": "打包长度设备",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 2.7 的 pack_padded_sequence 接收张量形式的 lengths 时，长度张量应位于什么设备？",
+      "answer": "lengths 张量必须位于 CPU。",
+      "explanation": "也可传入 Python 整数列表。",
+      "example": "模型输入在 GPU 上时，长度张量仍按接口要求保留在 CPU。",
+      "tags": [
+        "打包长度设备",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.utils.rnn.pack_padded_sequence.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.utils.rnn.pack_padded_sequence"
+    },
+    {
+      "id": "ptops-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "变长序列",
+      "knowledgePoint": "打包长度截断",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch pack_padded_sequence 遇到输入时间维长于对应 lengths 时会怎样？",
+      "answer": "对应序列超过指定长度的部分会被截断。",
+      "explanation": "应核对 lengths 是否真实反映有效序列长度。",
+      "example": "输入长度为 3、指定有效长度为 1 时，仅第一项被打包。",
+      "tags": [
+        "打包长度截断",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.utils.rnn.pack_padded_sequence.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.utils.rnn.pack_padded_sequence"
+    },
+    {
+      "id": "ptops-023",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "张量编码",
+      "knowledgePoint": "one_hot形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch functional.one_hot 的输入、输出类型与形状有什么特点？",
+      "answer": "输入是长整型索引张量；输出也是长整型，并在末尾增加类别维度。",
+      "explanation": "输出的对应类别位置为 1，其余为 0。",
+      "example": "索引 [0, 2] 指定 4 类时，输出形状为 (2, 4)。",
+      "tags": [
+        "one_hot形状",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.one_hot.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.functional.one_hot"
+    },
+    {
+      "id": "ptops-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量编码",
+      "knowledgePoint": "one_hot类别数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch functional.one_hot 不显式指定 num_classes 时，类别数如何推断？",
+      "answer": "使用输入中最大类别索引加 1。",
+      "explanation": "不同批次的最大索引不同时，推断出的类别维度可能不同。",
+      "example": "输入 [0, 2] 时推断为 3 类。",
+      "tags": [
+        "one_hot类别数",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.one_hot.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.functional.one_hot"
+    },
+    {
+      "id": "ptops-025",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量编码",
+      "knowledgePoint": "填充参数顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch functional.pad 的 pad 元组从哪个维度开始描述填充？",
+      "answer": "从最后一个维度开始，依次给出该维度两侧的填充量，再处理更前的维度。",
+      "explanation": "一维时 (left, right) 控制左右填充。",
+      "example": "对 [1, 2] 使用 pad=(1, 2) 可得到 [0, 1, 2, 0, 0]。",
+      "tags": [
+        "填充参数顺序",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.pad.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.functional.pad"
+    },
+    {
+      "id": "ptops-026",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "张量编码",
+      "knowledgePoint": "向量归一化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch functional.normalize 沿指定维度怎样归一化向量？",
+      "answer": "用向量除以其 Lp 范数与 eps 中较大的值。",
+      "explanation": "eps 避免极小范数造成除零；零向量仍可保持为零。",
+      "example": "默认 L2 归一化将 [3, 4] 变为 [0.6, 0.8]。",
+      "tags": [
+        "向量归一化",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.functional.normalize.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.functional.normalize"
+    },
+    {
+      "id": "ptops-027",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型状态",
+      "knowledgePoint": "非持久buffer",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch 注册 buffer 时设置 persistent=False，对 state_dict 有什么影响？",
+      "answer": "该 buffer 不会写入 state_dict，但仍是模块的 buffer。",
+      "explanation": "它仍随模块设备或类型转换等操作处理。",
+      "example": "临时缓存可注册为非持久 buffer。",
+      "tags": [
+        "非持久buffer",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.Module.html#torch.nn.Module.register_buffer",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.Module.register_buffer"
+    },
+    {
+      "id": "ptops-028",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型状态",
+      "knowledgePoint": "非严格加载限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch load_state_dict(strict=False) 能否忽略同名参数的形状不匹配？",
+      "answer": "不能；strict=False 放宽键缺失或多出的检查，同名参数形状不匹配仍会报错。",
+      "explanation": "应确认模型结构和检查点兼容。",
+      "example": "把三分类头权重加载到二分类头时，形状不一致仍需处理。",
+      "tags": [
+        "非严格加载限制",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.nn.Module.html#torch.nn.Module.load_state_dict",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.nn.Module.load_state_dict",
+      "supportingReferences": [
+        {
+          "id": "pytorch-source-27",
+          "title": "PyTorch 2.7.1 源码：参数形状检查",
+          "url": "https://github.com/pytorch/pytorch/blob/v2.7.1/torch/nn/modules/module.py#L2396",
+          "type": "开源代码",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "ptops-029",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "标量与梯度",
+      "knowledgePoint": "构建梯度图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PyTorch torch.autograd.grad 设置 create_graph=True 的主要用途是什么？",
+      "answer": "它为求得的梯度创建计算图，从而可以继续计算高阶导数。",
+      "explanation": "这与仅保留原计算图的 retain_graph 不同。",
+      "example": "对 x³ 求一次梯度后，可继续对所得梯度求导。",
+      "tags": [
+        "构建梯度图",
+        "PyTorch",
+        "机器学习接口"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/docs/2.7/generated/torch.autograd.grad.html",
+      "referenceTitle": "PyTorch 2.7 官方文档：torch.autograd.grad"
+    }
+  ]
+}

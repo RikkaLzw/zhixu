@@ -1,0 +1,105 @@
+{
+  "source": {
+    "id": "company-authentication-interviews",
+    "title": "OWASP 身份认证指南与阿里、蚂蚁公开面经",
+    "url": "https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html",
+    "type": "官方技术文档",
+    "note": "公司、岗位、轮次和经历均为分享者自述；主题启发不代表原帖逐题提出。逐题答案依据 OWASP 指南核验。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "authint-001",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "密码找回",
+      "knowledgePoint": "密码重置令牌",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "密码找回链接中的重置令牌应满足哪些基本条件？",
+      "answer": "令牌应足够随机、与用户绑定、单次使用，并在合理时间后过期。",
+      "explanation": "重置流程还应使用安全渠道传递令牌，并保护令牌存储和传输。",
+      "example": "用户成功重置后，服务端使该令牌失效，不能再次用于重置。",
+      "tags": [
+        "密码重置令牌",
+        "身份认证",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里菜鸟公开面经（合集收录，经历为分享者自述）；原帖提及找回密码逻辑漏洞；令牌设计为主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x4d-%E9%98%BF%E9%87%8C-%E8%8F%9C%E9%B8%9F",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ],
+      "referenceTitle": "OWASP：Forgot Password Cheat Sheet"
+    },
+    {
+      "id": "authint-002",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "密码找回",
+      "knowledgePoint": "找回流程账户枚举",
+      "questionType": "安全场景",
+      "origin": "自行整理",
+      "question": "密码找回页面为什么要对存在与不存在的账户返回一致的信息？",
+      "answer": "一致的反馈可以减少通过重置接口判断账户是否存在的信息泄露。",
+      "explanation": "还应留意响应时间等旁路差异，并结合频率限制防止滥用。",
+      "example": "提交任意邮箱后都提示“如果账户存在，将发送重置说明”。",
+      "tags": [
+        "账户枚举",
+        "密码找回",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html",
+      "supportingReferences": [
+        {
+          "id": "company-alibaba",
+          "title": "阿里菜鸟公开面经（合集收录，经历为分享者自述）；原帖提及找回密码逻辑漏洞；账户枚举为主题启发",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x4d-%E9%98%BF%E9%87%8C-%E8%8F%9C%E9%B8%9F",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ],
+      "referenceTitle": "OWASP：Forgot Password Cheat Sheet"
+    },
+    {
+      "id": "authint-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "多因素认证",
+      "knowledgePoint": "MFA安全边界",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "启用两因素认证后，是否就能消除账户接管风险？",
+      "answer": "不能；认证仍可能受到实时钓鱼、会话泄露或薄弱的恢复及备用流程影响。",
+      "explanation": "抗钓鱼认证器、会话保护和受控的账户恢复流程可以降低不同环节的风险。",
+      "example": "一次性验证码可能被实时转发，攻击者随后窃取已登录会话。",
+      "tags": [
+        "MFA安全边界",
+        "身份认证",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "source",
+      "reference": "https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁天穹实验室公开面经（合集收录，经历为分享者自述）；原帖询问 2FA 能否杜绝隐患",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x84-%E8%9A%82%E8%9A%81-%E5%A4%A9%E7%A9%B9%E5%AE%9E%E9%AA%8C%E5%AE%A4",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ],
+      "referenceTitle": "OWASP：Multifactor Authentication Cheat Sheet"
+    }
+  ]
+}

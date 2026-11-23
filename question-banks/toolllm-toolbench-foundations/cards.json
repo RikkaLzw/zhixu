@@ -1,0 +1,240 @@
+{
+  "source": {
+    "id": "toolllm-toolbench-foundations",
+    "title": "ToolLLM v2：工具使用训练与评测",
+    "url": "https://arxiv.org/pdf/2307.16789v2",
+    "type": "论文与官方技术文档",
+    "note": "依据逐题引用的原论文或官方文档自行整理；例子为自编，适用版本与条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "toolbench-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "框架组成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM 原论文主要覆盖工具使用的哪些环节？",
+      "answer": "它覆盖工具使用数据构造、模型训练以及自动评估。",
+      "explanation": "以下内容以 arXiv:2307.16789v2 为准。",
+      "example": "构造工具调用轨迹后训练并评估模型。",
+      "tags": [
+        "框架组成",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "工具来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM v2 论文中的工具接口文档主要来自哪里？",
+      "answer": "来自 RapidAPI 上收集的真实 REST API 文档。",
+      "explanation": "接口在实际服务中的可用性和版本可能随时间变化。",
+      "example": "按接口描述和参数组织工具库。",
+      "tags": [
+        "工具来源",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "指令生成",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM v2 的工具使用指令是全部由真实用户编写的吗？",
+      "answer": "不是；论文根据采样的 API 使用模型生成指令。",
+      "explanation": "生成任务需要检查可执行性和真实场景代表性。",
+      "example": "先抽取工具集合，再生成可能的用户任务。",
+      "tags": [
+        "指令生成",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "工具任务组合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM 论文生成多工具任务时，如何利用 RapidAPI 的工具组织关系？",
+      "answer": "它从同一类别或同一集合中抽取多个工具；同一集合中的工具可以跨类别。",
+      "explanation": "使用相关工具组合有助于生成自然的多工具任务。",
+      "example": "先查询地点，再查询该地点的天气。",
+      "tags": [
+        "工具任务组合",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "轨迹来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM 论文如何为生成的工具任务构造解决轨迹？",
+      "answer": "使用模型规划并执行多轮 API 调用，搜索可完成任务的路径。",
+      "explanation": "API 返回内容会影响后续步骤。",
+      "example": "先调用查询接口，再根据结果填写后续参数。",
+      "tags": [
+        "轨迹来源",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "深度搜索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM 的 DFSDT 允许模型如何处理不理想的工具调用路径？",
+      "answer": "它可放弃当前分支并回溯，继续扩展其他候选路径。",
+      "explanation": "搜索质量和成本受模型、工具与预算影响。",
+      "example": "一种查询方式失败后尝试其他工具路径。",
+      "tags": [
+        "深度搜索",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "分支多样性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM 的 DFSDT 在扩展新分支时如何鼓励不同的候选？",
+      "answer": "将已有分支信息提供给模型，并要求生成不同的后续节点。",
+      "explanation": "不同文本仍可能对应实质上相同的调用。",
+      "example": "避免再次生成相同的失败步骤。",
+      "tags": [
+        "分支多样性",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "工具检索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM 为什么引入 API 检索器？",
+      "answer": "它从大量 API 中为指令推荐相关接口，减少将完整工具库交给模型的需要。",
+      "explanation": "检索遗漏必要工具时，后续模型可能无法完成任务。",
+      "example": "先检索天气和地理位置相关接口。",
+      "tags": [
+        "工具检索",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "检索表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM 论文中的 API 检索器如何估计指令与接口的相关性？",
+      "answer": "它分别编码指令和 API 文档，再比较嵌入的相似度。",
+      "explanation": "检索结果质量依赖文档内容和训练样本。",
+      "example": "根据任务文本查找可能适用的接口。",
+      "tags": [
+        "检索表示",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "工具版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM 论文为什么强调比较不同系统时使用相同版本的 API？",
+      "answer": "API 行为会随时间变化，不同版本可能改变可用功能和返回结果。",
+      "explanation": "应记录服务版本或评测时的可用环境。",
+      "example": "比较模型时固定工具接口的行为。",
+      "tags": [
+        "工具版本",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "通过率与胜率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolEval 的 pass rate 与 win rate 分别关注什么？",
+      "answer": "通过率衡量预算内任务完成比例；胜率比较两条解决路径的质量偏好。",
+      "explanation": "两者使用不同评估问题，不能互相替代。",
+      "example": "一项任务完成但回答质量仍可能低于另一方案。",
+      "tags": [
+        "通过率与胜率",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    },
+    {
+      "id": "toolbench-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具使用与 ToolBench",
+      "knowledgePoint": "完成与放弃",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToolLLM 的解决轨迹使用哪两种结束动作区分结果？",
+      "answer": "一种给出最终答案；另一种在无法完成任务时主动放弃。",
+      "explanation": "结束动作本身不能证明答案正确。",
+      "example": "工具不足时停止并说明无法完成。",
+      "tags": [
+        "完成与放弃",
+        "工具使用与 ToolBench"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2307.16789v2"
+    }
+  ]
+}

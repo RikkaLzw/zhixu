@@ -7,15 +7,222 @@
     "note": "ATT&CK 术语参考官方说明；威胁情报抽取与模型评估为原创 AI4SEC 场景。"
   },
   "cards": [
-    {"id":"attack-001","category":"operations","level":"入门","question":"AI 威胁情报系统为什么要把攻击行为映射到 ATT&CK？","answer":"ATT&CK 提供统一的攻击行为描述，便于归类和关联安全事件。","explanation":"模型映射仍需由原文行为证据支持，不能仅凭关键词确定。","example":"从报告中的具体行为抽取候选技术，并给出原文片段。","tags":["ATT&CK","威胁情报"],"evidence":"application"},
-    {"id":"attack-002","category":"operations","level":"入门","question":"在 ATT&CK 中，战术和技术分别描述什么？","answer":"战术描述攻击者的目标，技术描述为达成目标采取的行为方式。","explanation":"做模型标签时应区分目标类别与具体行为类别。","example":"先识别报告中的行为，再映射到相应技术和可能的战术。","tags":["战术","技术","标签"],"evidence":"source"},
-    {"id":"attack-003","category":"operations","level":"进阶","question":"威胁情报模型为什么需要区分技术和子技术？","answer":"子技术比技术描述更具体的行为，证据不足时不应强行细分。","explanation":"输出可包含较宽泛的候选及缺少哪些细节。","example":"报告只有泛化的凭据获取描述时，暂不指定缺少证据的具体子技术。","tags":["子技术","证据"],"evidence":"source"},
-    {"id":"attack-004","category":"operations","level":"实践","question":"让模型给事件映射 ATT&CK 技术时应提供什么？","answer":"应提供事件原始行为、可用上下文和所用 ATT&CK 版本。","explanation":"映射结果应包含技术编号、名称、证据与置信度或待确认问题。","example":"输入命令和关联日志，输出候选技术及支持该候选的日志行。","tags":["技术映射","模型输入"],"evidence":"application"},
-    {"id":"attack-005","category":"operations","level":"进阶","question":"为什么 ATT&CK 技术映射不能只做关键词匹配？","answer":"相同工具名或命令可能用于不同目的，也可能是正常管理行为。","explanation":"需要理解行为、上下文和证据之间的关系。","example":"看到远程管理工具时，结合账号、目标设备和执行行为再判断。","tags":["误报","行为上下文"],"evidence":"application"},
-    {"id":"attack-006","category":"operations","level":"实践","question":"如何评价模型从威胁报告中提取 ATT&CK 技术的效果？","answer":"对照人工标注，分别统计技术级精确率、召回率和证据定位质量。","explanation":"还要明确是否允许较宽泛技术与子技术之间的部分匹配。","example":"报告预测技术编号、真实编号以及模型引用的原文句子。","tags":["情报抽取","评估"],"evidence":"application"},
-    {"id":"attack-007","category":"operations","level":"进阶","question":"为什么 ATT&CK 多标签识别不能强制每个事件只对应一个技术？","answer":"一个事件可能包含多个可由证据支持的行为，也可能证据不足。","explanation":"任务设计应允许多个候选及无足够证据的结果。","example":"同一事件包含两种不同可观察行为时，分别给出对应证据。","tags":["多标签","行为映射"],"evidence":"application"},
-    {"id":"attack-008","category":"operations","level":"实践","question":"ATT&CK 版本变化为什么会影响威胁情报模型？","answer":"技术、名称或关联关系可能随版本更新，导致旧标签与新知识库不一致。","explanation":"记录版本并维护映射关系，重新评估更新后的输出。","example":"对旧报告保留生成时的 ATT&CK 版本，并注明迁移规则。","tags":["版本管理","知识库"],"evidence":"application"},
-    {"id":"attack-009","category":"operations","level":"实践","question":"从报告抽取攻击技术时怎样保留可追溯性？","answer":"保存原文位置、报告来源、提取时间、候选技术和人工审核状态。","explanation":"这样可以区分原文事实、模型推断和人工确认。","example":"卡片或记录中同时保留报告标题、引用段落和技术编号。","tags":["溯源","人工复核"],"evidence":"application"},
-    {"id":"attack-010","category":"operations","level":"进阶","question":"ATT&CK 中的 procedure 与技术有什么关系？","answer":"procedure 是攻击者对技术或子技术的具体实施方式。","explanation":"模型可用具体行为证据辅助映射，但不能把某个实例当成该技术的唯一实现。","example":"报告中的具体命令或操作可作为分析 procedure 的证据。","tags":["procedure","威胁情报"],"evidence":"source"}
+    {
+      "id": "attack-001",
+      "category": "operations",
+      "level": "入门",
+      "question": "AI 威胁情报系统为什么要把攻击行为映射到 ATT&CK？",
+      "answer": "ATT&CK 提供统一的攻击行为描述，便于归类和关联安全事件。",
+      "explanation": "模型映射仍需由原文行为证据支持，不能仅凭关键词确定。",
+      "example": "从报告中的具体行为抽取候选技术，并给出原文片段。",
+      "tags": [
+        "ATT&CK",
+        "威胁情报"
+      ],
+      "evidence": "application",
+      "subtopic": "ATT&CK映射",
+      "knowledgePoint": "行为知识库用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://attack.mitre.org/resources/faq/"
+    },
+    {
+      "id": "attack-002",
+      "category": "operations",
+      "level": "入门",
+      "question": "在 ATT&CK 中，战术和技术分别描述什么？",
+      "answer": "战术描述攻击者的目标，技术描述为达成目标采取的行为方式。",
+      "explanation": "做模型标签时应区分目标类别与具体行为类别。",
+      "example": "先识别报告中的行为，再映射到相应技术和可能的战术。",
+      "tags": [
+        "战术",
+        "技术",
+        "标签"
+      ],
+      "evidence": "source",
+      "subtopic": "ATT&CK映射",
+      "knowledgePoint": "ATT&CK战术与技术",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "reference": "https://attack.mitre.org/resources/faq/"
+    },
+    {
+      "id": "attack-003",
+      "category": "operations",
+      "level": "进阶",
+      "question": "威胁情报模型为什么需要区分技术和子技术？",
+      "answer": "子技术比技术描述更具体的行为，证据不足时不应强行细分。",
+      "explanation": "输出可包含较宽泛的候选及缺少哪些细节。",
+      "example": "报告只有泛化的凭据获取描述时，暂不指定缺少证据的具体子技术。",
+      "tags": [
+        "子技术",
+        "证据"
+      ],
+      "evidence": "source",
+      "subtopic": "ATT&CK映射",
+      "knowledgePoint": "技术与子技术粒度",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "reference": "https://attack.mitre.org/resources/faq/"
+    },
+    {
+      "id": "attack-004",
+      "category": "operations",
+      "level": "实践",
+      "question": "让模型给事件映射 ATT&CK 技术时应提供什么？",
+      "answer": "应提供事件原始行为、可用上下文和所用 ATT&CK 版本。",
+      "explanation": "映射结果应包含技术编号、名称、证据与置信度或待确认问题。",
+      "example": "输入命令和关联日志，输出候选技术及支持该候选的日志行。",
+      "tags": [
+        "技术映射",
+        "模型输入"
+      ],
+      "evidence": "application",
+      "subtopic": "ATT&CK映射",
+      "knowledgePoint": "行为证据与版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/cisagov/decider/blob/6290a80504561d21b641ba5bf69d1fe5c1ee0a21/docs/user_guide_3_0_0/user-guide.md"
+    },
+    {
+      "id": "attack-005",
+      "category": "operations",
+      "level": "进阶",
+      "question": "为什么 ATT&CK 技术映射不能只做关键词匹配？",
+      "answer": "相同工具名或命令可能用于不同目的，也可能是正常管理行为。",
+      "explanation": "需要理解行为、上下文和证据之间的关系。",
+      "example": "看到远程管理工具时，结合账号、目标设备和执行行为再判断。",
+      "tags": [
+        "误报",
+        "行为上下文"
+      ],
+      "evidence": "application",
+      "subtopic": "ATT&CK映射",
+      "knowledgePoint": "行为上下文和关键词",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "reference": "https://github.com/cisagov/decider/blob/6290a80504561d21b641ba5bf69d1fe5c1ee0a21/docs/user_guide_3_0_0/user-guide.md"
+    },
+    {
+      "id": "attack-006",
+      "category": "operations",
+      "level": "实践",
+      "question": "如何评价模型从威胁报告中提取 ATT&CK 技术的效果？",
+      "answer": "对照人工标注，分别统计技术级精确率、召回率和证据定位质量。",
+      "explanation": "还要明确是否允许较宽泛技术与子技术之间的部分匹配。",
+      "example": "报告预测技术编号、真实编号以及模型引用的原文句子。",
+      "tags": [
+        "情报抽取",
+        "评估"
+      ],
+      "evidence": "application",
+      "subtopic": "情报抽取评估",
+      "knowledgePoint": "技术与证据质量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/cisagov/decider/blob/6290a80504561d21b641ba5bf69d1fe5c1ee0a21/docs/user_guide_3_0_0/user-guide.md",
+      "supportingReferences": [
+        {
+          "id": "classification-evaluation-guide",
+          "title": "scikit-learn：分类模型评价指标",
+          "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "attack-007",
+      "category": "operations",
+      "level": "进阶",
+      "question": "为什么 ATT&CK 多标签识别不能强制每个事件只对应一个技术？",
+      "answer": "一个事件可能包含多个可由证据支持的行为，也可能证据不足。",
+      "explanation": "任务设计应允许多个候选及无足够证据的结果。",
+      "example": "同一事件包含两种不同可观察行为时，分别给出对应证据。",
+      "tags": [
+        "多标签",
+        "行为映射"
+      ],
+      "evidence": "application",
+      "subtopic": "ATT&CK映射",
+      "knowledgePoint": "多行为与多标签",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "mitre-attack-faq-ref",
+          "title": "MITRE ATT&CK FAQ",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "attack-008",
+      "category": "operations",
+      "level": "实践",
+      "question": "ATT&CK 版本变化为什么会影响威胁情报模型？",
+      "answer": "技术、名称或关联关系可能随版本更新，导致旧标签与新知识库不一致。",
+      "explanation": "记录版本并维护映射关系，重新评估更新后的输出。",
+      "example": "对旧报告保留生成时的 ATT&CK 版本，并注明迁移规则。",
+      "tags": [
+        "版本管理",
+        "知识库"
+      ],
+      "evidence": "application",
+      "subtopic": "ATT&CK映射",
+      "knowledgePoint": "ATT&CK版本变化",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "reference": "https://attack.mitre.org/resources/updates/",
+      "supportingReferences": [
+        {
+          "id": "mitre-attack-faq-ref",
+          "title": "MITRE ATT&CK FAQ",
+          "url": "https://attack.mitre.org/resources/faq/",
+          "type": "官方知识库",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "attack-009",
+      "category": "operations",
+      "level": "实践",
+      "question": "从报告抽取攻击技术时怎样保留可追溯性？",
+      "answer": "保存原文位置、报告来源、提取时间、候选技术和人工审核状态。",
+      "explanation": "这样可以区分原文事实、模型推断和人工确认。",
+      "example": "卡片或记录中同时保留报告标题、引用段落和技术编号。",
+      "tags": [
+        "溯源",
+        "人工复核"
+      ],
+      "evidence": "application",
+      "subtopic": "情报抽取记录",
+      "knowledgePoint": "映射可追溯性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://github.com/cisagov/decider/blob/6290a80504561d21b641ba5bf69d1fe5c1ee0a21/docs/user_guide_3_0_0/user-guide.md"
+    },
+    {
+      "id": "attack-010",
+      "category": "operations",
+      "level": "进阶",
+      "question": "ATT&CK 中的 procedure 与技术有什么关系？",
+      "answer": "procedure 是攻击者对技术或子技术的具体实施方式。",
+      "explanation": "模型可用具体行为证据辅助映射，但不能把某个实例当成该技术的唯一实现。",
+      "example": "报告中的具体命令或操作可作为分析 procedure 的证据。",
+      "tags": [
+        "procedure",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "subtopic": "ATT&CK映射",
+      "knowledgePoint": "ATT&CK实施方式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "reference": "https://attack.mitre.org/resources/faq/"
+    }
   ]
 }

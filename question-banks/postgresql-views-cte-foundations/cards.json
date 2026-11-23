@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "postgresql-views-cte-foundations",
+    "title": "PostgreSQL 17：视图和公共表表达式",
+    "url": "https://www.postgresql.org/docs/17/queries-with.html",
+    "type": "协议标准、教材及官方手册",
+    "note": "依据逐题引用的标准、教材或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgcte-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 视图与公共表表达式",
+      "knowledgePoint": "物化视图",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的物化视图与普通视图在结果保存方面有什么区别？",
+      "answer": "物化视图以类似表的形式保存查询结果，普通视图不物化结果。",
+      "explanation": "物化结果可能落后于底层数据。",
+      "example": "为统计报表保存预计算结果。",
+      "tags": [
+        "SQL 视图与公共表表达式",
+        "物化视图"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/rules-materializedviews.html",
+      "supportingReferences": [
+        {
+          "id": "pg17-create-view",
+          "title": "PostgreSQL 17：CREATE VIEW",
+          "url": "https://www.postgresql.org/docs/17/sql-createview.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "pgcte-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "SQL 视图与公共表表达式",
+      "knowledgePoint": "物化视图刷新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 如何根据保存的查询重新填充物化视图？",
+      "answer": "使用 REFRESH MATERIALIZED VIEW。",
+      "explanation": "刷新之前结果可能不是底层数据的最新状态。",
+      "example": "定期刷新销售汇总物化视图。",
+      "tags": [
+        "SQL 视图与公共表表达式",
+        "物化视图刷新"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/sql-refreshmaterializedview.html"
+    },
+    {
+      "id": "pgcte-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 视图与公共表表达式",
+      "knowledgePoint": "CTE 作用域",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SQL 中 WITH 定义的公共表表达式（CTE）主要有什么用途？",
+      "answer": "为一条语句定义可引用的辅助查询，便于拆分复杂查询。",
+      "explanation": "CTE 的名称和结果不自动成为永久表。",
+      "example": "用命名的中间结果组织一条 SELECT。",
+      "tags": [
+        "SQL 视图与公共表表达式",
+        "CTE 作用域"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-with.html"
+    },
+    {
+      "id": "pgcte-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 视图与公共表表达式",
+      "knowledgePoint": "递归结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的递归 WITH 查询通常由哪些部分组成？",
+      "answer": "先写非递归项，再用 UNION 或 UNION ALL 连接包含自引用的递归项。",
+      "explanation": "只有递归项可引用该查询自身的输出。",
+      "example": "遍历组织层级或部件关系。",
+      "tags": [
+        "SQL 视图与公共表表达式",
+        "递归结构"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-with.html#QUERIES-WITH-RECURSIVE"
+    },
+    {
+      "id": "pgcte-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 视图与公共表表达式",
+      "knowledgePoint": "递归求值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的递归 CTE 在内部如何推进计算？",
+      "answer": "完整求值时，先计算初始项，再反复使用工作表计算递归项，直到工作表为空。",
+      "explanation": "查询写成递归形式，内部执行采用迭代；父查询可能提前停止读取。",
+      "example": "逐层生成树的后代。",
+      "tags": [
+        "SQL 视图与公共表表达式",
+        "递归求值"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-with.html#QUERIES-WITH-RECURSIVE"
+    },
+    {
+      "id": "pgcte-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 视图与公共表表达式",
+      "knowledgePoint": "递归去重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "递归 CTE 使用 UNION 而非 UNION ALL，能否保证所有有环查询终止？",
+      "answer": "不能；UNION 对完整结果行去重，随路径或深度变化的行仍可能不断不同。",
+      "explanation": "需要按实际节点标识检测环或加入合适的终止条件。",
+      "example": "同一节点被反复访问但 depth 不断增加。",
+      "tags": [
+        "SQL 视图与公共表表达式",
+        "递归去重"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-with.html#QUERIES-WITH-CYCLE"
+    },
+    {
+      "id": "pgcte-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 视图与公共表表达式",
+      "knowledgePoint": "递归结果顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 对递归 CTE 的结果按深度优先顺序排序，是否保证内部也按该顺序访问节点？",
+      "answer": "不保证；对结果排序只决定最终展示顺序，不控制内部访问节点的顺序。",
+      "explanation": "需要深度优先输出时，可计算路径等排序列并在最终查询中使用 ORDER BY。",
+      "example": "为每行构造路径列后排序。",
+      "tags": [
+        "SQL 视图与公共表表达式",
+        "递归结果顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-with.html#QUERIES-WITH-SEARCH"
+    },
+    {
+      "id": "pgcte-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 视图与公共表表达式",
+      "knowledgePoint": "CTE 折叠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 对只被引用一次、非递归且无副作用的 SELECT CTE 默认可以如何优化？",
+      "answer": "通常将其折叠进父查询，以便联合优化。",
+      "explanation": "多次引用时默认策略不同；MATERIALIZED 可要求单独计算。",
+      "example": "父查询条件可能被用于优化底层扫描。",
+      "tags": [
+        "SQL 视图与公共表表达式",
+        "CTE 折叠"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-with.html#QUERIES-WITH-CTE-MATERIALIZATION"
+    },
+    {
+      "id": "pgcte-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 视图与公共表表达式",
+      "knowledgePoint": "CTE 返回数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 17 的数据修改 CTE 用什么把修改的行提供给外层查询？",
+      "answer": "使用修改语句的 RETURNING 输出。",
+      "explanation": "没有 RETURNING 时仍执行修改，但不产生可供引用的结果表。",
+      "example": "DELETE ... RETURNING 将删除的行交给 INSERT。",
+      "tags": [
+        "SQL 视图与公共表表达式",
+        "CTE 返回数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/queries-with.html#QUERIES-WITH-MODIFYING"
+    }
+  ]
+}

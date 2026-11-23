@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "security-deployment-evaluation",
+    "title": "Google ML / SageMaker / SRE：安全模型上线验证",
+    "url": "https://docs.aws.amazon.com/sagemaker/latest/dg/shadow-tests.html",
+    "type": "官方文档与研究资料",
+    "note": "按逐题所列资料自行整理；安全场景示例用于说明，不代表原资料中的实际事件。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "secdeploy-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型上线验证",
+      "knowledgePoint": "影子测试作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "影子测试中的候选模型通常怎样接收请求？",
+      "answer": "它接收生产请求的副本并运行，但其结果通常不返回给调用方作为正式决策。",
+      "explanation": "影子运行仍可能产生计算费用，结果可记录供比较。",
+      "example": "候选告警模型对实时日志评分，但不直接触发处置。",
+      "tags": [
+        "影子测试作用",
+        "安全模型上线验证"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.aws.amazon.com/sagemaker/latest/dg/shadow-tests.html"
+    },
+    {
+      "id": "secdeploy-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型上线验证",
+      "knowledgePoint": "影子测试与金丝雀",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "影子测试和金丝雀发布在对实际用户的影响上有什么主要区别？",
+      "answer": "影子测试通常只观察候选结果；金丝雀发布让一小部分真实请求由新版本实际处理。",
+      "explanation": "两种方法的具体路由和操作边界取决于实现。",
+      "example": "复制请求做对照，或将部分请求切换到新模型。",
+      "tags": [
+        "影子测试与金丝雀",
+        "安全模型上线验证"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.aws.amazon.com/sagemaker/latest/dg/shadow-tests.html"
+    },
+    {
+      "id": "secdeploy-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型上线验证",
+      "knowledgePoint": "影子测试与正确性",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "影子测试只观察响应延迟和错误率，能否证明模型判断准确？",
+      "answer": "不能；运行性能与预测质量是不同维度，准确性仍需可信标签或人工复核。",
+      "explanation": "标签可能延迟到达，评估应说明可用范围。",
+      "example": "候选模型响应更快，但还需核验其告警判断。",
+      "tags": [
+        "影子测试与正确性",
+        "安全模型上线验证"
+      ],
+      "evidence": "application",
+      "reference": "https://docs.aws.amazon.com/sagemaker/latest/dg/shadow-tests.html"
+    },
+    {
+      "id": "secdeploy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型上线验证",
+      "knowledgePoint": "回退依据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全模型上线时为什么要预先定义回退条件？",
+      "answer": "可在出现明显质量或服务问题时及时切回可用方案，减少持续影响。",
+      "explanation": "回退条件应结合告警质量、延迟和业务影响制定。",
+      "example": "误报负荷显著超出约定范围时回退。",
+      "tags": [
+        "回退依据",
+        "安全模型上线验证"
+      ],
+      "evidence": "application",
+      "reference": "https://sre.google/workbook/canarying-releases/"
+    },
+    {
+      "id": "secdeploy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型上线验证",
+      "knowledgePoint": "模型指标与业务效果",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "离线安全模型指标改善，能否单独证明安全运营效果也改善？",
+      "answer": "不能；还需要检查实际告警负担、响应效率及有效发现等业务结果。",
+      "explanation": "指标变化可能与真实工作流程的收益不一致。",
+      "example": "AUC 提升但分析人员处理的无效告警并未减少。",
+      "tags": [
+        "模型指标与业务效果",
+        "安全模型上线验证"
+      ],
+      "evidence": "application",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    },
+    {
+      "id": "secdeploy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "安全模型上线验证",
+      "knowledgePoint": "训练服务偏差定位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "发现训练与线上特征分布不同后，为什么要检查特征计算流程？",
+      "answer": "训练和服务端可能使用不同处理逻辑或配置，产生不一致的模型输入。",
+      "explanation": "还应检查原始数据和部署时点是否发生变化。",
+      "example": "训练时和线上对同一类别字段使用了不同映射。",
+      "tags": [
+        "训练服务偏差定位",
+        "安全模型上线验证"
+      ],
+      "evidence": "application",
+      "reference": "https://developers.google.com/machine-learning/crash-course/production-ml-systems/monitoring"
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "source": {
+    "id": "sklearn-hist-gradient-boosting",
+    "title": "scikit-learn 1.7 文档：直方图梯度提升分类",
+    "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html",
+    "type": "官方技术文档、固定版本源码或研究论文",
+    "note": "依照逐题所列资料自行整理，示例自编；涉及实现的行为以指定版本为准。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skhist-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "直方图梯度提升分类",
+      "knowledgePoint": "训练缺失值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 HistGradientBoostingClassifier 如何处理训练时出现的数值缺失？",
+      "answer": "在每次分裂时学习缺失样本应进入左子节点还是右子节点。",
+      "explanation": "选择依据候选分裂的增益。",
+      "example": "特征中含 NaN 时模型可学习其分支方向。",
+      "tags": [
+        "直方图梯度提升分类",
+        "训练缺失值"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+    },
+    {
+      "id": "skhist-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "直方图梯度提升分类",
+      "knowledgePoint": "预测缺失值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HistGradientBoostingClassifier 某特征训练时从未出现缺失，预测时出现 NaN 会进入哪一侧？",
+      "answer": "进入训练样本数量较多的子节点。",
+      "explanation": "这是 scikit-learn 1.7 文档描述的规则。",
+      "example": "训练特征完整但推理数据缺失时仍可路由。",
+      "tags": [
+        "直方图梯度提升分类",
+        "预测缺失值"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+    },
+    {
+      "id": "skhist-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "直方图梯度提升分类",
+      "knowledgePoint": "缺失值分箱",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HistGradientBoostingClassifier 的 max_bins 是否包含缺失值使用的分箱？",
+      "answer": "不包含；非缺失值最多使用 max_bins 个箱，另外保留一个缺失值箱。",
+      "explanation": "该版本 max_bins 不大于 255。",
+      "example": "max_bins=255 时仍可有专用的缺失值箱。",
+      "tags": [
+        "直方图梯度提升分类",
+        "缺失值分箱"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+    },
+    {
+      "id": "skhist-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "直方图梯度提升分类",
+      "knowledgePoint": "自动早停",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7.2 的 HistGradientBoostingClassifier 实现中，early_stopping=\"auto\" 如何决定是否早停？",
+      "answer": "按训练样本数是否大于 10000 决定；即使传入显式验证集，小样本仍不会自动启用早停。",
+      "explanation": "1.7 文档还称显式验证集会启用早停，但 1.7.2 源码与本地实测均未体现这一条件；需要时可显式设置 early_stopping=True。",
+      "example": "样本数为 120 且提供验证集时，1.7.2 的 do_early_stopping_ 为 False。",
+      "tags": [
+        "直方图梯度提升分类",
+        "自动早停"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/1.7.2/sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py",
+      "supportingReferences": [
+        {
+          "id": "skhist-17-doc",
+          "title": "scikit-learn 1.7 HistGradientBoostingClassifier 文档",
+          "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "skhist-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "直方图梯度提升分类",
+      "knowledgePoint": "验证集比例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HistGradientBoostingClassifier 开启早停、validation_fraction=None 且未传入显式验证集时，使用什么数据检查早停？",
+      "answer": "使用训练数据。",
+      "explanation": "若传入显式验证集，则会使用该验证集；用训练评分解释模型表现时应区分其与独立验证评分。",
+      "example": "不留出验证集时按训练评分判断是否停止。",
+      "tags": [
+        "直方图梯度提升分类",
+        "验证集比例"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+    },
+    {
+      "id": "skhist-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "直方图梯度提升分类",
+      "knowledgePoint": "热启动条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HistGradientBoostingClassifier 使用 warm_start=True 时，为保证结果有效应满足什么数据条件？",
+      "answer": "后续 fit 应在与之前相同的数据上继续训练。",
+      "explanation": "该选项用于复用先前结果并增加提升轮次。",
+      "example": "在同一训练集上增加 max_iter。",
+      "tags": [
+        "直方图梯度提升分类",
+        "热启动条件"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+    },
+    {
+      "id": "skhist-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "直方图梯度提升分类",
+      "knowledgePoint": "每轮树数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 HistGradientBoostingClassifier 每轮通常构造多少棵树？",
+      "answer": "二分类每轮 1 棵；多分类每轮为每个类别构造 1 棵。",
+      "explanation": "可通过 n_trees_per_iteration_ 检查。",
+      "example": "三分类任务每轮构造 3 棵树。",
+      "tags": [
+        "直方图梯度提升分类",
+        "每轮树数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+    },
+    {
+      "id": "skhist-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "直方图梯度提升分类",
+      "knowledgePoint": "权重相乘",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HistGradientBoostingClassifier 同时提供 class_weight 与 sample_weight 时，两者如何组合？",
+      "answer": "类别权重与各样本权重相乘。",
+      "explanation": "重复加权可能明显改变不同样本的训练影响。",
+      "example": "样本权重和类别权重均为 2 时，该样本组合权重为 4。",
+      "tags": [
+        "直方图梯度提升分类",
+        "权重相乘"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html"
+    }
+  ]
+}

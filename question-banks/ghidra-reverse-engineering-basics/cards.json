@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "ghidra-reverse-engineering-basics",
+    "title": "Ghidra 官方材料：静态反编译基础",
+    "url": "https://ghidra.re/ghidra_docs/GhidraClass/Beginner/Introduction_to_Ghidra_Student_Guide.html",
+    "type": "官方文档或教材",
+    "note": "依据 Ghidra 官方入门课程和 Ghidra 11.4.2 固定版本反编译器帮助自行整理；示例自编。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "ghidra-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Ghidra 静态分析",
+      "knowledgePoint": "项目与导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ghidra 项目在静态分析中通常用于组织什么？",
+      "answer": "它组织导入的程序及分析过程产生的符号、注释和其他项目数据。",
+      "explanation": "分析前通常将目标文件导入项目。",
+      "example": "为一组待分析程序建立项目。",
+      "tags": [
+        "Ghidra 静态分析",
+        "项目与导入"
+      ],
+      "evidence": "source",
+      "reference": "https://ghidra.re/ghidra_docs/GhidraClass/Beginner/Introduction_to_Ghidra_Student_Guide.html"
+    },
+    {
+      "id": "ghidra-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Ghidra 静态分析",
+      "knowledgePoint": "裸二进制导入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ghidra 导入缺少可识别文件头的裸二进制时，为什么需要选择合适的处理器语言和编译器配置？",
+      "answer": "原始字节本身可能不提供足够的架构和调用约定信息，错误选择会影响后续解释。",
+      "explanation": "应结合已知来源或其他证据确定目标环境。",
+      "example": "为裸固件选择正确的架构与字节序。",
+      "tags": [
+        "Ghidra 静态分析",
+        "裸二进制导入"
+      ],
+      "evidence": "source",
+      "reference": "https://ghidra.re/ghidra_docs/GhidraClass/Beginner/Introduction_to_Ghidra_Student_Guide.html"
+    },
+    {
+      "id": "ghidra-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Ghidra 静态分析",
+      "knowledgePoint": "自动分析",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ghidra 的自动分析通常从入口点出发完成哪些基础工作？",
+      "answer": "它沿控制流反汇编、在调用位置创建函数并建立交叉引用等。",
+      "explanation": "具体工作还取决于文件类型和所选分析器。",
+      "example": "导入程序后运行 Auto Analyze。",
+      "tags": [
+        "Ghidra 静态分析",
+        "自动分析"
+      ],
+      "evidence": "source",
+      "reference": "https://ghidra.re/ghidra_docs/GhidraClass/Beginner/Introduction_to_Ghidra_Student_Guide.html"
+    },
+    {
+      "id": "ghidra-004",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Ghidra 静态分析",
+      "knowledgePoint": "反编译输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ghidra 反编译器对二进制函数生成的 C 表示应如何理解？",
+      "answer": "它是根据机器代码和可用注释等信息重建的高层表示，不保证与原始源代码完全一致。",
+      "explanation": "编译优化和缺失的信息会影响重建结果。",
+      "example": "结合反汇编核对反编译出的条件分支。",
+      "tags": [
+        "Ghidra 静态分析",
+        "反编译输出"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NationalSecurityAgency/ghidra/blob/Ghidra_11.4.2_build/Ghidra/Features/Decompiler/src/main/help/help/topics/DecompilePlugin/DecompilerIntro.html"
+    },
+    {
+      "id": "ghidra-005",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Ghidra 静态分析",
+      "knowledgePoint": "注释影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 Ghidra 中修改变量名、数据类型或函数原型，为什么反编译结果可能随之变化？",
+      "answer": "反编译器会利用这些程序注释，并重新生成当前函数的显示结果。",
+      "explanation": "注释是分析输入，应与其他证据相互核对。",
+      "example": "为参数设置指针类型后重新查看表达式。",
+      "tags": [
+        "Ghidra 静态分析",
+        "注释影响"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NationalSecurityAgency/ghidra/blob/Ghidra_11.4.2_build/Ghidra/Features/Decompiler/src/main/help/help/topics/DecompilePlugin/DecompilerIntro.html"
+    },
+    {
+      "id": "ghidra-006",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Ghidra 静态分析",
+      "knowledgePoint": "P-code",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ghidra 的 P-code 在反编译分析中起什么作用？",
+      "answer": "它是 Ghidra 的中间表示，反编译器先将机器指令转换为 P-code 再分析其操作和变量。",
+      "explanation": "一种机器指令可能对应多个 P-code 操作。",
+      "example": "以中间表示分析不同指令集的数据流。",
+      "tags": [
+        "Ghidra 静态分析",
+        "P-code"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/NationalSecurityAgency/ghidra/blob/Ghidra_11.4.2_build/Ghidra/Features/Decompiler/src/main/help/help/topics/DecompilePlugin/DecompilerConcepts.html"
+    },
+    {
+      "id": "ghidra-007",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Ghidra 静态分析",
+      "knowledgePoint": "交叉引用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Ghidra 的交叉引用对分析人员有什么用途？",
+      "answer": "它帮助定位某个地址或程序元素被引用的位置，以便追踪相关代码或数据。",
+      "explanation": "引用结果的完整性取决于分析与目标程序特征。",
+      "example": "从字符串位置跳转到引用该字符串的代码。",
+      "tags": [
+        "Ghidra 静态分析",
+        "交叉引用"
+      ],
+      "evidence": "source",
+      "reference": "https://ghidra.re/ghidra_docs/GhidraClass/Beginner/Introduction_to_Ghidra_Student_Guide.html"
+    }
+  ]
+}

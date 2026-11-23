@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "ton-iot-multisource-dataset",
+    "title": "UNSW ToN_IoT：多源遥测与数据划分",
+    "url": "https://research.unsw.edu.au/projects/toniot-datasets",
+    "type": "官方资料与技术文档",
+    "note": "依据 UNSW 官网自行整理；官网说明学术研究可免费使用，商业用途需联系作者，使用数据须按要求引用。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "toniot-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "IoT 多源遥测数据",
+      "knowledgePoint": "异构来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToN_IoT 官方说明中包含哪几类不同来源的数据？",
+      "answer": "包含 IoT／IIoT 传感器遥测、网络流量，以及 Windows 和 Linux 系统数据。",
+      "explanation": "不同来源的记录结构和采集方式不同。",
+      "example": "分别检查网络和主机数据的字段。",
+      "tags": [
+        "IoT 多源遥测数据",
+        "异构来源"
+      ],
+      "evidence": "source",
+      "reference": "https://research.unsw.edu.au/projects/toniot-datasets"
+    },
+    {
+      "id": "toniot-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "IoT 多源遥测数据",
+      "knowledgePoint": "网络格式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToN_IoT 官网列出的原始网络数据有哪些形式？",
+      "answer": "包括 PCAP，以及 Zeek 生成的日志和 CSV。",
+      "explanation": "处理后的特征文件与原始包或日志不是同一种表示。",
+      "example": "需要检查协议细节时查看原始网络数据。",
+      "tags": [
+        "IoT 多源遥测数据",
+        "网络格式"
+      ],
+      "evidence": "source",
+      "reference": "https://research.unsw.edu.au/projects/toniot-datasets"
+    },
+    {
+      "id": "toniot-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "IoT 多源遥测数据",
+      "knowledgePoint": "系统采集",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToN_IoT 官网分别用什么工具采集部分 Linux 和 Windows 系统活动？",
+      "answer": "Linux 数据使用 atop 等跟踪工具，Windows 数据使用 Performance Monitor 数据收集器。",
+      "explanation": "具体字段和版本应查看所用数据目录。",
+      "example": "比较不同系统采集器提供的进程指标。",
+      "tags": [
+        "IoT 多源遥测数据",
+        "系统采集"
+      ],
+      "evidence": "source",
+      "reference": "https://research.unsw.edu.au/projects/toniot-datasets"
+    },
+    {
+      "id": "toniot-004",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 多源遥测数据",
+      "knowledgePoint": "数据目录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToN_IoT 官方目录中的 Raw datasets 和 Processed datasets 有什么区别？",
+      "answer": "前者保存各来源采集的原始格式；后者经过筛选并生成特征和标签，提供 CSV。",
+      "explanation": "处理流程和特征说明应随实验记录。",
+      "example": "先确认模型使用原始遥测还是处理后的特征。",
+      "tags": [
+        "IoT 多源遥测数据",
+        "数据目录"
+      ],
+      "evidence": "source",
+      "reference": "https://research.unsw.edu.au/projects/toniot-datasets"
+    },
+    {
+      "id": "toniot-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 多源遥测数据",
+      "knowledgePoint": "事件真值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ToN_IoT 官网的 SecurityEvents_GroundTruth_datasets 主要包含什么？",
+      "answer": "包含四类数据集中攻击事件及其时间戳等信息。",
+      "explanation": "官网说明标签使用攻击 IP 和时间戳等信息。",
+      "example": "将事件时间与相关记录联系起来。",
+      "tags": [
+        "IoT 多源遥测数据",
+        "事件真值"
+      ],
+      "evidence": "source",
+      "reference": "https://research.unsw.edu.au/projects/toniot-datasets"
+    },
+    {
+      "id": "toniot-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 多源遥测数据",
+      "knowledgePoint": "跨源对齐",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 ToN_IoT 的多种遥测数据时，能否直接按文件行号将不同来源一一配对？",
+      "answer": "不能假定行号对应；各来源的采集频率和事件粒度可能不同，需要按时间和实体等信息对齐。",
+      "explanation": "应核对时间戳、设备与网络上下文，并处理缺失和延迟。",
+      "example": "用时间窗口关联同一主机的系统指标和网络事件。",
+      "tags": [
+        "IoT 多源遥测数据",
+        "跨源对齐"
+      ],
+      "evidence": "application",
+      "reference": "https://research.unsw.edu.au/projects/toniot-datasets"
+    },
+    {
+      "id": "toniot-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "IoT 多源遥测数据",
+      "knowledgePoint": "预设切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "使用 ToN_IoT 官方提供的 Train_Test_datasets 时，是否可直接假定其满足项目所需的时间外或跨主机评估？",
+      "answer": "不能；需要检查具体的样本选择和切分条件。",
+      "explanation": "官方提供训练测试样本不意味着满足任意部署问题的评估要求。",
+      "example": "核对训练和测试中的时间范围与主机交集。",
+      "tags": [
+        "IoT 多源遥测数据",
+        "预设切分"
+      ],
+      "evidence": "application",
+      "reference": "https://research.unsw.edu.au/projects/toniot-datasets"
+    }
+  ]
+}

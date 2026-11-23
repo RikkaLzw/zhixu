@@ -1,0 +1,110 @@
+{
+  "source": {
+    "id": "lora-fa-fixed-matrix",
+    "title": "LoRA-FA 原论文 v3：固定投影与内存",
+    "url": "https://arxiv.org/pdf/2308.03303v3",
+    "type": "论文、官方文档或数据集说明",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "lorafa-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA-FA 参数高效微调",
+      "knowledgePoint": "固定投影",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LoRA-FA 论文中，低秩适配器的 A 与 B 哪个固定、哪个训练？",
+      "answer": "固定降维投影矩阵 A，只训练升维投影矩阵 B。",
+      "explanation": "基础模型权重在该参数高效微调设置中也保持冻结。 快手公开复盘提及 LoRA 原理；此题为主题延伸，非原题。",
+      "example": "比较同时训练 A、B 的常见 LoRA 配置。",
+      "tags": [
+        "LoRA-FA 参数高效微调",
+        "固定投影",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.03303v3",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型公开面经：LoRA-FA 主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "lorafa-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA-FA 参数高效微调",
+      "knowledgePoint": "激活内存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LoRA-FA 为什么可能降低低秩适配器的激活内存？",
+      "answer": "固定 A 后不再需要保存用于计算 A 梯度的大输入激活，可利用低维投影计算 B 的梯度。",
+      "explanation": "模型总显存仍取决于其他层、实现及训练配置。 快手公开复盘提及 LoRA 原理；此题为主题延伸，非原题。",
+      "example": "长序列训练时分析适配器反向传播所需的激活。",
+      "tags": [
+        "LoRA-FA 参数高效微调",
+        "激活内存",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.03303v3",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型公开面经：LoRA-FA 主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "lorafa-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA-FA 参数高效微调",
+      "knowledgePoint": "子空间限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 ΔW=AB 且秩参数小于输入维数时，固定 A 的 LoRA-FA 能表示任意同秩更新吗？",
+      "answer": "不能；更新受固定 A 所张成的投影子空间限制。",
+      "explanation": "论文摘要对表达能力的表述较宽，附录将结果称为结构近似；固定子空间无法包含所有同秩更新。",
+      "example": "不同初始化的 A 可能导致可到达更新方向不同。",
+      "tags": [
+        "LoRA-FA 参数高效微调",
+        "子空间限制"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.03303v3"
+    },
+    {
+      "id": "lorafa-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA-FA 参数高效微调",
+      "knowledgePoint": "初始化影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 LoRA-FA 中固定矩阵 A 的初始化仍可能影响结果？",
+      "answer": "初始化决定训练过程中保持不变的投影方向，论文也比较了不同初始化的效果。",
+      "explanation": "具体任务效果需要实测；不能保证一种初始化始终最优。",
+      "example": "记录随机种子并比较不同的 A 初始化。",
+      "tags": [
+        "LoRA-FA 参数高效微调",
+        "初始化影响"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.03303v3"
+    }
+  ]
+}

@@ -1,0 +1,490 @@
+{
+  "source": {
+    "id": "virtualization-mechanisms-foundations",
+    "title": "Linux KVM、QEMU、VirtIO 与 libvirt 官方文档",
+    "url": "https://docs.kernel.org/virt/kvm/api.html",
+    "type": "内核、虚拟化与官方技术文档",
+    "note": "依据 Linux KVM、QEMU、VirtIO 和 libvirt 文档逐题整理；具体功能依赖处理器、内核、设备模型及版本支持。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "virtmech-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "虚拟机监控器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "虚拟机监控器 hypervisor 的基本职责是什么？",
+      "answer": "为多个客户虚拟机抽象并管理 CPU、内存和设备等资源，同时控制它们对宿主资源的使用。",
+      "explanation": "不同产品将设备模型、调度和管理接口拆分在内核与用户态组件中。",
+      "example": "宿主机可为两个虚拟机分别提供虚拟 CPU、内存区域和虚拟网卡。",
+      "tags": [
+        "虚拟机",
+        "hypervisor"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/virt/kvm/api.html"
+    },
+    {
+      "id": "virtmech-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "Type 1 与 Type 2",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "常见分类中的 Type 1 与 Type 2 hypervisor 有什么区别？",
+      "answer": "Type 1 通常直接运行在物理硬件之上；Type 2 通常运行在通用宿主操作系统之上。",
+      "explanation": "实际产品架构不一定严格落入二分法；应以其宿主、内核和设备模型的实际职责判断。",
+      "example": "桌面虚拟化软件常由宿主操作系统承载，而裸机虚拟化平台直接管理服务器硬件。",
+      "tags": [
+        "虚拟机",
+        "hypervisor",
+        "Type 1",
+        "Type 2"
+      ],
+      "evidence": "source",
+      "reference": "https://csrc.nist.gov/pubs/sp/800/125/final"
+    },
+    {
+      "id": "virtmech-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "硬件辅助虚拟化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "x86 硬件辅助虚拟化扩展为虚拟机运行提供了什么能力？",
+      "answer": "它提供受控的客户执行模式、特权操作截获等机制，让 hypervisor 能在客户机运行时保留资源控制。",
+      "explanation": "Intel VMX 与 AMD SVM 是不同实现；可用能力还受处理器和 hypervisor 配置影响。",
+      "example": "KVM 可使用处理器虚拟化扩展运行客户 vCPU，而不是完全依赖软件翻译。",
+      "tags": [
+        "硬件辅助虚拟化",
+        "VMX",
+        "SVM"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/virt/kvm/api.html"
+    },
+    {
+      "id": "virtmech-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "VM Exit",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "硬件辅助虚拟化中的 VM Exit 通常表示什么？",
+      "answer": "客户机执行触发配置的截获条件后，处理器退出客户上下文并把控制权交还 hypervisor 处理。",
+      "explanation": "退出原因可能是特权操作、外部事件或虚拟机控制配置指定的其他事件。",
+      "example": "客户机访问需要模拟的设备寄存器时，hypervisor 可收到相应退出并更新虚拟设备状态。",
+      "tags": [
+        "VM Exit",
+        "虚拟机",
+        "陷入"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/virt/kvm/api.html"
+    },
+    {
+      "id": "virtmech-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "KVM 的内核职责",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Linux KVM 与用户态虚拟机管理程序通常怎样分工？",
+      "answer": "KVM 在内核中提供虚拟化接口和客户机执行能力；用户态程序可创建虚拟机、配置设备并管理运行流程。",
+      "explanation": "实际设备模型、管理服务和启动工具取决于所用软件栈。",
+      "example": "QEMU 可通过 KVM 接口运行客户 CPU，并在用户态提供虚拟设备模型。",
+      "tags": [
+        "KVM",
+        "QEMU",
+        "虚拟机"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/virt/kvm/api.html"
+    },
+    {
+      "id": "virtmech-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "vCPU 调度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 KVM 中，客户 vCPU 与宿主物理 CPU 的关系是什么？",
+      "answer": "vCPU 是提供给客户机的处理器执行上下文，实际运行时间由宿主调度到可用物理 CPU 上。",
+      "explanation": "vCPU 数量不等于专属物理核心数量；绑定、过量分配和宿主负载都会影响延迟。",
+      "example": "两个虚拟机共用宿主核心时，它们的 vCPU 可能交替获得执行时间。",
+      "tags": [
+        "KVM",
+        "vCPU",
+        "CPU 调度"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/virt/kvm/api.html"
+    },
+    {
+      "id": "virtmech-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "嵌套页表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "硬件辅助的二阶段地址转换如何把客户机虚拟地址映射到宿主物理内存？",
+      "answer": "处理器先用客户页表把客户虚拟地址转换为客户物理地址，再用嵌套页表映射到宿主物理地址。",
+      "explanation": "x86 上常称 Intel EPT 或 AMD NPT；具体名称和能力依处理器而定。",
+      "example": "客户机地址 0x1000 映射到客户物理页后，再映射到宿主 RAM 中的实际页框。",
+      "tags": [
+        "KVM",
+        "EPT",
+        "NPT",
+        "地址转换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/virt/kvm/x86/mmu.html"
+    },
+    {
+      "id": "virtmech-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "Shadow Page Table",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "Shadow Page Table 怎样帮助虚拟机完成地址转换？",
+      "answer": "hypervisor 维护组合后的页表，把客户虚拟地址映射到宿主物理地址，并保持它与客户页表更新一致。",
+      "explanation": "客户页表变化可能需要陷入并同步，因此这种方式与硬件二阶段页表的开销特征不同。",
+      "example": "客户修改页表时，hypervisor 可更新对应影子映射，避免客户直接控制宿主物理映射。",
+      "tags": [
+        "KVM",
+        "Shadow Page Table",
+        "地址转换"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/virt/kvm/x86/mmu.html"
+    },
+    {
+      "id": "virtmech-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "IOMMU",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IOMMU 在设备直通场景中提供什么关键能力？",
+      "answer": "它为设备 DMA 地址提供隔离和映射，使设备只能访问分配给它的受控内存区域。",
+      "explanation": "IOMMU 配置错误或硬件分组限制仍可能影响隔离；启用它不等于所有设备都可安全直通。",
+      "example": "把 PCIe 设备分配给虚拟机时，宿主可通过 IOMMU 限制其 DMA 访问范围。",
+      "tags": [
+        "IOMMU",
+        "DMA",
+        "设备直通"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/driver-api/vfio.html"
+    },
+    {
+      "id": "virtmech-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "设备仿真与半虚拟化",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "全设备仿真与半虚拟化设备接口在客户机设备模型上有什么区别？",
+      "answer": "仿真设备模仿传统硬件接口；半虚拟化设备使用为虚拟环境设计的协作式接口。",
+      "explanation": "半虚拟化通常可减少部分仿真开销，但客户机需要相应驱动支持。",
+      "example": "客户机可使用 VirtIO 驱动与宿主提供的 VirtIO 设备后端通信。",
+      "tags": [
+        "设备仿真",
+        "半虚拟化",
+        "VirtIO"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html"
+    },
+    {
+      "id": "virtmech-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "VirtIO 驱动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirtIO 驱动与 VirtIO 设备后端如何协作？",
+      "answer": "客户机前端驱动通过标准化 VirtIO 接口提交请求，宿主设备后端处理请求并返回结果。",
+      "explanation": "该接口可承载块设备、网络等虚拟设备；具体功能依设备类型和实现而异。",
+      "example": "VirtIO 网络前端把发送缓冲区提交给宿主网络后端。",
+      "tags": [
+        "VirtIO",
+        "前端驱动",
+        "设备后端"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html"
+    },
+    {
+      "id": "virtmech-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "Virtqueue",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "VirtIO 中的 virtqueue 通常承担什么作用？",
+      "answer": "它提供客户前端与设备后端之间传递请求缓冲区和完成状态的队列机制。",
+      "explanation": "不同设备可定义一个或多个队列；具体队列语义由 VirtIO 设备规范描述。",
+      "example": "网络设备可用发送队列提交数据包，并用接收队列提供可填充的缓冲区。",
+      "tags": [
+        "VirtIO",
+        "virtqueue",
+        "设备队列"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html"
+    },
+    {
+      "id": "virtmech-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "虚拟机与容器",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "虚拟机与常见操作系统容器在内核隔离方式上有什么主要区别？",
+      "answer": "虚拟机通常运行独立的客户操作系统内核；容器通常共享宿主内核并通过命名空间、资源控制等机制隔离进程。",
+      "explanation": "两者都有配置错误和共享资源带来的风险；隔离强度需结合具体实现与配置判断。",
+      "example": "Linux 容器中的进程使用宿主 Linux 内核，而另一台虚拟机可运行不同的客户内核。",
+      "tags": [
+        "虚拟机",
+        "容器",
+        "内核"
+      ],
+      "evidence": "source",
+      "reference": "https://csrc.nist.gov/pubs/sp/800/125/final"
+    },
+    {
+      "id": "virtmech-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "全虚拟化与半虚拟化",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "全虚拟化与半虚拟化对客户操作系统的要求有什么常见区别？",
+      "answer": "全虚拟化通常让未专门修改的客户系统运行在虚拟硬件上；半虚拟化会让客户系统通过协作接口了解并配合虚拟环境。",
+      "explanation": "现代硬件辅助虚拟化和 VirtIO 等半虚拟化设备接口常组合使用，因此二者并非只能二选一。",
+      "example": "操作系统内核可使用 VirtIO 驱动，但其普通应用仍按虚拟 CPU 的架构运行。",
+      "tags": [
+        "全虚拟化",
+        "半虚拟化",
+        "VirtIO"
+      ],
+      "evidence": "source",
+      "reference": "https://csrc.nist.gov/pubs/sp/800/125/final"
+    },
+    {
+      "id": "virtmech-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "快照与备份",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "虚拟机磁盘快照是否等同于一份独立备份？",
+      "answer": "不一定；快照常依赖原始磁盘和差分层，删除或损坏依赖链可能使快照不可用。",
+      "explanation": "一致性还取决于是否协调客户文件系统和应用写入；应按恢复目标验证备份。",
+      "example": "差分镜像只记录基础镜像创建后的变化，单独复制差分文件不能还原完整磁盘。",
+      "tags": [
+        "虚拟机快照",
+        "备份",
+        "磁盘镜像"
+      ],
+      "evidence": "source",
+      "reference": "https://www.qemu.org/docs/master/system/images"
+    },
+    {
+      "id": "virtmech-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "在线迁移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "虚拟机 live migration 的目标是什么？",
+      "answer": "在尽量缩短服务中断的情况下，把运行中的虚拟机执行状态和所需资源转移到另一台宿主机。",
+      "explanation": "迁移通常要求目标端具备兼容的 CPU、设备、网络和存储条件，具体约束依管理栈而异。",
+      "example": "宿主维护前把虚拟机迁到另一台兼容服务器。",
+      "tags": [
+        "虚拟机迁移",
+        "live migration"
+      ],
+      "evidence": "source",
+      "reference": "https://libvirt.org/migration.html"
+    },
+    {
+      "id": "virtmech-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "预拷贝迁移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "预拷贝 live migration 如何减少虚拟机停机时间？",
+      "answer": "先在虚拟机运行时复制内存页，再重复传输迁移期间被改写的页，最后短暂停机同步剩余状态。",
+      "explanation": "若页面持续被大量修改，重复传输可能延长迁移；实现会设置停止条件或限制。",
+      "example": "迁移阶段先复制大部分内存，停机阶段再发送少量剩余脏页和处理器状态。",
+      "tags": [
+        "虚拟机迁移",
+        "预拷贝",
+        "脏页"
+      ],
+      "evidence": "source",
+      "reference": "https://libvirt.org/migration.html"
+    },
+    {
+      "id": "virtmech-018",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "迁移脏页收敛",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "预拷贝迁移中，客户机内存脏页产生速度持续高于可传输速度会造成什么问题？",
+      "answer": "待复制的脏页集合可能难以缩小，使迁移反复传输而无法在预定时间内收敛。",
+      "explanation": "可通过限制客户机负载、调整带宽或采用其他迁移策略处理；可用选项取决于平台。",
+      "example": "高写入速率数据库虚拟机可能在每轮内存复制期间再次改写大量页面。",
+      "tags": [
+        "虚拟机迁移",
+        "脏页",
+        "收敛"
+      ],
+      "evidence": "source",
+      "reference": "https://libvirt.org/migration.html"
+    },
+    {
+      "id": "virtmech-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "内存 Ballooning",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "虚拟机内存 ballooning 通常怎样让宿主重新分配部分内存？",
+      "answer": "宿主请求客户机中的 balloon 驱动占用并释放客户页，宿主因而可以回收相应物理页。",
+      "explanation": "效果依赖客户驱动和客户机内存状态；它不是无成本地增加客户机可用内存。",
+      "example": "宿主内存紧张时，可让空闲客户机膨胀 balloon 并交还部分页。",
+      "tags": [
+        "内存 Ballooning",
+        "虚拟机内存"
+      ],
+      "evidence": "source",
+      "reference": "https://libvirt.org/formatdomain.html#memory-allocation"
+    },
+    {
+      "id": "virtmech-020",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "内存过量分配",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "宿主机对虚拟机内存过量分配的主要运行风险是什么？",
+      "answer": "多个客户机同时需要更多物理页时，宿主可能发生回收、换页或内存耗尽，造成性能下降甚至虚拟机受影响。",
+      "explanation": "承诺的虚拟内存总量大于物理内存并不意味着负载峰值时仍有足够内存。",
+      "example": "多台虚拟机同时启动大规模作业，可能使宿主交换空间快速增长。",
+      "tags": [
+        "内存过量分配",
+        "宿主资源",
+        "虚拟机"
+      ],
+      "evidence": "source",
+      "reference": "https://libvirt.org/formatdomain.html#memory-allocation"
+    },
+    {
+      "id": "virtmech-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "PCI 设备直通",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PCI 设备直通给虚拟机时，宿主通常需要哪些隔离条件？",
+      "answer": "通常需要 IOMMU 支持和可安全隔离的设备分组，并由设备分配框架限制宿主与客户机的访问。",
+      "explanation": "硬件拓扑可能让多个设备处于同一隔离组；不是每个设备都能独立直通。",
+      "example": "VFIO 可在满足硬件条件时把设备交给虚拟机，而不让普通宿主驱动同时控制它。",
+      "tags": [
+        "PCI 直通",
+        "IOMMU",
+        "VFIO"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/driver-api/vfio.html"
+    },
+    {
+      "id": "virtmech-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "嵌套虚拟化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "嵌套虚拟化允许客户虚拟机执行什么额外角色？",
+      "answer": "它允许客户机自身运行 hypervisor，并在其内部创建更内层的虚拟机。",
+      "explanation": "需要处理器和宿主栈支持相应扩展；不同架构、功能和迁移场景支持程度不同。",
+      "example": "开发者可在笔记本的一层 Linux 虚拟机中启动用于测试的 KVM 虚拟机。",
+      "tags": [
+        "嵌套虚拟化",
+        "KVM"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.kernel.org/virt/kvm/x86/nested-vmx.html"
+    },
+    {
+      "id": "virtmech-023",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "NUMA 放置",
+      "questionType": "故障分析",
+      "origin": "自行整理",
+      "question": "NUMA 宿主机上，虚拟 CPU 与客户内存放置不匹配为什么可能降低性能？",
+      "answer": "线程访问远端 NUMA 节点内存的延迟和带宽通常不同于本地访问，跨节点放置可能增加访问成本。",
+      "explanation": "具体影响受处理器拓扑、内存策略和工作负载访问模式影响。",
+      "example": "把密集访问某组内存的 vCPU 固定在远端节点，可能增加跨插槽流量。",
+      "tags": [
+        "NUMA",
+        "vCPU",
+        "内存放置"
+      ],
+      "evidence": "source",
+      "reference": "https://libvirt.org/formatdomain.html#numa-node-tuning"
+    },
+    {
+      "id": "virtmech-024",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "虚拟机与硬件辅助虚拟化",
+      "knowledgePoint": "CPU Pinning 与过量分配",
+      "questionType": "区别辨析",
+      "origin": "自行整理",
+      "question": "把 vCPU 固定到宿主 CPU 后，是否就能保证该 vCPU 独占物理核心？",
+      "answer": "不一定；CPU 亲和性只限制可运行的处理器集合，仍需确认其他线程、宿主任务和 SMT 兄弟线程的使用情况。",
+      "explanation": "独占性还需要调度隔离、核心拓扑和资源配置共同保证。",
+      "example": "两个虚拟机的 vCPU 若都绑定到同一宿主核心，仍会竞争其执行时间。",
+      "tags": [
+        "CPU Pinning",
+        "CPU 亲和性",
+        "虚拟机调度"
+      ],
+      "evidence": "source",
+      "reference": "https://libvirt.org/formatdomain.html#cpu-tuning"
+    }
+  ]
+}

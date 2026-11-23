@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "graph-of-thoughts-reasoning",
+    "title": "Graph of Thoughts 原论文 v2：图结构推理",
+    "url": "https://arxiv.org/pdf/2308.09687v2",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "gotpaper-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "Graph of Thoughts 推理",
+      "knowledgePoint": "图表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graph of Thoughts 用图的节点和边分别表示什么？",
+      "answer": "节点表示语言模型产生的思路或中间结果，边表示思路之间的依赖关系。",
+      "explanation": "这种图表达的是推理信息的关系，不等同于模型神经网络结构。",
+      "example": "一个合并结论可依赖多个先前思路。",
+      "tags": [
+        "Graph of Thoughts 推理",
+        "图表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.09687v2"
+    },
+    {
+      "id": "gotpaper-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graph of Thoughts 推理",
+      "knowledgePoint": "思路聚合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graph of Thoughts 的 aggregation 操作做什么？",
+      "answer": "把多个已有思路作为输入，生成融合它们的新思路。",
+      "explanation": "新节点可有多个输入依赖，这是该图结构相对单父节点树的重要能力。",
+      "example": "合并多个子问题的部分答案生成汇总结果。",
+      "tags": [
+        "Graph of Thoughts 推理",
+        "思路聚合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.09687v2"
+    },
+    {
+      "id": "gotpaper-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graph of Thoughts 推理",
+      "knowledgePoint": "修订的图表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graph of Thoughts 论文用什么图结构表示对同一个思路的迭代修订？",
+      "answer": "用该思路节点上的自环表示反复修改其内容。",
+      "explanation": "这与创建一个依赖旧节点的新思路节点的生成操作不同。",
+      "example": "对已有摘要反复检查并补充遗漏内容。",
+      "tags": [
+        "Graph of Thoughts 推理",
+        "修订的图表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.09687v2"
+    },
+    {
+      "id": "gotpaper-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graph of Thoughts 推理",
+      "knowledgePoint": "运行推理状态",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Graph of Thoughts 的 Graph Reasoning State 与 Graph of Operations 有什么区别？",
+      "answer": "前者保存执行过程中产生的思路及状态，后者描述预设的操作计划。",
+      "explanation": "运行状态可包含思路的有效性和评分。",
+      "example": "执行聚合后产生的新结论会加入运行状态。",
+      "tags": [
+        "Graph of Thoughts 推理",
+        "运行推理状态"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.09687v2"
+    },
+    {
+      "id": "gotpaper-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graph of Thoughts 推理",
+      "knowledgePoint": "解析器作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graph of Thoughts 的 Parser 主要负责什么？",
+      "answer": "从语言模型回复中提取信息并构造思路状态，供推理状态更新。",
+      "explanation": "它处理输出表示，不等同于安排下一步操作的 Controller。",
+      "example": "从模型回复中解析排序结果并保存到状态。",
+      "tags": [
+        "Graph of Thoughts 推理",
+        "解析器作用"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.09687v2"
+    },
+    {
+      "id": "gotpaper-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "Graph of Thoughts 推理",
+      "knowledgePoint": "评分来源",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Graph of Thoughts 的思路评分一定由语言模型完成吗？",
+      "answer": "不一定；论文允许根据任务使用本地评分函数、人工或语言模型评分。",
+      "explanation": "评分质量和任务约束会影响后续思路选择。",
+      "example": "排序任务可直接计算顺序错误数作为评分依据。",
+      "tags": [
+        "Graph of Thoughts 推理",
+        "评分来源"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2308.09687v2"
+    }
+  ]
+}

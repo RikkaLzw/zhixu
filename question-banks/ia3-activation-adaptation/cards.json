@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "ia3-activation-adaptation",
+    "title": "(IA)³ 原论文 v2：激活缩放适配",
+    "url": "https://arxiv.org/pdf/2205.05638v2",
+    "type": "官方技术文档、固定版本源码或研究论文",
+    "note": "依照逐题所列资料自行整理，示例自编；涉及实现的行为以指定版本为准。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "ia3-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IA³ 参数高效微调",
+      "knowledgePoint": "核心方法",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "(IA)³ 参数高效微调主要怎样修改模型计算？",
+      "answer": "用可训练的任务向量逐元素缩放模型中选定的中间激活。",
+      "explanation": "基座模型参数可以保持冻结。",
+      "example": "不同任务可使用各自的缩放向量。",
+      "tags": [
+        "IA³ 参数高效微调",
+        "核心方法"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.05638v2"
+    },
+    {
+      "id": "ia3-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IA³ 参数高效微调",
+      "knowledgePoint": "缩放位置",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "(IA)³ 原论文在每层 Transformer 的哪些激活上引入缩放向量？",
+      "answer": "在注意力机制的键和值以及前馈网络内部激活上引入向量。",
+      "explanation": "论文为这些位置分别设置可学习向量。",
+      "example": "对注意力值向量逐元素缩放。",
+      "tags": [
+        "IA³ 参数高效微调",
+        "缩放位置"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.05638v2"
+    },
+    {
+      "id": "ia3-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IA³ 参数高效微调",
+      "knowledgePoint": "初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 (IA)³ 原论文把新增缩放向量初始化为全 1？",
+      "answer": "逐元素乘以 1 不改变原有激活，因此加入适配器时保持原模型计算。",
+      "explanation": "不考虑其他修改和数值误差。",
+      "example": "初始向量为全 1 时模型输出保持一致。",
+      "tags": [
+        "IA³ 参数高效微调",
+        "初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.05638v2"
+    },
+    {
+      "id": "ia3-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IA³ 参数高效微调",
+      "knowledgePoint": "与 LoRA 对比",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "(IA)³ 与 LoRA 在适配机制上有什么主要区别？",
+      "answer": "(IA)³ 学习逐元素激活缩放；LoRA 用低秩矩阵表示权重更新。",
+      "explanation": "二者都是参数高效微调方法，但可训练参数结构不同。",
+      "example": "比较一个缩放向量与一对低秩矩阵。",
+      "tags": [
+        "IA³ 参数高效微调",
+        "与 LoRA 对比"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.05638v2"
+    },
+    {
+      "id": "ia3-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IA³ 参数高效微调",
+      "knowledgePoint": "混合任务批次",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "(IA)³ 如何支持在一个批次中处理使用不同适配参数的任务？",
+      "answer": "可对各序列的激活分别乘以其对应任务向量。",
+      "explanation": "实现仍需正确为样本选择适配器。",
+      "example": "批次中两个任务各用自己的缩放参数。",
+      "tags": [
+        "IA³ 参数高效微调",
+        "混合任务批次"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.05638v2"
+    },
+    {
+      "id": "ia3-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IA³ 参数高效微调",
+      "knowledgePoint": "合并权重",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在单任务且满足实现条件时，(IA)³ 的逐元素缩放为什么可能合并进权重？",
+      "answer": "缩放与矩阵乘法相邻时可代数地吸收到对应权重矩阵中。",
+      "explanation": "合并后需注意量化、权重共享和实现约束。",
+      "example": "将输出通道的固定缩放并入线性层权重。",
+      "tags": [
+        "IA³ 参数高效微调",
+        "合并权重"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2205.05638v2"
+    }
+  ]
+}

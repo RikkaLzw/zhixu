@@ -1,0 +1,278 @@
+{
+  "source": {
+    "id": "model-explanations-lime-shap",
+    "title": "LIME 与 SHAP 原论文：模型解释",
+    "url": "https://arxiv.org/abs/1602.04938",
+    "type": "教材、研究论文与官方源码",
+    "note": "按逐题引用资料自行整理；安全场景示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "xaimodel-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "局部解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "机器学习模型的局部解释通常关注什么？",
+      "answer": "它解释模型对某个特定样本的预测如何与该样本的特征相关。",
+      "explanation": "单个样本的解释不一定代表模型在全部数据上的行为。",
+      "example": "解释一条日志为什么获得较高模型分数。",
+      "tags": [
+        "局部解释",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1602.04938"
+    },
+    {
+      "id": "xaimodel-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "LIME模型无关",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LIME 的模型无关性通常是什么意思？",
+      "answer": "它通过查询原模型在扰动样本上的输出构造解释，不要求取得原模型内部结构。",
+      "explanation": "仍需要能够对选定输入调用模型并读取输出。",
+      "example": "用同一解释方法分析树模型和神经网络。",
+      "tags": [
+        "LIME模型无关",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1602.04938"
+    },
+    {
+      "id": "xaimodel-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "局部代理模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LIME 怎样利用代理模型解释单个预测？",
+      "answer": "它在目标样本附近生成扰动样本，按邻近程度加权，再拟合可解释的局部代理模型。",
+      "explanation": "原论文以稀疏线性模型作为示例。",
+      "example": "扰动文本中的词语并拟合局部线性模型。",
+      "tags": [
+        "局部代理模型",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1602.04938"
+    },
+    {
+      "id": "xaimodel-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "局部与全局忠实",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "局部代理模型在一个样本附近拟合良好，能否证明它在所有输入上都忠实？",
+      "answer": "不能；局部忠实度只针对选定邻域，其他区域的模型行为可能不同。",
+      "explanation": "全局结论需要更广泛的分析。",
+      "example": "一个告警的局部解释不代表所有告警。",
+      "tags": [
+        "局部与全局忠实",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1602.04938"
+    },
+    {
+      "id": "xaimodel-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "解释复杂度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LIME 如何在局部解释中平衡拟合效果和模型复杂度？",
+      "answer": "目标函数同时考虑代理模型在邻域内的拟合损失和解释复杂度。",
+      "explanation": "解释过于简单可能遗漏局部行为，过于复杂又难以理解。",
+      "example": "限制线性解释使用的非零特征数。",
+      "tags": [
+        "解释复杂度",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1602.04938"
+    },
+    {
+      "id": "xaimodel-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "可解释表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LIME 中的可解释表示可以与模型原始输入不同吗？",
+      "answer": "可以；它可把原始输入映射为更便于人理解的组件，例如词或图像超像素的存在与否。",
+      "explanation": "扰动后的可解释表示还需映射回模型可接受的输入。",
+      "example": "用图像区域表示哪些部分被保留。",
+      "tags": [
+        "可解释表示",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1602.04938"
+    },
+    {
+      "id": "xaimodel-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "文本扰动",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LIME 解释文本分类时，原论文如何构造部分扰动样本？",
+      "answer": "通过移除部分词构造文本变体，再查询原模型的预测。",
+      "explanation": "这些变体不一定符合自然语言或真实分布。",
+      "example": "从句子中去掉某些词再评分。",
+      "tags": [
+        "文本扰动",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1602.04938"
+    },
+    {
+      "id": "xaimodel-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "扰动稳定性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "基于随机扰动拟合的 LIME 解释为什么可能随采样变化？",
+      "answer": "不同扰动样本可能使局部拟合和选出的特征发生变化。",
+      "explanation": "可通过固定随机状态并重复评估稳定性来检查。",
+      "example": "多次解释同一模型输出并比较特征。",
+      "tags": [
+        "扰动稳定性",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1602.04938"
+    },
+    {
+      "id": "xaimodel-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "Shapley边际贡献",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SHAP 如何基于 Shapley 值分配特征贡献？",
+      "answer": "它综合一个特征加入不同特征集合时对模型输出的边际变化，并按 Shapley 权重平均。",
+      "explanation": "贡献通常依赖对缺失特征和参考分布的定义。",
+      "example": "比较有无某特征时的条件预测差异。",
+      "tags": [
+        "Shapley边际贡献",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1705.07874"
+    },
+    {
+      "id": "xaimodel-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "SHAP加和",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "理想的加性 SHAP 解释中，基线值与各特征归因值之和对应什么？",
+      "answer": "对应被解释样本的模型输出；两者应使用相同的输出尺度。",
+      "explanation": "近似计算或实现设置可能引入数值误差。",
+      "example": "基线加各项贡献得到该样本的模型分数。",
+      "tags": [
+        "SHAP加和",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1705.07874"
+    },
+    {
+      "id": "xaimodel-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "SHAP基线",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SHAP 解释中的基线值通常起什么作用？",
+      "answer": "它作为解释的参考输出，特征归因描述从该基线到样本输出的变化。",
+      "explanation": "参考背景及输出空间取决于解释方法和配置。",
+      "example": "相对于背景样本平均预测解释单条记录。",
+      "tags": [
+        "SHAP基线",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1705.07874"
+    },
+    {
+      "id": "xaimodel-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "SHAP符号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于指定输出与基线，正负 SHAP 值通常各说明什么？",
+      "answer": "正值把该输出相对基线向上推，负值把该输出向下推。",
+      "explanation": "它不是对特征与真实结果因果关系的直接证明。",
+      "example": "某特征对恶意类模型分数贡献为负。",
+      "tags": [
+        "SHAP符号",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1705.07874"
+    },
+    {
+      "id": "xaimodel-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "相关特征解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "解释相关特征时，为什么 SHAP 归因可能随缺失特征的处理方式而变化？",
+      "answer": "不同处理方式对特征依赖和参考分布作出不同假设，可能改变各特征分配到的贡献。",
+      "explanation": "解释前应说明采用的设定。",
+      "example": "两个高度相关的流量特征共享预测信息。",
+      "tags": [
+        "相关特征解释",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html"
+    },
+    {
+      "id": "xaimodel-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "模型局部解释",
+      "knowledgePoint": "SHAP与单位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分类模型的 SHAP 值一定可以直接解释成概率变化吗？",
+      "answer": "不一定；归因可能对应原始分数、对数几率或概率等不同模型输出空间。",
+      "explanation": "必须核对解释器和模型的具体配置。",
+      "example": "树模型解释使用 raw 输出时先确认分数尺度。",
+      "tags": [
+        "SHAP与单位",
+        "模型局部解释"
+      ],
+      "evidence": "source",
+      "reference": "https://shap.readthedocs.io/en/latest/generated/shap.TreeExplainer.html"
+    }
+  ]
+}

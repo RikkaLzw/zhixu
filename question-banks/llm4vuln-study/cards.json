@@ -1,0 +1,369 @@
+{
+  "source": {
+    "id": "llm4vuln-study",
+    "title": "LLM4Vuln 漏洞推理与审计验证",
+    "url": "https://arxiv.org/abs/2401.16185v4",
+    "type": "研究论文与官方技术指南",
+    "note": "依据 LLM4Vuln v4 及 OWASP WSTG v4.2 固定版本整理；应用推论标记为 application，未重新运行模型或漏洞实验。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "llmvstudy-001",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "可控评测因素",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLM4Vuln 提供哪些可独立配置的评测组件？",
+      "answer": "它区分漏洞知识检索、代码上下文补充、提示方案和指令遵循。",
+      "explanation": "框架通过控制配置分析各因素对结果的影响。",
+      "example": "固定上下文与提示，比较使用和不使用外部知识。",
+      "tags": [
+        "可控评测因素",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§3–4"
+    },
+    {
+      "id": "llmvstudy-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "代码检索报告",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLM4Vuln v4 的原始报告检索方法用什么查询漏洞知识库？",
+      "answer": "它用待分析代码检索相似的历史代码，再取出关联的漏洞报告文本。",
+      "explanation": "历史代码可以包含代码和注释；报告只提供参考，不自动证明当前代码有同一漏洞。",
+      "example": "用待审计函数查找相近历史案例的报告。",
+      "tags": [
+        "代码检索报告",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§4.1"
+    },
+    {
+      "id": "llmvstudy-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "功能摘要检索",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLM4Vuln v4 的摘要知识检索主要用什么表示来匹配历史案例？",
+      "answer": "它先总结目标代码的功能，再用功能摘要的向量检索相似功能。",
+      "explanation": "得到匹配后再提供相应的漏洞知识摘要。",
+      "example": "按“计算代币交换量”的功能查找历史风险知识。",
+      "tags": [
+        "功能摘要检索",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§4.1"
+    },
+    {
+      "id": "llmvstudy-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "摘要知识内容",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLM4Vuln v4 对历史漏洞报告生成的摘要主要包含哪两类信息？",
+      "answer": "包括相关代码的功能和漏洞根因。",
+      "explanation": "功能摘要用于匹配，漏洞知识摘要供后续分析参考。",
+      "example": "用功能描述检索，再读取对应风险根因。",
+      "tags": [
+        "摘要知识内容",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§4.1"
+    },
+    {
+      "id": "llmvstudy-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "相似案例的验证",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "检索到相似漏洞报告后，能直接认定待测代码存在相同漏洞吗？",
+      "answer": "不能；仍需检查待测代码的数据流、条件和上下文是否满足该漏洞的触发前提。",
+      "explanation": "相似案例是分析线索，相关性不等于目标代码的漏洞证据。",
+      "example": "历史报告提到注入，仍要核查目标代码如何使用输入。",
+      "tags": [
+        "相似案例的验证",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§4.1"
+    },
+    {
+      "id": "llmvstudy-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "报告上下文可用性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLM4Vuln v4 从既有漏洞报告提取相关代码作为上下文，有什么部署限制？",
+      "answer": "发现未知漏洞时未必已有对应报告，不能默认这种报告派生上下文可用。",
+      "explanation": "论文还提供所有样本的被调用函数上下文，来源与报告派生上下文不同。",
+      "example": "新项目缺少公开漏洞报告时，需要从可用代码或工具提取上下文。",
+      "tags": [
+        "报告上下文可用性",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§4.2"
+    },
+    {
+      "id": "llmvstudy-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "两阶段评测角色",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLM4Vuln v4 的自动评测中，被评估模型与结果标注模型分别承担什么角色？",
+      "answer": "前者生成漏洞分析；后者把分析结果整理并与基准类型比较以辅助标注。",
+      "explanation": "评测模型本身也可能出错，结果需要核查。",
+      "example": "先生成自然语言审计结论，再将其转成可统计的类别。",
+      "tags": [
+        "两阶段评测角色",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§4.4"
+    },
+    {
+      "id": "llmvstudy-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "标注抽检范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLM4Vuln v4 对自动标注进行人工抽检后，能否据此证明全部自动标签都正确？",
+      "answer": "不能；抽检只直接覆盖被检查的样本，其他结果仍可能有误。",
+      "explanation": "论文对每种语言随机检查了 100 条；不同标注维度的结果也可能不同。",
+      "example": "报告抽检方法和误差，而不是把其余标注都视为已人工验证。",
+      "tags": [
+        "标注抽检范围",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§4.4"
+    },
+    {
+      "id": "llmvstudy-012",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "人工合成知识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UniVul 的 Java 和 C/C++ 可检索知识集中，CWE 如何转成带代码的案例？",
+      "answer": "论文让 GPT-4.1 根据 CWE 生成代表性代码示例及审计式报告。",
+      "explanation": "这类合成案例与直接收集真实历史漏洞报告的来源不同。",
+      "example": "用弱点类别生成示例，再为示例生成报告。",
+      "tags": [
+        "人工合成知识",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§5"
+    },
+    {
+      "id": "llmvstudy-013",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "负例构造差异",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "UniVul v4 中 Solidity 与 Java/C++ 的非漏洞样本构造方式有什么区别？",
+      "answer": "Solidity 从相关项目抽取非漏洞代码；Java 和 C/C++ 的样本与修复或非漏洞版本配对。",
+      "explanation": "这些差异可能影响不同语言结果的解释，不能默认所有负例构造一致。",
+      "example": "某语言使用同项目抽样，另一语言使用修复前后代码。",
+      "tags": [
+        "负例构造差异",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§5"
+    },
+    {
+      "id": "llmvstudy-014",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "名称改写与污染",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对评测代码重命名标识符并改写注释，能否证明模型没有在预训练中见过相关代码？",
+      "answer": "不能；改写只能减少部分表面重合，仍可能存在语义或结构上的记忆。",
+      "explanation": "论文将改写作为降低泄漏风险的措施，不能单独当成无污染证明。",
+      "example": "同一实现换了变量名，仍可能与公开代码高度相似。",
+      "tags": [
+        "名称改写与污染",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§5"
+    },
+    {
+      "id": "llmvstudy-015",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "提示效果边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LLM4Vuln v4 的实验是否说明思维链提示一定提高漏洞检出数量？",
+      "answer": "没有；论文观察到不同模型和语言上的效果并不一致。",
+      "explanation": "这是该实验条件下的观察，不代表所有模型或提示都一样。",
+      "example": "对照同一基准中直接提示与思维链提示的结果。",
+      "tags": [
+        "提示效果边界",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§6.3"
+    },
+    {
+      "id": "llmvstudy-016",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "外部知识效果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "给漏洞模型提供外部知识，是否保证每次都能提升精确率和召回率？",
+      "answer": "不保证；检索知识的相关性和模型如何使用它都会影响结果。",
+      "explanation": "LLM4Vuln v4 在部分模型与语言配置中观察到性能下降。",
+      "example": "不相关的历史漏洞类型可能分散模型对目标代码的分析。",
+      "tags": [
+        "外部知识效果",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§6.1"
+    },
+    {
+      "id": "llmvstudy-017",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "复现步骤目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "安全漏洞报告中写清复现步骤有什么作用？",
+      "answer": "它让接收报告的人员能够验证发现并定位需要处理的问题。",
+      "explanation": "复现材料应与实际测试范围和环境对应，避免把猜测写成已验证事实。",
+      "example": "记录可在授权环境中重复检查的输入与观察结果。",
+      "tags": [
+        "复现步骤目的",
+        "漏洞检测",
+        "代码审计"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/OWASP/wstg/blob/dd33419e10edb22b78d89325a6c2aad9f184e3a2/document/5-Reporting/README.md",
+      "referenceTitle": "OWASP WSTG v4.2：Reporting §3.2"
+    },
+    {
+      "id": "llmvstudy-018",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "测试覆盖边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "一次安全测试没有发现漏洞，能否证明系统不存在任何漏洞？",
+      "answer": "不能；测试只覆盖特定范围、时间和方法，其他问题仍可能未被发现。",
+      "explanation": "报告应交代测试范围和限制。",
+      "example": "未覆盖的功能或运行配置仍可能含有安全问题。",
+      "tags": [
+        "测试覆盖边界",
+        "漏洞检测",
+        "代码审计"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/OWASP/wstg/blob/dd33419e10edb22b78d89325a6c2aad9f184e3a2/document/5-Reporting/README.md",
+      "referenceTitle": "OWASP WSTG v4.2：Reporting §1, 3"
+    },
+    {
+      "id": "llmvstudy-019",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "审计总成本",
+      "questionType": "设计与权衡",
+      "origin": "自行整理",
+      "question": "为什么大模型辅助漏洞审计的成本不能只看模型调用费用？",
+      "answer": "生成结果仍需人工核验和处理误报，会产生额外工作成本。",
+      "explanation": "LLM4Vuln 的实际项目试验在提交结果前进行了人工复核；具体成本需结合流程测量。",
+      "example": "模型调用费用较低时，大量误报仍可能占用较多审计工时。",
+      "tags": [
+        "审计总成本",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§6.4"
+    },
+    {
+      "id": "llmvstudy-020",
+      "category": "vulnerabilities",
+      "level": "实践",
+      "subtopic": "漏洞推理与审计评估",
+      "knowledgePoint": "有效发现数量",
+      "questionType": "实践与诊断",
+      "origin": "自行整理",
+      "question": "评估辅助漏洞审计时，为什么不能把模型生成的可疑问题数直接当成有效发现数？",
+      "answer": "模型输出可能包含误报或未经证实的判断，应经独立复核后统计确认的发现。",
+      "explanation": "LLM4Vuln 的项目试验中，提交的问题还经过社区确认；确认比例取决于具体项目与流程。",
+      "example": "先核验每条可疑问题，再统计被确认的漏洞数量。",
+      "tags": [
+        "有效发现数量",
+        "漏洞检测",
+        "大模型"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/2401.16185v4",
+      "referenceTitle": "LLM4Vuln 原论文 v4：§6.4"
+    }
+  ]
+}

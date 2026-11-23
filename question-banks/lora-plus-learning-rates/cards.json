@@ -1,0 +1,91 @@
+{
+  "source": {
+    "id": "lora-plus-learning-rates",
+    "title": "LoRA+ 原论文 v2：低秩矩阵学习率",
+    "url": "https://arxiv.org/pdf/2402.12354v2",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "loraplus-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA+ 参数高效微调",
+      "knowledgePoint": "核心变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LoRA+ 相对使用同一学习率的标准 LoRA，主要改变什么训练设置？",
+      "answer": "为低秩矩阵 A 和 B 设置不同学习率，论文令 B 的学习率为 A 的 λ 倍。",
+      "explanation": "该方法保持低秩更新形式，论文研究大宽度下的学习率配置。快手公开复盘提及 LoRA 原理；此题为主题延伸，非原题。",
+      "example": "两个矩阵使用不同的优化器参数组。",
+      "tags": [
+        "LoRA+ 参数高效微调",
+        "核心变化",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.12354v2",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型公开面经：LoRA 主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "loraplus-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA+ 参数高效微调",
+      "knowledgePoint": "比例与缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LoRA+ 的学习率比例 λ 与 LoRA 前向缩放系数 α/r 有什么区别？",
+      "answer": "λ 控制 A、B 的相对学习率；α/r 缩放前向中的低秩权重更新。",
+      "explanation": "两者作用于不同环节，不能互相替代。 快手公开复盘提及 LoRA 原理；此题为主题延伸，非原题。",
+      "example": "调高 B 的学习率不等于直接放大推理时的适配器输出。",
+      "tags": [
+        "LoRA+ 参数高效微调",
+        "比例与缩放",
+        "公开面经",
+        "快手"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.12354v2",
+      "supportingReferences": [
+        {
+          "id": "company-kuaishou",
+          "title": "快手大模型公开面经：LoRA 主题延伸，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%BF%AB%E6%89%8B/%E3%80%900314%E3%80%91%E5%BF%AB%E6%89%8B%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "loraplus-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "LoRA+ 参数高效微调",
+      "knowledgePoint": "适用范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LoRA+ 原论文的理论分析和实验结果是否保证所有任务都优于普通 LoRA？",
+      "answer": "不保证；论文分析依赖模型与大宽度等假设，实际效果和学习率比例需在具体任务上评估。",
+      "explanation": "模型、初始化及数据均可能影响结果。",
+      "example": "在目标数据集上与相同预算的 LoRA 基线比较。",
+      "tags": [
+        "LoRA+ 参数高效微调",
+        "适用范围"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.12354v2"
+    }
+  ]
+}

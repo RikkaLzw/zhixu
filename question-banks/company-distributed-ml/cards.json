@@ -1,0 +1,250 @@
+{
+  "source": {
+    "id": "company-distributed-ml",
+    "title": "大厂公开面经：数据并行、蒸馏与稀疏模型",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "合集收录个人面试复盘，可能含转载；公司、岗位及经历为分享者自述，答案另依据逐题列出的资料核验。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "secint-dist-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "DP与DDP执行",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "单机多 GPU 的常见配置中，PyTorch DataParallel 与 DistributedDataParallel 的执行方式有什么区别？",
+      "answer": "DataParallel 在单进程中利用多线程和设备副本；DistributedDataParallel 通常为每个 GPU 使用独立进程，并在副本间同步梯度。",
+      "explanation": "具体 DDP 部署方式取决于设备与进程配置。",
+      "example": "在单机四卡训练中启动四个 DDP 工作进程。",
+      "tags": [
+        "DP与DDP执行",
+        "分布式训练",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-dist-ref",
+          "title": "PyTorch 2.15：DistributedDataParallel",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.parallel.DistributedDataParallel.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "pytorch-data-parallel-ref",
+          "title": "PyTorch 2.15：DataParallel",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.DataParallel.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-dist-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "DDP数据分片",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "PyTorch DistributedDataParallel 会自动把输入批次切分到各进程吗？",
+      "answer": "不会；需要由训练代码或 DistributedSampler 等机制为各进程提供相应数据。",
+      "explanation": "DDP 负责同步模型副本的梯度，输入组织需要另外配置。",
+      "example": "为每个训练进程配置对应的数据采样器。",
+      "tags": [
+        "DDP数据分片",
+        "分布式训练",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-dist-ref",
+          "title": "PyTorch 2.15：DistributedDataParallel",
+          "url": "https://docs.pytorch.org/docs/2.15/generated/torch.nn.parallel.DistributedDataParallel.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-dist-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "分布式训练",
+      "knowledgePoint": "分布式采样跨轮打乱",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用打乱的 PyTorch DistributedSampler 为什么每个 epoch 要调用 set_epoch？",
+      "answer": "它让不同训练轮次使用不同的打乱顺序；否则各轮可能重复同一顺序。",
+      "explanation": "应在创建该轮 DataLoader 迭代器之前调用。",
+      "example": "在每轮训练开始时传入当前 epoch 编号。",
+      "tags": [
+        "分布式采样跨轮打乱",
+        "分布式训练",
+        "公开面经",
+        "百度"
+      ],
+      "evidence": "application",
+      "referenceId": "company-baidu",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%99%BE%E5%BA%A6/%E3%80%900318%E3%80%91%E7%99%BE%E5%BA%A6%E4%BA%8C%E9%9D%A2.md",
+      "referenceTitle": "百度公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "pytorch-sampler-ref",
+          "title": "PyTorch 2.15：DistributedSampler",
+          "url": "https://docs.pytorch.org/docs/2.15/data.html#torch.utils.data.distributed.DistributedSampler",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-dist-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏",
+      "knowledgePoint": "蒸馏温度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "知识蒸馏中提高 softmax 温度通常怎样改变概率分布？",
+      "answer": "它使分布更平滑，让非最大类别也保留更多相对概率信息。",
+      "explanation": "原始蒸馏方法在训练时对教师和学生使用相同温度。",
+      "example": "比较教师在温度 1 与较高温度下的分类概率。",
+      "tags": [
+        "蒸馏温度",
+        "知识蒸馏",
+        "公开面经",
+        "科大讯飞"
+      ],
+      "evidence": "application",
+      "referenceId": "company-iflytek",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%A7%91%E5%A4%A7%E8%AE%AF%E9%A3%9E/%E3%80%900306%E3%80%91%E7%A7%91%E5%A4%A7%E8%AE%AF%E9%A3%9E%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "科大讯飞公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "distill-paper-ref",
+          "title": "Distilling the Knowledge in a Neural Network",
+          "url": "https://arxiv.org/abs/1503.02531",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-dist-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "知识蒸馏",
+      "knowledgePoint": "蒸馏损失缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始知识蒸馏为什么常将软目标损失乘以 T²？",
+      "answer": "软目标产生的梯度随温度大致按 1/T² 缩放，乘以 T² 有助于保持与硬标签损失的相对梯度尺度。",
+      "explanation": "这是论文中的梯度尺度调整，具体实现和损失权重可能不同。",
+      "example": "比较不同温度时保持软目标损失的相对影响。",
+      "tags": [
+        "蒸馏损失缩放",
+        "知识蒸馏",
+        "公开面经",
+        "科大讯飞"
+      ],
+      "evidence": "application",
+      "referenceId": "company-iflytek",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E7%A7%91%E5%A4%A7%E8%AE%AF%E9%A3%9E/%E3%80%900306%E3%80%91%E7%A7%91%E5%A4%A7%E8%AE%AF%E9%A3%9E%E4%B8%80%E9%9D%A2.md",
+      "referenceTitle": "科大讯飞公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "distill-paper-ref",
+          "title": "Distilling the Knowledge in a Neural Network",
+          "url": "https://arxiv.org/abs/1503.02531",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-dist-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稀疏模型",
+      "knowledgePoint": "Switch负载均衡统计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Switch Transformer 的负载均衡辅助损失结合了哪两类专家统计？",
+      "answer": "它结合每个专家实际接收的 token 比例和路由器给该专家的平均概率。",
+      "explanation": "论文的辅助损失鼓励路由分配更均匀；具体其他 MoE 实现可能不同。",
+      "example": "记录同一批 token 中各专家的分配比例和平均路由概率。",
+      "tags": [
+        "Switch负载均衡统计",
+        "稀疏模型",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "referenceId": "company-alibaba",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900303%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+      "referenceTitle": "阿里公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "switch-paper-ref",
+          "title": "Switch Transformers：路由与容量",
+          "url": "https://arxiv.org/html/2101.03961",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secint-dist-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "稀疏模型",
+      "knowledgePoint": "Switch专家容量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Switch Transformer 中某专家接收的 token 超过容量时如何处理溢出部分？",
+      "answer": "论文跳过这些 token 的专家计算，并通过残差连接把其表示传给下一层。",
+      "explanation": "这是 Switch 论文的处理方式，其他 MoE 实现可能不同。",
+      "example": "专家满载时，部分 token 不经过该专家的前馈计算。",
+      "tags": [
+        "Switch专家容量",
+        "稀疏模型",
+        "公开面经",
+        "阿里"
+      ],
+      "evidence": "application",
+      "referenceId": "company-alibaba",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E9%98%BF%E9%87%8C/%E3%80%900303%E3%80%91%E9%98%BF%E9%87%8C%E9%9D%A2%E7%BB%8F.md",
+      "referenceTitle": "阿里公开面经（合集收录，经历为分享者自述）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "switch-paper-ref",
+          "title": "Switch Transformers：路由与容量",
+          "url": "https://arxiv.org/html/2101.03961",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

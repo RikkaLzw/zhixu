@@ -1,0 +1,202 @@
+{
+  "source": {
+    "id": "yara-pe-rule-practice",
+    "title": "YARA 4.4 文档：PE 条件与规则细节",
+    "url": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html",
+    "type": "论文、教材与官方技术文档",
+    "note": "依据题目所列固定版本资料自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "12"
+  },
+  "cards": [
+    {
+      "id": "yarape-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "PE判定",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 的 pe.is_pe 在规则中用于判断什么？",
+      "answer": "判断扫描对象是否为 PE 文件。",
+      "explanation": "需要先导入 pe 模块；它只判断格式，不判断文件是否恶意。",
+      "example": "只对 PE 文件继续检查导入表。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "PE判定"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/modules/pe.html"
+    },
+    {
+      "id": "yarape-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "入口点语义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 4.4 的 pe.entry_point 在扫描文件和扫描进程内存时分别表示什么？",
+      "answer": "扫描文件时为入口点文件偏移；扫描进程内存时为入口点虚拟地址。",
+      "explanation": "不要把文件偏移和内存地址直接当成同一种坐标。",
+      "example": "相同 PE 的磁盘扫描与内存扫描使用不同地址含义。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "入口点语义"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/modules/pe.html"
+    },
+    {
+      "id": "yarape-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "PE节数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA PE 模块的 pe.number_of_sections 表示什么？",
+      "answer": "表示 PE 文件中的节数量。",
+      "explanation": "节数量可作为规则条件之一，但单独不足以判断恶意性。",
+      "example": "筛选只有一个节的 PE。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "PE节数量"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/modules/pe.html"
+    },
+    {
+      "id": "yarape-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "匹配长度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 条件中的 !a[1] 表示什么？",
+      "answer": "它表示字符串 $a 的第一次匹配长度。",
+      "explanation": "!a 是 !a[1] 的简写；该语法与匹配位置 @a 不同。",
+      "example": "检查可变长度正则匹配的字节数。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "匹配长度"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yarape-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "私有字符串",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 的 private 字符串修饰符如何影响条件判断和命令行 -s 的匹配细节？",
+      "answer": "字符串仍可参与规则条件，但其匹配细节不会由命令行 -s 显示。",
+      "explanation": "Python 绑定返回的字符串对象可能仍存在，但没有匹配实例；它与 private 规则控制规则报告的作用不同。",
+      "example": "使用辅助字符串判断规则但不展示其匹配。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "私有字符串"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yarape-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "ASCII与宽字符",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 文本字符串写作 \"text\" wide ascii 时会查找哪些形式？",
+      "answer": "同时查找 ASCII 形式和 wide 修饰的形式。",
+      "explanation": "wide 主要在 ASCII 字符之间插入零字节，不支持任意 UTF-16 文本。",
+      "example": "同时识别普通和零字节交错的英文字符串。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "ASCII与宽字符"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yarape-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "Base64明文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 文本字符串使用 base64 修饰符时，会同时搜索原始明文吗？",
+      "answer": "不会；若也要匹配明文，需要另设字符串。",
+      "explanation": "base64 与 wide、ascii 的组合先处理原始字符串形式再进行编码匹配。",
+      "example": "编码片段和明文片段分别定义为两项。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "Base64明文"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yarape-008",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "元数据用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 规则 meta 中定义的标识符能直接作为 condition 中的变量使用吗？",
+      "answer": "不能；meta 用于保存规则的附加信息。",
+      "explanation": "需要参与判断的数据应使用适当的规则表达式或外部变量。",
+      "example": "用 meta 存放作者和描述。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "元数据用途"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yarape-009",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "未定义表达式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 对未定义值取 not，是否总会得到 true？",
+      "answer": "不会；not 遇到未定义操作数仍产生未定义值，最终条件未定义时不匹配。",
+      "explanation": "and 与 or 对未定义操作数的处理规则另有说明。",
+      "example": "非 PE 文件上的 pe.entry_point 可能未定义。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "未定义表达式"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    },
+    {
+      "id": "yarape-010",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "YARA PE 与规则条件",
+      "knowledgePoint": "检查已定义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "YARA 的 defined 操作符可以用来做什么？",
+      "answer": "检查一个表达式是否具有已定义的值。",
+      "explanation": "模块字段可能因扫描对象不适用而未定义。",
+      "example": "使用 defined pe.entry_point 检查入口点可用性。",
+      "tags": [
+        "YARA PE 与规则条件",
+        "检查已定义"
+      ],
+      "evidence": "source",
+      "reference": "https://yara.readthedocs.io/en/v4.4.0/writingrules.html"
+    }
+  ]
+}

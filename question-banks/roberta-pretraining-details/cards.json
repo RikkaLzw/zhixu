@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "roberta-pretraining-details",
+    "title": "RoBERTa 原论文 v1：预训练策略",
+    "url": "https://arxiv.org/pdf/1907.11692v1",
+    "type": "官方文档与论文",
+    "note": "依据逐题引用的固定版本文档或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "robertapre-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RoBERTa 预训练",
+      "knowledgePoint": "预训练骨干",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoBERTa 原论文的主要改进集中在模型结构还是 BERT 的预训练策略？",
+      "answer": "主要集中在 BERT 的预训练方法和训练规模，论文沿用 BERT 架构进行比较。",
+      "explanation": "其结果表明训练配置和数据对模型表现有重要影响。",
+      "example": "比较 RoBERTa 和原始 BERT 时应同时考虑训练条件。",
+      "tags": [
+        "RoBERTa 预训练",
+        "预训练骨干"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.11692v1"
+    },
+    {
+      "id": "robertapre-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoBERTa 预训练",
+      "knowledgePoint": "动态掩码",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoBERTa 所用的动态掩码如何处理同一文本序列在训练中的多次出现？",
+      "answer": "每次将序列送入模型时生成掩码模式，同一序列不同次出现可以遮盖不同位置。",
+      "explanation": "训练目标仍是预测被选中位置的 token。",
+      "example": "同一句话两次训练时可能有不同单词被掩码。",
+      "tags": [
+        "RoBERTa 预训练",
+        "动态掩码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.11692v1"
+    },
+    {
+      "id": "robertapre-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "RoBERTa 预训练",
+      "knowledgePoint": "下一句预测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoBERTa 原论文的预训练配置是否保留 BERT 的下一句预测损失？",
+      "answer": "不保留；其预训练使用掩码语言模型目标而移除 NSP 损失。",
+      "explanation": "移除 NSP 不意味着文本输入一定只含单个自然句子。",
+      "example": "论文比较了带 NSP 和不带 NSP 的不同输入格式。",
+      "tags": [
+        "RoBERTa 预训练",
+        "下一句预测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.11692v1"
+    },
+    {
+      "id": "robertapre-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoBERTa 预训练",
+      "knowledgePoint": "全文输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoBERTa 论文的 FULL-SENTENCES 输入格式能否跨越文档边界？",
+      "answer": "可以；相邻完整句子可来自多个文档，文档之间加入额外分隔符。",
+      "explanation": "该格式移除了 NSP 损失，并把序列打包到长度上限内。",
+      "example": "当前文档结束后可以继续填入下一个文档的句子。",
+      "tags": [
+        "RoBERTa 预训练",
+        "全文输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.11692v1"
+    },
+    {
+      "id": "robertapre-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoBERTa 预训练",
+      "knowledgePoint": "单文档输入",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "RoBERTa 论文的 DOC-SENTENCES 与 FULL-SENTENCES 在文档边界上有什么区别？",
+      "answer": "DOC-SENTENCES 不跨文档边界，FULL-SENTENCES 可以跨越边界。",
+      "explanation": "DOC-SENTENCES 接近文档末尾时可能产生较短输入。",
+      "example": "两者都可在没有 NSP 损失的设置下使用。",
+      "tags": [
+        "RoBERTa 预训练",
+        "单文档输入"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.11692v1"
+    },
+    {
+      "id": "robertapre-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoBERTa 预训练",
+      "knowledgePoint": "词表实现",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoBERTa 论文采用哪一种 BPE 基本符号来构建词表？",
+      "answer": "采用字节作为基本符号的 byte-level BPE。",
+      "explanation": "论文使用约 5 万个子词单元；字节基础有助于编码多样文本。",
+      "example": "英文和其他语言中的字符可先表示为字节再切分。",
+      "tags": [
+        "RoBERTa 预训练",
+        "词表实现"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.11692v1"
+    },
+    {
+      "id": "robertapre-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoBERTa 预训练",
+      "knowledgePoint": "大批次实验控制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoBERTa 论文比较不同批次大小时，为什么同时调整训练步数？",
+      "answer": "为了使处理序列总量及计算预算相近，从而更清楚地比较批次大小的影响。",
+      "explanation": "批次变大且步数减少时，不能只看优化步数判断训练量。",
+      "example": "256 条序列训练 1M 步与 2048 条训练 125K 步处理相同数量的序列。",
+      "tags": [
+        "RoBERTa 预训练",
+        "大批次实验控制"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.11692v1"
+    },
+    {
+      "id": "robertapre-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "RoBERTa 预训练",
+      "knowledgePoint": "训练规模结论",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RoBERTa 论文说明比较预训练语言模型时为什么要报告训练数据和训练时长？",
+      "answer": "数据规模和训练步数都能影响下游效果，不控制它们会混淆模型方法的比较。",
+      "explanation": "论文分别研究了更多数据和更长预训练的影响。",
+      "example": "声称某种结构更好时，应检查两组是否使用相近语料和预算。",
+      "tags": [
+        "RoBERTa 预训练",
+        "训练规模结论"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/1907.11692v1"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "rag-original-latent-documents",
+    "title": "Lewis 等 RAG 原论文 v4：潜在文档",
+    "url": "https://arxiv.org/pdf/2005.11401v4",
+    "type": "教材、官方文档与论文",
+    "note": "依据逐题引用的文档、教材或论文自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "ragpaper-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "原始 RAG 潜在文档",
+      "knowledgePoint": "文档潜变量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 RAG 论文如何在生成答案时处理检索文档的不确定性？",
+      "answer": "把检索到的文档视为潜变量，对候选文档对应的生成概率进行边缘化。",
+      "explanation": "论文使用检索器的 top-K 文档近似完整文档集合。",
+      "example": "多个候选段落可以对同一答案的概率产生贡献。",
+      "tags": [
+        "原始 RAG 潜在文档",
+        "文档潜变量"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.11401v4"
+    },
+    {
+      "id": "ragpaper-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "原始 RAG 潜在文档",
+      "knowledgePoint": "序列与token边缘化",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "原始 RAG-Sequence 与 RAG-Token 对文档边缘化有什么区别？",
+      "answer": "RAG-Sequence 对整段输出使用同一个潜在文档后再汇总；RAG-Token 在每个输出位置分别汇总文档贡献。",
+      "explanation": "两者是不同的概率建模方式，不只是检索文档数量不同。",
+      "example": "不同输出 token 在 RAG-Token 中可以受不同候选文档影响。",
+      "tags": [
+        "原始 RAG 潜在文档",
+        "序列与token边缘化"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.11401v4"
+    },
+    {
+      "id": "ragpaper-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "原始 RAG 潜在文档",
+      "knowledgePoint": "候选文档集合",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 RAG-Token 是否要求为每个生成 token 重新检索整套文档？",
+      "answer": "不要求；论文先针对输入检索 top-K 文档，再在各生成位置对该候选集合边缘化。",
+      "explanation": "不同位置的文档贡献可以不同，但候选文档由输入查询确定。",
+      "example": "不要把 token 级边缘化误解为每一步都调用一次外部搜索。",
+      "tags": [
+        "原始 RAG 潜在文档",
+        "候选文档集合"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.11401v4"
+    },
+    {
+      "id": "ragpaper-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "原始 RAG 潜在文档",
+      "knowledgePoint": "单token情况",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 RAG-Sequence 与 RAG-Token 在输出只有一个 token 时有什么关系？",
+      "answer": "两者的文档边缘化形式相同。",
+      "explanation": "只有一个输出位置时，按序列汇总和按位置汇总不再有区别。",
+      "example": "单标签分类可表示成一个输出 token。",
+      "tags": [
+        "原始 RAG 潜在文档",
+        "单token情况"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.11401v4"
+    },
+    {
+      "id": "ragpaper-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "原始 RAG 潜在文档",
+      "knowledgePoint": "检索监督",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 RAG 训练检索器和生成器时，是否必须标注每个问题的金标准文档？",
+      "answer": "不必须；论文可以只利用输入和目标输出联合优化，而不直接监督所用文档。",
+      "explanation": "top-K 检索近似与实际训练实现仍影响优化。",
+      "example": "只有问题和答案的训练样本也可用于该训练设置。",
+      "tags": [
+        "原始 RAG 潜在文档",
+        "检索监督"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.11401v4"
+    },
+    {
+      "id": "ragpaper-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "原始 RAG 潜在文档",
+      "knowledgePoint": "固定文档编码器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 RAG 训练中为什么保持文档编码器和文档索引固定？",
+      "answer": "更新文档编码器会使大规模文档向量需要重新编码和重建索引，成本很高。",
+      "explanation": "论文仍微调查询编码器和生成器。",
+      "example": "静态索引减少每个训练更新步骤的索引重建成本。",
+      "tags": [
+        "原始 RAG 潜在文档",
+        "固定文档编码器"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.11401v4"
+    },
+    {
+      "id": "ragpaper-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "原始 RAG 潜在文档",
+      "knowledgePoint": "知识库更新",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原始 RAG 如何在不改变生成器参数的情况下接入更新后的外部知识？",
+      "answer": "重新构建或替换非参数化文档索引，使检索使用更新语料。",
+      "explanation": "知识更新是否被正确检索和使用仍需评估。",
+      "example": "更换维基百科快照后可以建立新的文档向量索引。",
+      "tags": [
+        "原始 RAG 潜在文档",
+        "知识库更新"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.11401v4"
+    },
+    {
+      "id": "ragpaper-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "原始 RAG 潜在文档",
+      "knowledgePoint": "两种解码",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "原始 RAG-Token 为什么比 RAG-Sequence 更容易直接采用标准自回归束搜索？",
+      "answer": "RAG-Token 可在每个输出位置计算边缘化后的下一 token 分布；RAG-Sequence 的序列级边缘化不按同样方式分解。",
+      "explanation": "论文为 RAG-Sequence 使用候选生成和近似排序。",
+      "example": "逐 token 汇总的分布可以作为束搜索的转移概率。",
+      "tags": [
+        "原始 RAG 潜在文档",
+        "两种解码"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2005.11401v4"
+    }
+  ]
+}

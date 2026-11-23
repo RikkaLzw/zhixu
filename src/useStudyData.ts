@@ -2,8 +2,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createInitialData } from './data/seed';
 import { migrateStudyData } from './data/migration';
+import { hydrateStudyData, isCompactStudyData, serializeStudyData } from './data/storage';
 import { scheduleCard } from './lib/scheduler';
-import { CategoryId, Rating, StudyCard, StudyData, TopicId } from './types';
+import { studyLevels } from './levels';
+import { Rating, StudyCard, StudyCardDraft, StudyData, StudyLevel } from './types';
 
 const storageKey = '@ai4sec-memory/v1';
 const categoryIds = new Set(['foundations', 'detection', 'vulnerabilities', 'operations']);
@@ -53,12 +55,13 @@ export function useStudyData() {
     setLoadError(false);
     try {
       const stored = await AsyncStorage.getItem(storageKey);
-      const parsed: unknown = stored === null ? createInitialData() : JSON.parse(stored);
+      const raw: unknown = stored === null ? null : JSON.parse(stored);
+      const parsed: unknown = stored === null ? createInitialData() : hydrateStudyData(raw);
       if (!isStudyData(parsed)) throw new Error('Invalid study data');
       const migrated = migrateStudyData(parsed);
-      if (migrated !== parsed) {
+      if (migrated !== parsed || (stored !== null && !isCompactStudyData(raw))) {
         try {
-          await AsyncStorage.setItem(storageKey, JSON.stringify(migrated));
+          await AsyncStorage.setItem(storageKey, serializeStudyData(migrated));
         } catch {
           setSaveError(true);
         }
@@ -75,7 +78,7 @@ export function useStudyData() {
   }, [load]);
 
   const persist = useCallback((next: StudyData) => {
-    const serialized = JSON.stringify(next);
+    const serialized = serializeStudyData(next);
     writes.current = writes.current
       .catch(() => undefined)
       .then(() => AsyncStorage.setItem(storageKey, serialized))
@@ -109,23 +112,26 @@ export function useStudyData() {
     });
   }, [update]);
 
-  const saveCard = useCallback((card: { id?: string; category: CategoryId; topic: TopicId; question: string; answer: string; explanation?: string; example?: string; tags: string[] }) => {
+  const saveCard = useCallback((card: StudyCardDraft) => {
     update((previous) => {
       const existing = card.id ? previous.cards.find((item) => item.id === card.id) : undefined;
       const changedText = existing && (existing.question !== card.question.trim() ||
         existing.answer !== card.answer.trim() || existing.explanation !== card.explanation || existing.example !== card.example);
+      const changedClassification = existing && (existing.category !== card.category || existing.topic !== card.topic);
       const next: StudyCard = {
         ...existing,
         id: existing?.id ?? makeId(),
         category: card.category,
         topic: card.topic,
+        level: card.level,
         question: card.question.trim(),
         answer: card.answer.trim(),
         explanation: card.explanation,
         example: card.example,
         tags: card.tags,
         createdAt: existing?.createdAt ?? Date.now(),
-        ...(changedText ? { sources: undefined, level: undefined, alternateQuestions: undefined, otherExplanations: undefined, otherExamples: undefined } : {}),
+        ...(changedText ? { sources: undefined, alternateQuestions: undefined, otherExplanations: undefined, otherExamples: undefined } : {}),
+        ...(changedText || changedClassification ? { knowledgeArea: undefined, subtopic: undefined, knowledgePoint: undefined, questionType: undefined, origin: undefined } : {}),
       };
       return {
         ...previous,
@@ -156,9 +162,17 @@ export function useStudyData() {
     }));
   }, [update]);
 
+  const setEnabledLevels = useCallback((levels: StudyLevel[]) => {
+    const enabledLevels = studyLevels.filter((level) => levels.includes(level.id)).map((level) => level.id);
+    update((previous) => ({
+      ...previous,
+      settings: { ...previous.settings, enabledLevels },
+    }));
+  }, [update]);
+
   const retrySave = useCallback(() => {
     if (current.current) persist(current.current);
   }, [persist]);
 
-  return { data, loadError, saveError, load, retrySave, review, saveCard, deleteCard, setDailyLimit };
+  return { data, loadError, saveError, load, retrySave, review, saveCard, deleteCard, setDailyLimit, setEnabledLevels };
 }

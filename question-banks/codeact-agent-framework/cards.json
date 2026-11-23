@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "codeact-agent-framework",
+    "title": "CodeAct 原论文 v2：可执行代码动作",
+    "url": "https://arxiv.org/pdf/2402.01030v2",
+    "type": "原论文、官方文档与固定版本源码",
+    "note": "依据逐题引用的论文、文档或固定版本源码自行整理；示例为自编，具体条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "codeact-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "代码动作智能体",
+      "knowledgePoint": "动作表示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeAct 用什么形式表示智能体的环境动作？",
+      "answer": "它让模型生成可执行的 Python 代码，由解释器执行并返回观察。",
+      "explanation": "执行结果可用于决定后续动作。",
+      "example": "生成一段代码调用查询函数。",
+      "tags": [
+        "代码动作智能体",
+        "动作表示"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.01030v2"
+    },
+    {
+      "id": "codeact-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "代码动作智能体",
+      "knowledgePoint": "组合能力",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 CodeAct 的单次代码动作可以组合多个工具调用？",
+      "answer": "代码可以用变量传递中间结果，并用循环和条件等控制流组织多次调用。",
+      "explanation": "一次模型动作与底层工具实际调用次数不一定相同。",
+      "example": "循环查询多个输入，再汇总结果。",
+      "tags": [
+        "代码动作智能体",
+        "组合能力"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.01030v2"
+    },
+    {
+      "id": "codeact-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码动作智能体",
+      "knowledgePoint": "训练轨迹",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeActInstruct 与 CodeAct 框架分别是什么？",
+      "answer": "CodeAct 是用代码表示动作的交互框架；CodeActInstruct 是用于训练的多轮交互轨迹数据。",
+      "explanation": "论文用数据微调模型以增强环境交互能力。",
+      "example": "框架定义动作方式，数据提供训练示例。",
+      "tags": [
+        "代码动作智能体",
+        "训练轨迹"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.01030v2"
+    },
+    {
+      "id": "codeact-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "代码动作智能体",
+      "knowledgePoint": "自我纠错数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "CodeActInstruct 为什么保留一部分先出错、后修正的轨迹？",
+      "answer": "用这些轨迹训练模型根据环境反馈改进后续行动。",
+      "explanation": "筛选关注从观察中恢复，而不是只保留每一步都成功的演示。",
+      "example": "先遇到异常，再调整代码并获得正确结果。",
+      "tags": [
+        "代码动作智能体",
+        "自我纠错数据"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2402.01030v2"
+    }
+  ]
+}

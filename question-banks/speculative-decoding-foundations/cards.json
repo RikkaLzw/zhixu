@@ -1,0 +1,282 @@
+{
+  "source": {
+    "id": "speculative-decoding-foundations",
+    "title": "投机解码原论文：Fast Inference from Transformers",
+    "url": "https://arxiv.org/abs/2211.17192",
+    "type": "研究论文",
+    "note": "依据逐题引用的资料自行整理；面经仅作主题启发，示例为自编。",
+    "knowledgeArea": "06"
+  },
+  "cards": [
+    {
+      "id": "specdec-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "输出分布",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "无损投机采样对生成结果的概率分布有什么保证？",
+      "answer": "在理想数学条件下，采样得到的输出分布与仅用目标模型按相同采样规则生成的分布一致。",
+      "explanation": "浮点数值和实际实现可能带来细微差异。",
+      "example": "草稿模型较小时仍可保持目标分布。",
+      "tags": [
+        "输出分布",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2211.17192",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "specdec-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "逐token一致性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "投机采样保持目标分布，是否意味着固定随机种子时输出序列必然逐 token 相同？",
+      "answer": "不必；算法可能以不同方式消耗随机数，分布相同不要求每次采样结果相同。",
+      "explanation": "应区分分布等价和样本逐次完全一致。",
+      "example": "同一随机种子下两种采样过程可能得到不同样本。",
+      "tags": [
+        "逐token一致性",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2211.17192",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "specdec-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "接受概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "投机采样中，草稿分布 q 提出 token x，目标分布为 p 时，接受概率如何计算？",
+      "answer": "当 q(x)>0 时，接受概率为 min(1, p(x)/q(x))。",
+      "explanation": "此处 p 是目标分布，q 是草稿分布。",
+      "example": "目标概率不小于草稿概率时接受概率为 1。",
+      "tags": [
+        "接受概率",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2211.17192",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "specdec-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "拒绝校正",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "无损投机采样拒绝某草稿 token 后，校正 token 从什么分布采样？",
+      "answer": "从与 max(0, p(x)-q(x)) 成比例的归一化分布采样，其中 p 为目标分布、q 为草稿分布。",
+      "explanation": "这一步补足草稿接受过程未覆盖的目标概率质量。",
+      "example": "将目标概率高于草稿概率的部分用于补偿。",
+      "tags": [
+        "拒绝校正",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2211.17192",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "specdec-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "前缀接受",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "投机解码遇到第一个被拒绝的草稿 token 后，后续草稿 token 为什么不能直接全部接受？",
+      "answer": "它们是以原草稿前缀为条件生成的；拒绝并校正后，后续条件前缀已经改变。",
+      "explanation": "本轮保留已接受前缀并从拒绝处校正。",
+      "example": "第二个草稿被替换后，第三个草稿依赖了旧第二个 token。",
+      "tags": [
+        "前缀接受",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2211.17192",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "specdec-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "全部接受",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "原论文的单轮算法验证 K 个草稿 token，全部接受时最多可生成多少个新 token？",
+      "answer": "最多 K+1 个：K 个草稿 token 加上从目标模型分布再采样的一个 token。",
+      "explanation": "提前终止条件等实际约束可能使输出更短。",
+      "example": "验证 4 个草稿全部成功时最多推进 5 个 token。",
+      "tags": [
+        "全部接受",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2211.17192",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "specdec-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "草稿匹配与接受率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "草稿分布与目标分布越接近，对投机采样的接受率通常有什么影响？",
+      "answer": "分布重叠越大，期望接受率越高，通常可在一次目标模型验证中推进更多 token。",
+      "explanation": "是否加速还取决于草稿生成和验证成本。",
+      "example": "针对任务的草稿模型可能提高接受率。",
+      "tags": [
+        "草稿匹配与接受率",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2211.17192",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "specdec-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "草稿长度权衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "投机解码中是否草稿长度 K 越大就一定越快？",
+      "answer": "不一定；更长草稿增加草稿生成与验证成本，后面的候选也可能因前面被拒绝而作废。",
+      "explanation": "最佳长度依模型、硬件、负载和接受率而变化。",
+      "example": "比较不同 K 的实际每 token 延迟。",
+      "tags": [
+        "草稿长度权衡",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2211.17192",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "specdec-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "投机解码与采样",
+      "knowledgePoint": "延迟与额外计算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "投机解码减少目标模型串行调用，是否意味着计算量一定减少？",
+      "answer": "不意味着；它可能用更多并行计算和草稿模型开销换取较低延迟。",
+      "explanation": "收益尤其依赖模型服务时的瓶颈和批量大小。",
+      "example": "对内存带宽受限的解码服务测量延迟。",
+      "tags": [
+        "延迟与额外计算",
+        "投机解码与采样",
+        "公开面经",
+        "腾讯"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2211.17192",
+      "supportingReferences": [
+        {
+          "id": "company-tencent",
+          "title": "腾讯 IEG 大模型公开面经：投机采样主题启发，非原题",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E8%85%BE%E8%AE%AF/%E3%80%900310%E3%80%91%E8%85%BE%E8%AE%AFIEG%E4%B8%80%E9%9D%A2.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

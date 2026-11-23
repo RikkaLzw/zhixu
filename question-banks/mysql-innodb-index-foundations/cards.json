@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "mysql-innodb-index-foundations",
+    "title": "MySQL 8.4 官方文档：InnoDB 索引与查询计划",
+    "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-index-types.html",
+    "type": "官方技术文档与系统手册",
+    "note": "依据题目所列版本文档与手册自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "mysqlidx-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MySQL InnoDB 索引",
+      "knowledgePoint": "聚簇索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 8.4 的 InnoDB 聚簇索引保存什么？",
+      "answer": "聚簇索引存储行数据；定义了主键时，InnoDB 用主键作为聚簇索引。",
+      "explanation": "InnoDB 的表与聚簇索引结构密切相关。",
+      "example": "使用主键查找时，索引搜索可定位到保存行数据的页。",
+      "tags": [
+        "MySQL InnoDB 索引",
+        "聚簇索引"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-index-types.html"
+    },
+    {
+      "id": "mysqlidx-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 索引",
+      "knowledgePoint": "隐藏聚簇索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 表既没有主键，也没有所有列均为 NOT NULL 的 UNIQUE 索引时，会使用什么聚簇索引？",
+      "answer": "InnoDB 会生成基于隐藏行 ID 的聚簇索引 GEN_CLUST_INDEX。",
+      "explanation": "如果有合适的唯一非空索引，则会优先使用第一个合适的索引。",
+      "example": "新表未声明主键和合适的唯一非空索引。",
+      "tags": [
+        "MySQL InnoDB 索引",
+        "隐藏聚簇索引"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-index-types.html"
+    },
+    {
+      "id": "mysqlidx-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MySQL InnoDB 索引",
+      "knowledgePoint": "二级索引记录",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 的二级索引记录包含什么信息，使其能够定位到聚簇索引中的行？",
+      "answer": "它包含对应行的主键列，可据此查找聚簇索引。",
+      "explanation": "可用主键值继续查找聚簇索引中的行。",
+      "example": "按邮箱索引找到该用户的主键。",
+      "tags": [
+        "MySQL InnoDB 索引",
+        "二级索引记录"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-index-types.html"
+    },
+    {
+      "id": "mysqlidx-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 索引",
+      "knowledgePoint": "二级索引回表",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "InnoDB 通过二级索引找到记录后，如果还需要不在索引中的列，通常如何取得？",
+      "answer": "使用记录中的主键值查找聚簇索引，以取得所需行数据。",
+      "explanation": "这种额外查找通常称为回表。",
+      "example": "邮箱索引不含用户昵称时，继续按主键读取行。",
+      "tags": [
+        "MySQL InnoDB 索引",
+        "二级索引回表"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-index-types.html"
+    },
+    {
+      "id": "mysqlidx-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 索引",
+      "knowledgePoint": "主键长度成本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么 InnoDB 的主键很长可能增加二级索引空间？",
+      "answer": "二级索引记录中包含主键列，较长主键会增加记录和索引存储开销。",
+      "explanation": "索引数量较多时，这种影响可能更明显。",
+      "example": "多个二级索引均需要携带主键值。",
+      "tags": [
+        "MySQL InnoDB 索引",
+        "主键长度成本"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/innodb-index-types.html"
+    },
+    {
+      "id": "mysqlidx-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "MySQL InnoDB 索引",
+      "knowledgePoint": "覆盖索引",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "数据库查询中所说的覆盖索引是什么意思？",
+      "answer": "索引中已包含查询从该表所需的全部数据，因此可以仅通过索引提供这些数据。",
+      "explanation": "实际执行方式仍由优化器及存储引擎决定。",
+      "example": "查询的过滤列与输出列都能从同一个索引取得。",
+      "tags": [
+        "MySQL InnoDB 索引",
+        "覆盖索引"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/explain-output.html"
+    },
+    {
+      "id": "mysqlidx-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 索引",
+      "knowledgePoint": "复合索引前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对于 MySQL 的复合索引 (a,b,c)，哪些连续左前缀可用于索引查找？",
+      "answer": "(a)、(a,b) 和 (a,b,c) 是可用于查找的左前缀。",
+      "explanation": "仅有 b 的条件不是左前缀查找，但优化器仍可能选择索引扫描或跳跃扫描；是否采用取决于成本估计。",
+      "example": "按 a 和 b 的等值条件查找。",
+      "tags": [
+        "MySQL InnoDB 索引",
+        "复合索引前缀"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/multiple-column-indexes.html",
+      "supportingReferences": [
+        {
+          "id": "mysql-range-optimization-84",
+          "title": "MySQL 8.4：Range Optimization 中的 Skip Scan",
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/range-optimization.html#range-access-skip-scan",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "mysqlidx-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 索引",
+      "knowledgePoint": "覆盖与条件下推",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL EXPLAIN 中 Using index 和 Using index condition 分别提示什么？",
+      "answer": "前者表示所需列可从索引取得；后者表示将可用的索引条件下推，尽量减少读取完整行。",
+      "explanation": "条件下推并不等同于覆盖索引。",
+      "example": "二级索引先过滤部分记录，再读取需要的行。",
+      "tags": [
+        "MySQL InnoDB 索引",
+        "覆盖与条件下推"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/explain-output.html"
+    },
+    {
+      "id": "mysqlidx-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "MySQL InnoDB 索引",
+      "knowledgePoint": "计划估计行数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MySQL 8.4 的传统 EXPLAIN 输出中 rows 和 filtered 分别是什么估计？",
+      "answer": "rows 是预计检查的行数；filtered 是经过表条件过滤后保留下来的估计百分比。",
+      "explanation": "它们是优化器估计，并非实际执行统计。",
+      "example": "估计读取 1000 行、过滤后保留 10%。",
+      "tags": [
+        "MySQL InnoDB 索引",
+        "计划估计行数"
+      ],
+      "evidence": "source",
+      "reference": "https://dev.mysql.com/doc/refman/8.4/en/explain-output.html"
+    }
+  ]
+}

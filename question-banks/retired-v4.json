@@ -1,0 +1,170 @@
+{
+  "version": 4,
+  "note": "迁移用的旧版内置卡快照；仅在用户未修改对应内容时迁移或归档，保留学习记录。",
+  "cards": [
+    {
+      "id": "eval-004",
+      "category": "foundations",
+      "question": "安全告警中的精确率、召回率分别回答什么问题？",
+      "answer": "精确率回答告警有多准；召回率回答真实威胁被发现了多少。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "03",
+      "level": "入门",
+      "tags": [
+        "精确率",
+        "召回率"
+      ],
+      "explanation": "两者都基于明确的目标威胁和标签，不能脱离告警阈值解释。",
+      "example": "100 条告警里 20 条真实攻击，精确率是 20%；是否漏掉攻击还要看全部真实攻击数。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-004"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "eval-007",
+      "category": "foundations",
+      "question": "安全检测阈值应该怎样选择？",
+      "answer": "在验证集上结合漏报代价、误报量和可处理容量选择，再在测试集评估。",
+      "createdAt": 0,
+      "topic": "data-evaluation",
+      "knowledgeArea": "17",
+      "level": "实践",
+      "tags": [
+        "阈值",
+        "告警量"
+      ],
+      "explanation": "阈值是业务决策的一部分，不应使用测试集反复调到最好。",
+      "example": "比较每天 50、100、200 条告警预算下的攻击召回率。",
+      "sources": [
+        {
+          "id": "sklearn-evaluation",
+          "title": "scikit-learn：数据泄漏与分类评估",
+          "url": "https://scikit-learn.org/stable/common_pitfalls.html",
+          "type": "官方文档",
+          "evidence": "application",
+          "sourceCardId": "eval-007"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    },
+    {
+      "id": "ai4sec-020",
+      "category": "detection",
+      "question": "异常分数如何转化为可处理的告警？",
+      "answer": "结合有标签的验证数据和分析人员处理能力选择阈值，并持续检查误报和漏报。",
+      "createdAt": 0,
+      "topic": "network-threats",
+      "knowledgeArea": "11",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-020"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": [],
+      "tags": []
+    },
+    {
+      "id": "ai4sec-028",
+      "category": "vulnerabilities",
+      "question": "为什么恶意软件检测要关注样本时间和家族？",
+      "answer": "同家族或相近时间的样本可能高度相似；按时间和家族分析有助于了解面对新样本的效果。",
+      "createdAt": 0,
+      "topic": "malware-analysis",
+      "knowledgeArea": "12",
+      "sources": [
+        {
+          "id": "original",
+          "title": "AI4SEC 自编起步题",
+          "url": "",
+          "type": "自编题",
+          "evidence": "application",
+          "sourceCardId": "ai4sec-028"
+        },
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-008"
+        },
+        {
+          "id": "ember-malware",
+          "title": "Elastic EMBER 恶意软件基准",
+          "url": "https://github.com/elastic/ember",
+          "type": "开源数据集",
+          "evidence": "application",
+          "sourceCardId": "ember-009"
+        }
+      ],
+      "explanation": "仅随机切分可能让同家族相似文件出现在训练与测试中。",
+      "example": "在具备可信家族标签时留出部分家族用于测试。",
+      "alternateQuestions": [
+        "恶意软件检测模型如何评估对新家族的效果？",
+        "静态恶意软件模型为什么需要关注样本时间？"
+      ],
+      "otherExplanations": [
+        "按时间评估有助于暴露对旧样本的依赖。"
+      ],
+      "otherExamples": [
+        "用早期样本训练，检查后续样本的精确率、召回率和误报量。"
+      ],
+      "level": "实践",
+      "tags": [
+        "家族切分",
+        "泛化",
+        "时间切分",
+        "漂移"
+      ]
+    },
+    {
+      "id": "phish-005",
+      "category": "detection",
+      "question": "为什么钓鱼网址模型要考虑数据的时间变化？",
+      "answer": "钓鱼网址寿命和攻击方式会变化，历史样本的效果可能不能代表后续流量。",
+      "createdAt": 0,
+      "topic": "phishing-detection",
+      "knowledgeArea": "12",
+      "level": "进阶",
+      "tags": [
+        "时间切分",
+        "漂移"
+      ],
+      "explanation": "时间外测试应保证训练时没有使用之后才确认的信息。",
+      "example": "用早期数据训练，在后续采集的数据上测试。",
+      "sources": [
+        {
+          "id": "openphish",
+          "title": "OpenPhish 钓鱼数据资料",
+          "url": "https://www.openphish.com/phishing_database.html",
+          "type": "安全数据来源",
+          "evidence": "application",
+          "sourceCardId": "phish-005"
+        }
+      ],
+      "alternateQuestions": [],
+      "otherExplanations": [],
+      "otherExamples": []
+    }
+  ]
+}

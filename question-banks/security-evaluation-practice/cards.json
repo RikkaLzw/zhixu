@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "security-evaluation-practice",
+    "title": "安全模型切分、抽样与反馈",
+    "url": "https://developers.google.com/machine-learning/guides/rules-of-ml",
+    "type": "官方技术文档与标准",
+    "note": "根据逐题依据自行编写中文问答，示例为自编；公开面经为个人复盘，公司经历未经企业确认。",
+    "knowledgeArea": "17"
+  },
+  "cards": [
+    {
+      "id": "deployment-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "评估切分",
+      "knowledgePoint": "分层分组交叉验证",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "StratifiedGroupKFold 同时考虑哪两项切分目标？",
+      "answer": "它保持同一组不跨训练与验证，并尽量维持各折的类别比例。",
+      "explanation": "组内类别分布不均时，不一定能得到完全平衡的折。",
+      "example": "以主机为组评估稀有攻击类别。",
+      "tags": [
+        "分层分组交叉验证",
+        "评估切分"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/cross_validation.html#stratifiedgroupkfold"
+    },
+    {
+      "id": "deployment-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "评估切分",
+      "knowledgePoint": "分组不等于时间",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "按主机分组的随机切分能自动保证训练数据早于测试数据吗？",
+      "answer": "不能；分组与时间先后是不同约束，需要明确设计并检查。",
+      "explanation": "实际评估可能同时要求未见主机和未来时间段。",
+      "example": "先按时间划分，再核验主机是否按任务要求分组。",
+      "tags": [
+        "分组不等于时间",
+        "评估切分"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/cross_validation.html"
+    },
+    {
+      "id": "deployment-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "评估切分",
+      "knowledgePoint": "时间序列交叉验证",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "TimeSeriesSplit 的典型训练折如何随时间推进？",
+      "answer": "它使用较早数据训练并在更晚数据上验证，后续训练折通常包含更多历史样本。",
+      "explanation": "具体窗口大小和间隔可由参数约束，输入顺序应符合时间顺序。",
+      "example": "用历史日志训练并在随后一段日志上验证。",
+      "tags": [
+        "时间序列交叉验证",
+        "评估切分"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/cross_validation.html#time-series-split"
+    },
+    {
+      "id": "deployment-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "标签反馈",
+      "knowledgePoint": "人工复核选择偏差",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么只用高分告警的人工复核结果评估检测系统可能有偏差？",
+      "answer": "低分或未展示的样本可能很少获得标签，已复核样本不能代表全部流量。",
+      "explanation": "需要设计覆盖未选中样本的抽样或其他标签收集方式。",
+      "example": "从低分样本中抽取一部分供人工复核。",
+      "tags": [
+        "人工复核选择偏差",
+        "标签反馈"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/guides/rules-of-ml#rule_34_in_binary_classification_for_filtering_such_as_spam_detection_or_determining_interesting_emails_make_small_short-term_sacrifices_in_performance_for_very_clean_data"
+    },
+    {
+      "id": "deployment-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "标签反馈",
+      "knowledgePoint": "排序反馈循环",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "告警排序模型为什么可能形成反馈循环？",
+      "answer": "排序影响哪些告警被人工看到和标注，后续训练又依赖这些受排序影响的反馈。",
+      "explanation": "应记录曝光与选择机制，并设计可代表目标总体的评估。",
+      "example": "优先处理高分告警导致低分攻击缺少确认标签。",
+      "tags": [
+        "排序反馈循环",
+        "标签反馈"
+      ],
+      "evidence": "source",
+      "reference": "https://developers.google.com/machine-learning/guides/rules-of-ml#rule_35_beware_of_the_inherent_skew_in_ranking_problems"
+    }
+  ]
+}

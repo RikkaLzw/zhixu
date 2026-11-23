@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "nist-honeypot-detection",
+    "title": "NIST SP 800-94：蜜罐与入侵检测",
+    "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf",
+    "type": "NIST 专题指南",
+    "note": "依据逐题引用的资料自行整理；示例为自编，版本与前提见题目。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "honeynist-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "蜜罐与威胁观测",
+      "knowledgePoint": "蜜罐用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "NIST SP 800-94 描述的蜜罐主要用于什么？",
+      "answer": "作为诱骗性主机收集针对它的可疑活动和威胁信息。",
+      "explanation": "其正常业务用途通常为空，仅管理员有授权使用。",
+      "example": "观察扫描或攻击工具对诱饵主机的访问。",
+      "tags": [
+        "蜜罐与威胁观测",
+        "蜜罐用途"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+    },
+    {
+      "id": "honeynist-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "蜜罐与威胁观测",
+      "knowledgePoint": "检测补充",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "NIST SP 800-94 认为蜜罐能否替代入侵检测和防御系统？",
+      "answer": "不能；蜜罐是其他安全控制的补充。",
+      "explanation": "它只观察到与诱饵交互的活动，并不能覆盖所有真实资产。",
+      "example": "同时使用诱饵和生产网络的检测系统。",
+      "tags": [
+        "蜜罐与威胁观测",
+        "检测补充"
+      ],
+      "evidence": "source",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+    },
+    {
+      "id": "honeynist-003",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "蜜罐与威胁观测",
+      "knowledgePoint": "告警解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "蜜罐收到连接后，能否仅凭这一事实认定连接一定来自恶意攻击者？",
+      "answer": "不能；它是可疑线索，仍应结合来源、授权测试和活动内容确认。",
+      "explanation": "例如资产扫描或维护工具也可能访问到诱饵。",
+      "example": "区分已授权扫描与未知来源的交互。",
+      "tags": [
+        "蜜罐与威胁观测",
+        "告警解释"
+      ],
+      "evidence": "application",
+      "reference": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-94.pdf"
+    }
+  ]
+}

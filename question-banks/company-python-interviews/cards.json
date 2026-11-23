@@ -1,0 +1,177 @@
+{
+  "source": {
+    "id": "company-python-interviews",
+    "title": "字节公开面经中的 Python 考点（个人自述）",
+    "url": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+    "type": "公开面经（个人自述）",
+    "note": "考点来自个人公开面经，公司及经历为作者自述；答案另据 Python 官方文档核验。",
+    "knowledgeArea": "02"
+  },
+  "cards": [
+    {
+      "id": "companypy-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "大厂面经",
+      "knowledgePoint": "可迭代对象与迭代器",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "Python 中可迭代对象与迭代器的主要区别是什么？",
+      "answer": "可迭代对象能通过 iter() 提供迭代器；迭代器可通过 next() 逐项取值并维护迭代状态。",
+      "explanation": "迭代器本身也是可迭代对象。",
+      "example": "列表是可迭代对象，iter(列表) 返回迭代器。",
+      "tags": [
+        "可迭代对象与迭代器",
+        "大厂面经",
+        "公开面经",
+        "字节",
+        "Python"
+      ],
+      "evidence": "application",
+      "reference": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（作者自述）",
+      "supportingReferences": [
+        {
+          "id": "python-interview-doc",
+          "title": "Python 3.13 官方文档",
+          "url": "https://docs.python.org/3.13/tutorial/classes.html#iterators",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypy-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "大厂面经",
+      "knowledgePoint": "迭代结束",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 迭代器如何表示没有更多元素？",
+      "answer": "调用 next() 时抛出 StopIteration。",
+      "explanation": "for 循环会处理该异常并结束迭代。",
+      "example": "消费完迭代器后再次调用 next()。",
+      "tags": [
+        "迭代结束",
+        "大厂面经",
+        "公开面经",
+        "字节",
+        "Python"
+      ],
+      "evidence": "application",
+      "reference": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（作者自述）",
+      "supportingReferences": [
+        {
+          "id": "python-interview-doc",
+          "title": "Python 3.13 官方文档",
+          "url": "https://docs.python.org/3.13/tutorial/classes.html#iterators",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypy-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大厂面经",
+      "knowledgePoint": "生成器暂停",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 生成器执行到 yield 时会发生什么？",
+      "answer": "它产出一个值并暂停，保留局部状态以便下次继续执行。",
+      "explanation": "生成器的值通常按需产生。",
+      "example": "分批读取日志时逐批 yield 结果。",
+      "tags": [
+        "生成器暂停",
+        "大厂面经",
+        "公开面经",
+        "字节",
+        "Python"
+      ],
+      "evidence": "application",
+      "reference": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（作者自述）",
+      "supportingReferences": [
+        {
+          "id": "python-interview-doc",
+          "title": "Python 3.13 官方文档",
+          "url": "https://docs.python.org/3.13/howto/functional.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大厂面经",
+      "knowledgePoint": "函数装饰器",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Python 函数装饰器在函数定义时通常做什么？",
+      "answer": "它接收被定义的函数并返回一个对象，该返回对象绑定到函数名。",
+      "explanation": "装饰器可以返回包装函数，也可以返回其他对象。",
+      "example": "用装饰器为函数增加调用日志。",
+      "tags": [
+        "函数装饰器",
+        "大厂面经",
+        "公开面经",
+        "字节",
+        "Python"
+      ],
+      "evidence": "application",
+      "reference": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（作者自述）",
+      "supportingReferences": [
+        {
+          "id": "python-interview-doc",
+          "title": "Python 3.13 官方文档",
+          "url": "https://docs.python.org/3.13/reference/compound_stmts.html#function-definitions",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "companypy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "大厂面经",
+      "knowledgePoint": "CPython的GIL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "启用 GIL 的 CPython 中，多个线程能同时执行 Python 字节码吗？",
+      "answer": "在同一个解释器中，GIL 限制同一时刻只有一个线程执行 Python 字节码。",
+      "explanation": "Python 3.13 起还提供可禁用 GIL 的构建；部分原生操作和 I/O 可释放 GIL。",
+      "example": "CPU 密集的纯 Python 线程任务不能简单假设线性并行。",
+      "tags": [
+        "CPython的GIL",
+        "大厂面经",
+        "公开面经",
+        "字节",
+        "Python"
+      ],
+      "evidence": "application",
+      "reference": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（作者自述）",
+      "supportingReferences": [
+        {
+          "id": "python-interview-doc",
+          "title": "Python 3.13 官方文档",
+          "url": "https://docs.python.org/3.13/glossary.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

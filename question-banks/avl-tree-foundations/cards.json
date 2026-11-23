@@ -1,0 +1,69 @@
+{
+  "source": {
+    "id": "avl-tree-foundations",
+    "title": "Princeton Algorithms：AVL 平衡搜索树",
+    "url": "https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/AVLTreeST.java.html",
+    "type": "教材、标准与官方文档",
+    "note": "依据逐题引用的教材、标准或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "avl-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AVL 平衡搜索树",
+      "knowledgePoint": "平衡条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AVL 树对每个节点的左右子树高度有什么要求？",
+      "answer": "任一节点的左右子树高度之差绝对值不超过 1。",
+      "explanation": "AVL 树同时保持二叉搜索树的键序。",
+      "example": "一个节点的左右子树高度可以相差 0 或 1。",
+      "tags": [
+        "AVL 平衡搜索树",
+        "平衡条件"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/AVLTreeST.java.html"
+    },
+    {
+      "id": "avl-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AVL 平衡搜索树",
+      "knowledgePoint": "左右同侧失衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AVL 树插入产生左左失衡或右右失衡时，通常分别如何调整？",
+      "answer": "左左失衡时对失衡节点右旋；右右失衡时对失衡节点左旋。",
+      "explanation": "这里指标准插入产生的同侧失衡。",
+      "example": "依次插入 3、2、1 可右旋；插入 1、2、3 可左旋。",
+      "tags": [
+        "AVL 平衡搜索树",
+        "左右同侧失衡"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/AVLTreeST.java.html"
+    },
+    {
+      "id": "avl-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AVL 平衡搜索树",
+      "knowledgePoint": "左右异侧失衡",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AVL 树插入产生左—右或右—左型失衡时，通常分别按什么顺序旋转？",
+      "answer": "左—右型先左子节点左旋、再失衡节点右旋；右—左型先右子节点右旋、再失衡节点左旋。",
+      "explanation": "两次局部旋转共同恢复平衡。",
+      "example": "插入 3、1、2 和插入 1、3、2 分别产生两种异侧失衡。",
+      "tags": [
+        "AVL 平衡搜索树",
+        "左右异侧失衡"
+      ],
+      "evidence": "source",
+      "reference": "https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/AVLTreeST.java.html"
+    }
+  ]
+}

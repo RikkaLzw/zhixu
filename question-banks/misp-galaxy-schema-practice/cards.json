@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "misp-galaxy-schema-practice",
+    "title": "MISP Galaxy 固定提交：JSON Schema",
+    "url": "https://raw.githubusercontent.com/MISP/misp-galaxy/6d78ff22dd1986ffd1a74bd720e635991a52e91a/schema_galaxies.json",
+    "type": "固定版本官方文档、源码或论文",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "mispgal-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP Galaxy 模式",
+      "knowledgePoint": "星系必填",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP Galaxy 固定提交的 galaxy JSON Schema 要求哪些核心字段？",
+      "answer": "要求 description、type、version、name 和 uuid。",
+      "explanation": "这是该版本模式的必填要求，不代表所有语义内容都已经核实。",
+      "example": "导入前先按对应版本模式检查字段。",
+      "tags": [
+        "MISP Galaxy 模式",
+        "星系必填"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/MISP/misp-galaxy/6d78ff22dd1986ffd1a74bd720e635991a52e91a/schema_galaxies.json"
+    },
+    {
+      "id": "mispgal-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP Galaxy 模式",
+      "knowledgePoint": "条目必填",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP Galaxy 固定提交的 cluster 模式中，values 数组的每个条目必须包含什么字段？",
+      "answer": "每个条目必须包含 value；该模式没有把每个条目的 uuid 设为必填。",
+      "explanation": "顶层 cluster 的必填字段与单个 values 条目的要求不同。",
+      "example": "校验条目时不要把顶层要求直接套到每个元素。",
+      "tags": [
+        "MISP Galaxy 模式",
+        "条目必填"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/MISP/misp-galaxy/6d78ff22dd1986ffd1a74bd720e635991a52e91a/schema_clusters.json"
+    },
+    {
+      "id": "mispgal-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP Galaxy 模式",
+      "knowledgePoint": "扩展元数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP Galaxy 固定提交的 cluster 模式对条目的 meta 扩展字段有什么约束？",
+      "answer": "meta 对象允许额外属性；而 values 条目对象本身不允许未声明的额外属性。",
+      "explanation": "是否接受还应以实际使用的模式版本为准。",
+      "example": "把自定义上下文放进允许扩展的 meta 对象。",
+      "tags": [
+        "MISP Galaxy 模式",
+        "扩展元数据"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/MISP/misp-galaxy/6d78ff22dd1986ffd1a74bd720e635991a52e91a/schema_clusters.json"
+    },
+    {
+      "id": "mispgal-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "MISP Galaxy 模式",
+      "knowledgePoint": "参考与别名",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MISP Galaxy 固定提交的 cluster 模式中，meta.refs 和 meta.synonyms 是什么类型？",
+      "answer": "两者都是字符串数组，分别用于参考资料和别名。",
+      "explanation": "模式校验类型不等于验证引用内容或别名真实性。",
+      "example": "保留情报来源和名称别名供分析人员核对。",
+      "tags": [
+        "MISP Galaxy 模式",
+        "参考与别名"
+      ],
+      "evidence": "source",
+      "reference": "https://raw.githubusercontent.com/MISP/misp-galaxy/6d78ff22dd1986ffd1a74bd720e635991a52e91a/schema_clusters.json"
+    }
+  ]
+}

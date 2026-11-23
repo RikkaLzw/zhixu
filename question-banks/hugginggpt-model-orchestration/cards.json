@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "hugginggpt-model-orchestration",
+    "title": "HuggingGPT 原论文 v1：模型协作",
+    "url": "https://arxiv.org/pdf/2303.17580v1",
+    "type": "原论文与固定版本开源实现",
+    "note": "依据逐题引用的论文或固定版本实现自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "huggpt-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HuggingGPT 模型协作",
+      "knowledgePoint": "控制与执行",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HuggingGPT 原论文中，语言模型和专家模型分别承担什么角色？",
+      "answer": "语言模型负责规划和模型选择，专家模型执行具体的子任务。",
+      "explanation": "控制模型可根据执行结果生成面向用户的回答。",
+      "example": "用语言模型协调图像描述与语音合成模型。",
+      "tags": [
+        "HuggingGPT 模型协作",
+        "控制与执行"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.17580v1"
+    },
+    {
+      "id": "huggpt-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HuggingGPT 模型协作",
+      "knowledgePoint": "四阶段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HuggingGPT 将一次请求的处理分为哪四个主要阶段？",
+      "answer": "任务规划、模型选择、任务执行和回答生成。",
+      "explanation": "各阶段通过结构化任务和执行结果衔接。",
+      "example": "先拆解任务，执行模型后再汇总结果。",
+      "tags": [
+        "HuggingGPT 模型协作",
+        "四阶段"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.17580v1"
+    },
+    {
+      "id": "huggpt-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "HuggingGPT 模型协作",
+      "knowledgePoint": "任务结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HuggingGPT 的任务规划使用哪四类槽位描述子任务？",
+      "answer": "任务类型、任务 ID、任务依赖和任务参数。",
+      "explanation": "ID 用于引用前置任务及其资源；依赖已满足的独立任务可以并行。",
+      "example": "图像描述任务的参数可指向上游生成的图片。",
+      "tags": [
+        "HuggingGPT 模型协作",
+        "任务结构"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.17580v1"
+    },
+    {
+      "id": "huggpt-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HuggingGPT 模型协作",
+      "knowledgePoint": "依赖占位",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HuggingGPT 规划时尚不知道上游模型输出的资源地址，如何在下游任务中引用它？",
+      "answer": "使用带上游任务 ID 的资源占位符，在执行时解析为实际生成的资源。",
+      "explanation": "占位符表达数据依赖，不是资源本身。",
+      "example": "语音合成任务引用图像描述任务生成的文本。",
+      "tags": [
+        "HuggingGPT 模型协作",
+        "依赖占位"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.17580v1"
+    },
+    {
+      "id": "huggpt-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HuggingGPT 模型协作",
+      "knowledgePoint": "候选模型",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HuggingGPT 原论文如何缩小提示中需要展示的候选专家模型集合？",
+      "answer": "先按任务类型过滤模型，再按下载量排序并选取前十个候选。",
+      "explanation": "下载量只是论文采用的启发式信号，不能证明模型一定适合当前任务。",
+      "example": "为目标检测子任务提供有限的检测模型候选。",
+      "tags": [
+        "HuggingGPT 模型协作",
+        "候选模型"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.17580v1"
+    },
+    {
+      "id": "huggpt-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HuggingGPT 模型协作",
+      "knowledgePoint": "模型描述",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HuggingGPT 的模型选择阶段如何利用专家模型的自然语言描述？",
+      "answer": "它将候选模型的描述与用户请求和子任务一起提供给语言模型，辅助选择。",
+      "explanation": "描述可能缺失或过时，实际使用仍需核对输入输出与许可。",
+      "example": "根据模型支持的语言和任务判断是否适用。",
+      "tags": [
+        "HuggingGPT 模型协作",
+        "模型描述"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.17580v1"
+    },
+    {
+      "id": "huggpt-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "HuggingGPT 模型协作",
+      "knowledgePoint": "混合端点",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "HuggingGPT 原论文的混合推理端点怎样选择本地和 Hugging Face 端点？",
+      "answer": "若所选模型已部署在本地则优先使用本地端点，否则使用 Hugging Face 端点。",
+      "explanation": "论文以覆盖范围、网络和推理效率为考虑。",
+      "example": "常用模型在本地执行，未本地部署的模型调用远端。",
+      "tags": [
+        "HuggingGPT 模型协作",
+        "混合端点"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/pdf/2303.17580v1"
+    }
+  ]
+}

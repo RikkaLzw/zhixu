@@ -1,0 +1,651 @@
+{
+  "source": {
+    "id": "kitsune-online-detection",
+    "title": "Kitsune 与 KitNET 在线网络异常检测",
+    "url": "https://arxiv.org/abs/1802.09089v1",
+    "type": "研究论文与开源代码",
+    "note": "依据 Kitsune 原论文和固定版本代码整理；使用 NumPy 2.2 兼容补丁对合成特征进行局部验证，未执行真实网络流量实验。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "kitsune-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "系统与核心",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 与 KitNET 在论文中分别指什么？",
+      "answer": "Kitsune 是网络异常检测系统；KitNET 是其基于自编码器集成的通用异常检测算法。",
+      "explanation": "Kitsune 还包含报文解析和时序特征提取等组件。",
+      "example": "把其他数值特征输入 KitNET，不等同于使用完整网络检测流程。",
+      "tags": [
+        "系统与核心",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-A"
+    },
+    {
+      "id": "kitsune-002",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "流量特征输入",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 的特征提取器主要从报文的哪些信息构造统计？",
+      "answer": "它利用到达时间、报文大小和网络地址等元信息，构造近期流量统计。",
+      "explanation": "这些统计用于描述报文所在通信流的上下文。",
+      "example": "累计某源地址近期报文大小和到达间隔的统计。",
+      "tags": [
+        "流量特征输入",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-A–B"
+    },
+    {
+      "id": "kitsune-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "时序上下文",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么同一个 TCP SYN 报文需要结合近期流量上下文判断？",
+      "answer": "单次 SYN 可能是正常连接，而大量类似请求也可能与扫描或拒绝服务有关。",
+      "explanation": "上下文是线索，仍不能单凭某一统计量确认攻击。",
+      "example": "结合单位时间内的连接尝试和目标分布分析。",
+      "tags": [
+        "时序上下文",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-B"
+    },
+    {
+      "id": "kitsune-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "衰减窗口",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 的衰减增量统计如何处理较早的观测？",
+      "answer": "它使旧观测的权重随经过时间指数衰减，以强调近期行为。",
+      "explanation": "这不同于只保留最近固定数量报文的硬窗口。",
+      "example": "较早的报文大小对当前加权均值的影响逐渐减小。",
+      "tags": [
+        "衰减窗口",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-B"
+    },
+    {
+      "id": "kitsune-005",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "衰减半衰期",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 论文使用 dλ(t)=2^(-λt) 时，权重降至一半需要多久？",
+      "answer": "当 λ>0 时，半衰期为 1/λ。",
+      "explanation": "时间单位应与计算 t 和 λ 时使用的单位一致。",
+      "example": "λ=0.5/秒时，约 2 秒后权重降至一半。",
+      "tags": [
+        "衰减半衰期",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-B"
+    },
+    {
+      "id": "kitsune-006",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "单流与总内存",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 的增量统计每个流只维护固定大小的摘要，是否意味着总内存与流数量无关？",
+      "answer": "不意味着；活跃流越多，需要维护的统计状态通常越多。",
+      "explanation": "论文的固定大小统计是针对单个统计对象的。",
+      "example": "大量不同通信对可能产生大量状态条目。",
+      "tags": [
+        "单流与总内存",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-B"
+    },
+    {
+      "id": "kitsune-007",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "多时间尺度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 为什么为相同统计维护多个衰减尺度？",
+      "answer": "不同尺度可同时反映较近期与较长期的流量行为。",
+      "explanation": "各尺度权重衰减速度不同。",
+      "example": "短尺度捕捉突发变化，长尺度提供较平滑的背景。",
+      "tags": [
+        "多时间尺度",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-B"
+    },
+    {
+      "id": "kitsune-008",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "通信粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 原论文会按哪些不同通信粒度维护统计？",
+      "answer": "它结合来源主机、主机对和网络端点对等不同粒度。",
+      "explanation": "不同粒度提供不同的行为上下文。",
+      "example": "分别观察单个源 IP 和某个源目端点对的流量。",
+      "tags": [
+        "通信粒度",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-B"
+    },
+    {
+      "id": "kitsune-009",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "不适用字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 原论文遇到报文不适用某种通信粒度时如何保持固定特征维数？",
+      "answer": "对应的特征设为零，使每个报文仍得到相同维数的向量。",
+      "explanation": "零值可能表示该统计不适用，也可能是统计结果为零。",
+      "example": "无 TCP/UDP 端口的报文不具有相应 socket 统计。",
+      "tags": [
+        "不适用字段",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-B"
+    },
+    {
+      "id": "kitsune-010",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "特征映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KitNET 的特征映射器主要负责什么？",
+      "answer": "它把输入特征分组成多个子集，分别提供给集成层的自编码器。",
+      "explanation": "映射在训练阶段依据观察到的特征关系学习。",
+      "example": "将相关的流量统计放入同一组。",
+      "tags": [
+        "特征映射",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-C"
+    },
+    {
+      "id": "kitsune-011",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "特征组上限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KitNET 参数 m 控制特征映射的什么约束？",
+      "answer": "它限制集成层中单个自编码器接收的特征数量上限。",
+      "explanation": "m 的选择影响模型结构、处理开销与检测表现。",
+      "example": "m=5 时，任何一个特征组都不超过 5 个特征。",
+      "tags": [
+        "特征组上限",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-C"
+    },
+    {
+      "id": "kitsune-012",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "特征分配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KitNET 原论文的特征映射是否允许一个输入特征重复出现在多个特征组中？",
+      "answer": "论文要求每个输入特征恰好映射一次。",
+      "explanation": "这样可限制集成层宽度和重复计算。",
+      "example": "四个输入特征被分成互不重叠的若干组。",
+      "tags": [
+        "特征分配",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-C"
+    },
+    {
+      "id": "kitsune-013",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "相关距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KitNET 原论文用怎样的相关距离比较特征？",
+      "answer": "采用 1 减去相关系数作为距离。",
+      "explanation": "相关系数可计算时，正相关较强则距离较小；常量特征需由实现单独处理。",
+      "example": "相关系数为 1 和 -1 时，距离分别为 0 和 2。",
+      "tags": [
+        "相关距离",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-C"
+    },
+    {
+      "id": "kitsune-014",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "层次聚类切分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KitNET 如何利用层次聚类结果满足特征组大小上限？",
+      "answer": "它递归切分过大的聚类分支，直到每个组的大小不超过 m。",
+      "explanation": "划分结果作为自编码器集成层的输入结构。",
+      "example": "一个包含 8 个特征的组在 m=5 时需要继续切分。",
+      "tags": [
+        "层次聚类切分",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-C"
+    },
+    {
+      "id": "kitsune-015",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "顺序预热",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "未预先提供特征映射时，Kitsune 的特征映射和异常检测训练通常按什么顺序进行？",
+      "answer": "先学习特征映射，再按映射训练自编码器集成，之后执行异常评分。",
+      "explanation": "异常检测器的结构依赖已完成的特征分组。",
+      "example": "先用初始报文建立特征组，再训练各组的自编码器。",
+      "tags": [
+        "顺序预热",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-A"
+    },
+    {
+      "id": "kitsune-016",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "集成层误差",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KitNET 集成层的每个自编码器向输出层提供什么？",
+      "answer": "它提供对所属特征子集的重构均方根误差。",
+      "explanation": "每个子模型处理自己的输入子空间。",
+      "example": "三个特征组产生三个重构误差。",
+      "tags": [
+        "集成层误差",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-D"
+    },
+    {
+      "id": "kitsune-017",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "输出层作用",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KitNET 的输出层如何利用集成层的误差产生最终异常分数？",
+      "answer": "它用另一个自编码器重构子模型误差向量，以该输出层的重构误差作为最终分数。",
+      "explanation": "输出层可以学习各子空间误差之间的关系，并非直接对误差取算术平均。",
+      "example": "两个子模型分别产生误差后，输出层处理这两个误差。",
+      "tags": [
+        "输出层作用",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-D"
+    },
+    {
+      "id": "kitsune-019",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "分数解释",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "KitNET 输出的 RMSE 异常分数越大通常表示什么？",
+      "answer": "表示输入相对于模型学习到的模式越异常。",
+      "explanation": "该分数不是经过校准的攻击概率，也不直接给出攻击类型。",
+      "example": "较高分数可作为后续告警排序的线索。",
+      "tags": [
+        "分数解释",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-D"
+    },
+    {
+      "id": "kitsune-020",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "最大训练误差阈值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 论文讨论的简单阈值如何利用训练阶段的误差？",
+      "answer": "它可用训练阶段观察到的最大输出误差作为基准阈值。",
+      "explanation": "该方法假设训练数据正常，训练异常或极端值会影响阈值。",
+      "example": "在基准阈值上再按所选敏感度调整告警条件。",
+      "tags": [
+        "最大训练误差阈值",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-D"
+    },
+    {
+      "id": "kitsune-021",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "检测模式参数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 原论文的执行模式会继续更新异常检测器的模型参数吗？",
+      "answer": "不会；检测器执行前向计算并输出异常分数。",
+      "explanation": "特征提取器仍需更新近期流量统计，二者的状态不同。",
+      "example": "推理时自编码器权重保持不变，流量窗口统计继续变化。",
+      "tags": [
+        "检测模式参数",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：IV-A"
+    },
+    {
+      "id": "kitsune-022",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "归一化边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune-py 固定版本用训练期最小值和最大值归一化新输入时，结果一定在 [0,1] 吗？",
+      "answer": "不一定；新值超出训练期范围时，归一化结果可小于 0 或大于 1。",
+      "explanation": "该实现推理时使用训练期记录的范围，未对归一化值做截断。",
+      "example": "训练范围为 [0, 10] 时，新值 20 可映射到约 2。",
+      "tags": [
+        "归一化边界",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ymirsky/Kitsune-py/blob/7c8ea51e89268d9a20399dca4bf32d663e638eb4/KitNET/dA.py",
+      "referenceTitle": "Kitsune-py 固定版本：dA.py：execute"
+    },
+    {
+      "id": "kitsune-023",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "预热输出",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune-py 固定版本的 KitNET.process 在预热训练期间返回的 0.0 能直接当成正常评分吗？",
+      "answer": "不能；该返回值是训练阶段的占位输出，并非完成训练后的异常分数。",
+      "explanation": "需要结合预热状态区分占位值与实际评分。",
+      "example": "绘制分数曲线时标出特征映射和检测器预热区间。",
+      "tags": [
+        "预热输出",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ymirsky/Kitsune-py/blob/7c8ea51e89268d9a20399dca4bf32d663e638eb4/KitNET/KitNET.py",
+      "referenceTitle": "Kitsune-py 固定版本：KitNET.py：process"
+    },
+    {
+      "id": "kitsune-024",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "预热边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "未提供 feature_map 时，Kitsune-py 固定版本的 process 为何可能比 FM 和 AD 预热参数之和多处理一个训练样本？",
+      "answer": "该代码用 n_trained > FM_grace_period + AD_grace_period 判断进入执行模式，且计数从 0 开始。",
+      "explanation": "这是所引用实现的边界行为，不应推广到其他版本。",
+      "example": "FM=6、AD=12 时，前 19 次调用返回训练占位值。",
+      "tags": [
+        "预热边界",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ymirsky/Kitsune-py/blob/7c8ea51e89268d9a20399dca4bf32d663e638eb4/KitNET/KitNET.py",
+      "referenceTitle": "Kitsune-py 固定版本：KitNET.py：process and train"
+    },
+    {
+      "id": "kitsune-025",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "预置特征映射",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune-py 固定版本传入 feature_map 后，是否还需要先由特征映射器学习分组？",
+      "answer": "不需要；构造器直接依据给定映射创建异常检测器。",
+      "explanation": "process 的训练时长判断仍使用配置的预热参数，需按源码检查。",
+      "example": "可提供预先验证的特征索引分组。",
+      "tags": [
+        "预置特征映射",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ymirsky/Kitsune-py/blob/7c8ea51e89268d9a20399dca4bf32d663e638eb4/KitNET/KitNET.py",
+      "referenceTitle": "Kitsune-py 固定版本：KitNET.py：constructor and process"
+    },
+    {
+      "id": "kitsune-026",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "读包结束标记",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune-py 固定版本的 proc_next_packet 返回 -1 表示什么？",
+      "answer": "特征提取器没有返回下一个向量，可能是数据结束或读取错误。",
+      "explanation": "它不是异常分数；仅凭 -1 不能区分结束与错误。",
+      "example": "循环读取报文时遇到 -1 应检查输入状态。",
+      "tags": [
+        "读包结束标记",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ymirsky/Kitsune-py/blob/7c8ea51e89268d9a20399dca4bf32d663e638eb4/Kitsune.py",
+      "referenceTitle": "Kitsune-py 固定版本：Kitsune.py：proc_next_packet"
+    },
+    {
+      "id": "kitsune-027",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "速度条件",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune-py README 为什么提醒不能直接把 Python 实现速度当作论文性能？",
+      "answer": "README 说明该 Python 实现未针对速度优化，论文速度需要相应的编译或其他实现。",
+      "explanation": "硬件、数据、解析器及实现方式也会影响实际吞吐量。",
+      "example": "复现时记录是否使用 Cython 或 C++ 实现。",
+      "tags": [
+        "速度条件",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/ymirsky/Kitsune-py/blob/7c8ea51e89268d9a20399dca4bf32d663e638eb4/README.md",
+      "referenceTitle": "Kitsune-py 固定版本：README：Implementation Notes"
+    },
+    {
+      "id": "kitsune-028",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "预热样本与时间",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 论文用固定报文数作为训练阶段时，为什么训练对应的时长可能随数据集变化？",
+      "answer": "不同网络的报文到达速率不同，相同数量报文覆盖的时间也不同。",
+      "explanation": "按报文数划分不等同于按固定时长划分。",
+      "example": "低流量环境积累一百万个报文可能需要更久。",
+      "tags": [
+        "预热样本与时间",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：V-B"
+    },
+    {
+      "id": "kitsune-029",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "观测点局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 论文为什么有些攻击即使没有恶意报文经过检测点也可能产生异常线索？",
+      "answer": "攻击可能改变检测点可见的正常流量统计，例如通信时延。",
+      "explanation": "这种间接信号不保证能可靠识别攻击类型或攻击者。",
+      "example": "中间人行为可能影响摄像头流量的时间特征。",
+      "tags": [
+        "观测点局限",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：V-A"
+    },
+    {
+      "id": "kitsune-030",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "基线输入一致",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune 论文比较不同异常检测器时，为什么让它们使用相同特征？",
+      "answer": "这样可减少特征输入差异对模型比较的影响。",
+      "explanation": "公平比较还需说明数据切分、阈值和资源条件。",
+      "example": "同一网络流量特征分别输入 KitNET 与 Isolation Forest。",
+      "tags": [
+        "基线输入一致",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://arxiv.org/abs/1802.09089v1",
+      "referenceTitle": "Kitsune 原论文（v1）：V-B–C"
+    },
+    {
+      "id": "kitsune-031",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "网络异常检测",
+      "knowledgePoint": "旧NumPy兼容性",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Kitsune-py 固定版本在 NumPy 2.x 中可能遇到什么兼容问题？",
+      "answer": "该版本源码使用已移除的 np.Inf 别名，直接运行相关代码可能报错。",
+      "explanation": "应使用兼容依赖版本或在受控环境中修正；具体问题取决于执行路径。",
+      "example": "NumPy 2.2 上验证该旧实现时需要处理 np.Inf。",
+      "tags": [
+        "旧NumPy兼容性",
+        "Kitsune",
+        "异常检测"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/ymirsky/Kitsune-py/blob/7c8ea51e89268d9a20399dca4bf32d663e638eb4/KitNET/dA.py",
+      "referenceTitle": "Kitsune-py 固定版本：dA.py 中的 np.Inf",
+      "supportingReferences": [
+        {
+          "id": "numpy-20-release",
+          "title": "NumPy 2.0 发布说明：移除 np.Inf",
+          "url": "https://numpy.org/doc/2.0/release/2.0.0-notes.html",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

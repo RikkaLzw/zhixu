@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "curl-http-debug-practice",
+    "title": "curl 手册：HTTP 请求与调试",
+    "url": "https://curl.se/docs/manpage.html",
+    "type": "官方文档与源码",
+    "note": "依据逐题链接自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "curlhttp-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "curl HTTP 调试",
+      "knowledgePoint": "发送表单数据",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "curl 对 HTTP 请求使用 -d 发送数据时，默认使用什么方法和 Content-Type？",
+      "answer": "默认使用 POST，Content-Type 为 application/x-www-form-urlencoded。",
+      "explanation": "发送 JSON 时应自行提供已序列化的内容并指定相应 Content-Type。",
+      "example": "curl -d \"name=alice\" URL 会提交表单格式数据。",
+      "tags": [
+        "curl HTTP 调试",
+        "发送表单数据"
+      ],
+      "evidence": "source",
+      "reference": "https://curl.se/docs/manpage.html#--data"
+    },
+    {
+      "id": "curlhttp-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "curl HTTP 调试",
+      "knowledgePoint": "重复数据参数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "curl 命令中多次使用 -d 时，HTTP 请求数据如何组合？",
+      "answer": "各段数据以 & 连接。",
+      "explanation": "curl 不会替调用者自动修正每段数据的编码。",
+      "example": "-d \"a=1\" -d \"b=2\" 得到 a=1&b=2。",
+      "tags": [
+        "curl HTTP 调试",
+        "重复数据参数"
+      ],
+      "evidence": "source",
+      "reference": "https://curl.se/docs/manpage.html#--data"
+    },
+    {
+      "id": "curlhttp-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "curl HTTP 调试",
+      "knowledgePoint": "表单编码",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "curl 的 -d \"name=张三\" 会自动对表单字段值进行 URL 编码吗？",
+      "answer": "不会；-d 直接使用提供的数据。",
+      "explanation": "需要对值编码时，可使用 --data-urlencode。",
+      "example": "包含空格或非 ASCII 字符时应选择适当的编码方式。",
+      "tags": [
+        "curl HTTP 调试",
+        "表单编码"
+      ],
+      "evidence": "source",
+      "reference": "https://curl.se/docs/manpage.html#--data"
+    },
+    {
+      "id": "curlhttp-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "curl HTTP 调试",
+      "knowledgePoint": "自动编码参数",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "curl 的 --data-urlencode \"name=value\" 对表单字段有什么作用？",
+      "answer": "对等号后的值做 URL 编码后发送，字段名应已按需要编码。",
+      "explanation": "适用于要把包含空格等字符的值作为表单字段提交。",
+      "example": "--data-urlencode \"q=a b\" 会编码值中的空格。",
+      "tags": [
+        "curl HTTP 调试",
+        "自动编码参数"
+      ],
+      "evidence": "source",
+      "reference": "https://curl.se/docs/manpage.html#--data-urlencode"
+    },
+    {
+      "id": "curlhttp-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "curl HTTP 调试",
+      "knowledgePoint": "文件内容与换行",
+      "questionType": "易错辨析",
+      "origin": "自行整理",
+      "question": "curl 通过 @文件读取 HTTP 数据时，-d 和 --data-binary 如何处理换行？",
+      "answer": "-d 读取文件时会去除回车、换行和 NUL；--data-binary 保留原始字节。",
+      "explanation": "使用直接命令行参数时不应套用文件读取的去除规则。",
+      "example": "上传包含换行的原始文件可使用 --data-binary @file。",
+      "tags": [
+        "curl HTTP 调试",
+        "文件内容与换行"
+      ],
+      "evidence": "source",
+      "reference": "https://curl.se/docs/manpage.html#--data-binary"
+    },
+    {
+      "id": "curlhttp-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "curl HTTP 调试",
+      "knowledgePoint": "字面at符号",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "curl 需要把以 @ 开头的文本直接作为 HTTP 数据发送时，可以用什么选项？",
+      "answer": "可用 --data-raw，它不会把开头的 @ 特殊解释为文件引用。",
+      "explanation": "普通 -d 的 @ 前缀可用于读取文件。",
+      "example": "--data-raw \"@example\" 发送字面文本。",
+      "tags": [
+        "curl HTTP 调试",
+        "字面at符号"
+      ],
+      "evidence": "source",
+      "reference": "https://curl.se/docs/manpage.html#--data-raw"
+    },
+    {
+      "id": "curlhttp-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "curl HTTP 调试",
+      "knowledgePoint": "保存响应与状态",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "curl 怎样将响应体写入指定文件并在标准输出打印 HTTP 状态码？",
+      "answer": "可组合 -o 文件名 和 -w \"%{http_code}\"。",
+      "explanation": "两者分别控制响应体输出位置和传输完成后的附加信息。",
+      "example": "curl -o result.json -w \"%{http_code}\" URL。",
+      "tags": [
+        "curl HTTP 调试",
+        "保存响应与状态"
+      ],
+      "evidence": "source",
+      "reference": "https://curl.se/docs/manpage.html#--write-out"
+    },
+    {
+      "id": "curlhttp-009",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "curl HTTP 调试",
+      "knowledgePoint": "保留失败响应",
+      "questionType": "故障排查",
+      "origin": "自行整理",
+      "question": "curl --fail-with-body 收到 HTTP 404 时，如何处理响应体和退出状态？",
+      "answer": "保留响应体，并以错误码 22 退出。",
+      "explanation": "它可让脚本同时获取服务端错误信息并识别失败。",
+      "example": "接口返回 JSON 错误时可保留错误内容排查。",
+      "tags": [
+        "curl HTTP 调试",
+        "保留失败响应"
+      ],
+      "evidence": "source",
+      "reference": "https://curl.se/docs/manpage.html#--fail-with-body"
+    },
+    {
+      "id": "curlhttp-010",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "curl HTTP 调试",
+      "knowledgePoint": "静默与错误",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "curl -sS 将 -s 与 -S 组合时有什么作用？",
+      "answer": "隐藏进度和常规错误输出，同时在失败时显示错误信息。",
+      "explanation": "具体 HTTP 状态是否使进程失败仍取决于其他选项。",
+      "example": "脚本中常用 -sS 减少进度输出并保留失败提示。",
+      "tags": [
+        "curl HTTP 调试",
+        "静默与错误"
+      ],
+      "evidence": "source",
+      "reference": "https://curl.se/docs/manpage.html#--show-error"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "source": {
+    "id": "mitre-tram-attack-mapping",
+    "title": "MITRE TRAM 固定提交：威胁报告与 ATT&CK 映射",
+    "url": "https://github.com/center-for-threat-informed-defense/tram/blob/f29793d8d665f7f552898696e00065ef24a29a20/README.md",
+    "type": "固定提交项目说明",
+    "note": "依据逐题引用的资料自行整理；示例为自编，版本与前提见题目。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "tram-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "TRAM 威胁报告映射",
+      "knowledgePoint": "项目用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MITRE TRAM 主要尝试将什么内容映射到 ATT&CK？",
+      "answer": "将网络威胁情报报告中的文本映射到 ATT&CK 技术。",
+      "explanation": "它用于辅助威胁情报提供者和分析人员处理报告。",
+      "example": "从威胁报告段落识别可能相关的技术。",
+      "tags": [
+        "TRAM 威胁报告映射",
+        "项目用途"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/center-for-threat-informed-defense/tram/blob/f29793d8d665f7f552898696e00065ef24a29a20/README.md"
+    },
+    {
+      "id": "tram-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "TRAM 威胁报告映射",
+      "knowledgePoint": "默认覆盖边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "固定提交的 TRAM 开箱即用模型是否覆盖 ATT&CK 的全部技术？",
+      "answer": "不能认为它覆盖全部技术；项目说明称该模型最多识别 50 种常见技术。",
+      "explanation": "未覆盖的技术仍需其他方法或人工分析。",
+      "example": "核对模型支持的标签后再判断报告中的遗漏。",
+      "tags": [
+        "TRAM 威胁报告映射",
+        "默认覆盖边界"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/center-for-threat-informed-defense/tram/blob/f29793d8d665f7f552898696e00065ef24a29a20/README.md"
+    },
+    {
+      "id": "tram-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "TRAM 威胁报告映射",
+      "knowledgePoint": "领域适配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TRAM 项目说明建议怎样针对组织自己的数据调整模型？",
+      "answer": "标注额外样本并重新构建或微调模型。",
+      "explanation": "领域文本分布变化可能影响原模型效果，适配后仍应单独评估。",
+      "example": "标注组织使用的报告文本以训练自定义映射模型。",
+      "tags": [
+        "TRAM 威胁报告映射",
+        "领域适配"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/center-for-threat-informed-defense/tram/blob/f29793d8d665f7f552898696e00065ef24a29a20/README.md"
+    },
+    {
+      "id": "tram-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "TRAM 威胁报告映射",
+      "knowledgePoint": "模型粒度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "TRAM 项目说明提供的 Jupyter 笔记本涵盖哪两种标签形式？",
+      "answer": "涵盖基于 SciBERT 的单标签和多标签模型。",
+      "explanation": "一种报告片段可能涉及多个技术，多标签建模允许多个标签。",
+      "example": "比较每段只选一项技术与允许多项技术的任务。",
+      "tags": [
+        "TRAM 威胁报告映射",
+        "模型粒度"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/center-for-threat-informed-defense/tram/blob/f29793d8d665f7f552898696e00065ef24a29a20/README.md"
+    }
+  ]
+}

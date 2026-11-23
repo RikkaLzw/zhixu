@@ -1,0 +1,80 @@
+{
+  "source": {
+    "id": "vision-evaluation",
+    "title": "TorchVision 与 TorchMetrics 目标检测评估",
+    "url": "https://docs.pytorch.org/vision/stable/generated/torchvision.ops.box_iou.html",
+    "type": "官方技术文档",
+    "note": "按逐题列出的资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "viseval-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检测评估",
+      "knowledgePoint": "交并比IoU",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "目标检测的边界框 IoU 如何定义？",
+      "answer": "它是两个框交集面积除以并集面积，用于衡量位置重叠程度。",
+      "explanation": "有效框重合越充分，IoU 越接近 1。",
+      "example": "将预测框与标注框计算 IoU，再按评估规则匹配。",
+      "tags": [
+        "交并比IoU",
+        "检测评估"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/vision/stable/generated/torchvision.ops.box_iou.html"
+    },
+    {
+      "id": "viseval-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检测后处理",
+      "knowledgePoint": "非极大值抑制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "常见的非极大值抑制（NMS）如何处理多个高度重叠的检测框？",
+      "answer": "它优先保留高分框，并移除与其 IoU 超过阈值的低分框。",
+      "explanation": "不同实现可能按类别分别处理；过强抑制也可能漏掉邻近目标。",
+      "example": "一个按钮出现多个相似预测框时保留高分结果。",
+      "tags": [
+        "非极大值抑制",
+        "检测后处理",
+        "公开面经",
+        "58同城"
+      ],
+      "evidence": "source",
+      "reference": "https://docs.pytorch.org/vision/stable/generated/torchvision.ops.nms.html",
+      "supportingReferences": [
+        {
+          "id": "company-58",
+          "title": "58同城公开面经（2020届，作者自述）",
+          "url": "https://github.com/harleyszhang/cv_note/blob/80820e4ca40a6d957825816dea6f94669c71a99c/interview_summary/4-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E5%B2%972020%E5%B1%8A%E7%A7%8B%E6%8B%9B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经（个人自述）",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "viseval-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "检测评估",
+      "knowledgePoint": "mAP与IoU阈值",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "TorchMetrics 默认的检测 mAP50-95 与 mAP50 有什么区别？",
+      "answer": "默认 mAP50-95 综合 IoU 从 0.50 到 0.95、步长 0.05 的多个阈值；mAP50 只使用 IoU 0.50。",
+      "explanation": "比较结果时应确认指标配置与数据集约定。",
+      "example": "报告同一检测模型在不同定位严格程度下的表现。",
+      "tags": [
+        "mAP与IoU阈值",
+        "检测评估"
+      ],
+      "evidence": "source",
+      "reference": "https://lightning.ai/docs/torchmetrics/stable/detection/mean_average_precision.html"
+    }
+  ]
+}

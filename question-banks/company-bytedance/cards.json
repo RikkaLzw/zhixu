@@ -1,0 +1,81 @@
+{
+  "source": {
+    "id": "company-bytedance",
+    "title": "字节跳动 Agent 岗公开面经（作者自述）",
+    "url": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+    "type": "公开面经（个人自述）",
+    "note": "考点依据个人公开复盘整理；公司、岗位及经历为作者自述，答案另依据所列技术资料核验。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "byte-interview-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具与技能",
+      "knowledgePoint": "Skill 与工具",
+      "questionType": "比较与选型",
+      "question": "Agent Skill 与可调用工具的主要作用有什么区别？",
+      "answer": "Skill 通常打包按需加载的任务指引和资源；工具提供可被调用的具体操作接口。",
+      "explanation": "Skill 可以指导智能体何时及如何使用工具，两者可以配合。",
+      "example": "技能说明如何查询资料，查询工具负责实际执行。",
+      "tags": [
+        "Skill 与工具",
+        "Agent",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+      "referenceTitle": "字节跳动 Agent 岗公开面经（作者自述）",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "agent-skills-ref",
+          "title": "Agent Skills：Overview",
+          "url": "https://agentskills.io/what-are-skills",
+          "type": "官方技术文档",
+          "evidence": "source"
+        },
+        {
+          "id": "mcp-agent",
+          "title": "MCP：Understanding MCP servers",
+          "url": "https://modelcontextprotocol.io/docs/learn/server-concepts",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "byte-interview-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "工具与技能",
+      "knowledgePoint": "Skill 渐进披露",
+      "questionType": "概念与原理",
+      "question": "Agent Skill 的渐进披露为什么先加载名称和描述？",
+      "answer": "先用少量元数据判断技能是否相关，再在需要时读取完整指引和其他资源，以节省上下文。",
+      "explanation": "不同实现的加载细节可能不同，应以所用运行时为准。",
+      "example": "只有命中代码审查任务时才读取对应技能说明。",
+      "tags": [
+        "Skill 渐进披露",
+        "Agent",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "source",
+      "reference": "https://www.nowcoder.com/feed/main/detail/6f9d862d77ec4284a05d07d3ec3cc92e",
+      "referenceTitle": "字节跳动 Agent 岗公开面经（作者自述）",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "agent-skills-ref",
+          "title": "Agent Skills：Overview",
+          "url": "https://agentskills.io/what-are-skills",
+          "type": "官方技术文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

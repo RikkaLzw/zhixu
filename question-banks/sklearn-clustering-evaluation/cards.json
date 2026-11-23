@@ -1,0 +1,183 @@
+{
+  "source": {
+    "id": "sklearn-clustering-evaluation",
+    "title": "scikit-learn 1.7 文档：聚类评估",
+    "url": "https://scikit-learn.org/1.7/modules/clustering.html#clustering-performance-evaluation",
+    "type": "论文、官方文档或数据集说明",
+    "note": "依据逐题列出的资料自行整理，示例自编；实现行为以指定版本及环境为准。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "skevalcl-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "聚类评估指标",
+      "knowledgePoint": "内部外部评估",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "聚类评估中，有真实类别标签时和没有真实标签时通常如何选择指标？",
+      "answer": "有真实标签可比较聚类划分与类别划分；没有标签可考察簇内紧密度和簇间分离度等内部指标。",
+      "explanation": "内部指标的偏好与距离定义、数据形状有关。",
+      "example": "使用 ARI 比较有标签结果，使用轮廓系数检查无标签聚类。",
+      "tags": [
+        "聚类评估指标",
+        "内部外部评估"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/clustering.html#clustering-performance-evaluation"
+    },
+    {
+      "id": "skevalcl-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "聚类评估指标",
+      "knowledgePoint": "轮廓含义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "轮廓系数如何结合一个样本的簇内距离和最近其他簇距离？",
+      "answer": "设 a 为簇内平均距离、b 为到最近其他簇的平均距离，系数为 (b−a)/max(a,b)。",
+      "explanation": "当簇内有其他样本时定义 a；单样本簇等边界按具体实现处理。",
+      "example": "簇内更近、与其他簇更远通常得到较高分数。",
+      "tags": [
+        "聚类评估指标",
+        "轮廓含义"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.silhouette_score.html"
+    },
+    {
+      "id": "skevalcl-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "聚类评估指标",
+      "knowledgePoint": "轮廓范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "轮廓系数大致落在什么范围，接近负值通常提示什么？",
+      "answer": "范围为 −1 到 1；负值可能表示样本距离其他簇比自身簇更近。",
+      "explanation": "它是相对距离指标，不能单独证明类别标签正确。",
+      "example": "检查低轮廓分数的边界点。",
+      "tags": [
+        "聚类评估指标",
+        "轮廓范围"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.silhouette_score.html"
+    },
+    {
+      "id": "skevalcl-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "聚类评估指标",
+      "knowledgePoint": "轮廓前提",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.7 的 silhouette_score 对标签数有什么要求？",
+      "answer": "标签数必须在 2 到样本数减 1 之间。",
+      "explanation": "只有一个簇或每个样本各自一簇时不能按该接口计算。",
+      "example": "10 个样本且仅有一个簇时不计算轮廓系数。",
+      "tags": [
+        "聚类评估指标",
+        "轮廓前提"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/generated/sklearn.metrics.silhouette_score.html"
+    },
+    {
+      "id": "skevalcl-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "聚类评估指标",
+      "knowledgePoint": "调整兰德",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调整兰德指数 ARI 与未调整的 Rand 指数相比增加了什么？",
+      "answer": "对随机划分得到的一致程度进行机会校正，使随机标签的期望分数接近 0。",
+      "explanation": "完全一致时得 1，个别结果也可能小于 0。",
+      "example": "比较聚类与已知类别时计算 adjusted_rand_score。",
+      "tags": [
+        "聚类评估指标",
+        "调整兰德"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/clustering.html#clustering-performance-evaluation"
+    },
+    {
+      "id": "skevalcl-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "聚类评估指标",
+      "knowledgePoint": "标签置换",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "调整兰德指数会因把聚类标签 0 和 1 互换而改变吗？",
+      "answer": "不会；它比较的是样本对的划分关系，而非簇编号本身。",
+      "explanation": "真实标签与预测标签仍需对应同一批样本。",
+      "example": "两种编号不同但划分相同的结果得相同 ARI。",
+      "tags": [
+        "聚类评估指标",
+        "标签置换"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/clustering.html#clustering-performance-evaluation"
+    },
+    {
+      "id": "skevalcl-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "聚类评估指标",
+      "knowledgePoint": "同质完整",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "聚类同质性和完整性分别衡量什么？",
+      "answer": "同质性要求每个簇只含一个真实类别；完整性要求同一真实类别都落入同一个簇。",
+      "explanation": "两个指标各有侧重，不能单独代表完整的聚类质量。",
+      "example": "把每个样本都分成独立簇可能同质但不完整。",
+      "tags": [
+        "聚类评估指标",
+        "同质完整"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/clustering.html#clustering-performance-evaluation"
+    },
+    {
+      "id": "skevalcl-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "聚类评估指标",
+      "knowledgePoint": "CH指数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Calinski–Harabasz 指数比较什么，通常怎样解读方向？",
+      "answer": "比较簇间离散程度与簇内离散程度的比值；通常越高表示簇更紧密且分离。",
+      "explanation": "其适用性受数据形状和距离等假设影响。",
+      "example": "在相同数据与评估条件下比较候选聚类。",
+      "tags": [
+        "聚类评估指标",
+        "CH指数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/clustering.html#clustering-performance-evaluation"
+    },
+    {
+      "id": "skevalcl-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "聚类评估指标",
+      "knowledgePoint": "DB指数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "Davies–Bouldin 指数通常怎样解读方向？",
+      "answer": "它依据簇内分散和簇间距离衡量簇的相似程度，通常越低表示分离更好。",
+      "explanation": "它并非所有非凸簇形状都适用的万能指标。",
+      "example": "比较同一数据上的不同聚类方案。",
+      "tags": [
+        "聚类评估指标",
+        "DB指数"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.7/modules/clustering.html#clustering-performance-evaluation"
+    }
+  ]
+}

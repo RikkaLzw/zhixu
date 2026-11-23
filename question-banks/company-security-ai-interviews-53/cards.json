@@ -1,0 +1,150 @@
+{
+  "source": {
+    "id": "company-security-ai-interviews-53",
+    "title": "PingCAP、头条公开面经：安全与智能安全",
+    "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md",
+    "type": "公开面经合集",
+    "note": "公司、岗位及经历为分享者自述；关联卡是由面经主题启发的练习，技术答案另有独立依据。",
+    "knowledgeArea": "13"
+  },
+  "cards": [
+    {
+      "id": "secnew-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "Web 漏洞机制",
+      "knowledgePoint": "布尔盲注与时间盲注",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "布尔盲注与时间盲注分别依靠什么信号推断条件真假？",
+      "answer": "布尔盲注观察条件真假引起的响应差异；时间盲注观察条件真假引起的响应时间差异。",
+      "explanation": "响应差异需要可观察；网络抖动和后端负载可能影响时间信号的判断。",
+      "example": "在授权测试中分别比较页面内容是否变化，以及响应是否出现可重复的延迟。",
+      "tags": [
+        "布尔盲注",
+        "时间盲注",
+        "Web安全",
+        "公开面经",
+        "PingCAP"
+      ],
+      "evidence": "application",
+      "referenceId": "company-pingcap",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1e-pingcap-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "PingCAP 安全工程师公开面经（合集收录，经历为分享者自述）；盲注主题启发",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "portswigger-blind-sql-ref",
+          "title": "PortSwigger Web Security Academy：Blind SQL injection",
+          "url": "https://portswigger.net/web-security/sql-injection/blind",
+          "type": "技术教程",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "secnew-002",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "服务端请求",
+      "knowledgePoint": "SSRF",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "服务端请求伪造（SSRF）的核心风险是什么？",
+      "answer": "服务端按外部可控目标发起请求，却没有充分限制请求目的地。",
+      "explanation": "受影响的服务可能被用于访问原本无法由外部直接访问的内部服务。",
+      "example": "图片抓取功能被引导访问内部地址。",
+      "tags": [
+        "SSRF",
+        "服务端请求",
+        "公开面经",
+        "哔哩哔哩",
+        "公开面经",
+        "PingCAP"
+      ],
+      "evidence": "application",
+      "referenceId": "company-pingcap",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1e-pingcap-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "PingCAP 安全工程师公开面经（合集收录，经历为分享者自述）；SSRF 主题启发",
+      "referenceType": "公开面经合集"
+    },
+    {
+      "id": "secnew-003",
+      "category": "vulnerabilities",
+      "level": "入门",
+      "subtopic": "Web 漏洞机制",
+      "knowledgePoint": "XSS核心机制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "跨站脚本（XSS）的核心问题是什么？",
+      "answer": "不可信内容被浏览器当作可执行脚本或代码解析，从而在受影响站点的上下文中运行。",
+      "explanation": "漏洞可能发生在服务端输出或浏览器端处理数据的过程中。",
+      "example": "页面把未经适当处理的用户内容插入可执行上下文。",
+      "tags": [
+        "XSS核心机制",
+        "Web安全",
+        "公开面经",
+        "海康威视",
+        "公开面经",
+        "PingCAP"
+      ],
+      "evidence": "application",
+      "referenceId": "company-pingcap",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x1e-pingcap-%E5%AE%89%E5%85%A8%E5%B7%A5%E7%A8%8B%E5%B8%88",
+      "referenceTitle": "PingCAP 安全工程师公开面经（合集收录，经历为分享者自述）；XSS 主题启发",
+      "referenceType": "公开面经合集"
+    },
+    {
+      "id": "secnew-004",
+      "category": "detection",
+      "level": "实践",
+      "subtopic": "模型比较",
+      "knowledgePoint": "规则基线比较",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "为什么要把机器学习检测与规则基线比较？",
+      "answer": "可以判断模型是否真正补充了现有规则，并比较双方的漏报、误报和维护成本。",
+      "explanation": "比较时除了检测率，还应看共同漏报、互补发现和人工处理量。",
+      "example": "列出只被规则发现、只被模型发现及两者都遗漏的攻击样本。",
+      "tags": [
+        "规则",
+        "模型评估",
+        "基线",
+        "异常检测",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6a-%E5%A4%B4%E6%9D%A1",
+      "referenceTitle": "头条智能安全公开面经（合集收录，经历为分享者自述）；安全模型和 WAF 比较主题启发",
+      "referenceType": "公开面经合集"
+    },
+    {
+      "id": "secnew-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "支持向量机",
+      "knowledgePoint": "核技巧",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "核 SVM 中的核技巧有什么作用？",
+      "answer": "通过核函数计算特征空间中的内积，而不必显式构造该空间中的每个坐标。",
+      "explanation": "合适的非线性核可在原始输入空间形成非线性决策边界。",
+      "example": "使用 RBF 核处理不能用直线分开的样本。",
+      "tags": [
+        "核技巧",
+        "机器学习",
+        "公开面经",
+        "腾讯",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "referenceId": "company-bytedance",
+      "reference": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6a-%E5%A4%B4%E6%9D%A1",
+      "referenceTitle": "头条智能安全公开面经（合集收录，经历为分享者自述）；SVM 主题启发",
+      "referenceType": "公开面经合集"
+    }
+  ]
+}

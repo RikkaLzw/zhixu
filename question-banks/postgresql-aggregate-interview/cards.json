@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "postgresql-aggregate-interview",
+    "title": "PostgreSQL 17：分组与聚合实践",
+    "url": "https://www.postgresql.org/docs/17/tutorial-agg.html",
+    "type": "标准、教材与技术文档",
+    "note": "依据逐题链接自行整理；计算和场景示例为自编，具体前提见题目。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "pgagg-001",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SQL 分组与聚合实践",
+      "knowledgePoint": "左连接计数",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "统计每位用户的订单数时，用户 LEFT JOIN 订单且订单主键非空。没有订单的用户用 COUNT(*) 和 COUNT(订单主键) 分别得到多少？",
+      "answer": "COUNT(*) 为 1，COUNT(订单主键) 为 0。",
+      "explanation": "左连接保留一行右表列为 NULL 的结果；COUNT(*) 数行，COUNT(表达式) 只计非 NULL 值。",
+      "example": "用户 A 无订单，COUNT(orders.id) 可以正确给出 0。",
+      "tags": [
+        "左连接计数",
+        "SQL 分组与聚合实践"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/queries-table-expressions.html"
+    },
+    {
+      "id": "pgagg-002",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SQL 分组与聚合实践",
+      "knowledgePoint": "聚合函数空值",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "一组数值为 2、NULL、4 时，PostgreSQL 的 SUM 和 AVG 分别是多少？",
+      "answer": "SUM 为 6，AVG 为 3。",
+      "explanation": "这些聚合函数忽略 NULL；AVG 的分母不是包含空值的总行数。",
+      "example": "三个输入行中只有两个非空数值。",
+      "tags": [
+        "聚合函数空值",
+        "SQL 分组与聚合实践"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/functions-aggregate.html"
+    },
+    {
+      "id": "pgagg-003",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SQL 分组与聚合实践",
+      "knowledgePoint": "行过滤与分组过滤",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "统计每个城市温度大于 30 的记录数，并仅保留至少有 3 条此类记录的城市，应如何组合 WHERE 和 HAVING？",
+      "answer": "先用 WHERE temp > 30 筛选输入行，按城市分组，再用 HAVING COUNT(*) >= 3 筛选分组。",
+      "explanation": "WHERE 改变参与聚合的行；HAVING 对聚合后的分组设置条件。",
+      "example": "SELECT city, COUNT(*) FROM weather WHERE temp > 30 GROUP BY city HAVING COUNT(*) >= 3。",
+      "tags": [
+        "行过滤与分组过滤",
+        "SQL 分组与聚合实践"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-agg.html"
+    },
+    {
+      "id": "pgagg-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 分组与聚合实践",
+      "knowledgePoint": "聚合不能放WHERE",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在 PostgreSQL 中为什么不能直接写 WHERE salary = MAX(salary) 来找最高薪员工？",
+      "answer": "WHERE 先筛选参与聚合的行，而 MAX 聚合结果尚未在该层计算；可用标量子查询先求最大值。",
+      "explanation": "应区分对单行的条件与跨多行的聚合计算。",
+      "example": "WHERE salary = (SELECT MAX(salary) FROM employee)。",
+      "tags": [
+        "聚合不能放WHERE",
+        "SQL 分组与聚合实践"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-agg.html"
+    },
+    {
+      "id": "pgagg-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 分组与聚合实践",
+      "knowledgePoint": "聚合filter",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 聚合表达式 COUNT(*) FILTER (WHERE status = 'ok') 会过滤整个查询的输入行吗？",
+      "answer": "不会；它只限制这个聚合函数接收的行。",
+      "explanation": "同一 SELECT 中其他聚合仍可使用全部分组输入行。",
+      "example": "同时输出 COUNT(*) 和 COUNT(*) FILTER (WHERE status = 'ok')。",
+      "tags": [
+        "聚合filter",
+        "SQL 分组与聚合实践"
+      ],
+      "evidence": "source",
+      "reference": "https://www.postgresql.org/docs/17/tutorial-agg.html"
+    },
+    {
+      "id": "pgagg-007",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SQL 分组与聚合实践",
+      "knowledgePoint": "多对多连接放大",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "用户有 2 个订单和 3 张优惠券，分别按用户 ID 同时左连接两张明细表后，对该用户 COUNT(订单.id) 得多少？",
+      "answer": "在两张明细独立关联且无额外筛选时得到 6，而不是 2。",
+      "explanation": "两个一对多关系在连接后形成 2×3 行；可先分别聚合，再连接汇总结果。",
+      "example": "每个订单都与该用户的每张优惠券组合一次。",
+      "tags": [
+        "多对多连接放大",
+        "SQL 分组与聚合实践"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/queries-table-expressions.html"
+    },
+    {
+      "id": "pgagg-008",
+      "category": "foundations",
+      "level": "实践",
+      "subtopic": "SQL 分组与聚合实践",
+      "knowledgePoint": "分组均值加权",
+      "questionType": "简短场景",
+      "origin": "自行整理",
+      "question": "一个组有 1 条记录且均值为 10，另一个组有 9 条记录且均值为 0。两组合并后的总体均值是多少？",
+      "answer": "1，而不是两个组均值的算术平均数 5。",
+      "explanation": "合并时要按每组非空数值的数量加权： (10×1+0×9)/10。",
+      "example": "求全体记录的 AVG，或使用 SUM 与非空 COUNT 合并。",
+      "tags": [
+        "分组均值加权",
+        "SQL 分组与聚合实践"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/functions-aggregate.html"
+    },
+    {
+      "id": "pgagg-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "SQL 分组与聚合实践",
+      "knowledgePoint": "分组空值",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PostgreSQL 按某列 GROUP BY 时，该列为 NULL 的行是否各自成为独立的组？",
+      "answer": "不会；该分组列为 NULL 的行会被放入同一组，其他分组列也必须相同。",
+      "explanation": "分组语义不等同于用 = NULL 判断单行。",
+      "example": "两个城市字段均为 NULL 的记录按城市分组时会归入同一组。",
+      "tags": [
+        "分组空值",
+        "SQL 分组与聚合实践"
+      ],
+      "evidence": "application",
+      "reference": "https://www.postgresql.org/docs/17/queries-table-expressions.html"
+    }
+  ]
+}

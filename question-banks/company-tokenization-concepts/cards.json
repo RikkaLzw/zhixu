@@ -1,0 +1,177 @@
+{
+  "source": {
+    "id": "company-tokenization-concepts",
+    "title": "字节面经主题启发：SentencePiece 与分词",
+    "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900301%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+    "type": "公开面经合集",
+    "note": "题目根据逐题所列公开资料自行整理，示例为自编。",
+    "knowledgeArea": "05"
+  },
+  "cards": [
+    {
+      "id": "tokint-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "子词分词",
+      "knowledgePoint": "SentencePiece与BPE",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "SentencePiece 与 BPE 是互斥的两种分词算法吗？",
+      "answer": "不是；SentencePiece 是子词分词工具，可以使用 BPE 或 Unigram 等模型。",
+      "explanation": "面经只提出分词方式的问题；此处结合论文整理具体知识点。",
+      "example": "使用 SentencePiece 训练一个 BPE 子词模型。",
+      "tags": [
+        "SentencePiece与BPE",
+        "子词分词",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900301%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（自述主题启发，非原帖逐题）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentencepiece-reference",
+          "title": "SentencePiece：子词分词与反分词",
+          "url": "https://arxiv.org/abs/1808.06226",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "tokint-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "子词分词",
+      "knowledgePoint": "原始文本训练",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "SentencePiece 训练子词模型前必须先按语言分词成单词吗？",
+      "answer": "不必须；它可以直接从原始句子训练子词模型。",
+      "explanation": "预处理和规范化仍应根据所用配置理解。",
+      "example": "用未预先按词切分的中文句子训练模型。",
+      "tags": [
+        "原始文本训练",
+        "子词分词",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900301%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（自述主题启发，非原帖逐题）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentencepiece-reference",
+          "title": "SentencePiece：子词分词与反分词",
+          "url": "https://arxiv.org/abs/1808.06226",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "tokint-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "子词分词",
+      "knowledgePoint": "空格元符号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SentencePiece 常用的 ▁ 符号表示什么？",
+      "answer": "它是用于表示空格的元符号，使空格信息进入子词序列。",
+      "explanation": "该表示有助于从子词序列恢复规范化后的文本。",
+      "example": "编码结果中用 ▁ 标示词前空格。",
+      "tags": [
+        "空格元符号",
+        "子词分词",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900301%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（自述主题启发，非原帖逐题）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentencepiece-reference",
+          "title": "SentencePiece：子词分词与反分词",
+          "url": "https://arxiv.org/abs/1808.06226",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "tokint-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "子词分词",
+      "knowledgePoint": "规范化与可逆性",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "SentencePiece 将输入规范化后编码，再解码一定能恢复规范化前的原文吗？",
+      "answer": "不一定；在没有未知字符等额外损失时，解码恢复的是规范化后的文本，规范化前被改写的信息可能已经丢失。",
+      "explanation": "还需考虑未知字符和具体模型配置的影响。",
+      "example": "全角字符被规范化后，解码结果可能保留规范化形式。",
+      "tags": [
+        "规范化与可逆性",
+        "子词分词",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900301%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（自述主题启发，非原帖逐题）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentencepiece-reference",
+          "title": "SentencePiece：子词分词与反分词",
+          "url": "https://arxiv.org/abs/1808.06226",
+          "type": "研究论文",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "tokint-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "子词分词",
+      "knowledgePoint": "子词采样",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "SentencePiece 的子词采样可怎样增加训练时的输入变化？",
+      "answer": "它可对同一文本采样不同的子词切分，使训练看到多种分段方式。",
+      "explanation": "该功能需要使用相应采样配置，不代表每次推理都会随机分词。",
+      "example": "同一短语在两次训练中被切成不同子词片段。",
+      "tags": [
+        "子词采样",
+        "子词分词",
+        "公开面经",
+        "字节"
+      ],
+      "evidence": "application",
+      "reference": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%AD%97%E8%8A%82/%E3%80%900301%E3%80%91%E5%AD%97%E8%8A%82%E4%BA%8C%E9%9D%A2.md",
+      "referenceId": "company-bytedance",
+      "referenceTitle": "字节公开面经（自述主题启发，非原帖逐题）",
+      "referenceType": "公开面经合集",
+      "supportingReferences": [
+        {
+          "id": "sentencepiece-reference",
+          "title": "SentencePiece：子词分词与反分词",
+          "url": "https://github.com/google/sentencepiece",
+          "type": "开源项目文档",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "source": {
+    "id": "relational-database-normalization",
+    "title": "Database System Concepts 第 7 版：关系数据库设计",
+    "url": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf",
+    "type": "教材、协议标准与系统手册",
+    "note": "依据逐题引用的教材、标准或手册自行整理；示例为自编，版本和适用条件见各卡。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "dbnorm-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "规范化目的",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "关系数据库设计中，规范化通常希望减少什么问题？",
+      "answer": "它通过合理组织关系，减少数据冗余和由重复信息带来的维护异常。",
+      "explanation": "分解还需要考虑无损连接和约束是否便于维护。",
+      "example": "把部门地址与员工记录分开存储。",
+      "tags": [
+        "关系数据库范式与设计",
+        "规范化目的"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "函数依赖",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "关系模式中的函数依赖 X → Y 表示什么？",
+      "answer": "在所有合法关系中，任意两行的 X 值相同，就必须具有相同的 Y 值。",
+      "explanation": "这是对合法数据的约束，不表示 Y 一定能反向确定 X。",
+      "example": "若每个员工编号对应唯一姓名，可有员工编号 → 姓名。",
+      "tags": [
+        "关系数据库范式与设计",
+        "函数依赖"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "依赖和样本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在当前一份数据中观察到 X 值各不重复，能否证明业务上 X → Y 永远成立？",
+      "answer": "不能；函数依赖约束所有合法数据，单份样本可能只是碰巧满足。",
+      "explanation": "应依据业务规则及约束判断。",
+      "example": "当前员工姓名不重复不代表姓名永远唯一。",
+      "tags": [
+        "关系数据库范式与设计",
+        "依赖和样本"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "超键与候选键",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "关系模式的超键与候选键有什么区别？",
+      "answer": "超键的属性集合能唯一确定整行；候选键是去掉任何属性后都不再是超键的最小超键。",
+      "explanation": "一个关系模式可能有多个候选键。",
+      "example": "编号唯一时，编号与姓名的组合是超键，但通常不是最小超键。",
+      "tags": [
+        "关系数据库范式与设计",
+        "超键与候选键"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "第一范式",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按照《Database System Concepts》第 7 版，关系模式的第一范式要求什么？",
+      "answer": "每个属性的值域应被视为原子的，不在关系模型中按多个值拆分使用。",
+      "explanation": "原子性取决于应用如何使用值，不意味着字符串完全不能分解。",
+      "example": "不要把可变数量的课程作为一组值塞进同一单元格。",
+      "tags": [
+        "关系数据库范式与设计",
+        "第一范式"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "重复组设计",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "为什么用 course1、course2、course3 列记录学生的不定数量课程通常不利于关系设计？",
+      "answer": "课程数量增加时需改表结构，查询和约束也会变复杂；可用单独的选课关系表示多条记录。",
+      "explanation": "单独关系可用学生和课程的键关联信息。",
+      "example": "选课表每行表示一个学生的一门课程。",
+      "tags": [
+        "关系数据库范式与设计",
+        "重复组设计"
+      ],
+      "evidence": "source",
+      "reference": "https://learn.microsoft.com/en-us/office/troubleshoot/access/database-normalization-description",
+      "referenceTitle": "Microsoft Learn：数据库规范化基础",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "dbnorm-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "第二范式实例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "选课表唯一候选键为（学生编号，课程编号），学生姓名只由学生编号决定，这说明什么范式问题？",
+      "answer": "学生姓名对组合键只有部分依赖，违反第二范式。",
+      "explanation": "可把学生姓名移至以学生编号为键的学生表。",
+      "example": "同一学生选多门课时姓名会重复存储。",
+      "tags": [
+        "关系数据库范式与设计",
+        "第二范式实例"
+      ],
+      "evidence": "source",
+      "reference": "https://www.ibm.com/think/topics/database-normalization",
+      "referenceTitle": "IBM：数据库规范化与第二范式",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "dbnorm-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "第三范式实例",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "学生表唯一候选键为学生编号，且学生编号 → 院系编号 → 院系名称；两个院系字段都不是键属性，这有什么设计问题？",
+      "answer": "院系名称通过非键属性传递依赖于学生编号，违反第三范式。",
+      "explanation": "可将院系名称移到以院系编号为键的院系表。",
+      "example": "修改院系名称时避免逐个更新学生记录。",
+      "tags": [
+        "关系数据库范式与设计",
+        "第三范式实例"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "更新异常",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "关系表中的更新异常通常是什么？",
+      "answer": "同一事实重复保存在多行时，只更新其中一部分会产生不一致。",
+      "explanation": "消除不必要的冗余可降低这类风险。",
+      "example": "同一部门的地址在不同员工行中被改成不同值。",
+      "tags": [
+        "关系数据库范式与设计",
+        "更新异常"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "无损分解",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "关系模式的无损连接分解是什么意思？",
+      "answer": "将合法关系投影到分解后的关系，再按公共属性自然连接时，恰好能恢复原关系。",
+      "explanation": "有损分解可能引入原来不存在的组合。",
+      "example": "按部门编号分解员工与部门信息并保留关联键。",
+      "tags": [
+        "关系数据库范式与设计",
+        "无损分解"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "依赖保持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "关系模式分解中的依赖保持主要关注什么？",
+      "answer": "能否利用分解后各关系上的约束检查原有函数依赖，而无需先连接所有关系。",
+      "explanation": "无损连接与依赖保持是不同要求。",
+      "example": "更新单表时直接检查该表内的相关依赖。",
+      "tags": [
+        "关系数据库范式与设计",
+        "依赖保持"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "BCNF与3NF",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "关系模式满足 BCNF 时，一定满足第三范式吗？",
+      "answer": "满足；BCNF 对非平凡函数依赖的限制比第三范式更严格。",
+      "explanation": "满足第三范式并不一定满足 BCNF。",
+      "example": "某些第三范式设计仍可含非超键决定因素。",
+      "tags": [
+        "关系数据库范式与设计",
+        "BCNF与3NF"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    },
+    {
+      "id": "dbnorm-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "关系数据库范式与设计",
+      "knowledgePoint": "BCNF限制",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "BCNF 对非平凡函数依赖 X → Y 的左侧 X 有什么要求？",
+      "answer": "X 必须是该关系模式的超键。",
+      "explanation": "平凡依赖即右侧属性已包含在左侧的依赖，不受这一限制。",
+      "example": "如果部门编号决定部门地址，部门编号需要是该关系的超键。",
+      "tags": [
+        "关系数据库范式与设计",
+        "BCNF限制"
+      ],
+      "evidence": "source",
+      "reference": "https://www.db-book.com/slides-dir/PDF-dir/ch7.pdf"
+    }
+  ]
+}

@@ -1,0 +1,354 @@
+{
+  "source": {
+    "id": "d2l-math",
+    "title": "Dive into Deep Learning：线性代数、微积分与概率",
+    "url": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "01"
+  },
+  "cards": [
+    {
+      "id": "math-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "向量维度",
+      "questionType": "概念与原理",
+      "question": "向量的维度通常指什么？",
+      "answer": "指向量所含分量的个数。",
+      "explanation": "不要把向量的维度和张量的轴数混为一谈。",
+      "example": "一个包含 4 个数的向量属于四维实向量空间。",
+      "tags": [
+        "向量维度",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "矩阵转置",
+      "questionType": "概念与原理",
+      "question": "矩阵转置会怎样改变行与列？",
+      "answer": "转置交换矩阵的行与列，原来第 i 行第 j 列的元素变成第 j 行第 i 列。",
+      "explanation": "m×n 矩阵的转置形状是 n×m。",
+      "example": "一个 2×3 矩阵转置后是 3×2。",
+      "tags": [
+        "矩阵转置",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "矩阵乘法形状",
+      "questionType": "计算与推导",
+      "question": "两个二维矩阵可以相乘的形状条件是什么？",
+      "answer": "左矩阵的列数必须等于右矩阵的行数；结果形状为左矩阵行数乘右矩阵列数。",
+      "explanation": "这是标准矩阵乘法的规则，不是逐元素相乘的规则。",
+      "example": "2×3 矩阵乘 3×4 矩阵得到 2×4 矩阵。",
+      "tags": [
+        "矩阵乘法形状",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "逐元素乘法",
+      "questionType": "比较与选型",
+      "question": "逐元素乘法与矩阵乘法有什么区别？",
+      "answer": "逐元素乘法把对应位置的值相乘；矩阵乘法对行与列做内积。",
+      "explanation": "逐元素乘法要求形状相同或满足相应库的广播规则。",
+      "example": "两个 2×2 矩阵逐元素相乘仍得到 2×2 矩阵。",
+      "tags": [
+        "逐元素乘法",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "向量内积",
+      "questionType": "计算与推导",
+      "question": "两个等长实向量的内积怎样计算？",
+      "answer": "将对应分量相乘，再把乘积相加，结果是一个标量。",
+      "explanation": "内积常用于表示投影或相似程度，解释时还需考虑向量长度。",
+      "example": "[1,2] 与 [3,4] 的内积为 11。",
+      "tags": [
+        "向量内积",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "向量范数",
+      "questionType": "概念与原理",
+      "question": "向量的 L2 范数表示什么？",
+      "answer": "它是各分量平方和的平方根，表示向量的欧几里得长度。",
+      "explanation": "它总是非负，只有零向量的 L2 范数为零。",
+      "example": "向量 [3,4] 的 L2 范数是 5。",
+      "tags": [
+        "向量范数",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "线性代数",
+      "knowledgePoint": "L1范数",
+      "questionType": "计算与推导",
+      "question": "向量的 L1 范数怎样计算？",
+      "answer": "将各分量的绝对值相加。",
+      "explanation": "L1 和 L2 范数衡量长度的方式不同。",
+      "example": "[-3,4] 的 L1 范数是 7。",
+      "tags": [
+        "L1范数",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "线性代数",
+      "knowledgePoint": "按轴归约",
+      "questionType": "概念与原理",
+      "question": "在 PyTorch 或 NumPy 中，默认按指定轴对张量求和会发生什么？",
+      "answer": "该轴上的元素会被相加；默认情况下该轴会从结果形状中移除。",
+      "explanation": "某些库提供保留被归约轴的选项，以便后续广播。",
+      "example": "对形状为 2×3 的矩阵沿第 0 轴求和得到长度为 3 的向量。",
+      "tags": [
+        "按轴归约",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/linear-algebra.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "微积分",
+      "knowledgePoint": "偏导数",
+      "questionType": "概念与原理",
+      "question": "多变量函数对某个变量的偏导数表示什么？",
+      "answer": "表示其他变量固定时，函数随该变量变化的局部变化率。",
+      "explanation": "偏导数只考察一个坐标方向的变化。",
+      "example": "计算 f(x,y) 对 x 的偏导时把 y 视为常量。",
+      "tags": [
+        "偏导数",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/calculus.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "微积分",
+      "knowledgePoint": "梯度",
+      "questionType": "概念与原理",
+      "question": "多变量函数的梯度由什么组成？",
+      "answer": "梯度由函数对各输入变量的偏导数组成。",
+      "explanation": "在可微点且梯度非零时，梯度是欧氏距离下局部增长最快的方向。",
+      "example": "二元函数的梯度包含对 x 和 y 的偏导。",
+      "tags": [
+        "梯度",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/calculus.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "微积分",
+      "knowledgePoint": "链式法则",
+      "questionType": "概念与原理",
+      "question": "链式法则在复合函数求导中起什么作用？",
+      "answer": "它把复合函数的导数分解为各层导数的乘积。",
+      "explanation": "反向传播沿计算路径重复使用链式法则。",
+      "example": "若 y=f(g(x))，则 dy/dx=f′(g(x))g′(x)。",
+      "tags": [
+        "链式法则",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/calculus.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-012",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率",
+      "knowledgePoint": "条件概率",
+      "questionType": "概念与原理",
+      "question": "条件概率 P(A∣B) 表示什么？",
+      "answer": "在事件 B 已发生的条件下，事件 A 发生的概率。",
+      "explanation": "定义要求 P(B)>0。",
+      "example": "已知一次连接来自某个网段，再看它触发告警的概率。",
+      "tags": [
+        "条件概率",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/probability.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-013",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率",
+      "knowledgePoint": "概率独立",
+      "questionType": "概念与原理",
+      "question": "两个事件相互独立意味着什么？",
+      "answer": "两事件的联合概率等于各自概率之积，即 P(A∩B)=P(A)P(B)。",
+      "explanation": "在相应条件概率有定义时，获知一个事件发生不会改变另一个事件的概率；独立不等于互斥。",
+      "example": "两次独立抛硬币时，第一次结果不改变第二次正面的概率。",
+      "tags": [
+        "概率独立",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/probability.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率",
+      "knowledgePoint": "贝叶斯公式",
+      "questionType": "计算与推导",
+      "question": "贝叶斯公式怎样由 P(B∣A) 求 P(A∣B)？",
+      "answer": "当 P(B)>0 时，P(A∣B)=P(B∣A)P(A)/P(B)。",
+      "explanation": "P(A) 是先验，观察到 B 后得到 P(A∣B) 这一后验。",
+      "example": "知道某检测结果出现的概率后，可以结合基准率更新事件概率。",
+      "tags": [
+        "贝叶斯公式",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/probability.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "概率",
+      "knowledgePoint": "边缘概率",
+      "questionType": "计算与推导",
+      "question": "联合分布中的边缘概率如何得到？",
+      "answer": "对离散联合分布，将不关心的变量所有可能取值对应的联合概率相加。",
+      "explanation": "连续变量的相应操作是积分。",
+      "example": "从 P(X,Y) 对所有 Y 值求和，得到 P(X)。",
+      "tags": [
+        "边缘概率",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/probability.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-016",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率",
+      "knowledgePoint": "期望",
+      "questionType": "概念与原理",
+      "question": "离散随机变量的期望是什么？",
+      "answer": "它是各可能取值按其概率加权后的平均值。",
+      "explanation": "期望不一定是变量某一次取到的值。",
+      "example": "公平骰子的期望点数是 3.5。",
+      "tags": [
+        "期望",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/probability.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-017",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率",
+      "knowledgePoint": "方差",
+      "questionType": "概念与原理",
+      "question": "随机变量的方差衡量什么？",
+      "answer": "衡量随机变量偏离其期望的平方偏差的平均值。",
+      "explanation": "方差非负，数值大小受变量单位影响。",
+      "example": "结果总是同一个常数时，方差为零。",
+      "tags": [
+        "方差",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/probability.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "math-018",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "概率",
+      "knowledgePoint": "概率和频率",
+      "questionType": "比较与选型",
+      "question": "理论概率与样本频率有什么区别？",
+      "answer": "概率描述模型或总体中的不确定性；频率是有限样本中事件发生的比例。",
+      "explanation": "样本频率会随抽样变化，不能与真实概率直接画等号。",
+      "example": "抛硬币 10 次出现 7 次正面，样本频率为 0.7。",
+      "tags": [
+        "概率和频率",
+        "数学基础"
+      ],
+      "evidence": "source",
+      "reference": "https://d2l.ai/chapter_preliminaries/probability.html",
+      "origin": "自行整理"
+    }
+  ]
+}

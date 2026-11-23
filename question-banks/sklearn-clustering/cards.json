@@ -1,0 +1,232 @@
+{
+  "source": {
+    "id": "sklearn-clustering",
+    "title": "scikit-learn：聚类与特征预处理",
+    "url": "https://scikit-learn.org/stable/modules/clustering.html",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "cluster-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "K-means",
+      "knowledgePoint": "K-means 目标",
+      "questionType": "概念与原理",
+      "question": "K-means 使用什么目标来形成聚类？",
+      "answer": "它寻找 K 个中心，使样本到其所属中心的平方距离之和尽量小。",
+      "explanation": "这个目标通常称为 inertia 或簇内平方和。",
+      "example": "把数值特征相近的流量样本分成预设数量的组。",
+      "tags": [
+        "K-means 目标",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/clustering.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "K-means",
+      "knowledgePoint": "聚类中心",
+      "questionType": "概念与原理",
+      "question": "K-means 的聚类中心一定是原始样本吗？",
+      "answer": "不一定；中心是所属样本在特征空间中的均值。",
+      "explanation": "计算出的均值可能不与任何观测样本完全重合。",
+      "example": "两个一维样本 0 和 2 的中心是 1。",
+      "tags": [
+        "聚类中心",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/clustering.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "K-means",
+      "knowledgePoint": "K-means 迭代",
+      "questionType": "概念与原理",
+      "question": "K-means 的典型迭代交替进行哪两步？",
+      "answer": "先把样本分配给最近的中心，再根据各簇样本重新计算中心。",
+      "explanation": "反复迭代直到满足收敛条件或达到迭代上限。",
+      "example": "分配样本后重新计算每个簇的均值。",
+      "tags": [
+        "K-means 迭代",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/clustering.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "K-means",
+      "knowledgePoint": "初始化敏感性",
+      "questionType": "概念与原理",
+      "question": "为什么运行 K-means 时要关注初始中心？",
+      "answer": "不同初始中心可能收敛到不同局部解，得到不同的聚类结果。",
+      "explanation": "可以采用较好的初始化策略或多次初始化比较目标值。",
+      "example": "同一数据多次运行后比较簇内平方和。",
+      "tags": [
+        "初始化敏感性",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/clustering.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "K-means",
+      "knowledgePoint": "簇形状假设",
+      "questionType": "比较与选型",
+      "question": "K-means 对什么形状的簇通常更合适？",
+      "answer": "它通常更适合近似凸形、各方向尺度相近的簇。",
+      "explanation": "对于弯曲、非凸或密度差异明显的簇，结果可能不理想。",
+      "example": "两个新月形簇不一定能被 K-means 正确分开。",
+      "tags": [
+        "簇形状假设",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/clustering.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "特征预处理",
+      "knowledgePoint": "特征标准化",
+      "questionType": "概念与原理",
+      "question": "标准化数值特征通常使用什么统计量？",
+      "answer": "通常减去训练数据的均值，再按训练数据的标准差缩放。",
+      "explanation": "应在训练集拟合这些统计量，再对其他数据应用同一变换。",
+      "example": "将训练集中不同量纲的两个特征分别标准化。",
+      "tags": [
+        "特征标准化",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/preprocessing.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "特征预处理",
+      "knowledgePoint": "标准化与异常值",
+      "questionType": "概念与原理",
+      "question": "为什么均值和标准差缩放容易受极端值影响？",
+      "answer": "极端值会改变均值和标准差，从而影响其他样本缩放后的数值。",
+      "explanation": "数据存在明显异常值时可评估使用稳健缩放方法。",
+      "example": "一个极大的流量值可能使大部分样本被压缩在较窄范围。",
+      "tags": [
+        "标准化与异常值",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/preprocessing.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "特征预处理",
+      "knowledgePoint": "稀疏矩阵中心化",
+      "questionType": "设计与权衡",
+      "question": "为什么稀疏矩阵通常不宜直接减去特征均值？",
+      "answer": "中心化可能把大量零变成非零值，破坏稀疏结构并大幅增加内存使用。",
+      "explanation": "使用 scikit-learn 的 StandardScaler 处理稀疏输入时可关闭中心化。",
+      "example": "对稀疏词频矩阵设置 with_mean=False。",
+      "tags": [
+        "稀疏矩阵中心化",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/preprocessing.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-009",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DBSCAN",
+      "knowledgePoint": "密度聚类",
+      "questionType": "概念与原理",
+      "question": "DBSCAN 怎样理解一个簇？",
+      "answer": "它把高密度且相互可达的区域视作簇，低密度区域可作为簇间分隔。",
+      "explanation": "与 K-means 不同，它能识别某些非凸形簇。",
+      "example": "识别平面中弯曲分布的样本群。",
+      "tags": [
+        "密度聚类",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/clustering.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "DBSCAN",
+      "knowledgePoint": "DBSCAN 参数",
+      "questionType": "概念与原理",
+      "question": "DBSCAN 的 eps 与 min_samples 控制什么？",
+      "answer": "eps 控制邻域距离范围，min_samples 控制形成核心点所需的邻域样本数。",
+      "explanation": "这两个参数共同决定算法要求的局部密度。",
+      "example": "在距离度量确定后调整邻域半径和密度门槛。",
+      "tags": [
+        "DBSCAN 参数",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/clustering.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "cluster-011",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "DBSCAN",
+      "knowledgePoint": "噪声标签",
+      "questionType": "概念与原理",
+      "question": "scikit-learn 的 DBSCAN 中标签 -1 表示什么？",
+      "answer": "表示算法没有把该样本分配到任何簇，将其视为噪声点。",
+      "explanation": "噪声点不自动等同于业务中的恶意样本。",
+      "example": "孤立的样本可能得到标签 -1，仍需结合场景检查。",
+      "tags": [
+        "噪声标签",
+        "机器学习",
+        "聚类"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/stable/modules/clustering.html",
+      "origin": "自行整理"
+    }
+  ]
+}

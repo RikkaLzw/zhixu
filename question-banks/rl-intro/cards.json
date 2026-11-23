@@ -1,0 +1,251 @@
+{
+  "source": {
+    "id": "rl-intro",
+    "title": "Spinning Up：强化学习核心概念",
+    "url": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+    "type": "教材与官方文档",
+    "note": "根据原文自行编写并整理为简体中文；示例为自编。",
+    "knowledgeArea": "18"
+  },
+  "cards": [
+    {
+      "id": "rl-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "环境交互",
+      "knowledgePoint": "状态与观测",
+      "questionType": "比较与选型",
+      "question": "强化学习中的状态与观测有什么区别？",
+      "answer": "状态描述环境当前情况；观测是智能体实际获得的信息，可能无法完全确定状态。",
+      "explanation": "智能体只能依据可用信息选择动作。",
+      "example": "游戏内部完整状态是状态，屏幕画面可作为部分观测。",
+      "tags": [
+        "状态与观测",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "环境交互",
+      "knowledgePoint": "动作空间",
+      "questionType": "概念与原理",
+      "question": "强化学习的动作空间是什么？",
+      "answer": "动作空间是智能体在环境中允许选择的动作集合。",
+      "explanation": "动作空间可以是离散的，也可以是连续的。",
+      "example": "机器人可选转向角度构成连续动作空间。",
+      "tags": [
+        "动作空间",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "环境交互",
+      "knowledgePoint": "离散与连续动作",
+      "questionType": "比较与选型",
+      "question": "离散动作空间与连续动作空间有什么区别？",
+      "answer": "离散空间中的动作来自有限或可数的选项；连续空间中的动作可在连续范围内取值。",
+      "explanation": "算法需要适配动作空间的类型。",
+      "example": "上下左右是离散动作，连续转向角度是连续动作。",
+      "tags": [
+        "离散与连续动作",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "策略",
+      "knowledgePoint": "强化学习策略",
+      "questionType": "概念与原理",
+      "question": "强化学习中的策略是什么？",
+      "answer": "策略是智能体根据可用状态或观测选择动作的规则。",
+      "explanation": "策略可以由可训练模型的参数表示。",
+      "example": "根据当前画面为每个可选动作给出选择概率。",
+      "tags": [
+        "强化学习策略",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "策略",
+      "knowledgePoint": "确定性与随机策略",
+      "questionType": "比较与选型",
+      "question": "确定性策略与随机策略有什么区别？",
+      "answer": "确定性策略对同一输入给出确定动作；随机策略给出动作概率分布并从中采样。",
+      "explanation": "随机策略的具体动作可能随采样而变化。",
+      "example": "同一观测下按概率选择左转或右转。",
+      "tags": [
+        "确定性与随机策略",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "奖励与回报",
+      "knowledgePoint": "奖励与回报",
+      "questionType": "比较与选型",
+      "question": "强化学习中的即时奖励与回报有什么区别？",
+      "answer": "即时奖励是一次交互得到的反馈；回报是一个时间范围内奖励的累积。",
+      "explanation": "回报的定义可能包含折扣。",
+      "example": "每一步得到分数，整局累计分数构成一种回报。",
+      "tags": [
+        "奖励与回报",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "奖励与回报",
+      "knowledgePoint": "折扣因子",
+      "questionType": "概念与原理",
+      "question": "折扣回报中的折扣因子有什么作用？",
+      "answer": "它控制未来奖励在当前回报中所占的权重，越远的奖励通常被折减得越多。",
+      "explanation": "常见折扣因子取值在 0 到 1 之间。",
+      "example": "折扣因子为 0.9 时，下一步奖励乘以 0.9。",
+      "tags": [
+        "折扣因子",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "环境交互",
+      "knowledgePoint": "轨迹",
+      "questionType": "概念与原理",
+      "question": "强化学习中的轨迹是什么？",
+      "answer": "轨迹是智能体与环境交互过程中形成的状态、动作等随时间排列的序列。",
+      "explanation": "轨迹可包含奖励等信息，具体表示取决于算法。",
+      "example": "记录一局游戏的每一步观测、动作和奖励。",
+      "tags": [
+        "轨迹",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "价值函数",
+      "knowledgePoint": "状态价值",
+      "questionType": "概念与原理",
+      "question": "给定策略下的状态价值表示什么？",
+      "answer": "表示从该状态开始、此后遵循该策略时预期获得的回报。",
+      "explanation": "价值依赖策略和所采用的回报定义。",
+      "example": "估计从当前游戏局面继续按既定策略行动的预期得分。",
+      "tags": [
+        "状态价值",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "价值函数",
+      "knowledgePoint": "动作价值",
+      "questionType": "概念与原理",
+      "question": "给定策略下的动作价值表示什么？",
+      "answer": "表示从某状态先采取指定动作，再遵循该策略时预期获得的回报。",
+      "explanation": "它与只给状态的价值函数相比，多指定了第一步动作。",
+      "example": "比较当前局面先向左或先向右的预期回报。",
+      "tags": [
+        "动作价值",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "价值函数",
+      "knowledgePoint": "贝尔曼关系",
+      "questionType": "概念与原理",
+      "question": "价值函数的贝尔曼关系表达了什么基本思想？",
+      "answer": "当前价值可以分解为即时奖励与后续状态价值的期望之和，后者按回报定义折扣。",
+      "explanation": "具体形式取决于策略和使用的价值函数。",
+      "example": "估计当前状态价值时结合下一步奖励和后续状态价值。",
+      "tags": [
+        "贝尔曼关系",
+        "强化学习"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理"
+    },
+    {
+      "id": "rl-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "价值函数",
+      "knowledgePoint": "优势函数",
+      "questionType": "概念与原理",
+      "question": "优势函数在强化学习中衡量什么？",
+      "answer": "衡量在某状态采取特定动作，相对于该状态下按策略行动的平均价值好多少。",
+      "explanation": "优势值为正表示该动作的估计价值高于对应基准。",
+      "example": "在同一局面比较某动作价值与该局面的状态价值。",
+      "tags": [
+        "优势函数",
+        "强化学习",
+        "公开面经",
+        "小米"
+      ],
+      "evidence": "source",
+      "reference": "https://spinningup.openai.com/en/latest/spinningup/rl_intro.html",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-xiaomi",
+          "title": "小米公开面经（合集转载，经历为分享者自述）",
+          "url": "https://github.com/jingtian11/EasyOffer/blob/9aed2cb583a141dce76f24d0e5be82b355dc8843/LLM%E5%A4%A7%E5%8E%82%E9%9D%A2%E7%BB%8F%E5%90%88%E9%9B%86/%E5%B0%8F%E7%B1%B3/%E3%80%900316%E3%80%91%E5%B0%8F%E7%B1%B3%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%9D%A2%E7%BB%8F.md",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    }
+  ]
+}

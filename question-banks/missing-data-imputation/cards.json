@@ -1,0 +1,320 @@
+{
+  "source": {
+    "id": "missing-data-imputation",
+    "title": "scikit-learn 1.9.1：缺失数据填充与指示",
+    "url": "https://scikit-learn.org/1.9/modules/impute.html",
+    "type": "官方技术文档",
+    "note": "逐题依据 scikit-learn 1.9.1 用户指南与 API 文档整理；安全数据示例为自编。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "impute-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "单变量与多变量填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "单变量缺失值填充与多变量填充主要使用哪些信息？",
+      "answer": "单变量方法主要使用待填充列本身的已知值；多变量方法还可利用其他列的信息估计缺失值。",
+      "explanation": "具体效果取决于数据关系、缺失机制和估计方法。",
+      "example": "分别用某列均值和其他特征预测该列的缺失值。",
+      "tags": [
+        "单变量与多变量填充",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/impute.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "均值填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 SimpleImputer 使用 mean 策略时如何填充缺失值？",
+      "answer": "它用拟合数据中对应列的非缺失值均值替换该列缺失值。",
+      "explanation": "均值填充适用于数值数据，拟合和转换应遵守数据集划分。",
+      "example": "使用训练集中某个时长特征的均值填充缺失时长。",
+      "tags": [
+        "均值填充",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.impute.SimpleImputer.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "分类特征填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 的 SimpleImputer 可用哪些策略填充字符串类别缺失值？",
+      "answer": "可使用 most_frequent 或 constant 策略。",
+      "explanation": "均值和中位数策略要求数值数据。",
+      "example": "用该列最常见的协议类别填充缺失项。",
+      "tags": [
+        "分类特征填充",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.impute.SimpleImputer.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "全缺失列保留",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 的 SimpleImputer 中，keep_empty_features=True 对拟合时全缺失的列有什么作用？",
+      "answer": "它在转换结果中保留这些列，并按文档使用填充值。",
+      "explanation": "保留列可维持特征形状，但不意味着训练时已经获得该列的有效信息。",
+      "example": "让训练期为空的日志字段在后续流水线中保留位置。",
+      "tags": [
+        "全缺失列保留",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.impute.SimpleImputer.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "缺失指示特征",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "填补缺失值后，附加缺失指示特征有什么作用？",
+      "answer": "它记录原值是否缺失，使模型仍有机会利用缺失这一信息。",
+      "explanation": "缺失模式也可能反映采集环境，需要检查其稳定性。",
+      "example": "填补响应字节数时保留一个原值缺失标记。",
+      "tags": [
+        "缺失指示特征",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/impute.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "缺失指示列选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 的 MissingIndicator 中，features=missing-only 与 features=all 有什么区别？",
+      "answer": "前者只为拟合时含缺失值的特征生成标记；后者为所有特征生成标记。",
+      "explanation": "选择会影响指示矩阵的列数。",
+      "example": "某一列训练时没有缺失时，all 仍保留该列指示位。",
+      "tags": [
+        "缺失指示列选择",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.impute.MissingIndicator.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "新缺失报错",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 的 MissingIndicator 使用默认参数时，训练时完整的列在转换时首次缺失会怎样？",
+      "answer": "如果该列拟合时没有缺失，transform 会报错。",
+      "explanation": "这是 features=missing-only 与 error_on_new=True 的默认组合。",
+      "example": "上线后原本完整的字段开始缺失。",
+      "tags": [
+        "新缺失报错",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.impute.MissingIndicator.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "填充器新缺失指示",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9.1 的 SimpleImputer 设置 add_indicator=True 后，拟合时完整的列在测试时首次缺失，会新增指示列吗？",
+      "answer": "不会；内置指示列只为拟合时存在缺失的特征建立。",
+      "explanation": "需要覆盖所有列的缺失状态时，应单独配置适合的指示器。",
+      "example": "训练数据完整的某个字段在生产数据中出现 NaN。",
+      "tags": [
+        "填充器新缺失指示",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.impute.SimpleImputer.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "KNN缺失填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 KNNImputer 怎样利用近邻填充某个缺失特征？",
+      "answer": "它从该特征有值的近邻中，按均匀或距离权重对相应值求平均。",
+      "explanation": "距离与近邻数量影响结果，候选近邻来自拟合数据。",
+      "example": "依据相似连接记录估计某条记录的缺失数值。",
+      "tags": [
+        "KNN缺失填充",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/impute.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "KNN逐列近邻",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "同一条记录有多个缺失特征时，KNNImputer 填充不同列必须使用同一组近邻吗？",
+      "answer": "不必须；只有对应特征有值的候选记录才能用于填充该列。",
+      "explanation": "因此不同列可使用不同的有效近邻。",
+      "example": "两个近邻分别缺少不同字段。",
+      "tags": [
+        "KNN逐列近邻",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/impute.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "缺失坐标距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 nan_euclidean_distances 在两个样本没有任何共同非缺失坐标时返回什么？",
+      "answer": "返回 NaN，表示这对样本的距离无法根据共同观测特征计算。",
+      "explanation": "存在共同坐标时，它忽略缺失坐标并按可用坐标比例缩放距离。",
+      "example": "两条日志记录可用字段完全错开。",
+      "tags": [
+        "缺失坐标距离",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.metrics.pairwise.nan_euclidean_distances.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "KNN无距离回退",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 KNNImputer 无法为缺失值找到定义了距离的训练邻居时，通常用什么回退？",
+      "answer": "使用拟合数据中该特征的平均值。",
+      "explanation": "如果该列在拟合数据中全缺失，还需考虑空特征配置。",
+      "example": "共同观测字段不足，无法计算任何候选距离。",
+      "tags": [
+        "KNN无距离回退",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/impute.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "迭代填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 IterativeImputer 怎样利用其他特征估计缺失值？",
+      "answer": "它轮流把待填充列作为目标，用其他列训练估计器并预测缺失值，重复多个轮次。",
+      "explanation": "在 1.9.1 文档中该估计器仍标为实验性。",
+      "example": "用其他已观测数值特征估计缺失的时长。",
+      "tags": [
+        "迭代填充",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/impute.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    },
+    {
+      "id": "impute-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "缺失数据处理",
+      "knowledgePoint": "多重填充",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "统计分析中的多重填充与只产生一份填充数据的主要区别是什么？",
+      "answer": "多重填充生成多个填充数据集并分别分析，结果差异有助于评估缺失值带来的不确定性。",
+      "explanation": "scikit-learn 文档说明 IterativeImputer 默认一次只返回一份填充结果。",
+      "example": "对同一缺失数据生成多份合理填充值并比较结果。",
+      "tags": [
+        "多重填充",
+        "缺失值",
+        "scikit-learn"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/impute.html",
+      "referenceTitle": "scikit-learn 1.9.1：缺失值填充文档",
+      "referenceType": "官方技术文档"
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "source": {
+    "id": "langchain-query-compression",
+    "title": "LangChain 0.3.27：多查询与上下文压缩",
+    "url": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_query.py",
+    "type": "原论文与固定版本源码或官方说明",
+    "note": "根据逐题所列原论文、官方说明或固定版本源码自行整理；示例为自编，适用条件见各卡。",
+    "knowledgeArea": "07"
+  },
+  "cards": [
+    {
+      "id": "lcmulticomp-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多查询与上下文压缩",
+      "knowledgePoint": "原始问题",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 MultiQueryRetriever 默认会把用户原始查询加入生成查询列表吗？",
+      "answer": "默认不会；可设置 include_original=True 将原始查询一并提交给底层检索器。",
+      "explanation": "默认值为 False。",
+      "example": "生成查询遗漏关键信息时可选择同时检索原问题。",
+      "tags": [
+        "多查询与上下文压缩",
+        "原始问题"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_query.py"
+    },
+    {
+      "id": "lcmulticomp-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多查询与上下文压缩",
+      "knowledgePoint": "查询数量",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MultiQueryRetriever 的默认提示要求生成 3 个改写，是否保证一定执行 3 次检索？",
+      "answer": "不保证；实际次数取决于语言模型生成并由解析器得到的查询数量。",
+      "explanation": "include_original=True 还会追加原始查询。",
+      "example": "模型多输出一行时可能产生额外查询。",
+      "tags": [
+        "多查询与上下文压缩",
+        "查询数量"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_query.py"
+    },
+    {
+      "id": "lcmulticomp-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "多查询与上下文压缩",
+      "knowledgePoint": "查询重复",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MultiQueryRetriever 会先对生成的重复查询去重，再调用底层检索器吗？",
+      "answer": "不会；该版本逐个提交生成查询，之后才对返回文档去重。",
+      "explanation": "重复查询可能导致重复检索调用。",
+      "example": "模型两次生成相同查询时，底层检索器可能被调用两次。",
+      "tags": [
+        "多查询与上下文压缩",
+        "查询重复"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_query.py"
+    },
+    {
+      "id": "lcmulticomp-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多查询与上下文压缩",
+      "knowledgePoint": "结果顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MultiQueryRetriever 0.3.27 合并不同查询的命中文档时，如何处理相等文档和顺序？",
+      "answer": "它保留首次出现的相等文档，按各查询结果展开后的首次出现顺序返回。",
+      "explanation": "它没有在此步骤中按全局相关分数重新排序。",
+      "example": "后续查询再次命中的相同文档不会增加一份。",
+      "tags": [
+        "多查询与上下文压缩",
+        "结果顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_query.py"
+    },
+    {
+      "id": "lcmulticomp-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多查询与上下文压缩",
+      "knowledgePoint": "文档相等",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MultiQueryRetriever 按文档对象相等性去重时，内容相同但元数据不同的文档一定合并吗？",
+      "answer": "不一定；该版本比较整个 Document 对象，不只比较正文。",
+      "explanation": "来源等元数据不同可能使对象不相等。",
+      "example": "同一正文分别标记两个来源时可能保留两条。",
+      "tags": [
+        "多查询与上下文压缩",
+        "文档相等"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_query.py"
+    },
+    {
+      "id": "lcmulticomp-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多查询与上下文压缩",
+      "knowledgePoint": "同步与异步",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MultiQueryRetriever 的同步和异步检索怎样调用多个生成查询？",
+      "answer": "同步路径依次调用底层检索器；异步路径用 asyncio.gather 调度各查询。",
+      "explanation": "实际并发效果还受底层检索器和环境限制。",
+      "example": "多个远程查询可在异步路径中同时等待。",
+      "tags": [
+        "多查询与上下文压缩",
+        "同步与异步"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/multi_query.py"
+    },
+    {
+      "id": "lcmulticomp-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多查询与上下文压缩",
+      "knowledgePoint": "基础与压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ContextualCompressionRetriever 的基本处理顺序是什么？",
+      "answer": "先用基础检索器取候选文档，再把候选及原查询交给文档压缩器。",
+      "explanation": "基础检索结果为空时，该版本直接返回空列表；压缩器可按实现过滤文档或提取相关内容。",
+      "example": "先召回文章片段，再选择与问题相关的部分。",
+      "tags": [
+        "多查询与上下文压缩",
+        "基础与压缩"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/contextual_compression.py"
+    },
+    {
+      "id": "lcmulticomp-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多查询与上下文压缩",
+      "knowledgePoint": "筛选顺序",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 EmbeddingsFilter 同时设置 k 和 similarity_threshold 时怎样筛选？",
+      "answer": "它先按相似度取前 k 个，再保留分数严格大于阈值的文档。",
+      "explanation": "因此最终文档数可能少于 k。",
+      "example": "k=2 且阈值为 0.7 时，分数恰为 0.7 的文档被排除。",
+      "tags": [
+        "多查询与上下文压缩",
+        "筛选顺序"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/document_compressors/embeddings_filter.py"
+    },
+    {
+      "id": "lcmulticomp-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "多查询与上下文压缩",
+      "knowledgePoint": "None初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LangChain 0.3.27 搭配 langchain-core 0.3.75 时，构造 EmbeddingsFilter 并传入 k=None 会禁用 top-k 吗？",
+      "answer": "不会；该版本的 pre_init 会把 None 替换为 k 的默认值 20。",
+      "explanation": "即使同时传入相似度阈值也会如此；版本变更时应重新核验。",
+      "example": "只依赖阈值时，构造后的 k 仍可能是 20。",
+      "tags": [
+        "多查询与上下文压缩",
+        "None初始化"
+      ],
+      "evidence": "source",
+      "reference": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/langchain/langchain/retrievers/document_compressors/embeddings_filter.py",
+      "supportingReferences": [
+        {
+          "id": "langchain-core-pre-init-0375",
+          "title": "langchain-core 0.3.75：pre_init 默认值处理",
+          "url": "https://github.com/langchain-ai/langchain/blob/bdf1cd383ce36dc18381a3bf3fb0a579337a32b5/libs/core/langchain_core/utils/pydantic.py",
+          "type": "固定版本源码",
+          "evidence": "source"
+        }
+      ]
+    }
+  ]
+}

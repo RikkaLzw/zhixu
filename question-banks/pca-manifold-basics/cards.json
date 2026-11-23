@@ -1,0 +1,483 @@
+{
+  "source": {
+    "id": "pca-manifold-basics",
+    "title": "PCA、截断 SVD 与 t-SNE 基础",
+    "url": "https://scikit-learn.org/1.9/modules/decomposition.html#pca",
+    "type": "官方文档与技术教程",
+    "note": "对照 scikit-learn 1.9 官方文档和 Distill 教程逐题整理，应用推论标为 application。",
+    "knowledgeArea": "03"
+  },
+  "cards": [
+    {
+      "id": "pcastudy-001",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "PCA目标",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "主成分分析（PCA）通常怎样进行线性降维？",
+      "answer": "它把数据投影到少量方向，使这些方向保留尽可能多的样本方差。",
+      "explanation": "方向由输入数据学习，不以类别标签为优化目标。",
+      "example": "把多个相关数值特征投影为两个主成分。",
+      "tags": [
+        "PCA目标",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/decomposition.html#pca",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-002",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "主成分方向",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PCA 中后续主成分的方向与前面的方向有什么约束？",
+      "answer": "它们与已选方向正交，并在该约束下依次解释尽可能多的剩余方差。",
+      "explanation": "相同特征值时，对应子空间内的具体方向可能不唯一。",
+      "example": "第二主成分与第一主成分方向垂直。",
+      "tags": [
+        "主成分方向",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/decomposition.html#pca",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "中心化与缩放",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 PCA 在拟合前会自动标准化每个特征的方差吗？",
+      "answer": "不会；它对每个特征做中心化，但不会自动按特征尺度缩放。",
+      "explanation": "是否先做标准化取决于数据和任务。",
+      "example": "年龄与收入输入 PCA 前可评估是否需要缩放。",
+      "tags": [
+        "中心化与缩放",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.PCA.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "特征尺度的影响",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PCA 前为什么要关注各特征的单位和尺度？",
+      "answer": "尺度较大的特征可能主导方差，使主成分方向随单位或缩放方式变化。",
+      "explanation": "标准化也会改变不同特征的相对权重，应依据任务选择。",
+      "example": "一个特征从米改为毫米、其他特征不变时，PCA 方向可能改变。",
+      "tags": [
+        "特征尺度的影响",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.9/auto_examples/preprocessing/plot_scaling_importance.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "方向与投影值",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PCA 的主成分方向与样本在主成分上的得分有什么区别？",
+      "answer": "方向描述原始特征空间中的投影轴；得分是各样本沿该轴的投影坐标。",
+      "explanation": "同一个投影轴对应每个样本各自的坐标。",
+      "example": "同一条轴上，不同样本有不同投影值。",
+      "tags": [
+        "方向与投影值",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.PCA.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "PCA输出形状",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对 n 个样本、p 个特征的数据保留 k 个主成分后，PCA 转换结果的形状通常是什么？",
+      "answer": "转换结果为 n×k：样本数不变，每个样本用 k 个主成分坐标表示。",
+      "explanation": "输入原始特征数为 p，输出特征数为 k。",
+      "example": "100 个样本投影到 2 维后得到 100×2 的矩阵。",
+      "tags": [
+        "PCA输出形状",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.PCA.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "解释方差与比例",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "scikit-learn PCA 的 explained_variance_ 和 explained_variance_ratio_ 有什么区别？",
+      "answer": "前者是各主成分解释的方差大小；后者是各主成分占总方差的比例。",
+      "explanation": "比例便于比较累计保留了多少方差。",
+      "example": "两个主成分的解释方差比例可以相加。",
+      "tags": [
+        "解释方差与比例",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.PCA.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-008",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "累计方差选维",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 PCA 使用 full 求解器且 n_components 为 0.95 时，如何选择维数？",
+      "answer": "选择足够多的主成分，使累计解释方差比例超过 95%。",
+      "explanation": "这个规则选择的是方差比例，不直接优化分类效果。",
+      "example": "根据训练数据自动选择达到阈值所需的维数。",
+      "tags": [
+        "累计方差选维",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.PCA.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "PCA与LDA",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PCA 与用于降维的线性判别分析（LDA）在使用标签上有什么区别？",
+      "answer": "PCA 按输入方差寻找方向，不使用类别标签；LDA 使用类别标签寻找有助于区分类别的方向。",
+      "explanation": "两种方法的目标不同，不能认为它们总产生相同投影。",
+      "example": "有类别标签时，可比较两种投影的表现。",
+      "tags": [
+        "PCA与LDA",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/auto_examples/decomposition/plot_pca_vs_lda.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-010",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "方差与分类信息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PCA 保留了很高比例的方差，能否保证保留分类所需的信息？",
+      "answer": "不能；类别差异可能存在于总体方差较小的方向。",
+      "explanation": "下游效果需要用独立数据验证。",
+      "example": "两个类别的微小差异可能被截断掉。",
+      "tags": [
+        "方差与分类信息",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.9/auto_examples/decomposition/plot_pca_vs_lda.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "逆变换与信息损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PCA 丢弃一部分主成分后，逆变换通常能精确还原每个原始样本吗？",
+      "answer": "通常不能；被丢弃方向上的信息无法从保留的坐标中完全恢复。",
+      "explanation": "如果样本恰好位于保留子空间中，重构误差可能为零。",
+      "example": "将三维数据压到二维后再重构三维。",
+      "tags": [
+        "逆变换与信息损失",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.PCA.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "PCA白化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn PCA 的 whiten=True 对保留的主成分有什么作用？",
+      "answer": "它缩放主成分，使拟合数据的输出在各成分上具有单位方差。",
+      "explanation": "白化会移除各成分原有的相对方差尺度。",
+      "example": "保留两个主成分后分别按其尺度缩放。",
+      "tags": [
+        "PCA白化",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.PCA.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "主成分不相关",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "在普通 PCA 的拟合数据上，不同主成分得分的线性相关性有什么特点？",
+      "answer": "在常规非退化条件下，中心化后的不同主成分得分互不相关。",
+      "explanation": "不相关并不等于统计独立；新数据的分布也可能变化。",
+      "example": "训练样本的两个主成分得分协方差为零。",
+      "tags": [
+        "主成分不相关",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.9/modules/decomposition.html#pca",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "主成分符号",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "两次 PCA 得到的同一方向符号相反，是否必然表示结果不同？",
+      "answer": "不一定；把主成分方向和相应投影得分同时乘以负一，表示的投影子空间不变。",
+      "explanation": "特征值相同时，方向还可能在对应子空间内旋转。",
+      "example": "一个结果把水平轴向右，另一个把它向左。",
+      "tags": [
+        "主成分符号",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "application",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.TruncatedSVD.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "PCA与截断SVD",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 的 TruncatedSVD 与 PCA 在输入中心化上有什么不同？",
+      "answer": "TruncatedSVD 不先对输入做中心化，而 PCA 会中心化输入。",
+      "explanation": "不中心化使 TruncatedSVD 能较高效地处理稀疏矩阵。",
+      "example": "对稀疏词频矩阵使用 TruncatedSVD。",
+      "tags": [
+        "PCA与截断SVD",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.TruncatedSVD.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "增量PCA",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IncrementalPCA 为什么适合无法一次装入内存的数据？",
+      "answer": "它可以分批处理数据并逐步更新主成分估计。",
+      "explanation": "内存使用与批次大小等设置有关，结果是增量近似。",
+      "example": "依次读取多批样本进行 partial_fit。",
+      "tags": [
+        "增量PCA",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/decomposition.html#pca",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "PCA与tSNE",
+      "questionType": "比较与选型",
+      "origin": "自行整理",
+      "question": "PCA 和 t-SNE 在降维思路上有什么主要区别？",
+      "answer": "PCA 使用线性投影并关注方差；t-SNE 使用非线性嵌入来表达样本间的相似关系。",
+      "explanation": "t-SNE 常用于可视化，不能保证完整保留全局几何。",
+      "example": "用 PCA 压缩特征，或用 t-SNE 查看样本邻域。",
+      "tags": [
+        "PCA与tSNE",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.manifold.TSNE.html",
+      "referenceTitle": "scikit-learn 1.9 文档",
+      "supportingReferences": [
+        {
+          "id": "pca-linear-ref",
+          "title": "scikit-learn 1.9：PCA",
+          "url": "https://scikit-learn.org/1.9/modules/generated/sklearn.decomposition.PCA.html",
+          "type": "官方文档",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "pcastudy-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "tSNE困惑度",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "scikit-learn 1.9 的 t-SNE 中 perplexity 与什么有关？",
+      "answer": "它与考虑的近邻尺度有关，且必须小于样本数。",
+      "explanation": "不同取值可能产生显著不同的可视化。",
+      "example": "样本很少时检查 perplexity 是否小于样本总数。",
+      "tags": [
+        "tSNE困惑度",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.manifold.TSNE.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-019",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "tSNE初始化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "相同数据的 t-SNE 不同运行为什么可能得到不同结果？",
+      "answer": "其优化目标非凸，不同初始化可能收敛到不同结果。",
+      "explanation": "固定随机状态有助于在相同设置下复现。",
+      "example": "比较不同随机初始化生成的二维图。",
+      "tags": [
+        "tSNE初始化",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://scikit-learn.org/1.9/modules/generated/sklearn.manifold.TSNE.html",
+      "referenceTitle": "scikit-learn 1.9 文档"
+    },
+    {
+      "id": "pcastudy-020",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "tSNE簇间距离",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "能否直接把 t-SNE 图中不同簇之间的距离当作原始空间距离？",
+      "answer": "不能；嵌入会扭曲全局距离，簇间距离可能不反映原始距离。",
+      "explanation": "不同参数下全局布局也可能改变。",
+      "example": "二维图中相距较近的两个簇未必在原空间同样接近。",
+      "tags": [
+        "tSNE簇间距离",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2016/misread-tsne/",
+      "referenceTitle": "Distill：How to Use t-SNE Effectively"
+    },
+    {
+      "id": "pcastudy-021",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "tSNE簇面积",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "t-SNE 图中簇的显示面积能否直接代表原始数据的离散程度？",
+      "answer": "不能；t-SNE 会按局部密度调整尺度，图中面积未必反映原始分散程度。",
+      "explanation": "这里的面积指图上几何范围，不是簇内样本个数。",
+      "example": "原始方差不同的两簇在图中可能看起来大小接近。",
+      "tags": [
+        "tSNE簇面积",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2016/misread-tsne/",
+      "referenceTitle": "Distill：How to Use t-SNE Effectively"
+    },
+    {
+      "id": "pcastudy-022",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "PCA 与可视化降维",
+      "knowledgePoint": "tSNE虚假结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "t-SNE 图中出现清晰的小团块，能否单独证明原始数据存在真实类别？",
+      "answer": "不能；参数和随机噪声也可能产生看似成簇的图形。",
+      "explanation": "应结合原数据、其他分析和领域知识验证。",
+      "example": "随机高维数据在某些参数下也可能呈现团块。",
+      "tags": [
+        "tSNE虚假结构",
+        "机器学习",
+        "降维"
+      ],
+      "evidence": "source",
+      "reference": "https://distill.pub/2016/misread-tsne/",
+      "referenceTitle": "Distill：How to Use t-SNE Effectively"
+    }
+  ]
+}

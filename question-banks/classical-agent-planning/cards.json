@@ -1,0 +1,135 @@
+{
+  "source": {
+    "id": "classical-agent-planning",
+    "title": "Artificial Intelligence 第三版与 PDDL 教程：规划建模",
+    "url": "https://artint.info/3e/html/ArtInt3e.Ch6.S1.html",
+    "type": "官方文档与教材",
+    "note": "依据题目所列文档或教材自行整理，示例为自编；在线资料按 2026-11-21 查看。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "planmodel-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "智能体经典规划建模",
+      "knowledgePoint": "动作条件与效果",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典确定性规划中的动作前置条件和效果分别描述什么？",
+      "answer": "前置条件描述动作何时可执行；效果描述执行后状态如何变化。",
+      "explanation": "规划需要动作模型来推断后续状态。",
+      "example": "拿取物品要求当前位置有该物品，效果是持有物品。",
+      "tags": [
+        "智能体经典规划建模",
+        "动作条件与效果"
+      ],
+      "evidence": "source",
+      "reference": "https://artint.info/3e/html/ArtInt3e.Ch6.S1.html"
+    },
+    {
+      "id": "planmodel-003",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体经典规划建模",
+      "knowledgePoint": "状态保持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典 STRIPS 表示中，动作效果未涉及的状态特征通常如何变化？",
+      "answer": "默认保持原值。",
+      "explanation": "这一约定避免为每个动作显式列出所有未变化的事实。",
+      "example": "移动位置不会自动改变是否持有物品。",
+      "tags": [
+        "智能体经典规划建模",
+        "状态保持"
+      ],
+      "evidence": "source",
+      "reference": "https://artint.info/3e/html/ArtInt3e.Ch6.S1.html"
+    },
+    {
+      "id": "planmodel-004",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体经典规划建模",
+      "knowledgePoint": "领域与问题",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PDDL 规划中的 domain 与 problem 分别描述什么？",
+      "answer": "domain 描述通用动作、谓词等规则；problem 给出具体对象、初始状态和目标。",
+      "explanation": "同一领域可用于多个不同实例。",
+      "example": "物流领域定义移动动作，某实例指定仓库及货物。",
+      "tags": [
+        "智能体经典规划建模",
+        "领域与问题"
+      ],
+      "evidence": "source",
+      "reference": "https://planning.wiki/ref/pddl/problem",
+      "supportingReferences": [
+        {
+          "id": "pddl-domain-ref",
+          "title": "Planning Wiki：PDDL Domain",
+          "url": "https://planning.wiki/ref/pddl/domain",
+          "type": "规划语言教程",
+          "evidence": "source"
+        }
+      ]
+    },
+    {
+      "id": "planmodel-005",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体经典规划建模",
+      "knowledgePoint": "目标不约束项",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "经典规划目标没有提到的状态事实在最终状态必须为假吗？",
+      "answer": "不必；未被目标表达式约束的事实可取任意满足其他条件的值。",
+      "explanation": "最终状态只需满足所写目标及规划模型约束。",
+      "example": "目标只要求货物到达时，不自动指定机器人最终位置。",
+      "tags": [
+        "智能体经典规划建模",
+        "目标不约束项"
+      ],
+      "evidence": "source",
+      "reference": "https://planning.wiki/ref/pddl/problem"
+    },
+    {
+      "id": "planmodel-006",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体经典规划建模",
+      "knowledgePoint": "封闭世界初始状态",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "PDDL 常见封闭世界假设下，初始状态未列为真的原子事实通常如何解释？",
+      "answer": "通常视为假。",
+      "explanation": "该结论依赖封闭世界及具体规划语言、建模设置。",
+      "example": "未列出机器人持有包裹时，初始状态视为未持有。",
+      "tags": [
+        "智能体经典规划建模",
+        "封闭世界初始状态"
+      ],
+      "evidence": "source",
+      "reference": "https://planning.wiki/ref/pddl/problem"
+    },
+    {
+      "id": "planmodel-007",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "智能体经典规划建模",
+      "knowledgePoint": "达成与维持",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "规划中的 achievement goal 与 maintenance goal 有什么区别？",
+      "answer": "前者要求最终状态满足目标；后者要求经过的每个状态都满足条件。",
+      "explanation": "维护目标通常用于表达持续需要遵守的约束。",
+      "example": "最终到达目的地，同时全程不进入危险区。",
+      "tags": [
+        "智能体经典规划建模",
+        "达成与维持"
+      ],
+      "evidence": "source",
+      "reference": "https://artint.info/3e/html/ArtInt3e.Ch6.S1.html"
+    }
+  ]
+}

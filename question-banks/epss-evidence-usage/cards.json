@@ -1,0 +1,369 @@
+{
+  "source": {
+    "id": "epss-evidence-usage",
+    "title": "EPSS 漏洞情报：使用边界与数据获取",
+    "url": "https://www.first.org/epss/faq",
+    "type": "教材与官方文档",
+    "note": "依据截至 2026-11-21 的 FIRST 官方说明及 API 文档整理；历史评分筛选边界使用公开 API 样本核验。",
+    "knowledgeArea": "15"
+  },
+  "cards": [
+    {
+      "id": "epssuse-001",
+      "category": "operations",
+      "level": "入门",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "群体预测与本地风险",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EPSS 分数能直接表示某个组织的资产在未来 30 天内被攻陷的概率吗？",
+      "answer": "不能；EPSS 预测的是其观测体系中漏洞利用活动的概率，还需结合组织资产、暴露和控制情况。",
+      "explanation": "群体级漏洞利用预测与特定资产是否受影响不是同一个事件。",
+      "example": "先检查漏洞是否存在于本组织资产。",
+      "tags": [
+        "群体预测与本地风险",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/using-epss",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "低分与利用证据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "漏洞已列入 CISA KEV，但 EPSS 分数较低，二者一定矛盾吗？",
+      "answer": "不一定；KEV 记录已确认的历史在野利用，EPSS 预测未来 30 天可观测利用活动。",
+      "explanation": "应结合确认利用证据及本地环境安排修复。",
+      "example": "某漏洞曾被利用，但当前预测分数较低。",
+      "tags": [
+        "低分与利用证据",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/using-epss",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "已知利用的时效",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "漏洞在 KEV 中出现，能否仅凭该条记录确认现在仍在发生利用？",
+      "answer": "不能；目录说明已有在野利用证据，当前活动仍需结合近期情报核验。",
+      "explanation": "历史确认与当前持续活动是不同时间命题。",
+      "example": "区分多年以前的记录与最近新出现的利用报告。",
+      "tags": [
+        "已知利用的时效",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "application",
+      "reference": "https://www.first.org/epss/using-epss",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "阈值选择",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EPSS 是否规定统一的“高危”分数线，组织应如何选择阈值？",
+      "answer": "FIRST 没有规定统一分数线；组织应结合修复能力、资产暴露和风险偏好选择阈值。",
+      "explanation": "阈值会影响待处理漏洞数量和可能覆盖的利用活动。",
+      "example": "小团队按可处理的修复量设定并复核阈值。",
+      "tags": [
+        "阈值选择",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/faq",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "分数变化与模型版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "EPSS 某漏洞的分数变化，是否一定表示模型本身已经更新？",
+      "answer": "不一定；每日输入信号变化也可能改变分数，模型更新是另一件事。",
+      "explanation": "对历史时间序列还应记录评分日期和模型版本。",
+      "example": "公开利用代码出现后分数可能变化。",
+      "tags": [
+        "分数变化与模型版本",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/faq",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "模型训练与日常评分",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "截至 2026 年 11 月的 FIRST FAQ，近期利用活动直接作为次日 EPSS 日常评分的输入吗？",
+      "answer": "FAQ 表示不直接使用；利用活动数据用于训练，日常评分使用当时可用的其他信号。",
+      "explanation": "实现和数据源可能随版本演进，应以对应版本说明为准。",
+      "example": "发现实时利用证据后，不应等待分数变化才评估处置。",
+      "tags": [
+        "模型训练与日常评分",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/faq",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-009",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "分位数同分处理",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "按 FIRST 当前数据说明，EPSS percentile 中的比较对象如何处理同分漏洞？",
+      "answer": "它表示得分小于或等于该分数的已评分漏洞所占比例。",
+      "explanation": "相同分数的漏洞计入该比例，分位数不是利用概率。",
+      "example": "多个漏洞同分时，它们可具有相同分位数。",
+      "tags": [
+        "分位数同分处理",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/data",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-010",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "分位数随群体变化",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "即使某漏洞的 EPSS 概率不变，其 percentile 是否仍可能变化？",
+      "answer": "可能；其他已评分漏洞的分数或总体构成变化会改变相对位置。",
+      "explanation": "percentile 依赖比较时的已评分群体。",
+      "example": "新增大量不同分数的漏洞可能改变其排名。",
+      "tags": [
+        "分位数随群体变化",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "application",
+      "reference": "https://www.first.org/epss/data",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-011",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "EPSS组合期望",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "对一组漏洞，若各 EPSS 分数可作为所讨论总体的边际概率，其未来观测利用数量的期望怎样表示？",
+      "answer": "可将各漏洞的概率相加；期望的线性性质不要求事件相互独立。",
+      "explanation": "这仍是依赖概率校准和适用群体的估计，不代表组织资产的必然损失。",
+      "example": "两个概率分别为 0.1 和 0.2，预期数量为 0.3。",
+      "tags": [
+        "EPSS组合期望",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/using-epss",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-012",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "至少一次利用概率",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "用各漏洞 EPSS 分数计算至少一个被观测利用的概率时，何时可使用 1−∏(1−pᵢ)？",
+      "answer": "当各漏洞被观测利用事件可近似视为相互独立时。",
+      "explanation": "攻击活动可能相关；不满足独立性时不能直接保证该公式正确。",
+      "example": "独立模型下把每个漏洞均未被利用的概率相乘。",
+      "tags": [
+        "至少一次利用概率",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/using-epss",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-013",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "CVSS与期望损失",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "把 EPSS 分数直接乘以 CVSS Base 分数，能否直接解释为组织的预期损失？",
+      "answer": "不能；CVSS Base 分数本身不表示本组织的货币损失，也不包含全部环境条件。",
+      "explanation": "量化风险需要明确事件、损失单位和本地暴露等假设。",
+      "example": "应结合资产影响和适用控制，而不是只依赖两个分数的乘积。",
+      "tags": [
+        "CVSS与期望损失",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "application",
+      "reference": "https://www.first.org/epss/using-epss",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-014",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "API与模型版本",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIRST EPSS API 地址中的 v1 表示 EPSS 预测模型版本吗？",
+      "answer": "不表示；它标识 API 版本，预测模型版本是另一项信息。",
+      "explanation": "长期研究应分别记录接口、模型和评分日期。",
+      "example": "API v1 可以提供不同模型版本时期的历史评分。",
+      "tags": [
+        "API与模型版本",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/data",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-015",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "历史评分查询",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIRST EPSS API 的 date 参数主要用于什么？",
+      "answer": "按指定日期查询当日的历史 EPSS 分数及分位数。",
+      "explanation": "历史评分适合复盘当时可获得的信息。",
+      "example": "查询某漏洞在过去某天的评分。",
+      "tags": [
+        "历史评分查询",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://api.first.org/epss/",
+      "referenceTitle": "FIRST EPSS API v1 文档（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-016",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "分数筛选边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "截至 2026 年 11 月，FIRST EPSS API 文档中的 epss-gt 和 epss-lt 是否包含等于阈值的结果？",
+      "answer": "包含；文档分别描述为大于等于和小于等于。",
+      "explanation": "接口语义可能随版本变化，使用时应以当前说明和实际响应核对。",
+      "example": "给定精确阈值时，同分结果也可能被返回。",
+      "tags": [
+        "分数筛选边界",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://api.first.org/epss/",
+      "referenceTitle": "FIRST EPSS API v1 文档（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-017",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "历史序列与days",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "FIRST EPSS API 中，scope=time-series 与 days 参数分别用于什么？",
+      "answer": "time-series 返回最多最近 30 天的分数历史；days 按分数进入数据库后的天数筛选。",
+      "explanation": "days 不是请求历史序列长度的参数。",
+      "example": "查询一个 CVE 的近期分数走势时使用 time-series。",
+      "tags": [
+        "历史序列与days",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://api.first.org/epss/",
+      "referenceTitle": "FIRST EPSS API v1 文档（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-018",
+      "category": "operations",
+      "level": "实践",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "批量评分获取",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "需要定期获取全部 EPSS 评分时，FIRST 推荐使用什么方式？",
+      "answer": "使用每日完整 CSV 或其归档，而不是逐个 CVE 调用查询接口。",
+      "explanation": "API 更适合单个漏洞或小批量按需查询。",
+      "example": "每日下载完整文件并关联资产清单。",
+      "tags": [
+        "批量评分获取",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/data",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    },
+    {
+      "id": "epssuse-019",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "EPSS 漏洞情报",
+      "knowledgePoint": "评分序列版本边界",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "分析跨 EPSS 模型版本的历史分数时，为什么要标记版本切换日期？",
+      "answer": "评分方法变化可能在切换时造成分数变化，不能直接全部归因于漏洞自身状态变化。",
+      "explanation": "模型版本与威胁信号变化是不同的潜在原因。",
+      "example": "比较长期分数曲线时标注模型升级。",
+      "tags": [
+        "评分序列版本边界",
+        "EPSS",
+        "威胁情报"
+      ],
+      "evidence": "source",
+      "reference": "https://www.first.org/epss/data",
+      "referenceTitle": "FIRST EPSS 官方说明（2026-11 核对）"
+    }
+  ]
+}

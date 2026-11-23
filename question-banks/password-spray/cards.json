@@ -1,0 +1,72 @@
+{
+  "source": {
+    "id": "password-spray",
+    "title": "MITRE ATT&CK：密码喷洒与认证异常",
+    "url": "https://attack.mitre.org/techniques/T1110/003/",
+    "type": "官方技术文档",
+    "note": "依据所引原文自行整理成中文问答，例子为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "spray-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "身份威胁",
+      "knowledgePoint": "密码喷洒",
+      "questionType": "概念与原理",
+      "question": "密码喷洒通常如何尝试获取账户凭据？",
+      "answer": "攻击者用一个或少量常见密码尝试登录许多不同账户。",
+      "explanation": "这种模式与对单一账户连续尝试大量密码有所不同。",
+      "example": "少数口令被用于尝试多个账户。",
+      "tags": [
+        "密码喷洒",
+        "身份威胁"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1110/003/",
+      "origin": "自行整理",
+      "referenceTitle": "MITRE ATT&CK：Password Spraying"
+    },
+    {
+      "id": "spray-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "身份威胁",
+      "knowledgePoint": "跨账户认证聚合",
+      "questionType": "应用与分析",
+      "question": "识别潜在密码喷洒时，为什么要关注跨账户的认证失败？",
+      "answer": "喷洒会把尝试分散到多个账户；按来源和时间窗口统计不同失败账户数可提供线索。",
+      "explanation": "这只是线索，还需结合认证上下文判断，日志通常不应记录明文密码。",
+      "example": "同一来源短时间对许多账户认证失败。",
+      "tags": [
+        "跨账户认证聚合",
+        "身份威胁"
+      ],
+      "evidence": "application",
+      "reference": "https://attack.mitre.org/techniques/T1110/003/",
+      "origin": "自行整理",
+      "referenceTitle": "MITRE ATT&CK：Password Spraying"
+    },
+    {
+      "id": "spray-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "身份威胁",
+      "knowledgePoint": "低速喷洒",
+      "questionType": "应用与分析",
+      "question": "为什么只用短时间窗口可能漏掉低速密码喷洒？",
+      "answer": "攻击者可能放慢尝试速度以避开短时告警阈值，行为需要在更长时间范围内关联。",
+      "explanation": "扩大窗口也可能引入正常行为，应结合业务基线与其他证据。",
+      "example": "持续数天、每个账户尝试次数很少的活动。",
+      "tags": [
+        "低速喷洒",
+        "身份威胁"
+      ],
+      "evidence": "application",
+      "reference": "https://attack.mitre.org/techniques/T1110/003/",
+      "origin": "自行整理",
+      "referenceTitle": "MITRE ATT&CK：Password Spraying"
+    }
+  ]
+}

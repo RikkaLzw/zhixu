@@ -1,0 +1,145 @@
+{
+  "source": {
+    "id": "fuzz-sanitizers",
+    "title": "LLVM Sanitizer 与 libFuzzer 测试边界",
+    "url": "https://llvm.org/docs/LibFuzzer.html",
+    "type": "官方技术文档与标准",
+    "note": "依据逐题链接的原始资料自行整理中文问答，示例为自编。",
+    "knowledgeArea": "14"
+  },
+  "cards": [
+    {
+      "id": "fuzzsafe-001",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试运行",
+      "knowledgePoint": "未初始化内存检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MemorySanitizer 主要检测哪类运行时问题？",
+      "answer": "它检测未初始化内存值的使用。",
+      "explanation": "例如未初始化的值用于条件判断或内存访问。",
+      "example": "测试输入触发对未初始化变量的分支判断。",
+      "tags": [
+        "未初始化内存检测",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://clang.llvm.org/docs/MemorySanitizer.html"
+    },
+    {
+      "id": "fuzzsafe-002",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试运行",
+      "knowledgePoint": "MemorySanitizer外部代码",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "为什么使用 MemorySanitizer 时要关注依赖库的插桩？",
+      "answer": "未正确插桩的程序或依赖代码可能造成误报。",
+      "explanation": "文档说明常用库函数的拦截器可帮助处理一部分外部代码。",
+      "example": "检查被测程序及依赖库的构建方式。",
+      "tags": [
+        "MemorySanitizer外部代码",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://clang.llvm.org/docs/MemorySanitizer.html"
+    },
+    {
+      "id": "fuzzsafe-003",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试运行",
+      "knowledgePoint": "未初始化值来源追踪",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "MemorySanitizer 的 origin tracking 有助于排查什么？",
+      "answer": "它帮助定位未初始化值的来源及部分传播位置。",
+      "explanation": "开启追踪会增加运行与内存开销。",
+      "example": "根据报告查找未初始化内存的分配位置。",
+      "tags": [
+        "未初始化值来源追踪",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://clang.llvm.org/docs/MemorySanitizer.html"
+    },
+    {
+      "id": "fuzzsafe-004",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试运行",
+      "knowledgePoint": "内存泄漏检测",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "LeakSanitizer 的主要用途是什么？",
+      "answer": "它在运行时检测内存泄漏。",
+      "explanation": "可独立使用，也可在支持的平台与 AddressSanitizer 一起使用。",
+      "example": "检查测试程序中未释放的分配。",
+      "tags": [
+        "内存泄漏检测",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://clang.llvm.org/docs/LeakSanitizer.html"
+    },
+    {
+      "id": "fuzzsafe-005",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试运行",
+      "knowledgePoint": "测试入口退出",
+      "questionType": "易错点",
+      "origin": "自行整理",
+      "question": "libFuzzer 的测试入口为什么不应对普通输入调用 exit()？",
+      "answer": "exit() 会终止进程，使引擎无法继续处理后续输入。",
+      "explanation": "入口应处理无效输入并返回，而不是因输入格式错误结束整个进程。",
+      "example": "解析失败时返回，让引擎继续生成其他输入。",
+      "tags": [
+        "测试入口退出",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzsafe-006",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试运行",
+      "knowledgePoint": "拒绝语料输入",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "在 libFuzzer 中，测试入口对某个输入返回 -1 会如何影响语料？",
+      "answer": "该输入不会被加入语料库，即使它触发了新覆盖。",
+      "explanation": "返回值只描述该输入的语料处理；不等于证明程序没有缺陷。",
+      "example": "只把解析成功的输入纳入后续变异语料。",
+      "tags": [
+        "拒绝语料输入",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    },
+    {
+      "id": "fuzzsafe-007",
+      "category": "vulnerabilities",
+      "level": "进阶",
+      "subtopic": "模糊测试运行",
+      "knowledgePoint": "隔离子进程模糊测试",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "libFuzzer 的实验性 fork 模式怎样提高对崩溃或超时的容忍度？",
+      "answer": "主进程启动子进程执行模糊测试，子进程异常结束后可按配置继续测试。",
+      "explanation": "实际处理方式取决于 fork 模式及其错误选项。",
+      "example": "隔离一次发生超时的子进程后继续其他测试。",
+      "tags": [
+        "隔离子进程模糊测试",
+        "模糊测试"
+      ],
+      "evidence": "source",
+      "reference": "https://llvm.org/docs/LibFuzzer.html"
+    }
+  ]
+}

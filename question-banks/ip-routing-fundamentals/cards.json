@@ -1,0 +1,354 @@
+{
+  "source": {
+    "id": "ip-routing-fundamentals",
+    "title": "IP、CIDR、ARP 与 ICMP 标准",
+    "url": "https://www.rfc-editor.org/rfc/rfc791.html",
+    "type": "互联网标准",
+    "note": "依据逐题引用的教材、手册或标准自行整理，示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "ipbase-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "IPv4位数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 地址由多少位组成？",
+      "answer": "IPv4 地址由 32 位组成，常用四段十进制表示。",
+      "explanation": "每段表示一个八位字节。",
+      "example": "192.0.2.1 是一个 IPv4 地址。",
+      "tags": [
+        "IPv4位数",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.html#section-3.2"
+    },
+    {
+      "id": "ipbase-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "IPv6位数",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 地址由多少位组成？",
+      "answer": "IPv6 地址由 128 位组成，常以十六进制分组表示。",
+      "explanation": "连续的零组可按规则压缩。",
+      "example": "2001:db8::1 是一个 IPv6 地址。",
+      "tags": [
+        "IPv6位数",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4291.html#section-2.2"
+    },
+    {
+      "id": "ipbase-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "IPv6压缩",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv6 文本地址中的双冒号 :: 表示什么，能出现几次？",
+      "answer": "它表示一个或多个连续全零分组，在一个地址中最多出现一次。",
+      "explanation": "省略组数由完整地址长度推断。",
+      "example": "2001:db8::1 省略中间的零组。",
+      "tags": [
+        "IPv6压缩",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4291.html#section-2.2"
+    },
+    {
+      "id": "ipbase-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "CIDR前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 的 CIDR 表示法中的 /24 表示什么？",
+      "answer": "它表示前 24 位是网络前缀，其余 8 位用于该前缀内的地址。",
+      "explanation": "是否可以分配给主机还取决于网络类型和用途。",
+      "example": "192.0.2.0/24 包含以相同前 24 位开头的地址。",
+      "tags": [
+        "CIDR前缀",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html#section-3.1"
+    },
+    {
+      "id": "ipbase-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "掩码前缀",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 前缀 /24 对应的常见子网掩码是什么？",
+      "answer": "255.255.255.0。",
+      "explanation": "掩码前 24 位为 1，其余 8 位为 0。",
+      "example": "判断 192.0.2.0/24 的网络部分。",
+      "tags": [
+        "掩码前缀",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html#section-3.1"
+    },
+    {
+      "id": "ipbase-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "最长前缀匹配",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "路由表中多个前缀同时匹配目的地址时，通常按什么规则选择？",
+      "answer": "优先选择匹配前缀最长、也就是最具体的路由。",
+      "explanation": "同一前缀存在多条路由时还需依据路由策略等选择。",
+      "example": "/24 与 /16 都匹配时先考虑 /24。",
+      "tags": [
+        "最长前缀匹配",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html#section-5.1"
+    },
+    {
+      "id": "ipbase-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "默认路由",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 路由表中的 0.0.0.0/0 通常有什么作用？",
+      "answer": "它是长度为 0 的默认前缀，在没有更具体匹配路由时可用于转发。",
+      "explanation": "是否存在以及下一跳由路由配置决定。",
+      "example": "把其他未知目标交给默认网关。",
+      "tags": [
+        "默认路由",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc4632.html#section-3.1"
+    },
+    {
+      "id": "ipbase-008",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "私有IPv4范围",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 1918 定义的三段私有 IPv4 地址空间是什么？",
+      "answer": "10.0.0.0/8、172.16.0.0/12 和 192.168.0.0/16。",
+      "explanation": "这些地址可在不同私有网络重复使用。",
+      "example": "局域网使用 192.168.1.0/24。",
+      "tags": [
+        "私有IPv4范围",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc1918.html#section-3"
+    },
+    {
+      "id": "ipbase-009",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "IP不可靠",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 本身是否保证数据报按序、无丢失地到达？",
+      "answer": "不保证；IP 提供尽力而为的数据报传送，更强的可靠性需由其他层或应用提供。",
+      "explanation": "TCP 是一种可提供可靠有序字节流的上层协议。",
+      "example": "网络丢包时由 TCP 检测并重传。",
+      "tags": [
+        "IP不可靠",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.html#section-1.1"
+    },
+    {
+      "id": "ipbase-010",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "TTL",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 头部的 TTL 对经过路由器的报文有什么作用？",
+      "answer": "它限制数据报在网络中的生存时间；每经过路由器转发至少递减 1，达到零时丢弃。",
+      "explanation": "这有助于限制路由环路中的报文存活。",
+      "example": "路由环路中的包不会无限循环。",
+      "tags": [
+        "TTL",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.html#section-3.2"
+    },
+    {
+      "id": "ipbase-011",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "IP头校验",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 头部校验和是否覆盖 IP 数据报的全部载荷？",
+      "answer": "不覆盖；它校验 IPv4 头部。",
+      "explanation": "传输层或其他机制可提供额外的完整性检查。",
+      "example": "TTL 变化时路由器需要更新头部校验和。",
+      "tags": [
+        "IP头校验",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.html#section-3.2"
+    },
+    {
+      "id": "ipbase-012",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "DF标志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 头部的 DF 标志表示什么？",
+      "answer": "它表示该数据报不应被分片。",
+      "explanation": "当下一链路无法承载且不能分片时，转发可能失败。",
+      "example": "路径 MTU 探测中发送设置 DF 的数据报。",
+      "tags": [
+        "DF标志",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.html#section-3.2"
+    },
+    {
+      "id": "ipbase-013",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "MF标志",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 分片头中的 MF 标志在分片数据报中表示什么？",
+      "answer": "MF 为 1 表示后面还有分片；最后一个分片的 MF 为 0。",
+      "explanation": "重组还需要偏移量和其他标识字段。",
+      "example": "接收端等待其余 IP 分片。",
+      "tags": [
+        "MF标志",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.html#section-3.2"
+    },
+    {
+      "id": "ipbase-014",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "IP分片偏移",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 分片偏移字段以什么单位表示片段在原数据报中的位置？",
+      "answer": "以 8 字节为单位。",
+      "explanation": "实际字节位置等于偏移字段值乘以 8。",
+      "example": "偏移值 2 对应从原始载荷第 16 字节开始。",
+      "tags": [
+        "IP分片偏移",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc791.html#section-3.2"
+    },
+    {
+      "id": "ipbase-015",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "ARP用途",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "IPv4 局域网中的 ARP 通常解决什么映射问题？",
+      "answer": "它用于把同一链路上的目标 IPv4 地址解析为对应的链路层地址。",
+      "explanation": "跨网段通信通常先解析下一跳的链路层地址。",
+      "example": "以太网主机查询本地网关的 MAC 地址。",
+      "tags": [
+        "ARP用途",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc826.html"
+    },
+    {
+      "id": "ipbase-016",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "下一跳ARP",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "向其他网段发送 IPv4 包时，主机在本地以太网通常需要解析谁的 MAC 地址？",
+      "answer": "通常解析所选下一跳网关的 MAC 地址，而不是远端主机的 MAC 地址。",
+      "explanation": "IP 目的地址仍用于网络层路由。",
+      "example": "客户端将远端流量先发给本地路由器。",
+      "tags": [
+        "下一跳ARP",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc826.html"
+    },
+    {
+      "id": "ipbase-017",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "ICMP差错",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "ICMP 在 IPv4 网络中常用于传递哪些信息？",
+      "answer": "它可报告不可达、超时等网络层差错，也可承载回显请求和应答。",
+      "explanation": "ICMP 不是可靠交付错误报告的保证。",
+      "example": "TTL 到期时可能返回 Time Exceeded。",
+      "tags": [
+        "ICMP差错",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc792.html"
+    },
+    {
+      "id": "ipbase-018",
+      "category": "foundations",
+      "level": "进阶",
+      "subtopic": "IP 寻址与转发",
+      "knowledgePoint": "NAPT",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "网络地址与端口转换 NAPT 如何让多个内部端点共享外部 IPv4 地址？",
+      "answer": "它转换地址及传输层标识，例如端口，以区分多个同时存在的映射。",
+      "explanation": "具体映射与过滤行为取决于实现和配置。",
+      "example": "不同内部连接映射到同一个公网 IP 的不同端口。",
+      "tags": [
+        "NAPT",
+        "IP 寻址与转发"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc3022.html#section-2"
+    }
+  ]
+}

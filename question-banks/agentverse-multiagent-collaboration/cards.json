@@ -1,0 +1,107 @@
+{
+  "source": {
+    "id": "agentverse-multiagent-collaboration",
+    "title": "AgentVerse 论文 v3：多智能体协作",
+    "url": "https://arxiv.org/abs/2308.10848v3",
+    "type": "固定版本论文、源码或官方文档",
+    "note": "依据逐题引用的资料自行整理；示例为自编，适用条件见卡片。",
+    "knowledgeArea": "08"
+  },
+  "cards": [
+    {
+      "id": "agverse-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AgentVerse 多智能体协作",
+      "knowledgePoint": "四阶段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentVerse 论文将一次协作迭代划分为哪四个主要阶段？",
+      "answer": "专家招募、协作决策、动作执行和评估。",
+      "explanation": "目标未完成时，评估反馈可进入下一轮。",
+      "example": "为复杂任务组织角色、执行并复盘。",
+      "tags": [
+        "AgentVerse 多智能体协作",
+        "四阶段"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.10848v3"
+    },
+    {
+      "id": "agverse-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AgentVerse 多智能体协作",
+      "knowledgePoint": "动态招募",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentVerse 的专家招募如何根据任务调整智能体组？",
+      "answer": "招募智能体根据目标生成角色描述，并可依据评估反馈调整组的组成。",
+      "explanation": "这是一种动态配置方式。",
+      "example": "发现缺少领域知识后调整角色。",
+      "tags": [
+        "AgentVerse 多智能体协作",
+        "动态招募"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.10848v3"
+    },
+    {
+      "id": "agverse-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AgentVerse 多智能体协作",
+      "knowledgePoint": "水平协作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentVerse 的水平决策结构如何形成群体决策？",
+      "answer": "各智能体分享并完善各自决策，再通过汇总或集成形成群体决策。",
+      "explanation": "具体汇总函数依实现而异。",
+      "example": "多个专家分别提出建议后汇总。",
+      "tags": [
+        "AgentVerse 多智能体协作",
+        "水平协作"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.10848v3"
+    },
+    {
+      "id": "agverse-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AgentVerse 多智能体协作",
+      "knowledgePoint": "垂直协作",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentVerse 的垂直决策结构中，solver 与 reviewer 如何配合？",
+      "answer": "solver 提出并迭代修改决策，reviewer 提供反馈直到达成条件或达到迭代上限。",
+      "explanation": "它强调对一个方案进行逐轮改进。",
+      "example": "求解者编写方案，审阅者提出问题。",
+      "tags": [
+        "AgentVerse 多智能体协作",
+        "垂直协作"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.10848v3"
+    },
+    {
+      "id": "agverse-007",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "AgentVerse 多智能体协作",
+      "knowledgePoint": "协作局限",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "AgentVerse 论文是否表明多智能体组一定优于单智能体？",
+      "answer": "没有；其部分实验中群体表现低于单智能体，错误反馈也可能影响结果。",
+      "explanation": "协作收益依赖模型、任务和反馈质量。",
+      "example": "多个角色重复传递错误建议。",
+      "tags": [
+        "AgentVerse 多智能体协作",
+        "协作局限"
+      ],
+      "evidence": "source",
+      "reference": "https://arxiv.org/abs/2308.10848v3"
+    }
+  ]
+}

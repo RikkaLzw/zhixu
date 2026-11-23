@@ -1,0 +1,164 @@
+{
+  "source": {
+    "id": "rfc5424-syslog-telemetry",
+    "title": "RFC 5424：Syslog 消息格式",
+    "url": "https://www.rfc-editor.org/rfc/rfc5424.html",
+    "type": "官方文档、标准或固定版本论文",
+    "note": "依据逐题引用的资料自行整理，示例自编；具体行为以指定版本和前提为准。",
+    "knowledgeArea": "10"
+  },
+  "cards": [
+    {
+      "id": "syslog-001",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Syslog 安全日志",
+      "knowledgePoint": "消息结构",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5424 的 Syslog 消息由哪些主要部分组成？",
+      "answer": "由 HEADER、STRUCTURED-DATA 和可选的 MSG 组成。",
+      "explanation": "解析时应先识别协议格式，再解释应用消息。",
+      "example": "从系统日志中提取头部与结构化字段。",
+      "tags": [
+        "Syslog 安全日志",
+        "消息结构"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5424.html"
+    },
+    {
+      "id": "syslog-002",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Syslog 安全日志",
+      "knowledgePoint": "优先级计算",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5424 的 PRI 数值如何由 Facility 和 Severity 计算？",
+      "answer": "PRI 数值等于 Facility 乘以 8，再加 Severity。",
+      "explanation": "PRI 在消息头中用尖括号包住。",
+      "example": "Facility 为 20、Severity 为 5 时 PRI 为 <165>。",
+      "tags": [
+        "Syslog 安全日志",
+        "优先级计算"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5424.html"
+    },
+    {
+      "id": "syslog-003",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Syslog 安全日志",
+      "knowledgePoint": "严重等级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5424 的 Syslog Severity 数值越小代表什么？",
+      "answer": "通常表示越严重；0 是 Emergency，7 是 Debug。",
+      "explanation": "不要把数值方向直接套用到其他日志系统的严重性字段。",
+      "example": "区分错误级别与调试级别。",
+      "tags": [
+        "Syslog 安全日志",
+        "严重等级"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5424.html"
+    },
+    {
+      "id": "syslog-004",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Syslog 安全日志",
+      "knowledgePoint": "空字段",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5424 的 NILVALUE 用什么表示，主要表达什么？",
+      "answer": "用单个连字符 - 表示字段没有提供值。",
+      "explanation": "它不是数值 0，也不是任意空白字符串。",
+      "example": "缺少结构化数据时 STRUCTURED-DATA 为 -。",
+      "tags": [
+        "Syslog 安全日志",
+        "空字段"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5424.html"
+    },
+    {
+      "id": "syslog-005",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Syslog 安全日志",
+      "knowledgePoint": "结构化数据",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5424 的一个 SD-ELEMENT 由什么组成？",
+      "answer": "由一个 SD-ID 和零个或多个参数名值对组成。",
+      "explanation": "一条消息可以包含多个不同 SD-ID 的元素。",
+      "example": "在结构化元素中传递应用相关的计数或地址。",
+      "tags": [
+        "Syslog 安全日志",
+        "结构化数据"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5424.html"
+    },
+    {
+      "id": "syslog-006",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Syslog 安全日志",
+      "knowledgePoint": "参数转义",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5424 的结构化参数值中，哪些字符必须转义？",
+      "answer": "双引号、反斜杠和右方括号必须转义。",
+      "explanation": "参数值使用 UTF-8；按规范解析以免误判字段边界。",
+      "example": "处理带右方括号的参数文本。",
+      "tags": [
+        "Syslog 安全日志",
+        "参数转义"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5424.html"
+    },
+    {
+      "id": "syslog-007",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Syslog 安全日志",
+      "knowledgePoint": "进程标识",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5424 的 PROCID 一定是操作系统的数字进程 ID 吗？",
+      "answer": "不一定；其具体值依实现或操作方而定，也可能没有提供。",
+      "explanation": "该字段变化可表示 Syslog 报告出现不连续。",
+      "example": "关联进程前核对设备的字段定义。",
+      "tags": [
+        "Syslog 安全日志",
+        "进程标识"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5424.html"
+    },
+    {
+      "id": "syslog-008",
+      "category": "operations",
+      "level": "进阶",
+      "subtopic": "Syslog 安全日志",
+      "knowledgePoint": "传输与消息",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "RFC 5424 的 Syslog 消息格式本身是否规定唯一的传输协议？",
+      "answer": "没有；消息格式与具体传输映射分开定义。",
+      "explanation": "实际可靠性、加密和长度限制取决于使用的传输方式。",
+      "example": "部署时分别核对日志格式与传输配置。",
+      "tags": [
+        "Syslog 安全日志",
+        "传输与消息"
+      ],
+      "evidence": "source",
+      "reference": "https://www.rfc-editor.org/rfc/rfc5424.html"
+    }
+  ]
+}

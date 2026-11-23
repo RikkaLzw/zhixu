@@ -1,0 +1,126 @@
+{
+  "source": {
+    "id": "posix-rwlock-foundations",
+    "title": "POSIX.1-2017：读写锁",
+    "url": "https://man7.org/linux/man-pages/man3/pthread_rwlock_rdlock.3p.html",
+    "type": "教材、标准与官方文档",
+    "note": "依据逐题引用的教材、标准或官方文档自行整理；示例为自编。",
+    "knowledgeArea": "19"
+  },
+  "cards": [
+    {
+      "id": "rwcs-001",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "POSIX 读写锁",
+      "knowledgePoint": "读写并发",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "读写锁允许多个读者与写者如何持有同一把锁？",
+      "answer": "可以有多个读者同时持有读锁；写锁与其他读锁或写锁互斥。",
+      "explanation": "读写操作均需按同一锁协议访问共享数据。",
+      "example": "多个线程并发读取，更新时独占访问。",
+      "tags": [
+        "POSIX 读写锁",
+        "读写并发"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/pthread_rwlock_rdlock.3p.html"
+    },
+    {
+      "id": "rwcs-002",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "POSIX 读写锁",
+      "knowledgePoint": "非阻塞读锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "pthread_rwlock_tryrdlock 与 pthread_rwlock_rdlock 在等待上有什么区别？",
+      "answer": "tryrdlock 在无法立即取得读锁时返回错误，不会阻塞等待。",
+      "explanation": "返回的错误码应由调用方处理。",
+      "example": "不能立刻读取时转去做其他任务。",
+      "tags": [
+        "POSIX 读写锁",
+        "非阻塞读锁"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/pthread_rwlock_rdlock.3p.html"
+    },
+    {
+      "id": "rwcs-003",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "POSIX 读写锁",
+      "knowledgePoint": "非阻塞写锁",
+      "questionType": "代码与配置",
+      "origin": "自行整理",
+      "question": "POSIX 的 pthread_rwlock_trywrlock 遇到已有读者或写者持锁时如何返回？",
+      "answer": "它获取失败并返回 EBUSY，不会等待现有持锁者释放。",
+      "explanation": "成功获取时返回 0。",
+      "example": "读线程持锁期间尝试写锁。",
+      "tags": [
+        "POSIX 读写锁",
+        "非阻塞写锁"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/pthread_rwlock_trywrlock.3p.html"
+    },
+    {
+      "id": "rwcs-004",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "POSIX 读写锁",
+      "knowledgePoint": "读锁升级",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "线程持有 POSIX 读锁时，直接调用 pthread_rwlock_wrlock 来升级是否安全？",
+      "answer": "不可依赖：该调用可能死锁，也可能返回 EDEADLK。",
+      "explanation": "需要设计释放读锁后重试并重新验证条件等方案。",
+      "example": "先读共享状态，释放读锁后再获取写锁检查。",
+      "tags": [
+        "POSIX 读写锁",
+        "读锁升级"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/pthread_rwlock_trywrlock.3p.html"
+    },
+    {
+      "id": "rwcs-005",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "POSIX 读写锁",
+      "knowledgePoint": "重复读锁",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "POSIX 线程多次成功取得同一读写锁的读锁后，需要解锁几次？",
+      "answer": "需要相应次数的 pthread_rwlock_unlock 调用。",
+      "explanation": "同时持有读锁的上限由实现定义。",
+      "example": "成功获取两次时需要匹配两次释放。",
+      "tags": [
+        "POSIX 读写锁",
+        "重复读锁"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/pthread_rwlock_rdlock.3p.html"
+    },
+    {
+      "id": "rwcs-006",
+      "category": "foundations",
+      "level": "入门",
+      "subtopic": "POSIX 读写锁",
+      "knowledgePoint": "等待读者与写者",
+      "questionType": "概念与原理",
+      "origin": "自行整理",
+      "question": "POSIX 读写锁是否在所有实现和调度配置下都保证等待中的写者优先于新读者？",
+      "answer": "不保证；等待写者时新读者能否获取锁取决于实现及相关调度条件。",
+      "explanation": "不要把特定实现的公平策略当作通用协议保证。",
+      "example": "持续读入可能影响写者等待时长。",
+      "tags": [
+        "POSIX 读写锁",
+        "等待读者与写者"
+      ],
+      "evidence": "source",
+      "reference": "https://man7.org/linux/man-pages/man3/pthread_rwlock_rdlock.3p.html"
+    }
+  ]
+}

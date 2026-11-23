@@ -1,0 +1,103 @@
+{
+  "source": {
+    "id": "dga-communications",
+    "title": "MITRE ATT&CK：域名生成与 DNS 通信",
+    "url": "https://attack.mitre.org/techniques/T1568/002/",
+    "type": "官方技术文档",
+    "note": "依据所列资料自行整理为简体中文问答；例子为自编。",
+    "knowledgeArea": "11"
+  },
+  "cards": [
+    {
+      "id": "dga-001",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "域名异常",
+      "knowledgePoint": "域名生成算法",
+      "questionType": "概念与原理",
+      "question": "恶意软件中的域名生成算法（DGA）通常用于什么？",
+      "answer": "它动态生成候选域名，以便寻找通信目的地，而不必只依赖固定域名列表。",
+      "explanation": "候选域名可能随时间或种子变化。",
+      "example": "恶意软件尝试一系列周期性生成的候选域名。",
+      "tags": [
+        "域名生成算法",
+        "域名异常"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1568/002/",
+      "referenceTitle": "MITRE ATT&CK T1568.002：Domain Generation Algorithms",
+      "origin": "自行整理"
+    },
+    {
+      "id": "dga-002",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "域名异常",
+      "knowledgePoint": "字典型DGA",
+      "questionType": "易错点",
+      "question": "DGA 生成的域名一定由看似随机的字母组成吗？",
+      "answer": "不一定；部分 DGA 使用完整单词拼接生成域名。",
+      "explanation": "仅靠字符随机性可能漏掉这类域名。",
+      "example": "由多个常见单词拼接出的候选域名。",
+      "tags": [
+        "字典型DGA",
+        "域名异常",
+        "公开面经",
+        "蚂蚁"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1568/002/",
+      "referenceTitle": "MITRE ATT&CK T1568.002：Domain Generation Algorithms",
+      "origin": "自行整理",
+      "supportingReferences": [
+        {
+          "id": "company-ant",
+          "title": "蚂蚁安全岗位公开面经（合集收录，经历为分享者自述）",
+          "url": "https://github.com/vvmdx/Sec-Interview-4-2023/blob/5f5555b3ae2d4077a44326fd5e66966412b0568f/README.md#0x6d-%E8%9A%82%E8%9A%81%E9%87%91%E6%9C%8D",
+          "type": "公开面经合集",
+          "evidence": "application"
+        }
+      ]
+    },
+    {
+      "id": "dga-003",
+      "category": "detection",
+      "level": "进阶",
+      "subtopic": "域名异常",
+      "knowledgePoint": "失败查询特征",
+      "questionType": "应用与分析",
+      "question": "检测 DGA 活动时，为什么可以关注一段时间内的 DNS 失败查询？",
+      "answer": "大量候选域名可能无法解析，因此失败查询的频率和上下文可作为检测线索。",
+      "explanation": "失败查询也可能来自正常配置问题，需结合进程和网络行为。",
+      "example": "关联同一进程短时间内对多个未解析域名的查询。",
+      "tags": [
+        "失败查询特征",
+        "域名异常"
+      ],
+      "evidence": "application",
+      "reference": "https://attack.mitre.org/techniques/T1568/002/#detection",
+      "referenceTitle": "MITRE ATT&CK：DGA Detection Strategy",
+      "origin": "自行整理"
+    },
+    {
+      "id": "dga-004",
+      "category": "detection",
+      "level": "入门",
+      "subtopic": "DNS通信",
+      "knowledgePoint": "DNS隧道通信",
+      "questionType": "比较与选型",
+      "question": "DNS 隧道如何利用 DNS 流量进行通信？",
+      "answer": "它可把命令或数据嵌入 DNS 查询、响应等协议流量中传递。",
+      "explanation": "DNS 有合法用途，是否构成恶意通信需要结合上下文判断。",
+      "example": "分析异常的 DNS 查询与响应是否承载了非预期数据。",
+      "tags": [
+        "DNS隧道通信",
+        "DNS通信"
+      ],
+      "evidence": "source",
+      "reference": "https://attack.mitre.org/techniques/T1071/004/",
+      "referenceTitle": "MITRE ATT&CK T1071.004：DNS",
+      "origin": "自行整理"
+    }
+  ]
+}
